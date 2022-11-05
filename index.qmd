@@ -1,0 +1,19 @@
+---
+title: "About Me"
+image: images/profile.jpg
+about:
+  template: jolla
+  links:
+    - icon: twitter
+      text: Twitter
+      href: https://twitter.com/PedroPark9
+    - icon: linkedin
+      text: LinkedIn
+      href: https://www.linkedin.com/in/pedro-faria-a68140209/
+    - icon: github
+      text: Github
+      href: https://github.com/pedropark99
+
+---
+
+About this blog
