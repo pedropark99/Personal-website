@@ -133,10 +133,38 @@
     "text": "A big reform was made. As a result, this new edition brings six new chapters to you\n\n\n\n\nBook\n\n\nR Language\n\n\n\n\n\n\n\n\n\n\n\nApr 6, 2022\n\n\nPedro Duarte Faria\n\n\n\n\n\n\n  \n\n\n\n\n\nUma grande reforma foi feita. Como resultado, esta nova edição traz seis novos capítulos para você\n\n\n\n\nBook\n\n\nR Language\n\n\n\n\n\n\n\n\n\n\n\nApr 6, 2022\n\n\nPedro Duarte Faria\n\n\n\n\n\n\n  \n\n\n\n\n\nNew chapters for Factors, Dates and time variables (date, POSIXct), in addition to the introduction of exercises at each chapter are among the main updates of the next edition.\n\n\n\n\nBook\n\n\nR Language\n\n\n\n\n\n\n\n\n\n\n\nMay 26, 2021\n\n\nPedro Duarte Faria\n\n\n\n\n\n\n  \n\n\n\n\n\nEsse post descreve as novas adições à segunda edição do livro Introdução à Linguagem R: seus fundamentos e sua prática. Fatores (factors); Datas e variáveis de tempo (date, POSIXct); além da introdução de exercícios em cada capítulo, estão entre as principais novidades da próxima edição.\n\n\n\n\nBook\n\n\nR Language\n\n\n\n\n\n\n\n\n\n\n\nMay 26, 2021\n\n\nPedro Duarte Faria\n\n\n\n\n\n\n  \n\n\n\n\n\nA second view on outer joins\n\n\n\n\nJoins\n\n\nTeaching\n\n\nBook\n\n\nR Language\n\n\n\n\n\n\n\n\n\n\n\nJan 2, 2021\n\n\nPedro Duarte Faria\n\n\n\n\n\n\n  \n\n\n\n\n\nUma segunda visão sobre outer joins\n\n\n\n\nJoins\n\n\nTeaching\n\n\nBook\n\n\nR Language\n\n\n\n\n\n\n\n\n\n\n\nJan 2, 2021\n\n\nPedro Duarte Faria\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nR Language\n\n\nTeaching\n\n\n\n\n\n\n\n\n\n\n\nOct 17, 2020\n\n\nPedro Duarte Faria\n\n\n\n\n\n\nNo matching items"
   },
   {
+    "objectID": "publications/book/introducao_linguagem_R/pt/index.html",
+    "href": "publications/book/introducao_linguagem_R/pt/index.html",
+    "title": "Introdução à Linguagem R: seus fundamentos e sua prática",
+    "section": "",
+    "text": "O que você aprende ?\nAtravés deste livro, você pode aprender sobre os fundamentos da linguagem R, e como eles se aplicam a área de análise de dados. Em mais detalhes:\n\nIntroduzindo a linguagem: aprenda sobre como definir e como trabalhar com objetos; conheça as estruturas e tipos de dados oferecidos pela linguagem; entenda como os processos de coerção e os valores especiais da linguagem podem afetar os seus resultados.\nImportação e transformação: aprenda a importar, transformar e formatar suas tabelas através dos pacotes readr, readxl, haven, dplyr e tidyr. Aplicando operações de ordenação, filtro, seleção e expansão, além de operações de pivô e join’s.\nVisualização de dados: aprenda a utilizar o pacote ggplot2 para produzir gráficos elegantes e efetivos para apresentar os seus dados e as suas conclusões.\nProgramando a sua análise: aprenda a utilizar controles de fluxo, funções e loops para automatizar tarefas e solucionar os seus problemas de maneira simples e clara.\nFunctional programming: aprenda a utilizar o pacote purrr para distribuir rapidamente os seus cálculos ao longo de múltiplos inputs.\nDebugging e environments: conheça as principais técnicas de debugging existentes na linguagem R, e, aprenda como investigar erros em suas funções. Além disso, entenda como a linguagem procura pelos seus objetos e, como você pode produzir resultados inesperados durante essa busca.\n\n\n\nCompre uma versão física do livro!\nVocê pode adquirir uma versão física do livro através da loja da Amazon. Uma versão eBook do livro também está disponível. Ao adquirir esses produtos, você estará me ajudando a continuar com esse projeto e a contribuir com nossa comunidade brasileira de R.\n\n\nLeia o livro online\nCaso você não possa comprar uma versão física do livro, você ainda pode ler gratuitamente a obra completa através de seu site.\n\n\nContribua para o projeto\nVocê também pode contribuir diretamente para a obra, ao postar pull requests ou issues no repositório oficial do livro no GitHub."
+  },
+  {
+    "objectID": "publications/en.html",
+    "href": "publications/en.html",
+    "title": "Publications in English",
+    "section": "",
+    "text": "No matching items"
+  },
+  {
+    "objectID": "publications/index.html",
+    "href": "publications/index.html",
+    "title": "All Publications",
+    "section": "",
+    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\n\n\nIntrodução à Linguagem R: seus fundamentos e sua prática\n\n\n\nR Language\n\n\nBook\n\n\nBrazil\n\n\n\n\n\n\n\n\n\n\nApr 11, 2022\n\n\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "publications/pt.html",
+    "href": "publications/pt.html",
+    "title": "Publicações em Português",
+    "section": "",
+    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n  \n\n\n\n\nIntrodução à Linguagem R: seus fundamentos e sua prática\n\n\nEste livro oferece uma descrição profunda sobre os fundamentos da linguagem R, e como eles se aplicam no contexto da análise de dados.\n\n\n\n\nR Language\n\n\nBook\n\n\nBrazil\n\n\n\n\n\n\n\n\n\n\n\nApr 11, 2022\n\n\n\n\n\n\nNo matching items"
+  },
+  {
     "objectID": "publications.html",
     "href": "publications.html",
     "title": "Publications",
     "section": "",
-    "text": "No matching items"
+    "text": "Este livro oferece uma descrição profunda sobre os fundamentos da linguagem R, e como eles se aplicam no contexto da análise de dados.\n\n\n\n\nR Language\n\n\nBook\n\n\nBrazil\n\n\n\n\n\n\n\n\n\n\n\nApr 11, 2022\n\n\n\n\n\n\nNo matching items"
   }
 ]

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Pedro Duarte Faria - Posts in English</title>
+<title>Pedro Duarte Faria - Publications in English</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -58,20 +58,20 @@ ul.task-list{list-style: none;}
 <script>
 
   window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-posts-en .list');
+    const listingTargetEl = window.document.querySelector('#listing-publications-en .list');
     if (!listingTargetEl) {
       // No listing discovered, do not attach.
       return; 
     }
 
     const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-subtitle','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      valueNames: [{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
       
-      searchColumns: ["listing-date","listing-title","listing-author","listing-subtitle","listing-image","listing-description"],
+      searchColumns: [],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-posts-en'] = new List('listing-posts-en', options);
+    window['quarto-listings']['listing-publications-en'] = new List('listing-publications-en', options);
 
     if (window['quarto-listing-loaded']) {
       window['quarto-listing-loaded']();
@@ -168,7 +168,7 @@ ul.task-list{list-style: none;}
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Posts in English</h1>
+<h1 class="title">Publications in English</h1>
 </div>
 
 
@@ -182,127 +182,27 @@ ul.task-list{list-style: none;}
 
 </header>
 
-<div id="listing-posts-en" class="quarto-listing quarto-listing-container-default">
+<div id="posts-en">
+
+</div>
+
+
+
+
+<div class="quarto-listing quarto-listing-container-default" id="listing-publications-en">
 <div class="listing-actions-group">
-   <div class="input-group input-group-sm quarto-listing-sort">
-     <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
-     <select id="listing-posts-en-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-posts-en'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
-       <option value="" disabled="" selected="" hidden="">Order By</option>
-       <option value="index" data-direction="asc">Default</option>
-         <option value="listing-title" data-direction="asc">
-          Title
-        </option>
-         <option value="listing-date-sort" data-direction="asc">
-          Date - Oldest
-        </option>
-         <option value="listing-date-sort" data-direction="desc">
-          Date - Newest
-        </option>
-         <option value="listing-author" data-direction="asc">
-          Author
-        </option>
-     </select>
-  </div>
     <div class="input-group input-group-sm quarto-listing-filter">
       <span class="input-group-text"><i class="bi bi-search"></i></span>
       <input type="text" class="search form-control" placeholder="Filter">
     </div>
 </div>
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="Book,R Language" data-listing-date-sort="1649214000000" data-listing-file-modified-sort="1667661809528" data-listing-reading-time-sort="3.015">
-<div class="thumbnail">
-<p><a href="../posts/2022-04-06-3nd-edition-rbook/en/index.html"> <img src="../posts/2022-04-06-3nd-edition-rbook/featured.png" class="thumnail-image"> </a></p>
-</div>
-<div class="body">
-<a href="../posts/2022-04-06-3nd-edition-rbook/en/index.html">
-<h3 class="no-anchor listing-title">
-What’s new in the 3rd edition of Introdução à Linguagem R: seus fundamentos e sua prática
-</h3>
-<div class="listing-subtitle">
-A big reform was made. As a result, this new edition brings six new chapters to you
-</div>
-<div class="listing-description">
-It is with great pleasure that I come to share with you the updates that I am bringing to this new edition of the book Introdução à Linguagem R: seus fundamentos e sua prática. The release of this new edition should take place in the middle of April 2022 📆, so stay tuned 😉.
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="../posts/2022-04-06-3nd-edition-rbook/en/index.html">
-<div class="listing-date">
-Apr 6, 2022
-</div>
-<div class="listing-author">
-Pedro Duarte Faria
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="Book,R Language" data-listing-date-sort="1621998000000" data-listing-file-modified-sort="1667660992727" data-listing-reading-time-sort="5.795">
-<div class="thumbnail">
-<p><a href="../posts/2021-05-26-2nd-edition-rbook/en/index.html"> <img src="../posts/2021-05-26-2nd-edition-rbook/featured.png" class="thumnail-image"> </a></p>
-</div>
-<div class="body">
-<a href="../posts/2021-05-26-2nd-edition-rbook/en/index.html">
-<h3 class="no-anchor listing-title">
-What’s new in the 2nd edition of Introdução à Linguagem R: seus fundamentos e sua prática
-</h3>
-<div class="listing-subtitle">
-New chapters for Factors, Dates and time variables (date, POSIXct), in addition to the introduction of exercises at each chapter are among the main updates of the next edition.
-</div>
-<div class="listing-description">
-As I and my colleague João Parga began teaching about The R Language, we quickly realized the presence of various short, quality and useful materials<sup>1</sup>. However, we also noticed a disturbing lack of materials (in Portuguese) about the R language, that were more technical or that sought to describe the language in more detail.
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="../posts/2021-05-26-2nd-edition-rbook/en/index.html">
-<div class="listing-date">
-May 26, 2021
-</div>
-<div class="listing-author">
-Pedro Duarte Faria
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="Joins,Teaching,Book,R Language" data-listing-date-sort="1609556400000" data-listing-file-modified-sort="1667661173793" data-listing-reading-time-sort="4.78">
-<div class="thumbnail">
-<p><a href="../posts/2021-01-02-tabela-destinataria-fonte/en/index.html"> <img src="../posts/2021-01-02-tabela-destinataria-fonte/featured.png" class="thumnail-image"> </a></p>
-</div>
-<div class="body">
-<a href="../posts/2021-01-02-tabela-destinataria-fonte/en/index.html">
-<h3 class="no-anchor listing-title">
-Recipient table and source table
-</h3>
-<div class="listing-subtitle">
-A second view on <em>outer joins</em>
-</div>
-<div class="listing-description">
-<em>Outer joins</em> are a simple topic of understanding for most students. However, this article proposes a second approach on the subject. This approach was built during a recent reformulation of the chapter “Introdução a base de dados relacionais”, from the book Introdução à Linguagem R: seus fundamentos e sua prática. The point of view presented here seeks to be strict, and uses this rigidity as a mechanism that facilitates the student`s memorization of the behaviors in each type of <em>outer join</em>.
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="../posts/2021-01-02-tabela-destinataria-fonte/en/index.html">
-<div class="listing-date">
-Jan 2, 2021
-</div>
-<div class="listing-author">
-Pedro Duarte Faria
-</div>
-</a>
-</div>
-</div>
+
 </div>
 <div class="listing-no-matching d-none">
 No matching items
 </div>
-</div>
-
-
-
-
-</main> <!-- /main -->
+</div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const icon = "";

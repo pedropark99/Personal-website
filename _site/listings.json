@@ -44,7 +44,28 @@
     ]
   },
   {
-    "listing": "/publications.html",
+    "listing": "/publications/en.html",
     "items": []
+  },
+  {
+    "listing": "/publications/index.html",
+    "items": [
+      "/publications/book/introducao_linguagem_R/pt/index.html"
+    ]
+  },
+  {
+    "listing": "/publications/pt.html",
+    "items": [
+      "/publications/book/introducao_linguagem_R/pt/index.html"
+    ]
+  },
+  {
+    "listing": "/publications.html",
+    "items": [
+      "/publications/en.html",
+      "/publications/index.html",
+      "/publications/pt.html",
+      "/publications/book/introducao_linguagem_R/pt/index.html"
+    ]
   }
 ]

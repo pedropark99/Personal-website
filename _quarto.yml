@@ -10,11 +10,18 @@ website:
         menu:
           - text: All posts
             href: posts/index.qmd
-          - text: English
+          - text: Posts in english
             href: posts/en.qmd
-          - text: Português
+          - text: Posts em português
             href: posts/pt.qmd
-      - publications.qmd
+      - text: Publications
+        menu:
+          - text: All publications
+            href: publications/index.qmd
+          - text: Publications in English
+            href: publications/en.qmd
+          - text: Publicações em Português
+            href: publications/pt.qmd
     right:
       - icon: github
         href: https://github.com/pedropark99
