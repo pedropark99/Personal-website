@@ -1,0 +1,92 @@
+---
+title: 'Novidades da 3° edição de Introdução à Linguagem R: seus fundamentos e sua prática'
+subtitle: ''
+summary: ''
+author: Pedro Duarte Faria
+date: '2022-04-06'
+lastmod: '2022-04-06T23:25:53-03:00'
+
+image: "./../featured.png"
+categories: ["Book", "R Language"]
+projects: ["R_curso"]
+links:
+  - name: "Link to the Book"
+    url: "https://pedro-faria.netlify.app/pt/publication/book/introducao_linguagem_r/"
+---
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(emoji)
+library(stringr)
+```
+
+
+```{css, include = FALSE}
+.hljs{
+  font-family: 'Inconsolata', monospace;
+  font-size: 17px;
+}
+
+.hljs.shell{
+  font-size: 18px;
+}
+
+.hljs-comment{
+  font-style: normal;
+  color: #222222;
+}
+```
+
+
+# Introdução
+
+É com muito prazer que venho compartilhar com você as novidades que estou trazendo para essa nova edição do livro [Introdução à Linguagem R: seus fundamentos e sua prática](https://pedro-faria.netlify.app/pt/publication/book/introducao_linguagem_r/). O lançamento desta nova edição deve ocorrer ainda no meio de Abril de 2022 `r emoji::emoji("calendar")`, portanto, fique atento `r emoji::emoji("winking_face")`.
+
+# O que temos de novo?
+
+Temos seis novos capítulos `r emoji::emoji("exploding_head")`, os quais compõe uma nova parte do livro e, trazem consigo, grandes avanços sobre o processo de desenvolvimento de programas no R. Além disso, várias melhorias foram feitas em seções específicas do livro, especialmente sobre o capítulo 2.
+
+Primeiro, houve uma reorganização significativa do livro. Os capítulos pré-existentes foram reorganizados em quatro partes diferentes. Já a quinta e nova parte (Funções e *Loops*: construindo os seus próprios programas e automatizando tarefas) é composta pelos seis novos capítulos introduzidos nesta edição. 
+
+Segundo, o capítulo de Funções e *Loops* foi completamente reescrito, expandido, e, repartido em dois novos capítulos `r str_c(unname(emoji_name[c("partying_face", rep("party_popper", 3))]), collapse = "")`. Mais especificamente, os capítulos 14 (Funções) e 15 (*Loops*) desta edição.
+
+Terceiro, o capítulo 16 desta edição traz uma das novidades programadas desde a segunda edição: um novo (e robusto) capítulo sobre *functional programming*. Com essa adição, esta obra se torna uma referência mais moderna e, se aproxima dos padrões adotados hoje pela comunidade internacional de R `r emoji::emoji("smiling face with sunglasses")`.
+
+Quarto, *environments* e as regras de *scoping* da linguagem são dois tópicos relativamente avançados, e que costumam causar certa confusão em muitos iniciantes. Por isso, um novo capítulo foi produzido para descrever essas funcionalidades que sustentam partes essenciais da linguagem, assim como de alguns dos pacotes que introduzimos ao longo do livro (e.g. `dplyr` e `ggplot2`).
+
+Quinto, várias adições e melhorias foram feitas no capítulo 6 (Introdução a base de dados relacionais com `dplyr`) e, principalmente, no capítulo 2 (Fundamentos da Linguagem R). Dentre elas, temos: um novo estudo de caso (Importando os dados da PINTEC); novas seções sobre as funções `str()` e `is.*()`; melhorias significativas sobre as seções de Coerção no R e Valores especiais do R.
+
+Sexto, foi introduzido um novo capítulo que descreve os controles condicionais de fluxo (`if else` *statements* e `switch()`) que a linguagem R oferece.
+
+Sétimo, um novo e pequeno capítulo foi adicionado à segunda parte do livro, com o objetivo de introduzir o universo do `tidyverse` ao leitor de maneira mais clara e amigável `r emoji::emoji("smiling face with hearts")`.
+
+Oitavo, o apêndice contendo as respostas dos exercícios foi retirado, com o objetivo de reduzir o número de páginas do livro. Consequentemente, as respostas dos exercícios estão sendo disponibilizadas em um PDF separado, o qual pode ser baixado gratuitamente, a partir da página de [publicação do livro](https://pedro-faria.netlify.app/pt/publication/book/introducao_linguagem_r/).
+
+
+
+# Sobre onde encontrar o livro
+
+Assim como ocorreu nas edições anteriores, você poderá ler toda a obra de maneira gratuita e aberta através de seu [website](https://pedropark99.github.io/Introducao_R/) `r emoji::emoji("book")`. 
+
+Contudo, diferente das edições anteriores, a versão em PDF da obra não será aberta. Você poderá adquirir uma versão em PDF ou física do livro através da loja da Amazon. Ao comprar essas versões, você estará me ajudando a continuar contribuindo com a nossa comunidade `r emoji::emoji("heart")`.
+
+
+
+# Contribua para a obra ou faça sugestões!
+
+Caso seja de seu interesse, você pode contribuir diretamente para a obra, ao postar *pull requests* dentro de seu [repositório oficial](https://github.com/pedropark99/Introducao_R). Para mais, você também pode fazer sugestões ou comentários, ao postar *issues* neste mesmo repositório.
+
+
+
+
+
+
+
+
+
+
+
+

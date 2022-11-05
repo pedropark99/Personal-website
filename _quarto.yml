@@ -4,8 +4,18 @@ project:
 website:
   title: "Pedro Duarte Faria"
   navbar:
+    left:
+      - index.qmd
+      - text: Posts
+        menu:
+          - text: All posts
+            href: posts/index.qmd
+          - text: English
+            href: posts/en.qmd
+          - text: Português
+            href: posts/pt.qmd
+      - publications.qmd
     right:
-      - posts.qmd
       - icon: github
         href: https://github.com/pedropark99
       - icon: twitter

@@ -1,0 +1,16 @@
+---
+title: "Posts in English"
+listing:
+  - id: posts-en
+    contents: "*/en/*.qmd"
+    type: default
+    sort: "date desc"
+    sort-ui: true
+    filter-ui: true
+page-layout: full
+title-block-banner: false
+comments: false
+---
+
+::: {#posts-en}
+:::

@@ -1,0 +1,73 @@
+---
+title: "What's new in the 3rd edition of Introdução à Linguagem R: seus fundamentos e sua prática"
+subtitle: ''
+summary: ''
+author: Pedro Duarte Faria
+date: '2022-04-06'
+lastmod: '2022-04-06T23:25:53-03:00'
+
+image: "./../featured.png"
+categories: ["Book", "R Language"]
+links:
+  - name: "Link to the Book"
+    url: "https://pedro-faria.netlify.app/pt/publication/book/introducao_linguagem_r/"
+---
+ 
+```{r, include = FALSE}
+library(stringr)
+library(emoji)
+```
+ 
+
+ 
+ 
+# Introduction
+ 
+It is with great pleasure that I come to share with you the updates that I am bringing to this new edition of the book [Introdução à Linguagem R: seus fundamentos e sua prática](https://pedro-faria.netlify.app/pt/publication/book/introducao_linguagem_r/). The release of this new edition should take place in the middle of April 2022 `r emoji::emoji("calendar")`, so stay tuned `r emoji::emoji("winking_face")`.
+ 
+# What is new?
+ 
+We have six new chapters `r emoji::emoji("exploding_head")`, which composes a new part of the book and, bring with it, great advances on the process of developing programs in R. In addition, several improvements have been made in specific sections of the book, especially about chapter 2.
+ 
+First, there was a significant reorganization of the book. The pre-existing chapters were reorganized into four different parts. The fifth and new part (Functions and *Loops*: building your own programs and automating tasks) consists of the six new chapters introduced in this edition.
+ 
+Second, the Functions and *Loops* chapter has been completely rewritten, expanded, and, broken down into two new chapters `r  str_c(emoji_name[c("partying_face", rep("party_popper", 3))], collapse = "") `. More specifically, chapters 14 (Functions) and 15 (*Loops*) of this edition.
+ 
+Third, chapter 16 of this issue brings one of the novelties programmed since the second edition: a new (and robust) chapter on *functional programming*. With this addition, this work becomes a more modern reference and, close to the standards adopted today by the international community of R `r emoji::emoji("smiling face with sunglasses")`.
+ 
+Fourth, *environments* and language *scoping* rules are two relatively advanced topics, and often cause some confusion in many beginners. Therefore, a new chapter has been produced to describe these features that support essential parts of the language, as well as some of the packages we have introduced throughout the book (e.g. `dplyr` and `ggplot2`).
+ 
+Fifth, several additions and improvements were made in chapter 6 (Introduction to the relational database with `dplyr`) and, mainly, in chapter 2 (Fundamentals of Language R). Among them, we have: a new case study (Importing pintec data); new sections on the functions `str()` and `is.*()`; significant improvements on the sections for Coercion and Special Values of R.
+ 
+Sixth, a new chapter has been introduced that describes the conditional flow controls (`if else` *statements* and `switch()`) that the R language offers.
+ 
+Seventh, a new and small chapter was added to the second part of the book, with the aim of introducing the tidyverse universe to the reader in a clearer and more friendly way `r emoji::emoji("smiling face with hearts")`.
+ 
+Eighth, the appendix containing the responses of the exercises was removed, with the aim of reducing the number of pages of the book. Consequently, the responses to the exercises are being made available in a separate PDF, which can be downloaded (free of charge) from the [book publication page](https://pedro-faria.netlify.app/pt/publication/book/introducao_linguagem_r/).
+ 
+ 
+ 
+# About where to find the book
+ 
+As in previous editions, you will be able to read the entire work free of charge and openly through your [website](https://pedropark99.github.io/Introducao_R/) 'r emoji::emoji("book")'.
+ 
+However, unlike previous editions, the PDF version of the work will not open. You can purchase a PDF or physical version of the book through the Amazon store. By purchasing these versions, you'll be helping me continue contributing to our 'r emoji::emoji('heart') community.
+ 
+ 
+ 
+# Contribute to the work or make suggestions!
+ 
+If it is of interest to you, you can contribute directly to the work by posting *pull requests* within your [official repository](https://github.com/pedropark99/Introducao_R). For more, you can also make suggestions or comments by posting *issues* in this same repository.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+

@@ -1,0 +1,94 @@
+---
+title: "Recipient table and source table"
+subtitle: "A second view on *outer joins*"
+summary: "*Outer joins* are a simple topic of understanding for most students. However, difficulties can always arise amid the simplicity of the theme. Therefore, this article offers a second approach that can primarily facilitate the memorization of your students about what each type of *outer joins* does."
+authors: [admin]
+
+#output:
+#  html_document:
+#    includes:
+#      in_header: style_ref.html
+      
+
+tags: ["Joins", "Teaching", "Book", "R Language"]
+date: 2021-01-02
+featured: false
+draft: false
+
+image:
+  caption: ""
+  focal_point: ""
+  preview_only: false
+
+projects: ["R_curso"]
+---
+
+
+
+<style type="text/css">
+.hljs{
+  font-family: 'Inconsolata', monospace;
+  font-size: 17px;
+}
+
+.hljs.shell{
+  font-size: 18px;
+}
+
+.hljs-comment{
+  font-style: normal;
+  color: #222222;
+}
+</style>
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p><em>Outer joins</em> are a simple topic of understanding for most students. However, this article proposes a second approach on the subject. This approach was built during a recent reformulation of the chapter “Introdução a base de dados relacionais”, from the book <a href="https://pedro-faria.netlify.app/pt/publication/book/introducao_linguagem_r/">Introdução à Linguagem R: seus fundamentos e sua prática</a>. The point of view presented here seeks to be strict, and uses this rigidity as a mechanism that facilitates the student`s memorization of the behaviors in each type of <em>outer join</em>.</p>
+</div>
+<div id="joins-have-direction" class="section level1">
+<h1>Joins have direction</h1>
+<p>A <em>join</em> operation is nothing more than a union between two tables. But, instead of an union of two tables, we have another option for interpreting the result of this operation. So that to produce a table that represents the union between two tables, we could simply extract all the columns from one of the tables, and insert them into the other table.</p>
+<p>For example, suppose you have a table <code>A</code>, which contains two columns, called <code>x</code> and <code>y</code>; and a table <code>B</code>, which in turn holds 4 different columns, named <code>x</code>, <code>z</code>, <code>r</code>, and <code>t</code>. Note that one of the columns in table <code>B</code> corresponds to the same column <code>x</code> that we found in table <code>A</code>.</p>
+<pre class="r"><code>library(tibble)
+
+A &lt;- tibble(
+  x = 1:5,
+  y = round(rnorm(5, 2, 1), 2)
+)
+
+B &lt;- tibble(
+  x = 1:5,
+  z = letters[1:5],
+  r = c(3.5, 2.1, 1, 5.6, 7.2),
+  t = &quot;tzu&quot;
+)</code></pre>
+<p>If you want to join tables <code>A</code> and <code>B</code>, you basically want to create a new table, which contains all five columns of these two tables (<code>x</code>, <code>y</code>, <code>z</code>, <code>r</code> and <code>t</code>). Therefore, we could imagine a <em>join</em> process, as if we were extracting all the columns from table <code>B</code>, and inserting all of these columns in table <code>A</code>. Hence, we have the table below as a result:</p>
+<pre class="r"><code>library(dplyr)</code></pre>
+<pre class="r"><code>full_join(A, B, by = &quot;x&quot;)</code></pre>
+<pre><code>## # A tibble: 5 x 5
+##       x     y z         r t    
+##   &lt;int&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;
+## 1     1  1.15 a       3.5 tzu  
+## 2     2  1.43 b       2.1 tzu  
+## 3     3  0.83 c       1   tzu  
+## 4     4  2.36 d       5.6 tzu  
+## 5     5  1.8  e       7.2 tzu</code></pre>
+<p>With this, we are creating the idea that <strong>a <em>join</em> always has a direction</strong>. In other words, we first extract the columns from table <code>B</code>, and then we add those columns to table <code>A</code>. Note that we are always starting from table <code>B</code> towards table <code>A</code>.</p>
+<p><img src="direcao.PNG" /></p>
+</div>
+<div id="recipient-table-and-source-table" class="section level1">
+<h1>Recipient table and source table</h1>
+<p>From this perspective, we can interpret that, in a <em>join</em>, we are bringing all the columns of a secondary table into our main table (or our table of interest). We have the option to call these tables :<strong>source table</strong> (secondary table) and <strong>recipient table</strong> (main table). With this, a <em>join</em> always starts at <strong>source table</strong> and go towards the <strong>recipient table</strong>.</p>
+<p>This perspective makes sense with the practice of <em>joins</em>. Because in any analysis, we commonly work with a “main” table, or a table that contains the key data we’re analyzing. And when we use some <em>join</em>, we’re usually bringing columns from other tables into this “main” table (or “recipient” table, according to that perspective). So keep in mind that a <em>join</em> always part from the <strong>source table</strong> toward the <strong>recipient table</strong>.</p>
+</div>
+<div id="types-of-outer-join" class="section level1">
+<h1>Types of <em>outer join</em></h1>
+<p>A natural <em>join</em> (<em>inner join</em>) usually generates a loss of observations from both tables involved in the process. In contrast, a <em>join</em> of type <em>outer</em> (that is, an <em>outer join</em>), seeks to delimit which of the two tables will be preserved in the result. That is, an <em>outer join</em> seeks to keep in the <em>join</em> result, the rows of at least one of the tables involved.</p>
+<p>We have three main types of <em>outer joins</em>, which are <em>left join</em>, <em>right join</em> and <em>full join</em>. A <em>full join</em> is the simplest to understand, as it seeks to keep all rows of both tables employed. Therefore, even if there is some observation not found in one of the tables, it will be preserved in the final product of the operation.</p>
+<p>However, <em>left join</em> and <em>right join</em> seek to keep rows from only one of the tables used in <em>join</em>. At this point, many teachers would say something like: “if we want to apply a <em>join</em> between tables <code>A</code> and <code>B</code>, a <em>left join</em> will keep the rows of table <code>A</code>, and a <em>right join</em> will keep the rows of table <code>B</code>”. Other teachers would still try to say, “<em>left join</em> will keep the table rows on the left, while a <em>right join</em> will keep the table rows to the right.” However, some confusion can be easily applied in both alternatives. I mean, a student can easily face the following question: “:thinking: Uhmm… I don’t remember very well. Does a <em>left join</em> keep the rows in table <code>A</code>? Or are the rows in table <code>B</code>?”; or else, “:thinking: Wait! But which of the two tables is on the right side?”</p>
+</div>
+<div id="conclusion" class="section level1">
+<h1>Conclusion</h1>
+<p>With this, according to the perspective adopted in this article, we can understand that a <em>left join</em> and a <em>right join</em> seek to keep the rows of the <strong>recipient table</strong> and the <strong>source table</strong>, respectively. Thus, when using a <em>right join</em> or a <em>left join</em>, you should ask yourself the following: “Do I want to keep the rows in my main table (recipient table)? Or the secondary table (source table), where I am extracting the new columns from?” So if you want to keep, for example, the rows in your main table (recipient table), which is what occurs most of the time, you now know that you need to use a <em>left join</em>.</p>
+<p>In a visual representation, we can reproduce below the initial image of this article, which marks the lines maintained by each of these two types of <em>join</em>.</p>
+<p><img src="featured.png" /></p>
+</div>

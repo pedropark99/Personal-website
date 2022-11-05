@@ -1,0 +1,139 @@
+---
+title: 'Novidades da 2° edição de Introdução à Linguagem R: seus fundamentos e sua prática'
+author: "Pedro Duarte Faria"
+date: '2021-05-26'
+subtitle: 'Esse post descreve as novas adições à segunda edição do livro Introdução à Linguagem R: seus fundamentos e sua prática. Fatores (`factors`); Datas e variáveis de tempo (`date`, `POSIXct`); além da introdução de exercícios em cada capítulo, estão entre as principais novidades da próxima edição.'
+
+lastmod: '2021-05-26T20:27:29-03:00'
+categories: ["Book", "R Language"]
+
+image: "./../featured.png"
+links:
+  - name: "Link para o Livro"
+    url: "https://pedro-faria.netlify.app/pt/publication/book/introducao_linguagem_r/"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{css, eval = T, echo = F}
+.hljs{
+  font-family: 'Inconsolata', monospace;
+  font-size: 17px;
+}
+
+.hljs.shell{
+  font-size: 18px;
+}
+
+.hljs-comment{
+  font-style: normal;
+  color: #222222;
+}
+```
+
+# Introdução
+
+A medida em que eu e meu colega [João Parga](https://twitter.com/joaoparga) começamos a ensinar sobre a Linguagem R, nós rapidamente percebemos a presença de vários materiais curtos, de qualidade e úteis^[Como os materiais produzidos pelo [Curso-R](https://curso-r.com/material/), ou este [índice de materiais](https://materiais-estudo-r.netlify.app/) construído por Beatriz Milz.]. Entretanto, também percebemos uma inquietante falta de materiais (em português) sobre a Linguagem R, que fossem mais técnicos ou que buscassem descrever a linguagem em mais detalhes. 
+
+Por esse motivo, nós construímos o livro [Introdução à Linguagem R: seus fundamentos e sua prática](https://pedro-faria.netlify.app/pt/publication/book/introducao_linguagem_r/), que representa a nossa tentativa de preencher tal lacuna. A primeira edição do livro foi muito bem recebida, em especial, por ser uma obra aberta e gratuita para qualquer brasileiro. 
+
+Tendo isso em mente, 📣 é com muito prazer que anuncio oficialmente que a produção da segunda edição do livro está quase pronta!!! 🥳🎉🎊✨, que está para ser lançada agora no mês de Junho. Esse *post* busca descrever as novidades que estamos entregando para essa nova edição.
+
+
+# Resumo das novidades para a nova edição
+
+Em resumo, há três novidades principais para essa nova edição, que incluem a adição de dois novos capítulos, além da adição de exercícios em cada capítulo (com respostas ao final do livro).
+
+- Fatores (`factor`'s), *status*: capítulo finalizado ✅.
+- Variáveis de tempo (`date`, `POSIXct`, `POSIXlt`), *status*: capítulo finalizado ✅.
+- Introdução de exercícios em cada capítulo, *status*: ainda em processo de escrita 🚧.
+
+
+
+
+# Sobre o lançamento
+
+Se tudo ocorrer conforme planejado:
+
+- 📣 O lançamento ocorrerá no **dia 26/06** `r emoji::emoji("pushpin")`.
+
+- Nesse dia, o PDF da obra será disponibilizada em ambas as páginas do [ResearchGate](https://www.researchgate.net/publication/345985082_Introducao_a_Linguagem_R_seus_fundamentos_e_sua_pratica) e no [Academia](https://www.academia.edu/44520051/Introdu%C3%A7%C3%A3o_%C3%A0_Linguagem_R_seus_fundamentos_e_sua_pr%C3%A1tica), que são os dois locais onde o livro está atualmente hospedado. 
+
+
+A produção dessa nova edição se encontra avançada, mas pode enfrentar atrasos no próximo mês, pois recentemente assumi um novo emprego em uma grande empresa de tecnologia ([Take Blip](https://www.take.net/)) e, portanto, posso ter que atrasar a produção em detrimento de demandas urgentes. Estou ansioso e torcendo muito para que nada de errado ocorra `r emoji::emoji("grinning_face_with_sweat")`, e que eu possa cumprir este compromisso com a nossa comunidade brasileira de R.
+
+
+
+# Sobre cada novidade:
+
+## Adição de exercícios em cada capítulo
+
+Desde o início, o livro se propôs a ser uma referência introdutória e, principalmente, **técnica**, sobre a linguagem. Isto significa que, o livro não tenta atingir o público que procura por algo sucinto e eficiente, mas sim, o público iniciante que busca se aprofundar (ou ter uma base mais sólida) em conceitos, métodos e outras partes importantes da linguagem. 
+
+Apesar desse propósito, o livro inicialmente não oferece exercícios, os quais são uma característica essencial de qualquer obra técnica. Por esse motivo, a introdução de exercícios em cada capítulo dessa segunda edição, busca ajudar o livro a caminhar para esse propósito, se tornando uma obra mais consolidada. 
+
+Atualmente, a construção dos exercícios para cada capítulo é a única parte (dessa nova edição) que ainda está em construção. A partir do momento em que essa etapa for finalizada, a segunda edição será lançada para todo o público brasileiro.
+
+## Fatores (`factor`'s)
+
+No capítulo 2 do livro, são abordados os quatro tipos de dados básicos da linguagem R. Sendo eles: `integer`; `double`; `character`; e `logical`. Porém, há dois outros tipos de dados, que são "mais complexos", e que também são muito importantes hoje em dia. São eles os fatores (ou `factor`'s) e os tipos voltados para variáveis de tempo (`date`, `POSIXct`, `POSIXlt`). 
+
+Fatores são especialmente úteis para classificarmos variáveis categóricos. Isto é, definirmos a ordem de seus "níveis" (ou "grupos"). Dito de outra forma, várias características podem ser descritas através de uma variável categórica, mas nem sempre essas características seguem uma ordenação numérica, ou uma ordem alfabética. Por exemplo, ao dar a sua avaliação de um certo governo, você pode responder "Péssimo", "Ruim", "Bom" ou "Muito Bom". Perceba pela demonstração abaixo, que caso eu empregue uma ordenação alfabética (crescente) sobre as minhas respostas, "Bom" aparece antes de "Ruim", "Péssimo" e "Muito Bom". 
+
+```{r}
+respostas <- c("Muito Bom", "Muito Bom", "Bom", "Ruim", "Péssimo",
+               "Bom", "Ruim", "Ruim", "Muito Bom", "Ruim")
+sort(respostas)
+```
+
+Com o uso de fatores, nós podemos definir qual a ordem correta desses diferentes níveis e corrigir esse problema de ordenação. Perceba abaixo que a ordenação dos valores foi corrigida.
+
+```{r}
+respostas <- factor(respostas)
+levels(respostas) <- c("Péssimo", "Ruim", "Bom", "Muito Bom")
+sort(respostas)
+```
+
+
+
+
+## Variáveis de tempo
+
+Firmas registram o horário em que vendas são realizadas, o horário em que cargas de insumos chegam a suas instalações, o tempo de trabalho de seus funcionários, além da evolução de vários de seus indicadores ao longo do tempo. Pois tempo é dinheiro, e, em uma economia capitalista o dinheiro é o que faz a diferença. 
+
+Por essa razão, variáveis de tempo são fundamentais em diversas análises de dados e, é muito importante que você saiba como trabalhar com elas em qualquer linguagem de programação que você venha a trabalhar. Por isso, essa é uma lacuna atual muito importante do livro e, que está sendo preenchida nessa segunda edição.
+
+A linguagem R nos oferece três tipos principais de dados focados em variáveis de tempo, sendo eles: `Date`, `POSIXct`, `POSIXlt`. Além disso, temos ainda um quarto tipo de dado chamado `difftime`, que busca dar suporte às operações aritméticas entre os 3 tipos anteriores. Valores desses três tipos de dados, são criados a partir das funções `as.POSIXct()`, `as.POSIXlt()` e `as.Date()`.
+
+
+O tipo `Date` nos ajuda a armazenar datas no R. Poderíamos armazenar datas como simples *strings*, mas com isso, teríamos uma ordenação incorreta dos valores, além da falta de acesso a diversos métodos aritméticos e computacionais voltados para esse tipo de dado. Logo, tratar as suas datas por meio do tipo `Date` pode fazer a diferença em sua análise.
+
+```{r}
+d <- as.Date(c("2020-08-10", "2020-08-11", "2020-08-12"))
+d
+```
+
+Já o tipo `POSIXct` é particularmente útil para interpretar datas acompanhadas de um horário (isto é, um dado do tipo `date-time`). Certas transações econômicas precisam ser registradas com um nível de precisão alto. Ou seja, os registros de muitas empresas não se contentam com datas, pois eles também necessitam saber o momento exato (ou o horário exato) dessa data em que um evento ocorre. O tipo `POSIXct` foi feito justamente para tratar e lidar com esse tipo de informação.
+
+```{r}
+h <- as.POSIXct(c("2020-03-21 15:52:29", "2020-03-22 10:30:02"))
+h
+```
+
+
+Por outro lado, o tipo `POSIXlt` pode ser especialmente útil quando desejamos extrair os componentes de uma variável de tempo específica. Por exemplo, podemos estar interessados apenas no dia do mês presente em cada valor, ou ainda, na hora do dia guardada em cada um desses valores. Tal ponto está demonstrado no exemplo abaixo:
+
+```{r}
+hl <- as.POSIXlt(c("2020-03-21 15:52:29", "2020-03-22 10:30:02"))
+
+## O dia de cada data:
+hl$mday
+## A hora do dia de cada data:
+hl$hour
+```
+
+
+
