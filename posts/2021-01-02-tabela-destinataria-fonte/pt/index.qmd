@@ -1,8 +1,7 @@
 ---
 title: "Tabela destinatária e tabela fonte"
 subtitle: "Uma segunda visão sobre *outer joins*"
-summary: "Um visão diferente (talvez maluca) sobre como ensinar/explicar *Outer joins* para seus alunos"
-author: Pedro Duarte Faria
+description: "Um visão diferente (talvez maluca) sobre como ensinar/explicar *Outer joins* para seus alunos"
 
 categories: ["Joins", "Teaching", "Book", "R Language"]
 date: 2021-01-02
@@ -74,7 +73,10 @@ full_join(A, B, by = "x")
 
 Com isso, estamos criando a ideia de que **um *join* possui sempre um sentido e uma direção**. Em outras palavras, primeiro, extraímos as colunas da tabela `B`, e em seguida, acrescentamos essas colunas à tabela `A`. Repare que estamos sempre partindo da tabela `B` em direção a tabela `A`.
 
-![](direcao.png) 
+```{r}
+#| echo: false
+knitr::include_graphics("./../direcao.png")
+```
 
 # Tabela destinatária e tabela fonte
 
@@ -90,7 +92,9 @@ Um *join* natural (*inner join*) usualmente gera uma perda de observações de a
 
 Temos três tipos principais de *outer joins*, que são *left join*, *right join* e *full join*. O *full join* é o mais simples de se compreender, pois ele busca manter todas as linhas de ambas as tabelas empregadas. Logo, mesmo que haja alguma observação não encontrada em uma das tabelas, ela será preservada no produto final da operação.
 
-No entanto, *left join* e *right join* buscam conservar as linhas de apenas uma das tabelas utilizadas no *join*. Nesse ponto, muitos professores diriam algo como: "se temos desejamos aplicar um *join* entre as tabelas `A` e `B`, um *left join* irá manter as linhas da tabela `A` e um *right join* vai manter as linhas da tabela `B`". Outros professores ainda tentariam dizer: "*left join* irá manter as linhas da tabela à esquerda, enquanto um *right join* vai manter as linhas da tabela à direita". Porém, certa confusão pode ser facilmente aplicada em ambas alternativas. Digo, um aluno pode facilmente enfrentar a seguinte questão: ":thinking: Uhmm... Eu não me lembro muito bem. Um *left join* mantém as linhas da tabela `A`? Ou são as linhas da tabela `B`?"; ou então, ":thinking: Pera! Mas qual das duas tabelas está a direita?".
+No entanto, *left join* e *right join* buscam conservar as linhas de apenas uma das tabelas utilizadas no *join*. Nesse ponto, muitos professores diriam algo como: "se temos desejamos aplicar um *join* entre as tabelas `A` e `B`, um *left join* irá manter as linhas da tabela `A` e um *right join* vai manter as linhas da tabela `B`". Outros professores ainda tentariam dizer: "*left join* irá manter as linhas da tabela à esquerda, enquanto um *right join* vai manter as linhas da tabela à direita". 
+
+Porém, certa confusão pode ser facilmente aplicada em ambas alternativas. Digo, um aluno pode facilmente enfrentar a seguinte questão: "`r emoji::emoji("thinking")` Uhmm... Eu não me lembro muito bem. Um *left join* mantém as linhas da tabela `A`? Ou são as linhas da tabela `B`?"; ou então, "`r emoji::emoji("thinking")` Pera! Mas qual das duas tabelas está a direita?".
 
 # Conclusão
 
@@ -98,6 +102,9 @@ Com isso, segundo a perspectiva adotada nesse artigo, podemos entender que, um *
 
 Em uma representação visual, podemos reproduzir abaixo a imagem inicial desse artigo, que marca as linhas mantidas por cada um desses dois tipos de *join*.
 
-![](featured.png)
+```{r}
+#| echo: false
+knitr::include_graphics("./../featured.png")
+```
 
 

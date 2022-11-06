@@ -1,6 +1,5 @@
 ---
 title: "Resultados do Formulário de Pesquisa de Interesse - Curso Introdutório de R"
-author: "Pedro Duarte Faria"
 date: 2020-10-17
 categories: ["R Language", "Teaching"]
 ---

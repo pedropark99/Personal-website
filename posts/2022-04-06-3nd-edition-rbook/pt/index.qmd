@@ -1,9 +1,7 @@
 ---
 title: 'Novidades da 3° edição de Introdução à Linguagem R: seus fundamentos e sua prática'
-subtitle: 'Uma grande reforma foi feita. Como resultado, esta nova edição traz seis novos capítulos para você'
-author: Pedro Duarte Faria
+description: 'Uma grande reforma sobre a obra foi feita para esta nova edição. Como resultado, temos seis novos capítulos para você!'
 date: '2022-04-06'
-lastmod: '2022-04-06T23:25:53-03:00'
 
 image: "./../featured.png"
 categories: ["Book", "R Language"]

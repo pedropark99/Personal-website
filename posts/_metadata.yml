@@ -6,3 +6,9 @@ freeze: true
 
 # Enable banner style title blocks
 title-block-banner: true
+#title-block-style: default
+
+# Default author
+author:
+  - name: "Pedro Duarte Faria"
+    affiliation: Take Blip

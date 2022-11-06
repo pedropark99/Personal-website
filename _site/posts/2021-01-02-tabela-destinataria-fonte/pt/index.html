@@ -8,6 +8,7 @@
 
 <meta name="author" content="Pedro Duarte Faria">
 <meta name="dcterms.date" content="2021-01-02">
+<meta name="description" content="Um visão diferente (talvez maluca) sobre como ensinar/explicar Outer joins para seus alunos">
 
 <title>Pedro Duarte Faria - Tabela destinatária e tabela fonte</title>
 <style>
@@ -123,7 +124,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <link rel="stylesheet" href="../../../styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -200,10 +201,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
+    <div class="quarto-title column-page">
       <h1 class="title">Tabela destinatária e tabela fonte</h1>
             <p class="subtitle lead">Uma segunda visão sobre <em>outer joins</em></p>
-                                <div class="quarto-categories">
+                  <div>
+        <div class="description">
+          Um visão diferente (talvez maluca) sobre como ensinar/explicar <em>Outer joins</em> para seus alunos
+        </div>
+      </div>
+                          <div class="quarto-categories">
                 <div class="quarto-category">Joins</div>
                 <div class="quarto-category">Teaching</div>
                 <div class="quarto-category">Book</div>
@@ -226,12 +232,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content quarto-banner-title-block column-page" id="quarto-document-content">
 
 
 
@@ -286,15 +292,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code># A tibble: 5 × 5
       x     y z         r t    
   &lt;int&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;
-1     1  1.41 a       3.5 tzu  
-2     2  0.7  b       2.1 tzu  
-3     3  1.44 c       1   tzu  
-4     4  1.96 d       5.6 tzu  
-5     5 -0.32 e       7.2 tzu  </code></pre>
+1     1  3.27 a       3.5 tzu  
+2     2  2.3  b       2.1 tzu  
+3     3  1.18 c       1   tzu  
+4     4  1.95 d       5.6 tzu  
+5     5  1.59 e       7.2 tzu  </code></pre>
 </div>
 </div>
 <p>Com isso, estamos criando a ideia de que <strong>um <em>join</em> possui sempre um sentido e uma direção</strong>. Em outras palavras, primeiro, extraímos as colunas da tabela <code>B</code>, e em seguida, acrescentamos essas colunas à tabela <code>A</code>. Repare que estamos sempre partindo da tabela <code>B</code> em direção a tabela <code>A</code>.</p>
-<p><img src="direcao.png" class="img-fluid"></p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="./../direcao.png" class="img-fluid" width="2200"></p>
+</div>
+</div>
 </section>
 <section id="tabela-destinatária-e-tabela-fonte" class="level1">
 <h1>Tabela destinatária e tabela fonte</h1>
@@ -305,13 +315,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1>Tipos de <em>outer join</em></h1>
 <p>Um <em>join</em> natural (<em>inner join</em>) usualmente gera uma perda de observações de ambas as tabelas envolvidas no processo. Em contrapartida, um <em>join</em> do tipo <em>outer</em> (isto é, um <em>outer join</em>), busca delimitar qual das duas tabelas será preservada no resultado. Ou seja, um <em>outer join</em> busca manter as linhas de pelo menos uma das tabelas envolvidas, no resultado do <em>join</em>.</p>
 <p>Temos três tipos principais de <em>outer joins</em>, que são <em>left join</em>, <em>right join</em> e <em>full join</em>. O <em>full join</em> é o mais simples de se compreender, pois ele busca manter todas as linhas de ambas as tabelas empregadas. Logo, mesmo que haja alguma observação não encontrada em uma das tabelas, ela será preservada no produto final da operação.</p>
-<p>No entanto, <em>left join</em> e <em>right join</em> buscam conservar as linhas de apenas uma das tabelas utilizadas no <em>join</em>. Nesse ponto, muitos professores diriam algo como: “se temos desejamos aplicar um <em>join</em> entre as tabelas <code>A</code> e <code>B</code>, um <em>left join</em> irá manter as linhas da tabela <code>A</code> e um <em>right join</em> vai manter as linhas da tabela <code>B</code>”. Outros professores ainda tentariam dizer: “<em>left join</em> irá manter as linhas da tabela à esquerda, enquanto um <em>right join</em> vai manter as linhas da tabela à direita”. Porém, certa confusão pode ser facilmente aplicada em ambas alternativas. Digo, um aluno pode facilmente enfrentar a seguinte questão: “:thinking: Uhmm… Eu não me lembro muito bem. Um <em>left join</em> mantém as linhas da tabela <code>A</code>? Ou são as linhas da tabela <code>B</code>?”; ou então, “:thinking: Pera! Mas qual das duas tabelas está a direita?”.</p>
+<p>No entanto, <em>left join</em> e <em>right join</em> buscam conservar as linhas de apenas uma das tabelas utilizadas no <em>join</em>. Nesse ponto, muitos professores diriam algo como: “se temos desejamos aplicar um <em>join</em> entre as tabelas <code>A</code> e <code>B</code>, um <em>left join</em> irá manter as linhas da tabela <code>A</code> e um <em>right join</em> vai manter as linhas da tabela <code>B</code>”. Outros professores ainda tentariam dizer: “<em>left join</em> irá manter as linhas da tabela à esquerda, enquanto um <em>right join</em> vai manter as linhas da tabela à direita”.</p>
+<p>Porém, certa confusão pode ser facilmente aplicada em ambas alternativas. Digo, um aluno pode facilmente enfrentar a seguinte questão: “🤔 Uhmm… Eu não me lembro muito bem. Um <em>left join</em> mantém as linhas da tabela <code>A</code>? Ou são as linhas da tabela <code>B</code>?”; ou então, “🤔 Pera! Mas qual das duas tabelas está a direita?”.</p>
 </section>
 <section id="conclusão" class="level1">
 <h1>Conclusão</h1>
 <p>Com isso, segundo a perspectiva adotada nesse artigo, podemos entender que, um <em>left join</em> e um <em>right join</em> buscam manter as linhas da <strong>tabela destinatária</strong> e da <strong>tabela fonte</strong>, respectivamente. Dessa forma, ao utilizar um <em>right join</em> ou um <em>left join</em>, você deve se questionar o seguinte: “Eu quero manter as linhas de minha tabela principal (tabela destinatária)? Ou da tabela secundária (tabela fonte), de onde estou extraindo as novas colunas?”. Logo, se você deseja manter, por exemplo, as linhas de sua tabela principal (tabela destinatária), que é o que ocorre na maioria das vezes, você sabe agora que você precisa utilizar um <em>left join</em>.</p>
 <p>Em uma representação visual, podemos reproduzir abaixo a imagem inicial desse artigo, que marca as linhas mantidas por cada um desses dois tipos de <em>join</em>.</p>
-<p><img src="featured.png" class="img-fluid"></p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="./../featured.png" class="img-fluid" width="2200"></p>
+</div>
+</div>
 
 
 </section>

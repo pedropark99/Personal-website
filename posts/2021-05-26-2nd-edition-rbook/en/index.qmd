@@ -1,9 +1,8 @@
 ---
 title: "What's new in the 2nd edition of Introdução à Linguagem R: seus fundamentos e sua prática"
-author: "Pedro Duarte Faria"
 date: '2021-05-26'
 categories: ["Book", "R Language"]
-subtitle: 'New chapters for Factors, Dates and time variables (date, POSIXct), in addition to the introduction of exercises at each chapter are among the main updates of the next edition.'
+description: 'New chapters for Factors, Dates and time variables (date, POSIXct), in addition to the introduction of exercises at each chapter are among the main updates of the next edition.'
 lastmod: '2021-05-26T20:27:29-03:00'
 image: "./../featured.png"
 links: 

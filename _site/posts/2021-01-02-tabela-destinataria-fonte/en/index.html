@@ -8,6 +8,7 @@
 
 <meta name="author" content="Pedro Duarte Faria">
 <meta name="dcterms.date" content="2021-01-02">
+<meta name="description" content="A different (maybe crazy) view on how to teach/explain Outer joins to students">
 
 <title>Pedro Duarte Faria - Recipient table and source table</title>
 <style>
@@ -123,7 +124,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <link rel="stylesheet" href="../../../styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -200,10 +201,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
+    <div class="quarto-title column-page">
       <h1 class="title">Recipient table and source table</h1>
             <p class="subtitle lead">A second view on <em>outer joins</em></p>
-                                <div class="quarto-categories">
+                  <div>
+        <div class="description">
+          A different (maybe crazy) view on how to teach/explain <em>Outer joins</em> to students
+        </div>
+      </div>
+                          <div class="quarto-categories">
                 <div class="quarto-category">Joins</div>
                 <div class="quarto-category">Teaching</div>
                 <div class="quarto-category">Book</div>
@@ -226,12 +232,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content quarto-banner-title-block column-page" id="quarto-document-content">
 
 
 
@@ -283,15 +289,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code># A tibble: 5 × 5
       x     y z         r t    
   &lt;int&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;
-1     1  2.25 a       3.5 tzu  
-2     2  1.7  b       2.1 tzu  
-3     3  2.54 c       1   tzu  
-4     4  0.93 d       5.6 tzu  
-5     5 -0.07 e       7.2 tzu  </code></pre>
+1     1  1.14 a       3.5 tzu  
+2     2  1.36 b       2.1 tzu  
+3     3  3.27 c       1   tzu  
+4     4  1.77 d       5.6 tzu  
+5     5  3.16 e       7.2 tzu  </code></pre>
 </div>
 </div>
 <p>With this, we are creating the idea that <strong>a <em>join</em> always has a direction</strong>. In other words, we first extract the columns from table <code>B</code>, and then we add those columns to table <code>A</code>. Note that we are always starting from table <code>B</code> towards table <code>A</code>.</p>
-<p><img src="direcao.png" class="img-fluid"></p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="./../direcao.png" class="img-fluid" width="2200"></p>
+</div>
+</div>
 </section>
 <section id="recipient-table-and-source-table" class="level1">
 <h1>Recipient table and source table</h1>
@@ -302,13 +312,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1>Types of <em>outer join</em></h1>
 <p>A natural <em>join</em> (<em>inner join</em>) usually generates a loss of observations from both tables involved in the process. In contrast, a <em>join</em> of type <em>outer</em> (that is, an <em>outer join</em>), seeks to delimit which of the two tables will be preserved in the result. That is, an <em>outer join</em> seeks to keep in the <em>join</em> result, the rows of at least one of the tables involved.</p>
 <p>We have three main types of <em>outer joins</em>, which are <em>left join</em>, <em>right join</em> and <em>full join</em>. A <em>full join</em> is the simplest to understand, as it seeks to keep all rows of both tables employed. Therefore, even if there is some observation not found in one of the tables, it will be preserved in the final product of the operation.</p>
-<p>However, <em>left join</em> and <em>right join</em> seek to keep rows from only one of the tables used in <em>join</em>. At this point, many teachers would say something like: “if we want to apply a <em>join</em> between tables <code>A</code> and <code>B</code>, a <em>left join</em> will keep the rows of table <code>A</code>, and a <em>right join</em> will keep the rows of table <code>B</code>”. Other teachers would still try to say, “<em>left join</em> will keep the table rows on the left, while a <em>right join</em> will keep the table rows to the right.” However, some confusion can be easily applied in both alternatives. I mean, a student can easily face the following question: “:thinking: Uhmm… I don’t remember very well. Does a <em>left join</em> keep the rows in table <code>A</code>? Or are the rows in table <code>B</code>?”; or else, “:thinking: Wait! But which of the two tables is on the right side?”</p>
+<p>However, <em>left join</em> and <em>right join</em> seek to keep rows from only one of the tables used in <em>join</em>. At this point, many teachers would say something like: “if we want to apply a <em>join</em> between tables <code>A</code> and <code>B</code>, a <em>left join</em> will keep the rows of table <code>A</code>, and a <em>right join</em> will keep the rows of table <code>B</code>”. Other teachers would still try to say, “<em>left join</em> will keep the table rows on the left, while a <em>right join</em> will keep the table rows to the right”.</p>
+<p>However, some confusion can be easily applied in both alternatives. I mean, a student can easily face the following question: “🤔 Uhmm… I don’t remember very well. Does a <em>left join</em> keep the rows in table <code>A</code>? Or are the rows in table <code>B</code>?”; or else, “🤔 Wait! But which of the two tables is on the right side?”</p>
 </section>
 <section id="conclusion" class="level1">
 <h1>Conclusion</h1>
 <p>With this, according to the perspective adopted in this article, we can understand that a <em>left join</em> and a <em>right join</em> seek to keep the rows of the <strong>recipient table</strong> and the <strong>source table</strong>, respectively. Thus, when using a <em>right join</em> or a <em>left join</em>, you should ask yourself the following: “Do I want to keep the rows in my main table (recipient table)? Or the secondary table (source table), where I am extracting the new columns from?” So if you want to keep, for example, the rows in your main table (recipient table), which is what occurs most of the time, you now know that you need to use a <em>left join</em>.</p>
 <p>In a visual representation, we can reproduce below the initial image of this article, which marks the lines maintained by each of these two types of <em>join</em>.</p>
-<p><img src="featured.png" class="img-fluid"></p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="./../featured.png" class="img-fluid" width="2200"></p>
+</div>
+</div>
 
 
 </section>

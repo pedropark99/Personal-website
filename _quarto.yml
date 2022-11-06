@@ -29,8 +29,10 @@ website:
         href: https://twitter.com/PedroPark9
       - icon: linkedin
         href: https://www.linkedin.com/in/pedro-faria-a68140209/
+
 format:
   html:
+    page-layout: full
     theme: cosmo
     css: styles.css
 

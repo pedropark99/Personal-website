@@ -1,8 +1,7 @@
 ---
 title: 'Novidades da 2° edição de Introdução à Linguagem R: seus fundamentos e sua prática'
-author: "Pedro Duarte Faria"
 date: '2021-05-26'
-subtitle: 'Esse post descreve as novas adições à segunda edição do livro Introdução à Linguagem R: seus fundamentos e sua prática. Fatores (`factors`); Datas e variáveis de tempo (`date`, `POSIXct`); além da introdução de exercícios em cada capítulo, estão entre as principais novidades da próxima edição.'
+description: 'Esse post descreve as novas adições à segunda edição do livro Introdução à Linguagem R: seus fundamentos e sua prática. Fatores (`factors`); Datas e variáveis de tempo (`date`, `POSIXct`); além da introdução de exercícios em cada capítulo, estão entre as principais novidades da próxima edição.'
 
 lastmod: '2021-05-26T20:27:29-03:00'
 categories: ["Book", "R Language"]

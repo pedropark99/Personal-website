@@ -1,8 +1,7 @@
 ---
 title: "Recipient table and source table"
 subtitle: "A second view on *outer joins*"
-summary: "A different (maybe crazy) view on how to teach/explain *Outer joins* to students"
-author: Pedro Duarte Faria
+description: "A different (maybe crazy) view on how to teach/explain *Outer joins* to students"
 
 categories: ["Joins", "Teaching", "Book", "R Language"]
 date: 2021-01-02
@@ -96,7 +95,10 @@ full_join(A, B, by = "x")
 
 With this, we are creating the idea that **a *join* always has a direction**. In other words, we first extract the columns from table `B`, and then we add those columns to table `A`. Note that we are always starting from table `B` towards table `A`.
 
- ![](direcao.png)
+```{r}
+#| echo: false
+knitr::include_graphics("./../direcao.png")
+```
 
  
 
@@ -128,7 +130,9 @@ We have three main types of *outer joins*, which are *left join*, *right join* a
 
  
 
-However, *left join* and *right join* seek to keep rows from only one of the tables used in *join*. At this point, many teachers would say something like: "if we want to apply a *join* between tables `A` and `B`, a *left join* will keep the rows of table `A`, and a *right join* will keep the rows of table `B`". Other teachers would still try to say, "*left join* will keep the table rows on the left, while a *right join* will keep the table rows to the right." However, some confusion can be easily applied in both alternatives. I mean, a student can easily face the following question: ":thinking: Uhmm... I don't remember very well. Does a *left join* keep the rows in table `A`? Or are the rows in table `B`?"; or else, ":thinking: Wait! But which of the two tables is on the right side?"
+However, *left join* and *right join* seek to keep rows from only one of the tables used in *join*. At this point, many teachers would say something like: "if we want to apply a *join* between tables `A` and `B`, a *left join* will keep the rows of table `A`, and a *right join* will keep the rows of table `B`". Other teachers would still try to say, "*left join* will keep the table rows on the left, while a *right join* will keep the table rows to the right". 
+
+However, some confusion can be easily applied in both alternatives. I mean, a student can easily face the following question: "`r emoji::emoji("thinking")` Uhmm... I don't remember very well. Does a *left join* keep the rows in table `A`? Or are the rows in table `B`?"; or else, "`r emoji::emoji("thinking")` Wait! But which of the two tables is on the right side?"
 
  
 
@@ -143,7 +147,10 @@ With this, according to the perspective adopted in this article, we can understa
 In a visual representation, we can reproduce below the initial image of this article, which marks the lines maintained by each of these two types of *join*.
 
  
-![](featured.png)
+```{r}
+#| echo: false
+knitr::include_graphics("./../featured.png")
+```
  
 
  

@@ -2,7 +2,7 @@
 title: "About Me"
 image: images/profile.jpg
 about:
-  template: solana
+  template: trestles
   links:
     - icon: twitter
       text: Twitter
@@ -18,6 +18,8 @@ about:
 ## Bio
 Hey! I'm Pedro, a brazilian data analyst and software enginner, working mainly with R, SQL, Python and Apache Spark. I do a lot of data analysis these days, but I do love teaching software development and building open-source software too.
 
+-----------------------------------------------------------------------------------------------------------------------------------
+
 ## Experience
 
 **Data Analyst**,
@@ -29,9 +31,13 @@ João Pinheiro Foundation, August 2019 - March 2021.
 **Business Intelligence Intern**,
 Beltech, June 2019 - August 2019.
 
+-----------------------------------------------------------------------------------------------------------------------------------
+
 ## Projects
 
 I'm the author of R package `{figma}`, and, a technical and introductory book about the R language. I have made some contributions to R package `{knitr}` too, which is one of the biggest open-source projects in the R community.
+
+-----------------------------------------------------------------------------------------------------------------------------------
 
 ## Education
 

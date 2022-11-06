@@ -1,7 +1,6 @@
 ---
 title: "What's new in the 3rd edition of Introdução à Linguagem R: seus fundamentos e sua prática"
-subtitle: 'A big reform was made. As a result, this new edition brings six new chapters to you'
-author: Pedro Duarte Faria
+description: 'A big reform was made. As a result, this new edition brings six new chapters to you'
 date: '2022-04-06'
 lastmod: '2022-04-06T23:25:53-03:00'
 
