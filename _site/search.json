@@ -1,31 +1,45 @@
 [
   {
-    "objectID": "index.html",
-    "href": "index.html",
+    "objectID": "about.html",
+    "href": "about.html",
     "title": "About Me",
     "section": "",
     "text": "Hey! I’m Pedro, a brazilian data analyst and software enginner, working mainly with R, SQL, Python and Apache Spark. I do a lot of data analysis these days, but I do love teaching software development and building open-source software too."
   },
   {
-    "objectID": "index.html#experience",
-    "href": "index.html#experience",
+    "objectID": "about.html#experience",
+    "href": "about.html#experience",
     "title": "About Me",
     "section": "Experience",
     "text": "Experience\nData Analyst, Take Blip, May 2021 - present.\nResearch engineering Intern, João Pinheiro Foundation, August 2019 - March 2021.\nBusiness Intelligence Intern, Beltech, June 2019 - August 2019."
   },
   {
-    "objectID": "index.html#projects",
-    "href": "index.html#projects",
+    "objectID": "about.html#projects",
+    "href": "about.html#projects",
     "title": "About Me",
     "section": "Projects",
     "text": "Projects\nI’m the author of R package {figma}, and, a technical and introductory book about the R language. I have made some contributions to R package {knitr} too, which is one of the biggest open-source projects in the R community."
   },
   {
-    "objectID": "index.html#education",
-    "href": "index.html#education",
+    "objectID": "about.html#education",
+    "href": "about.html#education",
     "title": "About Me",
     "section": "Education",
     "text": "Education\nFederal University of Ouro Preto - UFOP, Brazil\nEconomics, B.S., March 2017 - February 2022."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Hi there 🖐️!",
+    "section": "",
+    "text": "Este livro oferece uma descrição profunda sobre os fundamentos da linguagem R, e como eles se aplicam no contexto da análise de dados.\n\n\n\n\n\n\nApr 11, 2022\n\n\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "index.html#posts",
+    "href": "index.html#posts",
+    "title": "Hi there 🖐️!",
+    "section": "Posts",
+    "text": "Posts\n\n\n\n\n\n\n\n\n\n\nWhat’s new in the 3rd edition of Introdução à Linguagem R: seus fundamentos e sua prática\n\n\nA big reform was made. As a result, this new edition brings six new chapters to you\n\n\n\n\n\n\nApr 6, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNovidades da 3° edição de Introdução à Linguagem R: seus fundamentos e sua prática\n\n\nUma grande reforma sobre a obra foi feita para esta nova edição. Como resultado, temos seis novos capítulos para você!\n\n\n\n\n\n\nApr 6, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWhat’s new in the 2nd edition of Introdução à Linguagem R: seus fundamentos e sua prática\n\n\nNew chapters for Factors, Dates and time variables (date, POSIXct), in addition to the introduction of exercises at each chapter are among the main updates of the next…\n\n\n\n\n\n\nMay 26, 2021\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNovidades da 2° edição de Introdução à Linguagem R: seus fundamentos e sua prática\n\n\nEsse post descreve as novas adições à segunda edição do livro Introdução à Linguagem R: seus fundamentos e sua prática. Fatores (factors); Datas e variáveis de tempo…\n\n\n\n\n\n\nMay 26, 2021\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nRecipient table and source table\n\n\nA different (maybe crazy) view on how to teach/explain Outer joins to students\n\n\n\n\n\n\nJan 2, 2021\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTabela destinatária e tabela fonte\n\n\nUm visão diferente (talvez maluca) sobre como ensinar/explicar Outer joins para seus alunos\n\n\n\n\n\n\nJan 2, 2021\n\n\n\n\n\n\n\n\n\n\n \n\n\n\nResultados do Formulário de Pesquisa de Interesse - Curso Introdutório de R\n\n\n\n\n\n\n\n\n\nOct 17, 2020\n\n\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/2020-10-17-formulario-pesquisa/pt/index.html",
@@ -109,14 +123,14 @@
     "href": "posts/en.html",
     "title": "Posts in English",
     "section": "",
-    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n  \n\n\n\n\n\n\n\n\nA big reform was made. As a result, this new edition brings six new chapters to you\n\n\n\n\n\n\nApr 6, 2022\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nNew chapters for Factors, Dates and time variables (date, POSIXct), in addition to the introduction of exercises at each chapter are among the main updates of the next edition.\n\n\n\n\n\n\nMay 26, 2021\n\n\n\n\n\n\n  \n\n\n\n\n\nA second view on outer joins\n\n\nA different (maybe crazy) view on how to teach/explain Outer joins to students\n\n\n\n\n\n\nJan 2, 2021\n\n\n\n\n\n\nNo matching items"
+    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n  \n\n\n\n\n\n\n\n\n\n\nBook\n\n\nR Language\n\n\n\n\nA big reform was made. As a result, this new edition brings six new chapters to you\n\n\n\n\n\n\nApr 6, 2022\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\n\n\nBook\n\n\nR Language\n\n\n\n\nNew chapters for Factors, Dates and time variables (date, POSIXct), in addition to the introduction of exercises at each chapter are among the main updates of the next edition.\n\n\n\n\n\n\nMay 26, 2021\n\n\n\n\n\n\n  \n\n\n\n\n\nA second view on outer joins\n\n\n\n\nJoins\n\n\nTeaching\n\n\nBook\n\n\nR Language\n\n\n\n\nA different (maybe crazy) view on how to teach/explain Outer joins to students\n\n\n\n\n\n\nJan 2, 2021\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/index.html",
     "href": "posts/index.html",
     "title": "All Posts",
     "section": "",
-    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\n\n\nWhat’s new in the 3rd edition of Introdução à Linguagem R: seus fundamentos e sua prática\n\n\n\nBook\n\n\nR Language\n\n\n\nA big reform was made. As a result, this new edition brings six new chapters to you\n\n\n\n\n\n\nApr 6, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNovidades da 3° edição de Introdução à Linguagem R: seus fundamentos e sua prática\n\n\n\nBook\n\n\nR Language\n\n\n\nUma grande reforma sobre a obra foi feita para esta nova edição. Como resultado, temos seis novos capítulos para você!\n\n\n\n\n\n\nApr 6, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWhat’s new in the 2nd edition of Introdução à Linguagem R: seus fundamentos e sua prática\n\n\n\nBook\n\n\nR Language\n\n\n\nNew chapters for Factors, Dates and time variables (date, POSIXct), in addition to the introduction of exercises at each chapter are among the main updates of the next…\n\n\n\n\n\n\nMay 26, 2021\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNovidades da 2° edição de Introdução à Linguagem R: seus fundamentos e sua prática\n\n\n\nBook\n\n\nR Language\n\n\n\nEsse post descreve as novas adições à segunda edição do livro Introdução à Linguagem R: seus fundamentos e sua prática. Fatores (factors); Datas e variáveis de tempo…\n\n\n\n\n\n\nMay 26, 2021\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nRecipient table and source table\n\n\n\nJoins\n\n\nTeaching\n\n\nBook\n\n\nR Language\n\n\n\nA different (maybe crazy) view on how to teach/explain Outer joins to students\n\n\n\n\n\n\nJan 2, 2021\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTabela destinatária e tabela fonte\n\n\n\nJoins\n\n\nTeaching\n\n\nBook\n\n\nR Language\n\n\n\nUm visão diferente (talvez maluca) sobre como ensinar/explicar Outer joins para seus alunos\n\n\n\n\n\n\nJan 2, 2021\n\n\n\n\n\n\n\n\n\n\n \n\n\n\nResultados do Formulário de Pesquisa de Interesse - Curso Introdutório de R\n\n\n\nR Language\n\n\nTeaching\n\n\n\n\n\n\n\n\n\n\nOct 17, 2020\n\n\n\n\n\n\n\n\nNo matching items"
+    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\n\n\n\n\nBook\n\n\nR Language\n\n\n\nA big reform was made. As a result, this new edition brings six new chapters to you\n\n\n\n\n\n\nApr 6, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nBook\n\n\nR Language\n\n\n\nUma grande reforma sobre a obra foi feita para esta nova edição. Como resultado, temos seis novos capítulos para você!\n\n\n\n\n\n\nApr 6, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nBook\n\n\nR Language\n\n\n\nNew chapters for Factors, Dates and time variables (date, POSIXct), in addition to the introduction of exercises at each chapter are among the main updates of the next…\n\n\n\n\n\n\nMay 26, 2021\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nBook\n\n\nR Language\n\n\n\nEsse post descreve as novas adições à segunda edição do livro Introdução à Linguagem R: seus fundamentos e sua prática. Fatores (factors); Datas e variáveis de tempo…\n\n\n\n\n\n\nMay 26, 2021\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nJoins\n\n\nTeaching\n\n\nBook\n\n\nR Language\n\n\n\nA different (maybe crazy) view on how to teach/explain Outer joins to students\n\n\n\n\n\n\nJan 2, 2021\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nJoins\n\n\nTeaching\n\n\nBook\n\n\nR Language\n\n\n\nUm visão diferente (talvez maluca) sobre como ensinar/explicar Outer joins para seus alunos\n\n\n\n\n\n\nJan 2, 2021\n\n\n\n\n\n\n\n\n\n\n \n\n\n\n\n\nR Language\n\n\nTeaching\n\n\n\n\n\n\n\n\n\n\nOct 17, 2020\n\n\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/pt.html",
@@ -151,20 +165,20 @@
     "href": "publications/index.html",
     "title": "All Publications",
     "section": "",
-    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\n\n\nIntrodução à Linguagem R: seus fundamentos e sua prática\n\n\n\nR Language\n\n\nBook\n\n\nBrazil\n\n\n\n\n\n\n\n\n\n\nApr 11, 2022\n\n\n\n\n\n\n\n\nNo matching items"
+    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\n\n\nIntrodução à Linguagem R: seus fundamentos e sua prática\n\n\n\nR Language\n\n\nBook\n\n\nBrazil\n\n\n\nEste livro oferece uma descrição profunda sobre os fundamentos da linguagem R, e como eles se aplicam no contexto da análise de dados.\n\n\n\n\n\n\nApr 11, 2022\n\n\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "publications/pt.html",
     "href": "publications/pt.html",
     "title": "Publicações em Português",
     "section": "",
-    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n  \n\n\n\n\nIntrodução à Linguagem R: seus fundamentos e sua prática\n\n\nEste livro oferece uma descrição profunda sobre os fundamentos da linguagem R, e como eles se aplicam no contexto da análise de dados.\n\n\n\n\nR Language\n\n\nBook\n\n\nBrazil\n\n\n\n\n\n\n\n\n\n\n\nApr 11, 2022\n\n\n\n\n\n\nNo matching items"
+    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n  \n\n\n\n\n\n\n\n\n\n\nR Language\n\n\nBook\n\n\nBrazil\n\n\n\n\nEste livro oferece uma descrição profunda sobre os fundamentos da linguagem R, e como eles se aplicam no contexto da análise de dados.\n\n\n\n\n\n\nApr 11, 2022\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "publications.html",
     "href": "publications.html",
     "title": "Publications",
     "section": "",
-    "text": "Este livro oferece uma descrição profunda sobre os fundamentos da linguagem R, e como eles se aplicam no contexto da análise de dados.\n\n\n\n\nR Language\n\n\nBook\n\n\nBrazil\n\n\n\n\n\n\n\n\n\n\n\nApr 11, 2022\n\n\n\n\n\n\nNo matching items"
+    "text": "R Language\n\n\nBook\n\n\nBrazil\n\n\n\nEste livro oferece uma descrição profunda sobre os fundamentos da linguagem R, e como eles se aplicam no contexto da análise de dados.\n\n\n\n\n\n\nApr 11, 2022\n\n\n\n\n\n\n\n\nNo matching items"
   }
 ]

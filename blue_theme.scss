@@ -1,0 +1,87 @@
+/*-- scss:defaults --*/
+
+
+// Import fonts
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata&display=swap');
+
+// Colors
+$dark-blue: #0e326b;
+$light-blue: #cce0ff;
+$purple: #9954BB;
+$light-black: #222222;
+$light-green: #79B791;
+$light-green2: #abd9bd;
+$pine-green: #157A6E;
+$xanadu: #748B75;
+
+
+// Background colors
+$navbar-bg: $dark-blue;
+$body-bg: $light-blue;
+$input-bg: $dark-blue;
+// Font colors
+$navbar-fg: white;
+$body-color: $light-black;
+// Inline code
+$code-bg: $light-blue;
+$code-color: $purple;
+// Fonts
+$font-family-monospace: 'Inconsolata';
+
+
+/*-- scss:rules --*/
+// Listing Cards
+.no-anchor.card-title.listing-title {
+    color: $dark-blue;
+    font-weight: bold;
+}
+.card-text.listing-description {
+    color: $light-black;
+}
+.listing-date {
+    color: $light-black;
+}
+.quarto-grid-item .listing-categories .listing-category {
+    color: $dark-blue;
+    border-color: $dark-blue;
+}
+.card {
+    background-color: $light-green2;
+}
+
+// Top Navbar
+.navbar-title {
+    font-family: 'Inconsolata', monospace;
+    font-size: 19pt;
+}
+
+// Categories inside of posts
+.quarto-title .quarto-categories .quarto-category {
+    background-color: $light-green2;
+    border-color: $light-green2;
+    color: $dark-blue;
+    opacity: 0;
+}
+
+// Buttons
+.btn.btn-primary {
+    background-color: $light-green2;
+    border-color: $dark-blue;
+    color: $dark-blue;
+    border-radius: 0.25rem;
+}
+
+// Forms
+.form-control {
+    background-color: white;
+}
+
+.form-select {
+    color: $light-black;
+    background-color: white;
+}
+
+
+code {
+    font-size: 14pt;
+}

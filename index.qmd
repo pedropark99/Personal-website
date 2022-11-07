@@ -1,46 +1,34 @@
 ---
-title: "About Me"
-image: images/profile.jpg
-about:
-  template: trestles
-  links:
-    - icon: twitter
-      text: Twitter
-      href: https://twitter.com/PedroPark9
-    - icon: linkedin
-      text: LinkedIn
-      href: https://www.linkedin.com/in/pedro-faria-a68140209/
-    - icon: github
-      text: Github
-      href: https://github.com/pedropark99
+title: "Hi there `r emoji::emoji('raised_hand_with_fingers_splayed')`!"
+subtitle: "Welcome to my site! I love to write books about R and Python, and to develop open-source software `r emoji::emoji('winking_face')`"
+title-block-banner: false
+comments: false 
+toc: true
+listing:
+  - id: posts
+    type: grid
+    sort: "date desc"
+    contents: posts/**/*/index.qmd
+  - id: books
+    type: grid
+    sort: "date desc"
+    contents: publications/*/*/*/index.qmd
+
+freeze: true
 ---
- 
-## Bio
-Hey! I'm Pedro, a brazilian data analyst and software enginner, working mainly with R, SQL, Python and Apache Spark. I do a lot of data analysis these days, but I do love teaching software development and building open-source software too.
 
------------------------------------------------------------------------------------------------------------------------------------
+## My books
 
-## Experience
+::: {#books}
+:::
 
-**Data Analyst**,
-Take Blip, May 2021 - present.
+## Posts
 
-**Research engineering Intern**,
-João Pinheiro Foundation, August 2019 - March 2021.
+::: {#posts}
+:::
 
-**Business Intelligence Intern**,
-Beltech, June 2019 - August 2019.
+<br>
 
------------------------------------------------------------------------------------------------------------------------------------
 
-## Projects
 
-I'm the author of R package `{figma}`, and, a technical and introductory book about the R language. I have made some contributions to R package `{knitr}` too, which is one of the biggest open-source projects in the R community.
 
------------------------------------------------------------------------------------------------------------------------------------
-
-## Education
-
-**Federal University of Ouro Preto - UFOP, Brazil**
-
-*Economics, B.S.*, March 2017 - February 2022.

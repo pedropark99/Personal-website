@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Pedro Duarte Faria - Publications</title>
+<title>home |&gt; dplyr::glimpse() - Publications</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -58,20 +58,20 @@ ul.task-list{list-style: none;}
 <script>
 
   window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
+    const listingTargetEl = window.document.querySelector('#listing-publications .list');
     if (!listingTargetEl) {
       // No listing discovered, do not attach.
       return; 
     }
 
     const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-subtitle','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      valueNames: ['listing-title','listing-author','listing-date','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
       
-      searchColumns: ["listing-date","listing-title","listing-author","listing-subtitle","listing-image","listing-description","listing-categories"],
+      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description","listing-categories"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
+    window['quarto-listings']['listing-publications'] = new List('listing-publications', options);
 
     if (window['quarto-listing-loaded']) {
       window['quarto-listing-loaded']();
@@ -91,19 +91,19 @@ ul.task-list{list-style: none;}
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Pedro Duarte Faria</span>
+    <span class="navbar-title">home |&gt; dplyr::glimpse()</span>
   </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav navbar-nav-scroll me-auto">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html">About Me</a>
+    <a class="nav-link" href="./about.html">About Me</a>
   </li>  
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="button" data-bs-toggle="dropdown" aria-expanded="false">Posts</a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-posts">    
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-posts">    
         <li>
     <a class="dropdown-item" href="./posts/index.html">
  <span class="dropdown-text">All posts</span></a>
@@ -120,7 +120,7 @@ ul.task-list{list-style: none;}
   </li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-publications" role="button" data-bs-toggle="dropdown" aria-expanded="false">Publications</a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-publications">    
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-publications">    
         <li>
     <a class="dropdown-item" href="./publications/index.html">
  <span class="dropdown-text">All publications</span></a>
@@ -135,8 +135,19 @@ ul.task-list{list-style: none;}
   </li>  
     </ul>
   </li>
-</ul>
-            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-cv" role="button" data-bs-toggle="dropdown" aria-expanded="false">CV</a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-cv">    
+        <li>
+    <a class="dropdown-item" href="./cv/cv-english.pdf">
+ <span class="dropdown-text">CV in English</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./cv/cv-portuguese.pdf">
+ <span class="dropdown-text">CV em Português</span></a>
+  </li>  
+    </ul>
+  </li>
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/pedropark99"><i class="bi bi-github" role="img">
 </i> 
@@ -186,102 +197,86 @@ ul.task-list{list-style: none;}
 
 
 
-
-
-
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-listing-file-modified-sort="1667666549710" data-listing-reading-time-sort="0.01">
-<div class="thumbnail">
-<a href="./publications/en.html">
-<div class="thumbnail-image">
-
+<div id="listing-publications" class="quarto-listing quarto-listing-container-grid">
+<div class="list grid quarto-listing-cols-3">
+<div class="g-col-1" data-index="0" data-listing-file-modified-sort="1667765150756" data-listing-reading-time-sort="0.01">
+<a href="./publications/en.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<div class="card-img-bg" style="height: 150px;">
+&nbsp;
 </div>
-</a><p><a href="./publications/en.html"></a></p>
-</div>
-<div class="body">
-<a href="./publications/en.html">
-<h3 class="no-anchor listing-title">
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
 Publications in English
-</h3>
-<div class="listing-subtitle">
+</h5>
+<div class="card-text listing-description">
 
 </div>
-<div class="listing-description">
+<div class="card-attribution card-text-small start">
+<div class="listing-author">
 
+</div>
+</div>
+</div>
 </div>
 </a>
 </div>
-<div class="metadata">
-<a href="./publications/en.html"> </a>
+<div class="g-col-1" data-index="1" data-listing-file-modified-sort="1667764363336" data-listing-reading-time-sort="0.01">
+<a href="./publications/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<div class="card-img-bg" style="height: 150px;">
+&nbsp;
 </div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-listing-file-modified-sort="1667666655429" data-listing-reading-time-sort="0.01">
-<div class="thumbnail">
-<a href="./publications/index.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./publications/index.html"></a></p>
-</div>
-<div class="body">
-<a href="./publications/index.html">
-<h3 class="no-anchor listing-title">
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
 All Publications
-</h3>
-<div class="listing-subtitle">
-
-</div>
-<div class="listing-description">
+</h5>
+<div class="card-text listing-description">
 
 <img src="../publications/book/introducao_linguagem_R/featured.png" class="thumbnail-image card-img" style="height: 150px;">
 
 </div>
+<div class="card-attribution card-text-small start">
+<div class="listing-author">
+
+</div>
+</div>
+</div>
+</div>
 </a>
 </div>
-<div class="metadata">
-<a href="./publications/index.html"> </a>
+<div class="g-col-1" data-index="2" data-listing-file-modified-sort="1667765151715" data-listing-reading-time-sort="0.01">
+<a href="./publications/pt.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<div class="card-img-bg" style="height: 150px;">
+&nbsp;
 </div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-listing-file-modified-sort="1667666674417" data-listing-reading-time-sort="0.01">
-<div class="thumbnail">
-<a href="./publications/pt.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./publications/pt.html"></a></p>
-</div>
-<div class="body">
-<a href="./publications/pt.html">
-<h3 class="no-anchor listing-title">
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
 Publicações em Português
-</h3>
-<div class="listing-subtitle">
-
-</div>
-<div class="listing-description">
+</h5>
+<div class="card-text listing-description">
  <img src="../publications/book/introducao_linguagem_R/featured.png" class="thumnail-image"> 
 </div>
+<div class="card-attribution card-text-small start">
+<div class="listing-author">
+
+</div>
+</div>
+</div>
+</div>
 </a>
 </div>
-<div class="metadata">
-<a href="./publications/pt.html"> </a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-categories="R Language,Book,Brazil" data-listing-date-sort="1649721600000" data-listing-file-modified-sort="1667667541763" data-listing-reading-time-sort="1.99">
-<div class="thumbnail">
-<p><a href="./publications/book/introducao_linguagem_R/pt/index.html"> <img src="./publications/book/introducao_linguagem_R/featured.png" class="thumnail-image"> </a></p>
-</div>
-<div class="body">
-<a href="./publications/book/introducao_linguagem_R/pt/index.html">
-<h3 class="no-anchor listing-title">
+<div class="g-col-1" data-index="3" data-categories="R Language,Book,Brazil" data-listing-date-sort="1649721600000" data-listing-file-modified-sort="1667764495339" data-listing-reading-time-sort="1.99">
+<a href="./publications/book/introducao_linguagem_R/pt/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./publications/book/introducao_linguagem_R/featured.png" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
 Introdução à Linguagem R: seus fundamentos e sua prática
-</h3>
-<div class="listing-subtitle">
-Este livro oferece uma descrição profunda sobre os fundamentos da linguagem R, e como eles se aplicam no contexto da análise de dados.
-</div>
-</a>
+</h5>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('R Language'); return false;">
 R Language
@@ -293,25 +288,31 @@ Book
 Brazil
 </div>
 </div>
-<a href="./publications/book/introducao_linguagem_R/pt/index.html">
-<div class="listing-description">
-Este livro oferece uma descrição profunda sobre os fundamentos da linguagem R, e como eles se aplicam no contexto da análise de dados. Sua principal contribuição para a literatura brasileira hoje, está no combate de dois problemas recorrentes nos materiais disponíveis em português sobre a linguagem: 1) a falta de profundidade de muitos materiais, que tentam abordar muitos assuntos em um espaço muito curto; 2) a alta especialização de muitos materiais, que são de difícil transposição para aplicações gerais em análises de dados.
+<div class="card-text listing-description">
+Este livro oferece uma descrição profunda sobre os fundamentos da linguagem R, e como eles se aplicam no contexto da análise de dados.
 </div>
-</a>
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+
 </div>
-<div class="metadata">
-<a href="./publications/book/introducao_linguagem_R/pt/index.html">
 <div class="listing-date">
 Apr 11, 2022
 </div>
-</a>
 </div>
+</div>
+</div>
+</a>
 </div>
 </div>
 <div class="listing-no-matching d-none">
 No matching items
 </div>
-</div></main> <!-- /main -->
+</div>
+
+
+
+
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const icon = "";

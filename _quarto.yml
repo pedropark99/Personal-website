@@ -2,10 +2,11 @@ project:
   type: website
 
 website:
-  title: "Pedro Duarte Faria"
+  title: 'home |> dplyr::glimpse()'
   navbar:
-    left:
-      - index.qmd
+    background: "#0e326b"
+    right:
+      - about.qmd
       - text: Posts
         menu:
           - text: All posts
@@ -22,7 +23,12 @@ website:
             href: publications/en.qmd
           - text: Publicações em Português
             href: publications/pt.qmd
-    right:
+      - text: CV
+        menu:
+          - text: CV in English
+            href: cv/cv-english.pdf
+          - text: CV em Português
+            href: cv/cv-portuguese.pdf
       - icon: github
         href: https://github.com/pedropark99
       - icon: twitter
@@ -33,7 +39,9 @@ website:
 format:
   html:
     page-layout: full
-    theme: cosmo
+    theme: 
+      - cosmo
+      - blue_theme.scss
     css: styles.css
 
 

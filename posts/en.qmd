@@ -3,11 +3,12 @@ title: "Posts in English"
 listing:
   - id: posts-en
     contents: "*/en/*.qmd"
+    categories: cloud
     type: default
     sort: "date desc"
     sort-ui: true
     filter-ui: true
-page-layout: full
+    
 title-block-banner: false
 comments: false
 ---

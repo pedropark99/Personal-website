@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Pedro Duarte Faria">
 
-<title>home |&gt; dplyr::glimpse() - All Publications</title>
+<title>home |&gt; dplyr::glimpse() - About Me</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,24 +18,21 @@ ul.task-list{list-style: none;}
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-listing/list.min.js"></script>
-<script src="../site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="../site_libs/quarto-html/quarto.js"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -56,33 +52,9 @@ ul.task-list{list-style: none;}
     "search-submit-button-title": "Submit"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-publications .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
 
-    const options = {
-      valueNames: ['listing-title','listing-author','listing-date','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-publications'] = new List('listing-publications', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-  </script>
-
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="styles.css">
 </head>
 
 <body class="nav-fixed">
@@ -91,7 +63,7 @@ ul.task-list{list-style: none;}
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
-      <a class="navbar-brand" href="../index.html">
+      <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">home |&gt; dplyr::glimpse()</span>
   </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -100,21 +72,21 @@ ul.task-list{list-style: none;}
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../about.html">About Me</a>
+    <a class="nav-link active" href="./about.html" aria-current="page">About Me</a>
   </li>  
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="button" data-bs-toggle="dropdown" aria-expanded="false">Posts</a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-posts">    
         <li>
-    <a class="dropdown-item" href="../posts/index.html">
+    <a class="dropdown-item" href="./posts/index.html">
  <span class="dropdown-text">All posts</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../posts/en.html">
+    <a class="dropdown-item" href="./posts/en.html">
  <span class="dropdown-text">Posts in english</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../posts/pt.html">
+    <a class="dropdown-item" href="./posts/pt.html">
  <span class="dropdown-text">Posts em português</span></a>
   </li>  
     </ul>
@@ -123,15 +95,15 @@ ul.task-list{list-style: none;}
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-publications" role="button" data-bs-toggle="dropdown" aria-expanded="false">Publications</a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-publications">    
         <li>
-    <a class="dropdown-item" href="../publications/index.html">
+    <a class="dropdown-item" href="./publications/index.html">
  <span class="dropdown-text">All publications</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../publications/en.html">
+    <a class="dropdown-item" href="./publications/en.html">
  <span class="dropdown-text">Publications in English</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../publications/pt.html">
+    <a class="dropdown-item" href="./publications/pt.html">
  <span class="dropdown-text">Publicações em Português</span></a>
   </li>  
     </ul>
@@ -140,11 +112,11 @@ ul.task-list{list-style: none;}
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-cv" role="button" data-bs-toggle="dropdown" aria-expanded="false">CV</a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-cv">    
         <li>
-    <a class="dropdown-item" href="../cv/cv-english.pdf">
+    <a class="dropdown-item" href="./cv/cv-english.pdf">
  <span class="dropdown-text">CV in English</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../cv/cv-portuguese.pdf">
+    <a class="dropdown-item" href="./cv/cv-portuguese.pdf">
  <span class="dropdown-text">CV em Português</span></a>
   </li>  
     </ul>
@@ -174,112 +146,64 @@ ul.task-list{list-style: none;}
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-cloud"><div class="category" data-category="Book"><span class="quarto-category-count category-cloud-10">Book</span></div><div class="category" data-category="Brazil"><span class="quarto-category-count category-cloud-10">Brazil</span></div><div class="category" data-category="R Language"><span class="quarto-category-count category-cloud-10">R Language</span></div></div></div>
+    
 <!-- main -->
-<main class="content column-page-left" id="quarto-document-content">
-
+<div class="quarto-about-trestles column-page">
+  <div class="about-entity">
+    <img src="images/profile.jpg" class="about-image
+  rounded " style="width: 20em;">
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">All Publications</h1>
+<h1 class="title">About Me</h1>
 </div>
-
-
-
 <div class="quarto-title-meta">
-
-    
-    
   </div>
-  
-
 </header>
-
-<div id="posts">
-
+    <div class="about-links">
+  <a href="https://twitter.com/PedroPark9" class="about-link">
+    <i class="bi bi-twitter"></i>
+     <span class="about-link-text">Twitter</span>
+  </a>
+  <a href="https://www.linkedin.com/in/pedro-faria-a68140209/" class="about-link">
+    <i class="bi bi-linkedin"></i>
+     <span class="about-link-text">LinkedIn</span>
+  </a>
+  <a href="https://github.com/pedropark99" class="about-link">
+    <i class="bi bi-github"></i>
+     <span class="about-link-text">Github</span>
+  </a>
 </div>
-
-
-
-
-<div class="quarto-listing quarto-listing-container-grid" id="listing-publications">
-<div class="listing-actions-group">
-   <div class="input-group input-group-sm quarto-listing-sort">
-     <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
-     <select id="listing-publications-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-publications'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
-       <option value="" disabled="" selected="" hidden="">Order By</option>
-       <option value="index" data-direction="asc">Default</option>
-         <option value="listing-title" data-direction="asc">
-          Title
-        </option>
-         <option value="listing-date-sort" data-direction="asc">
-          Date - Oldest
-        </option>
-         <option value="listing-date-sort" data-direction="desc">
-          Date - Newest
-        </option>
-         <option value="listing-author" data-direction="asc">
-          Author
-        </option>
-     </select>
   </div>
-    <div class="input-group input-group-sm quarto-listing-filter">
-      <span class="input-group-text"><i class="bi bi-search"></i></span>
-      <input type="text" class="search form-control" placeholder="Filter">
-    </div>
-</div>
-<div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-categories="R Language,Book,Brazil" data-listing-date-sort="1649721600000" data-listing-file-modified-sort="1667764495339" data-listing-reading-time-sort="1.99">
-<a href="../publications/book/introducao_linguagem_R/pt/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img src="../publications/book/introducao_linguagem_R/featured.png" class="thumbnail-image card-img" style="height: 150px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Introdução à Linguagem R: seus fundamentos e sua prática
-</h5>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('R Language'); return false;">
-R Language
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Book'); return false;">
-Book
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Brazil'); return false;">
-Brazil
-</div>
-</div>
-<div class="card-text listing-description">
-Este livro oferece uma descrição profunda sobre os fundamentos da linguagem R, e como eles se aplicam no contexto da análise de dados.
-</div>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
+  <div class="about-contents"><main class="content column-page" id="quarto-document-content">
+<section id="bio" class="level2">
+<h2 data-anchor-id="bio">Bio</h2>
+<p>Hey! I’m Pedro, a brazilian data analyst and software enginner, working mainly with R, SQL, Python and Apache Spark. I do a lot of data analysis these days, but I do love teaching software development and building open-source software too.</p>
+<hr>
+</section>
+<section id="experience" class="level2">
+<h2 data-anchor-id="experience">Experience</h2>
+<p><strong>Data Analyst</strong>, Take Blip, May 2021 - present.</p>
+<p><strong>Research engineering Intern</strong>, João Pinheiro Foundation, August 2019 - March 2021.</p>
+<p><strong>Business Intelligence Intern</strong>, Beltech, June 2019 - August 2019.</p>
+<hr>
+</section>
+<section id="projects" class="level2">
+<h2 data-anchor-id="projects">Projects</h2>
+<p>I’m the author of R package <code>{figma}</code>, and, a technical and introductory book about the R language. I have made some contributions to R package <code>{knitr}</code> too, which is one of the biggest open-source projects in the R community.</p>
+<hr>
+</section>
+<section id="education" class="level2">
+<h2 data-anchor-id="education">Education</h2>
+<p><strong>Federal University of Ouro Preto - UFOP, Brazil</strong></p>
+<p><em>Economics, B.S.</em>, March 2017 - February 2022.</p>
 
+
+</section>
+</main></div>
 </div>
-<div class="listing-date">
-Apr 11, 2022
-</div>
-</div>
-</div>
-</div>
-</a>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div></main> <!-- /main -->
+ <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
   const clipboard = new window.ClipboardJS('.code-copy-button', {
     target: function(trigger) {
       return trigger.previousElementSibling;

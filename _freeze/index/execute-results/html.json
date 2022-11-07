@@ -1,0 +1,14 @@
+{
+  "hash": "35be8d5efabedc44f3b3fa9d58778263",
+  "result": {
+    "markdown": "---\ntitle: \"Hi there 🖐️!\"\nsubtitle: \"Welcome to my site! I love to write books about R and Python, and to develop open-source software 😉\"\ntitle-block-banner: false\ncomments: false \ntoc: true\nlisting:\n  - id: posts\n    type: grid\n    sort: \"date desc\"\n    contents: posts/**/*/index.qmd\n  - id: books\n    type: grid\n    sort: \"date desc\"\n    contents: publications/*/*/*/index.qmd\n\nfreeze: true\n---\n\n\n## My books\n\n::: {#books}\n:::\n\n## Posts\n\n::: {#posts}\n:::\n\n<br>\n\n\n\n\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
