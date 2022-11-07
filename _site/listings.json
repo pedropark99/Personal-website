@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/2022-11-06-figma-pkgv0.1.0/en/index.html",
       "/posts/2022-04-06-3nd-edition-rbook/en/index.html",
       "/posts/2022-04-06-3nd-edition-rbook/pt/index.html",
       "/posts/2021-05-26-2nd-edition-rbook/en/index.html",
@@ -15,6 +16,7 @@
   {
     "listing": "/posts/en.html",
     "items": [
+      "/posts/2022-11-06-figma-pkgv0.1.0/en/index.html",
       "/posts/2022-04-06-3nd-edition-rbook/en/index.html",
       "/posts/2021-05-26-2nd-edition-rbook/en/index.html",
       "/posts/2021-01-02-tabela-destinataria-fonte/en/index.html"
@@ -23,6 +25,7 @@
   {
     "listing": "/posts/index.html",
     "items": [
+      "/posts/2022-11-06-figma-pkgv0.1.0/en/index.html",
       "/posts/2022-04-06-3nd-edition-rbook/en/index.html",
       "/posts/2022-04-06-3nd-edition-rbook/pt/index.html",
       "/posts/2021-05-26-2nd-edition-rbook/en/index.html",
@@ -47,6 +50,7 @@
       "/posts/en.html",
       "/posts/index.html",
       "/posts/pt.html",
+      "/posts/2022-11-06-figma-pkgv0.1.0/en/index.html",
       "/posts/2022-04-06-3nd-edition-rbook/en/index.html",
       "/posts/2022-04-06-3nd-edition-rbook/pt/index.html",
       "/posts/2021-05-26-2nd-edition-rbook/en/index.html",

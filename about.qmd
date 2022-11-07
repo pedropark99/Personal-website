@@ -16,7 +16,7 @@ about:
 ---
  
 ## Bio
-Hey! I'm Pedro, a brazilian data analyst and software enginner, working mainly with R, SQL, Python and Apache Spark. I do a lot of data analysis these days, but I do love teaching software development and building open-source software too.
+Hey! I'm Pedro Duarte Faria. A brazilian economist, data analyst and software enginner, working mainly with R, SQL, Python and Apache Spark. I do a lot of data analysis these days, but I do love teaching software development and building open-source software too.
 
 -----------------------------------------------------------------------------------------------------------------------------------
 

@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Pedro Duarte Faria">
-<meta name="dcterms.date" content="2021-05-26">
-<meta name="description" content="New chapters for Factors, Dates and time variables (date, POSIXct), in addition to the introduction of exercises at each chapter are among the main updates of the next edition.">
+<meta name="dcterms.date" content="2022-11-06">
+<meta name="description" content="With this package, you can access the Figma API to bring your design files to R 🎨!">
 
-<title>home |&gt; dplyr::glimpse() - What’s new in the 2nd edition of Introdução à Linguagem R: seus fundamentos e sua prática</title>
+<title>home |&gt; dplyr::glimpse() - Introducing the {figma} R package</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -240,35 +240,43 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page">
-      <h1 class="title">What’s new in the 2nd edition of Introdução à Linguagem R: seus fundamentos e sua prática</h1>
-            <p class="subtitle lead">New chapters for Factors, Dates and time variables (date, POSIXct), in addition to the introduction of exercises at each chapter are among the main updates of the next edition.</p>
+    <div class="quarto-title column-page-left">
+      <h1 class="title">Introducing the <code>{figma}</code> R package</h1>
                   <div>
         <div class="description">
-          New chapters for Factors, Dates and time variables (date, POSIXct), in addition to the introduction of exercises at each chapter are among the main updates of the next edition.
+          With this package, you can access the Figma API to bring your design files to R 🎨!
         </div>
       </div>
                           <div class="quarto-categories">
-                <div class="quarto-category">Book</div>
                 <div class="quarto-category">R Language</div>
+                <div class="quarto-category">Package</div>
+                <div class="quarto-category">Figma</div>
+                <div class="quarto-category">API</div>
               </div>
                   </div>
   </div>
     
-  
+  <div class="quarto-title-meta-author">
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-heading">Affiliation</div>
+    
+      <div class="quarto-title-meta-contents">
+      Pedro Duarte Faria 
+    </div>
+      <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              Take Blip
+            </p>
+        </div>
+      </div>
+
   <div class="quarto-title-meta">
 
-      <div>
-      <div class="quarto-title-meta-heading">Author</div>
-      <div class="quarto-title-meta-contents">
-               <p>Pedro Duarte Faria </p>
-            </div>
-    </div>
-      
+        
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">May 26, 2021</p>
+        <p class="date">November 6, 2022</p>
       </div>
     </div>
     
@@ -279,135 +287,107 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#getting-started" id="toc-getting-started" class="nav-link" data-scroll-target="#getting-started">Getting started</a></li>
+  <li><a href="#use-get_figma_file-to-get-your-figma-file" id="toc-use-get_figma_file-to-get-your-figma-file" class="nav-link" data-scroll-target="#use-get_figma_file-to-get-your-figma-file">Use <code>get_figma_file()</code> to get your Figma file</a></li>
+  <li><a href="#other-scopes-of-data" id="toc-other-scopes-of-data" class="nav-link" data-scroll-target="#other-scopes-of-data">Other scopes of data</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content quarto-banner-title-block column-page" id="quarto-document-content">
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
 
 
 
-<div class="cell">
-<style type="text/css">
-.hljs{
-  font-family: 'Inconsolata', monospace;
-  font-size: 17px;
-}
-
-.hljs.shell{
-  font-size: 18px;
-}
-
-.hljs-comment{
-  font-style: normal;
-  color: #222222;
-}
-</style>
-</div>
-<section id="introduction" class="level1">
-<h1>Introduction</h1>
-<p>As I and my colleague <a href="https://twitter.com/joaoparga">João Parga</a> began teaching about The R Language, we quickly realized the presence of various short, quality and useful materials<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. However, we also noticed a disturbing lack of materials (in Portuguese) about the R language, that were more technical or that sought to describe the language in more detail.</p>
-<p>For this reason, we built the book <a href="https://pedro-faria.netlify.app/pt/publication/book/introducao_linguagem_r/">Introduction to R Language: its foundations and its practice</a>, which represents our attempt to fill this gap. The first edition of the book was very well received, especially because it is an open and free work for any Brazilian.</p>
-<p>With this in mind, 📣 is with great pleasure that I officially announce that the production of the second edition of the book is almost ready!!! 🥳🎉🎊✨, which is to be released now in June. This <em>post</em> seeks to describe the news we are delivering for this new edition.</p>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>I’m very happy to announce the realease of <code>figma</code> R package to CRAN! This package provides a R interface (or a web client/wrapper) to the <a href="https://www.figma.com/developers/api">Figma API</a>. Below we have all the important links about this package:</p>
+<p><a href="https://github.com/pedropark99/figma"> <button type="button" class="btn btn-primary">Official repository</button></a> <a href="https://pedropark99.github.io/figma/"> <button type="button" class="btn btn-primary">Package website</button></a> <a href="https://cran.r-project.org/package=figma"> <button type="button" class="btn btn-primary">Page on CRAN</button></a></p>
+<p>This is the first release (or the first version) of the package, and for now, it have all the necessary functionality to get all data from a Figma file, and bring it to your R session. But in the future, the package will include more functionalities and endpoints. Please, if you can, test this package and give feedbacks or report bugs by <a href="https://github.com/pedropark99/figma/issues">sending Issues on the official repository</a>.</p>
 </section>
-<section id="summary-of-news-for-the-new-edition" class="level1">
-<h1>Summary of news for the new edition</h1>
-<p>In summary, there are three main novelties for this new edition, which include the addition of two new chapters, and, the introduction of exercises in each chapter (with answers at the end of the book).</p>
+<section id="getting-started" class="level2">
+<h2 class="anchored" data-anchor-id="getting-started">Getting started</h2>
+<p>Fist of all, you need to install the package on your machine, and to do that, you can use this code:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"figma"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Or, to install the development version directly from GitHub:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"pedropark99/figma"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now, to get the data of a Figma file through the Figma API, you have to collect two key variables about your file and your credentials. They are:</p>
 <ul>
-<li><p>Factors (<code>factor</code>s), <em>status</em>: chapter finalized ✅.</p></li>
-<li><p>Time variables (<code>date</code>, <code>POSIXct</code>, <code>POSIXlt</code>), <em>status</em>: chapter completed ✅.</p></li>
-<li><p>Introduction of exercises in each chapter, <em>status</em>: still in the process of writing 🚧.</p></li>
+<li><code>file_key</code>: The ID (or the “key”) that identifies your Figma file;</li>
+<li><code>token</code>: Your personal access token from the Figma platform;</li>
 </ul>
+<p>To use specifically the <code>figma::get_figma_page()</code> function, you will need to collect a third information, which is the <code>node_id</code>, or the ID that identifies a canvas/page of your Figma file. I explain, in details, on how to collect these key variables on the <a href="https://pedropark99.github.io/figma/articles/figma.html">main vignette package</a>. For brevity, lets assume in this blog post that already have collected these variables.</p>
 </section>
-<section id="about-the-launch" class="level1">
-<h1>About the launch</h1>
-<p>If everything goes according to plan:</p>
-<ul>
-<li><p>📣 The release will take place on <strong>day 26/06</strong> 📌.</p></li>
-<li><p>On that day, the PDF of the new edition will be available on both pages of <a href="https://www.researchgate.net/publication/345985082_Introducao_a_Linguagem_R_seus_fundamentos_e_sua_pratica">ResearchGate</a> and <a href="https://www.academia.edu/44520051/Introdu%C3%A7%C3%A3o_%C3%A0_Linguagem_R_seus_fundamentos_e_sua_pr%C3%A1tica">Academy</a>, which are the two places where the book is currently hosted.</p></li>
-</ul>
-<p>Production of this new edition is advanced, but may face delays next month, as I recently took up a new job at a major technology company (<a href="https://www.take.net/">Take Blip</a>) and, therefore, I may have to delay production at the expense of urgent demands. I am ansious and praying hard that nothing goes wrong 😅, and that I can fulfill this commitment to our Brazilian community of R.</p>
+<section id="use-get_figma_file-to-get-your-figma-file" class="level2">
+<h2 class="anchored" data-anchor-id="use-get_figma_file-to-get-your-figma-file">Use <code>get_figma_file()</code> to get your Figma file</h2>
+<p>Now that you have the key (or ID) that identifies your Figma file, and your personal token that identifies yourself, you can use <code>figma::get_figma_file()</code> to get your Figma file:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(figma)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>file_key <span class="ot">&lt;-</span> <span class="st">"hch8YlkIrYbU3raDzjPvCz"</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Insert your personal token:</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>token <span class="ot">&lt;-</span> <span class="st">"Your personal token ..."</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Returns a `httr::response` object:</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>figma_file <span class="ot">&lt;-</span> figma<span class="sc">::</span><span class="fu">get_figma_file</span>(</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  file_key, token</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The functions from <code>figma</code> package returns a <code>httr::response</code> object by default. But you can use the <code>.output_format</code> argument to fit the data into a more intuitive data strucuture. For example, a <code>tibble::tibble</code> object:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Returns a `tibble::tibble` object:</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>figma_file <span class="ot">&lt;-</span> figma<span class="sc">::</span><span class="fu">get_figma_file</span>(</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  file_key, token,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">.output_format =</span> <span class="st">"tibble"</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(figma_file)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>#&gt; # A tibble: 5 × 7
+#&gt;   canvas_id canvas_name canvas_type object_id object_name   objec…¹ object_att…²
+#&gt;   &lt;chr&gt;     &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;     &lt;chr&gt;         &lt;chr&gt;   &lt;list&gt;      
+#&gt; 1 0:1       Page 1      CANVAS      1:2       Background    RECTAN… &lt;named list&gt;
+#&gt; 2 0:1       Page 1      CANVAS      5:2       Paragraph     TEXT    &lt;named list&gt;
+#&gt; 3 0:1       Page 1      CANVAS      5:3       Arrow         VECTOR  &lt;named list&gt;
+#&gt; 4 5:4       Page 2      CANVAS      5:5       BackgroundPa… RECTAN… &lt;named list&gt;
+#&gt; 5 5:4       Page 2      CANVAS      5:6       Texto da pág… TEXT    &lt;named list&gt;
+#&gt; # … with abbreviated variable names ¹​object_type, ²​object_attributes</code></pre>
+<p>Each row in the above <code>data.frame</code> is an object drawn in a canvas/page in your Figma file. Every object that you drawn in the canvas of your Figma file, can have a different type (like RECTANGLE, CIRCLE, TEXT, etc.). And objects of different types usually have different attributes.</p>
+<p>For example, TEXT objects have a <code>characters</code> attribute, which have the exact text that is written in the text box. In the other hand, RECTANGLE objects does not have such attribute.</p>
+<p>All the attributes of each object are in the <code>​object_attributes</code> column, which is a <code>&lt;list&gt;</code> column. Each row (or, if you prefer, each element) in this column is a list with all the attributes of the object described in the corresponding row. For example, to collect the <code>characters</code> attribute of the first TEXT object described in <code>figma_file</code> (which is in the 2nd row), you could do this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>figma_file<span class="sc">$</span>object_attributes[[<span class="dv">2</span>]][[<span class="st">"characters"</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>[1] "Um texto qualquer, que não sei se vai dar certo"</code></pre>
+<p>Or, you could the functions from <code>dplyr</code> and <code>purrr</code> packages to extract the <code>characters</code> attribute from all TEXT objects of your Figma file, like this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>text_objects <span class="ot">&lt;-</span> figma_file <span class="sc">|&gt;</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(object_type <span class="sc">==</span> <span class="st">'TEXT'</span>) </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>text_objects[[<span class="st">'object_attributes'</span>]] <span class="sc">|&gt;</span> </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  purrr<span class="sc">::</span><span class="fu">map_chr</span>(<span class="st">'characters'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>[1] "Um texto qualquer, que não sei se vai dar certo" "Texto da página 2"</code></pre>
 </section>
-<section id="about-every-novelty" class="level1">
-<h1>About every novelty:</h1>
-<section id="adding-exercises-in-each-chapter" class="level2">
-<h2 class="anchored" data-anchor-id="adding-exercises-in-each-chapter">Adding exercises in each chapter</h2>
-<p>From the beginning, the book set out to be an introductory and, specially, <strong>technical</strong> reference on language. This means that the book does not try to reach the audience looking for something succinct and efficient, but rather the beginning audience that seeks to delve deeper (or have a more solid foundation) in concepts, methods and other important parts of the language.</p>
-<p>Despite this purpose, the book initially offers no exercises, which are an essential feature of any technical book. For this reason, the introduction of exercises in each chapter of this second edition seeks to help the book move towards this purpose, becoming a more consolidated work.</p>
-<p>Currently, the construction of the exercises for each chapter is the only part (of this new edition) that is still under construction. From the moment this stage is finished, the second edition will be released to the entire Brazilian public.</p>
-</section>
-<section id="factors-factors" class="level2">
-<h2 class="anchored" data-anchor-id="factors-factors">Factors (‘factor’’s)</h2>
-<p>In chapter 2 of the book, the four basic data types of the R language are covered; <code>integer</code>; <code>double</code>; <code>character</code>; and <code>logical</code>. However, there are two other types of data, which are “more complex”, and which are also very important nowadays. They are the factors (or <code>factor</code>’s) and the types facing time variables (<code>Date</code>, <code>POSIXct</code>, <code>POSIXlt</code>).</p>
-<p>Factors are especially useful for classifying categorical variables. That is, we define the order of their “levels” (or “groups”). In other words, several characteristics can be described through a categorical variable, but these characteristics do not always follow a numerical ordering, or an alphabetical order. For example, when giving your assessment of a certain government, you can answer “Bad,” “Bad,” “Good,” or “Very Good.” Notice from the demo below, that if I use an alphabetical (growing) ordering on my answers, “Good” appears before “Bad”, “Bad” and “Very Good”.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>respostas <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Muito Bom"</span>, <span class="st">"Muito Bom"</span>, <span class="st">"Bom"</span>, <span class="st">"Ruim"</span>, <span class="st">"Péssimo"</span>,</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>               <span class="st">"Bom"</span>, <span class="st">"Ruim"</span>, <span class="st">"Ruim"</span>, <span class="st">"Muito Bom"</span>, <span class="st">"Ruim"</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(respostas)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1] "Bom"       "Bom"       "Muito Bom" "Muito Bom" "Muito Bom" "Péssimo"  
- [7] "Ruim"      "Ruim"      "Ruim"      "Ruim"     </code></pre>
-</div>
-</div>
-<p>Using factors, we can define the correct order of these different levels and correct this ordering problem. Notice below that the ordering of the values has been corrected.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>respostas <span class="ot">&lt;-</span> <span class="fu">factor</span>(respostas)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(respostas) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Péssimo"</span>, <span class="st">"Ruim"</span>, <span class="st">"Bom"</span>, <span class="st">"Muito Bom"</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(respostas)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1] Péssimo   Péssimo   Ruim      Ruim      Ruim      Bom       Muito Bom
- [8] Muito Bom Muito Bom Muito Bom
-Levels: Péssimo Ruim Bom Muito Bom</code></pre>
-</div>
-</div>
-</section>
-<section id="time-variables" class="level2">
-<h2 class="anchored" data-anchor-id="time-variables">Time variables</h2>
-<p>Firms record the time at which sales are made, the time when loads of insums arrive at their facilities, the working time of their employees, and the evolution of several of their indicators over time. Because time is money, and in a capitalist economy money is what makes a difference.</p>
-<p>For this reason, time variables are critical in various data analysis, and it is very important that you know how to work with them in any programming language you come to work with. Therefore, this is a very important current gap of the book and, which is being filled in this second edition.</p>
-<p>The R language offers us three main types of data focused on time variables, which are: <code>Date</code>, <code>POSIXct</code>, <code>POSIXlt</code>. In addition, we also have a fourth type of data called <code>difftime</code>, which seeks to support the aritmetic operations among the previous 3 types. Values of these three data types are created from the functions <code>as.POSIXct()</code>, <code>as. POSIXlt()</code> and <code>as. Date()</code>.</p>
-<p>The <code>Date</code> type helps us store dates in R. We could store dates as simple <em>strings</em>, but with this, we would have an incorrect ordering of the values, in addition to the lack of access to various aritmetic and computational methods focused on this type of data. Therefore, treating your dates using the <code>Date</code> type can make a big difference in your analysis.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="fu">c</span>(<span class="st">"2020-08-10"</span>, <span class="st">"2020-08-11"</span>, <span class="st">"2020-08-12"</span>))</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>d</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "2020-08-10" "2020-08-11" "2020-08-12"</code></pre>
-</div>
-</div>
-<p>The type <code>POSIXct</code> is particularly useful for interpreting dates accompanied by a time (i.e., a date-time data). Certain transactions need to be recorded with a high level of accuracy. That is, the records of many companies are not content with dates, because they also need to know the exact time (or the exact part) of that day that an event occurs. The type <code>POSIXct</code> was made precisely to treat and deal with this type of information.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="fu">as.POSIXct</span>(<span class="fu">c</span>(<span class="st">"2020-03-21 15:52:29"</span>, <span class="st">"2020-03-22 10:30:02"</span>))</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>h</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "2020-03-21 15:52:29 -03" "2020-03-22 10:30:02 -03"</code></pre>
-</div>
-</div>
-<p>On the other hand, the <code>POSIXlt</code> type can be especially useful when we want to extract the components of a specific time variable. For example, we may be interested only in the day of the month present in each value, or at the time of day stored in each of these values. This point is demonstrated in the example below:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>hl <span class="ot">&lt;-</span> <span class="fu">as.POSIXlt</span>(<span class="fu">c</span>(<span class="st">"2020-03-21 15:52:29"</span>, <span class="st">"2020-03-22 10:30:02"</span>))</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="do">## The day of each date:</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>hl<span class="sc">$</span>mday</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 21 22</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="do">## The time of day of each date:</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>hl<span class="sc">$</span>hour</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 15 10</code></pre>
-</div>
-</div>
+<section id="other-scopes-of-data" class="level1">
+<h1>Other scopes of data</h1>
+<p>The <code>figma::get_figma_file()</code> get the data of all objects drawn in all canvas/pages of a Figma file. But, maybe, you don’t need all data from your file. Maybe you just need the data from a section, or a specific part of your Figma file.</p>
+<p>For these occasions, the <code>figma</code> package offers the <code>figma::get_figma_page()</code> (get data of objects drawn in a specific canvas/page of your file) and <code>figma::get_document_info()</code> (get metadata about your Figma file) functions.</p>
+<p>These functions work basically the same way as <code>figma::get_figma_file()</code>, they have the same arguments (except <code>figma::get_figma_page()</code> which have a extra argument <code>node_id</code>). Check the <a href="https://pedropark99.github.io/figma/reference/index.html">documentation of these functions</a>, and the <a href="https://pedropark99.github.io/figma/articles/figma.html">main vignette of the package</a> to see examples.</p>
 
 
 </section>
-</section>
 
-
-<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
-
-<ol>
-<li id="fn1"><p>Like the materials produced by <a href="https://curso-r.com/material/">Course-R</a>, or this <a href="https://materiais-study-r.netlify.app/">materials index</a> built by Beatriz Milz.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section></div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

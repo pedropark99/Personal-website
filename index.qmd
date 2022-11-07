@@ -1,6 +1,6 @@
 ---
 title: "Hi there `r emoji::emoji('raised_hand_with_fingers_splayed')`!"
-subtitle: "My name is Pedro, and welcome to my website! I love to write books about programming, and to develop open-source software"
+subtitle: "I'm Pedro, and welcome to my website! I love to write books about programming, and to develop open-source software"
 title-block-banner: false
 comments: false 
 toc: false

@@ -13,6 +13,7 @@ projects: [R_curso]
 
 aliases: 
     - "./../../../../pt/publication/book/introducao_linguagem_r/"
+
 ---
 
 
@@ -53,6 +54,15 @@ Você pode adquirir uma [versão física do livro através da loja da Amazon](ht
 # Leia o livro online
 
 Caso você não possa comprar uma versão física do livro, você ainda pode ler gratuitamente a obra completa através de seu [site](https://pedropark99.github.io/Introducao_R/).
+
+# Citando o livro
+
+Arquivo BibTex:
+```{r}
+#| echo: false
+cat(readLines("./../cite.bib"), sep = '\n')
+```
+
 
 
 # Contribua para o projeto
