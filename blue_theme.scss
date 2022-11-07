@@ -86,8 +86,24 @@ $font-family-monospace: 'Inconsolata';
 code {
     font-size: 14pt;
 }
+// Inline code inside Headers
+h1 code {
+    font-size: calc(1.3rem + 1.14vw);
+}
+h2 code {
+    font-size: calc(1.3rem + 0.6vw);
+}
+h3 code {
+    font-size: calc(1.255rem + 0.6vw);
+}
 
+.description code {
+    font-size: 12pt;
+}
 
+.card-text.listing-description code {
+    font-size: .9em;
+}
 
 
 // Titles and headers
