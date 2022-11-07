@@ -10,6 +10,9 @@ isbn: "978-65-00-43003-5"
 categories: [R Language, Book, Brazil]
 image: "./../featured.png"
 projects: [R_curso]
+
+aliases: 
+    - "./../../../../pt/publication/book/introducao_linguagem_r/"
 ---
 
 
