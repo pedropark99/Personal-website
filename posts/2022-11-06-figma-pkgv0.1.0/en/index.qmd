@@ -39,72 +39,7 @@ They are:
 - `file_key`: The ID (or the "key") that identifies your Figma file;
 - `token`: Your personal access token from the Figma platform;
 
-To use the `figma::get_figma_page()` function, you will need to collect a third information, which is the `node_id`, or the ID that identifies a canvas/page of your Figma file. We will talk about this ID later.
-
-
-## Finding the key (or ID) of your Figma file
-
-The file key (or the file key), is a random text that identifies your Figma
-file. The Figma API uses this key to identify which specific Figma file you
-are requesting for.
-
-You can find the key (or ID) of your Figma file by looking at the URL in your web browser, when you access your Figma file
-at the Figma platform. As an example, lets use this Figma file entitled `Untitled` (I will not make a joke on that 
-`r emoji::emoji("sweat_smile")`):
-
-```{r file_example, echo = FALSE, fig.cap = "An example of Figma file", out.width="100%"}
-knitr::include_graphics("./../example-figma-file.png")
-```
-
-If we look at the top of my web browser, we have the following URL:
-
-`https://www.figma.com/file/hch8YlkIrYbU3raDzjPvCz/Untitled?node-id=0%3A1`
-
-The key (or the ID) of this file is `"hch8YlkIrYbU3raDzjPvCz"`. This means
-that the URL of every Figma file is composed of this structure. So in
-order to use the functions from the `figma` package, you should always
-collect this `:file_key` portion of the URL, to get the key to your
-file.
-
-`https://www.figma.com/file/:file_key/:file_title?node-id=:node_id`
-
-This also means that, if you want to use `figma::get_figma_page()`, you will need
-to collect the `:node_id` portion of the URL as well. This portion gives you the
-node ID, or, in other words, the ID that identifies the canvas/page you are on.
-This portion of the URL is usually a key-value pair, where the ID of your node is after the equal sign (`=`).
-
-For example, by looking at the URL example that we gave above, we know that the
-canvas/page where I am is the page of `node_id = "0%3A1"`.
-
-
-## Get your personal access token
-
-You can read more about the authentication process and the use of personal
-access tokens, in [the section "Authentication" of the Figma API documentation](https://www.figma.com/developers/api#authentication).
-If you do not have a personal access token, you can create one in the Figma
-platform. Just log in the platform, and click on the `Settings` section, like
-in the image below:
-
-```{r, echo = FALSE, fig.cap = "Settings of Figma platform", out.width="30%"}
-knitr::include_graphics("./../figma-settings.png")
-```
-
-After that, look for the `Personal access token` section of the settings, like in
-the image below. This is where you can create all of your personal access tokens. Just
-add a description (or a "alias") to your token, and press Enter. A pop-up should appear
-in your screen with your new token.
-
-```{r, echo = FALSE, fig.cap = "Personal access token section in settings", out.width="60%"}
-knitr::include_graphics("./../create-token.png")
-```
-
-The Figma API uses this secret token to identify you, to know that is you that is requesting
-for a file, and not someone else. Because of this, is important to keep this token a secret,
-because if someone have it, they can access your Figma files through the API.
-
-A standard way to store these passwords, is to store them in the `.Renviron` file, but there are
-many other methods that are good alternatives too. A good place to start is the 
-[vignette from Hadley Wickham](https://cran.r-project.org/package=httr/vignettes/secrets.html).
+To use specifically the `figma::get_figma_page()` function, you will need to collect a third information, which is the `node_id`, or the ID that identifies a canvas/page of your Figma file. I explain, in details, on how to collect these key variables on the [main vignette package](https://pedropark99.github.io/figma/articles/figma.html). For brevity, lets assume in this blog post that already have collected these variables.
 
 
 ## Use `get_figma_file()` to get your Figma file 
@@ -123,7 +58,7 @@ figma_file <- figma::get_figma_file(
 )
 ```
 
-For now, the functions from `figma` package returns a `httr::response` object by default. But you can use the `.output_format` argument to fit the data into a more intuitive data strucuture. For example, a `tibble::tibble` object:
+The functions from `figma` package returns a `httr::response` object by default. But you can use the `.output_format` argument to fit the data into a more intuitive data strucuture. For example, a `tibble::tibble` object:
 
 ```{r, eval = FALSE}
 # Returns a `tibble::tibble` object:
@@ -147,3 +82,19 @@ print(figma_file)
 #> # … with abbreviated variable names ¹​object_type, ²​object_attributes
 ```
 
+Each row in the above `data.frame` is an object drawn in a canvas/page in your Figma file. Every object that you drawn in the canvas of your Figma file, can have a different type (like RECTANGLE, CIRCLE, TEXT, etc.). And objects of different types usually have different attributes. 
+
+For example, TEXT objects have a `characters` attribute, which have the exact text that is written in the text box. In the other hand, RECTANGLE objects does not have such attribute.
+
+All the attributes of each object are in the `​object_attributes` column, which is a `<list>` column. Each row (or, if you prefer, each element) in this column is a list with all the attributes of the object described in the corresponding row. For example, to collect the `characters` attribute of the first TEXT object described in `figma_file` (which is in the 2nd row), you could do this:
+
+```{r, eval = FALSE}
+figma_file$object_attributes[[2]][["characters"]]
+```
+
+```
+[1] "Um texto qualquer, que não sei se vai dar certo"
+```
+
+
+# The future
