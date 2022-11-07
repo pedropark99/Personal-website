@@ -137,7 +137,7 @@
     "href": "posts/2022-11-06-figma-pkgv0.1.0/en/index.html#getting-started",
     "title": "Introducing the {figma} R package",
     "section": "Getting started",
-    "text": "Getting started\nFist of all, you need to install the package on your machine, and to do that, you can use this code:\n\ninstall.packages(\"figma\")\n\nNow, to get the data of a Figma file through the Figma API, you have to collect two key variables about your file and your credentials. They are:\n\nfile_key: The ID (or the “key”) that identifies your Figma file;\ntoken: Your personal access token from the Figma platform;\n\nTo use the figma::get_figma_page() function, you will need to collect a third information, which is the node_id, or the ID that identifies a canvas/page of your Figma file. We will talk about this ID later."
+    "text": "Getting started\nFist of all, you need to install the package on your machine, and to do that, you can use this code:\n\ninstall.packages(\"figma\")\n\nOr, to install the development version directly from GitHub:\n\ndevtools::install_github(\"pedropark99/figma\")\n\nNow, to get the data of a Figma file through the Figma API, you have to collect two key variables about your file and your credentials. They are:\n\nfile_key: The ID (or the “key”) that identifies your Figma file;\ntoken: Your personal access token from the Figma platform;\n\nTo use the figma::get_figma_page() function, you will need to collect a third information, which is the node_id, or the ID that identifies a canvas/page of your Figma file. We will talk about this ID later."
   },
   {
     "objectID": "posts/en.html",
