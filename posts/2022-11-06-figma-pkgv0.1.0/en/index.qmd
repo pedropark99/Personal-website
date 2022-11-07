@@ -4,22 +4,137 @@ description: With this package, you can access the Figma API to bring your desig
 date: '2022-11-06'
 image: './../featured.png'
 categories: ['R Language', 'Package', 'Figma', 'API']
+toc: true
 ---
 
 ## Introduction
 
-I'm very happy to announce the realease of `figma` R package to CRAN! This package provides a R interface (you can call it a "wrapper" too if you prefer) to the Figma API. Below we have all the important links about this package:
+I'm very happy to announce the realease of `figma` R package to CRAN! This package provides a R interface (or a web client/wrapper) to the [Figma API](https://www.figma.com/developers/api). Below we have all the important links about this package:
 
 {{< include ../buttons-en.html >}}
 
-This is the first release (or the first version) of the package, and for now, it have all the necessary functionality to get all data from a Figma file (through the `/files/` endpoint), and bring it to your R session. But in the future, the package will include more functionalities and endpoints. Please, if you can, test this package and give feedbacks or report bugs by [sending Issues on the official repository](https://github.com/pedropark99/figma/issues).
+This is the first release (or the first version) of the package, and for now, it have all the necessary functionality to get all data from a Figma file, and bring it to your R session. But in the future, the package will include more functionalities and endpoints. Please, if you can, test this package and give feedbacks or report bugs by [sending Issues on the official repository](https://github.com/pedropark99/figma/issues).
 
 
 ## Getting started
 
-Fist of all, you need to install the package on your machine. And to do that, you can use this code:
+Fist of all, you need to install the package on your machine, and to do that, you can use this code:
 
 ```{r}
 #| eval: false
 install.packages("figma")
+```
+
+Now, to get the data of a Figma file through the Figma API, you have to collect two key variables about your file and your credentials. 
+They are:
+
+- `file_key`: The ID (or the "key") that identifies your Figma file;
+- `token`: Your personal access token from the Figma platform;
+
+To use the `figma::get_figma_page()` function, you will need to collect a third information, which is the `node_id`, or the ID that identifies a canvas/page of your Figma file. We will talk about this ID later.
+
+
+## Finding the key (or ID) of your Figma file
+
+The file key (or the file key), is a random text that identifies your Figma
+file. The Figma API uses this key to identify which specific Figma file you
+are requesting for.
+
+You can find the key (or ID) of your Figma file by looking at the URL in your web browser, when you access your Figma file
+at the Figma platform. As an example, lets use this Figma file entitled `Untitled` (I will not make a joke on that 
+`r emoji::emoji("sweat_smile")`):
+
+```{r file_example, echo = FALSE, fig.cap = "An example of Figma file", out.width="100%"}
+knitr::include_graphics("./../example-figma-file.png")
+```
+
+If we look at the top of my web browser, we have the following URL:
+
+`https://www.figma.com/file/hch8YlkIrYbU3raDzjPvCz/Untitled?node-id=0%3A1`
+
+The key (or the ID) of this file is `"hch8YlkIrYbU3raDzjPvCz"`. This means
+that the URL of every Figma file is composed of this structure. So in
+order to use the functions from the `figma` package, you should always
+collect this `:file_key` portion of the URL, to get the key to your
+file.
+
+`https://www.figma.com/file/:file_key/:file_title?node-id=:node_id`
+
+This also means that, if you want to use `figma::get_figma_page()`, you will need
+to collect the `:node_id` portion of the URL as well. This portion gives you the
+node ID, or, in other words, the ID that identifies the canvas/page you are on.
+This portion of the URL is usually a key-value pair, where the ID of your node is after the equal sign (`=`).
+
+For example, by looking at the URL example that we gave above, we know that the
+canvas/page where I am is the page of `node_id = "0%3A1"`.
+
+
+## Get your personal access token
+
+You can read more about the authentication process and the use of personal
+access tokens, in [the section "Authentication" of the Figma API documentation](https://www.figma.com/developers/api#authentication).
+If you do not have a personal access token, you can create one in the Figma
+platform. Just log in the platform, and click on the `Settings` section, like
+in the image below:
+
+```{r, echo = FALSE, fig.cap = "Settings of Figma platform", out.width="30%"}
+knitr::include_graphics("./../figma-settings.png")
+```
+
+After that, look for the `Personal access token` section of the settings, like in
+the image below. This is where you can create all of your personal access tokens. Just
+add a description (or a "alias") to your token, and press Enter. A pop-up should appear
+in your screen with your new token.
+
+```{r, echo = FALSE, fig.cap = "Personal access token section in settings", out.width="60%"}
+knitr::include_graphics("./../create-token.png")
+```
+
+The Figma API uses this secret token to identify you, to know that is you that is requesting
+for a file, and not someone else. Because of this, is important to keep this token a secret,
+because if someone have it, they can access your Figma files through the API.
+
+A standard way to store these passwords, is to store them in the `.Renviron` file, but there are
+many other methods that are good alternatives too. A good place to start is the 
+[vignette from Hadley Wickham](https://cran.r-project.org/package=httr/vignettes/secrets.html).
+
+
+## Use `get_figma_file()` to get your Figma file 
+Now that you have the key (or ID) that identifies your Figma file, and your personal token that
+identifies yourself, you can use `figma::get_figma_file()` to get your Figma file:
+
+```{r, eval = FALSE}
+library(figma)
+file_key <- "hch8YlkIrYbU3raDzjPvCz"
+# Insert your personal token:
+token <- "Your personal token ..."
+
+# Returns a `httr::response` object:
+figma_file <- figma::get_figma_file(
+  file_key, token
+)
+```
+
+For now, the functions from `figma` package returns a `httr::response` object by default. But you can use the `.output_format` argument to fit the data into a more intuitive data strucuture. For example, a `tibble::tibble` object:
+
+```{r, eval = FALSE}
+# Returns a `tibble::tibble` object:
+figma_file <- figma::get_figma_file(
+  file_key, token,
+  .output_format = "tibble"
+)
+
+print(figma_file)
+```
+
+```
+#> # A tibble: 5 × 7
+#>   canvas_id canvas_name canvas_type object_id object_name   objec…¹ object_att…²
+#>   <chr>     <chr>       <chr>       <chr>     <chr>         <chr>   <list>      
+#> 1 0:1       Page 1      CANVAS      1:2       Background    RECTAN… <named list>
+#> 2 0:1       Page 1      CANVAS      5:2       Paragraph     TEXT    <named list>
+#> 3 0:1       Page 1      CANVAS      5:3       Arrow         VECTOR  <named list>
+#> 4 5:4       Page 2      CANVAS      5:5       BackgroundPa… RECTAN… <named list>
+#> 5 5:4       Page 2      CANVAS      5:6       Texto da pág… TEXT    <named list>
+#> # … with abbreviated variable names ¹​object_type, ²​object_attributes
 ```

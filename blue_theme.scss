@@ -86,7 +86,7 @@ $font-family-monospace: 'Inconsolata';
 code {
     font-size: 14pt;
 }
-// Inline code inside Headers
+// Inline code inside Headers and Navigation bars
 h1 code {
     font-size: calc(1.3rem + 1.14vw);
 }
@@ -95,6 +95,10 @@ h2 code {
 }
 h3 code {
     font-size: calc(1.255rem + 0.6vw);
+}
+
+.nav-link code {
+    font-size: .875rem;
 }
 
 .description code {

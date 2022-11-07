@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Pedro Duarte Faria">
-<meta name="dcterms.date" content="2022-04-06">
-<meta name="description" content="Uma grande reforma sobre a obra foi feita para esta nova edição. Como resultado, temos seis novos capítulos para você!">
+<meta name="dcterms.date" content="2022-04-11">
+<meta name="description" content="Este livro oferece uma descrição profunda sobre os fundamentos da linguagem R, e como eles se aplicam no contexto da análise de dados.">
 
-<title>home |&gt; dplyr::glimpse() - Novidades da 3° edição de Introdução à Linguagem R: seus fundamentos e sua prática</title>
+<title>home |&gt; dplyr::glimpse() - Introdução à Linguagem R: seus fundamentos e sua prática</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -26,22 +26,22 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../../../">
-<script src="../../../site_libs/quarto-html/quarto.js"></script>
-<script src="../../../site_libs/quarto-html/popper.min.js"></script>
-<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../">
+<script src="../../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -72,7 +72,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 </script>
 
 
-<link rel="stylesheet" href="../../../styles.css">
+<link rel="stylesheet" href="../../../../styles.css">
 </head>
 
 <body class="nav-fixed">
@@ -82,7 +82,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
-    <a class="navbar-brand" href="../../../index.html">
+    <a class="navbar-brand" href="../../../../index.html">
     <span class="navbar-title">home |&gt; dplyr::glimpse()</span>
     </a>
   </div>
@@ -92,7 +92,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../../about.html">
+    <a class="nav-link" href="../../../../about.html">
  <span class="menu-text">About Me</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -101,15 +101,15 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-posts">    
         <li>
-    <a class="dropdown-item" href="../../../posts/index.html">
+    <a class="dropdown-item" href="../../../../posts/index.html">
  <span class="dropdown-text">All posts</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../../posts/en.html">
+    <a class="dropdown-item" href="../../../../posts/en.html">
  <span class="dropdown-text">Posts in english</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../../posts/pt.html">
+    <a class="dropdown-item" href="../../../../posts/pt.html">
  <span class="dropdown-text">Posts em português</span></a>
   </li>  
     </ul>
@@ -120,15 +120,15 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-publications">    
         <li>
-    <a class="dropdown-item" href="../../../publications/index.html">
+    <a class="dropdown-item" href="../../../../publications/index.html">
  <span class="dropdown-text">All publications</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../../publications/en.html">
+    <a class="dropdown-item" href="../../../../publications/en.html">
  <span class="dropdown-text">Publications in English</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../../publications/pt.html">
+    <a class="dropdown-item" href="../../../../publications/pt.html">
  <span class="dropdown-text">Publicações em Português</span></a>
   </li>  
     </ul>
@@ -139,11 +139,11 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-cv">    
         <li>
-    <a class="dropdown-item" href="../../../files/cv/cv-english.pdf">
+    <a class="dropdown-item" href="../../../../files/cv/cv-english.pdf">
  <span class="dropdown-text">CV in English</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../../files/cv/cv-portuguese.pdf">
+    <a class="dropdown-item" href="../../../../files/cv/cv-portuguese.pdf">
  <span class="dropdown-text">CV em Português</span></a>
   </li>  
     </ul>
@@ -178,40 +178,35 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-page">
-      <h1 class="title">Novidades da 3° edição de Introdução à Linguagem R: seus fundamentos e sua prática</h1>
+      <h1 class="title">Introdução à Linguagem R: seus fundamentos e sua prática</h1>
                   <div>
         <div class="description">
-          Uma grande reforma sobre a obra foi feita para esta nova edição. Como resultado, temos seis novos capítulos para você!
+          Este livro oferece uma descrição profunda sobre os fundamentos da linguagem R, e como eles se aplicam no contexto da análise de dados.
         </div>
       </div>
                           <div class="quarto-categories">
-                <div class="quarto-category">Book</div>
                 <div class="quarto-category">R Language</div>
+                <div class="quarto-category">Book</div>
+                <div class="quarto-category">Brazil</div>
               </div>
                   </div>
   </div>
     
-  <div class="quarto-title-meta-author">
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-heading">Affiliation</div>
-    
-      <div class="quarto-title-meta-contents">
-      Pedro Duarte Faria 
-    </div>
-      <div class="quarto-title-meta-contents">
-          <p class="affiliation">
-              Take Blip
-            </p>
-        </div>
-      </div>
-
+  
   <div class="quarto-title-meta">
 
-        
+      <div>
+      <div class="quarto-title-meta-heading">Authors</div>
+      <div class="quarto-title-meta-contents">
+               <p>Pedro Duarte Faria </p>
+               <p>João Pedro Figueira Amorim Parga </p>
+            </div>
+    </div>
+      
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">April 6, 2022</p>
+        <p class="date">April 11, 2022</p>
       </div>
     </div>
     
@@ -229,30 +224,34 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 
 
 
-<section id="introdução" class="level1">
-<h1>Introdução</h1>
-<p>É com muito prazer que venho compartilhar com você as novidades que estou trazendo para essa nova edição do livro <a href="https://pedro-faria.netlify.app/pt/publication/book/introducao_linguagem_r/">Introdução à Linguagem R: seus fundamentos e sua prática</a>. O lançamento desta nova edição deve ocorrer ainda no meio de Abril de 2022 📆, portanto, fique atento 😉.</p>
+<section id="sobre-o-livro" class="level1">
+<h1>Sobre o livro</h1>
+<p>Este livro oferece uma descrição profunda sobre os fundamentos da linguagem R, e como eles se aplicam no contexto da análise de dados. Sua principal contribuição para a literatura brasileira hoje, está no combate de dois problemas recorrentes nos materiais disponíveis em português sobre a linguagem: 1) a falta de profundidade de muitos materiais, que tentam abordar muitos assuntos em um espaço muito curto; 2) a alta especialização de muitos materiais, que são de difícil transposição para aplicações gerais em análises de dados.</p>
+<p><a href="https://amz.run/5UiQ"> <button type="button" class="btn btn-primary">Compre uma versão física</button></a> <a href="https://pedropark99.github.io/Introducao_R/"> <button type="button" class="btn btn-primary">Leia online</button></a> <a href="./../respostas_complete.pdf"> <button type="button" class="btn btn-primary">Respostas dos exercícios</button></a></p>
 </section>
-<section id="o-que-temos-de-novo" class="level1">
-<h1>O que temos de novo?</h1>
-<p>Temos seis novos capítulos 🤯, os quais compõe uma nova parte do livro e, trazem consigo, grandes avanços sobre o processo de desenvolvimento de programas no R. Além disso, várias melhorias foram feitas em seções específicas do livro, especialmente sobre o capítulo 2.</p>
-<p>Primeiro, houve uma reorganização significativa do livro. Os capítulos pré-existentes foram reorganizados em quatro partes diferentes. Já a quinta e nova parte (Funções e <em>Loops</em>: construindo os seus próprios programas e automatizando tarefas) é composta pelos seis novos capítulos introduzidos nesta edição.</p>
-<p>Segundo, o capítulo de Funções e <em>Loops</em> foi completamente reescrito, expandido, e, repartido em dois novos capítulos 🥳🎉🎉🎉. Mais especificamente, os capítulos 14 (Funções) e 15 (<em>Loops</em>) desta edição.</p>
-<p>Terceiro, o capítulo 16 desta edição traz uma das novidades programadas desde a segunda edição: um novo (e robusto) capítulo sobre <em>functional programming</em>. Com essa adição, esta obra se torna uma referência mais moderna e, se aproxima dos padrões adotados hoje pela comunidade internacional de R 😎.</p>
-<p>Quarto, <em>environments</em> e as regras de <em>scoping</em> da linguagem são dois tópicos relativamente avançados, e que costumam causar certa confusão em muitos iniciantes. Por isso, um novo capítulo foi produzido para descrever essas funcionalidades que sustentam partes essenciais da linguagem, assim como de alguns dos pacotes que introduzimos ao longo do livro (e.g.&nbsp;<code>dplyr</code> e <code>ggplot2</code>).</p>
-<p>Quinto, várias adições e melhorias foram feitas no capítulo 6 (Introdução a base de dados relacionais com <code>dplyr</code>) e, principalmente, no capítulo 2 (Fundamentos da Linguagem R). Dentre elas, temos: um novo estudo de caso (Importando os dados da PINTEC); novas seções sobre as funções <code>str()</code> e <code>is.*()</code>; melhorias significativas sobre as seções de Coerção no R e Valores especiais do R.</p>
-<p>Sexto, foi introduzido um novo capítulo que descreve os controles condicionais de fluxo (<code>if else</code> <em>statements</em> e <code>switch()</code>) que a linguagem R oferece.</p>
-<p>Sétimo, um novo e pequeno capítulo foi adicionado à segunda parte do livro, com o objetivo de introduzir o universo do <code>tidyverse</code> ao leitor de maneira mais clara e amigável 🥰.</p>
-<p>Oitavo, o apêndice contendo as respostas dos exercícios foi retirado, com o objetivo de reduzir o número de páginas do livro. Consequentemente, as respostas dos exercícios estão sendo disponibilizadas em um PDF separado, o qual pode ser baixado gratuitamente, a partir da página de <a href="https://pedro-faria.netlify.app/pt/publication/book/introducao_linguagem_r/">publicação do livro</a>.</p>
+<section id="o-que-você-aprende" class="level1">
+<h1>O que você aprende ?</h1>
+<p>Através deste livro, você pode aprender sobre os fundamentos da linguagem R, e como eles se aplicam a área de análise de dados. Em mais detalhes:</p>
+<ul>
+<li><p><strong>Introduzindo a linguagem</strong>: aprenda sobre como definir e como trabalhar com objetos; conheça as estruturas e tipos de dados oferecidos pela linguagem; entenda como os processos de coerção e os valores especiais da linguagem podem afetar os seus resultados.</p></li>
+<li><p><strong>Importação e transformação</strong>: aprenda a importar, transformar e formatar suas tabelas através dos pacotes <code>readr</code>, <code>readxl</code>, <code>haven</code>, <code>dplyr</code> e <code>tidyr</code>. Aplicando operações de ordenação, filtro, seleção e expansão, além de operações de pivô e <em>join</em>’s.</p></li>
+<li><p><strong>Visualização de dados</strong>: aprenda a utilizar o pacote <code>ggplot2</code> para produzir gráficos elegantes e efetivos para apresentar os seus dados e as suas conclusões.</p></li>
+<li><p><strong>Programando a sua análise</strong>: aprenda a utilizar controles de fluxo, funções e <em>loops</em> para automatizar tarefas e solucionar os seus problemas de maneira simples e clara.</p></li>
+<li><p><strong><em>Functional programming</em></strong>: aprenda a utilizar o pacote <code>purrr</code> para distribuir rapidamente os seus cálculos ao longo de múltiplos <em>inputs</em>.</p></li>
+<li><p><strong><em>Debugging</em></strong> e <strong><em>environments</em></strong>: conheça as principais técnicas de <em>debugging</em> existentes na linguagem R, e, aprenda como investigar erros em suas funções. Além disso, entenda como a linguagem procura pelos seus objetos e, como você pode produzir resultados inesperados durante essa busca.</p></li>
+</ul>
 </section>
-<section id="sobre-onde-encontrar-o-livro" class="level1">
-<h1>Sobre onde encontrar o livro</h1>
-<p>Assim como ocorreu nas edições anteriores, você poderá ler toda a obra de maneira gratuita e aberta através de seu <a href="https://pedropark99.github.io/Introducao_R/">website</a> 📖.</p>
-<p>Contudo, diferente das edições anteriores, a versão em PDF da obra não será aberta. Você poderá adquirir uma versão em PDF ou física do livro através da loja da Amazon. Ao comprar essas versões, você estará me ajudando a continuar contribuindo com a nossa comunidade ❤️.</p>
+<section id="compre-uma-versão-física-do-livro" class="level1">
+<h1>Compre uma versão física do livro!</h1>
+<p>Você pode adquirir uma <a href="https://amz.run/5UiQ">versão física do livro através da loja da Amazon</a>. Uma versão eBook do livro também está disponível. Ao adquirir esses produtos, você estará me ajudando a continuar com esse projeto e a contribuir com nossa comunidade brasileira de R.</p>
 </section>
-<section id="contribua-para-a-obra-ou-faça-sugestões" class="level1">
-<h1>Contribua para a obra ou faça sugestões!</h1>
-<p>Caso seja de seu interesse, você pode contribuir diretamente para a obra, ao postar <em>pull requests</em> dentro de seu <a href="https://github.com/pedropark99/Introducao_R">repositório oficial</a>. Para mais, você também pode fazer sugestões ou comentários, ao postar <em>issues</em> neste mesmo repositório.</p>
+<section id="leia-o-livro-online" class="level1">
+<h1>Leia o livro online</h1>
+<p>Caso você não possa comprar uma versão física do livro, você ainda pode ler gratuitamente a obra completa através de seu <a href="https://pedropark99.github.io/Introducao_R/">site</a>.</p>
+</section>
+<section id="contribua-para-o-projeto" class="level1">
+<h1>Contribua para o projeto</h1>
+<p>Você também pode contribuir diretamente para a obra, ao postar <em>pull requests</em> ou <em>issues</em> no <a href="https://github.com/pedropark99/Introducao_R">repositório oficial do livro</a> no GitHub.</p>
 
 
 </section>
