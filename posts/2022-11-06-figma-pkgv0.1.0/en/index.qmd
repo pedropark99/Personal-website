@@ -25,6 +25,14 @@ Fist of all, you need to install the package on your machine, and to do that, yo
 install.packages("figma")
 ```
 
+Or, to install the development version directly from GitHub:
+
+```{r}
+#| eval: false
+devtools::install_github("pedropark99/figma")
+```
+
+
 Now, to get the data of a Figma file through the Figma API, you have to collect two key variables about your file and your credentials. 
 They are:
 
@@ -138,3 +146,4 @@ print(figma_file)
 #> 5 5:4       Page 2      CANVAS      5:6       Texto da pág… TEXT    <named list>
 #> # … with abbreviated variable names ¹​object_type, ²​object_attributes
 ```
+
