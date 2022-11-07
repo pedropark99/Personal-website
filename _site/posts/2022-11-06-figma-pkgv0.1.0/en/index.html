@@ -294,9 +294,8 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
   <li><a href="#getting-started" id="toc-getting-started" class="nav-link" data-scroll-target="#getting-started">Getting started</a></li>
-  <li><a href="#finding-the-key-or-id-of-your-figma-file" id="toc-finding-the-key-or-id-of-your-figma-file" class="nav-link" data-scroll-target="#finding-the-key-or-id-of-your-figma-file">Finding the key (or ID) of your Figma file</a></li>
-  <li><a href="#get-your-personal-access-token" id="toc-get-your-personal-access-token" class="nav-link" data-scroll-target="#get-your-personal-access-token">Get your personal access token</a></li>
   <li><a href="#use-get_figma_file-to-get-your-figma-file" id="toc-use-get_figma_file-to-get-your-figma-file" class="nav-link" data-scroll-target="#use-get_figma_file-to-get-your-figma-file">Use <code>get_figma_file()</code> to get your Figma file</a></li>
+  <li><a href="#other-scopes-of-data" id="toc-other-scopes-of-data" class="nav-link" data-scroll-target="#other-scopes-of-data">Other scopes of data</a></li>
   </ul>
 </nav>
     </div>
@@ -327,55 +326,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <li><code>file_key</code>: The ID (or the “key”) that identifies your Figma file;</li>
 <li><code>token</code>: Your personal access token from the Figma platform;</li>
 </ul>
-<p>To use the <code>figma::get_figma_page()</code> function, you will need to collect a third information, which is the <code>node_id</code>, or the ID that identifies a canvas/page of your Figma file. We will talk about this ID later.</p>
-</section>
-<section id="finding-the-key-or-id-of-your-figma-file" class="level2">
-<h2 class="anchored" data-anchor-id="finding-the-key-or-id-of-your-figma-file">Finding the key (or ID) of your Figma file</h2>
-<p>The file key (or the file key), is a random text that identifies your Figma file. The Figma API uses this key to identify which specific Figma file you are requesting for.</p>
-<p>You can find the key (or ID) of your Figma file by looking at the URL in your web browser, when you access your Figma file at the Figma platform. As an example, lets use this Figma file entitled <code>Untitled</code> (I will not make a joke on that 😅):</p>
-<div class="cell">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="./../example-figma-file.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">An example of Figma file</figcaption><p></p>
-</figure>
-</div>
-</div>
-</div>
-<p>If we look at the top of my web browser, we have the following URL:</p>
-<p><code>https://www.figma.com/file/hch8YlkIrYbU3raDzjPvCz/Untitled?node-id=0%3A1</code></p>
-<p>The key (or the ID) of this file is <code>"hch8YlkIrYbU3raDzjPvCz"</code>. This means that the URL of every Figma file is composed of this structure. So in order to use the functions from the <code>figma</code> package, you should always collect this <code>:file_key</code> portion of the URL, to get the key to your file.</p>
-<p><code>https://www.figma.com/file/:file_key/:file_title?node-id=:node_id</code></p>
-<p>This also means that, if you want to use <code>figma::get_figma_page()</code>, you will need to collect the <code>:node_id</code> portion of the URL as well. This portion gives you the node ID, or, in other words, the ID that identifies the canvas/page you are on. This portion of the URL is usually a key-value pair, where the ID of your node is after the equal sign (<code>=</code>).</p>
-<p>For example, by looking at the URL example that we gave above, we know that the canvas/page where I am is the page of <code>node_id = "0%3A1"</code>.</p>
-</section>
-<section id="get-your-personal-access-token" class="level2">
-<h2 class="anchored" data-anchor-id="get-your-personal-access-token">Get your personal access token</h2>
-<p>You can read more about the authentication process and the use of personal access tokens, in <a href="https://www.figma.com/developers/api#authentication">the section “Authentication” of the Figma API documentation</a>. If you do not have a personal access token, you can create one in the Figma platform. Just log in the platform, and click on the <code>Settings</code> section, like in the image below:</p>
-<div class="cell">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="./../figma-settings.png" class="img-fluid figure-img" style="width:30.0%"></p>
-<p></p><figcaption class="figure-caption">Settings of Figma platform</figcaption><p></p>
-</figure>
-</div>
-</div>
-</div>
-<p>After that, look for the <code>Personal access token</code> section of the settings, like in the image below. This is where you can create all of your personal access tokens. Just add a description (or a “alias”) to your token, and press Enter. A pop-up should appear in your screen with your new token.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="./../create-token.png" class="img-fluid figure-img" style="width:60.0%"></p>
-<p></p><figcaption class="figure-caption">Personal access token section in settings</figcaption><p></p>
-</figure>
-</div>
-</div>
-</div>
-<p>The Figma API uses this secret token to identify you, to know that is you that is requesting for a file, and not someone else. Because of this, is important to keep this token a secret, because if someone have it, they can access your Figma files through the API.</p>
-<p>A standard way to store these passwords, is to store them in the <code>.Renviron</code> file, but there are many other methods that are good alternatives too. A good place to start is the <a href="https://cran.r-project.org/package=httr/vignettes/secrets.html">vignette from Hadley Wickham</a>.</p>
+<p>To use specifically the <code>figma::get_figma_page()</code> function, you will need to collect a third information, which is the <code>node_id</code>, or the ID that identifies a canvas/page of your Figma file. I explain, in details, on how to collect these key variables on the <a href="https://pedropark99.github.io/figma/articles/figma.html">main vignette package</a>. For brevity, lets assume in this blog post that already have collected these variables.</p>
 </section>
 <section id="use-get_figma_file-to-get-your-figma-file" class="level2">
 <h2 class="anchored" data-anchor-id="use-get_figma_file-to-get-your-figma-file">Use <code>get_figma_file()</code> to get your Figma file</h2>
@@ -391,7 +342,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  file_key, token</span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>For now, the functions from <code>figma</code> package returns a <code>httr::response</code> object by default. But you can use the <code>.output_format</code> argument to fit the data into a more intuitive data strucuture. For example, a <code>tibble::tibble</code> object:</p>
+<p>The functions from <code>figma</code> package returns a <code>httr::response</code> object by default. But you can use the <code>.output_format</code> argument to fit the data into a more intuitive data strucuture. For example, a <code>tibble::tibble</code> object:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Returns a `tibble::tibble` object:</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>figma_file <span class="ot">&lt;-</span> figma<span class="sc">::</span><span class="fu">get_figma_file</span>(</span>
@@ -410,6 +361,28 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 #&gt; 4 5:4       Page 2      CANVAS      5:5       BackgroundPa… RECTAN… &lt;named list&gt;
 #&gt; 5 5:4       Page 2      CANVAS      5:6       Texto da pág… TEXT    &lt;named list&gt;
 #&gt; # … with abbreviated variable names ¹​object_type, ²​object_attributes</code></pre>
+<p>Each row in the above <code>data.frame</code> is an object drawn in a canvas/page in your Figma file. Every object that you drawn in the canvas of your Figma file, can have a different type (like RECTANGLE, CIRCLE, TEXT, etc.). And objects of different types usually have different attributes.</p>
+<p>For example, TEXT objects have a <code>characters</code> attribute, which have the exact text that is written in the text box. In the other hand, RECTANGLE objects does not have such attribute.</p>
+<p>All the attributes of each object are in the <code>​object_attributes</code> column, which is a <code>&lt;list&gt;</code> column. Each row (or, if you prefer, each element) in this column is a list with all the attributes of the object described in the corresponding row. For example, to collect the <code>characters</code> attribute of the first TEXT object described in <code>figma_file</code> (which is in the 2nd row), you could do this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>figma_file<span class="sc">$</span>object_attributes[[<span class="dv">2</span>]][[<span class="st">"characters"</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>[1] "Um texto qualquer, que não sei se vai dar certo"</code></pre>
+<p>Or, you could the functions from <code>dplyr</code> and <code>purrr</code> packages to extract the <code>characters</code> attribute from all TEXT objects of your Figma file, like this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>text_objects <span class="ot">&lt;-</span> figma_file <span class="sc">|&gt;</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(object_type <span class="sc">==</span> <span class="st">'TEXT'</span>) </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>text_objects[[<span class="st">'object_attributes'</span>]] <span class="sc">|&gt;</span> </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  purrr<span class="sc">::</span><span class="fu">map_chr</span>(<span class="st">'characters'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>[1] "Um texto qualquer, que não sei se vai dar certo" "Texto da página 2"</code></pre>
+</section>
+<section id="other-scopes-of-data" class="level1">
+<h1>Other scopes of data</h1>
+<p>The <code>figma::get_figma_file()</code> get the data of all objects drawn in all canvas/pages of a Figma file. But, maybe, you don’t need all data from your file. Maybe you just need the data from a section, or a specific part of your Figma file.</p>
+<p>For these occasions, the <code>figma</code> package offers the <code>figma::get_figma_page()</code> (get data of objects drawn in a specific canvas/page of your file) and <code>figma::get_document_info()</code> (get metadata about your Figma file) functions.</p>
+<p>These functions work basically the same way as <code>figma::get_figma_file()</code>, they have the same arguments (except <code>figma::get_figma_page()</code> which have a extra argument <code>node_id</code>). Check the <a href="https://pedropark99.github.io/figma/reference/index.html">documentation of these functions</a>, and the <a href="https://pedropark99.github.io/figma/articles/figma.html">main vignette of the package</a> to see examples.</p>
 
 
 </section>

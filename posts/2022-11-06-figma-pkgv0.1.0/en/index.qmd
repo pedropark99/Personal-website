@@ -96,5 +96,25 @@ figma_file$object_attributes[[2]][["characters"]]
 [1] "Um texto qualquer, que não sei se vai dar certo"
 ```
 
+Or, you could the functions from `dplyr` and `purrr` packages to extract the `characters` attribute from all TEXT objects of your Figma file, like this:
 
-# The future
+```{r, eval = FALSE}
+text_objects <- figma_file |> 
+  dplyr::filter(object_type == 'TEXT') 
+
+text_objects[['object_attributes']] |> 
+  purrr::map_chr('characters')
+```
+
+```
+[1] "Um texto qualquer, que não sei se vai dar certo" "Texto da página 2"
+```
+
+# Other scopes of data
+
+The `figma::get_figma_file()` get the data of all objects drawn in all canvas/pages of a Figma file. But, maybe, you don't need all data from your file. Maybe you just need the data from a section, or a specific part of your Figma file.
+
+For these occasions, the `figma` package offers the `figma::get_figma_page()` (get data of objects drawn in a specific canvas/page of your file) and `figma::get_document_info()` (get metadata about your Figma file) functions. 
+
+These functions work basically the same way as `figma::get_figma_file()`, they have the same arguments (except `figma::get_figma_page()` which have a extra argument `node_id`). Check the [documentation of these functions](https://pedropark99.github.io/figma/reference/index.html), and the [main vignette of the package](https://pedropark99.github.io/figma/articles/figma.html) to see examples.
+
