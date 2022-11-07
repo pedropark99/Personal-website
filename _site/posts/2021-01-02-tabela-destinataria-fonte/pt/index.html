@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-0.9.531">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Pedro Duarte Faria">
+<meta name="dcterms.date" content="2021-01-02">
+<meta name="description" content="Um visão diferente (talvez maluca) sobre como ensinar/explicar Outer joins para seus alunos">
+
+<title>home |&gt; dplyr::glimpse() - Tabela destinatária e tabela fonte</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">home |&gt; dplyr::glimpse()</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html">About Me</a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="button" data-bs-toggle="dropdown" aria-expanded="false">Posts</a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-posts">    
+        <li>
+    <a class="dropdown-item" href="../../../posts/index.html">
+ <span class="dropdown-text">All posts</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../posts/en.html">
+ <span class="dropdown-text">Posts in english</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../posts/pt.html">
+ <span class="dropdown-text">Posts em português</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-publications" role="button" data-bs-toggle="dropdown" aria-expanded="false">Publications</a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-publications">    
+        <li>
+    <a class="dropdown-item" href="../../../publications/index.html">
+ <span class="dropdown-text">All publications</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../publications/en.html">
+ <span class="dropdown-text">Publications in English</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../publications/pt.html">
+ <span class="dropdown-text">Publicações em Português</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-cv" role="button" data-bs-toggle="dropdown" aria-expanded="false">CV</a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-cv">    
+        <li>
+    <a class="dropdown-item" href="../../../files/cv/cv-english.pdf">
+ <span class="dropdown-text">CV in English</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../files/cv/cv-portuguese.pdf">
+ <span class="dropdown-text">CV em Português</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item compact">
+    <a class="nav-link" href="mailto:pedropark99@gmail.com"><i class="bi bi-envelope" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/pedropark99"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/PedroPark9"><i class="bi bi-twitter" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/pedro-faria-a68140209/"><i class="bi bi-linkedin" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-page">
+      <h1 class="title">Tabela destinatária e tabela fonte</h1>
+            <p class="subtitle lead">Uma segunda visão sobre <em>outer joins</em></p>
+                  <div>
+        <div class="description">
+          Um visão diferente (talvez maluca) sobre como ensinar/explicar <em>Outer joins</em> para seus alunos
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Joins</div>
+                <div class="quarto-category">Teaching</div>
+                <div class="quarto-category">Book</div>
+                <div class="quarto-category">R Language</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading"></div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">January 2, 2021</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block column-page" id="quarto-document-content">
+
+
+
+
+<div class="cell">
+<style type="text/css">
+.hljs{
+  font-family: 'Inconsolata', monospace;
+  font-size: 17px;
+}
+
+.hljs.shell{
+  font-size: 18px;
+}
+
+.hljs-comment{
+  font-style: normal;
+  color: #222222;
+}
+</style>
+</div>
+<section id="introdução" class="level1">
+<h1>Introdução</h1>
+<p><em>Outer joins</em> são um tópico de simples compreensão para a maioria dos alunos. Entretanto, esse artigo propõe uma segunda abordagem sobre o tema. Tal abordagem foi construída durante uma reformulação recente do capítulo “Introdução a base de dados relacionais” do livro <a href="https://pedro-faria.netlify.app/pt/publication/book/introducao_linguagem_r/">Introdução à Linguagem R: seus fundamentos e sua prática</a>. O ponto de vista apresentado aqui, busca ser estrito, e utiliza essa rigidez como um mecanismo que facilite a memorização do aluno sobre os comportamentos de cada tipo de <em>outer join</em>.</p>
+</section>
+<section id="joins-possuem-sentido-e-direção" class="level1">
+<h1>Joins possuem sentido e direção</h1>
+<p>Uma operação de <em>join</em> é nada mais do que uma união entre duas tabelas. Por outro lado, temos uma outra opção de interpretação do resultado dessa operação. De modo que, para produzirmos uma tabela que represente a união entre duas tabelas, poderíamos simplesmente extrair todas as colunas de uma das tabelas, e inserí-las na outra tabela.</p>
+<p>Por exemplo, suponha que você possua uma tabela <code>A</code>, que contém duas colunas, chamadas <code>x</code> e <code>y</code>; e uma tabela <code>B</code>, que por sua vez, guarda 4 colunas diferentes, denominadas <code>x</code>, <code>z</code>, <code>r</code>, e <code>t</code>. Perceba que uma das colunas na tabela <code>B</code>, corresponde a mesma coluna <code>x</code> que encontramos na tabela <code>A</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="fu">round</span>(<span class="fu">rnorm</span>(<span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">1</span>), <span class="dv">2</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">z =</span> letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>],</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">r =</span> <span class="fu">c</span>(<span class="fl">3.5</span>, <span class="fl">2.1</span>, <span class="dv">1</span>, <span class="fl">5.6</span>, <span class="fl">7.2</span>),</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">t =</span> <span class="st">"tzu"</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Se você deseja unir as tabelas <code>A</code> e <code>B</code>, você basicamente deseja criar uma nova tabela, que contém todas as cinco colunas dessas duas tabelas (<code>x</code>, <code>y</code>, <code>z</code>, <code>r</code> e <code>t</code>). Portanto, poderíamos imaginar um processo de <em>join</em>, como se estivéssemos transportando todas as colunas da tabela <code>B</code>, para dentro da tabela <code>A</code>. Dessa maneira, temos a tabela abaixo como resultado:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">full_join</span>(A, B, <span class="at">by =</span> <span class="st">"x"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 5
+      x     y z         r t    
+  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;
+1     1  3.27 a       3.5 tzu  
+2     2  2.3  b       2.1 tzu  
+3     3  1.18 c       1   tzu  
+4     4  1.95 d       5.6 tzu  
+5     5  1.59 e       7.2 tzu  </code></pre>
+</div>
+</div>
+<p>Com isso, estamos criando a ideia de que <strong>um <em>join</em> possui sempre um sentido e uma direção</strong>. Em outras palavras, primeiro, extraímos as colunas da tabela <code>B</code>, e em seguida, acrescentamos essas colunas à tabela <code>A</code>. Repare que estamos sempre partindo da tabela <code>B</code> em direção a tabela <code>A</code>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="./../direcao.png" class="img-fluid" width="2200"></p>
+</div>
+</div>
+</section>
+<section id="tabela-destinatária-e-tabela-fonte" class="level1">
+<h1>Tabela destinatária e tabela fonte</h1>
+<p>Por essa perspectiva, podemos interpretar que, em um <em>join</em>, estamos trazendo todas as colunas de uma tabela secundária, para dentro de nossa tabela principal (ou a nossa tabela de interesse). Temos a opção de chamarmos essas tabelas de: <strong>tabela fonte</strong> (tabela secundária) e <strong>tabela destinatária</strong> (tabela principal). Com isso, temos que um <em>join</em> sempre parte da <strong>tabela fonte</strong> em direção à <strong>tabela destinatária</strong>.</p>
+<p>Essa perspectiva faz sentido com a prática de <em>joins</em>. Pois em qualquer análise, nós comumente trabalhamos com uma tabela “principal”, ou uma tabela que contém os principais dados que estamos analisando. E quando utilizamos algum <em>join</em>, estamos geralmente trazendo colunas de outras tabelas para dentro dessa tabela “principal” (ou tabela “destinatária”, segundo essa perspectiva). Por isso, tenha em mente que um <em>join</em> sempre parte da <strong>tabela fonte</strong> em direção à <strong>tabela destinatária</strong>.</p>
+</section>
+<section id="tipos-de-outer-join" class="level1">
+<h1>Tipos de <em>outer join</em></h1>
+<p>Um <em>join</em> natural (<em>inner join</em>) usualmente gera uma perda de observações de ambas as tabelas envolvidas no processo. Em contrapartida, um <em>join</em> do tipo <em>outer</em> (isto é, um <em>outer join</em>), busca delimitar qual das duas tabelas será preservada no resultado. Ou seja, um <em>outer join</em> busca manter as linhas de pelo menos uma das tabelas envolvidas, no resultado do <em>join</em>.</p>
+<p>Temos três tipos principais de <em>outer joins</em>, que são <em>left join</em>, <em>right join</em> e <em>full join</em>. O <em>full join</em> é o mais simples de se compreender, pois ele busca manter todas as linhas de ambas as tabelas empregadas. Logo, mesmo que haja alguma observação não encontrada em uma das tabelas, ela será preservada no produto final da operação.</p>
+<p>No entanto, <em>left join</em> e <em>right join</em> buscam conservar as linhas de apenas uma das tabelas utilizadas no <em>join</em>. Nesse ponto, muitos professores diriam algo como: “se temos desejamos aplicar um <em>join</em> entre as tabelas <code>A</code> e <code>B</code>, um <em>left join</em> irá manter as linhas da tabela <code>A</code> e um <em>right join</em> vai manter as linhas da tabela <code>B</code>”. Outros professores ainda tentariam dizer: “<em>left join</em> irá manter as linhas da tabela à esquerda, enquanto um <em>right join</em> vai manter as linhas da tabela à direita”.</p>
+<p>Porém, certa confusão pode ser facilmente aplicada em ambas alternativas. Digo, um aluno pode facilmente enfrentar a seguinte questão: “🤔 Uhmm… Eu não me lembro muito bem. Um <em>left join</em> mantém as linhas da tabela <code>A</code>? Ou são as linhas da tabela <code>B</code>?”; ou então, “🤔 Pera! Mas qual das duas tabelas está a direita?”.</p>
+</section>
+<section id="conclusão" class="level1">
+<h1>Conclusão</h1>
+<p>Com isso, segundo a perspectiva adotada nesse artigo, podemos entender que, um <em>left join</em> e um <em>right join</em> buscam manter as linhas da <strong>tabela destinatária</strong> e da <strong>tabela fonte</strong>, respectivamente. Dessa forma, ao utilizar um <em>right join</em> ou um <em>left join</em>, você deve se questionar o seguinte: “Eu quero manter as linhas de minha tabela principal (tabela destinatária)? Ou da tabela secundária (tabela fonte), de onde estou extraindo as novas colunas?”. Logo, se você deseja manter, por exemplo, as linhas de sua tabela principal (tabela destinatária), que é o que ocorre na maioria das vezes, você sabe agora que você precisa utilizar um <em>left join</em>.</p>
+<p>Em uma representação visual, podemos reproduzir abaixo a imagem inicial desse artigo, que marca as linhas mantidas por cada um desses dois tipos de <em>join</em>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="./../featured.png" class="img-fluid" width="2200"></p>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

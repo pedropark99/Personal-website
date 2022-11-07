@@ -31,7 +31,7 @@ website:
             href: files/cv/cv-english.pdf
           - text: CV em Português
             href: files/cv/cv-portuguese.pdf
-      - icon: envelope
+      - icon: envelope-fill
         href: "mailto:pedropark99@gmail.com"
       - icon: github
         href: https://github.com/pedropark99

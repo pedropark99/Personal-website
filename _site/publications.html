@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>home |&gt; dplyr::glimpse() - Hi there r emoji::emoji('raised_hand_with_fingers_splayed')!</title>
+<title>home |&gt; dplyr::glimpse() - Publications</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -58,42 +58,20 @@ ul.task-list{list-style: none;}
 <script>
 
   window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-posts .list');
+    const listingTargetEl = window.document.querySelector('#listing-publications .list');
     if (!listingTargetEl) {
       // No listing discovered, do not attach.
       return; 
     }
 
     const options = {
-      valueNames: ['listing-title','listing-author','listing-date','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      valueNames: ['listing-title','listing-author','listing-date','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
       
-      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description"],
+      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description","listing-categories"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-posts'] = new List('listing-posts', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-  
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-books .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-title','listing-author','listing-date','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-books'] = new List('listing-books', options);
+    window['quarto-listings']['listing-publications'] = new List('listing-publications', options);
 
     if (window['quarto-listing-loaded']) {
       window['quarto-listing-loaded']();
@@ -171,7 +149,7 @@ ul.task-list{list-style: none;}
     </ul>
   </li>
   <li class="nav-item compact">
-    <a class="nav-link" href="mailto:pedropark99@gmail.com"><i class="bi bi-envelope-fill" role="img">
+    <a class="nav-link" href="mailto:pedropark99@gmail.com"><i class="bi bi-envelope" role="img">
 </i> 
  </a>
   </li>  
@@ -197,36 +175,104 @@ ul.task-list{list-style: none;}
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-page-left">
+      <h1 class="title">Publications</h1>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(4)</span></div><div class="category" data-category="Book">Book <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Brazil">Brazil <span class="quarto-category-count">(1)</span></div><div class="category" data-category="R Language">R Language <span class="quarto-category-count">(1)</span></div></div></div>
 <!-- main -->
-<main class="content column-page" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Hi there 🖐️!</h1>
-<p class="subtitle lead">My name is Pedro, and welcome to my website! I love to write books about programming, and to develop open-source software</p>
-</div>
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
 
 
-<div class="quarto-title-meta">
 
-    
-    
-  </div>
-  
-
-</header>
-
-<p>In this page, you can quickly scan through my latest published books 📚 and blog posts 📌. But, if you prefer, you can read a quick resume of me and my work in the <a href="./about.html">About Me</a> section too. Be free to contact me via email if you have an interesting proposal 😉.</p>
-<section id="my-books" class="level2">
-<h2 class="anchored" data-anchor-id="my-books">My books</h2>
-<div id="listing-books" class="quarto-listing quarto-listing-container-grid">
+<div id="listing-publications" class="quarto-listing quarto-listing-container-grid">
 <div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-categories="R Language,Book,Brazil" data-listing-date-sort="1649721600000" data-listing-file-modified-sort="1667764495339" data-listing-reading-time-sort="1.99">
+<div class="g-col-1" data-index="0" data-listing-file-modified-sort="1667765150756" data-listing-reading-time-sort="0.01">
+<a href="./publications/en.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<div class="card-img-bg" style="height: 150px;">
+&nbsp;
+</div>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Publications in English
+</h5>
+<div class="card-text listing-description">
+
+</div>
+<div class="card-attribution card-text-small start">
+<div class="listing-author">
+
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="1" data-listing-file-modified-sort="1667764363336" data-listing-reading-time-sort="0.01">
+<a href="./publications/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<div class="card-img-bg" style="height: 150px;">
+&nbsp;
+</div>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+All Publications
+</h5>
+<div class="card-text listing-description">
+
+<img src="../publications/book/introducao_linguagem_R/featured.png" class="thumbnail-image card-img" style="height: 150px;">
+
+</div>
+<div class="card-attribution card-text-small start">
+<div class="listing-author">
+
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="2" data-listing-file-modified-sort="1667765151715" data-listing-reading-time-sort="0.01">
+<a href="./publications/pt.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<div class="card-img-bg" style="height: 150px;">
+&nbsp;
+</div>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Publicações em Português
+</h5>
+<div class="card-text listing-description">
+ <img src="../publications/book/introducao_linguagem_R/featured.png" class="thumnail-image"> 
+</div>
+<div class="card-attribution card-text-small start">
+<div class="listing-author">
+
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="3" data-categories="R Language,Book,Brazil" data-listing-date-sort="1649721600000" data-listing-file-modified-sort="1667764495339" data-listing-reading-time-sort="1.99">
 <a href="./publications/book/introducao_linguagem_R/pt/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -236,6 +282,17 @@ ul.task-list{list-style: none;}
 <h5 class="no-anchor card-title listing-title">
 Introdução à Linguagem R: seus fundamentos e sua prática
 </h5>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('R Language'); return false;">
+R Language
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Book'); return false;">
+Book
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Brazil'); return false;">
+Brazil
+</div>
+</div>
 <div class="card-text listing-description">
 Este livro oferece uma descrição profunda sobre os fundamentos da linguagem R, e como eles se aplicam no contexto da análise de dados.
 </div>
@@ -256,196 +313,9 @@ Apr 11, 2022
 No matching items
 </div>
 </div>
-</section>
-<section id="posts" class="level2">
-<h2 class="anchored" data-anchor-id="posts">Posts</h2>
-<div id="listing-posts" class="quarto-listing quarto-listing-container-grid">
-<div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-categories="Book,R Language" data-listing-date-sort="1649214000000" data-listing-file-modified-sort="1667760696134" data-listing-reading-time-sort="3.015">
-<a href="./posts/2022-04-06-3nd-edition-rbook/en/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img src="./posts/2022-04-06-3nd-edition-rbook/featured.png" class="thumbnail-image card-img" style="height: 150px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-What’s new in the 3rd edition of Introdução à Linguagem R: seus fundamentos e sua prática
-</h5>
-<div class="card-text listing-description">
-A big reform was made. As a result, this new edition brings six new chapters to you
-</div>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-
-</div>
-<div class="listing-date">
-Apr 6, 2022
-</div>
-</div>
-</div>
-</div>
-</a>
-</div>
-<div class="g-col-1" data-index="1" data-categories="Book,R Language" data-listing-date-sort="1649214000000" data-listing-file-modified-sort="1667761570481" data-listing-reading-time-sort="2.905">
-<a href="./posts/2022-04-06-3nd-edition-rbook/pt/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img src="./posts/2022-04-06-3nd-edition-rbook/featured.png" class="thumbnail-image card-img" style="height: 150px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Novidades da 3° edição de Introdução à Linguagem R: seus fundamentos e sua prática
-</h5>
-<div class="card-text listing-description">
-Uma grande reforma sobre a obra foi feita para esta nova edição. Como resultado, temos seis novos capítulos para você!
-</div>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-
-</div>
-<div class="listing-date">
-Apr 6, 2022
-</div>
-</div>
-</div>
-</div>
-</a>
-</div>
-<div class="g-col-1" data-index="2" data-categories="Book,R Language" data-listing-date-sort="1621998000000" data-listing-file-modified-sort="1667760710146" data-listing-reading-time-sort="5.795">
-<a href="./posts/2021-05-26-2nd-edition-rbook/en/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img src="./posts/2021-05-26-2nd-edition-rbook/featured.png" class="thumbnail-image card-img" style="height: 150px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-What’s new in the 2nd edition of Introdução à Linguagem R: seus fundamentos e sua prática
-</h5>
-<div class="card-text listing-description">
-New chapters for Factors, Dates and time variables (date, POSIXct), in addition to the introduction of exercises at each chapter are among the main updates of the next…
-</div>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-
-</div>
-<div class="listing-date">
-May 26, 2021
-</div>
-</div>
-</div>
-</div>
-</a>
-</div>
-<div class="g-col-1" data-index="3" data-categories="Book,R Language" data-listing-date-sort="1621998000000" data-listing-file-modified-sort="1667760708824" data-listing-reading-time-sort="5.625">
-<a href="./posts/2021-05-26-2nd-edition-rbook/pt/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img src="./posts/2021-05-26-2nd-edition-rbook/featured.png" class="thumbnail-image card-img" style="height: 150px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Novidades da 2° edição de Introdução à Linguagem R: seus fundamentos e sua prática
-</h5>
-<div class="card-text listing-description">
-Esse post descreve as novas adições à segunda edição do livro Introdução à Linguagem R: seus fundamentos e sua prática. Fatores (<code>factors</code>); Datas e variáveis de tempo…
-</div>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-
-</div>
-<div class="listing-date">
-May 26, 2021
-</div>
-</div>
-</div>
-</div>
-</a>
-</div>
-<div class="g-col-1" data-index="4" data-categories="Joins,Teaching,Book,R Language" data-listing-date-sort="1609556400000" data-listing-file-modified-sort="1667761265026" data-listing-reading-time-sort="4.805">
-<a href="./posts/2021-01-02-tabela-destinataria-fonte/en/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img src="./posts/2021-01-02-tabela-destinataria-fonte/featured.png" class="thumbnail-image card-img" style="height: 150px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Recipient table and source table
-</h5>
-<div class="card-text listing-description">
-A different (maybe crazy) view on how to teach/explain <em>Outer joins</em> to students
-</div>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-
-</div>
-<div class="listing-date">
-Jan 2, 2021
-</div>
-</div>
-</div>
-</div>
-</a>
-</div>
-<div class="g-col-1" data-index="5" data-categories="Joins,Teaching,Book,R Language" data-listing-date-sort="1609556400000" data-listing-file-modified-sort="1667761237910" data-listing-reading-time-sort="4.525">
-<a href="./posts/2021-01-02-tabela-destinataria-fonte/pt/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img src="./posts/2021-01-02-tabela-destinataria-fonte/featured.png" class="thumbnail-image card-img" style="height: 150px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Tabela destinatária e tabela fonte
-</h5>
-<div class="card-text listing-description">
-Um visão diferente (talvez maluca) sobre como ensinar/explicar <em>Outer joins</em> para seus alunos
-</div>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-
-</div>
-<div class="listing-date">
-Jan 2, 2021
-</div>
-</div>
-</div>
-</div>
-</a>
-</div>
-<div class="g-col-1" data-index="6" data-categories="R Language,Teaching" data-listing-date-sort="1602903600000" data-listing-file-modified-sort="1667781174048" data-listing-reading-time-sort="5.395">
-<a href="./posts/2020-10-17-formulario-pesquisa/pt/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img src="./posts/2020-10-17-formulario-pesquisa/featured.jpg" class="thumbnail-image card-img" style="height: 150px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Resultados do Formulário de Pesquisa de Interesse - Curso Introdutório de R
-</h5>
-<div class="card-text listing-description">
-Uma rápida análise sobre o impacto e as sugestões fornecidas ao Curso Introdutório de R
-</div>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-
-</div>
-<div class="listing-date">
-Oct 17, 2020
-</div>
-</div>
-</div>
-</div>
-</a>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div>
-<p><br></p>
 
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

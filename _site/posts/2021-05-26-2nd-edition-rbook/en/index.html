@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-0.9.531">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Pedro Duarte Faria">
+<meta name="dcterms.date" content="2021-05-26">
+<meta name="description" content="New chapters for Factors, Dates and time variables (date, POSIXct), in addition to the introduction of exercises at each chapter are among the main updates of the next edition.">
+
+<title>home |&gt; dplyr::glimpse() - What’s new in the 2nd edition of Introdução à Linguagem R: seus fundamentos e sua prática</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">home |&gt; dplyr::glimpse()</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html">About Me</a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="button" data-bs-toggle="dropdown" aria-expanded="false">Posts</a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-posts">    
+        <li>
+    <a class="dropdown-item" href="../../../posts/index.html">
+ <span class="dropdown-text">All posts</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../posts/en.html">
+ <span class="dropdown-text">Posts in english</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../posts/pt.html">
+ <span class="dropdown-text">Posts em português</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-publications" role="button" data-bs-toggle="dropdown" aria-expanded="false">Publications</a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-publications">    
+        <li>
+    <a class="dropdown-item" href="../../../publications/index.html">
+ <span class="dropdown-text">All publications</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../publications/en.html">
+ <span class="dropdown-text">Publications in English</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../publications/pt.html">
+ <span class="dropdown-text">Publicações em Português</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-cv" role="button" data-bs-toggle="dropdown" aria-expanded="false">CV</a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-cv">    
+        <li>
+    <a class="dropdown-item" href="../../../files/cv/cv-english.pdf">
+ <span class="dropdown-text">CV in English</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../files/cv/cv-portuguese.pdf">
+ <span class="dropdown-text">CV em Português</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item compact">
+    <a class="nav-link" href="mailto:pedropark99@gmail.com"><i class="bi bi-envelope" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/pedropark99"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/PedroPark9"><i class="bi bi-twitter" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/pedro-faria-a68140209/"><i class="bi bi-linkedin" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-page">
+      <h1 class="title">What’s new in the 2nd edition of Introdução à Linguagem R: seus fundamentos e sua prática</h1>
+            <p class="subtitle lead">New chapters for Factors, Dates and time variables (date, POSIXct), in addition to the introduction of exercises at each chapter are among the main updates of the next edition.</p>
+                  <div>
+        <div class="description">
+          New chapters for Factors, Dates and time variables (date, POSIXct), in addition to the introduction of exercises at each chapter are among the main updates of the next edition.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Book</div>
+                <div class="quarto-category">R Language</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading"></div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">May 26, 2021</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block column-page" id="quarto-document-content">
+
+
+
+
+<div class="cell">
+<style type="text/css">
+.hljs{
+  font-family: 'Inconsolata', monospace;
+  font-size: 17px;
+}
+
+.hljs.shell{
+  font-size: 18px;
+}
+
+.hljs-comment{
+  font-style: normal;
+  color: #222222;
+}
+</style>
+</div>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>As I and my colleague <a href="https://twitter.com/joaoparga">João Parga</a> began teaching about The R Language, we quickly realized the presence of various short, quality and useful materials<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. However, we also noticed a disturbing lack of materials (in Portuguese) about the R language, that were more technical or that sought to describe the language in more detail.</p>
+<p>For this reason, we built the book <a href="https://pedro-faria.netlify.app/pt/publication/book/introducao_linguagem_r/">Introduction to R Language: its foundations and its practice</a>, which represents our attempt to fill this gap. The first edition of the book was very well received, especially because it is an open and free work for any Brazilian.</p>
+<p>With this in mind, 📣 is with great pleasure that I officially announce that the production of the second edition of the book is almost ready!!! 🥳🎉🎊✨, which is to be released now in June. This <em>post</em> seeks to describe the news we are delivering for this new edition.</p>
+</section>
+<section id="summary-of-news-for-the-new-edition" class="level1">
+<h1>Summary of news for the new edition</h1>
+<p>In summary, there are three main novelties for this new edition, which include the addition of two new chapters, and, the introduction of exercises in each chapter (with answers at the end of the book).</p>
+<ul>
+<li><p>Factors (<code>factor</code>s), <em>status</em>: chapter finalized ✅.</p></li>
+<li><p>Time variables (<code>date</code>, <code>POSIXct</code>, <code>POSIXlt</code>), <em>status</em>: chapter completed ✅.</p></li>
+<li><p>Introduction of exercises in each chapter, <em>status</em>: still in the process of writing 🚧.</p></li>
+</ul>
+</section>
+<section id="about-the-launch" class="level1">
+<h1>About the launch</h1>
+<p>If everything goes according to plan:</p>
+<ul>
+<li><p>📣 The release will take place on <strong>day 26/06</strong> 📌.</p></li>
+<li><p>On that day, the PDF of the new edition will be available on both pages of <a href="https://www.researchgate.net/publication/345985082_Introducao_a_Linguagem_R_seus_fundamentos_e_sua_pratica">ResearchGate</a> and <a href="https://www.academia.edu/44520051/Introdu%C3%A7%C3%A3o_%C3%A0_Linguagem_R_seus_fundamentos_e_sua_pr%C3%A1tica">Academy</a>, which are the two places where the book is currently hosted.</p></li>
+</ul>
+<p>Production of this new edition is advanced, but may face delays next month, as I recently took up a new job at a major technology company (<a href="https://www.take.net/">Take Blip</a>) and, therefore, I may have to delay production at the expense of urgent demands. I am ansious and praying hard that nothing goes wrong 😅, and that I can fulfill this commitment to our Brazilian community of R.</p>
+</section>
+<section id="about-every-novelty" class="level1">
+<h1>About every novelty:</h1>
+<section id="adding-exercises-in-each-chapter" class="level2">
+<h2 class="anchored" data-anchor-id="adding-exercises-in-each-chapter">Adding exercises in each chapter</h2>
+<p>From the beginning, the book set out to be an introductory and, specially, <strong>technical</strong> reference on language. This means that the book does not try to reach the audience looking for something succinct and efficient, but rather the beginning audience that seeks to delve deeper (or have a more solid foundation) in concepts, methods and other important parts of the language.</p>
+<p>Despite this purpose, the book initially offers no exercises, which are an essential feature of any technical book. For this reason, the introduction of exercises in each chapter of this second edition seeks to help the book move towards this purpose, becoming a more consolidated work.</p>
+<p>Currently, the construction of the exercises for each chapter is the only part (of this new edition) that is still under construction. From the moment this stage is finished, the second edition will be released to the entire Brazilian public.</p>
+</section>
+<section id="factors-factors" class="level2">
+<h2 class="anchored" data-anchor-id="factors-factors">Factors (‘factor’’s)</h2>
+<p>In chapter 2 of the book, the four basic data types of the R language are covered; <code>integer</code>; <code>double</code>; <code>character</code>; and <code>logical</code>. However, there are two other types of data, which are “more complex”, and which are also very important nowadays. They are the factors (or <code>factor</code>’s) and the types facing time variables (<code>Date</code>, <code>POSIXct</code>, <code>POSIXlt</code>).</p>
+<p>Factors are especially useful for classifying categorical variables. That is, we define the order of their “levels” (or “groups”). In other words, several characteristics can be described through a categorical variable, but these characteristics do not always follow a numerical ordering, or an alphabetical order. For example, when giving your assessment of a certain government, you can answer “Bad,” “Bad,” “Good,” or “Very Good.” Notice from the demo below, that if I use an alphabetical (growing) ordering on my answers, “Good” appears before “Bad”, “Bad” and “Very Good”.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>respostas <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Muito Bom"</span>, <span class="st">"Muito Bom"</span>, <span class="st">"Bom"</span>, <span class="st">"Ruim"</span>, <span class="st">"Péssimo"</span>,</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>               <span class="st">"Bom"</span>, <span class="st">"Ruim"</span>, <span class="st">"Ruim"</span>, <span class="st">"Muito Bom"</span>, <span class="st">"Ruim"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(respostas)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "Bom"       "Bom"       "Muito Bom" "Muito Bom" "Muito Bom" "Péssimo"  
+ [7] "Ruim"      "Ruim"      "Ruim"      "Ruim"     </code></pre>
+</div>
+</div>
+<p>Using factors, we can define the correct order of these different levels and correct this ordering problem. Notice below that the ordering of the values has been corrected.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>respostas <span class="ot">&lt;-</span> <span class="fu">factor</span>(respostas)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(respostas) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Péssimo"</span>, <span class="st">"Ruim"</span>, <span class="st">"Bom"</span>, <span class="st">"Muito Bom"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(respostas)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] Péssimo   Péssimo   Ruim      Ruim      Ruim      Bom       Muito Bom
+ [8] Muito Bom Muito Bom Muito Bom
+Levels: Péssimo Ruim Bom Muito Bom</code></pre>
+</div>
+</div>
+</section>
+<section id="time-variables" class="level2">
+<h2 class="anchored" data-anchor-id="time-variables">Time variables</h2>
+<p>Firms record the time at which sales are made, the time when loads of insums arrive at their facilities, the working time of their employees, and the evolution of several of their indicators over time. Because time is money, and in a capitalist economy money is what makes a difference.</p>
+<p>For this reason, time variables are critical in various data analysis, and it is very important that you know how to work with them in any programming language you come to work with. Therefore, this is a very important current gap of the book and, which is being filled in this second edition.</p>
+<p>The R language offers us three main types of data focused on time variables, which are: <code>Date</code>, <code>POSIXct</code>, <code>POSIXlt</code>. In addition, we also have a fourth type of data called <code>difftime</code>, which seeks to support the aritmetic operations among the previous 3 types. Values of these three data types are created from the functions <code>as.POSIXct()</code>, <code>as. POSIXlt()</code> and <code>as. Date()</code>.</p>
+<p>The <code>Date</code> type helps us store dates in R. We could store dates as simple <em>strings</em>, but with this, we would have an incorrect ordering of the values, in addition to the lack of access to various aritmetic and computational methods focused on this type of data. Therefore, treating your dates using the <code>Date</code> type can make a big difference in your analysis.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="fu">c</span>(<span class="st">"2020-08-10"</span>, <span class="st">"2020-08-11"</span>, <span class="st">"2020-08-12"</span>))</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>d</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2020-08-10" "2020-08-11" "2020-08-12"</code></pre>
+</div>
+</div>
+<p>The type <code>POSIXct</code> is particularly useful for interpreting dates accompanied by a time (i.e., a date-time data). Certain transactions need to be recorded with a high level of accuracy. That is, the records of many companies are not content with dates, because they also need to know the exact time (or the exact part) of that day that an event occurs. The type <code>POSIXct</code> was made precisely to treat and deal with this type of information.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="fu">as.POSIXct</span>(<span class="fu">c</span>(<span class="st">"2020-03-21 15:52:29"</span>, <span class="st">"2020-03-22 10:30:02"</span>))</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>h</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2020-03-21 15:52:29 -03" "2020-03-22 10:30:02 -03"</code></pre>
+</div>
+</div>
+<p>On the other hand, the <code>POSIXlt</code> type can be especially useful when we want to extract the components of a specific time variable. For example, we may be interested only in the day of the month present in each value, or at the time of day stored in each of these values. This point is demonstrated in the example below:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>hl <span class="ot">&lt;-</span> <span class="fu">as.POSIXlt</span>(<span class="fu">c</span>(<span class="st">"2020-03-21 15:52:29"</span>, <span class="st">"2020-03-22 10:30:02"</span>))</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="do">## The day of each date:</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>hl<span class="sc">$</span>mday</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 21 22</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="do">## The time of day of each date:</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>hl<span class="sc">$</span>hour</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 15 10</code></pre>
+</div>
+</div>
+
+
+</section>
+</section>
+
+
+<div id="quarto-appendix" class="default"><section class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1" role="doc-endnote"><p>Like the materials produced by <a href="https://curso-r.com/material/">Course-R</a>, or this <a href="https://materiais-study-r.netlify.app/">materials index</a> built by Beatriz Milz.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
