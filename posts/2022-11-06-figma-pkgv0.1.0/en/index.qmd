@@ -39,7 +39,7 @@ They are:
 - `file_key`: The ID (or the "key") that identifies your Figma file;
 - `token`: Your personal access token from the Figma platform;
 
-To use specifically the `figma::get_figma_page()` function, you will need to collect a third information, which is the `node_id`, or the ID that identifies a canvas/page of your Figma file. I explain, in details, on how to collect these key variables on the [main vignette package](https://pedropark99.github.io/figma/articles/figma.html). For brevity, lets assume in this blog post that already have collected these variables.
+To use specifically the `figma::get_figma_page()` function, you will need to collect a third information, which is the `node_id`, or the ID that identifies a canvas/page of your Figma file. I explain, in details, on how to collect these key variables on the [main vignette package](https://pedropark99.github.io/figma/articles/figma.html). For brevity reasons, lets assume in this blog post that you already have collected these variables.
 
 
 ## Use `get_figma_file()` to get your Figma file 
