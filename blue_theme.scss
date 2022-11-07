@@ -2,7 +2,7 @@
 
 
 // Import fonts
-@import url('https://fonts.googleapis.com/css2?family=Inconsolata&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata&family=Nunito+Sans:wght@900&display=swap');
 
 // Colors
 $dark-blue: #0e326b;
@@ -82,6 +82,26 @@ $font-family-monospace: 'Inconsolata';
 }
 
 
+// Inline code
 code {
     font-size: 14pt;
+}
+
+
+
+
+// Titles and headers
+.quarto-title-banner .quarto-title .title {
+    font-family: 'Nunito Sans', sans-serif;
+    color: $light-green2;
+}
+
+h1.title{
+    font-family: 'Nunito Sans', sans-serif;
+    color: $light-black;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: 'Nunito Sans', sans-serif;
+    color: $dark-blue;
 }

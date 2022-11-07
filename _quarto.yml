@@ -1,8 +1,10 @@
 project:
   type: website
+  output-dir: _site
 
 website:
   title: 'home |> dplyr::glimpse()'
+  site-url: "https://pedro-faria.com"
   navbar:
     background: "#0e326b"
     right:
@@ -26,15 +28,18 @@ website:
       - text: CV
         menu:
           - text: CV in English
-            href: cv/cv-english.pdf
+            href: files/cv/cv-english.pdf
           - text: CV em Português
-            href: cv/cv-portuguese.pdf
+            href: files/cv/cv-portuguese.pdf
+      - icon: envelope
+        href: "mailto:pedropark99@gmail.com"
       - icon: github
         href: https://github.com/pedropark99
       - icon: twitter
         href: https://twitter.com/PedroPark9
       - icon: linkedin
         href: https://www.linkedin.com/in/pedro-faria-a68140209/
+
 
 format:
   html:

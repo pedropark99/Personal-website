@@ -1,7 +1,9 @@
 ---
 title: "Resultados do Formulário de Pesquisa de Interesse - Curso Introdutório de R"
+description: "Uma rápida análise sobre o impacto e as sugestões fornecidas ao Curso Introdutório de R"
 date: 2020-10-17
 categories: ["R Language", "Teaching"]
+image: './../featured.jpg'
 ---
 
 ```{r setup}
@@ -211,10 +213,23 @@ knitr::include_graphics("./../wordcloud.png")
 A enorme maioria das pessoas que responderam eram alunos de graduação, ou bachareis já formados. Como pode ser observado logo abaixo, tivemos também algumas pessoas com algum nível de pós-graduação. 
 
 ```{r}
+#| include: false
+regex <- "doutoran?d[oa]|mestran?d[oa]"
+respostas$Nivel <- respostas$Curso |>
+  str_to_lower() |> 
+  str_extract(regex) |> 
+  str_replace('doutoran?d[oa]', 'Doutorado') |> 
+  str_replace('mestran?d[oa]', 'Mestrado')
+
+respostas$Nivel[is.na(respostas$Nivel)] <- "Graduação"
+```
+
+
+```{r}
 table(respostas$Nivel)
 ```
 
-Curiosamente, das 10 pessoas que possuíam ou estavam fazendo pós-graduação (mestrado ou doutorado), 6 eram de alguma área da Saúde ou das Ciências Biológicas. Apenas uma dessas 10 pessoas, pertencia a área de Economia. Esse resultado faz sentido, visto que a linguagem R tem se expandido muito em algumas áreas como a epidemiologia e principalmente em análise genética, através de um conjunto de pacotes como o `Bioconductor`^[https://www.bioconductor.org/].
+Curiosamente, das 9 pessoas que possuíam ou estavam fazendo pós-graduação (mestrado ou doutorado), 6 eram de alguma área da Saúde ou das Ciências Biológicas. Apenas uma dessas 9 pessoas, pertencia a área de Economia. Esse resultado faz sentido, visto que a linguagem R tem se expandido muito em algumas áreas como a epidemiologia e principalmente em análise genética, através de um conjunto de pacotes como o `Bioconductor`^[https://www.bioconductor.org/].
 
 
 
