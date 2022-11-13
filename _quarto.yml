@@ -4,7 +4,8 @@ project:
 
 website:
   title: 'home |> dplyr::glimpse()'
-  site-url: "https://pedro-faria.com"
+  site-url: "https://pedro-faria.netlify.app/"
+  description: "A blog about programming and data analysis, specially with R and Python"
   google-analytics: "G-7E6XG4WKHE"
   navbar:
     background: "#0e326b"

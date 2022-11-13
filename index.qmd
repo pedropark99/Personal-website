@@ -13,6 +13,7 @@ listing:
     type: grid
     sort: "date desc"
     contents: publications/*/*/*/index.qmd
+    feed: true
 
 freeze: true
 ---

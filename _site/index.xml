@@ -1,0 +1,985 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>home |&gt; dplyr::glimpse()</title>
+<link>https://pedro-faria.netlify.app/index.html</link>
+<atom:link href="https://pedro-faria.netlify.app/index.xml" rel="self" type="application/rss+xml"/>
+<description>A blog about programming and data analysis, specially with R and Python</description>
+<generator>quarto-1.2.262</generator>
+<lastBuildDate>Sun, 06 Nov 2022 03:00:00 GMT</lastBuildDate>
+<item>
+  <title>Introducing the {figma} R package</title>
+  <dc:creator>Pedro Duarte Faria</dc:creator>
+  <link>https://pedro-faria.netlify.app/posts/2022-11-06-figma-pkgv0.1.0/en/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>I’m very happy to announce the realease of <code>figma</code> R package to CRAN! This package provides a R interface (or a web client/wrapper) to the <a href="https://www.figma.com/developers/api">Figma API</a>. Below we have all the important links about this package:</p>
+<p><a href="https://github.com/pedropark99/figma"> <button type="button" class="btn btn-primary">Official repository</button></a> <a href="https://pedropark99.github.io/figma/"> <button type="button" class="btn btn-primary">Package website</button></a> <a href="https://cran.r-project.org/package=figma"> <button type="button" class="btn btn-primary">Page on CRAN</button></a></p>
+<p>This is the first release (or the first version) of the package, and for now, it have all the necessary functionality to get all data from a Figma file, and bring it to your R session. But in the future, the package will include more functionalities and endpoints. Please, if you can, test this package and give feedbacks or report bugs by <a href="https://github.com/pedropark99/figma/issues">sending Issues on the official repository</a>.</p>
+</section>
+<section id="getting-started" class="level2">
+<h2 class="anchored" data-anchor-id="getting-started">Getting started</h2>
+<p>Fist of all, you need to install the package on your machine, and to do that, you can use this code:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;">install.packages</span>(<span class="st" style="color: #20794D;">"figma"</span>)</span></code></pre></div>
+</div>
+<p>Or, to install the development version directly from GitHub:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1">devtools<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">install_github</span>(<span class="st" style="color: #20794D;">"pedropark99/figma"</span>)</span></code></pre></div>
+</div>
+<p>Now, to get the data of a Figma file through the Figma API, you have to collect two key variables about your file and your credentials. They are:</p>
+<ul>
+<li><code>file_key</code>: The ID (or the “key”) that identifies your Figma file;</li>
+<li><code>token</code>: Your personal access token from the Figma platform;</li>
+</ul>
+<p>To use specifically the <code>figma::get_figma_page()</code> function, you will need to collect a third information, which is the <code>node_id</code>, or the ID that identifies a canvas/page of your Figma file. I explain, in details, on how to collect these key variables on the <a href="https://pedropark99.github.io/figma/articles/figma.html">main vignette package</a>. For brevity reasons, lets assume in this blog post that you already have collected these variables.</p>
+</section>
+<section id="use-get_figma_file-to-get-your-figma-file" class="level2">
+<h2 class="anchored" data-anchor-id="use-get_figma_file-to-get-your-figma-file">Use <code>get_figma_file()</code> to get your Figma file</h2>
+<p>Now that you have the key (or ID) that identifies your Figma file, and your personal token that identifies yourself, you can use <code>figma::get_figma_file()</code> to get your Figma file:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="fu" style="color: #4758AB;">library</span>(figma)</span>
+<span id="cb3-2">file_key <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="st" style="color: #20794D;">"hch8YlkIrYbU3raDzjPvCz"</span></span>
+<span id="cb3-3"><span class="co" style="color: #5E5E5E;"># Insert your personal token:</span></span>
+<span id="cb3-4">token <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="st" style="color: #20794D;">"Your personal token ..."</span></span>
+<span id="cb3-5"></span>
+<span id="cb3-6"><span class="co" style="color: #5E5E5E;"># Returns a `httr::response` object:</span></span>
+<span id="cb3-7">figma_file <span class="ot" style="color: #003B4F;">&lt;-</span> figma<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">get_figma_file</span>(</span>
+<span id="cb3-8">  file_key, token</span>
+<span id="cb3-9">)</span></code></pre></div>
+</div>
+<p>The functions from <code>figma</code> package returns a <code>httr::response</code> object by default. But you can use the <code>.output_format</code> argument to fit the data into a more intuitive data strucuture. For example, a <code>tibble::tibble</code> object:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="co" style="color: #5E5E5E;"># Returns a `tibble::tibble` object:</span></span>
+<span id="cb4-2">figma_file <span class="ot" style="color: #003B4F;">&lt;-</span> figma<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">get_figma_file</span>(</span>
+<span id="cb4-3">  file_key, token,</span>
+<span id="cb4-4">  <span class="at" style="color: #657422;">.output_format =</span> <span class="st" style="color: #20794D;">"tibble"</span></span>
+<span id="cb4-5">)</span>
+<span id="cb4-6"></span>
+<span id="cb4-7"><span class="fu" style="color: #4758AB;">print</span>(figma_file)</span></code></pre></div>
+</div>
+<pre><code>#&gt; # A tibble: 5 × 7
+#&gt;   canvas_id canvas_name canvas_type object_id object_name   objec…¹ object_att…²
+#&gt;   &lt;chr&gt;     &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;     &lt;chr&gt;         &lt;chr&gt;   &lt;list&gt;      
+#&gt; 1 0:1       Page 1      CANVAS      1:2       Background    RECTAN… &lt;named list&gt;
+#&gt; 2 0:1       Page 1      CANVAS      5:2       Paragraph     TEXT    &lt;named list&gt;
+#&gt; 3 0:1       Page 1      CANVAS      5:3       Arrow         VECTOR  &lt;named list&gt;
+#&gt; 4 5:4       Page 2      CANVAS      5:5       BackgroundPa… RECTAN… &lt;named list&gt;
+#&gt; 5 5:4       Page 2      CANVAS      5:6       Texto da pág… TEXT    &lt;named list&gt;
+#&gt; # … with abbreviated variable names ¹​object_type, ²​object_attributes</code></pre>
+<p>Each row in the above <code>data.frame</code> is an object drawn in a canvas/page in your Figma file. Every object that you drawn in the canvas of your Figma file, can have a different type (like RECTANGLE, CIRCLE, TEXT, etc.). And objects of different types usually have different attributes.</p>
+<p>For example, TEXT objects have a <code>characters</code> attribute, which have the exact text that is written in the text box. In the other hand, RECTANGLE objects does not have such attribute.</p>
+<p>All the attributes of each object are in the <code>​object_attributes</code> column, which is a <code>&lt;list&gt;</code> column. Each row (or, if you prefer, each element) in this column is a list with all the attributes of the object described in the corresponding row. For example, to collect the <code>characters</code> attribute of the first TEXT object described in <code>figma_file</code> (which is in the 2nd row), you could do this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1">figma_file<span class="sc" style="color: #5E5E5E;">$</span>object_attributes[[<span class="dv" style="color: #AD0000;">2</span>]][[<span class="st" style="color: #20794D;">"characters"</span>]]</span></code></pre></div>
+</div>
+<pre><code>[1] "Um texto qualquer, que não sei se vai dar certo"</code></pre>
+<p>Or, you could the functions from <code>dplyr</code> and <code>purrr</code> packages to extract the <code>characters</code> attribute from all TEXT objects of your Figma file, like this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1">text_objects <span class="ot" style="color: #003B4F;">&lt;-</span> figma_file <span class="sc" style="color: #5E5E5E;">|&gt;</span> </span>
+<span id="cb8-2">  dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">filter</span>(object_type <span class="sc" style="color: #5E5E5E;">==</span> <span class="st" style="color: #20794D;">'TEXT'</span>) </span>
+<span id="cb8-3"></span>
+<span id="cb8-4">text_objects[[<span class="st" style="color: #20794D;">'object_attributes'</span>]] <span class="sc" style="color: #5E5E5E;">|&gt;</span> </span>
+<span id="cb8-5">  purrr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">map_chr</span>(<span class="st" style="color: #20794D;">'characters'</span>)</span></code></pre></div>
+</div>
+<pre><code>[1] "Um texto qualquer, que não sei se vai dar certo" "Texto da página 2"</code></pre>
+</section>
+<section id="other-scopes-of-data" class="level1">
+<h1>Other scopes of data</h1>
+<p>The <code>figma::get_figma_file()</code> get the data of all objects drawn in all canvas/pages of a Figma file. But, maybe, you don’t need all data from your file. Maybe you just need the data from a section, or a specific part of your Figma file.</p>
+<p>For these occasions, the <code>figma</code> package offers the <code>figma::get_figma_page()</code> (get data of objects drawn in a specific canvas/page of your file) and <code>figma::get_document_info()</code> (get metadata about your Figma file) functions.</p>
+<p>These functions work basically the same way as <code>figma::get_figma_file()</code>, they have the same arguments (except <code>figma::get_figma_page()</code> which have a extra argument <code>node_id</code>). Check the <a href="https://pedropark99.github.io/figma/reference/index.html">documentation of these functions</a>, and the <a href="https://pedropark99.github.io/figma/articles/figma.html">main vignette of the package</a> to see examples.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>R Language</category>
+  <category>Package</category>
+  <category>Figma</category>
+  <category>API</category>
+  <guid>https://pedro-faria.netlify.app/posts/2022-11-06-figma-pkgv0.1.0/en/index.html</guid>
+  <pubDate>Sun, 06 Nov 2022 03:00:00 GMT</pubDate>
+  <media:content url="https://pedro-faria.netlify.app/posts/2022-11-06-figma-pkgv0.1.0/featured.png" medium="image" type="image/png" height="79" width="144"/>
+</item>
+<item>
+  <title>Introdução à Linguagem R: seus fundamentos e sua prática</title>
+  <dc:creator>Pedro Duarte Faria</dc:creator>
+  <link>https://pedro-faria.netlify.app/publications/book/introducao_linguagem_R/pt/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="sobre-o-livro" class="level1">
+<h1>Sobre o livro</h1>
+<p>Este livro oferece uma descrição profunda sobre os fundamentos da linguagem R, e como eles se aplicam no contexto da análise de dados. Sua principal contribuição para a literatura brasileira hoje, está no combate de dois problemas recorrentes nos materiais disponíveis em português sobre a linguagem: 1) a falta de profundidade de muitos materiais, que tentam abordar muitos assuntos em um espaço muito curto; 2) a alta especialização de muitos materiais, que são de difícil transposição para aplicações gerais em análises de dados.</p>
+<p><a href="https://amz.run/5UiQ"> <button type="button" class="btn btn-primary">Compre uma versão física</button></a> <a href="https://pedropark99.github.io/Introducao_R/"> <button type="button" class="btn btn-primary">Leia online</button></a> <a href="./../respostas_complete.pdf"> <button type="button" class="btn btn-primary">Respostas dos exercícios</button></a></p>
+</section>
+<section id="o-que-você-aprende" class="level1">
+<h1>O que você aprende ?</h1>
+<p>Através deste livro, você pode aprender sobre os fundamentos da linguagem R, e como eles se aplicam a área de análise de dados. Em mais detalhes:</p>
+<ul>
+<li><p><strong>Introduzindo a linguagem</strong>: aprenda sobre como definir e como trabalhar com objetos; conheça as estruturas e tipos de dados oferecidos pela linguagem; entenda como os processos de coerção e os valores especiais da linguagem podem afetar os seus resultados.</p></li>
+<li><p><strong>Importação e transformação</strong>: aprenda a importar, transformar e formatar suas tabelas através dos pacotes <code>readr</code>, <code>readxl</code>, <code>haven</code>, <code>dplyr</code> e <code>tidyr</code>. Aplicando operações de ordenação, filtro, seleção e expansão, além de operações de pivô e <em>join</em>’s.</p></li>
+<li><p><strong>Visualização de dados</strong>: aprenda a utilizar o pacote <code>ggplot2</code> para produzir gráficos elegantes e efetivos para apresentar os seus dados e as suas conclusões.</p></li>
+<li><p><strong>Programando a sua análise</strong>: aprenda a utilizar controles de fluxo, funções e <em>loops</em> para automatizar tarefas e solucionar os seus problemas de maneira simples e clara.</p></li>
+<li><p><strong><em>Functional programming</em></strong>: aprenda a utilizar o pacote <code>purrr</code> para distribuir rapidamente os seus cálculos ao longo de múltiplos <em>inputs</em>.</p></li>
+<li><p><strong><em>Debugging</em></strong> e <strong><em>environments</em></strong>: conheça as principais técnicas de <em>debugging</em> existentes na linguagem R, e, aprenda como investigar erros em suas funções. Além disso, entenda como a linguagem procura pelos seus objetos e, como você pode produzir resultados inesperados durante essa busca.</p></li>
+</ul>
+</section>
+<section id="compre-uma-versão-física-do-livro" class="level1">
+<h1>Compre uma versão física do livro!</h1>
+<p>Você pode adquirir uma <a href="https://amz.run/5UiQ">versão física do livro através da loja da Amazon</a>. Uma versão eBook do livro também está disponível. Ao adquirir esses produtos, você estará me ajudando a continuar com esse projeto e a contribuir com nossa comunidade brasileira de R.</p>
+</section>
+<section id="leia-o-livro-online" class="level1">
+<h1>Leia o livro online</h1>
+<p>Caso você não possa comprar uma versão física do livro, você ainda pode ler gratuitamente a obra completa através de seu <a href="https://pedropark99.github.io/Introducao_R/">site</a>.</p>
+</section>
+<section id="citando-o-livro" class="level1">
+<h1>Citando o livro</h1>
+<p>Arquivo BibTex:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>@book{pedro2022,
+  title = {Introdução à Linguagem R},
+  subtitle = {seus fundamentos e sua prática},
+  author = {Pedro Duarte Faria and João Pedro Figueira Amorim Parga},
+  year = {2022},
+  edition = {3},
+  address = {Belo Horizonte},
+  month = {Abril},
+  isbn = {978-65-00-43003-5},
+  url = {https://pedro-faria.netlify.app/pt/publication/book/introducao_linguagem_r/}
+}</code></pre>
+</div>
+</div>
+</section>
+<section id="contribua-para-o-projeto" class="level1">
+<h1>Contribua para o projeto</h1>
+<p>Você também pode contribuir diretamente para a obra, ao postar <em>pull requests</em> ou <em>issues</em> no <a href="https://github.com/pedropark99/Introducao_R">repositório oficial do livro</a> no GitHub.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>R Language</category>
+  <category>Book</category>
+  <category>Brazil</category>
+  <guid>https://pedro-faria.netlify.app/publications/book/introducao_linguagem_R/pt/index.html</guid>
+  <pubDate>Tue, 12 Apr 2022 00:00:00 GMT</pubDate>
+  <media:content url="https://pedro-faria.netlify.app/publications/book/introducao_linguagem_R/featured.png" medium="image" type="image/png" height="206" width="144"/>
+</item>
+<item>
+  <title>What’s new in the 3rd edition of Introdução à Linguagem R: seus fundamentos e sua prática</title>
+  <dc:creator>Pedro Duarte Faria</dc:creator>
+  <link>https://pedro-faria.netlify.app/posts/2022-04-06-3nd-edition-rbook/en/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>It is with great pleasure that I come to share with you the updates that I am bringing to this new edition of the book <a href="https://pedro-faria.netlify.app/pt/publication/book/introducao_linguagem_r/">Introdução à Linguagem R: seus fundamentos e sua prática</a>. The release of this new edition should take place in the middle of April 2022 📆, so stay tuned 😉.</p>
+</section>
+<section id="what-is-new" class="level1">
+<h1>What is new?</h1>
+<p>We have six new chapters 🤯, which composes a new part of the book and, bring with it, great advances on the process of developing programs in R. In addition, several improvements have been made in specific sections of the book, especially about chapter 2.</p>
+<p>First, there was a significant reorganization of the book. The pre-existing chapters were reorganized into four different parts. The fifth and new part (Functions and <em>Loops</em>: building your own programs and automating tasks) consists of the six new chapters introduced in this edition.</p>
+<p>Second, the Functions and <em>Loops</em> chapter has been completely rewritten, expanded, and, broken down into two new chapters 🥳🎉🎉🎉. More specifically, chapters 14 (Functions) and 15 (<em>Loops</em>) of this edition.</p>
+<p>Third, chapter 16 of this issue brings one of the novelties programmed since the second edition: a new (and robust) chapter on <em>functional programming</em>. With this addition, this work becomes a more modern reference and, close to the standards adopted today by the international community of R 😎.</p>
+<p>Fourth, <em>environments</em> and language <em>scoping</em> rules are two relatively advanced topics, and often cause some confusion in many beginners. Therefore, a new chapter has been produced to describe these features that support essential parts of the language, as well as some of the packages we have introduced throughout the book (e.g.&nbsp;<code>dplyr</code> and <code>ggplot2</code>).</p>
+<p>Fifth, several additions and improvements were made in chapter 6 (Introduction to the relational database with <code>dplyr</code>) and, mainly, in chapter 2 (Fundamentals of Language R). Among them, we have: a new case study (Importing pintec data); new sections on the functions <code>str()</code> and <code>is.*()</code>; significant improvements on the sections for Coercion and Special Values of R.</p>
+<p>Sixth, a new chapter has been introduced that describes the conditional flow controls (<code>if else</code> <em>statements</em> and <code>switch()</code>) that the R language offers.</p>
+<p>Seventh, a new and small chapter was added to the second part of the book, with the aim of introducing the tidyverse universe to the reader in a clearer and more friendly way 🥰.</p>
+<p>Eighth, the appendix containing the responses of the exercises was removed, with the aim of reducing the number of pages of the book. Consequently, the responses to the exercises are being made available in a separate PDF, which can be downloaded (free of charge) from the <a href="https://pedro-faria.netlify.app/pt/publication/book/introducao_linguagem_r/">book publication page</a>.</p>
+</section>
+<section id="about-where-to-find-the-book" class="level1">
+<h1>About where to find the book</h1>
+<p>As in previous editions, you will be able to read the entire work free of charge and openly through your <a href="https://pedropark99.github.io/Introducao_R/">website</a> ‘r emoji::emoji(“book”)’.</p>
+<p>However, unlike previous editions, the PDF version of the work will not open. You can purchase a PDF or physical version of the book through the Amazon store. By purchasing these versions, you’ll be helping me continue contributing to our ‘r emoji::emoji(’heart’) community.</p>
+</section>
+<section id="contribute-to-the-work-or-make-suggestions" class="level1">
+<h1>Contribute to the work or make suggestions!</h1>
+<p>If it is of interest to you, you can contribute directly to the work by posting <em>pull requests</em> within your <a href="https://github.com/pedropark99/Introducao_R">official repository</a>. For more, you can also make suggestions or comments by posting <em>issues</em> in this same repository.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>Book</category>
+  <category>R Language</category>
+  <guid>https://pedro-faria.netlify.app/posts/2022-04-06-3nd-edition-rbook/en/index.html</guid>
+  <pubDate>Wed, 06 Apr 2022 03:00:00 GMT</pubDate>
+  <media:content url="https://pedro-faria.netlify.app/posts/2022-04-06-3nd-edition-rbook/featured.png" medium="image" type="image/png" height="206" width="144"/>
+</item>
+<item>
+  <title>Novidades da 3° edição de Introdução à Linguagem R: seus fundamentos e sua prática</title>
+  <dc:creator>Pedro Duarte Faria</dc:creator>
+  <link>https://pedro-faria.netlify.app/posts/2022-04-06-3nd-edition-rbook/pt/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="introdução" class="level1">
+<h1>Introdução</h1>
+<p>É com muito prazer que venho compartilhar com você as novidades que estou trazendo para essa nova edição do livro <a href="https://pedro-faria.netlify.app/pt/publication/book/introducao_linguagem_r/">Introdução à Linguagem R: seus fundamentos e sua prática</a>. O lançamento desta nova edição deve ocorrer ainda no meio de Abril de 2022 📆, portanto, fique atento 😉.</p>
+</section>
+<section id="o-que-temos-de-novo" class="level1">
+<h1>O que temos de novo?</h1>
+<p>Temos seis novos capítulos 🤯, os quais compõe uma nova parte do livro e, trazem consigo, grandes avanços sobre o processo de desenvolvimento de programas no R. Além disso, várias melhorias foram feitas em seções específicas do livro, especialmente sobre o capítulo 2.</p>
+<p>Primeiro, houve uma reorganização significativa do livro. Os capítulos pré-existentes foram reorganizados em quatro partes diferentes. Já a quinta e nova parte (Funções e <em>Loops</em>: construindo os seus próprios programas e automatizando tarefas) é composta pelos seis novos capítulos introduzidos nesta edição.</p>
+<p>Segundo, o capítulo de Funções e <em>Loops</em> foi completamente reescrito, expandido, e, repartido em dois novos capítulos 🥳🎉🎉🎉. Mais especificamente, os capítulos 14 (Funções) e 15 (<em>Loops</em>) desta edição.</p>
+<p>Terceiro, o capítulo 16 desta edição traz uma das novidades programadas desde a segunda edição: um novo (e robusto) capítulo sobre <em>functional programming</em>. Com essa adição, esta obra se torna uma referência mais moderna e, se aproxima dos padrões adotados hoje pela comunidade internacional de R 😎.</p>
+<p>Quarto, <em>environments</em> e as regras de <em>scoping</em> da linguagem são dois tópicos relativamente avançados, e que costumam causar certa confusão em muitos iniciantes. Por isso, um novo capítulo foi produzido para descrever essas funcionalidades que sustentam partes essenciais da linguagem, assim como de alguns dos pacotes que introduzimos ao longo do livro (e.g.&nbsp;<code>dplyr</code> e <code>ggplot2</code>).</p>
+<p>Quinto, várias adições e melhorias foram feitas no capítulo 6 (Introdução a base de dados relacionais com <code>dplyr</code>) e, principalmente, no capítulo 2 (Fundamentos da Linguagem R). Dentre elas, temos: um novo estudo de caso (Importando os dados da PINTEC); novas seções sobre as funções <code>str()</code> e <code>is.*()</code>; melhorias significativas sobre as seções de Coerção no R e Valores especiais do R.</p>
+<p>Sexto, foi introduzido um novo capítulo que descreve os controles condicionais de fluxo (<code>if else</code> <em>statements</em> e <code>switch()</code>) que a linguagem R oferece.</p>
+<p>Sétimo, um novo e pequeno capítulo foi adicionado à segunda parte do livro, com o objetivo de introduzir o universo do <code>tidyverse</code> ao leitor de maneira mais clara e amigável 🥰.</p>
+<p>Oitavo, o apêndice contendo as respostas dos exercícios foi retirado, com o objetivo de reduzir o número de páginas do livro. Consequentemente, as respostas dos exercícios estão sendo disponibilizadas em um PDF separado, o qual pode ser baixado gratuitamente, a partir da página de <a href="https://pedro-faria.netlify.app/pt/publication/book/introducao_linguagem_r/">publicação do livro</a>.</p>
+</section>
+<section id="sobre-onde-encontrar-o-livro" class="level1">
+<h1>Sobre onde encontrar o livro</h1>
+<p>Assim como ocorreu nas edições anteriores, você poderá ler toda a obra de maneira gratuita e aberta através de seu <a href="https://pedropark99.github.io/Introducao_R/">website</a> 📖.</p>
+<p>Contudo, diferente das edições anteriores, a versão em PDF da obra não será aberta. Você poderá adquirir uma versão em PDF ou física do livro através da loja da Amazon. Ao comprar essas versões, você estará me ajudando a continuar contribuindo com a nossa comunidade ❤️.</p>
+</section>
+<section id="contribua-para-a-obra-ou-faça-sugestões" class="level1">
+<h1>Contribua para a obra ou faça sugestões!</h1>
+<p>Caso seja de seu interesse, você pode contribuir diretamente para a obra, ao postar <em>pull requests</em> dentro de seu <a href="https://github.com/pedropark99/Introducao_R">repositório oficial</a>. Para mais, você também pode fazer sugestões ou comentários, ao postar <em>issues</em> neste mesmo repositório.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>Book</category>
+  <category>R Language</category>
+  <guid>https://pedro-faria.netlify.app/posts/2022-04-06-3nd-edition-rbook/pt/index.html</guid>
+  <pubDate>Wed, 06 Apr 2022 03:00:00 GMT</pubDate>
+  <media:content url="https://pedro-faria.netlify.app/posts/2022-04-06-3nd-edition-rbook/featured.png" medium="image" type="image/png" height="206" width="144"/>
+</item>
+<item>
+  <title>What’s new in the 2nd edition of Introdução à Linguagem R: seus fundamentos e sua prática</title>
+  <dc:creator>Pedro Duarte Faria</dc:creator>
+  <link>https://pedro-faria.netlify.app/posts/2021-05-26-2nd-edition-rbook/en/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<div class="cell">
+<style type="text/css">
+.hljs{
+  font-family: 'Inconsolata', monospace;
+  font-size: 17px;
+}
+
+.hljs.shell{
+  font-size: 18px;
+}
+
+.hljs-comment{
+  font-style: normal;
+  color: #222222;
+}
+</style>
+</div>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>As I and my colleague <a href="https://twitter.com/joaoparga">João Parga</a> began teaching about The R Language, we quickly realized the presence of various short, quality and useful materials<sup>1</sup>. However, we also noticed a disturbing lack of materials (in Portuguese) about the R language, that were more technical or that sought to describe the language in more detail.</p>
+<p>For this reason, we built the book <a href="https://pedro-faria.netlify.app/pt/publication/book/introducao_linguagem_r/">Introduction to R Language: its foundations and its practice</a>, which represents our attempt to fill this gap. The first edition of the book was very well received, especially because it is an open and free work for any Brazilian.</p>
+<p>With this in mind, 📣 is with great pleasure that I officially announce that the production of the second edition of the book is almost ready!!! 🥳🎉🎊✨, which is to be released now in June. This <em>post</em> seeks to describe the news we are delivering for this new edition.</p>
+</section>
+<section id="summary-of-news-for-the-new-edition" class="level1">
+<h1>Summary of news for the new edition</h1>
+<p>In summary, there are three main novelties for this new edition, which include the addition of two new chapters, and, the introduction of exercises in each chapter (with answers at the end of the book).</p>
+<ul>
+<li><p>Factors (<code>factor</code>s), <em>status</em>: chapter finalized ✅.</p></li>
+<li><p>Time variables (<code>date</code>, <code>POSIXct</code>, <code>POSIXlt</code>), <em>status</em>: chapter completed ✅.</p></li>
+<li><p>Introduction of exercises in each chapter, <em>status</em>: still in the process of writing 🚧.</p></li>
+</ul>
+</section>
+<section id="about-the-launch" class="level1">
+<h1>About the launch</h1>
+<p>If everything goes according to plan:</p>
+<ul>
+<li><p>📣 The release will take place on <strong>day 26/06</strong> 📌.</p></li>
+<li><p>On that day, the PDF of the new edition will be available on both pages of <a href="https://www.researchgate.net/publication/345985082_Introducao_a_Linguagem_R_seus_fundamentos_e_sua_pratica">ResearchGate</a> and <a href="https://www.academia.edu/44520051/Introdu%C3%A7%C3%A3o_%C3%A0_Linguagem_R_seus_fundamentos_e_sua_pr%C3%A1tica">Academy</a>, which are the two places where the book is currently hosted.</p></li>
+</ul>
+<p>Production of this new edition is advanced, but may face delays next month, as I recently took up a new job at a major technology company (<a href="https://www.take.net/">Take Blip</a>) and, therefore, I may have to delay production at the expense of urgent demands. I am ansious and praying hard that nothing goes wrong 😅, and that I can fulfill this commitment to our Brazilian community of R.</p>
+</section>
+<section id="about-every-novelty" class="level1">
+<h1>About every novelty:</h1>
+<section id="adding-exercises-in-each-chapter" class="level2">
+<h2 class="anchored" data-anchor-id="adding-exercises-in-each-chapter">Adding exercises in each chapter</h2>
+<p>From the beginning, the book set out to be an introductory and, specially, <strong>technical</strong> reference on language. This means that the book does not try to reach the audience looking for something succinct and efficient, but rather the beginning audience that seeks to delve deeper (or have a more solid foundation) in concepts, methods and other important parts of the language.</p>
+<p>Despite this purpose, the book initially offers no exercises, which are an essential feature of any technical book. For this reason, the introduction of exercises in each chapter of this second edition seeks to help the book move towards this purpose, becoming a more consolidated work.</p>
+<p>Currently, the construction of the exercises for each chapter is the only part (of this new edition) that is still under construction. From the moment this stage is finished, the second edition will be released to the entire Brazilian public.</p>
+</section>
+<section id="factors-factors" class="level2">
+<h2 class="anchored" data-anchor-id="factors-factors">Factors (‘factor’’s)</h2>
+<p>In chapter 2 of the book, the four basic data types of the R language are covered; <code>integer</code>; <code>double</code>; <code>character</code>; and <code>logical</code>. However, there are two other types of data, which are “more complex”, and which are also very important nowadays. They are the factors (or <code>factor</code>’s) and the types facing time variables (<code>Date</code>, <code>POSIXct</code>, <code>POSIXlt</code>).</p>
+<p>Factors are especially useful for classifying categorical variables. That is, we define the order of their “levels” (or “groups”). In other words, several characteristics can be described through a categorical variable, but these characteristics do not always follow a numerical ordering, or an alphabetical order. For example, when giving your assessment of a certain government, you can answer “Bad,” “Bad,” “Good,” or “Very Good.” Notice from the demo below, that if I use an alphabetical (growing) ordering on my answers, “Good” appears before “Bad”, “Bad” and “Very Good”.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1">respostas <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"Muito Bom"</span>, <span class="st" style="color: #20794D;">"Muito Bom"</span>, <span class="st" style="color: #20794D;">"Bom"</span>, <span class="st" style="color: #20794D;">"Ruim"</span>, <span class="st" style="color: #20794D;">"Péssimo"</span>,</span>
+<span id="cb1-2">               <span class="st" style="color: #20794D;">"Bom"</span>, <span class="st" style="color: #20794D;">"Ruim"</span>, <span class="st" style="color: #20794D;">"Ruim"</span>, <span class="st" style="color: #20794D;">"Muito Bom"</span>, <span class="st" style="color: #20794D;">"Ruim"</span>)</span>
+<span id="cb1-3"><span class="fu" style="color: #4758AB;">sort</span>(respostas)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "Bom"       "Bom"       "Muito Bom" "Muito Bom" "Muito Bom" "Péssimo"  
+ [7] "Ruim"      "Ruim"      "Ruim"      "Ruim"     </code></pre>
+</div>
+</div>
+<p>Using factors, we can define the correct order of these different levels and correct this ordering problem. Notice below that the ordering of the values has been corrected.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">respostas <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">factor</span>(respostas)</span>
+<span id="cb3-2"><span class="fu" style="color: #4758AB;">levels</span>(respostas) <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"Péssimo"</span>, <span class="st" style="color: #20794D;">"Ruim"</span>, <span class="st" style="color: #20794D;">"Bom"</span>, <span class="st" style="color: #20794D;">"Muito Bom"</span>)</span>
+<span id="cb3-3"><span class="fu" style="color: #4758AB;">sort</span>(respostas)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] Péssimo   Péssimo   Ruim      Ruim      Ruim      Bom       Muito Bom
+ [8] Muito Bom Muito Bom Muito Bom
+Levels: Péssimo Ruim Bom Muito Bom</code></pre>
+</div>
+</div>
+</section>
+<section id="time-variables" class="level2">
+<h2 class="anchored" data-anchor-id="time-variables">Time variables</h2>
+<p>Firms record the time at which sales are made, the time when loads of insums arrive at their facilities, the working time of their employees, and the evolution of several of their indicators over time. Because time is money, and in a capitalist economy money is what makes a difference.</p>
+<p>For this reason, time variables are critical in various data analysis, and it is very important that you know how to work with them in any programming language you come to work with. Therefore, this is a very important current gap of the book and, which is being filled in this second edition.</p>
+<p>The R language offers us three main types of data focused on time variables, which are: <code>Date</code>, <code>POSIXct</code>, <code>POSIXlt</code>. In addition, we also have a fourth type of data called <code>difftime</code>, which seeks to support the aritmetic operations among the previous 3 types. Values of these three data types are created from the functions <code>as.POSIXct()</code>, <code>as. POSIXlt()</code> and <code>as. Date()</code>.</p>
+<p>The <code>Date</code> type helps us store dates in R. We could store dates as simple <em>strings</em>, but with this, we would have an incorrect ordering of the values, in addition to the lack of access to various aritmetic and computational methods focused on this type of data. Therefore, treating your dates using the <code>Date</code> type can make a big difference in your analysis.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1">d <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">as.Date</span>(<span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"2020-08-10"</span>, <span class="st" style="color: #20794D;">"2020-08-11"</span>, <span class="st" style="color: #20794D;">"2020-08-12"</span>))</span>
+<span id="cb5-2">d</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2020-08-10" "2020-08-11" "2020-08-12"</code></pre>
+</div>
+</div>
+<p>The type <code>POSIXct</code> is particularly useful for interpreting dates accompanied by a time (i.e., a date-time data). Certain transactions need to be recorded with a high level of accuracy. That is, the records of many companies are not content with dates, because they also need to know the exact time (or the exact part) of that day that an event occurs. The type <code>POSIXct</code> was made precisely to treat and deal with this type of information.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1">h <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">as.POSIXct</span>(<span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"2020-03-21 15:52:29"</span>, <span class="st" style="color: #20794D;">"2020-03-22 10:30:02"</span>))</span>
+<span id="cb7-2">h</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2020-03-21 15:52:29 -03" "2020-03-22 10:30:02 -03"</code></pre>
+</div>
+</div>
+<p>On the other hand, the <code>POSIXlt</code> type can be especially useful when we want to extract the components of a specific time variable. For example, we may be interested only in the day of the month present in each value, or at the time of day stored in each of these values. This point is demonstrated in the example below:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1">hl <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">as.POSIXlt</span>(<span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"2020-03-21 15:52:29"</span>, <span class="st" style="color: #20794D;">"2020-03-22 10:30:02"</span>))</span>
+<span id="cb9-2"></span>
+<span id="cb9-3"><span class="do" style="color: #5E5E5E;
+font-style: italic;">## The day of each date:</span></span>
+<span id="cb9-4">hl<span class="sc" style="color: #5E5E5E;">$</span>mday</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 21 22</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><span class="do" style="color: #5E5E5E;
+font-style: italic;">## The time of day of each date:</span></span>
+<span id="cb11-2">hl<span class="sc" style="color: #5E5E5E;">$</span>hour</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 15 10</code></pre>
+</div>
+</div>
+
+
+</section>
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>Like the materials produced by <a href="https://curso-r.com/material/">Course-R</a>, or this <a href="https://materiais-study-r.netlify.app/">materials index</a> built by Beatriz Milz.↩︎</p></li>
+</ol>
+</section></div> ]]></description>
+  <category>Book</category>
+  <category>R Language</category>
+  <guid>https://pedro-faria.netlify.app/posts/2021-05-26-2nd-edition-rbook/en/index.html</guid>
+  <pubDate>Wed, 26 May 2021 03:00:00 GMT</pubDate>
+  <media:content url="https://pedro-faria.netlify.app/posts/2021-05-26-2nd-edition-rbook/featured.png" medium="image" type="image/png" height="204" width="144"/>
+</item>
+<item>
+  <title>Novidades da 2° edição de Introdução à Linguagem R: seus fundamentos e sua prática</title>
+  <dc:creator>Pedro Duarte Faria</dc:creator>
+  <link>https://pedro-faria.netlify.app/posts/2021-05-26-2nd-edition-rbook/pt/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<div class="cell">
+<style type="text/css">
+.hljs{
+  font-family: 'Inconsolata', monospace;
+  font-size: 17px;
+}
+
+.hljs.shell{
+  font-size: 18px;
+}
+
+.hljs-comment{
+  font-style: normal;
+  color: #222222;
+}
+</style>
+</div>
+<section id="introdução" class="level1">
+<h1>Introdução</h1>
+<p>A medida em que eu e meu colega <a href="https://twitter.com/joaoparga">João Parga</a> começamos a ensinar sobre a Linguagem R, nós rapidamente percebemos a presença de vários materiais curtos, de qualidade e úteis<sup>1</sup>. Entretanto, também percebemos uma inquietante falta de materiais (em português) sobre a Linguagem R, que fossem mais técnicos ou que buscassem descrever a linguagem em mais detalhes.</p>
+<p>Por esse motivo, nós construímos o livro <a href="https://pedro-faria.netlify.app/pt/publication/book/introducao_linguagem_r/">Introdução à Linguagem R: seus fundamentos e sua prática</a>, que representa a nossa tentativa de preencher tal lacuna. A primeira edição do livro foi muito bem recebida, em especial, por ser uma obra aberta e gratuita para qualquer brasileiro.</p>
+<p>Tendo isso em mente, 📣 é com muito prazer que anuncio oficialmente que a produção da segunda edição do livro está quase pronta!!! 🥳🎉🎊✨, que está para ser lançada agora no mês de Junho. Esse <em>post</em> busca descrever as novidades que estamos entregando para essa nova edição.</p>
+</section>
+<section id="resumo-das-novidades-para-a-nova-edição" class="level1">
+<h1>Resumo das novidades para a nova edição</h1>
+<p>Em resumo, há três novidades principais para essa nova edição, que incluem a adição de dois novos capítulos, além da adição de exercícios em cada capítulo (com respostas ao final do livro).</p>
+<ul>
+<li>Fatores (<code>factor</code>’s), <em>status</em>: capítulo finalizado ✅.</li>
+<li>Variáveis de tempo (<code>date</code>, <code>POSIXct</code>, <code>POSIXlt</code>), <em>status</em>: capítulo finalizado ✅.</li>
+<li>Introdução de exercícios em cada capítulo, <em>status</em>: ainda em processo de escrita 🚧.</li>
+</ul>
+</section>
+<section id="sobre-o-lançamento" class="level1">
+<h1>Sobre o lançamento</h1>
+<p>Se tudo ocorrer conforme planejado:</p>
+<ul>
+<li><p>📣 O lançamento ocorrerá no <strong>dia 26/06</strong> 📌.</p></li>
+<li><p>Nesse dia, o PDF da obra será disponibilizada em ambas as páginas do <a href="https://www.researchgate.net/publication/345985082_Introducao_a_Linguagem_R_seus_fundamentos_e_sua_pratica">ResearchGate</a> e no <a href="https://www.academia.edu/44520051/Introdu%C3%A7%C3%A3o_%C3%A0_Linguagem_R_seus_fundamentos_e_sua_pr%C3%A1tica">Academia</a>, que são os dois locais onde o livro está atualmente hospedado.</p></li>
+</ul>
+<p>A produção dessa nova edição se encontra avançada, mas pode enfrentar atrasos no próximo mês, pois recentemente assumi um novo emprego em uma grande empresa de tecnologia (<a href="https://www.take.net/">Take Blip</a>) e, portanto, posso ter que atrasar a produção em detrimento de demandas urgentes. Estou ansioso e torcendo muito para que nada de errado ocorra 😅, e que eu possa cumprir este compromisso com a nossa comunidade brasileira de R.</p>
+</section>
+<section id="sobre-cada-novidade" class="level1">
+<h1>Sobre cada novidade:</h1>
+<section id="adição-de-exercícios-em-cada-capítulo" class="level2">
+<h2 class="anchored" data-anchor-id="adição-de-exercícios-em-cada-capítulo">Adição de exercícios em cada capítulo</h2>
+<p>Desde o início, o livro se propôs a ser uma referência introdutória e, principalmente, <strong>técnica</strong>, sobre a linguagem. Isto significa que, o livro não tenta atingir o público que procura por algo sucinto e eficiente, mas sim, o público iniciante que busca se aprofundar (ou ter uma base mais sólida) em conceitos, métodos e outras partes importantes da linguagem.</p>
+<p>Apesar desse propósito, o livro inicialmente não oferece exercícios, os quais são uma característica essencial de qualquer obra técnica. Por esse motivo, a introdução de exercícios em cada capítulo dessa segunda edição, busca ajudar o livro a caminhar para esse propósito, se tornando uma obra mais consolidada.</p>
+<p>Atualmente, a construção dos exercícios para cada capítulo é a única parte (dessa nova edição) que ainda está em construção. A partir do momento em que essa etapa for finalizada, a segunda edição será lançada para todo o público brasileiro.</p>
+</section>
+<section id="fatores-factors" class="level2">
+<h2 class="anchored" data-anchor-id="fatores-factors">Fatores (<code>factor</code>’s)</h2>
+<p>No capítulo 2 do livro, são abordados os quatro tipos de dados básicos da linguagem R. Sendo eles: <code>integer</code>; <code>double</code>; <code>character</code>; e <code>logical</code>. Porém, há dois outros tipos de dados, que são “mais complexos”, e que também são muito importantes hoje em dia. São eles os fatores (ou <code>factor</code>’s) e os tipos voltados para variáveis de tempo (<code>date</code>, <code>POSIXct</code>, <code>POSIXlt</code>).</p>
+<p>Fatores são especialmente úteis para classificarmos variáveis categóricos. Isto é, definirmos a ordem de seus “níveis” (ou “grupos”). Dito de outra forma, várias características podem ser descritas através de uma variável categórica, mas nem sempre essas características seguem uma ordenação numérica, ou uma ordem alfabética. Por exemplo, ao dar a sua avaliação de um certo governo, você pode responder “Péssimo”, “Ruim”, “Bom” ou “Muito Bom”. Perceba pela demonstração abaixo, que caso eu empregue uma ordenação alfabética (crescente) sobre as minhas respostas, “Bom” aparece antes de “Ruim”, “Péssimo” e “Muito Bom”.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1">respostas <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"Muito Bom"</span>, <span class="st" style="color: #20794D;">"Muito Bom"</span>, <span class="st" style="color: #20794D;">"Bom"</span>, <span class="st" style="color: #20794D;">"Ruim"</span>, <span class="st" style="color: #20794D;">"Péssimo"</span>,</span>
+<span id="cb1-2">               <span class="st" style="color: #20794D;">"Bom"</span>, <span class="st" style="color: #20794D;">"Ruim"</span>, <span class="st" style="color: #20794D;">"Ruim"</span>, <span class="st" style="color: #20794D;">"Muito Bom"</span>, <span class="st" style="color: #20794D;">"Ruim"</span>)</span>
+<span id="cb1-3"><span class="fu" style="color: #4758AB;">sort</span>(respostas)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "Bom"       "Bom"       "Muito Bom" "Muito Bom" "Muito Bom" "Péssimo"  
+ [7] "Ruim"      "Ruim"      "Ruim"      "Ruim"     </code></pre>
+</div>
+</div>
+<p>Com o uso de fatores, nós podemos definir qual a ordem correta desses diferentes níveis e corrigir esse problema de ordenação. Perceba abaixo que a ordenação dos valores foi corrigida.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">respostas <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">factor</span>(respostas)</span>
+<span id="cb3-2"><span class="fu" style="color: #4758AB;">levels</span>(respostas) <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"Péssimo"</span>, <span class="st" style="color: #20794D;">"Ruim"</span>, <span class="st" style="color: #20794D;">"Bom"</span>, <span class="st" style="color: #20794D;">"Muito Bom"</span>)</span>
+<span id="cb3-3"><span class="fu" style="color: #4758AB;">sort</span>(respostas)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] Péssimo   Péssimo   Ruim      Ruim      Ruim      Bom       Muito Bom
+ [8] Muito Bom Muito Bom Muito Bom
+Levels: Péssimo Ruim Bom Muito Bom</code></pre>
+</div>
+</div>
+</section>
+<section id="variáveis-de-tempo" class="level2">
+<h2 class="anchored" data-anchor-id="variáveis-de-tempo">Variáveis de tempo</h2>
+<p>Firmas registram o horário em que vendas são realizadas, o horário em que cargas de insumos chegam a suas instalações, o tempo de trabalho de seus funcionários, além da evolução de vários de seus indicadores ao longo do tempo. Pois tempo é dinheiro, e, em uma economia capitalista o dinheiro é o que faz a diferença.</p>
+<p>Por essa razão, variáveis de tempo são fundamentais em diversas análises de dados e, é muito importante que você saiba como trabalhar com elas em qualquer linguagem de programação que você venha a trabalhar. Por isso, essa é uma lacuna atual muito importante do livro e, que está sendo preenchida nessa segunda edição.</p>
+<p>A linguagem R nos oferece três tipos principais de dados focados em variáveis de tempo, sendo eles: <code>Date</code>, <code>POSIXct</code>, <code>POSIXlt</code>. Além disso, temos ainda um quarto tipo de dado chamado <code>difftime</code>, que busca dar suporte às operações aritméticas entre os 3 tipos anteriores. Valores desses três tipos de dados, são criados a partir das funções <code>as.POSIXct()</code>, <code>as.POSIXlt()</code> e <code>as.Date()</code>.</p>
+<p>O tipo <code>Date</code> nos ajuda a armazenar datas no R. Poderíamos armazenar datas como simples <em>strings</em>, mas com isso, teríamos uma ordenação incorreta dos valores, além da falta de acesso a diversos métodos aritméticos e computacionais voltados para esse tipo de dado. Logo, tratar as suas datas por meio do tipo <code>Date</code> pode fazer a diferença em sua análise.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1">d <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">as.Date</span>(<span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"2020-08-10"</span>, <span class="st" style="color: #20794D;">"2020-08-11"</span>, <span class="st" style="color: #20794D;">"2020-08-12"</span>))</span>
+<span id="cb5-2">d</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2020-08-10" "2020-08-11" "2020-08-12"</code></pre>
+</div>
+</div>
+<p>Já o tipo <code>POSIXct</code> é particularmente útil para interpretar datas acompanhadas de um horário (isto é, um dado do tipo <code>date-time</code>). Certas transações econômicas precisam ser registradas com um nível de precisão alto. Ou seja, os registros de muitas empresas não se contentam com datas, pois eles também necessitam saber o momento exato (ou o horário exato) dessa data em que um evento ocorre. O tipo <code>POSIXct</code> foi feito justamente para tratar e lidar com esse tipo de informação.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1">h <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">as.POSIXct</span>(<span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"2020-03-21 15:52:29"</span>, <span class="st" style="color: #20794D;">"2020-03-22 10:30:02"</span>))</span>
+<span id="cb7-2">h</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2020-03-21 15:52:29 -03" "2020-03-22 10:30:02 -03"</code></pre>
+</div>
+</div>
+<p>Por outro lado, o tipo <code>POSIXlt</code> pode ser especialmente útil quando desejamos extrair os componentes de uma variável de tempo específica. Por exemplo, podemos estar interessados apenas no dia do mês presente em cada valor, ou ainda, na hora do dia guardada em cada um desses valores. Tal ponto está demonstrado no exemplo abaixo:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1">hl <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">as.POSIXlt</span>(<span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"2020-03-21 15:52:29"</span>, <span class="st" style="color: #20794D;">"2020-03-22 10:30:02"</span>))</span>
+<span id="cb9-2"></span>
+<span id="cb9-3"><span class="do" style="color: #5E5E5E;
+font-style: italic;">## O dia de cada data:</span></span>
+<span id="cb9-4">hl<span class="sc" style="color: #5E5E5E;">$</span>mday</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 21 22</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><span class="do" style="color: #5E5E5E;
+font-style: italic;">## A hora do dia de cada data:</span></span>
+<span id="cb11-2">hl<span class="sc" style="color: #5E5E5E;">$</span>hour</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 15 10</code></pre>
+</div>
+</div>
+
+
+</section>
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>Como os materiais produzidos pelo <a href="https://curso-r.com/material/">Curso-R</a>, ou este <a href="https://materiais-estudo-r.netlify.app/">índice de materiais</a> construído por Beatriz Milz.↩︎</p></li>
+</ol>
+</section></div> ]]></description>
+  <category>Book</category>
+  <category>R Language</category>
+  <guid>https://pedro-faria.netlify.app/posts/2021-05-26-2nd-edition-rbook/pt/index.html</guid>
+  <pubDate>Wed, 26 May 2021 03:00:00 GMT</pubDate>
+  <media:content url="https://pedro-faria.netlify.app/posts/2021-05-26-2nd-edition-rbook/featured.png" medium="image" type="image/png" height="204" width="144"/>
+</item>
+<item>
+  <title>Recipient table and source table</title>
+  <dc:creator>Pedro Duarte Faria</dc:creator>
+  <link>https://pedro-faria.netlify.app/posts/2021-01-02-tabela-destinataria-fonte/en/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<div class="cell">
+<style type="text/css">
+.hljs{
+  font-family: 'Inconsolata', monospace;
+  font-size: 17px;
+}
+
+.hljs.shell{
+  font-size: 18px;
+}
+
+.hljs-comment{
+  font-style: normal;
+  color: #222222;
+}
+</style>
+</div>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p><em>Outer joins</em> are a simple topic of understanding for most students. However, this article proposes a second approach on the subject. This approach was built during a recent reformulation of the chapter “Introdução a base de dados relacionais”, from the book <a href="https://pedro-faria.netlify.app/pt/publication/book/introducao_linguagem_r/">Introdução à Linguagem R: seus fundamentos e sua prática</a>. The point of view presented here seeks to be strict, and uses this rigidity as a mechanism that facilitates the student`s memorization of the behaviors in each type of <em>outer join</em>.</p>
+</section>
+<section id="joins-have-direction" class="level1">
+<h1>Joins have direction</h1>
+<p>A <em>join</em> operation is nothing more than a union between two tables. But, instead of an union of two tables, we have another option for interpreting the result of this operation. So that to produce a table that represents the union between two tables, we could simply extract all the columns from one of the tables, and insert them into the other table.</p>
+<p>For example, suppose you have a table <code>A</code>, which contains two columns, called <code>x</code> and <code>y</code>; and a table <code>B</code>, which in turn holds 4 different columns, named <code>x</code>, <code>z</code>, <code>r</code>, and <code>t</code>. Note that one of the columns in table <code>B</code> corresponds to the same column <code>x</code> that we found in table <code>A</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;">library</span>(tibble)</span>
+<span id="cb1-2"></span>
+<span id="cb1-3">A <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">tibble</span>(</span>
+<span id="cb1-4">  <span class="at" style="color: #657422;">x =</span> <span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">5</span>,</span>
+<span id="cb1-5">  <span class="at" style="color: #657422;">y =</span> <span class="fu" style="color: #4758AB;">round</span>(<span class="fu" style="color: #4758AB;">rnorm</span>(<span class="dv" style="color: #AD0000;">5</span>, <span class="dv" style="color: #AD0000;">2</span>, <span class="dv" style="color: #AD0000;">1</span>), <span class="dv" style="color: #AD0000;">2</span>)</span>
+<span id="cb1-6">)</span>
+<span id="cb1-7"></span>
+<span id="cb1-8">B <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">tibble</span>(</span>
+<span id="cb1-9">  <span class="at" style="color: #657422;">x =</span> <span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">5</span>,</span>
+<span id="cb1-10">  <span class="at" style="color: #657422;">z =</span> letters[<span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">5</span>],</span>
+<span id="cb1-11">  <span class="at" style="color: #657422;">r =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="fl" style="color: #AD0000;">3.5</span>, <span class="fl" style="color: #AD0000;">2.1</span>, <span class="dv" style="color: #AD0000;">1</span>, <span class="fl" style="color: #AD0000;">5.6</span>, <span class="fl" style="color: #AD0000;">7.2</span>),</span>
+<span id="cb1-12">  <span class="at" style="color: #657422;">t =</span> <span class="st" style="color: #20794D;">"tzu"</span></span>
+<span id="cb1-13">)</span></code></pre></div>
+</div>
+<p>If you want to join tables <code>A</code> and <code>B</code>, you basically want to create a new table, which contains all five columns of these two tables (<code>x</code>, <code>y</code>, <code>z</code>, <code>r</code> and <code>t</code>). Therefore, we could imagine a <em>join</em> process, as if we were extracting all the columns from table <code>B</code>, and inserting all of these columns in table <code>A</code>. Hence, we have the table below as a result:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="fu" style="color: #4758AB;">full_join</span>(A, B, <span class="at" style="color: #657422;">by =</span> <span class="st" style="color: #20794D;">"x"</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 5
+      x     y z         r t    
+  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;
+1     1  1.14 a       3.5 tzu  
+2     2  1.36 b       2.1 tzu  
+3     3  3.27 c       1   tzu  
+4     4  1.77 d       5.6 tzu  
+5     5  3.16 e       7.2 tzu  </code></pre>
+</div>
+</div>
+<p>With this, we are creating the idea that <strong>a <em>join</em> always has a direction</strong>. In other words, we first extract the columns from table <code>B</code>, and then we add those columns to table <code>A</code>. Note that we are always starting from table <code>B</code> towards table <code>A</code>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="https://pedro-faria.netlify.app/posts/2021-01-02-tabela-destinataria-fonte/direcao.png" class="img-fluid" width="2200"></p>
+</div>
+</div>
+</section>
+<section id="recipient-table-and-source-table" class="level1">
+<h1>Recipient table and source table</h1>
+<p>From this perspective, we can interpret that, in a <em>join</em>, we are bringing all the columns of a secondary table into our main table (or our table of interest). We have the option to call these tables :<strong>source table</strong> (secondary table) and <strong>recipient table</strong> (main table). With this, a <em>join</em> always starts at <strong>source table</strong> and go towards the <strong>recipient table</strong>.</p>
+<p>This perspective makes sense with the practice of <em>joins</em>. Because in any analysis, we commonly work with a “main” table, or a table that contains the key data we’re analyzing. And when we use some <em>join</em>, we’re usually bringing columns from other tables into this “main” table (or “recipient” table, according to that perspective). So keep in mind that a <em>join</em> always part from the <strong>source table</strong> toward the <strong>recipient table</strong>.</p>
+</section>
+<section id="types-of-outer-join" class="level1">
+<h1>Types of <em>outer join</em></h1>
+<p>A natural <em>join</em> (<em>inner join</em>) usually generates a loss of observations from both tables involved in the process. In contrast, a <em>join</em> of type <em>outer</em> (that is, an <em>outer join</em>), seeks to delimit which of the two tables will be preserved in the result. That is, an <em>outer join</em> seeks to keep in the <em>join</em> result, the rows of at least one of the tables involved.</p>
+<p>We have three main types of <em>outer joins</em>, which are <em>left join</em>, <em>right join</em> and <em>full join</em>. A <em>full join</em> is the simplest to understand, as it seeks to keep all rows of both tables employed. Therefore, even if there is some observation not found in one of the tables, it will be preserved in the final product of the operation.</p>
+<p>However, <em>left join</em> and <em>right join</em> seek to keep rows from only one of the tables used in <em>join</em>. At this point, many teachers would say something like: “if we want to apply a <em>join</em> between tables <code>A</code> and <code>B</code>, a <em>left join</em> will keep the rows of table <code>A</code>, and a <em>right join</em> will keep the rows of table <code>B</code>”. Other teachers would still try to say, “<em>left join</em> will keep the table rows on the left, while a <em>right join</em> will keep the table rows to the right”.</p>
+<p>However, some confusion can be easily applied in both alternatives. I mean, a student can easily face the following question: “🤔 Uhmm… I don’t remember very well. Does a <em>left join</em> keep the rows in table <code>A</code>? Or are the rows in table <code>B</code>?”; or else, “🤔 Wait! But which of the two tables is on the right side?”</p>
+</section>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+<p>With this, according to the perspective adopted in this article, we can understand that a <em>left join</em> and a <em>right join</em> seek to keep the rows of the <strong>recipient table</strong> and the <strong>source table</strong>, respectively. Thus, when using a <em>right join</em> or a <em>left join</em>, you should ask yourself the following: “Do I want to keep the rows in my main table (recipient table)? Or the secondary table (source table), where I am extracting the new columns from?” So if you want to keep, for example, the rows in your main table (recipient table), which is what occurs most of the time, you now know that you need to use a <em>left join</em>.</p>
+<p>In a visual representation, we can reproduce below the initial image of this article, which marks the lines maintained by each of these two types of <em>join</em>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="https://pedro-faria.netlify.app/posts/2021-01-02-tabela-destinataria-fonte/featured.png" class="img-fluid" width="2200"></p>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <category>Joins</category>
+  <category>Teaching</category>
+  <category>Book</category>
+  <category>R Language</category>
+  <guid>https://pedro-faria.netlify.app/posts/2021-01-02-tabela-destinataria-fonte/en/index.html</guid>
+  <pubDate>Sat, 02 Jan 2021 03:00:00 GMT</pubDate>
+  <media:content url="https://pedro-faria.netlify.app/posts/2021-01-02-tabela-destinataria-fonte/featured.png" medium="image" type="image/png" height="81" width="144"/>
+</item>
+<item>
+  <title>Tabela destinatária e tabela fonte</title>
+  <dc:creator>Pedro Duarte Faria</dc:creator>
+  <link>https://pedro-faria.netlify.app/posts/2021-01-02-tabela-destinataria-fonte/pt/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<div class="cell">
+<style type="text/css">
+.hljs{
+  font-family: 'Inconsolata', monospace;
+  font-size: 17px;
+}
+
+.hljs.shell{
+  font-size: 18px;
+}
+
+.hljs-comment{
+  font-style: normal;
+  color: #222222;
+}
+</style>
+</div>
+<section id="introdução" class="level1">
+<h1>Introdução</h1>
+<p><em>Outer joins</em> são um tópico de simples compreensão para a maioria dos alunos. Entretanto, esse artigo propõe uma segunda abordagem sobre o tema. Tal abordagem foi construída durante uma reformulação recente do capítulo “Introdução a base de dados relacionais” do livro <a href="https://pedro-faria.netlify.app/pt/publication/book/introducao_linguagem_r/">Introdução à Linguagem R: seus fundamentos e sua prática</a>. O ponto de vista apresentado aqui, busca ser estrito, e utiliza essa rigidez como um mecanismo que facilite a memorização do aluno sobre os comportamentos de cada tipo de <em>outer join</em>.</p>
+</section>
+<section id="joins-possuem-sentido-e-direção" class="level1">
+<h1>Joins possuem sentido e direção</h1>
+<p>Uma operação de <em>join</em> é nada mais do que uma união entre duas tabelas. Por outro lado, temos uma outra opção de interpretação do resultado dessa operação. De modo que, para produzirmos uma tabela que represente a união entre duas tabelas, poderíamos simplesmente extrair todas as colunas de uma das tabelas, e inserí-las na outra tabela.</p>
+<p>Por exemplo, suponha que você possua uma tabela <code>A</code>, que contém duas colunas, chamadas <code>x</code> e <code>y</code>; e uma tabela <code>B</code>, que por sua vez, guarda 4 colunas diferentes, denominadas <code>x</code>, <code>z</code>, <code>r</code>, e <code>t</code>. Perceba que uma das colunas na tabela <code>B</code>, corresponde a mesma coluna <code>x</code> que encontramos na tabela <code>A</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;">library</span>(tibble)</span>
+<span id="cb1-2"></span>
+<span id="cb1-3">A <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">tibble</span>(</span>
+<span id="cb1-4">  <span class="at" style="color: #657422;">x =</span> <span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">5</span>,</span>
+<span id="cb1-5">  <span class="at" style="color: #657422;">y =</span> <span class="fu" style="color: #4758AB;">round</span>(<span class="fu" style="color: #4758AB;">rnorm</span>(<span class="dv" style="color: #AD0000;">5</span>, <span class="dv" style="color: #AD0000;">2</span>, <span class="dv" style="color: #AD0000;">1</span>), <span class="dv" style="color: #AD0000;">2</span>)</span>
+<span id="cb1-6">)</span>
+<span id="cb1-7"></span>
+<span id="cb1-8">B <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">tibble</span>(</span>
+<span id="cb1-9">  <span class="at" style="color: #657422;">x =</span> <span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">5</span>,</span>
+<span id="cb1-10">  <span class="at" style="color: #657422;">z =</span> letters[<span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">5</span>],</span>
+<span id="cb1-11">  <span class="at" style="color: #657422;">r =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="fl" style="color: #AD0000;">3.5</span>, <span class="fl" style="color: #AD0000;">2.1</span>, <span class="dv" style="color: #AD0000;">1</span>, <span class="fl" style="color: #AD0000;">5.6</span>, <span class="fl" style="color: #AD0000;">7.2</span>),</span>
+<span id="cb1-12">  <span class="at" style="color: #657422;">t =</span> <span class="st" style="color: #20794D;">"tzu"</span></span>
+<span id="cb1-13">)</span></code></pre></div>
+</div>
+<p>Se você deseja unir as tabelas <code>A</code> e <code>B</code>, você basicamente deseja criar uma nova tabela, que contém todas as cinco colunas dessas duas tabelas (<code>x</code>, <code>y</code>, <code>z</code>, <code>r</code> e <code>t</code>). Portanto, poderíamos imaginar um processo de <em>join</em>, como se estivéssemos transportando todas as colunas da tabela <code>B</code>, para dentro da tabela <code>A</code>. Dessa maneira, temos a tabela abaixo como resultado:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="fu" style="color: #4758AB;">library</span>(dplyr)</span></code></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="fu" style="color: #4758AB;">full_join</span>(A, B, <span class="at" style="color: #657422;">by =</span> <span class="st" style="color: #20794D;">"x"</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 5
+      x     y z         r t    
+  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;
+1     1  3.27 a       3.5 tzu  
+2     2  2.3  b       2.1 tzu  
+3     3  1.18 c       1   tzu  
+4     4  1.95 d       5.6 tzu  
+5     5  1.59 e       7.2 tzu  </code></pre>
+</div>
+</div>
+<p>Com isso, estamos criando a ideia de que <strong>um <em>join</em> possui sempre um sentido e uma direção</strong>. Em outras palavras, primeiro, extraímos as colunas da tabela <code>B</code>, e em seguida, acrescentamos essas colunas à tabela <code>A</code>. Repare que estamos sempre partindo da tabela <code>B</code> em direção a tabela <code>A</code>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="https://pedro-faria.netlify.app/posts/2021-01-02-tabela-destinataria-fonte/direcao.png" class="img-fluid" width="2200"></p>
+</div>
+</div>
+</section>
+<section id="tabela-destinatária-e-tabela-fonte" class="level1">
+<h1>Tabela destinatária e tabela fonte</h1>
+<p>Por essa perspectiva, podemos interpretar que, em um <em>join</em>, estamos trazendo todas as colunas de uma tabela secundária, para dentro de nossa tabela principal (ou a nossa tabela de interesse). Temos a opção de chamarmos essas tabelas de: <strong>tabela fonte</strong> (tabela secundária) e <strong>tabela destinatária</strong> (tabela principal). Com isso, temos que um <em>join</em> sempre parte da <strong>tabela fonte</strong> em direção à <strong>tabela destinatária</strong>.</p>
+<p>Essa perspectiva faz sentido com a prática de <em>joins</em>. Pois em qualquer análise, nós comumente trabalhamos com uma tabela “principal”, ou uma tabela que contém os principais dados que estamos analisando. E quando utilizamos algum <em>join</em>, estamos geralmente trazendo colunas de outras tabelas para dentro dessa tabela “principal” (ou tabela “destinatária”, segundo essa perspectiva). Por isso, tenha em mente que um <em>join</em> sempre parte da <strong>tabela fonte</strong> em direção à <strong>tabela destinatária</strong>.</p>
+</section>
+<section id="tipos-de-outer-join" class="level1">
+<h1>Tipos de <em>outer join</em></h1>
+<p>Um <em>join</em> natural (<em>inner join</em>) usualmente gera uma perda de observações de ambas as tabelas envolvidas no processo. Em contrapartida, um <em>join</em> do tipo <em>outer</em> (isto é, um <em>outer join</em>), busca delimitar qual das duas tabelas será preservada no resultado. Ou seja, um <em>outer join</em> busca manter as linhas de pelo menos uma das tabelas envolvidas, no resultado do <em>join</em>.</p>
+<p>Temos três tipos principais de <em>outer joins</em>, que são <em>left join</em>, <em>right join</em> e <em>full join</em>. O <em>full join</em> é o mais simples de se compreender, pois ele busca manter todas as linhas de ambas as tabelas empregadas. Logo, mesmo que haja alguma observação não encontrada em uma das tabelas, ela será preservada no produto final da operação.</p>
+<p>No entanto, <em>left join</em> e <em>right join</em> buscam conservar as linhas de apenas uma das tabelas utilizadas no <em>join</em>. Nesse ponto, muitos professores diriam algo como: “se temos desejamos aplicar um <em>join</em> entre as tabelas <code>A</code> e <code>B</code>, um <em>left join</em> irá manter as linhas da tabela <code>A</code> e um <em>right join</em> vai manter as linhas da tabela <code>B</code>”. Outros professores ainda tentariam dizer: “<em>left join</em> irá manter as linhas da tabela à esquerda, enquanto um <em>right join</em> vai manter as linhas da tabela à direita”.</p>
+<p>Porém, certa confusão pode ser facilmente aplicada em ambas alternativas. Digo, um aluno pode facilmente enfrentar a seguinte questão: “🤔 Uhmm… Eu não me lembro muito bem. Um <em>left join</em> mantém as linhas da tabela <code>A</code>? Ou são as linhas da tabela <code>B</code>?”; ou então, “🤔 Pera! Mas qual das duas tabelas está a direita?”.</p>
+</section>
+<section id="conclusão" class="level1">
+<h1>Conclusão</h1>
+<p>Com isso, segundo a perspectiva adotada nesse artigo, podemos entender que, um <em>left join</em> e um <em>right join</em> buscam manter as linhas da <strong>tabela destinatária</strong> e da <strong>tabela fonte</strong>, respectivamente. Dessa forma, ao utilizar um <em>right join</em> ou um <em>left join</em>, você deve se questionar o seguinte: “Eu quero manter as linhas de minha tabela principal (tabela destinatária)? Ou da tabela secundária (tabela fonte), de onde estou extraindo as novas colunas?”. Logo, se você deseja manter, por exemplo, as linhas de sua tabela principal (tabela destinatária), que é o que ocorre na maioria das vezes, você sabe agora que você precisa utilizar um <em>left join</em>.</p>
+<p>Em uma representação visual, podemos reproduzir abaixo a imagem inicial desse artigo, que marca as linhas mantidas por cada um desses dois tipos de <em>join</em>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="https://pedro-faria.netlify.app/posts/2021-01-02-tabela-destinataria-fonte/featured.png" class="img-fluid" width="2200"></p>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <category>Joins</category>
+  <category>Teaching</category>
+  <category>Book</category>
+  <category>R Language</category>
+  <guid>https://pedro-faria.netlify.app/posts/2021-01-02-tabela-destinataria-fonte/pt/index.html</guid>
+  <pubDate>Sat, 02 Jan 2021 03:00:00 GMT</pubDate>
+  <media:content url="https://pedro-faria.netlify.app/posts/2021-01-02-tabela-destinataria-fonte/featured.png" medium="image" type="image/png" height="81" width="144"/>
+</item>
+<item>
+  <title>Resultados do Formulário de Pesquisa de Interesse - Curso Introdutório de R</title>
+  <dc:creator>Pedro Duarte Faria</dc:creator>
+  <link>https://pedro-faria.netlify.app/posts/2020-10-17-formulario-pesquisa/pt/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>Esse post faz parte de um projeto meu, de um Curso Introdutório de R. Esse projeto já tem um ano, que venho aperfeiçoando-o, e a primeira vez que ele foi posto em prática (ou seja, a primeira vez que dei um curso da linguagem) foi no instituto de pesquisa onde trabalho, a Fundação João Pinheiro<sup>1</sup>. Foi um momento muito proveitoso, pois uma das melhores formas de se aprender uma matéria, é tentando ensiná-la para outras pessoas.</p>
+<p>Aprimorei e venho aprimorando constatemente o meu conhecimento da linguagem R, e agora, uma nova oportunidade de ensinar essa linguagem, surgiu através de um convite da CORECON-MG<sup>2</sup> Acadêmico. Com a ideia de compreendermos melhor as preferências do potencial público desse curso, nós lançamos um formulário de pesquisa no dia 10/10/2020.</p>
+<p>Neste post, estarei analisando rapidamente as respostas que coletamos por esse formulário. Por motivos óbvios, as informações pessoais daqueles que responderam ao formulário, foram omitidas nesse artigo.</p>
+<section id="tivemos-inclusive-pessoas-de-outros-países" class="level1">
+<h1>Tivemos inclusive pessoas de outros países!</h1>
+<p>No momento em que estou montando essa análise, tivemos no total, 122 respostas ao formulário. Mesmo sendo um número relativamente pequeno de pessoas, atingimos os mais diversos locais do país, abrangendo todas as cinco regiões do país.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;">nrow</span>(respostas)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 122</code></pre>
+</div>
+</div>
+<p>As respostas ao formulário não tinham um padrão bem definido, e por isso algumas respostas tiveram que ser ajustadas. Ao final desse ajuste, percebemos que pessoas de 61 instituições diferentes responderam ao formulário.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="fu" style="color: #4758AB;">nrow</span>(instituicoes)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 61</code></pre>
+</div>
+</div>
+<p>A maior parte das instituições às quais os respondentes pertenciam, estão localizadas na região Sudeste, com 22 instituições. O Nordeste vem logo em seguida, com 16 insituições. Agora, as instituições que não foram designadas para alguma região (<code>NA</code>), são na verdade instituições de fora do Brasil. Isso significa que tivemos 5 respostas vindas de outros países, ao formulário de interesse no curso.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;">library</span>(tidyverse)</span>
+<span id="cb5-2"></span>
+<span id="cb5-3">instituicoes <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb5-4">  <span class="fu" style="color: #4758AB;">group_by</span>(Regiao) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb5-5">  <span class="fu" style="color: #4758AB;">summarise</span>(<span class="at" style="color: #657422;">contagem =</span> <span class="fu" style="color: #4758AB;">n</span>())</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 2
+  Regiao       contagem
+  &lt;chr&gt;           &lt;int&gt;
+1 Centro Oeste        3
+2 Nordeste           15
+3 Norte               9
+4 Sudeste            22
+5 Sul                 7
+6 &lt;NA&gt;                5</code></pre>
+</div>
+</div>
+<p>A maioria das pessoas que responderam ao formulário, provinham de instituições localizadas no estado Minas Gerais. Grande parte das respostas foram da UFOP (que é a instituição na qual estudo), totalizando 22 respostas. Além disso, não recebemos respostas de alguns estados, que estão marcados em cinza no gráfico abaixo:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="fu" style="color: #4758AB;">library</span>(geobr)</span>
+<span id="cb7-2"></span>
+<span id="cb7-3">brasil <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">read_state</span>()</span></code></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1">resp_sum <span class="ot" style="color: #003B4F;">&lt;-</span> respostas <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb8-2">  <span class="fu" style="color: #4758AB;">select</span>(Regiao, Instituicao, abbrev, Estado) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb8-3">  <span class="fu" style="color: #4758AB;">group_by</span>(Estado, Regiao) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb8-4">  <span class="fu" style="color: #4758AB;">summarise</span>(<span class="at" style="color: #657422;">contagem =</span> <span class="fu" style="color: #4758AB;">n</span>())</span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'Estado'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1">brasil <span class="ot" style="color: #003B4F;">&lt;-</span> brasil <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb10-2">  <span class="fu" style="color: #4758AB;">left_join</span>(resp_sum, <span class="at" style="color: #657422;">by =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"name_state"</span> <span class="ot" style="color: #003B4F;">=</span> <span class="st" style="color: #20794D;">"Estado"</span>))</span>
+<span id="cb10-3"></span>
+<span id="cb10-4"><span class="fu" style="color: #4758AB;">ggplot</span>(<span class="at" style="color: #657422;">data =</span> brasil) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb10-5">  <span class="fu" style="color: #4758AB;">geom_sf</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">fill =</span> Regiao)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb10-6">  <span class="fu" style="color: #4758AB;">stat_sf_coordinates</span>(</span>
+<span id="cb10-7">    <span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">label =</span> contagem),</span>
+<span id="cb10-8">    <span class="at" style="color: #657422;">geom =</span> <span class="st" style="color: #20794D;">"text"</span></span>
+<span id="cb10-9">  ) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb10-10">  <span class="fu" style="color: #4758AB;">theme_void</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb10-11">  <span class="fu" style="color: #4758AB;">labs</span>(</span>
+<span id="cb10-12">    <span class="at" style="color: #657422;">title =</span> <span class="st" style="color: #20794D;">"Número de respostas provenientes de cada estado brasileiro"</span>,</span>
+<span id="cb10-13">    <span class="at" style="color: #657422;">fill =</span> <span class="st" style="color: #20794D;">"Região"</span></span>
+<span id="cb10-14">  )</span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in st_point_on_surface.sfc(sf::st_zm(x)): st_point_on_surface may not
+give correct results for longitude/latitude data</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 6 rows containing missing values (geom_text).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="https://pedro-faria.netlify.app/posts/2020-10-17-formulario-pesquisa/pt/index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Talvez o mais impressionante de tudo isso, é que tivemos pessoas de outros países interessadas no curso. Cada um desses outros países obtiveram apenas uma assinatura, mas mesmo assim, é no mínimo interessante ver o quão longe fomos. Os países atingidos (fora o Brasil), e as respectivas instituições dos respondentes foram: Venezuela (Universidad de Carabobo); Cuba (Universidad de la Havana); Moçambique (ISRI - Instituto Superior De Relações Internacionais); e Peru (Universidad Nacional de Ingeniaria); Portugal (Universidade de Lisboa).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1">cores <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(</span>
+<span id="cb13-2">  <span class="st" style="color: #20794D;">"Brazil"</span> <span class="ot" style="color: #003B4F;">=</span> <span class="st" style="color: #20794D;">"#F8766D"</span>,</span>
+<span id="cb13-3">  <span class="st" style="color: #20794D;">"Cuba"</span> <span class="ot" style="color: #003B4F;">=</span> <span class="st" style="color: #20794D;">"#BB9D00"</span>,</span>
+<span id="cb13-4">  <span class="st" style="color: #20794D;">"Mozambique"</span> <span class="ot" style="color: #003B4F;">=</span> <span class="st" style="color: #20794D;">"#7CAE00"</span>,</span>
+<span id="cb13-5">  <span class="st" style="color: #20794D;">"Venezuela"</span> <span class="ot" style="color: #003B4F;">=</span> <span class="st" style="color: #20794D;">"#00A5FF"</span>,</span>
+<span id="cb13-6">  <span class="st" style="color: #20794D;">"Peru"</span> <span class="ot" style="color: #003B4F;">=</span> <span class="st" style="color: #20794D;">"#E76BF3"</span>,</span>
+<span id="cb13-7">  <span class="st" style="color: #20794D;">"Portugal"</span> <span class="ot" style="color: #003B4F;">=</span> <span class="st" style="color: #20794D;">"#4fc953"</span>,</span>
+<span id="cb13-8">  <span class="st" style="color: #20794D;">"Não foi atingido"</span> <span class="ot" style="color: #003B4F;">=</span> <span class="st" style="color: #20794D;">"#d4d4d4"</span></span>
+<span id="cb13-9">)</span>
+<span id="cb13-10"></span>
+<span id="cb13-11">world<span class="sc" style="color: #5E5E5E;">$</span>cores <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">unname</span>(cores[world<span class="sc" style="color: #5E5E5E;">$</span>marca])</span>
+<span id="cb13-12"></span>
+<span id="cb13-13"><span class="fu" style="color: #4758AB;">ggplot</span>(<span class="at" style="color: #657422;">data =</span> world) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb13-14">  <span class="fu" style="color: #4758AB;">geom_sf</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">fill =</span> cores)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb13-15">  <span class="fu" style="color: #4758AB;">coord_sf</span>(<span class="at" style="color: #657422;">xlim =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">100</span>, <span class="dv" style="color: #AD0000;">50</span>), <span class="at" style="color: #657422;">ylim =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">60</span>, <span class="dv" style="color: #AD0000;">40</span>)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb13-16">  <span class="fu" style="color: #4758AB;">theme_void</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb13-17">  <span class="fu" style="color: #4758AB;">labs</span>(</span>
+<span id="cb13-18">    <span class="at" style="color: #657422;">title =</span> <span class="st" style="color: #20794D;">"Países atingidos pelo formulário"</span>,</span>
+<span id="cb13-19">    <span class="at" style="color: #657422;">fill =</span> <span class="st" style="color: #20794D;">"País de referência"</span></span>
+<span id="cb13-20">  ) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb13-21">  <span class="fu" style="color: #4758AB;">theme</span>(<span class="at" style="color: #657422;">legend.position =</span> <span class="st" style="color: #20794D;">"bottom"</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb13-22">  <span class="fu" style="color: #4758AB;">scale_fill_identity</span>(</span>
+<span id="cb13-23">    <span class="at" style="color: #657422;">guide =</span> <span class="st" style="color: #20794D;">"legend"</span>,</span>
+<span id="cb13-24">    <span class="at" style="color: #657422;">labels =</span> <span class="fu" style="color: #4758AB;">names</span>(cores),</span>
+<span id="cb13-25">    <span class="at" style="color: #657422;">breaks =</span> <span class="fu" style="color: #4758AB;">unname</span>(cores)</span>
+<span id="cb13-26">  )</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://pedro-faria.netlify.app/posts/2020-10-17-formulario-pesquisa/pt/index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="assuntos-requisitados" class="level1">
+<h1>Assuntos requisitados</h1>
+<p>O R é uma linguagem que foi criada por estatísticos, e por isso, é uma linguagem especializada em análise de dados e estatística. Com isso, não é nenhuma surpresa que Econometria e Análise de Séries Temporais, tenham sido as principais sugestões e assuntos requisitados para o curso, pelas pessoas que responderam o formulário.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><span class="fu" style="color: #4758AB;">library</span>(wordcloud)</span>
+<span id="cb14-2"><span class="fu" style="color: #4758AB;">library</span>(RColorBrewer)</span>
+<span id="cb14-3"></span>
+<span id="cb14-4">assuntos <span class="ot" style="color: #003B4F;">&lt;-</span> respostas <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb14-5">  <span class="fu" style="color: #4758AB;">filter</span>(<span class="sc" style="color: #5E5E5E;">!</span><span class="fu" style="color: #4758AB;">is.na</span>(Sugestao)) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb14-6">  <span class="fu" style="color: #4758AB;">group_by</span>(Sugestao) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb14-7">  <span class="fu" style="color: #4758AB;">count</span>() <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb14-8">  <span class="fu" style="color: #4758AB;">arrange</span>(n)</span>
+<span id="cb14-9"></span>
+<span id="cb14-10">cor <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">brewer.pal</span>(<span class="dv" style="color: #AD0000;">6</span>, <span class="st" style="color: #20794D;">"Dark2"</span>)</span>
+<span id="cb14-11"><span class="fu" style="color: #4758AB;">names</span>(cor) <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"1"</span>, <span class="st" style="color: #20794D;">"3"</span>, <span class="st" style="color: #20794D;">"5"</span>, <span class="st" style="color: #20794D;">"8"</span>, <span class="st" style="color: #20794D;">"2"</span>, <span class="st" style="color: #20794D;">"4"</span>)</span>
+<span id="cb14-12">assuntos<span class="sc" style="color: #5E5E5E;">$</span>color <span class="ot" style="color: #003B4F;">&lt;-</span> cor[<span class="fu" style="color: #4758AB;">as.character</span>(assuntos<span class="sc" style="color: #5E5E5E;">$</span>n)]</span>
+<span id="cb14-13"></span>
+<span id="cb14-14"></span>
+<span id="cb14-15"><span class="fu" style="color: #4758AB;">wordcloud</span>(</span>
+<span id="cb14-16">  <span class="at" style="color: #657422;">words =</span> assuntos<span class="sc" style="color: #5E5E5E;">$</span>Sugestao,</span>
+<span id="cb14-17">  <span class="at" style="color: #657422;">freq =</span> assuntos<span class="sc" style="color: #5E5E5E;">$</span>n,</span>
+<span id="cb14-18">  <span class="at" style="color: #657422;">min.freq =</span> <span class="dv" style="color: #AD0000;">1</span>,</span>
+<span id="cb14-19">  <span class="at" style="color: #657422;">max.words =</span> <span class="dv" style="color: #AD0000;">200</span>,</span>
+<span id="cb14-20">  <span class="at" style="color: #657422;">ordered.colors =</span> <span class="cn" style="color: #8f5902;">TRUE</span>,</span>
+<span id="cb14-21">  <span class="at" style="color: #657422;">rot.per =</span> <span class="fl" style="color: #AD0000;">0.35</span>,</span>
+<span id="cb14-22">  <span class="at" style="color: #657422;">use.r.layout =</span> <span class="cn" style="color: #8f5902;">FALSE</span>,</span>
+<span id="cb14-23">  <span class="at" style="color: #657422;">scale =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="dv" style="color: #AD0000;">2</span>,<span class="fl" style="color: #AD0000;">0.5</span>),</span>
+<span id="cb14-24">  <span class="at" style="color: #657422;">colors =</span> assuntos<span class="sc" style="color: #5E5E5E;">$</span>color</span>
+<span id="cb14-25">)</span></code></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="https://pedro-faria.netlify.app/posts/2020-10-17-formulario-pesquisa/wordcloud.png" class="img-fluid" width="450"></p>
+</div>
+</div>
+</section>
+<section id="áreas-dos-respondentes" class="level1">
+<h1>Áreas dos respondentes</h1>
+<p>A enorme maioria das pessoas que responderam eram alunos de graduação, ou bachareis já formados. Como pode ser observado logo abaixo, tivemos também algumas pessoas com algum nível de pós-graduação.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><span class="fu" style="color: #4758AB;">table</span>(respostas<span class="sc" style="color: #5E5E5E;">$</span>Nivel)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Doutorado Graduação  Mestrado 
+        4       113         5 </code></pre>
+</div>
+</div>
+<p>Curiosamente, das 10 pessoas que possuíam ou estavam fazendo pós-graduação (mestrado ou doutorado), 6 eram de alguma área da Saúde ou das Ciências Biológicas. Apenas uma dessas 10 pessoas, pertencia a área de Economia. Esse resultado faz sentido, visto que a linguagem R tem se expandido muito em algumas áreas como a epidemiologia e principalmente em análise genética, através de um conjunto de pacotes como o <code>Bioconductor</code><sup>3</sup>.</p>
+<p>De qualquer maneira, olhando para o número geral de respondentes, a grande maioria do público atingido pelo formulário, foram graduandos (ou bachareis já formados) em Economia, totalizando 65 pessoas.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1">respostas <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb17-2">  <span class="fu" style="color: #4758AB;">filter</span>(Curso <span class="sc" style="color: #5E5E5E;">==</span> <span class="st" style="color: #20794D;">"Economia"</span>) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb17-3">  <span class="fu" style="color: #4758AB;">nrow</span>()</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 30</code></pre>
+</div>
+</div>
+<p>Quanto às 52 pessoas restantes que não pertencem à area de Economia, as áreas atingidas foram bem diversas. Foram 5 pessoas de Agronomia e 4 pessoas de Geologia. As demais áreas marcadas em laranja abaixo, correspondem a 2 pessoas, enquanto todas as outras em ciano obtiveram apenas 1 respondente.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1">areas <span class="ot" style="color: #003B4F;">&lt;-</span> respostas <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb19-2">  <span class="fu" style="color: #4758AB;">filter</span>(Curso <span class="sc" style="color: #5E5E5E;">!=</span> <span class="st" style="color: #20794D;">"Economia"</span>) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb19-3">  <span class="fu" style="color: #4758AB;">group_by</span>(Curso) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb19-4">  <span class="fu" style="color: #4758AB;">count</span>() <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb19-5">  <span class="fu" style="color: #4758AB;">arrange</span>(n)</span>
+<span id="cb19-6"></span>
+<span id="cb19-7">cor <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">brewer.pal</span>(<span class="dv" style="color: #AD0000;">5</span>, <span class="st" style="color: #20794D;">"Dark2"</span>)</span>
+<span id="cb19-8"><span class="fu" style="color: #4758AB;">names</span>(cor) <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">unique</span>(areas<span class="sc" style="color: #5E5E5E;">$</span>n)</span>
+<span id="cb19-9">areas<span class="sc" style="color: #5E5E5E;">$</span>color <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">unname</span>(cor[<span class="fu" style="color: #4758AB;">as.character</span>(areas<span class="sc" style="color: #5E5E5E;">$</span>n)])</span>
+<span id="cb19-10"></span>
+<span id="cb19-11"><span class="fu" style="color: #4758AB;">wordcloud</span>(</span>
+<span id="cb19-12">  <span class="at" style="color: #657422;">words =</span> areas<span class="sc" style="color: #5E5E5E;">$</span>Curso,</span>
+<span id="cb19-13">  <span class="at" style="color: #657422;">freq =</span> areas<span class="sc" style="color: #5E5E5E;">$</span>n,</span>
+<span id="cb19-14">  <span class="at" style="color: #657422;">min.freq =</span> <span class="dv" style="color: #AD0000;">1</span>,</span>
+<span id="cb19-15">  <span class="at" style="color: #657422;">max.words =</span> <span class="dv" style="color: #AD0000;">200</span>,</span>
+<span id="cb19-16">  <span class="at" style="color: #657422;">ordered.colors =</span> <span class="cn" style="color: #8f5902;">TRUE</span>,</span>
+<span id="cb19-17">  <span class="at" style="color: #657422;">rot.per =</span> <span class="fl" style="color: #AD0000;">0.35</span>,</span>
+<span id="cb19-18">  <span class="at" style="color: #657422;">use.r.layout =</span> <span class="cn" style="color: #8f5902;">FALSE</span>,</span>
+<span id="cb19-19">  <span class="at" style="color: #657422;">scale =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="dv" style="color: #AD0000;">2</span>,<span class="fl" style="color: #AD0000;">0.5</span>),</span>
+<span id="cb19-20">  <span class="at" style="color: #657422;">color =</span> areas<span class="sc" style="color: #5E5E5E;">$</span>color</span>
+<span id="cb19-21">)</span></code></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="https://pedro-faria.netlify.app/posts/2020-10-17-formulario-pesquisa/areas.png" class="img-fluid" width="700"></p>
+</div>
+</div>
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>http://novosite.fjp.mg.gov.br/↩︎</p></li>
+<li id="fn2"><p>Conselho Regional de Economia Acadêmico de Minas Gerais:http://corecon-mg.org.br/academico/↩︎</p></li>
+<li id="fn3"><p>https://www.bioconductor.org/↩︎</p></li>
+</ol>
+</section></div> ]]></description>
+  <category>R Language</category>
+  <category>Teaching</category>
+  <guid>https://pedro-faria.netlify.app/posts/2020-10-17-formulario-pesquisa/pt/index.html</guid>
+  <pubDate>Sat, 17 Oct 2020 03:00:00 GMT</pubDate>
+  <media:content url="https://pedro-faria.netlify.app/posts/2020-10-17-formulario-pesquisa/featured.jpg" medium="image" type="image/jpeg"/>
+</item>
+</channel>
+</rss>

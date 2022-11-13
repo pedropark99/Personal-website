@@ -1,1 +1,1 @@
-Sitemap: https://pedro-faria.com/sitemap.xml
+Sitemap: https://pedro-faria.netlify.app/sitemap.xml
