@@ -4,6 +4,9 @@ image: files/images/profile.jpg
 about:
   template: trestles
   links:
+    - icon: mastodon
+      text: Mastodon
+      href: https://fosstodon.org/web/@pedropark99
     - icon: twitter
       text: Twitter
       href: https://twitter.com/PedroPark9
