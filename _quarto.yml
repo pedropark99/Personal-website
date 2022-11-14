@@ -40,6 +40,9 @@ website:
       - icon: github
         href: https://github.com/pedropark99
         aria-label: "Github profile"
+      - icon: mastodon
+        href: https://fosstodon.org/web/@pedropark99
+        aria-label: "Mastodon profile"
       - icon: twitter
         href: https://twitter.com/PedroPark9
         aria-label: "Twitter profile"
