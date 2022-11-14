@@ -9,7 +9,7 @@ website:
   google-analytics: "G-7E6XG4WKHE"
   navbar:
     background: "#0e326b"
-    right:
+    left:
       - about.qmd
       - text: Posts
         menu:
@@ -33,20 +33,28 @@ website:
             href: files/cv/cv-english.pdf
           - text: CV em Português
             href: files/cv/cv-portuguese.pdf
+    right:
       - icon: envelope-fill
         href: "mailto:pedropark99@gmail.com"
+        aria-label: "Email for contact"
       - icon: github
         href: https://github.com/pedropark99
+        aria-label: "Github profile"
       - icon: twitter
         href: https://twitter.com/PedroPark9
+        aria-label: "Twitter profile"
       - icon: linkedin
         href: https://www.linkedin.com/in/pedro-faria-a68140209/
+        aria-label: "Linkedin profile"
+      - icon: rss
+        href: https://pedro-faria.netlify.app/index.xml
+        aria-label: "RSS feed for Pedro's blog"
 
 
 format:
   html:
     page-layout: full
-    theme: 
+    theme:
       - cosmo
       - blue_theme.scss
     css: styles.css
