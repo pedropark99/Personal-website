@@ -122,8 +122,19 @@
 
 <section id="sobre-o-livro" class="level1">
 <h1>Sobre o livro</h1>
-<p>Este livro oferece uma descrição profunda sobre os fundamentos da linguagem R, e como eles se aplicam no contexto da análise de dados. Sua principal contribuição para a literatura brasileira hoje, está no combate de dois problemas recorrentes nos materiais disponíveis em português sobre a linguagem: 1) a falta de profundidade de muitos materiais, que tentam abordar muitos assuntos em um espaço muito curto; 2) a alta especialização de muitos materiais, que são de difícil transposição para aplicações gerais em análises de dados.</p>
 <p><a href="https://amz.run/5UiQ"> <button type="button" class="btn btn-primary">Compre uma versão física</button></a> <a href="https://pedropark99.github.io/Introducao_R/"> <button type="button" class="btn btn-primary">Leia online</button></a> <a href="./../respostas_complete.pdf"> <button type="button" class="btn btn-primary">Respostas dos exercícios</button></a></p>
+<div style="display:flex;justify-content:space-between;padding:30px">
+<p>Este livro oferece uma descrição profunda sobre os fundamentos da linguagem R, e como eles se aplicam no contexto da análise de dados. Sua principal contribuição para a literatura brasileira hoje, está no combate de dois problemas recorrentes nos materiais disponíveis em português sobre a linguagem: 1) a falta de profundidade de muitos materiais, que tentam abordar muitos assuntos em um espaço muito curto; 2) a alta especialização de muitos materiais, que são de difícil transposição para aplicações gerais em análises de dados.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://pedro-faria.netlify.app/publications/book/introducao_linguagem_R/featured.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
 </section>
 <section id="o-que-você-aprende" class="level1">
 <h1>O que você aprende ?</h1>
@@ -980,6 +991,59 @@ Doutorado Graduação  Mestrado
   <guid>https://pedro-faria.netlify.app/posts/2020-10-17-formulario-pesquisa/pt/index.html</guid>
   <pubDate>Sat, 17 Oct 2020 03:00:00 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/posts/2020-10-17-formulario-pesquisa/featured.jpg" medium="image" type="image/jpeg"/>
+</item>
+<item>
+  <title>Introduction to pyspark</title>
+  <dc:creator>Pedro Duarte Faria</dc:creator>
+  <link>https://pedro-faria.netlify.app/publications/book/introd-pyspark/en/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="still-under-construction" class="level1">
+<h1>Still under construction 🛠️ ⚠️!</h1>
+<p>This book is still under active construction and development! This means that not all chapters are ready yet, and the current contents might change in the close future. However, you can already read some of its parts by using one the buttons exposed below.</p>
+</section>
+<section id="about-the-book" class="level1">
+<h1>About the book</h1>
+<p><a href="https://github.com/pedropark99/Introd-pyspark"> <button type="button" class="btn btn-primary">Official repository</button></a> <a href="https://pedropark99.github.io/Introd-pyspark/"> <button type="button" class="btn btn-primary">Read online</button></a></p>
+<div style="float:left;display:flex;justify-content:space-between;padding:30px">
+<div class="about-this-book-text">
+<p>Although we have a good range of materials about Apache Spark in general, such as <span class="citation" data-cites="damji2020">Damji et al. (2020)</span> and <span class="citation" data-cites="chambers2018">Chambers and Zaharia (2018)</span>, we do not have much abundance of materials about the APIs of Spark in “foreign” languages, like the Python (<code>pyspark</code>) and R (<code>SparkR</code>) APIs.</p>
+<p>The reason for this is simple: the Spark API have a consistent structure across all languages. As consequence, a general book about Spark can fairly cover all languages at once. In other words, Spark code in Scala can be easily translated into python code with <code>pyspark</code>. Because the structure of the code is very similar between all languages.</p>
+<p>So why this book? First, python is a more popular and friendly language than Scala or Java. If the reader is not interested in learning Java or Scala, why show Java/Scala? Is very important to focus solely on what interest the reader, specially if it is in a language that he is familiar with. Second, I had some time to spent, and, a lot of practical experience with <code>pyspark</code> on production to share (so… why not to write a book about it?).</p>
+<p>This book aims to give a solid introduction to python (and not python) users to the <code>pyspark</code> package, and how to use it to build Spark applications for data analysis.</p>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://pedro-faria.netlify.app/publications/book/introd-pyspark/featured.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-chambers2018" class="csl-entry">
+Chambers, Bill, and Matei Zaharia. 2018. <em>Spark: The Definitive Guide: Big Data Processing Made Simple</em>. Sebastopol, CA: O’Reilly Media.
+</div>
+<div id="ref-damji2020" class="csl-entry">
+Damji, Jules, Brooke Wenig, Tathagata Das, and Denny Lee. 2020. <em>Learning Spark: Lightning-Fast Data Analytics</em>. Sebastopol, CA: O’Reilly Media.
+</div>
+</div></section></div> ]]></description>
+  <category>Python</category>
+  <category>Spark</category>
+  <category>Book</category>
+  <guid>https://pedro-faria.netlify.app/publications/book/introd-pyspark/en/index.html</guid>
+  <pubDate>Mon, 14 Nov 2022 01:26:37 GMT</pubDate>
+  <media:content url="https://pedro-faria.netlify.app/publications/book/introd-pyspark/featured.png" medium="image" type="image/png" height="215" width="144"/>
 </item>
 </channel>
 </rss>

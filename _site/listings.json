@@ -10,6 +10,7 @@
       "/posts/2021-01-02-tabela-destinataria-fonte/en/index.html",
       "/posts/2021-01-02-tabela-destinataria-fonte/pt/index.html",
       "/posts/2020-10-17-formulario-pesquisa/pt/index.html",
+      "/publications/book/introd-pyspark/en/index.html",
       "/publications/book/introducao_linguagem_R/pt/index.html"
     ]
   },
@@ -62,11 +63,14 @@
   },
   {
     "listing": "/publications/en.html",
-    "items": []
+    "items": [
+      "/publications/book/introd-pyspark/en/index.html"
+    ]
   },
   {
     "listing": "/publications/index.html",
     "items": [
+      "/publications/book/introd-pyspark/en/index.html",
       "/publications/book/introducao_linguagem_R/pt/index.html"
     ]
   },
@@ -79,6 +83,7 @@
   {
     "listing": "/publications.html",
     "items": [
+      "/publications/book/introd-pyspark/en/index.html",
       "/publications/en.html",
       "/publications/index.html",
       "/publications/pt.html",
