@@ -22,13 +22,14 @@ This book is still under active construction and development! This means that no
 ::: {style="float:left;display:flex;justify-content:space-between;padding:30px"}
 
 :::: {class="about-this-book-text"}
+
+In summary, this book aims to give a solid introduction (for python and not python users) to the `pyspark` package, and on how to use it to build Spark applications for data pipelines and interactive data analysis.
+
 Although we have a good range of materials about Apache Spark in general, such as @damji2020 and @chambers2018, we do not have much abundance of materials about the APIs of Spark in "foreign" languages, like the Python (`pyspark`) and R (`SparkR`) APIs. 
 
 The reason for this is simple: the Spark API have a consistent structure across all languages. As consequence, a general book about Spark can fairly cover all languages at once. In other words, Spark code in Scala can be easily translated into python code with `pyspark`. Because the structure of the code is very similar between all languages.
 
-So why this book? First, python is a more popular and friendly language than Scala or Java. If the reader is not interested in learning Java or Scala, why show Java/Scala? Is very important to focus solely on what interest the reader, specially if it is in a language that he is familiar with. Second, I had some time to spent, and, a lot of practical experience with `pyspark` on production to share (so... why not to write a book about it?).
-
-This book aims to give a solid introduction to python (and not python) users to the `pyspark` package, and how to use it to build Spark applications for data analysis.
+So why this book? First, python is a more popular and friendly language than Scala or Java. If the reader is not interested in learning Java or Scala, why show Java/Scala code to him? Is very important to focus solely on what interest the reader, specially if it is in a language that he is familiar with. Second, I had some time to spent, and a lot of practical experience with `pyspark` on production to share (so... why not write a book about it?).
 ::::
 
 
