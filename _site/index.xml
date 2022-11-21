@@ -9,7 +9,7 @@
 <link>https://pedro-faria.netlify.app/index.html</link>
 <atom:link href="https://pedro-faria.netlify.app/index.xml" rel="self" type="application/rss+xml"/>
 <description>A blog about programming and data analysis, specially with R and Python</description>
-<generator>quarto-1.2.262</generator>
+<generator>quarto-1.2.269</generator>
 <lastBuildDate>Sun, 06 Nov 2022 03:00:00 GMT</lastBuildDate>
 <item>
   <title>Introducing the {figma} R package</title>
@@ -1042,7 +1042,7 @@ Damji, Jules, Brooke Wenig, Tathagata Das, and Denny Lee. 2020. <em>Learning Spa
   <category>Spark</category>
   <category>Book</category>
   <guid>https://pedro-faria.netlify.app/publications/book/introd-pyspark/en/index.html</guid>
-  <pubDate>Mon, 14 Nov 2022 16:26:02 GMT</pubDate>
+  <pubDate>Mon, 21 Nov 2022 19:51:52 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/publications/book/introd-pyspark/featured.png" medium="image" type="image/png" height="215" width="144"/>
 </item>
 </channel>

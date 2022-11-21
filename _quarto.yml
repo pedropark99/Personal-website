@@ -9,7 +9,7 @@ website:
   google-analytics: "G-7E6XG4WKHE"
   navbar:
     background: "#0e326b"
-    left:
+    right:
       - about.qmd
       - text: Posts
         menu:
@@ -27,13 +27,13 @@ website:
             href: publications/en.qmd
           - text: Publicações em Português
             href: publications/pt.qmd
+      - donate.qmd
       - text: CV
         menu:
           - text: CV in English
             href: files/cv/cv-english.pdf
           - text: CV em Português
             href: files/cv/cv-portuguese.pdf
-    right:
       - icon: envelope-fill
         href: "mailto:pedropark99@gmail.com"
         aria-label: "Email for contact"

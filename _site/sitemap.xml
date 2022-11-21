@@ -2,82 +2,86 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://pedro-faria.netlify.app/about.html</loc>
-    <lastmod>2022-11-14T16:29:05.541Z</lastmod>
+    <lastmod>2022-11-21T19:51:49.077Z</lastmod>
+  </url>
+  <url>
+    <loc>https://pedro-faria.netlify.app/donate.html</loc>
+    <lastmod>2022-11-21T19:51:51.497Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/index.html</loc>
-    <lastmod>2022-11-14T16:26:02.696Z</lastmod>
+    <lastmod>2022-11-21T19:51:52.631Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/posts/2020-10-17-formulario-pesquisa/pt/index.html</loc>
-    <lastmod>2022-11-14T16:26:03.740Z</lastmod>
+    <lastmod>2022-11-21T19:51:53.697Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/posts/2021-01-02-tabela-destinataria-fonte/en/index.html</loc>
-    <lastmod>2022-11-14T16:26:04.668Z</lastmod>
+    <lastmod>2022-11-21T19:51:54.601Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/posts/2021-01-02-tabela-destinataria-fonte/pt/index.html</loc>
-    <lastmod>2022-11-14T16:26:05.567Z</lastmod>
+    <lastmod>2022-11-21T19:51:55.514Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/posts/2021-05-26-2nd-edition-rbook/en/index.html</loc>
-    <lastmod>2022-11-14T16:26:06.537Z</lastmod>
+    <lastmod>2022-11-21T19:51:56.511Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/posts/2021-05-26-2nd-edition-rbook/pt/index.html</loc>
-    <lastmod>2022-11-14T16:26:07.468Z</lastmod>
+    <lastmod>2022-11-21T19:51:57.493Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/posts/2022-04-06-3nd-edition-rbook/en/index.html</loc>
-    <lastmod>2022-11-14T16:26:08.046Z</lastmod>
+    <lastmod>2022-11-21T19:51:58.094Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/posts/2022-04-06-3nd-edition-rbook/pt/index.html</loc>
-    <lastmod>2022-11-14T16:26:08.649Z</lastmod>
+    <lastmod>2022-11-21T19:51:58.719Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/posts/2022-11-06-figma-pkgv0.1.0/en/index.html</loc>
-    <lastmod>2022-11-14T16:26:09.531Z</lastmod>
+    <lastmod>2022-11-21T19:51:59.625Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/posts/en.html</loc>
-    <lastmod>2022-11-14T16:26:10.174Z</lastmod>
+    <lastmod>2022-11-21T19:52:00.328Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/posts/index.html</loc>
-    <lastmod>2022-11-14T16:26:10.873Z</lastmod>
+    <lastmod>2022-11-21T19:52:01.042Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/posts/pt.html</loc>
-    <lastmod>2022-11-14T16:26:11.503Z</lastmod>
+    <lastmod>2022-11-21T19:52:01.685Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/posts.html</loc>
-    <lastmod>2022-11-14T16:26:12.299Z</lastmod>
+    <lastmod>2022-11-21T19:52:02.492Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/publications/book/introd-pyspark/en/index.html</loc>
-    <lastmod>2022-11-14T16:26:12.941Z</lastmod>
+    <lastmod>2022-11-21T19:52:03.238Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/publications/book/introducao_linguagem_R/pt/index.html</loc>
-    <lastmod>2022-11-14T16:26:13.544Z</lastmod>
+    <lastmod>2022-11-21T19:52:03.909Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/publications/en.html</loc>
-    <lastmod>2022-11-14T16:26:14.092Z</lastmod>
+    <lastmod>2022-11-21T19:52:04.483Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/publications/index.html</loc>
-    <lastmod>2022-11-14T16:26:14.658Z</lastmod>
+    <lastmod>2022-11-21T19:52:05.031Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/publications/pt.html</loc>
-    <lastmod>2022-11-14T16:26:15.199Z</lastmod>
+    <lastmod>2022-11-21T19:52:05.589Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/publications.html</loc>
-    <lastmod>2022-11-14T16:26:15.799Z</lastmod>
+    <lastmod>2022-11-21T19:52:06.248Z</lastmod>
   </url>
 </urlset>

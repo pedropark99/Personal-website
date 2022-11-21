@@ -1,0 +1,34 @@
+---
+title: "Donate or Sponsor Me"
+description: 'If you like my work, and want to support me, you can send money to me `r paste0(c(emoji::emoji("money_with_wings"), emoji::emoji("winking_face")), collapse = "")`'
+title-block-banner: true
+---
+
+
+# Payment methods
+
+Currently, I only support direct transfers made via [Pix](https://business.ebanx.com/en/resources/payments-explained/pix-instant-payment-system). Which is a brazilian payment method available in most banks operating in the Brazilian market.
+
+```{js, echo = FALSE}
+function copyText() {
+    navigator.clipboard.writeText(
+      "00020101021126580014br.gov.bcb.pix01362510f316-d7d3-4282-8c93-6f9ca1d203b75204000053039865802BR5918PEDRO DUARTE FARIA6013BELO HORIZONT62070503***630446EB"
+    );
+    alert("Copied Pix key to your clipboard!")
+}
+```
+
+# Copy and paste it
+
+You can click in the button to copy my Pix key to your clipboard:
+
+<button type="button" class="btn btn-primary" onclick="copyText()">Copy Pix Key</button>
+
+# Scan a QR Code
+
+Or, if you prefer, you can get my Pix key with this QR Code:
+
+```{r, out.width="50%", fig.align='center', echo=FALSE}
+knitr::include_graphics("files/images/pix-qrcode.jpg")
+```
+
