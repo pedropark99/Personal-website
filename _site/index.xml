@@ -10,7 +10,86 @@
 <atom:link href="https://pedro-faria.netlify.app/index.xml" rel="self" type="application/rss+xml"/>
 <description>A blog about programming and data analysis, specially with R and Python</description>
 <generator>quarto-1.2.269</generator>
-<lastBuildDate>Sun, 06 Nov 2022 03:00:00 GMT</lastBuildDate>
+<lastBuildDate>Thu, 01 Dec 2022 03:00:00 GMT</lastBuildDate>
+<item>
+  <title>Introdução à Linguagem R: seus fundamentos e sua prática</title>
+  <dc:creator>Pedro Duarte Faria</dc:creator>
+  <link>https://pedro-faria.netlify.app/publications/book/introducao_linguagem_R/pt/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="sobre-o-livro" class="level1">
+<h1>Sobre o livro</h1>
+<p><a href="https://amz.run/5UiQ"> <button type="button" class="btn btn-primary">Compre uma versão física</button></a> <a href="https://pedropark99.github.io/Introducao_R/"> <button type="button" class="btn btn-primary">Leia online</button></a> <a href="./../respostas_complete.pdf"> <button type="button" class="btn btn-primary">Respostas dos exercícios</button></a></p>
+<div style="display:flex;justify-content:space-between;padding:30px">
+<p>Este livro oferece uma descrição profunda sobre os fundamentos da linguagem R, e como eles se aplicam no contexto da análise de dados. Sua principal contribuição para a literatura brasileira hoje, está no combate de dois problemas recorrentes nos materiais disponíveis em português sobre a linguagem: 1) a falta de profundidade de muitos materiais, que tentam abordar muitos assuntos em um espaço muito curto; 2) a alta especialização de muitos materiais, que são de difícil transposição para aplicações gerais em análises de dados.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://pedro-faria.netlify.app/publications/book/introducao_linguagem_R/featured.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="o-que-você-aprende" class="level1">
+<h1>O que você aprende ?</h1>
+<p>Através deste livro, você pode aprender sobre os fundamentos da linguagem R, e como eles se aplicam a área de análise de dados. Em mais detalhes:</p>
+<ul>
+<li><p><strong>Introduzindo a linguagem</strong>: aprenda sobre como definir e como trabalhar com objetos; conheça as estruturas e tipos de dados oferecidos pela linguagem; entenda como os processos de coerção e os valores especiais da linguagem podem afetar os seus resultados.</p></li>
+<li><p><strong>Importação e transformação</strong>: aprenda a importar, transformar e formatar suas tabelas através dos pacotes <code>readr</code>, <code>readxl</code>, <code>haven</code>, <code>dplyr</code> e <code>tidyr</code>. Aplicando operações de ordenação, filtro, seleção e expansão, além de operações de pivô e <em>join</em>’s.</p></li>
+<li><p><strong>Visualização de dados</strong>: aprenda a utilizar o pacote <code>ggplot2</code> para produzir gráficos elegantes e efetivos para apresentar os seus dados e as suas conclusões.</p></li>
+<li><p><strong>Programando a sua análise</strong>: aprenda a utilizar controles de fluxo, funções e <em>loops</em> para automatizar tarefas e solucionar os seus problemas de maneira simples e clara.</p></li>
+<li><p><strong><em>Functional programming</em></strong>: aprenda a utilizar o pacote <code>purrr</code> para distribuir rapidamente os seus cálculos ao longo de múltiplos <em>inputs</em>.</p></li>
+<li><p><strong><em>Debugging</em></strong> e <strong><em>environments</em></strong>: conheça as principais técnicas de <em>debugging</em> existentes na linguagem R, e, aprenda como investigar erros em suas funções. Além disso, entenda como a linguagem procura pelos seus objetos e, como você pode produzir resultados inesperados durante essa busca.</p></li>
+</ul>
+</section>
+<section id="compre-uma-versão-física-do-livro" class="level1">
+<h1>Compre uma versão física do livro!</h1>
+<p>Você pode adquirir uma <a href="https://amz.run/5UiQ">versão física do livro através da loja da Amazon</a>. Uma versão eBook do livro também está disponível. Ao adquirir esses produtos, você estará me ajudando a continuar com esse projeto e a contribuir com nossa comunidade brasileira de R.</p>
+</section>
+<section id="leia-o-livro-online" class="level1">
+<h1>Leia o livro online</h1>
+<p>Caso você não possa comprar uma versão física do livro, você ainda pode ler gratuitamente a obra completa através de seu <a href="https://pedropark99.github.io/Introducao_R/">site</a>.</p>
+</section>
+<section id="citando-o-livro" class="level1">
+<h1>Citando o livro</h1>
+<p>Arquivo BibTex:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>@book{pedro2022,
+  title = {Introdução à Linguagem R},
+  subtitle = {seus fundamentos e sua prática},
+  author = {Pedro Duarte Faria},
+  year = {2022},
+  edition = {4},
+  address = {Belo Horizonte},
+  month = {Dezembro},
+  isbn = {978-65-00-57872-0},
+  note = {https://pedro-faria.netlify.app/pt/publication/book/introducao_linguagem_r/}
+}</code></pre>
+</div>
+</div>
+</section>
+<section id="contribua-para-o-projeto" class="level1">
+<h1>Contribua para o projeto</h1>
+<p>Você também pode contribuir diretamente para a obra, ao postar <em>pull requests</em> ou <em>issues</em> no <a href="https://github.com/pedropark99/Introducao_R">repositório oficial do livro</a> no GitHub.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>R Language</category>
+  <category>Book</category>
+  <category>Brazil</category>
+  <guid>https://pedro-faria.netlify.app/publications/book/introducao_linguagem_R/pt/index.html</guid>
+  <pubDate>Thu, 01 Dec 2022 03:00:00 GMT</pubDate>
+  <media:content url="https://pedro-faria.netlify.app/publications/book/introducao_linguagem_R/featured.png" medium="image" type="image/png" height="203" width="144"/>
+</item>
 <item>
   <title>Introducing the {figma} R package</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
@@ -110,85 +189,6 @@
   <guid>https://pedro-faria.netlify.app/posts/2022-11-06-figma-pkgv0.1.0/en/index.html</guid>
   <pubDate>Sun, 06 Nov 2022 03:00:00 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/posts/2022-11-06-figma-pkgv0.1.0/featured.png" medium="image" type="image/png" height="79" width="144"/>
-</item>
-<item>
-  <title>Introdução à Linguagem R: seus fundamentos e sua prática</title>
-  <dc:creator>Pedro Duarte Faria</dc:creator>
-  <link>https://pedro-faria.netlify.app/publications/book/introducao_linguagem_R/pt/index.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<section id="sobre-o-livro" class="level1">
-<h1>Sobre o livro</h1>
-<p><a href="https://amz.run/5UiQ"> <button type="button" class="btn btn-primary">Compre uma versão física</button></a> <a href="https://pedropark99.github.io/Introducao_R/"> <button type="button" class="btn btn-primary">Leia online</button></a> <a href="./../respostas_complete.pdf"> <button type="button" class="btn btn-primary">Respostas dos exercícios</button></a></p>
-<div style="display:flex;justify-content:space-between;padding:30px">
-<p>Este livro oferece uma descrição profunda sobre os fundamentos da linguagem R, e como eles se aplicam no contexto da análise de dados. Sua principal contribuição para a literatura brasileira hoje, está no combate de dois problemas recorrentes nos materiais disponíveis em português sobre a linguagem: 1) a falta de profundidade de muitos materiais, que tentam abordar muitos assuntos em um espaço muito curto; 2) a alta especialização de muitos materiais, que são de difícil transposição para aplicações gerais em análises de dados.</p>
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://pedro-faria.netlify.app/publications/book/introducao_linguagem_R/featured.png" class="img-fluid figure-img" style="width:70.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="o-que-você-aprende" class="level1">
-<h1>O que você aprende ?</h1>
-<p>Através deste livro, você pode aprender sobre os fundamentos da linguagem R, e como eles se aplicam a área de análise de dados. Em mais detalhes:</p>
-<ul>
-<li><p><strong>Introduzindo a linguagem</strong>: aprenda sobre como definir e como trabalhar com objetos; conheça as estruturas e tipos de dados oferecidos pela linguagem; entenda como os processos de coerção e os valores especiais da linguagem podem afetar os seus resultados.</p></li>
-<li><p><strong>Importação e transformação</strong>: aprenda a importar, transformar e formatar suas tabelas através dos pacotes <code>readr</code>, <code>readxl</code>, <code>haven</code>, <code>dplyr</code> e <code>tidyr</code>. Aplicando operações de ordenação, filtro, seleção e expansão, além de operações de pivô e <em>join</em>’s.</p></li>
-<li><p><strong>Visualização de dados</strong>: aprenda a utilizar o pacote <code>ggplot2</code> para produzir gráficos elegantes e efetivos para apresentar os seus dados e as suas conclusões.</p></li>
-<li><p><strong>Programando a sua análise</strong>: aprenda a utilizar controles de fluxo, funções e <em>loops</em> para automatizar tarefas e solucionar os seus problemas de maneira simples e clara.</p></li>
-<li><p><strong><em>Functional programming</em></strong>: aprenda a utilizar o pacote <code>purrr</code> para distribuir rapidamente os seus cálculos ao longo de múltiplos <em>inputs</em>.</p></li>
-<li><p><strong><em>Debugging</em></strong> e <strong><em>environments</em></strong>: conheça as principais técnicas de <em>debugging</em> existentes na linguagem R, e, aprenda como investigar erros em suas funções. Além disso, entenda como a linguagem procura pelos seus objetos e, como você pode produzir resultados inesperados durante essa busca.</p></li>
-</ul>
-</section>
-<section id="compre-uma-versão-física-do-livro" class="level1">
-<h1>Compre uma versão física do livro!</h1>
-<p>Você pode adquirir uma <a href="https://amz.run/5UiQ">versão física do livro através da loja da Amazon</a>. Uma versão eBook do livro também está disponível. Ao adquirir esses produtos, você estará me ajudando a continuar com esse projeto e a contribuir com nossa comunidade brasileira de R.</p>
-</section>
-<section id="leia-o-livro-online" class="level1">
-<h1>Leia o livro online</h1>
-<p>Caso você não possa comprar uma versão física do livro, você ainda pode ler gratuitamente a obra completa através de seu <a href="https://pedropark99.github.io/Introducao_R/">site</a>.</p>
-</section>
-<section id="citando-o-livro" class="level1">
-<h1>Citando o livro</h1>
-<p>Arquivo BibTex:</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>@book{pedro2022,
-  title = {Introdução à Linguagem R},
-  subtitle = {seus fundamentos e sua prática},
-  author = {Pedro Duarte Faria and João Pedro Figueira Amorim Parga},
-  year = {2022},
-  edition = {3},
-  address = {Belo Horizonte},
-  month = {Abril},
-  isbn = {978-65-00-43003-5},
-  url = {https://pedro-faria.netlify.app/pt/publication/book/introducao_linguagem_r/}
-}</code></pre>
-</div>
-</div>
-</section>
-<section id="contribua-para-o-projeto" class="level1">
-<h1>Contribua para o projeto</h1>
-<p>Você também pode contribuir diretamente para a obra, ao postar <em>pull requests</em> ou <em>issues</em> no <a href="https://github.com/pedropark99/Introducao_R">repositório oficial do livro</a> no GitHub.</p>
-
-
-</section>
-
- ]]></description>
-  <category>R Language</category>
-  <category>Book</category>
-  <category>Brazil</category>
-  <guid>https://pedro-faria.netlify.app/publications/book/introducao_linguagem_R/pt/index.html</guid>
-  <pubDate>Tue, 12 Apr 2022 00:00:00 GMT</pubDate>
-  <media:content url="https://pedro-faria.netlify.app/publications/book/introducao_linguagem_R/featured.png" medium="image" type="image/png" height="206" width="144"/>
 </item>
 <item>
   <title>What’s new in the 3rd edition of Introdução à Linguagem R: seus fundamentos e sua prática</title>
@@ -1042,7 +1042,7 @@ Damji, Jules, Brooke Wenig, Tathagata Das, and Denny Lee. 2020. <em>Learning Spa
   <category>Spark</category>
   <category>Book</category>
   <guid>https://pedro-faria.netlify.app/publications/book/introd-pyspark/en/index.html</guid>
-  <pubDate>Mon, 21 Nov 2022 19:51:52 GMT</pubDate>
+  <pubDate>Thu, 01 Dec 2022 13:10:23 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/publications/book/introd-pyspark/featured.png" medium="image" type="image/png" height="215" width="144"/>
 </item>
 </channel>

@@ -1,9 +1,9 @@
 ---
 title: "Introdução à Linguagem R: seus fundamentos e sua prática"
 description: "Este livro oferece uma descrição profunda sobre os fundamentos da linguagem R, e como eles se aplicam no contexto da análise de dados."
-authors: ["Pedro Duarte Faria", "João Pedro Figueira Amorim Parga"]
-date: "2022-04-12T00:00:00Z"
-isbn: "978-65-00-43003-5"
+authors: ["Pedro Duarte Faria"]
+date: "2022-12-01"
+isbn: "978-65-00-57872-0"
 
 #include-before-body: "./../buttons-pt.html"
 
