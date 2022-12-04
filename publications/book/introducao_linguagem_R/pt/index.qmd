@@ -49,7 +49,7 @@ Através deste livro, você pode aprender sobre os fundamentos da linguagem R, e
 
 # Compre uma versão física do livro!
 
-Você pode adquirir uma [versão física do livro através da loja da Amazon](https://amz.run/5UiQ). Uma versão eBook do livro também está disponível. Ao adquirir esses produtos, você estará me ajudando a continuar com esse projeto e a contribuir com nossa comunidade brasileira de R.
+Você pode adquirir uma [versão física do livro através da loja da Amazon](https://www.amazon.com.br/dp/B0BNW4K232). Uma versão eBook do livro também está disponível. Ao adquirir esses produtos, você estará me ajudando a continuar com esse projeto e a contribuir com nossa comunidade brasileira de R.
 
 
 # Leia o livro online

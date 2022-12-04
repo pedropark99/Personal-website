@@ -1,11 +1,11 @@
 links_pt <- c(
-  "Compre uma versão física" = "https://amz.run/5UiQ",
+  "Compre uma versão física" = "https://www.amazon.com.br/dp/B0BNW4K232",
   "Leia online" = "https://pedropark99.github.io/Introducao_R/",
   "Respostas dos exercícios" = "./../respostas_complete.pdf"
 )
 
 links_en <- c(
-  "Buy a physical copy" = "https://amz.run/5UiQ",
+  "Buy a physical copy" = "https://www.amazon.com.br/dp/B0BNW4K232",
   "Read online" = "https://pedropark99.github.io/Introducao_R/",
   "Exercises answers" = "./../respostas_complete.pdf"
 )
