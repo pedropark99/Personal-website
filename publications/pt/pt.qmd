@@ -1,0 +1,17 @@
+---
+title: "Publicações em Português"
+listing:
+  - id: publications-ptbr
+    contents: "book/**/index.qmd"
+    type: default
+    sort: "date desc"
+    categories: cloud
+    sort-ui: true
+    filter-ui: true
+page-layout: full
+title-block-banner: false
+comments: false
+---
+
+::: {#publications-ptbr}
+:::

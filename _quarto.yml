@@ -22,11 +22,11 @@ website:
       - text: Publications
         menu:
           - text: All publications
-            href: publications/index.html
+            href: publications/index.qmd
           - text: Publications in English
-            href: publications/en.qmd
+            href: publications/en/en.qmd
           - text: Publicações em Português
-            href: publications/pt.qmd
+            href: publications/pt/pt.qmd
       - donate.qmd
       - text: CV
         menu:

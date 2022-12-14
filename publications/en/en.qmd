@@ -1,19 +1,17 @@
 ---
-title: "All Publications"
+title: "Publications in English"
 listing:
-  - id: "publications"
-    contents: 
-      - "*/*/*/index.qmd"
-    type: grid
+  - id: publications-en
+    contents: "book/**/index.qmd"
+    type: default
     sort: "date desc"
     categories: cloud
     sort-ui: true
     filter-ui: true
 page-layout: full
 title-block-banner: false
-toc: true
+comments: false
 ---
 
-
-::: {#publications}
+::: {#publications-en}
 :::
