@@ -26,4 +26,27 @@ Perceba pela mensagem acima, que o motivo do erro foi uma falta de memória (*in
 
 
 
+Era um erro de "Falta de memória". Quando fui investigar, percebi que esse dash estava puxando todos os inputs inesperados do fluxo, em um período de mais de 1 ano. Ou seja, o dash estava basicamente puxando mais de 60 milhões de linhas em inputs inesperados, e era esse tanto de linhas que estava causando o erro
 
+Inicialmente nós corrigimos esse erro ao ligar a atualização incremental nessa tabela. Desse modo, a cada atualização diária puxamos apenas os dados mais recentes, e não a tabela inteira
+
+Até aí tudo bem. Deu pra resolver o problema de um modo simples na hora. Mas eu acho que a melhor solução mesmo era repensar o porque diabos a gente precisa de >60 milhões de dados
+
+Se vcs passarem por um caso parecido com esse, ao invés de tentaram formas alternativas de fazer a atualização funcionar (como eu fiz), tentem o porquê desses dados. Pq na maioria desses casos, vc está falhando no design do dash, e desperdiçando recursos
+
+Tipo, no meu caso, porque diabos eu estou puxando 60 milhões de inputs inesperados? Eu por acaso espero que o meu cliente leia esses 60 milhões de inputs? Será que um wordcloud de tantos inputs vai ser algo útil (acho bem improvável)?
+
+*Tentem repensar o porquê dos dados eu quis dizer
+
+Ao invés de trazer todos os dados, pq não trazer apenas uma amostra aleatória? Para isso, temos o método sample() em pyspark. Então pra pegar uma amostra de 100 linhas seria tabela.sample(100)
+
+Outra pergunta que vc pode fazer, será que eu preciso mesmo manter o histórico disso no dash? Será que meu cliente precisa FREQUENTEMENTE puxar os inputs inesperados de 6 meses atrás?
+
+
+Se ele não precisa puxar ou consultar essas informações com muita frequência, é bem provável que essa info não deveria estar no dashboard
+
+
+O que você trouxe parece que foi uma construção antiga, modelada pra necessidade X, e ela não é mais a mesma hoje em dia
+
+É interessante pensar no processo de evolução/revisão dos nossos dashs, adequando eles pros usos atuais (coisa que nem sempre a gente consegue 😅)
+Viajando um pouco aqui, um dash de atendimento humano pra acompanhar a métrica X (abandono, sei lá).. faz sentido acompanhar essa métrica pro resto da vida? Ou vai chegar uma hora que o abandono é normalizado, e vamos ter alguma outra dor pra investigar, analisar, melhorar, medir?
