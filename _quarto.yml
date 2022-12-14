@@ -22,7 +22,7 @@ website:
       - text: Publications
         menu:
           - text: All publications
-            href: publications/index.qmd
+            href: publications/index.html
           - text: Publications in English
             href: publications/en.qmd
           - text: Publicações em Português
