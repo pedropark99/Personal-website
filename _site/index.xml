@@ -9,8 +9,47 @@
 <link>https://pedro-faria.netlify.app/index.html</link>
 <atom:link href="https://pedro-faria.netlify.app/index.xml" rel="self" type="application/rss+xml"/>
 <description>A blog about programming and data analysis, specially with R and Python</description>
-<generator>quarto-1.2.269</generator>
-<lastBuildDate>Thu, 01 Dec 2022 03:00:00 GMT</lastBuildDate>
+<generator>quarto-1.2.262</generator>
+<lastBuildDate>Wed, 14 Dec 2022 03:00:00 GMT</lastBuildDate>
+<item>
+  <title>Erro de memória no Power BI Online? Hora de repensar o seu dashboard</title>
+  <dc:creator>Pedro Duarte Faria</dc:creator>
+  <link>https://pedro-faria.netlify.app/posts/2022-12-14-power-bi-memory-error/pt/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="introdução" class="level1">
+<h1>Introdução</h1>
+<p>Em um dia recente, eu descobri que um dos dashboards que estavam publicados em nosso ambiente de produção do Power BI Online havia sofrido um erro de atualização. Logo, eu prontamente parei o que estava fazendo e comecei a investigar o motivo do erro, até porque: 1) o nosso cliente depende dos dados desse dashboard ; e 2) erros em produção não são legais!</p>
+<p>Nesse post, eu quero mostrar como esse tipo de erro de atualização pode ser um forte sinal de que você precisa repensar o design de seu dashboard. Em outras palavras, vou descrever como você pode evitar esse tipo erro, ao pensar muito bem em como o design de seu dashboard atende as necessidades de seu cliente.</p>
+</section>
+<section id="contexto" class="level1">
+<h1>Contexto</h1>
+<p>Bem, você já sabe que tudo começou por um erro durante a atualização de um dashboard publicado no Power BI Online. Porém, este não era qualquer erro, e sim, um erro de falta de memória:</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://pedro-faria.netlify.app/posts/2022-12-14-power-bi-memory-error/image.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Mensagem de erro da atualização no Power BI Online</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Perceba pela mensagem acima, que o motivo do erro foi uma falta de memória (<em>insufficient memory</em>) nos clusters responsáveis por executar a atualização. O que isso significa? Significa que este dashboard estava pedindo por um volume tão grande, mas tão grande de dados durante a atualização, que os clusters que estavam executando essa atualização não tinham mais espaço para alocar esse volume tão grande de dados, e, por isso, eles simplesmente desistiram, pediram para parar antes que alguma computador explodisse 😅;</p>
+
+
+</section>
+
+ ]]></description>
+  <category>Power BI</category>
+  <category>Power BI Online</category>
+  <guid>https://pedro-faria.netlify.app/posts/2022-12-14-power-bi-memory-error/pt/index.html</guid>
+  <pubDate>Wed, 14 Dec 2022 03:00:00 GMT</pubDate>
+  <media:content url="https://pedro-faria.netlify.app/posts/2022-12-14-power-bi-memory-error/featured.png" medium="image" type="image/png" height="52" width="144"/>
+</item>
 <item>
   <title>Introdução à Linguagem R: seus fundamentos e sua prática</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
@@ -1042,7 +1081,7 @@ Damji, Jules, Brooke Wenig, Tathagata Das, and Denny Lee. 2020. <em>Learning Spa
   <category>Spark</category>
   <category>Book</category>
   <guid>https://pedro-faria.netlify.app/publications/book/introd-pyspark/en/index.html</guid>
-  <pubDate>Wed, 14 Dec 2022 16:59:38 GMT</pubDate>
+  <pubDate>Wed, 14 Dec 2022 20:19:56 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/publications/book/introd-pyspark/featured.png" medium="image" type="image/png" height="215" width="144"/>
 </item>
 </channel>

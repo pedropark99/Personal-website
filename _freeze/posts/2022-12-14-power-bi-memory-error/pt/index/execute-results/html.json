@@ -1,0 +1,14 @@
+{
+  "hash": "18838e562bf7fd573c01f79fd3ea957e",
+  "result": {
+    "markdown": "---\ntitle: \"Erro de memória no Power BI Online? Hora de repensar o seu dashboard\"\ndescription: \"Um erro de memória no Power BI Online é um forte sinal de que você precisa repensar o design de seu dashboard. Neste post explico que estratégias você pode adotar para enfrentar esse problema e repensar a sua solução de dados\"\ndate: 2022-12-14\ncategories: [\"Power BI\", \"Power BI Online\"]\nimage: './../featured.png'\n---\n\n\n\n# Introdução\n\nEm um dia recente, eu descobri que um dos dashboards que estavam publicados em nosso ambiente de produção do Power BI Online havia sofrido um erro de atualização. Logo, eu prontamente parei o que estava fazendo e comecei a investigar o motivo do erro, até porque: 1) o nosso cliente depende dos dados desse dashboard ; e 2) erros em produção não são legais!\n\nNesse post, eu quero mostrar como esse tipo de erro de atualização pode ser um forte sinal de que você precisa repensar o design de seu dashboard. Em outras palavras, vou descrever como você pode evitar esse tipo erro, ao pensar muito bem em como o design de seu dashboard atende as necessidades de seu cliente.\n\n# Contexto\n\nBem, você já sabe que tudo começou por um erro durante a atualização de um dashboard publicado no Power BI Online. Porém, este não era qualquer erro, e sim, um erro de falta de memória:\n\n\n::: {.cell}\n::: {.cell-output-display}\n![Mensagem de erro da atualização no Power BI Online](../image.png){width=80%}\n:::\n:::\n\n\nPerceba pela mensagem acima, que o motivo do erro foi uma falta de memória (*insufficient memory*) nos clusters responsáveis por executar a atualização. O que isso significa? Significa que este dashboard estava pedindo por um volume tão grande, mas tão grande de dados durante a atualização, que os clusters que estavam executando essa atualização não tinham mais espaço para alocar esse volume tão grande de dados, e, por isso, eles simplesmente desistiram, pediram para parar antes que alguma computador explodisse 😅;\n\n\n\n\n\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
