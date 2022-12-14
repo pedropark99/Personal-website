@@ -24,6 +24,16 @@ knitr::include_graphics("../image.png")
 Perceba pela mensagem acima, que o motivo do erro foi uma falta de memória (*insufficient memory*) nos clusters responsáveis por executar a atualização. O que isso significa? Significa que este dashboard estava pedindo por um volume tão grande, mas tão grande de dados durante a atualização, que os clusters que estavam executando essa atualização não tinham mais espaço para alocar esse volume tão grande de dados. Por isso, o Power BI decidiu simplesmente parar a atualização antes que algum computador explodisse `r emoji::emoji("grinning_face_with_sweat")`;
 
 
+## Hora de explorar o terreno desconhecido
+
+Eu estava em minha primeira semana em uma nova equipe, e, eu não conhecia esse dashboard. Em outras palavras, eu havia herdado esse dashboard que foi criado pelos analistas anteriores dessa equipe. Isso significa que eu preciso abrir o `.pbix` desse dashboard e começar a investigar, tentando descobrir que mistérios e perigos estão escondidos nesse dashboard.
+
+Inicialmente, percebi apenas 5 tabelas no dashboard, a maioria delas já estavam agregadas, o que era ótimo, menos linhas a serem consumidas. Então decidi simplesmente clicar sobre o botão de `Atualizar`. Já que o erro ocorreu durante a atualização, imaginei que seria mais simples descobrir a fonte do problema dessa forma.
+
+A maioria das tabelas atualizaram rapidamente. Porém, uma única tabela ainda estava atualizando. Mais especificamente, essa era uma **tabela de inputs**. Isto é, uma tabela que guardava as mensagens digitadas por todos os usuários que acessaram o nosso sistema. O tempo foi passando, e após 3 horas com a atualização rodando em meu computador, o Power BI já havia puxado mais de 80 milhões de linhas para essa única tabela.
+
+Portanto, a fonte do problema estava claro
+
 
 
 Era um erro de "Falta de memória". Quando fui investigar, percebi que esse dash estava puxando todos os inputs inesperados do fluxo, em um período de mais de 1 ano. Ou seja, o dash estava basicamente puxando mais de 60 milhões de linhas em inputs inesperados, e era esse tanto de linhas que estava causando o erro
