@@ -3,7 +3,7 @@ title: "All Publications"
 listing:
   - id: "publications"
     contents: 
-      - "*/*/*/index.qmd"
+      - "book/*/*/index.qmd"
     type: grid
     sort: "date desc"
     categories: cloud

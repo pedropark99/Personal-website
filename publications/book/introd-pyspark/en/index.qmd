@@ -3,10 +3,10 @@ title: "Introduction to `pyspark`"
 description: "This book offers a introduction on how to build Spark applications using the `pyspark` python package"
 authors: ["Pedro Duarte Faria"]
 
-bibliography: "references.bib"
+bibliography: "../references.bib"
 
 categories: [Python, Spark, Book]
-image: "featured.png"
+image: "../featured.png"
 ---
 
 # Still under construction `r emoji::emoji("hammer_and_wrench")` `r emoji::emoji("warning")`!
@@ -15,7 +15,7 @@ This book is still under active construction and development! This means that no
 
 # About the book
 
-{{< include buttons-en.html >}}
+{{< include ../buttons-en.html >}}
 
 In summary, this book aims to give a solid introduction (for python and not python users) to the `pyspark` package, and on how to use it to build Spark applications for data pipelines and interactive data analysis.
 

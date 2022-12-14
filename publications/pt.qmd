@@ -2,7 +2,7 @@
 title: "Publicações em Português"
 listing:
   - id: publications-ptbr
-    contents: "book/**/index.qmd"
+    contents: "book/*/pt/index.qmd"
     type: default
     sort: "date desc"
     categories: cloud

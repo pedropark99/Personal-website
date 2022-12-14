@@ -24,9 +24,9 @@ website:
           - text: All publications
             href: publications/index.qmd
           - text: Publications in English
-            href: publications/en/en.qmd
+            href: publications/en.qmd
           - text: Publicações em Português
-            href: publications/pt/pt.qmd
+            href: publications/pt.qmd
       - donate.qmd
       - text: CV
         menu:

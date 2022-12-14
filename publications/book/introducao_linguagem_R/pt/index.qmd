@@ -6,7 +6,7 @@ date: "2022-12-01"
 isbn: "978-65-00-57872-0"
 
 categories: [R Language, Book, Brazil]
-image: "featured.png"
+image: "../featured.png"
 projects: [R_curso]
 
 aliases: 
@@ -17,7 +17,7 @@ aliases:
 
 # Sobre o livro
 
-{{< include buttons-pt.html >}}
+{{< include ../buttons-pt.html >}}
 
 Este livro oferece uma descrição profunda sobre os fundamentos da linguagem R, e como eles se aplicam no contexto da análise de dados. Sua principal contribuição para a literatura brasileira hoje, está no combate de dois problemas recorrentes nos materiais disponíveis em português sobre a linguagem: 1) a falta de profundidade de muitos materiais, que tentam abordar muitos assuntos em um espaço muito curto; 2) a alta especialização de muitos materiais, que são de difícil transposição para aplicações gerais em análises de dados.
 
@@ -54,7 +54,7 @@ Caso você não possa comprar uma versão física do livro, você ainda pode ler
 Arquivo BibTex:
 ```{r}
 #| echo: false
-cat(readLines("cite.bib"), sep = '\n')
+cat(readLines("../cite.bib"), sep = '\n')
 ```
 
 

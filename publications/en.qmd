@@ -2,7 +2,7 @@
 title: "Publications in English"
 listing:
   - id: publications-en
-    contents: "book/**/index.qmd"
+    contents: "book/*/en/index.qmd"
     type: default
     sort: "date desc"
     categories: cloud
