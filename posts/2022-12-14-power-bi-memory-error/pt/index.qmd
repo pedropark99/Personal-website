@@ -11,7 +11,8 @@ image: './../featured.png'
 
 Em um dia recente, eu descobri que um dos dashboards que estavam publicados em nosso ambiente de produção do Power BI Online havia sofrido um erro de atualização. Logo, eu prontamente parei o que estava fazendo e comecei a investigar o motivo do erro, até porque: 1) o nosso cliente depende dos dados desse dashboard ; e 2) erros em produção não são legais!
 
-Nesse post, eu quero mostrar como esse tipo de erro de atualização pode ser um forte sinal de que você precisa repensar o design de seu dashboard. Em outras palavras, vou descrever como você pode evitar esse tipo erro, ao pensar muito bem em como o design de seu dashboard atende as necessidades de seu cliente.
+Nesse post, eu quero mostrar como esse tipo de erro de atualização pode ser um forte sinal de que você precisa repensar o design de seu dashboard. Em outras palavras, meu objetivo é mostrar que se você está puxando milhões e milhões de linhas de dados para um dashboard... é provável que você **não tenha entendido o que é um dashboard e qual o seu propósito.**
+
 
 # Contexto
 
@@ -21,7 +22,7 @@ Bem, você já sabe que tudo começou por um erro durante a atualização de um 
 knitr::include_graphics("../image.png")
 ```
 
-Perceba pela mensagem acima, que o motivo do erro foi uma falta de memória (*insufficient memory*) nos clusters responsáveis por executar a atualização. O que isso significa? Significa que este dashboard estava pedindo por um volume tão grande, mas tão grande de dados durante a atualização, que os clusters que estavam executando essa atualização não tinham mais espaço para alocar esse volume tão grande de dados. Por isso, o Power BI decidiu simplesmente parar a atualização antes que algum computador explodisse `r emoji::emoji("grinning_face_with_sweat")`;
+Perceba pela mensagem acima, que o motivo do erro foi uma falta de memória (*insufficient memory*) nos clusters responsáveis por executar a atualização. O que isso significa? Significa que este dashboard estava pedindo por um volume tão grande, mas tão grande de dados durante a atualização, que os clusters que estavam executando essa atualização não tinham mais espaço para alocar esse volume tão grande de dados.
 
 
 ## Hora de explorar o terreno desconhecido
@@ -41,11 +42,11 @@ A maioria das tabelas atualizaram rapidamente. Porém, a tabela `input` ainda es
 O tempo foi passando, e após 3 horas com a atualização rodando em meu computador, o Power BI já havia puxado mais de 80 milhões de linhas para essa única tabela. Decidi verificar se o recurso de [Atualização incremental](<https://learn.microsoft.com/pt-br/power-bi/connect-data/incremental-refresh-overview>) estava ligado para essa tabela `input`, e, percebi que ele estava desligado.
 
 
-## Conclusão
+## A fonte do problema
 
 Portanto, a fonte do problema estava claro. Como o recurso de "Atualização incremental" estava desligado para essa tabela `input`, a cada atualização, o Power BI Online estava recalculando toda a tabela `input` de uma vez só.
 
-Isso significa que, todos os dias, o Power BI estava coletava todas as **80 milhões de linhas** dessa tabela `input`. Devido a este alto volume de dados, o serviço do Power BI decidiu interromper a atualização.
+Isso significa que, todos os dias, o Power BI estava coletando todas as **80 milhões de linhas** dessa tabela `input`. Devido a este volume monumental de dados, o serviço do Power BI decidiu interromper a atualização.
 
 ```{r, echo = FALSE, out.width = "70%"}
 knitr::include_graphics("../conversa.png")
@@ -64,13 +65,13 @@ Por exemplo, na primeira atualização, tentamos puxar os dados do primeiro mês
 
 Primeiro de tudo, pare! E pense... tente entender o porquê você está puxando milhões e milhões de linhas. Você realmente precisa desse volume tão grande de dados em seu dashboard? É muito provável que não!
 
-> **Insight 1:** Se você está puxando milhões e milhões de linhas para um dashboard, é provável que você não tenha entendido o que é um dashboard e qual o seu propósito.
+> **Insight 1:** Se você está puxando milhões e milhões de linhas de dados para um dashboard, é provável que você não tenha entendido o que é um dashboard e qual o seu propósito.
 
 ## Manutenção se torna um peso grande
 
 Atualizar 80 milhões de linhas **não é prático, não é rápido, e é difícil de manter e testar**. Se por algum motivo, você precisar atualizar todos os dados de seu dashboard^[Como exemplo, talvez a fonte dos dados sofreu uma atualização, e você quer trazer essa atualização para o seu dashboard, ou então, porque houve uma perda de dados no Power BI Online e você deseja recuperar esses dados perdidos.], você vai muito provavelmente perder uma tarde, talvez um dia inteiro de trabalho só para completar a atualização.
 
-> **Insight 2:** Manter e testar um volume grande de dados em um dashboard é trabalhoso demais
+> **Insight 2:** Um dashboard deve ser fácil de se manter e expandir. Em contrapartida, manter um volume grande de dados em um dashboard é trabalhoso demais.
 
 ## Vamos pensar um pouco sobre *user experience*
 
@@ -80,17 +81,15 @@ Por um momento, vamos adotar o papel de um UX, e refletir sobre a experiência d
 
 Na maioria das vezes, quem está consumindo os nossos dashboards são **gerentes de alguma área**. Gente importante, que tem pouco tempo no dia, e que lidam com várias tarefas e responsabilidades ao mesmo tempo.
 
-É justamente por essa escassez de tempo e atenção que, em geral, gerentes gostam muito de dashboards. Eles gostam de entrar num dashboard, e rapidamente visualizar todos os indicadores que eles precisam acompanhar. Com isso, este gerente não precisa gastar horas e horas caçando números em diferentes lugares, e com diferentes pessoas.
+É justamente por essa escassez de tempo e atenção que, em geral, gerentes gostam muito de dashboards. Eles gostam de entrar num dashboard, e rapidamente visualizar todos os indicadores que eles precisam acompanhar. Com isso, eles não precisam gastar horas e horas caçando números em diferentes lugares, e com diferentes pessoas. Está tudo concentrado em um lugar único e de fácil acesso.
 
-Por isso, um dashboard tem que ser **rápido**. Todo gerente tem pressa, então, a página inicial do dashboard precisa carregar rápido, e navegar pelas diferentes páginas e visões do dashboard também precisa ser uma experiência rápida e flúida. Ninguém gosta de uma página que demora 5 minutos para carregar, muito menos um gerente.
+Por isso, um dashboard tem que ser **rápido**. Todo gerente tem pressa, então, a página inicial do dashboard precisa carregar rápido! Navegar pelas diferentes páginas e visões do dashboard também precisa ser uma experiência rápida e flúida. Ninguém gosta de uma página que demora 5 minutos para carregar... muito menos um gerente.
 
-É por esse mesmo motivo, que cada página de um dashboard precisa ser focada em um tema central, e manter o mínimo possível de informação que o gerente precisa, da forma mais clara possível.
-
-Se uma mesma página mistura diferentes temas, o leitor pode ter dificuldade em navegar pelos indicadores e encontrar o que ele está procurando (ou seja, misturar temas = confusão mental!).
+É por esse mesmo motivo, que cada página de um dashboard precisa ser focada em um tema central, e manter o mínimo possível de informação que o gerente precisa, da forma mais clara possível. Se uma mesma página mistura diferentes temas, o leitor pode ter dificuldade em navegar pelos indicadores e encontrar o que ele está procurando (ou seja, misturar temas = confusão mental!).
 
 > Ah! Achei a página com os indicadores de vendas. Ok. Espera! Por que os indicadores de atendimento estão nessa página? Onde está o número de vendas de maquininhas nesse mês? Ahhh achei! Não, espera... Esse é o número de maquininhas vendidas somente no setor de atendimento, mas eu quero os números de venda em TODOS os setores...
 
-Portanto, dashboards precisam ser rápidos, claros e bem dividos! E se você está puxando um volume muito grande de dados para dentro dele, você com certeza vai impactar negativamente a rapidez desse dashboard. Além disso, é possível que você esteja preenchendo esse dashboard com informação que é irrelevante para o gerente.
+Portanto, dashboards precisam ser rápidos, claros e bem dividos! E se você está puxando um volume muito grande de dados para dentro dele, você com certeza vai impactar negativamente a rapidez desse dashboard, pois ele precisa carregar o grande conjunto de dados que você inseriu lá dentro. Além disso, um grande volume de dados pode indicar que você está preenchendo esse dashboard com informações que são irrelevante para o gerente.
 
 > **Insight 3:** Dashboards precisam ser rápidos, claros e bem dividos! 
 
@@ -108,45 +107,61 @@ Logo, por que trazer dados brutos para o dashboard? Por que trazer para o dashbo
 
 Isso tudo não significa que gerentes não consomem dados brutos em momento algum. Mas isso significa que um dashboard é geralmente o lugar errado para esses dados brutos.
 
-É até comum em certos momentos um gerente pedir para nós coletarmos um conjunto específico de dados brutos para ele. Mas se você refletir sobre todas as ocasiões onde isso ocorreu, você talvez consiga perceber que essas ocasiões caem em duas categorias diferentes:
+É até comum em certos momentos um gerente pedir para nós coletarmos um conjunto específico de dados brutos para ele. Mas se você refletir sobre todas as ocasiões onde isso ocorreu, você talvez consiga perceber que essas situações caem em duas categorias:
 
 1. o gerente queria investigar um problema bem específico, e é bem provável que esse problema não se repita, logo, ele nunca mais vai precisar desses dados brutos específicos novamente (i.e. foi uma entrega pontual);
 
 2. o gerente precisa desses dados brutos com certa frequência para alimentar algum fluxo de trabalho que você não conhece, ou está em uma equipe/setor diferente do seu;
 
-Essas duas categorias não justificam incluir dados brutos em um dashboard. 
+Essas duas categorias não justificam incluir dados brutos em um dashboard. Para a primeira situação, você pode armazenar a query (ou o script) que você usou no momento para puxar os dados brutos que o gerente te pediu naquele momento. Desse modo, se lá na frente, por algum motivo você precisar extrair novamente esses dados brutos, você precisa apenas retornar à query e executá-la novamente. Além disso, é muito mais econômico armazenar centenas de queries distintas, do que armazenar os dados brutos produzidos em cada uma dessas queries (imagine ter centenas de CSV's de vários MB's armazenados no seu computador...).
 
-Portanto, na maior parte do tempo, os gerentes em si não precisam do nível elevado de detalhes que dados brutos trazem para gerir o seu negócio. Se eles estão pedindo por dados brutos com frequência, é porque algum analista ou membro mais especializado de sua equipe precisa desses dados brutos para desempenhar o seu trabalho. Portanto, porquê não criar rotinas para enviar esses dados brutos para esse membro mais especializado?
+Em minha equipe de trabalho, nós utilizamos um board de cards no estilo kanban (como o Asana, ou o Azure DevOps, etc.) para organizar as nossas tarefas e demandas. Eu particularmente gosto de sempre salvar a query que eu utilizei para completar uma demanda, dentro do card correspondente a essa demanda. Sendo assim, caso eu precisar utilizar essa mesma query, eu procuro rapidamente pelo card dessa demanda no histórico do nosso board de cards, e, copio a query que está salva lá dentro desse card.
 
+Já na segunda situação, faz mais sentido criar rotinas automatizadas de envio desses dados para o gerente, ou para qualquer que seja a pessoa que esteja precisando desses dados. Ou seja, se por exemplo, o Paulo precisa extrair toda semana, uma lista com todos os usuários que são elegíveis a adquirir um empréstimo, eu posso, por exemplo, criar uma rotina automatizada em Python ou em R, que pega os dados brutos do nosso database SQL, filtra todos esses usuários elegíveis, e compila esses dados em um formato agradável e intuitivo, e por fim, envia esses dados para o Paulo, seja por email, ou talvez, para um servidor ou uma pasta na nuvem que o Paulo tem acesso.
 
 
 ## Dashboards são ferramentas de uso diário
 
+O gerente depende desse dashboard todos os dias (ou talvez toda semana) para extrair informações importantes sobre o seu negócio. Portanto, dashboards possuem uma frequência de uso alta, e por essa característica, é essencial que um dashboard **seja estável** e que esteja sempre o mais atualizado possível.
 
-> **Insight 5:** Se o usuário de seu dashboard não precisa puxar ou consultar uma informação x com certa frequência, é bem provável que essa informação x não deveria estar no dashboard.
+Contudo, ao puxar milhões e milhões de linhas de dados para um dashboard, todos os dias, você está aumentando as chances desse dashboard enfrentar um erro de atualização. Isso não é algo estável! 
 
-> **Insight 6:** Dashboards precisam ser estáveis! Quanto menos erros ele gerar, melhor para você e também para o gerente que utiliza esse dash.
+Você não quer erros acontecendo no seu dashboard, pois você não quer perder uma tarde inteira de trabalho investigando onde nas milhões e milhões de linhas que você puxou está a fonte do erro. Você também não quer perder horas e horas atualizando essas milhões de linhas. Isso está bastante relacionado também com o insight 2, onde definimos que um dashboard deve ser fácil de se manter e expandir.
+
+> **Insight 5:** Dashboards precisam ser estáveis! Quanto menos erros ele gerar, melhor para você (que vai gastar menos tempo de debugging e manutenção) e também para o gerente que utiliza esse dash.
+
+Você quer um dashboard simples, leve, claro, e que funcione da forma como você esperava que ele funcionasse. Na empresa onde trabalho, temos um lema: "A simplicidade é o mais alto nível de sofisticação". Portanto, leve essa simplicidade para os seus dashboards. Não tente fazer coisas complexas e confusas, que são difíceis de se entender e de investigar (ou "desbugar").
 
 
 ## As vezes não existe maneira simples de contornar o problema
 
-Em certas ocasiões, os usuários de um dashboard realmente precisam ver algum tipo de dado bruto dentro dele. Nesses casos, você traçar algumas outras estratégias e perguntas para melhorar a sua situação. Por exemplo:
+Em certas ocasiões, os usuários de um dashboard realmente precisam ver algum tipo de dado bruto dentro dele. Nesses casos, você traçar algumas outras estratégias e perguntas para reduzir ao máximo o número de linhas importadas. Por exemplo:
 
 1. eu posso trazer para dentro dashboard uma parte bastante filtrada dos dados brutos? 
 
-Ou seja, ao invés de trazer as 80 milhões de linhas, será que eu consigo aplicar vários filtros sobre esses dados brutos, antes de importá-los para dentro do dashboard. Esses filtros podem te ajudar a reduzir drasticamente o número de linhas carregadas.
+Ou seja, ao invés de trazer as 80 milhões de linhas, será que eu consigo aplicar vários filtros sobre esses dados brutos, antes de importá-los para dentro do dashboard? Esses filtros podem te ajudar a reduzir drasticamente o número de linhas carregadas.
 
 2. ao invés de trazer todos os dados, por que não trazer uma amostra aleatória da população?
 
-É útil entender o porquê exatamente o seu usuário precisa ver algum dado bruto em seu dashboard. Ao entender o que esse usuário está perseguindo, você talvez chegue a conclusão de que o seu usuário já ficaria satisfeito ao ver pelo menos uma parte dos dados brutos (não precisa trazer literalmente tudo). Portanto, selecione uma amostra aleatória dos dados, e importe apenas essa amostra para dentro do dashboard.
+É útil entender o porquê exatamente o seu usuário precisa ver algum dado bruto em seu dashboard. Ao entender o que esse usuário está perseguindo, você talvez chegue a conclusão de que o seu usuário já ficaria satisfeito ao ver pelo menos uma parte dos dados brutos (não precisa trazer literalmente tudo). Portanto, você poderia selecionar uma amostra aleatória dos dados, e importar apenas essa amostra para dentro do dashboard.
 
 3. será que eu preciso manter o histórico desses dados brutos dentro do dash? 
 
 Será que o seu cliente precisa frequentemente visualizar os dados brutos de 6 meses atrás? É muito provável que não. Então, por que não manter apenas os dados brutos dos últimos 30 dias? Em outras palavras, os dados históricos são sempre limpos, e apenas os dados brutos mais recentes são mantidos.
 
+Ao reduzir o volume de dados mantidos dentro do dashboard, você talvez traga uma melhoria considerável sobre o tempo de navegação e carregamento do dashboard (lembre-se, um dashboard preciso ser rápido, claro e bem divido).
 
 
-<!-- O que você trouxe parece que foi uma construção antiga, modelada pra necessidade X, e ela não é mais a mesma hoje em dia -->
+# Conclusão
 
-<!-- É interessante pensar no processo de evolução/revisão dos nossos dashs, adequando eles pros usos atuais (coisa que nem sempre a gente consegue 😅) -->
-<!-- Viajando um pouco aqui, um dash de atendimento humano pra acompanhar a métrica X (abandono, sei lá).. faz sentido acompanhar essa métrica pro resto da vida? Ou vai chegar uma hora que o abandono é normalizado, e vamos ter alguma outra dor pra investigar, analisar, melhorar, medir? -->
+Espero que neste artigo, tenha consiguido deixar claro como um número exacerbado de dados brutos em seu dashboard pode ser um forte sinal de que você tenha desenvolvido um dashboard mal desenhado. Apenas para recapitular, os principais pontos abordados foram:
+
+1. Se você está puxando milhões e milhões de linhas de dados para um dashboard, é provável que você não tenha entendido o que é um dashboard e qual o seu propósito.
+
+2. Um dashboard deve ser fácil de se manter e expandir. Em contrapartida, manter um volume grande de dados em um dashboard é trabalhoso demais.
+
+3. Dashboards precisam ser rápidos, claros e bem dividos! 
+
+4. Gerentes estão interessados em acompanhar indicadores e agregados, ao invés de dados brutos. Portanto, importe os seus dados já agregados para dentro do dashboard.
+
+5. Dashboards precisam ser estáveis! Quanto menos erros ele gerar, melhor para você (que vai gastar menos tempo de debugging e manutenção) e também para o gerente que utiliza esse dash.
