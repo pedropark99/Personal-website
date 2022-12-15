@@ -99,7 +99,7 @@ Portanto, dashboards precisam ser rápidos, claros e bem dividos! E se você est
 
 Gerentes querem acompanhar indicadores e agregados que descrevam de maneira rápida a situação atual do negócio que eles gerem, e das pessoas que estão envolvidas nele.
 
-Logo, porque trazer dados brutos para o dashboard? Porque trazer para o dashboard uma tabela com a lista completa de todos os usuários que visitaram o nosso serviço em todos os dias do ano? Se eu posso simplesmente trazer uma tabela já agregada, com o número de usuários que visitaram o serviço dentro de cada dia.
+Logo, por que trazer dados brutos para o dashboard? Por que trazer para o dashboard uma tabela com a lista completa de todos os usuários que visitaram o nosso serviço em todos os dias do ano? Se eu posso simplesmente trazer uma tabela já agregada, com o número de usuários que visitaram esse serviço dentro de cada dia do ano?
 
 > **Insight 4:** Gerentes estão interessados em acompanhar indicadores e agregados, ao invés de dados brutos. Portanto, importe os seus dados já agregados para dentro do dashboard.
 
