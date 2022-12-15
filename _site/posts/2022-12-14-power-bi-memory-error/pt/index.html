@@ -300,11 +300,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <h1>A solução simples e suja (o famoso <em>quick and dirty</em>)</h1>
 <p>Um jeito simples de resolver esse erro de falta de memória, seria simplesmente não carregar todas as 80 milhões de linhas de uma vez só! E sim, carregar essas linhas aos poucos.</p>
 <p>Para isso, poderíamos ligar a atualização incremental nessa tabela <code>input</code>. Desse modo, cada atualização vai atualizar apenas os dados dos últimos dias (ao invés de atualizar a tabela inteira), e em seguida, começamos a carregar os dados aos poucos para o dashboard.</p>
-<p>Por exemplo, na primeira atualização, tentamos puxar os dados do primeiro mês, depois, na próxima atualização, puxamos os dados do segundo mês, e assim por diante, até puxarmos todas as 80 mihões de linhas.</p>
-<section id="contudo-isso-não-é-uma-solução-de-fato" class="level2">
-<h2 class="anchored" data-anchor-id="contudo-isso-não-é-uma-solução-de-fato">Contudo, isso não é uma solução de fato!</h2>
-<p>Atualizar 80 milhões de linhas <strong>não é prático, não é rápido, e é difícil de manter e testar</strong>. Se por algum motivo, você precisar atualizar todos os dados de seu dashboard<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>, você vai muito provavelmente perder uma tarde, talvez um dia inteiro de trabalho só para completar a atualização.</p>
-</section>
+<p>Por exemplo, na primeira atualização, tentamos puxar os dados do primeiro mês, depois, na próxima atualização, puxamos os dados do segundo mês, e assim por diante, até puxarmos todas as 80 mihões de linhas. Contudo, isso não é uma solução de fato!</p>
 </section>
 <section id="antes-de-tudo-pare-um-pouco-e-pense" class="level1">
 <h1>Antes de tudo, pare um pouco e pense</h1>
@@ -312,6 +308,13 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <blockquote class="blockquote">
 <p><strong>Insight 1:</strong> Se você está puxando milhões e milhões de linhas para um dashboard, é provável que você não tenha entendido o que é um dashboard e qual o seu propósito.</p>
 </blockquote>
+<section id="manutenção-se-torna-um-peso-grande" class="level2">
+<h2 class="anchored" data-anchor-id="manutenção-se-torna-um-peso-grande">Manutenção se torna um peso grande</h2>
+<p>Atualizar 80 milhões de linhas <strong>não é prático, não é rápido, e é difícil de manter e testar</strong>. Se por algum motivo, você precisar atualizar todos os dados de seu dashboard<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>, você vai muito provavelmente perder uma tarde, talvez um dia inteiro de trabalho só para completar a atualização.</p>
+<blockquote class="blockquote">
+<p><strong>Insight 2:</strong> Manter e testar um volume grande de dados em um dashboard é trabalhoso demais</p>
+</blockquote>
+</section>
 <section id="vamos-pensar-um-pouco-sobre-user-experience" class="level2">
 <h2 class="anchored" data-anchor-id="vamos-pensar-um-pouco-sobre-user-experience">Vamos pensar um pouco sobre <em>user experience</em></h2>
 <p>Por um momento, vamos adotar o papel de um UX, e refletir sobre a experiência dos usuários que consomem o nosso dashboard. É esquisito pensar dessa forma, entretanto, às vezes, nós nos esquecemos que pessoas de verdade usam o nosso produto (nesse caso, o dashboard) e se baseiam nele diariamente para desempenhar trabalhos e planejamentos importantes. Portanto, é muito importante que eles tenham uma experiência agradável utilizando o nosso dashboard.</p>
@@ -328,7 +331,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 </blockquote>
 <p>Portanto, dashboards precisam ser rápidos, claros e bem dividos! E se você está puxando um volume muito grande de dados para dentro dele, você com certeza vai impactar negativamente a rapidez desse dashboard. Além disso, é possível que você esteja preenchendo esse dashboard com informação que é irrelevante para o gerente.</p>
 <blockquote class="blockquote">
-<p><strong>Insight 2:</strong> Dashboards precisam ser rápidos, claros e bem dividos!</p>
+<p><strong>Insight 3:</strong> Dashboards precisam ser rápidos, claros e bem dividos!</p>
 </blockquote>
 </section>
 <section id="gerentes-querem-indicadores-e-agregados-não-dados-brutos" class="level2">
@@ -336,7 +339,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <p>Gerentes querem acompanhar indicadores e agregados que descrevam de maneira rápida a situação atual do negócio que eles gerem, e das pessoas que estão envolvidas nele.</p>
 <p>Logo, porque trazer dados brutos para o dashboard? Porque trazer para o dashboard uma tabela com a lista completa de todos os usuários que visitaram o nosso serviço em todos os dias do ano? Se eu posso simplesmente trazer uma tabela já agregada, com o número de usuários que visitaram o serviço dentro de cada dia.</p>
 <blockquote class="blockquote">
-<p><strong>Insight 3:</strong> Gerentes estão interessados em acompanhar indicadores e agregados, ao invés de dados brutos. Portanto, importe os seus dados já agregados para dentro do dashboard.</p>
+<p><strong>Insight 4:</strong> Gerentes estão interessados em acompanhar indicadores e agregados, ao invés de dados brutos. Portanto, importe os seus dados já agregados para dentro do dashboard.</p>
 </blockquote>
 </section>
 <section id="isso-significa-que-dados-brutos-geralmente-não-devem-estar-em-um-dashboard" class="level2">
@@ -353,10 +356,10 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <section id="dashboards-são-ferramentas-de-uso-diário" class="level2">
 <h2 class="anchored" data-anchor-id="dashboards-são-ferramentas-de-uso-diário">Dashboards são ferramentas de uso diário</h2>
 <blockquote class="blockquote">
-<p><strong>Insight 4:</strong> Se o usuário de seu dashboard não precisa puxar ou consultar uma informação x com certa frequência, é bem provável que essa informação x não deveria estar no dashboard.</p>
+<p><strong>Insight 5:</strong> Se o usuário de seu dashboard não precisa puxar ou consultar uma informação x com certa frequência, é bem provável que essa informação x não deveria estar no dashboard.</p>
 </blockquote>
 <blockquote class="blockquote">
-<p><strong>Insight 5:</strong> Dashboards precisam ser estáveis! Quanto menos erros ele gerar, melhor para você e também para o gerente que utiliza esse dash.</p>
+<p><strong>Insight 6:</strong> Dashboards precisam ser estáveis! Quanto menos erros ele gerar, melhor para você e também para o gerente que utiliza esse dash.</p>
 </blockquote>
 </section>
 <section id="as-vezes-não-existe-maneira-simples-de-contornar-o-problema" class="level2">

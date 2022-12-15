@@ -58,17 +58,19 @@ Um jeito simples de resolver esse erro de falta de memória, seria simplesmente 
 
 Para isso, poderíamos ligar a atualização incremental nessa tabela `input`. Desse modo, cada atualização vai atualizar apenas os dados dos últimos dias (ao invés de atualizar a tabela inteira), e em seguida, começamos a carregar os dados aos poucos para o dashboard.
 
-Por exemplo, na primeira atualização, tentamos puxar os dados do primeiro mês, depois, na próxima atualização, puxamos os dados do segundo mês, e assim por diante, até puxarmos todas as 80 mihões de linhas.
-
-## Contudo, isso não é uma solução de fato!
-
-Atualizar 80 milhões de linhas **não é prático, não é rápido, e é difícil de manter e testar**. Se por algum motivo, você precisar atualizar todos os dados de seu dashboard^[Como exemplo, talvez a fonte dos dados sofreu uma atualização, e você quer trazer essa atualização para o seu dashboard, ou então, porque houve uma perda de dados no Power BI Online e você deseja recuperar esses dados perdidos.], você vai muito provavelmente perder uma tarde, talvez um dia inteiro de trabalho só para completar a atualização.
+Por exemplo, na primeira atualização, tentamos puxar os dados do primeiro mês, depois, na próxima atualização, puxamos os dados do segundo mês, e assim por diante, até puxarmos todas as 80 mihões de linhas. Contudo, isso não é uma solução de fato!
 
 # Antes de tudo, pare um pouco e pense
 
 Primeiro de tudo, pare! E pense... tente entender o porquê você está puxando milhões e milhões de linhas. Você realmente precisa desse volume tão grande de dados em seu dashboard? É muito provável que não!
 
 > **Insight 1:** Se você está puxando milhões e milhões de linhas para um dashboard, é provável que você não tenha entendido o que é um dashboard e qual o seu propósito.
+
+## Manutenção se torna um peso grande
+
+Atualizar 80 milhões de linhas **não é prático, não é rápido, e é difícil de manter e testar**. Se por algum motivo, você precisar atualizar todos os dados de seu dashboard^[Como exemplo, talvez a fonte dos dados sofreu uma atualização, e você quer trazer essa atualização para o seu dashboard, ou então, porque houve uma perda de dados no Power BI Online e você deseja recuperar esses dados perdidos.], você vai muito provavelmente perder uma tarde, talvez um dia inteiro de trabalho só para completar a atualização.
+
+> **Insight 2:** Manter e testar um volume grande de dados em um dashboard é trabalhoso demais
 
 ## Vamos pensar um pouco sobre *user experience*
 
@@ -90,7 +92,7 @@ Se uma mesma página mistura diferentes temas, o leitor pode ter dificuldade em 
 
 Portanto, dashboards precisam ser rápidos, claros e bem dividos! E se você está puxando um volume muito grande de dados para dentro dele, você com certeza vai impactar negativamente a rapidez desse dashboard. Além disso, é possível que você esteja preenchendo esse dashboard com informação que é irrelevante para o gerente.
 
-> **Insight 2:** Dashboards precisam ser rápidos, claros e bem dividos! 
+> **Insight 3:** Dashboards precisam ser rápidos, claros e bem dividos! 
 
 
 ## Gerentes querem indicadores e agregados! Não dados brutos...
@@ -99,7 +101,7 @@ Gerentes querem acompanhar indicadores e agregados que descrevam de maneira ráp
 
 Logo, porque trazer dados brutos para o dashboard? Porque trazer para o dashboard uma tabela com a lista completa de todos os usuários que visitaram o nosso serviço em todos os dias do ano? Se eu posso simplesmente trazer uma tabela já agregada, com o número de usuários que visitaram o serviço dentro de cada dia.
 
-> **Insight 3:** Gerentes estão interessados em acompanhar indicadores e agregados, ao invés de dados brutos. Portanto, importe os seus dados já agregados para dentro do dashboard.
+> **Insight 4:** Gerentes estão interessados em acompanhar indicadores e agregados, ao invés de dados brutos. Portanto, importe os seus dados já agregados para dentro do dashboard.
 
 
 ## Isso significa que dados brutos geralmente não devem estar em um dashboard
@@ -121,9 +123,9 @@ Portanto, na maior parte do tempo, os gerentes em si não precisam do nível ele
 ## Dashboards são ferramentas de uso diário
 
 
-> **Insight 4:** Se o usuário de seu dashboard não precisa puxar ou consultar uma informação x com certa frequência, é bem provável que essa informação x não deveria estar no dashboard.
+> **Insight 5:** Se o usuário de seu dashboard não precisa puxar ou consultar uma informação x com certa frequência, é bem provável que essa informação x não deveria estar no dashboard.
 
-> **Insight 5:** Dashboards precisam ser estáveis! Quanto menos erros ele gerar, melhor para você e também para o gerente que utiliza esse dash.
+> **Insight 6:** Dashboards precisam ser estáveis! Quanto menos erros ele gerar, melhor para você e também para o gerente que utiliza esse dash.
 
 
 ## As vezes não existe maneira simples de contornar o problema
