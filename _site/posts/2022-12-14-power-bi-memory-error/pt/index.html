@@ -8,7 +8,7 @@
 
 <meta name="author" content="Pedro Duarte Faria">
 <meta name="dcterms.date" content="2022-12-14">
-<meta name="description" content="Um erro de memória no Power BI Online é um forte sinal de que você precisa repensar o design de seu dashboard. Neste post explico que estratégias você pode adotar para enfrentar esse problema e repensar a sua solução de dados">
+<meta name="description" content="Um erro de memória no Power BI Online é um forte sinal de que você precisa repensar o design de seu dashboard. Neste post explico que estratégias você pode adotar para enfrentar esse problema, e quais perguntas são interessantes de serem respondidas">
 
 <title>home |&gt; dplyr::glimpse() - Erro de memória no Power BI Online? Hora de repensar o seu dashboard</title>
 <style>
@@ -200,7 +200,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
       <h1 class="title">Erro de memória no Power BI Online? Hora de repensar o seu dashboard</h1>
                   <div>
         <div class="description">
-          Um erro de memória no Power BI Online é um forte sinal de que você precisa repensar o design de seu dashboard. Neste post explico que estratégias você pode adotar para enfrentar esse problema e repensar a sua solução de dados
+          Um erro de memória no Power BI Online é um forte sinal de que você precisa repensar o design de seu dashboard. Neste post explico que estratégias você pode adotar para enfrentar esse problema, e quais perguntas são interessantes de serem respondidas
         </div>
       </div>
                           <div class="quarto-categories">
@@ -260,18 +260,136 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../image.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p><img src="../image.png" class="img-fluid figure-img" style="width:70.0%"></p>
 <p></p><figcaption class="figure-caption">Mensagem de erro da atualização no Power BI Online</figcaption><p></p>
 </figure>
 </div>
 </div>
 </div>
-<p>Perceba pela mensagem acima, que o motivo do erro foi uma falta de memória (<em>insufficient memory</em>) nos clusters responsáveis por executar a atualização. O que isso significa? Significa que este dashboard estava pedindo por um volume tão grande, mas tão grande de dados durante a atualização, que os clusters que estavam executando essa atualização não tinham mais espaço para alocar esse volume tão grande de dados, e, por isso, eles simplesmente desistiram, pediram para parar antes que alguma computador explodisse 😅;</p>
+<p>Perceba pela mensagem acima, que o motivo do erro foi uma falta de memória (<em>insufficient memory</em>) nos clusters responsáveis por executar a atualização. O que isso significa? Significa que este dashboard estava pedindo por um volume tão grande, mas tão grande de dados durante a atualização, que os clusters que estavam executando essa atualização não tinham mais espaço para alocar esse volume tão grande de dados. Por isso, o Power BI decidiu simplesmente parar a atualização antes que algum computador explodisse 😅;</p>
+<section id="hora-de-explorar-o-terreno-desconhecido" class="level2">
+<h2 class="anchored" data-anchor-id="hora-de-explorar-o-terreno-desconhecido">Hora de explorar o terreno desconhecido</h2>
+<p>Nesse dia, eu estava em minha primeira semana em uma nova equipe, e, eu não conhecia esse dashboard. Em outras palavras, eu havia herdado esse dashboard, que foi criado pelos analistas anteriores dessa equipe. Logo, eu precisava abrir o <code>.pbix</code> desse dashboard e começar a investigar, tentando descobrir que mistérios e perigos estão escondidos dentro dele.</p>
+<p>Inicialmente, percebi oito tabelas associadas ao dashboard que foram puxadas diretamente dos nossos databases SQL (<code>campanhas</code>, <code>cartoes_selecionados</code>, <code>usuarios_por_dia</code>, <code>formatos</code>, <code>inputs</code>, <code>usuarios_por_mes</code>, <code>perfis</code> e <code>tracks</code>), as quais estão expostas na imagem abaixo<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. Além delas, temos outras duas tabelas calculadas no próprio <code>.pbix</code>, através de DAX (<code>dCalendario</code> e <code>Medidas</code>).</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../tabelas.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<p></p><figcaption class="figure-caption">Tabelas associadas ao arquivo <code>.pbix</code></figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Decidi simplesmente clicar no botão de <code>Atualizar</code>. Já que o erro ocorreu durante a atualização, imaginei que seria mais simples descobrir a fonte do problema dessa forma.</p>
+<p>A maioria das tabelas atualizaram rapidamente. Porém, a tabela <code>input</code> ainda estava atualizando. Em resumo, essa tabela continha todas as mensagens digitadas por todos os usuários que acessaram o nosso sistema.</p>
+<p>O tempo foi passando, e após 3 horas com a atualização rodando em meu computador, o Power BI já havia puxado mais de 80 milhões de linhas para essa única tabela. Decidi verificar se o recurso de <a href="https://learn.microsoft.com/pt-br/power-bi/connect-data/incremental-refresh-overview">Atualização incremental</a> estava ligado para essa tabela <code>input</code>, e, percebi que ele estava desligado.</p>
+</section>
+<section id="conclusão" class="level2">
+<h2 class="anchored" data-anchor-id="conclusão">Conclusão</h2>
+<p>Portanto, a fonte do problema estava claro. Como o recurso de “Atualização incremental” estava desligado para essa tabela <code>input</code>, a cada atualização, o Power BI Online estava recalculando toda a tabela <code>input</code> de uma vez só.</p>
+<p>Isso significa que, todos os dias, o Power BI estava coletava todas as <strong>80 milhões de linhas</strong> dessa tabela <code>input</code>. Devido a este alto volume de dados, o serviço do Power BI decidiu interromper a atualização.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="../conversa.png" class="img-fluid" style="width:70.0%"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="a-solução-simples-e-suja-o-famoso-quick-and-dirty" class="level1">
+<h1>A solução simples e suja (o famoso <em>quick and dirty</em>)</h1>
+<p>Um jeito simples de resolver esse erro de falta de memória, seria simplesmente não carregar todas as 80 milhões de linhas de uma vez só! E sim, carregar essas linhas aos poucos.</p>
+<p>Para isso, poderíamos ligar a atualização incremental nessa tabela <code>input</code>. Desse modo, cada atualização vai atualizar apenas os dados dos últimos dias (ao invés de atualizar a tabela inteira), e em seguida, começamos a carregar os dados aos poucos para o dashboard.</p>
+<p>Por exemplo, na primeira atualização, tentamos puxar os dados do primeiro mês, depois, na próxima atualização, puxamos os dados do segundo mês, e assim por diante, até puxarmos todas as 80 mihões de linhas.</p>
+<section id="contudo-isso-não-é-uma-solução-de-fato" class="level2">
+<h2 class="anchored" data-anchor-id="contudo-isso-não-é-uma-solução-de-fato">Contudo, isso não é uma solução de fato!</h2>
+<p>Atualizar 80 milhões de linhas <strong>não é prático, não é rápido, e é difícil de manter e testar</strong>. Se por algum motivo, você precisar atualizar todos os dados de seu dashboard<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>, você vai muito provavelmente perder uma tarde, talvez um dia inteiro de trabalho só para completar a atualização.</p>
+</section>
+</section>
+<section id="antes-de-tudo-pare-um-pouco-e-pense" class="level1">
+<h1>Antes de tudo, pare um pouco e pense</h1>
+<p>Primeiro de tudo, pare! E pense… tente entender o porquê você está puxando milhões e milhões de linhas. Você realmente precisa desse volume tão grande de dados em seu dashboard? É muito provável que não!</p>
+<blockquote class="blockquote">
+<p><strong>Insight 1:</strong> Se você está puxando milhões e milhões de linhas para um dashboard, é provável que você não tenha entendido o que é um dashboard e qual o seu propósito.</p>
+</blockquote>
+<section id="vamos-pensar-um-pouco-sobre-user-experience" class="level2">
+<h2 class="anchored" data-anchor-id="vamos-pensar-um-pouco-sobre-user-experience">Vamos pensar um pouco sobre <em>user experience</em></h2>
+<p>Por um momento, vamos adotar o papel de um UX, e refletir sobre a experiência dos usuários que consomem o nosso dashboard. É esquisito pensar dessa forma, entretanto, às vezes, nós nos esquecemos que pessoas de verdade usam o nosso produto (nesse caso, o dashboard) e se baseiam nele diariamente para desempenhar trabalhos e planejamentos importantes. Portanto, é muito importante que eles tenham uma experiência agradável utilizando o nosso dashboard.</p>
+<ul>
+<li><strong>Definindo o público-alvo:</strong> Primeiro, quem utiliza o nosso dashboard?</li>
+</ul>
+<p>Na maioria das vezes, quem está consumindo os nossos dashboards são <strong>gerentes de alguma área</strong>. Gente importante, que tem pouco tempo no dia, e que lidam com várias tarefas e responsabilidades ao mesmo tempo.</p>
+<p>É justamente por essa escassez de tempo e atenção que, em geral, gerentes gostam muito de dashboards. Eles gostam de entrar num dashboard, e rapidamente visualizar todos os indicadores que eles precisam acompanhar. Com isso, este gerente não precisa gastar horas e horas caçando números em diferentes lugares, e com diferentes pessoas.</p>
+<p>Por isso, um dashboard tem que ser <strong>rápido</strong>. Todo gerente tem pressa, então, a página inicial do dashboard precisa carregar rápido, e navegar pelas diferentes páginas e visões do dashboard também precisa ser uma experiência rápida e flúida. Ninguém gosta de uma página que demora 5 minutos para carregar, muito menos um gerente.</p>
+<p>É por esse mesmo motivo, que cada página de um dashboard precisa ser focada em um tema central, e manter o mínimo possível de informação que o gerente precisa, da forma mais clara possível.</p>
+<p>Se uma mesma página mistura diferentes temas, o leitor pode ter dificuldade em navegar pelos indicadores e encontrar o que ele está procurando (ou seja, misturar temas = confusão mental!).</p>
+<blockquote class="blockquote">
+<p>Ah! Achei a página com os indicadores de vendas. Ok. Espera! Por que os indicadores de atendimento estão nessa página? Onde está o número de vendas de maquininhas nesse mês? Ahhh achei! Não, espera… Esse é o número de maquininhas vendidas somente no setor de atendimento, mas eu quero os números de venda em TODOS os setores…</p>
+</blockquote>
+<p>Portanto, dashboards precisam ser rápidos, claros e bem dividos! E se você está puxando um volume muito grande de dados para dentro dele, você com certeza vai impactar negativamente a rapidez desse dashboard. Além disso, é possível que você esteja preenchendo esse dashboard com informação que é irrelevante para o gerente.</p>
+<blockquote class="blockquote">
+<p><strong>Insight 2:</strong> Dashboards precisam ser rápidos, claros e bem dividos!</p>
+</blockquote>
+</section>
+<section id="gerentes-querem-indicadores-e-agregados-não-dados-brutos" class="level2">
+<h2 class="anchored" data-anchor-id="gerentes-querem-indicadores-e-agregados-não-dados-brutos">Gerentes querem indicadores e agregados! Não dados brutos…</h2>
+<p>Gerentes querem acompanhar indicadores e agregados que descrevam de maneira rápida a situação atual do negócio que eles gerem, e das pessoas que estão envolvidas nele.</p>
+<p>Logo, porque trazer dados brutos para o dashboard? Porque trazer para o dashboard uma tabela com a lista completa de todos os usuários que visitaram o nosso serviço em todos os dias do ano? Se eu posso simplesmente trazer uma tabela já agregada, com o número de usuários que visitaram o serviço dentro de cada dia.</p>
+<blockquote class="blockquote">
+<p><strong>Insight 3:</strong> Gerentes estão interessados em acompanhar indicadores e agregados, ao invés de dados brutos. Portanto, importe os seus dados já agregados para dentro do dashboard.</p>
+</blockquote>
+</section>
+<section id="isso-significa-que-dados-brutos-geralmente-não-devem-estar-em-um-dashboard" class="level2">
+<h2 class="anchored" data-anchor-id="isso-significa-que-dados-brutos-geralmente-não-devem-estar-em-um-dashboard">Isso significa que dados brutos geralmente não devem estar em um dashboard</h2>
+<p>Isso tudo não significa que gerentes não consomem dados brutos em momento algum. Mas isso significa que um dashboard é geralmente o lugar errado para esses dados brutos.</p>
+<p>É até comum em certos momentos um gerente pedir para nós coletarmos um conjunto específico de dados brutos para ele. Mas se você refletir sobre todas as ocasiões onde isso ocorreu, você talvez consiga perceber que essas ocasiões caem em duas categorias diferentes:</p>
+<ol type="1">
+<li><p>o gerente queria investigar um problema bem específico, e é bem provável que esse problema não se repita, logo, ele nunca mais vai precisar desses dados brutos específicos novamente (i.e.&nbsp;foi uma entrega pontual);</p></li>
+<li><p>o gerente precisa desses dados brutos com certa frequência para alimentar algum fluxo de trabalho que você não conhece, ou está em uma equipe/setor diferente do seu;</p></li>
+</ol>
+<p>Essas duas categorias não justificam incluir dados brutos em um dashboard.</p>
+<p>Portanto, na maior parte do tempo, os gerentes em si não precisam do nível elevado de detalhes que dados brutos trazem para gerir o seu negócio. Se eles estão pedindo por dados brutos com frequência, é porque algum analista ou membro mais especializado de sua equipe precisa desses dados brutos para desempenhar o seu trabalho. Portanto, porquê não criar rotinas para enviar esses dados brutos para esse membro mais especializado?</p>
+</section>
+<section id="dashboards-são-ferramentas-de-uso-diário" class="level2">
+<h2 class="anchored" data-anchor-id="dashboards-são-ferramentas-de-uso-diário">Dashboards são ferramentas de uso diário</h2>
+<blockquote class="blockquote">
+<p><strong>Insight 4:</strong> Se o usuário de seu dashboard não precisa puxar ou consultar uma informação x com certa frequência, é bem provável que essa informação x não deveria estar no dashboard.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>Insight 5:</strong> Dashboards precisam ser estáveis! Quanto menos erros ele gerar, melhor para você e também para o gerente que utiliza esse dash.</p>
+</blockquote>
+</section>
+<section id="as-vezes-não-existe-maneira-simples-de-contornar-o-problema" class="level2">
+<h2 class="anchored" data-anchor-id="as-vezes-não-existe-maneira-simples-de-contornar-o-problema">As vezes não existe maneira simples de contornar o problema</h2>
+<p>Em certas ocasiões, os usuários de um dashboard realmente precisam ver algum tipo de dado bruto dentro dele. Nesses casos, você traçar algumas outras estratégias e perguntas para melhorar a sua situação. Por exemplo:</p>
+<ol type="1">
+<li>eu posso trazer para dentro dashboard uma parte bastante filtrada dos dados brutos?</li>
+</ol>
+<p>Ou seja, ao invés de trazer as 80 milhões de linhas, será que eu consigo aplicar vários filtros sobre esses dados brutos, antes de importá-los para dentro do dashboard. Esses filtros podem te ajudar a reduzir drasticamente o número de linhas carregadas.</p>
+<ol start="2" type="1">
+<li>ao invés de trazer todos os dados, por que não trazer uma amostra aleatória da população?</li>
+</ol>
+<p>É útil entender o porquê exatamente o seu usuário precisa ver algum dado bruto em seu dashboard. Ao entender o que esse usuário está perseguindo, você talvez chegue a conclusão de que o seu usuário já ficaria satisfeito ao ver pelo menos uma parte dos dados brutos (não precisa trazer literalmente tudo). Portanto, selecione uma amostra aleatória dos dados, e importe apenas essa amostra para dentro do dashboard.</p>
+<ol start="3" type="1">
+<li>será que eu preciso manter o histórico desses dados brutos dentro do dash?</li>
+</ol>
+<p>Será que o seu cliente precisa frequentemente visualizar os dados brutos de 6 meses atrás? É muito provável que não. Então, por que não manter apenas os dados brutos dos últimos 30 dias? Em outras palavras, os dados históricos são sempre limpos, e apenas os dados brutos mais recentes são mantidos.</p>
+<!-- O que você trouxe parece que foi uma construção antiga, modelada pra necessidade X, e ela não é mais a mesma hoje em dia -->
+<!-- É interessante pensar no processo de evolução/revisão dos nossos dashs, adequando eles pros usos atuais (coisa que nem sempre a gente consegue 😅) -->
+<!-- Viajando um pouco aqui, um dash de atendimento humano pra acompanhar a métrica X (abandono, sei lá).. faz sentido acompanhar essa métrica pro resto da vida? Ou vai chegar uma hora que o abandono é normalizado, e vamos ter alguma outra dor pra investigar, analisar, melhorar, medir? -->
 
 
 </section>
+</section>
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>Vale destacar que essas tabelas foram renomeadas com o objetivo de manter o anonimato do cliente e dos dados associados a elas.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Como exemplo, talvez a fonte dos dados sofreu uma atualização, e você quer trazer essa atualização para o seu dashboard, ou então, porque houve uma perda de dados no Power BI Online e você deseja recuperar esses dados perdidos.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
