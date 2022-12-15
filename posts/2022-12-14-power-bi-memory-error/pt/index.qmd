@@ -1,6 +1,6 @@
 ---
 title: "Erro de memória no Power BI Online? Hora de repensar o seu dashboard"
-description: "Um erro de memória no Power BI Online é um forte sinal de que você precisa repensar o design de seu dashboard. Neste post explico que estratégias você pode adotar para enfrentar esse problema, e quais perguntas são interessantes de serem respondidas"
+description: "Neste post explico como um erro de memória no Power BI Online pode ser um forte sinal de que você está errando no design de seu dashboard"
 date: 2022-12-14
 categories: ["Power BI", "Power BI Online"]
 image: './../featured.png'
