@@ -59,7 +59,6 @@ website:
 
 format:
   html:
-    page-layout: full
     theme:
       - cosmo
       - blue_theme.scss
