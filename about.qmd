@@ -1,9 +1,15 @@
 ---
 title: "About Me"
 image: files/images/profile.jpg
+format: 
+  html: 
+    page-layout: full
 about:
   template: trestles
   links:
+    - icon: github
+      text: Github
+      href: https://github.com/pedropark99
     - icon: mastodon
       text: Mastodon
       href: https://fosstodon.org/web/\@pedropark99
@@ -13,9 +19,9 @@ about:
     - icon: linkedin
       text: LinkedIn
       href: https://www.linkedin.com/in/pedro-faria-a68140209/
-    - icon: github
-      text: Github
-      href: https://github.com/pedropark99
+    - icon: medium
+      text: Medium
+      href: https://medium.com/@pedropark99
 ---
  
 ## Bio

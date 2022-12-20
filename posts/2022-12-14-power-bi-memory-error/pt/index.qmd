@@ -48,7 +48,7 @@ Portanto, a fonte do problema estava claro. Como o recurso de "Atualização inc
 
 Isso significa que, todos os dias, o Power BI estava coletando todas as **80 milhões de linhas** dessa tabela `input`. Devido a este volume monumental de dados, o serviço do Power BI decidiu interromper a atualização.
 
-```{r, echo = FALSE, out.width = "70%"}
+```{r, echo = FALSE, out.width = "80%"}
 knitr::include_graphics("../conversa.png")
 ```
 
