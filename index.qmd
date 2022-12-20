@@ -4,6 +4,9 @@ subtitle: "I'm Pedro, and welcome to my website! I love to write books about pro
 title-block-banner: false
 comments: false 
 toc: false
+format:
+  html:
+    page-layout: full
 listing:
   - id: posts
     type: grid
