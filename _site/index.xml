@@ -83,7 +83,7 @@
   <category>Apache Spark</category>
   <guid>https://pedro-faria.netlify.app/posts/2022-12-21-spark-map-v0.2.3/en/index.html</guid>
   <pubDate>Wed, 21 Dec 2022 03:00:00 GMT</pubDate>
-  <media:content url="https://pedro-faria.netlify.app/posts/2022-12-21-spark-map-v0.2.3/featured.png" medium="image" type="image/png"/>
+  <media:content url="https://pedro-faria.netlify.app/posts/2022-12-21-spark-map-v0.2.3/spark-map-logo.png" medium="image" type="image/png" height="76" width="144"/>
 </item>
 <item>
   <title>Erro de memória no Power BI Online? Hora de repensar o seu dashboard</title>
@@ -1286,7 +1286,7 @@ Damji, Jules, Brooke Wenig, Tathagata Das, and Denny Lee. 2020. <em>Learning Spa
   <category>Apache Spark</category>
   <category>Book</category>
   <guid>https://pedro-faria.netlify.app/publications/book/introd-pyspark/en/index.html</guid>
-  <pubDate>Wed, 21 Dec 2022 16:50:41 GMT</pubDate>
+  <pubDate>Wed, 21 Dec 2022 17:13:40 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/publications/book/introd-pyspark/featured.png" medium="image" type="image/png" height="215" width="144"/>
 </item>
 </channel>
