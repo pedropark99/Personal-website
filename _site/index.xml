@@ -67,11 +67,11 @@
 <li><code>all_of()</code>: its name being inside a specific list of options;</li>
 </ul>
 </section>
-<section id="what-spark_map-offers" class="level2">
-<h2 class="anchored" data-anchor-id="what-spark_map-offers">What <code>spark_map</code> offers?</h2>
+<section id="the-differences-between-spark_map-and-spark_across" class="level2">
+<h2 class="anchored" data-anchor-id="the-differences-between-spark_map-and-spark_across">The differences between <code>spark_map()</code> and <code>spark_across()</code></h2>
 <p>There are two main functions in the package that performs the heavy work, which are <code>spark_map()</code> and <code>spark_across()</code>.</p>
 <p>Both of these functions perform the same work, which is to apply a function over a set of columns of a Spark DataFrame. But they differ in the method they use to apply this function. While <code>spark_map()</code> uses the <code>agg()</code> method of Spark DataFrame’s to apply the function, <code>spark_across()</code> uses the <code>withColumn()</code> method to do so.</p>
-<p>This means that you will mainly use <code>spark_map()</code> when you want to calculate aggregates. Is worthy pointing out that <code>spark_map()</code> works perfectly with grouped DataFrames as well (i.e.&nbsp;<code>GroupedData</code>). In the other hand, you will use <code>spark_across()</code> when you want to just transform the values of multiple colums at once by applying the same function over them.</p>
+<p>This means that you will mainly use <code>spark_map()</code> when you want to calculate <strong>aggregates</strong>. Is worthy pointing out that <code>spark_map()</code> works perfectly with grouped DataFrames as well (i.e.&nbsp;<code>GroupedData</code>). In the other hand, you will use <code>spark_across()</code> when you want to just transform the values of multiple colums at once by applying the same function over them.</p>
 
 
 </section>
@@ -1286,7 +1286,7 @@ Damji, Jules, Brooke Wenig, Tathagata Das, and Denny Lee. 2020. <em>Learning Spa
   <category>Apache Spark</category>
   <category>Book</category>
   <guid>https://pedro-faria.netlify.app/publications/book/introd-pyspark/en/index.html</guid>
-  <pubDate>Wed, 21 Dec 2022 17:13:40 GMT</pubDate>
+  <pubDate>Wed, 21 Dec 2022 17:30:30 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/publications/book/introd-pyspark/featured.png" medium="image" type="image/png" height="215" width="144"/>
 </item>
 </channel>

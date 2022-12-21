@@ -15,7 +15,7 @@ toc: true
 
 ## What problem `spark_map` solves?
 
-I work a lot with data pipelines using Apache Spark and `pyspark` at [Take Blip](https://takeblip.net). Some day, I got myself writing a very long `agg()` statement to aggregate multiple columns of my Spark DataFrame with the same function, like this one below:
+I work a lot with data pipelines using Apache Spark and `pyspark` at [Take Blip](https://www.take.net/). Some day, I got myself writing a very long `agg()` statement to aggregate multiple columns of my Spark DataFrame with the same function, like this one below:
 
 ```{python}
 #| eval: false
@@ -63,10 +63,10 @@ You can use different mapping methods to select the columns of your DataFrame, a
 - `all_of()`: its name being inside a specific list of options;
 
 
-## What `spark_map` offers?
+## The differences between `spark_map()` and `spark_across()`
 
 There are two main functions in the package that performs the heavy work, which are `spark_map()` and `spark_across()`.
 
 Both of these functions perform the same work, which is to apply a function over a set of columns of a Spark DataFrame. But they differ in the method they use to apply this function. While `spark_map()` uses the `agg()` method of Spark DataFrame’s to apply the function, `spark_across()` uses the `withColumn()` method to do so.
 
-This means that you will mainly use `spark_map()` when you want to calculate aggregates. Is worthy pointing out that `spark_map()` works perfectly with grouped DataFrames as well (i.e. `GroupedData`). In the other hand, you will use `spark_across()` when you want to just transform the values of multiple colums at once by applying the same function over them.
+This means that you will mainly use `spark_map()` when you want to calculate **aggregates**. Is worthy pointing out that `spark_map()` works perfectly with grouped DataFrames as well (i.e. `GroupedData`). In the other hand, you will use `spark_across()` when you want to just transform the values of multiple colums at once by applying the same function over them.
