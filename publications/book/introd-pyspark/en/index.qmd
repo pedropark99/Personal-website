@@ -5,7 +5,7 @@ authors: ["Pedro Duarte Faria"]
 
 bibliography: "../references.bib"
 
-categories: [Python, Spark, Book]
+categories: ['Python', 'Apache Spark', 'Book']
 image: "../featured.png"
 ---
 
