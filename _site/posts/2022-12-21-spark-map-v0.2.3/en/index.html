@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Pedro Duarte Faria">
-<meta name="dcterms.date" content="2021-01-02">
-<meta name="description" content="A different (maybe crazy) view on how to teach/explain Outer joins to students">
+<meta name="dcterms.date" content="2022-12-21">
+<meta name="description" content="With this package, you can easily apply a function over multiple columns of a Spark DataFrame">
 
-<title>home |&gt; dplyr::glimpse() - Recipient table and source table</title>
+<title>home |&gt; dplyr::glimpse() - Introducing the {spark_map} Python package</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -138,7 +138,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <link rel="stylesheet" href="../../../styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -260,18 +260,17 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Recipient table and source table</h1>
-            <p class="subtitle lead">A second view on <em>outer joins</em></p>
+      <h1 class="title">Introducing the <code>{spark_map}</code> Python package</h1>
                   <div>
         <div class="description">
-          A different (maybe crazy) view on how to teach/explain <em>Outer joins</em> to students
+          With this package, you can easily apply a function over multiple columns of a Spark DataFrame
         </div>
       </div>
                           <div class="quarto-categories">
-                <div class="quarto-category">Joins</div>
-                <div class="quarto-category">Teaching</div>
-                <div class="quarto-category">Book</div>
-                <div class="quarto-category">R Language</div>
+                <div class="quarto-category">Python</div>
+                <div class="quarto-category">Package</div>
+                <div class="quarto-category">pyspark</div>
+                <div class="quarto-category">Apache Spark</div>
               </div>
                   </div>
   </div>
@@ -296,7 +295,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">January 2, 2021</p>
+        <p class="date">December 21, 2022</p>
       </div>
     </div>
     
@@ -307,95 +306,88 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#how-to-install-it" id="toc-how-to-install-it" class="nav-link" data-scroll-target="#how-to-install-it">How to install it ?</a></li>
+  <li><a href="#what-problem-spark_map-solves" id="toc-what-problem-spark_map-solves" class="nav-link" data-scroll-target="#what-problem-spark_map-solves">What problem <code>spark_map</code> solves?</a></li>
+  <li><a href="#how-spark_map-works" id="toc-how-spark_map-works" class="nav-link" data-scroll-target="#how-spark_map-works">How <code>spark_map()</code> works ?</a></li>
+  <li><a href="#the-differences-between-spark_map-and-spark_across" id="toc-the-differences-between-spark_map-and-spark_across" class="nav-link" data-scroll-target="#the-differences-between-spark_map-and-spark_across">The differences between <code>spark_map()</code> and <code>spark_across()</code></a></li>
+  <li><a href="#check-the-documentation-for-more-examples-and-details" id="toc-check-the-documentation-for-more-examples-and-details" class="nav-link" data-scroll-target="#check-the-documentation-for-more-examples-and-details">Check the documentation for more examples and details</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
-<div class="cell">
-<style type="text/css">
-.hljs{
-  font-family: 'Inconsolata', monospace;
-  font-size: 17px;
-}
-
-.hljs.shell{
-  font-size: 18px;
-}
-
-.hljs-comment{
-  font-style: normal;
-  color: #222222;
-}
-</style>
-</div>
-<section id="introduction" class="level1">
-<h1>Introduction</h1>
-<p><em>Outer joins</em> are a simple topic of understanding for most students. However, this article proposes a second approach on the subject. This approach was built during a recent reformulation of the chapter “Introdução a base de dados relacionais”, from the book <a href="https://pedro-faria.netlify.app/pt/publication/book/introducao_linguagem_r/">Introdução à Linguagem R: seus fundamentos e sua prática</a>. The point of view presented here seeks to be strict, and uses this rigidity as a mechanism that facilitates the student`s memorization of the behaviors in each type of <em>outer join</em>.</p>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p><code>spark_map</code> is a python package that offers some tools that help you to apply a function over multiple columns of Apache Spark DataFrames, using <code>pyspark</code>. The package offers two main functions (or “two main methods”) to distribute your calculations, which are <code>spark_map()</code> and <code>spark_across()</code>. Furthermore, the package offers several methods to map (or select) the columns to which you want to apply your calculations (these methods are called <em>mapping methods</em> in the package).</p>
+<p><a href="https://github.com/pedropark99/spark_map"> <button type="button" class="btn btn-primary">Official repository</button></a> <a href="https://pedropark99.github.io/spark_map"> <button type="button" class="btn btn-primary">Package website</button></a> <a href="https://pypi.org/project/spark-map/"> <button type="button" class="btn btn-primary">Page on PyPI</button></a></p>
 </section>
-<section id="joins-have-direction" class="level1">
-<h1>Joins have direction</h1>
-<p>A <em>join</em> operation is nothing more than a union between two tables. But, instead of an union of two tables, we have another option for interpreting the result of this operation. So that to produce a table that represents the union between two tables, we could simply extract all the columns from one of the tables, and insert them into the other table.</p>
-<p>For example, suppose you have a table <code>A</code>, which contains two columns, called <code>x</code> and <code>y</code>; and a table <code>B</code>, which in turn holds 4 different columns, named <code>x</code>, <code>z</code>, <code>r</code>, and <code>t</code>. Note that one of the columns in table <code>B</code> corresponds to the same column <code>x</code> that we found in table <code>A</code>.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="fu">round</span>(<span class="fu">rnorm</span>(<span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">1</span>), <span class="dv">2</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">z =</span> letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>],</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">r =</span> <span class="fu">c</span>(<span class="fl">3.5</span>, <span class="fl">2.1</span>, <span class="dv">1</span>, <span class="fl">5.6</span>, <span class="fl">7.2</span>),</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">t =</span> <span class="st">"tzu"</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="how-to-install-it" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-install-it">How to install it ?</h2>
+<p>You can install the package through PyPI, by using the <code>pip</code> tool on your terminal, like this:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install spark-map</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="what-problem-spark_map-solves" class="level2">
+<h2 class="anchored" data-anchor-id="what-problem-spark_map-solves">What problem <code>spark_map</code> solves?</h2>
+<p>I work a lot with data pipelines using Apache Spark and <code>pyspark</code> at <a href="https://www.take.net/">Take Blip</a>. Some day, I got myself writing a very long <code>agg()</code> statement to aggregate multiple columns of my Spark DataFrame with the same function, like this one below:</p>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> <span class="bu">sum</span>, column</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>aggregates <span class="op">=</span> (</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    spark.table(<span class="st">'cards.detailed_sales_per_user'</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        .groupBy(<span class="st">'day'</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        .agg(</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>            <span class="bu">sum</span>(column(<span class="st">'cards_lite'</span>)).alias(<span class="st">'cards_lite'</span>),</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>            <span class="bu">sum</span>(column(<span class="st">'cards_silver'</span>)).alias(<span class="st">'cards_silver'</span>),</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>            <span class="bu">sum</span>(column(<span class="st">'cards_gold'</span>)).alias(<span class="st">'cards_gold'</span>),</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>            <span class="bu">sum</span>(column(<span class="st">'cards_premium'</span>)).alias(<span class="st">'cards_premium'</span>),</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>            <span class="bu">sum</span>(column(<span class="st">'cards_enterprise'</span>)).alias(<span class="st">'cards_enterprise'</span>),</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>            <span class="bu">sum</span>(column(<span class="st">'cards_business'</span>)).alias(<span class="st">'cards_business'</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>If you want to join tables <code>A</code> and <code>B</code>, you basically want to create a new table, which contains all five columns of these two tables (<code>x</code>, <code>y</code>, <code>z</code>, <code>r</code> and <code>t</code>). Therefore, we could imagine a <em>join</em> process, as if we were extracting all the columns from table <code>B</code>, and inserting all of these columns in table <code>A</code>. Hence, we have the table below as a result:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">full_join</span>(A, B, <span class="at">by =</span> <span class="st">"x"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 5 × 5
-      x     y z         r t    
-  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;
-1     1  1.14 a       3.5 tzu  
-2     2  1.36 b       2.1 tzu  
-3     3  3.27 c       1   tzu  
-4     4  1.77 d       5.6 tzu  
-5     5  3.16 e       7.2 tzu  </code></pre>
-</div>
-</div>
-<p>With this, we are creating the idea that <strong>a <em>join</em> always has a direction</strong>. In other words, we first extract the columns from table <code>B</code>, and then we add those columns to table <code>A</code>. Note that we are always starting from table <code>B</code> towards table <code>A</code>.</p>
-<div class="cell">
-<div class="cell-output-display">
-<p><img src="./../direcao.png" class="img-fluid" width="2200"></p>
-</div>
+<p>Looking at this code, I had the following thought: “this is not elegant, and is error-prone, because it involves copy and paste, and very subtle changes in each line”. Following the golden rule of DRY (<em>do not repeat yourself</em>), I had to find a better way to write this code.</p>
+<p>I just wanted to apply the <code>sum()</code> function over multiple columns of <code>cards.detailed_sales_per_user</code> grouped by <code>day</code>. Because of that, I decided to develop the <code>spark_map</code> package, which allows you to declare this operation in a much better, elegant and concise way, by using the <code>spark_map()</code> function.</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> spark_map.functions <span class="im">import</span> spark_map</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> spark_map.mapping <span class="im">import</span> starts_with</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>grouped_by_day <span class="op">=</span> spark.table(<span class="st">'cards.detailed_sales_per_user'</span>)<span class="op">\</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    .groupBy(<span class="st">'day'</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>aggregates <span class="op">=</span> spark_map(grouped_by_day, starts_with(<span class="st">'cards'</span>), <span class="bu">sum</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="recipient-table-and-source-table" class="level1">
-<h1>Recipient table and source table</h1>
-<p>From this perspective, we can interpret that, in a <em>join</em>, we are bringing all the columns of a secondary table into our main table (or our table of interest). We have the option to call these tables :<strong>source table</strong> (secondary table) and <strong>recipient table</strong> (main table). With this, a <em>join</em> always starts at <strong>source table</strong> and go towards the <strong>recipient table</strong>.</p>
-<p>This perspective makes sense with the practice of <em>joins</em>. Because in any analysis, we commonly work with a “main” table, or a table that contains the key data we’re analyzing. And when we use some <em>join</em>, we’re usually bringing columns from other tables into this “main” table (or “recipient” table, according to that perspective). So keep in mind that a <em>join</em> always part from the <strong>source table</strong> toward the <strong>recipient table</strong>.</p>
+<section id="how-spark_map-works" class="level2">
+<h2 class="anchored" data-anchor-id="how-spark_map-works">How <code>spark_map()</code> works ?</h2>
+<p>The <code>spark_map()</code> function receives three inputs, which are <code>table</code> (i.e.&nbsp;the Spark DataFrame you want to use), <code>mapping</code> (i.e.&nbsp;a “mapping” that describes which columns you want to apply your function), and <code>function</code> (i.e.&nbsp;the function you want to apply to each column in the Spark DataFrame).</p>
+<p>In short, the <code>starts_with('cards')</code> section tells <code>spark_map()</code> that you want to apply the input function on all columns of <code>grouped_by_day</code> whose name starts with the text <code>'cards'</code>. In other words, all <code>spark_map()</code> does is to apply the function you want (in the above example this function is <code>sum()</code>) to whatever column it finds in the input DataFrame which fits in the description of your mapping method.</p>
+<p>You can use different mapping methods to select the columns of your DataFrame, and the package offers several built-in methods which can be very useful for you, which are available through the <code>spark_map.mapping</code> module of the package. You can select columns based on:</p>
+<ul>
+<li><code>at_position()</code>: their position (i.e.&nbsp;3rd, 4th and 5th columns);</li>
+<li><code>matches()</code>: a regex to which their match;</li>
+<li><code>are_of_type()</code>: the type of data their store (i.e.&nbsp;all columns of type <code>int</code>);</li>
+<li><code>starts_with()</code> and <code>ends_with()</code>: its name starting or ending with a particular pattern;</li>
+<li><code>all_of()</code>: its name being inside a specific list of options;</li>
+</ul>
 </section>
-<section id="types-of-outer-join" class="level1">
-<h1>Types of <em>outer join</em></h1>
-<p>A natural <em>join</em> (<em>inner join</em>) usually generates a loss of observations from both tables involved in the process. In contrast, a <em>join</em> of type <em>outer</em> (that is, an <em>outer join</em>), seeks to delimit which of the two tables will be preserved in the result. That is, an <em>outer join</em> seeks to keep in the <em>join</em> result, the rows of at least one of the tables involved.</p>
-<p>We have three main types of <em>outer joins</em>, which are <em>left join</em>, <em>right join</em> and <em>full join</em>. A <em>full join</em> is the simplest to understand, as it seeks to keep all rows of both tables employed. Therefore, even if there is some observation not found in one of the tables, it will be preserved in the final product of the operation.</p>
-<p>However, <em>left join</em> and <em>right join</em> seek to keep rows from only one of the tables used in <em>join</em>. At this point, many teachers would say something like: “if we want to apply a <em>join</em> between tables <code>A</code> and <code>B</code>, a <em>left join</em> will keep the rows of table <code>A</code>, and a <em>right join</em> will keep the rows of table <code>B</code>”. Other teachers would still try to say, “<em>left join</em> will keep the table rows on the left, while a <em>right join</em> will keep the table rows to the right”.</p>
-<p>However, some confusion can be easily applied in both alternatives. I mean, a student can easily face the following question: “🤔 Uhmm… I don’t remember very well. Does a <em>left join</em> keep the rows in table <code>A</code>? Or are the rows in table <code>B</code>?”; or else, “🤔 Wait! But which of the two tables is on the right side?”</p>
+<section id="the-differences-between-spark_map-and-spark_across" class="level2">
+<h2 class="anchored" data-anchor-id="the-differences-between-spark_map-and-spark_across">The differences between <code>spark_map()</code> and <code>spark_across()</code></h2>
+<p>There are two main functions in the package that performs the heavy work, which are <code>spark_map()</code> and <code>spark_across()</code>.</p>
+<p>Both of these functions perform the same work, which is to apply a function over a set of columns of a Spark DataFrame. But they differ in the method they use to apply this function. While <code>spark_map()</code> uses the <code>agg()</code> method of Spark DataFrame’s to apply the function, <code>spark_across()</code> uses the <code>withColumn()</code> method to do so.</p>
+<p>This means that you will mainly use <code>spark_map()</code> when you want to calculate <strong>aggregates</strong>. Is worthy pointing out that <code>spark_map()</code> works perfectly with grouped DataFrames as well (i.e.&nbsp;<code>GroupedData</code>). In the other hand, you will use <code>spark_across()</code> when you want to just transform the values of multiple colums at once by applying the same function over them.</p>
 </section>
-<section id="conclusion" class="level1">
-<h1>Conclusion</h1>
-<p>With this, according to the perspective adopted in this article, we can understand that a <em>left join</em> and a <em>right join</em> seek to keep the rows of the <strong>recipient table</strong> and the <strong>source table</strong>, respectively. Thus, when using a <em>right join</em> or a <em>left join</em>, you should ask yourself the following: “Do I want to keep the rows in my main table (recipient table)? Or the secondary table (source table), where I am extracting the new columns from?” So if you want to keep, for example, the rows in your main table (recipient table), which is what occurs most of the time, you now know that you need to use a <em>left join</em>.</p>
-<p>In a visual representation, we can reproduce below the initial image of this article, which marks the lines maintained by each of these two types of <em>join</em>.</p>
-<div class="cell">
-<div class="cell-output-display">
-<p><img src="./../featured.png" class="img-fluid" width="2200"></p>
-</div>
-</div>
+<section id="check-the-documentation-for-more-examples-and-details" class="level1">
+<h1>Check the documentation for more examples and details</h1>
+<p>The <a href="https://pedropark99.github.io/spark_map/">website</a> have documentation for all functions of the package. If you have any trouble to understand or to find examples, is a good idea to check the <a href="https://pedropark99.github.io/spark_map/reference-en.html">Function Reference</a> of the package, to see examples and more details about how each function works.</p>
+<p>To understand how the mapping methods works, and how you can create your own mapping method, a good place to start is to read the article <a href="https://pedropark99.github.io/spark_map/english/articles/building-mapping.html">Building the mapping</a> available at the website of the package.</p>
 
 
 </section>
