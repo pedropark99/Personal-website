@@ -1,6 +1,6 @@
 ---
 title: 'Novidades da 4° edição de Introdução à Linguagem R: seus fundamentos e sua prática'
-description: ''
+description: 'Esta quarta edição traz algumas melhorias que buscam manter um dos principais objetivos deste livro, que é ser uma referência moderna, introdutória e técnica sobre a Linguagem R.'
 date: '2022-12-26'
 
 image: "./../featured.png"
@@ -21,54 +21,31 @@ library(stringr)
 ```
 
 
-```{css, include = FALSE}
-.hljs{
-  font-family: 'Inconsolata', monospace;
-  font-size: 17px;
-}
-
-.hljs.shell{
-  font-size: 18px;
-}
-
-.hljs-comment{
-  font-style: normal;
-  color: #222222;
-}
-```
-
 
 # Introdução
 
-É com muito prazer que venho compartilhar com você as novidades que estou trazendo para essa nova edição do livro [Introdução à Linguagem R: seus fundamentos e sua prática](https://pedro-faria.netlify.app/pt/publication/book/introducao_linguagem_r/). O lançamento desta nova edição deve ocorrer ainda no meio de Abril de 2022 `r emoji::emoji("calendar")`, portanto, fique atento `r emoji::emoji("winking_face")`.
+É com muito prazer que venho compartilhar com você as novidades que estou trazendo para essa nova edição do livro [Introdução à Linguagem R: seus fundamentos e sua prática](https://pedro-faria.netlify.app/publications/book/introducao_linguagem_r/pt/). Esta quarta edição busca principalmente fazer algumas correções e adições que buscam manter o livro como um **referência moderna, introdutória e técnica** sobre a linguagem R. 
+
+{{< include ../buttons.html >}}
+
 
 # O que temos de novo?
 
-Temos seis novos capítulos `r emoji::emoji("exploding_head")`, os quais compõe uma nova parte do livro e, trazem consigo, grandes avanços sobre o processo de desenvolvimento de programas no R. Além disso, várias melhorias foram feitas em seções específicas do livro, especialmente sobre o capítulo 2.
+Primeiro, a seção do capítulo 4 que citava o pacote `SAScii` foi removida. Pois durante o desenvolvimento desta quarta edição, foi identificado que este pacote não estava funcionando corretamente em versões mais recentes do R.
 
-Primeiro, houve uma reorganização significativa do livro. Os capítulos pré-existentes foram reorganizados em quatro partes diferentes. Já a quinta e nova parte (Funções e *Loops*: construindo os seus próprios programas e automatizando tarefas) é composta pelos seis novos capítulos introduzidos nesta edição. 
+Segundo, uma nova seção foi adicionada ao capítulo 5, para introduzir o novo operador *pipe* do R (`|>`) - que está disponível desde a versão 4.1 da linguagem, além de explicar as diferenças deste novo operador com o operador *pipe* do pacote `magrittr.`
 
-Segundo, o capítulo de Funções e *Loops* foi completamente reescrito, expandido, e, repartido em dois novos capítulos `r str_c(unname(emoji_name[c("partying_face", rep("party_popper", 3))]), collapse = "")`. Mais especificamente, os capítulos 14 (Funções) e 15 (*Loops*) desta edição.
+Terceiro, várias melhorias e pequenas correções foram aplicadas sobre o capítulo 8, com o objetivo de melhorar a clareza do conhecimento exposto e da organização do capítulo.
 
-Terceiro, o capítulo 16 desta edição traz uma das novidades programadas desde a segunda edição: um novo (e robusto) capítulo sobre *functional programming*. Com essa adição, esta obra se torna uma referência mais moderna e, se aproxima dos padrões adotados hoje pela comunidade internacional de R `r emoji::emoji("smiling face with sunglasses")`.
+Quarto, a seção [Alterando as fontes do seu gráfico](https://pedropark99.github.io/Introducao_R/configurando-componentes-est%C3%A9ticos-do-gr%C3%A1fico-no-ggplot2.html#alterando-as-fontes-do-seu-gr%C3%A1fico) no capítulo 9 foi reformulada, com o objetivo de substituir o pacote `extrafont` (o qual era a solução descrita em edições passadas desta obra) pelo pacote `ragg`, o qual se tornou uma solução mais moderna e robusta para o uso de fontes em gráficos do R.
 
-Quarto, *environments* e as regras de *scoping* da linguagem são dois tópicos relativamente avançados, e que costumam causar certa confusão em muitos iniciantes. Por isso, um novo capítulo foi produzido para descrever essas funcionalidades que sustentam partes essenciais da linguagem, assim como de alguns dos pacotes que introduzimos ao longo do livro (e.g. `dplyr` e `ggplot2`).
-
-Quinto, várias adições e melhorias foram feitas no capítulo 6 (Introdução a base de dados relacionais com `dplyr`) e, principalmente, no capítulo 2 (Fundamentos da Linguagem R). Dentre elas, temos: um novo estudo de caso (Importando os dados da PINTEC); novas seções sobre as funções `str()` e `is.*()`; melhorias significativas sobre as seções de Coerção no R e Valores especiais do R.
-
-Sexto, foi introduzido um novo capítulo que descreve os controles condicionais de fluxo (`if else` *statements* e `switch()`) que a linguagem R oferece.
-
-Sétimo, um novo e pequeno capítulo foi adicionado à segunda parte do livro, com o objetivo de introduzir o universo do `tidyverse` ao leitor de maneira mais clara e amigável `r emoji::emoji("smiling face with hearts")`.
-
-Oitavo, o apêndice contendo as respostas dos exercícios foi retirado, com o objetivo de reduzir o número de páginas do livro. Consequentemente, as respostas dos exercícios estão sendo disponibilizadas em um PDF separado, o qual pode ser baixado gratuitamente, a partir da página de [publicação do livro](https://pedro-faria.netlify.app/pt/publication/book/introducao_linguagem_r/).
+Quinto, tivemos algumas melhorias sobre o capítulo 4, especialmente sobre a descrição de endereços absolutos e relativos, assim como a seção [A função `guess_encoding()` como um possível guia](https://pedropark99.github.io/Introducao_R/importando-e-exportando-dados-com-readr-readxl-e-haven.html?q=guess#sec:readr_guess_encoding) que foi atualizada com o objetivo de acompanhar as mudanças recentes sobre a função `readr::guess_encoding()`.
 
 
 
 # Sobre onde encontrar o livro
 
-Assim como ocorreu nas edições anteriores, você poderá ler toda a obra de maneira gratuita e aberta através de seu [website](https://pedropark99.github.io/Introducao_R/) `r emoji::emoji("book")`. 
-
-Contudo, diferente das edições anteriores, a versão em PDF da obra não será aberta. Você poderá adquirir uma versão em PDF ou física do livro através da loja da Amazon. Ao comprar essas versões, você estará me ajudando a continuar contribuindo com a nossa comunidade `r emoji::emoji("heart")`.
+Você pode ler toda a obra de maneira gratuita e aberta através de seu [website](https://pedropark99.github.io/Introducao_R/) `r emoji::emoji("book")`. Caso você queira contribuir para o projeto desse livro, você pode adquirir uma [versão física ou em EBook do livro através da loja da Amazon](https://www.amazon.com.br/dp/B0BNW4K232). Ao comprar essas versões, você estará me ajudando a continuar contribuindo com a nossa comunidade `r emoji::emoji("heart")`. Além disso, você também pode doar um Pix para o autor (veja a página [Donate or Sponsor Me](https://pedro-faria.netlify.app/donate.html)).
 
 
 
