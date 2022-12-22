@@ -11,9 +11,9 @@ projects: [R_curso]
 
 aliases: 
     - "./../../../../publication/pt/book/introducao_linguagem_r/"
+    - "./../../../../pt/publication/book/introducao_linguagem_r/"
 
 ---
-
 
 # Sobre o livro
 
