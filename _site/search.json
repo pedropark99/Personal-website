@@ -256,14 +256,14 @@
     "href": "publications/en.html",
     "title": "Publications in English",
     "section": "",
-    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n  \n\n\n\n\nIntroduction to pyspark\n\n\n\n\n\n\n\nPython\n\n\nSpark\n\n\nBook\n\n\n\n\nThis book offers a introduction on how to build Spark applications using the pyspark python package\n\n\n\n\n\n\nPedro Duarte Faria\n\n\n\n\n\n\nNo matching items"
+    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n  \n\n\n\n\nIntroduction to pyspark\n\n\n\n\n\n\n\nPython\n\n\nApache Spark\n\n\nBook\n\n\n\n\nThis book offers a introduction on how to build Spark applications using the pyspark python package\n\n\n\n\n\n\nPedro Duarte Faria\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "publications/index.html",
     "href": "publications/index.html",
     "title": "All Publications",
     "section": "",
-    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\n\n\nIntroduction to pyspark\n\n\n\nPython\n\n\nSpark\n\n\nBook\n\n\n\nThis book offers a introduction on how to build Spark applications using the pyspark python package\n\n\n\nPedro Duarte Faria\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nIntrodução à Linguagem R: seus fundamentos e sua prática\n\n\n\nR Language\n\n\nBook\n\n\nBrazil\n\n\n\nEste livro oferece uma descrição profunda sobre os fundamentos da linguagem R, e como eles se aplicam no contexto da análise de dados.\n\n\n\nPedro Duarte Faria\n\n\nDec 1, 2022\n\n\n\n\n\n\n\n\nNo matching items"
+    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\n\n\nIntroduction to pyspark\n\n\n\nPython\n\n\nApache Spark\n\n\nBook\n\n\n\nThis book offers a introduction on how to build Spark applications using the pyspark python package\n\n\n\nPedro Duarte Faria\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nIntrodução à Linguagem R: seus fundamentos e sua prática\n\n\n\nR Language\n\n\nBook\n\n\nBrazil\n\n\n\nEste livro oferece uma descrição profunda sobre os fundamentos da linguagem R, e como eles se aplicam no contexto da análise de dados.\n\n\n\nPedro Duarte Faria\n\n\nDec 1, 2022\n\n\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "publications/pt.html",
@@ -306,5 +306,12 @@
     "title": "Introducing the {spark_map} Python package",
     "section": "The differences between spark_map() and spark_across()",
     "text": "The differences between spark_map() and spark_across()\nThere are two main functions in the package that performs the heavy work, which are spark_map() and spark_across().\nBoth of these functions perform the same work, which is to apply a function over a set of columns of a Spark DataFrame. But they differ in the method they use to apply this function. While spark_map() uses the agg() method of Spark DataFrame’s to apply the function, spark_across() uses the withColumn() method to do so.\nThis means that you will mainly use spark_map() when you want to calculate aggregates. Is worthy pointing out that spark_map() works perfectly with grouped DataFrames as well (i.e. GroupedData). In the other hand, you will use spark_across() when you want to just transform the values of multiple colums at once by applying the same function over them."
+  },
+  {
+    "objectID": "posts/2022-12-21-spark-map-v0.2.3/en/index.html#how-to-install-it",
+    "href": "posts/2022-12-21-spark-map-v0.2.3/en/index.html#how-to-install-it",
+    "title": "Introducing the {spark_map} Python package",
+    "section": "How to install it ?",
+    "text": "How to install it ?\nYou can install the package through PyPI, by using the pip tool on your terminal, like this:\npip install spark-map"
   }
 ]
