@@ -1,0 +1,66 @@
+---
+title: 'Novidades da 4° edição de Introdução à Linguagem R: seus fundamentos e sua prática'
+description: 'Esta quarta edição traz algumas melhorias que buscam manter um dos principais objetivos deste livro, que é ser uma referência moderna, introdutória e técnica sobre a Linguagem R.'
+date: '2022-12-26'
+
+image: "./../featured.png"
+categories: ["Book", "R Language"]
+projects: ["R_curso"]
+links:
+  - name: "Link to the Book"
+    url: "https://pedro-faria.netlify.app/pt/publication/book/introducao_linguagem_r/"
+---
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(emoji)
+library(stringr)
+```
+
+
+
+# Introdução
+
+É com muito prazer que venho compartilhar com você as novidades que estou trazendo para essa nova edição do livro [Introdução à Linguagem R: seus fundamentos e sua prática](https://pedro-faria.netlify.app/publications/book/introducao_linguagem_r/pt/). Esta quarta edição busca principalmente fazer algumas correções e adições que buscam manter o livro como um **referência moderna, introdutória e técnica** sobre a linguagem R. 
+
+{{< include ../buttons.html >}}
+
+
+# O que temos de novo?
+
+Primeiro, a seção do capítulo 4 que citava o pacote `SAScii` foi removida. Pois durante o desenvolvimento desta quarta edição, foi identificado que este pacote não estava funcionando corretamente em versões mais recentes do R.
+
+Segundo, uma nova seção foi adicionada ao capítulo 5, para introduzir o novo operador *pipe* do R (`|>`) - que está disponível desde a versão 4.1 da linguagem, além de explicar as diferenças deste novo operador com o operador *pipe* do pacote `magrittr.`
+
+Terceiro, várias melhorias e pequenas correções foram aplicadas sobre o capítulo 8, com o objetivo de melhorar a clareza do conhecimento exposto e da organização do capítulo.
+
+Quarto, a seção [Alterando as fontes do seu gráfico](https://pedropark99.github.io/Introducao_R/configurando-componentes-est%C3%A9ticos-do-gr%C3%A1fico-no-ggplot2.html#alterando-as-fontes-do-seu-gr%C3%A1fico) no capítulo 9 foi reformulada, com o objetivo de substituir o pacote `extrafont` (o qual era a solução descrita em edições passadas desta obra) pelo pacote `ragg`, o qual se tornou uma solução mais moderna e robusta para o uso de fontes em gráficos do R.
+
+Quinto, tivemos algumas melhorias sobre o capítulo 4, especialmente sobre a descrição de endereços absolutos e relativos, assim como a seção [A função `guess_encoding()` como um possível guia](https://pedropark99.github.io/Introducao_R/importando-e-exportando-dados-com-readr-readxl-e-haven.html?q=guess#sec:readr_guess_encoding) que foi atualizada com o objetivo de acompanhar as mudanças recentes sobre a função `readr::guess_encoding()`.
+
+
+
+# Sobre onde encontrar o livro
+
+Você pode ler toda a obra de maneira gratuita e aberta através de seu [website](https://pedropark99.github.io/Introducao_R/) `r emoji::emoji("book")`. Caso você queira contribuir para o projeto desse livro, você pode adquirir uma [versão física ou em EBook do livro através da loja da Amazon](https://www.amazon.com.br/dp/B0BNW4K232). Ao comprar essas versões, você estará me ajudando a continuar contribuindo com a nossa comunidade `r emoji::emoji("heart")`. Além disso, você também pode doar um Pix para o autor (veja a página [Donate or Sponsor Me](https://pedro-faria.netlify.app/donate.html)).
+
+
+
+# Contribua para a obra ou faça sugestões!
+
+Caso seja de seu interesse, você pode contribuir diretamente para a obra, ao postar *pull requests* dentro de seu [repositório oficial](https://github.com/pedropark99/Introducao_R). Para mais, você também pode fazer sugestões ou comentários, ao postar *issues* neste mesmo repositório.
+
+
+
+
+
+
+
+
+
+
+
+

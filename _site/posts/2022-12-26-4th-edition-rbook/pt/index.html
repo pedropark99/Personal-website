@@ -7,8 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Pedro Duarte Faria">
+<meta name="dcterms.date" content="2022-12-26">
+<meta name="description" content="Esta quarta edição traz algumas melhorias que buscam manter um dos principais objetivos deste livro, que é ser uma referência moderna, introdutória e técnica sobre a Linguagem R.">
 
-<title>home |&gt; dplyr::glimpse() - All Publications</title>
+<title>home |&gt; dplyr::glimpse() - Novidades da 4° edição de Introdução à Linguagem R: seus fundamentos e sua prática</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -24,24 +26,22 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-listing/list.min.js"></script>
-<script src="../site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="../site_libs/quarto-html/quarto.js"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -61,35 +61,6 @@ ul.task-list li input[type="checkbox"] {
     "search-submit-button-title": "Submit"
   }
 }</script>
-<script>
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-publications .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-title','listing-author','listing-date','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-publications'] = new List('listing-publications', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-7E6XG4WKHE"></script>
 
 <script type="text/javascript">
@@ -100,19 +71,18 @@ gtag('js', new Date());
 gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 </script>
 
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../../../styles.css">
 </head>
 
-<body class="nav-fixed">
+<body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
-    <a class="navbar-brand" href="../index.html">
+    <a class="navbar-brand" href="../../../index.html">
     <span class="navbar-title">home |&gt; dplyr::glimpse()</span>
     </a>
   </div>
@@ -122,7 +92,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../about.html">
+    <a class="nav-link" href="../../../about.html">
  <span class="menu-text">About Me</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -131,15 +101,15 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-posts">    
         <li>
-    <a class="dropdown-item" href="../posts/index.html">
+    <a class="dropdown-item" href="../../../posts/index.html">
  <span class="dropdown-text">All posts</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../posts/en.html">
+    <a class="dropdown-item" href="../../../posts/en.html">
  <span class="dropdown-text">Posts in english</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../posts/pt.html">
+    <a class="dropdown-item" href="../../../posts/pt.html">
  <span class="dropdown-text">Posts em português</span></a>
   </li>  
     </ul>
@@ -150,21 +120,21 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-publications">    
         <li>
-    <a class="dropdown-item" href="../publications/index.html">
+    <a class="dropdown-item" href="../../../publications/index.html">
  <span class="dropdown-text">All publications</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../publications/en.html">
+    <a class="dropdown-item" href="../../../publications/en.html">
  <span class="dropdown-text">Publications in English</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../publications/pt.html">
+    <a class="dropdown-item" href="../../../publications/pt.html">
  <span class="dropdown-text">Publicações em Português</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../donate.html">
+    <a class="nav-link" href="../../../donate.html">
  <span class="menu-text">Donate or Sponsor Me</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -173,11 +143,11 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-cv">    
         <li>
-    <a class="dropdown-item" href="../files/cv/cv-english.pdf">
+    <a class="dropdown-item" href="../../../files/cv/cv-english.pdf">
  <span class="dropdown-text">CV in English</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../files/cv/cv-portuguese.pdf">
+    <a class="dropdown-item" href="../../../files/cv/cv-portuguese.pdf">
  <span class="dropdown-text">CV em Português</span></a>
   </li>  
     </ul>
@@ -224,149 +194,83 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
-<!-- sidebar -->
-<!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-cloud"><div class="category" data-category="Apache Spark"><span class="quarto-category-count category-cloud-5">Apache Spark</span></div><div class="category" data-category="Book"><span class="quarto-category-count category-cloud-10">Book</span></div><div class="category" data-category="Brazil"><span class="quarto-category-count category-cloud-5">Brazil</span></div><div class="category" data-category="Python"><span class="quarto-category-count category-cloud-5">Python</span></div><div class="category" data-category="R Language"><span class="quarto-category-count category-cloud-5">R Language</span></div></div></div>
-<!-- main -->
-<main class="content column-page-left" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">All Publications</h1>
-</div>
-
-
-<div class="quarto-title-meta-author">
-  <div class="quarto-title-meta-heading">Author</div>
-  <div class="quarto-title-meta-heading">Affiliation</div>
-  
-    <div class="quarto-title-meta-contents">
-    Pedro Duarte Faria 
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Novidades da 4° edição de Introdução à Linguagem R: seus fundamentos e sua prática</h1>
+                  <div>
+        <div class="description">
+          Esta quarta edição traz algumas melhorias que buscam manter um dos principais objetivos deste livro, que é ser uma referência moderna, introdutória e técnica sobre a Linguagem R.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Book</div>
+                <div class="quarto-category">R Language</div>
+              </div>
+                  </div>
   </div>
-    <div class="quarto-title-meta-contents">
-        <p class="affiliation">
-            Take Blip
-          </p>
+    
+  <div class="quarto-title-meta-author">
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-heading">Affiliation</div>
+    
+      <div class="quarto-title-meta-contents">
+      Pedro Duarte Faria 
+    </div>
+      <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              Take Blip
+            </p>
+        </div>
+      </div>
+
+  <div class="quarto-title-meta">
+
+        
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">December 26, 2022</p>
       </div>
     </div>
-
-<div class="quarto-title-meta">
-
-      
-  
     
-  </div>
-  
-
-</header>
-
-<div id="listing-publications" class="quarto-listing quarto-listing-container-grid">
-<div class="listing-actions-group">
-   <div class="input-group input-group-sm quarto-listing-sort">
-     <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
-     <select id="listing-publications-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-publications'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
-       <option value="" disabled="" selected="" hidden="">Order By</option>
-       <option value="index" data-direction="asc">Default</option>
-         <option value="listing-title" data-direction="asc">
-          Title
-        </option>
-         <option value="listing-date-sort" data-direction="asc">
-          Date - Oldest
-        </option>
-         <option value="listing-date-sort" data-direction="desc">
-          Date - Newest
-        </option>
-         <option value="listing-author" data-direction="asc">
-          Author
-        </option>
-     </select>
-  </div>
-    <div class="input-group input-group-sm quarto-listing-filter">
-      <span class="input-group-text"><i class="bi bi-search"></i></span>
-      <input type="text" class="search form-control" placeholder="Filter">
+      
     </div>
-</div>
-<div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-categories="Python,Apache Spark,Book" data-listing-file-modified-sort="1671723591002" data-listing-reading-time-sort="1.325">
-<a href="../publications/book/introd-pyspark/en/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img src="../publications/book/introd-pyspark/featured.png" class="thumbnail-image card-img" style="height: 150px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Introduction to <code>pyspark</code>
-</h5>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Python'); return false;">
-Python
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Apache Spark'); return false;">
-Apache Spark
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Book'); return false;">
-Book
-</div>
-</div>
-<div class="card-text listing-description">
-This book offers a introduction on how to build Spark applications using the <code>pyspark</code> python package
-</div>
-<div class="card-attribution card-text-small start">
-<div class="listing-author">
-Pedro Duarte Faria
-</div>
-</div>
-</div>
-</div>
-</a>
-</div>
-<div class="g-col-1" data-index="1" data-categories="R Language,Book,Brazil" data-listing-date-sort="1669863600000" data-listing-file-modified-sort="1671724324491" data-listing-reading-time-sort="2.03">
-<a href="../publications/book/introducao_linguagem_R/pt/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img src="../publications/book/introducao_linguagem_R/featured.png" class="thumbnail-image card-img" style="height: 150px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Introdução à Linguagem R: seus fundamentos e sua prática
-</h5>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('R Language'); return false;">
-R Language
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Book'); return false;">
-Book
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Brazil'); return false;">
-Brazil
-</div>
-</div>
-<div class="card-text listing-description">
-Este livro oferece uma descrição profunda sobre os fundamentos da linguagem R, e como eles se aplicam no contexto da análise de dados.
-</div>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-Pedro Duarte Faria
-</div>
-<div class="listing-date">
-Dec 1, 2022
-</div>
-</div>
-</div>
-</div>
-</a>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
+
+<section id="introdução" class="level1">
+<h1>Introdução</h1>
+<p>É com muito prazer que venho compartilhar com você as novidades que estou trazendo para essa nova edição do livro <a href="https://pedro-faria.netlify.app/publications/book/introducao_linguagem_r/pt/">Introdução à Linguagem R: seus fundamentos e sua prática</a>. Esta quarta edição busca principalmente fazer algumas correções e adições que buscam manter o livro como um <strong>referência moderna, introdutória e técnica</strong> sobre a linguagem R.</p>
+<p><a href="https://www.amazon.com.br/dp/B0BNW4K232"> <button type="button" class="btn btn-primary">Compre uma versão do livro</button></a> <a href="https://pedro-faria.netlify.app/publications/book/introducao_linguagem_r/pt/"> <button type="button" class="btn btn-primary">Página de publicação</button></a> <a href="https://pedropark99.github.io/Introducao_R/"> <button type="button" class="btn btn-primary">Leia online</button></a></p>
+</section>
+<section id="o-que-temos-de-novo" class="level1">
+<h1>O que temos de novo?</h1>
+<p>Primeiro, a seção do capítulo 4 que citava o pacote <code>SAScii</code> foi removida. Pois durante o desenvolvimento desta quarta edição, foi identificado que este pacote não estava funcionando corretamente em versões mais recentes do R.</p>
+<p>Segundo, uma nova seção foi adicionada ao capítulo 5, para introduzir o novo operador <em>pipe</em> do R (<code>|&gt;</code>) - que está disponível desde a versão 4.1 da linguagem, além de explicar as diferenças deste novo operador com o operador <em>pipe</em> do pacote <code>magrittr.</code></p>
+<p>Terceiro, várias melhorias e pequenas correções foram aplicadas sobre o capítulo 8, com o objetivo de melhorar a clareza do conhecimento exposto e da organização do capítulo.</p>
+<p>Quarto, a seção <a href="https://pedropark99.github.io/Introducao_R/configurando-componentes-est%C3%A9ticos-do-gr%C3%A1fico-no-ggplot2.html#alterando-as-fontes-do-seu-gr%C3%A1fico">Alterando as fontes do seu gráfico</a> no capítulo 9 foi reformulada, com o objetivo de substituir o pacote <code>extrafont</code> (o qual era a solução descrita em edições passadas desta obra) pelo pacote <code>ragg</code>, o qual se tornou uma solução mais moderna e robusta para o uso de fontes em gráficos do R.</p>
+<p>Quinto, tivemos algumas melhorias sobre o capítulo 4, especialmente sobre a descrição de endereços absolutos e relativos, assim como a seção <a href="https://pedropark99.github.io/Introducao_R/importando-e-exportando-dados-com-readr-readxl-e-haven.html?q=guess#sec:readr_guess_encoding">A função <code>guess_encoding()</code> como um possível guia</a> que foi atualizada com o objetivo de acompanhar as mudanças recentes sobre a função <code>readr::guess_encoding()</code>.</p>
+</section>
+<section id="sobre-onde-encontrar-o-livro" class="level1">
+<h1>Sobre onde encontrar o livro</h1>
+<p>Você pode ler toda a obra de maneira gratuita e aberta através de seu <a href="https://pedropark99.github.io/Introducao_R/">website</a> 📖. Caso você queira contribuir para o projeto desse livro, você pode adquirir uma <a href="https://www.amazon.com.br/dp/B0BNW4K232">versão física ou em EBook do livro através da loja da Amazon</a>. Ao comprar essas versões, você estará me ajudando a continuar contribuindo com a nossa comunidade ❤️. Além disso, você também pode doar um Pix para o autor (veja a página <a href="https://pedro-faria.netlify.app/donate.html">Donate or Sponsor Me</a>).</p>
+</section>
+<section id="contribua-para-a-obra-ou-faça-sugestões" class="level1">
+<h1>Contribua para a obra ou faça sugestões!</h1>
+<p>Caso seja de seu interesse, você pode contribuir diretamente para a obra, ao postar <em>pull requests</em> dentro de seu <a href="https://github.com/pedropark99/Introducao_R">repositório oficial</a>. Para mais, você também pode fazer sugestões ou comentários, ao postar <em>issues</em> neste mesmo repositório.</p>
+
+
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

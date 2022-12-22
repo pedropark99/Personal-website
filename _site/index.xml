@@ -10,7 +10,47 @@
 <atom:link href="https://pedro-faria.netlify.app/index.xml" rel="self" type="application/rss+xml"/>
 <description>A blog about programming and data analysis, specially with R and Python</description>
 <generator>quarto-1.2.269</generator>
-<lastBuildDate>Wed, 21 Dec 2022 03:00:00 GMT</lastBuildDate>
+<lastBuildDate>Mon, 26 Dec 2022 03:00:00 GMT</lastBuildDate>
+<item>
+  <title>Novidades da 4° edição de Introdução à Linguagem R: seus fundamentos e sua prática</title>
+  <dc:creator>Pedro Duarte Faria</dc:creator>
+  <link>https://pedro-faria.netlify.app/posts/2022-12-26-4th-edition-rbook/pt/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="introdução" class="level1">
+<h1>Introdução</h1>
+<p>É com muito prazer que venho compartilhar com você as novidades que estou trazendo para essa nova edição do livro <a href="https://pedro-faria.netlify.app/publications/book/introducao_linguagem_r/pt/">Introdução à Linguagem R: seus fundamentos e sua prática</a>. Esta quarta edição busca principalmente fazer algumas correções e adições que buscam manter o livro como um <strong>referência moderna, introdutória e técnica</strong> sobre a linguagem R.</p>
+<p><a href="https://www.amazon.com.br/dp/B0BNW4K232"> <button type="button" class="btn btn-primary">Compre uma versão do livro</button></a> <a href="https://pedro-faria.netlify.app/publications/book/introducao_linguagem_r/pt/"> <button type="button" class="btn btn-primary">Página de publicação</button></a> <a href="https://pedropark99.github.io/Introducao_R/"> <button type="button" class="btn btn-primary">Leia online</button></a></p>
+</section>
+<section id="o-que-temos-de-novo" class="level1">
+<h1>O que temos de novo?</h1>
+<p>Primeiro, a seção do capítulo 4 que citava o pacote <code>SAScii</code> foi removida. Pois durante o desenvolvimento desta quarta edição, foi identificado que este pacote não estava funcionando corretamente em versões mais recentes do R.</p>
+<p>Segundo, uma nova seção foi adicionada ao capítulo 5, para introduzir o novo operador <em>pipe</em> do R (<code>|&gt;</code>) - que está disponível desde a versão 4.1 da linguagem, além de explicar as diferenças deste novo operador com o operador <em>pipe</em> do pacote <code>magrittr.</code></p>
+<p>Terceiro, várias melhorias e pequenas correções foram aplicadas sobre o capítulo 8, com o objetivo de melhorar a clareza do conhecimento exposto e da organização do capítulo.</p>
+<p>Quarto, a seção <a href="https://pedropark99.github.io/Introducao_R/configurando-componentes-est%C3%A9ticos-do-gr%C3%A1fico-no-ggplot2.html#alterando-as-fontes-do-seu-gr%C3%A1fico">Alterando as fontes do seu gráfico</a> no capítulo 9 foi reformulada, com o objetivo de substituir o pacote <code>extrafont</code> (o qual era a solução descrita em edições passadas desta obra) pelo pacote <code>ragg</code>, o qual se tornou uma solução mais moderna e robusta para o uso de fontes em gráficos do R.</p>
+<p>Quinto, tivemos algumas melhorias sobre o capítulo 4, especialmente sobre a descrição de endereços absolutos e relativos, assim como a seção <a href="https://pedropark99.github.io/Introducao_R/importando-e-exportando-dados-com-readr-readxl-e-haven.html?q=guess#sec:readr_guess_encoding">A função <code>guess_encoding()</code> como um possível guia</a> que foi atualizada com o objetivo de acompanhar as mudanças recentes sobre a função <code>readr::guess_encoding()</code>.</p>
+</section>
+<section id="sobre-onde-encontrar-o-livro" class="level1">
+<h1>Sobre onde encontrar o livro</h1>
+<p>Você pode ler toda a obra de maneira gratuita e aberta através de seu <a href="https://pedropark99.github.io/Introducao_R/">website</a> 📖. Caso você queira contribuir para o projeto desse livro, você pode adquirir uma <a href="https://www.amazon.com.br/dp/B0BNW4K232">versão física ou em EBook do livro através da loja da Amazon</a>. Ao comprar essas versões, você estará me ajudando a continuar contribuindo com a nossa comunidade ❤️. Além disso, você também pode doar um Pix para o autor (veja a página <a href="https://pedro-faria.netlify.app/donate.html">Donate or Sponsor Me</a>).</p>
+</section>
+<section id="contribua-para-a-obra-ou-faça-sugestões" class="level1">
+<h1>Contribua para a obra ou faça sugestões!</h1>
+<p>Caso seja de seu interesse, você pode contribuir diretamente para a obra, ao postar <em>pull requests</em> dentro de seu <a href="https://github.com/pedropark99/Introducao_R">repositório oficial</a>. Para mais, você também pode fazer sugestões ou comentários, ao postar <em>issues</em> neste mesmo repositório.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>Book</category>
+  <category>R Language</category>
+  <guid>https://pedro-faria.netlify.app/posts/2022-12-26-4th-edition-rbook/pt/index.html</guid>
+  <pubDate>Mon, 26 Dec 2022 03:00:00 GMT</pubDate>
+  <media:content url="https://pedro-faria.netlify.app/posts/2022-12-26-4th-edition-rbook/featured.png" medium="image" type="image/png" height="206" width="144"/>
+</item>
 <item>
   <title>Introducing the {spark_map} Python package</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
@@ -1285,7 +1325,7 @@ Damji, Jules, Brooke Wenig, Tathagata Das, and Denny Lee. 2020. <em>Learning Spa
   <category>Apache Spark</category>
   <category>Book</category>
   <guid>https://pedro-faria.netlify.app/publications/book/introd-pyspark/en/index.html</guid>
-  <pubDate>Thu, 22 Dec 2022 15:48:28 GMT</pubDate>
+  <pubDate>Thu, 22 Dec 2022 16:10:50 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/publications/book/introd-pyspark/featured.png" medium="image" type="image/png" height="215" width="144"/>
 </item>
 </channel>

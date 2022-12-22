@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/2022-12-26-4th-edition-rbook/pt/index.html",
       "/posts/2022-12-21-spark-map-v0.2.3/en/index.html",
       "/posts/2022-12-14-power-bi-memory-error/pt/index.html",
       "/posts/2022-11-06-figma-pkgv0.1.0/en/index.html",
@@ -29,6 +30,7 @@
   {
     "listing": "/posts/index.html",
     "items": [
+      "/posts/2022-12-26-4th-edition-rbook/pt/index.html",
       "/posts/2022-12-21-spark-map-v0.2.3/en/index.html",
       "/posts/2022-12-14-power-bi-memory-error/pt/index.html",
       "/posts/2022-11-06-figma-pkgv0.1.0/en/index.html",
@@ -44,6 +46,7 @@
   {
     "listing": "/posts/pt.html",
     "items": [
+      "/posts/2022-12-26-4th-edition-rbook/pt/index.html",
       "/posts/2022-12-14-power-bi-memory-error/pt/index.html",
       "/posts/2022-04-06-3nd-edition-rbook/pt/index.html",
       "/posts/2021-05-26-2nd-edition-rbook/pt/index.html",
