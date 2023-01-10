@@ -1,14 +1,16 @@
 ---
 title: JOINs são importantes fontes de duplicações em seus dados
+description: "Se os seus dados crescerem de forma repentina, sem explicação aparente, verifique se os seus JOINs são a fonte desse problema"
+date: 2023-01-10
 ---
 
 
 # Introdução
 
-A regra de ouro da programação DRY (*do not repeat yourself*) pode também influenciar outras dimensões de nossa vida. Por exemplo, se você der o mesmo conselho para uma pessoa pela terceira vez ou mais, é melhor que você escreva ou documente esse conselho de alguma forma. Desse modo, você pode disseminar esse conselho para outras pessoas de forma mais efetiva. Esse post é um reflexo direto disso:
+<!--
+A regra de ouro da programação DRY (*do not repeat yourself*) também pode influenciar outras dimensões de sua vida. Por exemplo, se você der o mesmo conselho para uma pessoa pela terceira vez ou mais, é melhor que você escreva ou documente esse conselho de alguma forma. Desse modo, você pode disseminar esse conselho para outras pessoas de forma mais efetiva. Esse post é um reflexo direto disso:
 
 > When you’ve written the same code 3 times, write a function. When you’ve given the same in-person advice 3 times, write a blog post. ROBINSON, David, 2017 ^[Essa citação vem de um tweet de David Robinson, o qual está disponível no link: <https://twitter.com/drob/status/928447584712253440?s=20&t=5gy5SkBKGr6oXsWcg9LIag>].
-
-
+-->
 
 

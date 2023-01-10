@@ -7,6 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Pedro Duarte Faria">
+<meta name="dcterms.date" content="2023-01-10">
+<meta name="description" content="Se os seus dados crescerem de forma repentina, sem explicação aparente, verifique se os seus JOINs são a fonte desse problema">
 
 <title>home |&gt; dplyr::glimpse() - JOINs são importantes fontes de duplicações em seus dados</title>
 <style>
@@ -196,7 +198,12 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">JOINs são importantes fontes de duplicações em seus dados</h1>
-                      </div>
+                  <div>
+        <div class="description">
+          Se os seus dados crescerem de forma repentina, sem explicação aparente, verifique se os seus JOINs são a fonte desse problema
+        </div>
+      </div>
+                </div>
   </div>
     
   <div class="quarto-title-meta-author">
@@ -216,6 +223,12 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
   <div class="quarto-title-meta">
 
         
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">January 10, 2023</p>
+      </div>
+    </div>
     
       
     </div>
@@ -233,21 +246,16 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 
 <section id="introdução" class="level1">
 <h1>Introdução</h1>
-<p>A regra de ouro da programação DRY (<em>do not repeat yourself</em>) pode também influenciar outras dimensões de nossa vida. Por exemplo, se você der o mesmo conselho para uma pessoa pela terceira vez ou mais, é melhor que você escreva ou documente esse conselho de alguma forma. Desse modo, você pode disseminar esse conselho para outras pessoas de forma mais efetiva. Esse post é um reflexo direto disso:</p>
-<blockquote class="blockquote">
-<p>When you’ve written the same code 3 times, write a function. When you’ve given the same in-person advice 3 times, write a blog post. ROBINSON, David, 2017 <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
-</blockquote>
+<!--
+A regra de ouro da programação DRY (*do not repeat yourself*) também pode influenciar outras dimensões de sua vida. Por exemplo, se você der o mesmo conselho para uma pessoa pela terceira vez ou mais, é melhor que você escreva ou documente esse conselho de alguma forma. Desse modo, você pode disseminar esse conselho para outras pessoas de forma mais efetiva. Esse post é um reflexo direto disso:
+
+> When you’ve written the same code 3 times, write a function. When you’ve given the same in-person advice 3 times, write a blog post. ROBINSON, David, 2017 ^[Essa citação vem de um tweet de David Robinson, o qual está disponível no link: <https://twitter.com/drob/status/928447584712253440?s=20&t=5gy5SkBKGr6oXsWcg9LIag>].
+-->
 
 
 </section>
 
-
-<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
-
-<ol>
-<li id="fn1"><p>Essa citação vem de um tweet de David Robinson, o qual está disponível no link: <a href="https://twitter.com/drob/status/928447584712253440?s=20&amp;t=5gy5SkBKGr6oXsWcg9LIag" class="uri">https://twitter.com/drob/status/928447584712253440?s=20&amp;t=5gy5SkBKGr6oXsWcg9LIag</a><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section></div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
