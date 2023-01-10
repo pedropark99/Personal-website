@@ -285,5 +285,12 @@
     "title": "Publicações em Português",
     "section": "",
     "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n  \n\n\n\n\nIntrodução à Linguagem R: seus fundamentos e sua prática\n\n\n\n\n\n\n\nR Language\n\n\nBook\n\n\nBrazil\n\n\n\n\nEste livro oferece uma descrição profunda sobre os fundamentos da linguagem R, e como eles se aplicam no contexto da análise de dados.\n\n\n\n\n\n\nDec 1, 2022\n\n\nPedro Duarte Faria\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/2023-01-10-join-duplicates/pt/index.html",
+    "href": "posts/2023-01-10-join-duplicates/pt/index.html",
+    "title": "JOINs são importantes fontes de duplicações em seus dados",
+    "section": "",
+    "text": "Introdução\nA regra de ouro da programação DRY (do not repeat yourself) pode também influenciar outras dimensões de nossa vida. Por exemplo, se você der o mesmo conselho para uma pessoa pela terceira vez ou mais, é melhor que você escreva ou documente esse conselho de alguma forma. Desse modo, você pode disseminar esse conselho para outras pessoas de forma mais efetiva. Esse post é um reflexo direto disso:\n\nWhen you’ve written the same code 3 times, write a function. When you’ve given the same in-person advice 3 times, write a blog post. ROBINSON, David, 2017 1.\n\n\n\n\n\n\nFootnotes\n\n\nEssa citação vem de um tweet de David Robinson, o qual está disponível no link: https://twitter.com/drob/status/928447584712253440?s=20&t=5gy5SkBKGr6oXsWcg9LIag↩︎"
   }
 ]
