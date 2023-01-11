@@ -13,4 +13,14 @@ A regra de ouro da programação DRY (*do not repeat yourself*) também pode inf
 > When you’ve written the same code 3 times, write a function. When you’ve given the same in-person advice 3 times, write a blog post. ROBINSON, David, 2017 ^[Essa citação vem de um tweet de David Robinson, o qual está disponível no link: <https://twitter.com/drob/status/928447584712253440?s=20&t=5gy5SkBKGr6oXsWcg9LIag>].
 -->
 
+Quando estamos construindo uma nova tabela de dados, é muito comum compararmos os nossos resultados com tabelas anteriores e nos depararmos com problemas de divergência nos dados. Isto é, situações como:
+
+> Uhmm... a tabela antiga indica que o número de maquininhas vendidas no mês de Dezembro foi de 1387. Porém, esse mesmo indicador na tabela nova está em 1824 para o mesmo mês de Dezembro. Porque esse aumento?
+
+Aumentos desse tipo podem ocorrer por uma variedade de razões. Porém, operações de JOIN tem sido uma razão específica que tenho enfrentado com muita frequência em meu trabalho. 
+
+Em outras palavras, JOINs são fontes extremamente comums desse tipo de "efeito expansivo", e, muitos analistas não compreendem o porquê, ou não enxergam como isso pode ocorrer. Nesse post, busco justamente esclarecer como uma operação de JOIN pode causar esse "efeito de aumento" em seus dados.
+
+# O que é um JOIN ?
+
 
