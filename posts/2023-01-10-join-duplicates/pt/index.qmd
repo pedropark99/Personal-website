@@ -17,10 +17,46 @@ Quando estamos construindo uma nova tabela de dados, é muito comum compararmos 
 
 > Uhmm... a tabela antiga indica que o número de maquininhas vendidas no mês de Dezembro foi de 1387. Porém, esse mesmo indicador na tabela nova está em 1824 para o mesmo mês de Dezembro. Porque esse aumento?
 
-Aumentos desse tipo podem ocorrer por uma variedade de razões. Porém, operações de JOIN tem sido uma razão específica que tenho enfrentado com muita frequência em meu trabalho. 
+Aumentos desse tipo podem ocorrer por uma variedade de razões. Porém, operações de JOIN tem sido uma razão específica que tenho enfrentado com muita frequência em meu trabalho. Em outras palavras, JOINs são fontes extremamente comums desse tipo de "efeito expansivo", e, muitos analistas não compreendem o porquê, ou não enxergam como isso pode ocorrer. 
 
-Em outras palavras, JOINs são fontes extremamente comums desse tipo de "efeito expansivo", e, muitos analistas não compreendem o porquê, ou não enxergam como isso pode ocorrer. Nesse post, busco justamente esclarecer como uma operação de JOIN pode causar esse "efeito de aumento" em seus dados.
+Nesse post, busco justamente esclarecer como uma operação de JOIN pode causar esse "efeito de aumento" em seus dados. Eu explico esse efeito em detalhes no capítulo 6 do meu livro introdutório da linguagem R. Mais especificamente, a partir da seção [Relações entre *keys: primary keys* são menos comuns do que você pensa](https://pedropark99.github.io/Introducao_R/introdu%C3%A7%C3%A3o-a-base-de-dados-relacionais-com-dplyr.html#rela%C3%A7%C3%B5es-entre-keys-primary-keys-s%C3%A3o-menos-comuns-do-que-voc%C3%AA-pensa). Portanto, grande parte do conhecimento exposto aqui são referências diretas ao livro.
 
-# O que é um JOIN ?
+# Alguns exemplos de tabela
+
+Para demonstrar os processos de JOIN ao longo desse post, vou utilizar algumas tabelas de exemplo, que estão expostas abaixo. Por opção minha, estou mostrando esses exemplos utilizando a linguagem R. Mas você poderia facilmente transpor esses exemplos para qualquer outra linguagem (e.g. como o Python).
+
+Ou seja, o conhecimento exposto aqui **independe da linguagem utilizada**. Pois o efeito expansivo descrito aqui é uma característica intrínseca ao processo de JOIN.
+
+```{r}
+library(dplyr)
+
+info <- data.frame(
+  name = c("Mick", "John", "Paul", "George", "Ringo"),
+  band = c("Rolling Stones", "Beatles", "Beatles", "Beatles", "Beatles"),
+  born = as.Date(c("1943-07-26", "1940-09-10", "1942-06-18", "1943-02-25", "1940-07-07")),
+  children = TRUE
+)
+
+band_instruments <- data.frame(
+  name = c("John", "Paul", "Keith"),
+  plays = c("guitar", "bass", "guitar")
+)
+```
+
+# O que é um JOIN?
+
+Um processo de JOIN é um processo de união entre duas tabelas. Ou seja, se você tem uma tabela A com colunas `x` e `y`, e uma tabela B com colunas `j`, `k` e `l`, um JOIN entre essas duas tabelas resulta em uma nova tabela com colunas `x`, `y`, `j`, `k` e `l`.
+
+Uma característica fundamental de um JOIN, é que ele realiza um processo de pareamento dos dados durante essa união. Um JOIN não vai simplesmente concatenar as colunas `x`, `y`, `j`, `k` e `l` em conjunto e voa-lá! Temos uma nova tabela. Para realizar esse processo de pareamento, um JOIN utiliza uma coluna (ou um conjunto de colunas) presente em ambas as tabelas como as "chaves" do JOIN.
+
+
+# Relações entre *keys* de um JOIN
+
+As *keys*, ou as "chaves" de um JOIN são a combinação de colunas utilizadas para realizar o processo de pareamento (ou *matching*) entre os dados das duas tabelas que estão sendo unidas no JOIN. Por exemplo, olhando para a tabela 
+
+
+![Resumo das relações possíveis entre *keys*](../relacoes_keys.png)
+
+Para entender como esse efeito expansivo é interessante enxergarmos como as relações entre as *keys* (ou as "chaves") das duas tabelas afetam o produto, ou o resultado do JOIN.
 
 
