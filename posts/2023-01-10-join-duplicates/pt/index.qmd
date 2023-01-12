@@ -24,11 +24,12 @@ Nesse post, busco justamente esclarecer como uma operação de JOIN pode causar 
 
 # Alguns exemplos de tabela
 
-Para demonstrar os processos de JOIN ao longo desse post, vou utilizar algumas tabelas de exemplo, que estão expostas abaixo. Por opção minha, estou mostrando esses exemplos utilizando a linguagem R. Mas você poderia facilmente transpor esses exemplos para qualquer outra linguagem (e.g. como o Python).
+Para demonstrar os processos de JOIN ao longo desse post, vou utilizar algumas tabelas de exemplo. Por opção minha, estou mostrando esses exemplos na linguagem R. Mas você poderia facilmente transpor esses exemplos para qualquer outra linguagem (e.g. como o Python).
 
-Ou seja, o conhecimento exposto aqui **independe da linguagem utilizada**. Pois o efeito expansivo descrito aqui é uma característica intrínseca ao processo de JOIN.
+Ou seja, o conhecimento exposto aqui **independe da linguagem utilizada**. Pois o efeito expansivo descrito aqui é uma característica intrínseca ao processo de JOIN, e não à linguagem utilizada.
 
 ```{r}
+#| eval: false
 library(dplyr)
 
 info <- data.frame(
@@ -46,14 +47,20 @@ band_instruments <- data.frame(
 
 # O que é um JOIN?
 
-Um processo de JOIN é um processo de união entre duas tabelas. Ou seja, se você tem uma tabela A com colunas `x` e `y`, e uma tabela B com colunas `j`, `k` e `l`, um JOIN entre essas duas tabelas resulta em uma nova tabela com colunas `x`, `y`, `j`, `k` e `l`.
+Um processo de JOIN é a união entre duas tabelas. Ou seja, se você tem uma tabela A com colunas `x` e `y`, e uma tabela B com colunas `j`, `k` e `l`, um JOIN entre essas duas tabelas resulta em uma nova tabela com colunas `x`, `y`, `j`, `k` e `l`.
 
-Uma característica fundamental de um JOIN, é que ele realiza um processo de pareamento dos dados durante essa união. Um JOIN não vai simplesmente concatenar as colunas `x`, `y`, `j`, `k` e `l` em conjunto e voa-lá! Temos uma nova tabela. Para realizar esse processo de pareamento, um JOIN utiliza uma coluna (ou um conjunto de colunas) presente em ambas as tabelas como as "chaves" do JOIN.
+Uma característica fundamental de um JOIN, é que ele realiza um processo de pareamento dos dados durante essa união. Ou seja, um JOIN não vai simplesmente unir as colunas `x`, `y`, `j`, `k`, `l` e voa-lá! Temos uma nova tabela. Esse tipo de união que não inclui um processo de pareamento geralmente é denominado de *"binding"* ou *"concating"*, ao invés de *"join"*.
 
 
 # Relações entre *keys* de um JOIN
 
-As *keys*, ou as "chaves" de um JOIN são a combinação de colunas utilizadas para realizar o processo de pareamento (ou *matching*) entre os dados das duas tabelas que estão sendo unidas no JOIN. Por exemplo, olhando para a tabela 
+Para realizar esse processo de pareamento dos dados, um JOIN utiliza uma coluna (ou um conjunto de colunas) presente em ambas as tabelas como as "chaves" do JOIN. Portanto, as *keys*, ou as "chaves" de um JOIN são a combinação de colunas utilizadas para realizar o processo de pareamento (ou *matching*) entre os dados das duas tabelas que estão sendo unidas no JOIN. 
+
+Em @fig-pareamento, podemos visualizar esse processo de pareamento dos dados. Nesse exemplo, a coluna que representa a "chave" do JOIN é a coluna `ID`, pois ela é a única coluna que está presente em ambas as tabelas.
+
+![Processo de pareamento realizado em um JOIN](../pareamento1.png){#fig-pareamento}
+
+Por exemplo, olhando para a tabela 
 
 
 ![Resumo das relações possíveis entre *keys*](../relacoes_keys.png)

@@ -323,45 +323,40 @@ A regra de ouro da programação DRY (*do not repeat yourself*) também pode inf
 </section>
 <section id="alguns-exemplos-de-tabela" class="level1">
 <h1>Alguns exemplos de tabela</h1>
-<p>Para demonstrar os processos de JOIN ao longo desse post, vou utilizar algumas tabelas de exemplo, que estão expostas abaixo. Por opção minha, estou mostrando esses exemplos utilizando a linguagem R. Mas você poderia facilmente transpor esses exemplos para qualquer outra linguagem (e.g.&nbsp;como o Python).</p>
-<p>Ou seja, o conhecimento exposto aqui <strong>independe da linguagem utilizada</strong>. Pois o efeito expansivo descrito aqui é uma característica intrínseca ao processo de JOIN.</p>
+<p>Para demonstrar os processos de JOIN ao longo desse post, vou utilizar algumas tabelas de exemplo. Por opção minha, estou mostrando esses exemplos na linguagem R. Mas você poderia facilmente transpor esses exemplos para qualquer outra linguagem (e.g.&nbsp;como o Python).</p>
+<p>Ou seja, o conhecimento exposto aqui <strong>independe da linguagem utilizada</strong>. Pois o efeito expansivo descrito aqui é uma característica intrínseca ao processo de JOIN, e não à linguagem utilizada.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'dplyr'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following objects are masked from 'package:stats':
-
-    filter, lag</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following objects are masked from 'package:base':
-
-    intersect, setdiff, setequal, union</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>info <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">name =</span> <span class="fu">c</span>(<span class="st">"Mick"</span>, <span class="st">"John"</span>, <span class="st">"Paul"</span>, <span class="st">"George"</span>, <span class="st">"Ringo"</span>),</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">band =</span> <span class="fu">c</span>(<span class="st">"Rolling Stones"</span>, <span class="st">"Beatles"</span>, <span class="st">"Beatles"</span>, <span class="st">"Beatles"</span>, <span class="st">"Beatles"</span>),</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">born =</span> <span class="fu">as.Date</span>(<span class="fu">c</span>(<span class="st">"1943-07-26"</span>, <span class="st">"1940-09-10"</span>, <span class="st">"1942-06-18"</span>, <span class="st">"1943-02-25"</span>, <span class="st">"1940-07-07"</span>)),</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">children =</span> <span class="cn">TRUE</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>band_instruments <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">name =</span> <span class="fu">c</span>(<span class="st">"John"</span>, <span class="st">"Paul"</span>, <span class="st">"Keith"</span>),</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">plays =</span> <span class="fu">c</span>(<span class="st">"guitar"</span>, <span class="st">"bass"</span>, <span class="st">"guitar"</span>)</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>info <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">name =</span> <span class="fu">c</span>(<span class="st">"Mick"</span>, <span class="st">"John"</span>, <span class="st">"Paul"</span>, <span class="st">"George"</span>, <span class="st">"Ringo"</span>),</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">band =</span> <span class="fu">c</span>(<span class="st">"Rolling Stones"</span>, <span class="st">"Beatles"</span>, <span class="st">"Beatles"</span>, <span class="st">"Beatles"</span>, <span class="st">"Beatles"</span>),</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">born =</span> <span class="fu">as.Date</span>(<span class="fu">c</span>(<span class="st">"1943-07-26"</span>, <span class="st">"1940-09-10"</span>, <span class="st">"1942-06-18"</span>, <span class="st">"1943-02-25"</span>, <span class="st">"1940-07-07"</span>)),</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">children =</span> <span class="cn">TRUE</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>band_instruments <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">name =</span> <span class="fu">c</span>(<span class="st">"John"</span>, <span class="st">"Paul"</span>, <span class="st">"Keith"</span>),</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">plays =</span> <span class="fu">c</span>(<span class="st">"guitar"</span>, <span class="st">"bass"</span>, <span class="st">"guitar"</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="o-que-é-um-join" class="level1">
 <h1>O que é um JOIN?</h1>
-<p>Um processo de JOIN é um processo de união entre duas tabelas. Ou seja, se você tem uma tabela A com colunas <code>x</code> e <code>y</code>, e uma tabela B com colunas <code>j</code>, <code>k</code> e <code>l</code>, um JOIN entre essas duas tabelas resulta em uma nova tabela com colunas <code>x</code>, <code>y</code>, <code>j</code>, <code>k</code> e <code>l</code>.</p>
-<p>Uma característica fundamental de um JOIN, é que ele realiza um processo de pareamento dos dados durante essa união. Um JOIN não vai simplesmente concatenar as colunas <code>x</code>, <code>y</code>, <code>j</code>, <code>k</code> e <code>l</code> em conjunto e voa-lá! Temos uma nova tabela. Para realizar esse processo de pareamento, um JOIN utiliza uma coluna (ou um conjunto de colunas) presente em ambas as tabelas como as “chaves” do JOIN.</p>
+<p>Um processo de JOIN é a união entre duas tabelas. Ou seja, se você tem uma tabela A com colunas <code>x</code> e <code>y</code>, e uma tabela B com colunas <code>j</code>, <code>k</code> e <code>l</code>, um JOIN entre essas duas tabelas resulta em uma nova tabela com colunas <code>x</code>, <code>y</code>, <code>j</code>, <code>k</code> e <code>l</code>.</p>
+<p>Uma característica fundamental de um JOIN, é que ele realiza um processo de pareamento dos dados durante essa união. Ou seja, um JOIN não vai simplesmente unir as colunas <code>x</code>, <code>y</code>, <code>j</code>, <code>k</code>, <code>l</code> e voa-lá! Temos uma nova tabela. Esse tipo de união que não inclui um processo de pareamento geralmente é denominado de <em>“binding”</em> ou <em>“concating”</em>, ao invés de <em>“join”</em>.</p>
 </section>
 <section id="relações-entre-keys-de-um-join" class="level1">
 <h1>Relações entre <em>keys</em> de um JOIN</h1>
-<p>As <em>keys</em>, ou as “chaves” de um JOIN são a combinação de colunas utilizadas para realizar o processo de pareamento (ou <em>matching</em>) entre os dados das duas tabelas que estão sendo unidas no JOIN. Por exemplo, olhando para a tabela</p>
+<p>Para realizar esse processo de pareamento dos dados, um JOIN utiliza uma coluna (ou um conjunto de colunas) presente em ambas as tabelas como as “chaves” do JOIN. Portanto, as <em>keys</em>, ou as “chaves” de um JOIN são a combinação de colunas utilizadas para realizar o processo de pareamento (ou <em>matching</em>) entre os dados das duas tabelas que estão sendo unidas no JOIN.</p>
+<p>Na figura <a href="#fig-pareamento">Figure&nbsp;1</a> abaixo, podemos visualizar esse processo de pareamento dos dados. Nesse exemplo, a coluna que representa a “chave” do JOIN é a coluna <code>ID</code>, pois ela é a única coluna que está presente em ambas as tabelas.</p>
+<div id="fig-pareamento" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="../pareamento1.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1: Processo de pareamento realizado em um JOIN</figcaption><p></p>
+</figure>
+</div>
+<p>Por exemplo, olhando para a tabela</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../relacoes_keys.png" class="img-fluid figure-img"></p>
