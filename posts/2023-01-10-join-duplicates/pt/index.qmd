@@ -5,6 +5,24 @@ date: 2023-01-10
 bibliography: "../bibliography.bib"
 ---
 
+```{r setup}
+#| include: false
+library(dplyr)
+
+cores_de_pele <- data.frame(
+    ID = c(100, 102, 104, 105),
+    Cor = c("Pardo", "Branco", "Branco", "Amarelo")
+)
+
+alturas <- data.frame(
+    DataRegistro = as.Date(c(
+        "2022-01-10", "2022-01-10",
+        "2022-06-12", "2022-08-24"
+    )),
+    ID = c(102, 105, 105, 105),
+    Altura = c(1.58, 1.72, 1.74, 1.75)
+)
+```
 
 # Introdução
 
@@ -22,37 +40,73 @@ Aumentos desse tipo podem ocorrer por uma variedade de razões. Porém, operaç�
 
 Nesse post, busco justamente esclarecer como uma operação de JOIN pode causar esse "efeito de aumento" em seus dados. Eu explico esse efeito em detalhes no capítulo 6 do meu livro introdutório da linguagem R. Mais especificamente, a partir da seção [Relações entre *keys: primary keys* são menos comuns do que você pensa](https://pedropark99.github.io/Introducao_R/introdu%C3%A7%C3%A3o-a-base-de-dados-relacionais-com-dplyr.html#rela%C3%A7%C3%B5es-entre-keys-primary-keys-s%C3%A3o-menos-comuns-do-que-voc%C3%AA-pensa). Portanto, grande parte do conhecimento exposto aqui são referências diretas ao livro.
 
-# Alguns exemplos de tabela
 
-Para demonstrar os processos de JOIN ao longo desse post, vou utilizar algumas tabelas de exemplo. Por opção minha, estou mostrando esses exemplos na linguagem R. Mas você poderia facilmente transpor esses exemplos para qualquer outra linguagem (e.g. como o Python).
+# Esse efeito independe da linguagem de programação utilizada
 
-Ou seja, o conhecimento exposto aqui **independe da linguagem utilizada**. Pois o efeito expansivo descrito aqui é uma característica intrínseca ao processo de JOIN, e não à linguagem utilizada.
+Por opção minha, vou utilizar exemplos na linguagem R para demonstrar esse "efeito expansivo" de JOINs ao longo desse post. Mas você poderia facilmente transpor todos esses exemplos para qualquer outra linguagem de sua preferência (e.g. como o Python).
+
+Ou seja, o conhecimento exposto aqui **independe da linguagem utilizada**. Pois o efeito expansivo descrito aqui é uma característica intrínseca ao processo de JOIN, e não da linguagem utilizada.
+
+
+# Um exemplo de efeito expansivo
+
+Para demonstrar esse efeito expansivo, vou utilizar as tabelas `cores_de_pele` e `alturas` como exemplo. Podemos visualizar os dados dessas duas tabelas abaixo:
 
 ```{r}
-#| eval: false
-library(dplyr)
-
-info <- data.frame(
-  name = c("Mick", "John", "Paul", "George", "Ringo"),
-  band = c("Rolling Stones", "Beatles", "Beatles", "Beatles", "Beatles"),
-  born = as.Date(c("1943-07-26", "1940-09-10", "1942-06-18", "1943-02-25", "1940-07-07")),
-  children = TRUE
-)
-
-band_instruments <- data.frame(
-  name = c("John", "Paul", "Keith"),
-  plays = c("guitar", "bass", "guitar")
-)
+cores_de_pele
 ```
+
+```{r}
+alturas
+```
+
+Vamos supor que, no início, você precisava manter um indicador de "número de usuários por cor de pele" em um relatório. Para isso, você simplesmente contava o número de linhas na tabela `cores_de_pele` agrupado pelos valores da coluna `Cor`. Como demonstrado abaixo:
+
+```{r}
+library(dplyr)
+usuarios_por_cor <- cores_de_pele |>
+    group_by(Cor) |>
+    summarise(N_usuarios = n())
+
+usuarios_por_cor
+```
+
+
+## Uma nova necessidade
+
+Porém, uma nova necessidade surge no time. Agora, você precisa calcular também a "altura média por cor de pele". Você sabe que as alturas dos usuários estão armazenadas na tabela `alturas`, contudo, você precisa trazer essas alturas para dentro da tabela `cores_de_pele`, para que você possa de fato calcular a altura média para cada cor de pele.
+
+Portanto, você precisa realizar um JOIN entre essas tabelas, e é isso que estamos fazendo no código abaixo:
+
+```{r}
+dados <- cores_de_pele |>
+    left_join(alturas, by = "ID")
+```
+
+Agora, temos uma nova tabela chamada `dados` que contém todos os dados que precisamos para calcular ambos os indicadores ("número de usuários" e "altura média") para cada cor de pele. Entretanto, quando calculamos esses indicadores com essa tabela `dados`, perceba que o número de usuários (indicador `N_usuarios`) de cor "Amarelo" sofreu um aumento repentino.
+
+```{r}
+indicadores <- dados |>
+    group_by(Cor) |>
+    summarise(
+        N_usuarios = n(),
+        Altura_media = mean(Altura)
+    )
+
+indicadores
+```
+
+Repare que nós não mudamos a fórmula de cálculo do indicador `N_usuarios`. Nós aplicamos a mesma função `n()` que utilizamos anteriormente. Nós também agrupamos a tabela `dados` pela coluna `Cor` com `group_by()`, da mesma forma que fizemos anteriormente. Porque esse aumento ocorreu?
+
+Nós de fato não mudamos nada na fórmula de cálculo do indicador `N_usuarios`. Porém, nós introduzimos um novo item na cadeia de transformações da tabela. Mais especificamente, um LEFT JOIN realizado pela função `left_join()`. Ou seja, **o JOIN é o que mudou nesse código**, e ele é o culpado por esse estranho e repentino aumento no número de usuários de cor amarela.
+
+
 
 # O que é um JOIN?
 
 Um processo de JOIN é a união entre duas tabelas. Ou seja, se você tem uma tabela A com colunas `x` e `y`, e uma tabela B com colunas `j`, `k` e `l`, um JOIN entre essas duas tabelas resulta em uma nova tabela com colunas `x`, `y`, `j`, `k` e `l`.
 
-Uma característica fundamental de um JOIN, é que ele realiza um processo de pareamento dos dados durante essa união. Ou seja, um JOIN não vai simplesmente unir as colunas `x`, `y`, `j`, `k`, `l` e voa-lá! Temos uma nova tabela. Esse tipo de união que não inclui um processo de pareamento geralmente é denominado de *"binding"* ou *"concating"*, ao invés de *"join"*.
-
-
-# Relações entre *keys* de um JOIN
+Uma característica fundamental de um JOIN, é que ele realiza um processo de pareamento dos dados durante essa união. Ou seja, um JOIN não vai simplesmente unir as colunas `x`, `y`, `j`, `k`, `l` e voa-lá! Temos uma nova tabela. Esse tipo de união que não inclui um processo de pareamento geralmente é denominado de *"bind"* ou *"concatenate"*, ao invés de *"join"*.
 
 Para realizar esse processo de pareamento dos dados, um JOIN utiliza uma coluna (ou um conjunto de colunas) presente em ambas as tabelas como as "chaves" do JOIN. Portanto, as *keys*, ou as "chaves" de um JOIN são a combinação de colunas utilizadas para realizar o processo de pareamento (ou *matching*) entre os dados das duas tabelas que estão sendo unidas no JOIN. 
 
@@ -60,11 +114,21 @@ Em @fig-pareamento, podemos visualizar esse processo de pareamento dos dados. Ne
 
 ![Processo de pareamento realizado em um JOIN](../pareamento1.png){#fig-pareamento}
 
-Por exemplo, olhando para a tabela 
+
+# Relações entre *keys* de um JOIN
+
+As "chaves" (ou *keys*) de todo JOIN podem formar três tipos de relação: 1) um para um; 2) um para muitos; e 3) muitos para muitos. Em @fig-relacoes apresentamos cada uma dessas relações de forma visual, onde a coluna `key` representa a "chave" do JOIN.
+
+![Resumo das relações possíveis entre *keys*](../relacoes_keys.png){#fig-relacoes width="80%"}
+
+Perceba que, para o caso de relação um para um, o número de linhas na tabela resultado permanece inalterado. Porém, as relações que realmente nos interessam nesse post são as relações de "um para muitos" e de "muitos para muitos". Perceba que algum nível de "duplicação" de informações é gerado nesses dois tipos de relação.
+
+É através dessa "duplicação" que pode ocorrer o que estamos chamando de "efeito expansivo" dos JOINs nesse post. **Vale destacar que esse efeito independe do tipo de JOIN que você está realizando**. Pois esse efeito expansivo nasce do processo de pareamento e da relação entre as "chaves" do JOIN, e não do tipo de JOIN (*inner, left, right, full*) que você está executando.
 
 
-![Resumo das relações possíveis entre *keys*](../relacoes_keys.png)
 
-Para entender como esse efeito expansivo é interessante enxergarmos como as relações entre as *keys* (ou as "chaves") das duas tabelas afetam o produto, ou o resultado do JOIN.
 
+# Conclusão
+
+Perceba pelo exemplo acima, que **em nenhum momento nós mudamos a forma** como o indicador `N_usuarios` estava sendo calculado. Porém, o simples fato de introduzirmos um JOIN no caminho gerou uma expansão dos dados que distorceu os valores desse indicador. 
 

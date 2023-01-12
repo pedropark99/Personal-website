@@ -321,49 +321,110 @@ A regra de ouro da programação DRY (*do not repeat yourself*) também pode inf
 <p>Aumentos desse tipo podem ocorrer por uma variedade de razões. Porém, operações de JOIN tem sido uma razão específica que tenho enfrentado com muita frequência em meu trabalho. Em outras palavras, JOINs são fontes extremamente comums desse tipo de “efeito expansivo”, e, muitos analistas não compreendem o porquê, ou não enxergam como isso pode ocorrer.</p>
 <p>Nesse post, busco justamente esclarecer como uma operação de JOIN pode causar esse “efeito de aumento” em seus dados. Eu explico esse efeito em detalhes no capítulo 6 do meu livro introdutório da linguagem R. Mais especificamente, a partir da seção <a href="https://pedropark99.github.io/Introducao_R/introdu%C3%A7%C3%A3o-a-base-de-dados-relacionais-com-dplyr.html#rela%C3%A7%C3%B5es-entre-keys-primary-keys-s%C3%A3o-menos-comuns-do-que-voc%C3%AA-pensa">Relações entre <em>keys: primary keys</em> são menos comuns do que você pensa</a>. Portanto, grande parte do conhecimento exposto aqui são referências diretas ao livro.</p>
 </section>
-<section id="alguns-exemplos-de-tabela" class="level1">
-<h1>Alguns exemplos de tabela</h1>
-<p>Para demonstrar os processos de JOIN ao longo desse post, vou utilizar algumas tabelas de exemplo. Por opção minha, estou mostrando esses exemplos na linguagem R. Mas você poderia facilmente transpor esses exemplos para qualquer outra linguagem (e.g.&nbsp;como o Python).</p>
-<p>Ou seja, o conhecimento exposto aqui <strong>independe da linguagem utilizada</strong>. Pois o efeito expansivo descrito aqui é uma característica intrínseca ao processo de JOIN, e não à linguagem utilizada.</p>
+<section id="esse-efeito-independe-da-linguagem-de-programação" class="level1">
+<h1>Esse efeito independe da linguagem de programação</h1>
+<p>Por opção minha, vou utilizar exemplos na linguagem R para demonstrar esse “efeito expansivo” de JOINs ao longo desse post. Mas você poderia facilmente transpor todos esses exemplos para qualquer outra linguagem de sua preferência (e.g.&nbsp;como o Python).</p>
+<p>Ou seja, o conhecimento exposto aqui <strong>independe da linguagem utilizada</strong>. Pois o efeito expansivo descrito aqui é uma característica intrínseca ao processo de JOIN, e não da linguagem utilizada.</p>
+</section>
+<section id="um-exemplo-de-efeito-expansivo" class="level1">
+<h1>Um exemplo de efeito expansivo</h1>
+<p>Para demonstrar esse efeito expansivo, vou utilizar as tabelas <code>cores_de_pele</code> e <code>alturas</code> como exemplo. Podemos visualizar os dados dessas duas tabelas abaixo:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>info <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">name =</span> <span class="fu">c</span>(<span class="st">"Mick"</span>, <span class="st">"John"</span>, <span class="st">"Paul"</span>, <span class="st">"George"</span>, <span class="st">"Ringo"</span>),</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">band =</span> <span class="fu">c</span>(<span class="st">"Rolling Stones"</span>, <span class="st">"Beatles"</span>, <span class="st">"Beatles"</span>, <span class="st">"Beatles"</span>, <span class="st">"Beatles"</span>),</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">born =</span> <span class="fu">as.Date</span>(<span class="fu">c</span>(<span class="st">"1943-07-26"</span>, <span class="st">"1940-09-10"</span>, <span class="st">"1942-06-18"</span>, <span class="st">"1943-02-25"</span>, <span class="st">"1940-07-07"</span>)),</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">children =</span> <span class="cn">TRUE</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>band_instruments <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">name =</span> <span class="fu">c</span>(<span class="st">"John"</span>, <span class="st">"Paul"</span>, <span class="st">"Keith"</span>),</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">plays =</span> <span class="fu">c</span>(<span class="st">"guitar"</span>, <span class="st">"bass"</span>, <span class="st">"guitar"</span>)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>cores_de_pele</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   ID     Cor
+1 100   Pardo
+2 102  Branco
+3 104  Branco
+4 105 Amarelo</code></pre>
 </div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>alturas</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  DataRegistro  ID Altura
+1   2022-01-10 102   1.58
+2   2022-01-10 105   1.72
+3   2022-06-12 105   1.74
+4   2022-08-24 105   1.75</code></pre>
+</div>
+</div>
+<p>Vamos supor que, no início, você precisava manter um indicador de “número de usuários por cor de pele” em um relatório. Para isso, você simplesmente contava o número de linhas na tabela <code>cores_de_pele</code> agrupado pelos valores da coluna <code>Cor</code>. Como demonstrado abaixo:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>usuarios_por_cor <span class="ot">&lt;-</span> cores_de_pele <span class="sc">|&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(Cor) <span class="sc">|&gt;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">N_usuarios =</span> <span class="fu">n</span>())</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>usuarios_por_cor</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  Cor     N_usuarios
+  &lt;chr&gt;        &lt;int&gt;
+1 Amarelo          1
+2 Branco           2
+3 Pardo            1</code></pre>
+</div>
+</div>
+<section id="uma-nova-necessidade" class="level2">
+<h2 class="anchored" data-anchor-id="uma-nova-necessidade">Uma nova necessidade</h2>
+<p>Porém, uma nova necessidade surge no time. Agora, você precisa calcular também a “altura média por cor de pele”. Você sabe que as alturas dos usuários estão armazenadas na tabela <code>alturas</code>, contudo, você precisa trazer essas alturas para dentro da tabela <code>cores_de_pele</code>, para que você possa de fato calcular a altura média para cada cor de pele.</p>
+<p>Portanto, você precisa realizar um JOIN entre essas tabelas, e é isso que estamos fazendo no código abaixo:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>dados <span class="ot">&lt;-</span> cores_de_pele <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(alturas, <span class="at">by =</span> <span class="st">"ID"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Agora, temos uma nova tabela chamada <code>dados</code> que contém todos os dados que precisamos para calcular ambos os indicadores (“número de usuários” e “altura média”) para cada cor de pele. Entretanto, quando calculamos esses indicadores com essa tabela <code>dados</code>, perceba que o número de usuários (indicador <code>N_usuarios</code>) de cor “Amarelo” sofreu um aumento repentino.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>indicadores <span class="ot">&lt;-</span> dados <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(Cor) <span class="sc">|&gt;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">N_usuarios =</span> <span class="fu">n</span>(),</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">Altura_media =</span> <span class="fu">mean</span>(Altura)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>indicadores</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  Cor     N_usuarios Altura_media
+  &lt;chr&gt;        &lt;int&gt;        &lt;dbl&gt;
+1 Amarelo          3         1.74
+2 Branco           2        NA   
+3 Pardo            1        NA   </code></pre>
+</div>
+</div>
+<p>Repare que nós não mudamos a fórmula de cálculo do indicador <code>N_usuarios</code>. Nós aplicamos a mesma função <code>n()</code> que utilizamos anteriormente. Nós também agrupamos a tabela <code>dados</code> pela coluna <code>Cor</code> com <code>group_by()</code>, da mesma forma que fizemos anteriormente. Porque esse aumento ocorreu?</p>
+<p>Nós de fato não mudamos nada na fórmula de cálculo do indicador <code>N_usuarios</code>. Porém, nós introduzimos um novo item na cadeia de transformações da tabela. Mais especificamente, um LEFT JOIN realizado pela função <code>left_join()</code>. Ou seja, <strong>o JOIN é o que mudou nesse código</strong>, e ele é o culpado por esse estranho e repentino aumento no número de usuários de cor amarela.</p>
+</section>
 </section>
 <section id="o-que-é-um-join" class="level1">
 <h1>O que é um JOIN?</h1>
 <p>Um processo de JOIN é a união entre duas tabelas. Ou seja, se você tem uma tabela A com colunas <code>x</code> e <code>y</code>, e uma tabela B com colunas <code>j</code>, <code>k</code> e <code>l</code>, um JOIN entre essas duas tabelas resulta em uma nova tabela com colunas <code>x</code>, <code>y</code>, <code>j</code>, <code>k</code> e <code>l</code>.</p>
-<p>Uma característica fundamental de um JOIN, é que ele realiza um processo de pareamento dos dados durante essa união. Ou seja, um JOIN não vai simplesmente unir as colunas <code>x</code>, <code>y</code>, <code>j</code>, <code>k</code>, <code>l</code> e voa-lá! Temos uma nova tabela. Esse tipo de união que não inclui um processo de pareamento geralmente é denominado de <em>“binding”</em> ou <em>“concating”</em>, ao invés de <em>“join”</em>.</p>
-</section>
-<section id="relações-entre-keys-de-um-join" class="level1">
-<h1>Relações entre <em>keys</em> de um JOIN</h1>
+<p>Uma característica fundamental de um JOIN, é que ele realiza um processo de pareamento dos dados durante essa união. Ou seja, um JOIN não vai simplesmente unir as colunas <code>x</code>, <code>y</code>, <code>j</code>, <code>k</code>, <code>l</code> e voa-lá! Temos uma nova tabela. Esse tipo de união que não inclui um processo de pareamento geralmente é denominado de <em>“bind”</em> ou <em>“concatenate”</em>, ao invés de <em>“join”</em>.</p>
 <p>Para realizar esse processo de pareamento dos dados, um JOIN utiliza uma coluna (ou um conjunto de colunas) presente em ambas as tabelas como as “chaves” do JOIN. Portanto, as <em>keys</em>, ou as “chaves” de um JOIN são a combinação de colunas utilizadas para realizar o processo de pareamento (ou <em>matching</em>) entre os dados das duas tabelas que estão sendo unidas no JOIN.</p>
-<p>Na figura <a href="#fig-pareamento">Figure&nbsp;1</a> abaixo, podemos visualizar esse processo de pareamento dos dados. Nesse exemplo, a coluna que representa a “chave” do JOIN é a coluna <code>ID</code>, pois ela é a única coluna que está presente em ambas as tabelas.</p>
+<p>Em <a href="#fig-pareamento">Figure&nbsp;1</a>, podemos visualizar esse processo de pareamento dos dados. Nesse exemplo, a coluna que representa a “chave” do JOIN é a coluna <code>ID</code>, pois ela é a única coluna que está presente em ambas as tabelas.</p>
 <div id="fig-pareamento" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="../pareamento1.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Figure&nbsp;1: Processo de pareamento realizado em um JOIN</figcaption><p></p>
 </figure>
 </div>
-<p>Por exemplo, olhando para a tabela</p>
-<div class="quarto-figure quarto-figure-center">
+</section>
+<section id="relações-entre-keys-de-um-join" class="level1">
+<h1>Relações entre <em>keys</em> de um JOIN</h1>
+<p>As “chaves” (ou <em>keys</em>) de todo JOIN podem formar três tipos de relação: 1) um para um; 2) um para muitos; e 3) muitos para muitos. Em <a href="#fig-relacoes">Figure&nbsp;2</a> apresentamos cada uma dessas relações de forma visual, onde a coluna <code>key</code> representa a “chave” do JOIN.</p>
+<div id="fig-relacoes" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="../relacoes_keys.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Resumo das relações possíveis entre <em>keys</em></figcaption><p></p>
+<p><img src="../relacoes_keys.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;2: Resumo das relações possíveis entre <em>keys</em></figcaption><p></p>
 </figure>
 </div>
-<p>Para entender como esse efeito expansivo é interessante enxergarmos como as relações entre as <em>keys</em> (ou as “chaves”) das duas tabelas afetam o produto, ou o resultado do JOIN.</p>
+<p>Perceba que, para o caso de relação um para um, o número de linhas na tabela resultado permanece inalterado. Porém, as relações que realmente nos interessam nesse post são as relações de “um para muitos” e de “muitos para muitos”. Perceba que algum nível de “duplicação” de informações é gerado nesses dois tipos de relação.</p>
+<p>É através dessa “duplicação” que pode ocorrer o que estamos chamando de “efeito expansivo” dos JOINs nesse post. <strong>Vale destacar que esse efeito independe do tipo de JOIN que você está realizando</strong>. Pois esse efeito expansivo nasce do processo de pareamento e da relação entre as “chaves” do JOIN, e não do tipo de JOIN (<em>inner, left, right, full</em>) que você está executando.</p>
+</section>
+<section id="conclusão" class="level1">
+<h1>Conclusão</h1>
+<p>Perceba pelo exemplo acima, que <strong>em nenhum momento nós mudamos a forma</strong> como o indicador <code>N_usuarios</code> estava sendo calculado. Porém, o simples fato de introduzirmos um JOIN no caminho gerou uma expansão dos dados que distorceu os valores desse indicador.</p>
 
 
 </section>
