@@ -61,6 +61,8 @@ cores_de_pele
 alturas
 ```
 
+## Necessidade inicial
+
 Vamos supor que, no início, você precisava manter um indicador de "número de usuários por cor de pele" em um relatório. Para isso, você simplesmente contava o número de linhas na tabela `cores_de_pele` agrupado pelos valores da coluna `Cor`. Como demonstrado abaixo:
 
 ```{r}
@@ -84,7 +86,7 @@ dados <- cores_de_pele |>
     left_join(alturas, by = "ID")
 ```
 
-Agora, temos uma nova tabela chamada `dados` que contém todos os dados que precisamos para calcular ambos os indicadores ("número de usuários" e "altura média") para cada cor de pele. Entretanto, quando calculamos esses indicadores com essa tabela `dados`, perceba que o número de usuários (indicador `N_usuarios`) de cor "Amarelo" sofreu um aumento repentino.
+Agora, temos uma nova tabela chamada `dados` que contém todos os dados que precisamos para calcular ambos os indicadores ("número de usuários" e "altura média") para cada cor de pele. Entretanto, quando calculamos esses indicadores com essa tabela `dados`, perceba que o número de usuários (indicador `N_usuarios`) de cor "Amarelo" sofreu um **aumento repentino**.
 
 ```{r}
 indicadores <- dados |>
@@ -109,11 +111,18 @@ Se olharmos bem para a tabela resultado do JOIN (tabela `dados`) podemos começa
 dados
 ```
 
-O usuário de ID 105 é o único usuário de cor "Amarelo" na tabela. Portanto, essas 3 linhas referentes ao ID 105 são a causa da mudança repentina no indicador `N_usuarios` para a cor "Amarelo". Porém, a tabela `cores_de_pele` tinha 1 única linha referente ao usuário de ID 105, como você pode ver abaixo. Como essa única linha se transformou em três?
+O usuário de ID 105 é o único usuário de cor "Amarelo" na tabela. Portanto, essas 3 linhas referentes ao ID 105 são a causa da mudança repentina no indicador `N_usuarios` para a cor "Amarelo". Porém, como podemos ver abaixo, a tabela `cores_de_pele` tem 1 única linha para o usuário de ID 105. Como essa única linha se transformou em três?
 
 ```{r}
 cores_de_pele
 ```
+
+## Entendo o processo de pareamento de um JOIN
+
+A única linha de ID 105 na tabela `cores_de_pele` se transformou em 3 linhas devido ao processo de pareamento dos dados realizado pelo JOIN. Todo JOIN, independe do tipo que ele seja (*left, inner, right, full*), vai sempre realizar um processo de pareamento entre os dados das duas tabelas, utilizando as colunas que representam as "chaves" do JOIN.
+
+No nosso exemplo, as chaves do JOIN são representadas pela coluna `ID`. Logo, o JOIN vai puxar os dados de uma tabela para a outra, utilizando os valores dessa coluna como guia. A figura
+
 
 
 <!-- Isso é um fato importante, pois muito analistas tendem a interpretar um LEFT JOIN como um JOIN que resulta em uma nova tabela com o mesmo número de linhas que a tabela à esquerda. Porém, a tabela à esquerda neste exemplo era a tabela `cores_de_pele`, a qual possui 4 linhas, e mesmo assim, o resultado do JOIN foi uma tabela de 6 linhas. -->
