@@ -117,28 +117,22 @@ O usuário de ID 105 é o único usuário de cor "Amarelo" na tabela. Portanto, 
 cores_de_pele
 ```
 
-## Entendo o processo de pareamento de um JOIN
+## Entenda o processo de pareamento de um JOIN
 
-A única linha de ID 105 na tabela `cores_de_pele` se transformou em 3 linhas devido ao processo de pareamento dos dados realizado pelo JOIN. Todo JOIN, independe do tipo que ele seja (*left, inner, right, full*), vai sempre realizar um processo de pareamento entre os dados das duas tabelas, utilizando as colunas que representam as "chaves" do JOIN.
+A única linha de ID 105 na tabela `cores_de_pele` se transformou em 3 linhas devido ao processo de pareamento dos dados realizado pelo JOIN. Todo JOIN, independe do tipo que ele seja (*left, inner, right, full*), vai sempre realizar um processo de pareamento entre os dados das duas tabelas, utilizando as colunas que representam as "chaves" do JOIN [@pedro2022].
 
-No nosso exemplo, as chaves do JOIN são representadas pela coluna `ID`. Logo, o JOIN vai puxar os dados de uma tabela para a outra, utilizando os valores dessa coluna como guia. A figura
-
-
-
-<!-- Isso é um fato importante, pois muito analistas tendem a interpretar um LEFT JOIN como um JOIN que resulta em uma nova tabela com o mesmo número de linhas que a tabela à esquerda. Porém, a tabela à esquerda neste exemplo era a tabela `cores_de_pele`, a qual possui 4 linhas, e mesmo assim, o resultado do JOIN foi uma tabela de 6 linhas. -->
-
-
-# O que é um JOIN?
-
-Um processo de JOIN é a união entre duas tabelas. Ou seja, se você tem uma tabela A com colunas `x` e `y`, e uma tabela B com colunas `j`, `k` e `l`, um JOIN entre essas duas tabelas resulta em uma nova tabela com colunas `x`, `y`, `j`, `k` e `l`.
-
-Uma característica fundamental de um JOIN, é que ele realiza um processo de pareamento dos dados durante essa união. Ou seja, um JOIN não vai simplesmente unir as colunas `x`, `y`, `j`, `k`, `l` e voa-lá! Temos uma nova tabela. Esse tipo de união que não inclui um processo de pareamento geralmente é denominado de *"bind"* ou *"concatenate"*, ao invés de *"join"*.
-
-Para realizar esse processo de pareamento dos dados, um JOIN utiliza uma coluna (ou um conjunto de colunas) presente em ambas as tabelas como as "chaves" do JOIN. Portanto, as *keys*, ou as "chaves" de um JOIN são a combinação de colunas utilizadas para realizar o processo de pareamento (ou *matching*) entre os dados das duas tabelas que estão sendo unidas no JOIN. 
-
-Em @fig-pareamento, podemos visualizar esse processo de pareamento dos dados. Nesse exemplo, a coluna que representa a "chave" do JOIN é a coluna `ID`, pois ela é a única coluna que está presente em ambas as tabelas.
+No nosso exemplo, as chaves do JOIN são representadas pela coluna `ID`. Logo, o JOIN vai puxar os dados de uma tabela para a outra, utilizando os valores dessa coluna como guia. Podemos visualizar esse processo de pareamento dos dados em @fig-pareamento.
 
 ![Processo de pareamento realizado em um JOIN](../pareamento1.png){#fig-pareamento}
+
+No exemplo de @fig-pareamento, ambas as tabelas que estão sendo unidas possuem uma linha para cada `ID`. Ou seja, não existe IDs duplicados em nenhuma das duas tabelas, formando assim, uma relação de um para um entre as chaves do JOIN.
+
+Contudo, apesar da tabela `cores_de_pele` não apresentar IDs duplicados, a tabela `alturas` por sua vez, possui três linhas diferentes para o mesmo ID 105. Nesse caso, como o processo de pareamento do JOIN deve se comportar? Bem, o seguinte vai acontecer...
+
+Primeiro, o JOIN vai pegar o ID 105 da tabela `cores_de_pele` e pesquisar por ele ao longo da tabela `alturas`. Como resultado, o JOIN vai localizar três linhas distintas para o ID 105. Segundo, o JOIN percebe que há um desequilíbrio (1 linha de `cores_de_pele` $\times$ 3 linhas de `alturas`). Terceiro, para reequilibrar essa balança, o JOIN vai executar um produto cartesiano entre as linhas dessas duas tabelas.
+
+Ou seja, o JOIN vai retornar como resultado, todas as combinações possíveis entre a linha única de `cores_de_pele` e as 3 linhas de `alturas`. Ou seja, a linha única de `cores_de_pele` é combinada com cada uma das 3 linhas de `alturas`. Como resultado, temos as 3 linhas que vimos na tabela `dados`.
+
 
 
 # Relações entre *keys* de um JOIN

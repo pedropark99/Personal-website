@@ -86,6 +86,25 @@ code span.st { color: #4070a0; } /* String */
 code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 
@@ -353,6 +372,8 @@ A regra de ouro da programação DRY (*do not repeat yourself*) também pode inf
 4 2022-08-24     105   1.75</code></pre>
 </div>
 </div>
+<section id="necessidade-inicial" class="level2">
+<h2 class="anchored" data-anchor-id="necessidade-inicial">Necessidade inicial</h2>
 <p>Vamos supor que, no início, você precisava manter um indicador de “número de usuários por cor de pele” em um relatório. Para isso, você simplesmente contava o número de linhas na tabela <code>cores_de_pele</code> agrupado pelos valores da coluna <code>Cor</code>. Como demonstrado abaixo:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
@@ -370,6 +391,7 @@ A regra de ouro da programação DRY (*do not repeat yourself*) também pode inf
 3 Pardo            1</code></pre>
 </div>
 </div>
+</section>
 <section id="uma-nova-necessidade" class="level2">
 <h2 class="anchored" data-anchor-id="uma-nova-necessidade">Uma nova necessidade</h2>
 <p>Porém, uma nova necessidade surge no time. Agora, você precisa calcular também a “altura média por cor de pele”. Você sabe que as alturas dos usuários estão armazenadas na tabela <code>alturas</code>, contudo, você precisa trazer essas alturas para dentro da tabela <code>cores_de_pele</code>, para que você possa de fato calcular a altura média para cada cor de pele.</p>
@@ -378,7 +400,7 @@ A regra de ouro da programação DRY (*do not repeat yourself*) também pode inf
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>dados <span class="ot">&lt;-</span> cores_de_pele <span class="sc">|&gt;</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(alturas, <span class="at">by =</span> <span class="st">"ID"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Agora, temos uma nova tabela chamada <code>dados</code> que contém todos os dados que precisamos para calcular ambos os indicadores (“número de usuários” e “altura média”) para cada cor de pele. Entretanto, quando calculamos esses indicadores com essa tabela <code>dados</code>, perceba que o número de usuários (indicador <code>N_usuarios</code>) de cor “Amarelo” sofreu um aumento repentino.</p>
+<p>Agora, temos uma nova tabela chamada <code>dados</code> que contém todos os dados que precisamos para calcular ambos os indicadores (“número de usuários” e “altura média”) para cada cor de pele. Entretanto, quando calculamos esses indicadores com essa tabela <code>dados</code>, perceba que o número de usuários (indicador <code>N_usuarios</code>) de cor “Amarelo” sofreu um <strong>aumento repentino</strong>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>indicadores <span class="ot">&lt;-</span> dados <span class="sc">|&gt;</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(Cor) <span class="sc">|&gt;</span></span>
@@ -402,7 +424,7 @@ A regra de ouro da programação DRY (*do not repeat yourself*) também pode inf
 </section>
 <section id="o-que-aconteceu" class="level2">
 <h2 class="anchored" data-anchor-id="o-que-aconteceu">O que aconteceu?</h2>
-<p>Se olharmos bem para a tabela resultado do JOIN (tabela <code>dados</code>) podemos começar a compreender o que aconteceu. Perceba que temos 6 linhas nessa tabela, isto é, temos 2 linhas a mais que a tabela <code>cores_de_pele</code> (que possui 4 linhas). Perceba também que temos 3 linhas nessa tabela descrevendo o mesmo usuário de ID 105.</p>
+<p>Se olharmos bem para a tabela resultado do JOIN (tabela <code>dados</code>) podemos começar a compreender o que aconteceu. Perceba que temos 6 linhas nessa tabela, isto é, temos 2 linhas a mais que a tabela <code>cores_de_pele</code> (que possui 4 linhas). Perceba também que temos 3 linhas nessa tabela descrevendo o mesmo usuário de ID 105. Ou seja, temos duplicatas para esse usuário.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>dados</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -417,7 +439,7 @@ A regra de ouro da programação DRY (*do not repeat yourself*) também pode inf
 6   105 Amarelo 2022-08-24     1.75</code></pre>
 </div>
 </div>
-<p>O usuário de ID 105 é o único usuário de cor “Amarelo” na tabela. Portanto, essas 3 linhas referentes ao ID 105 são a causa da mudança repentina no indicador <code>N_usuarios</code> para a cor “Amarelo”. Porém, a tabela <code>cores_de_pele</code> tinha 1 única linha referente ao usuário de ID 105, como você pode ver abaixo. Como essa única linha se transformou em três?</p>
+<p>O usuário de ID 105 é o único usuário de cor “Amarelo” na tabela. Portanto, essas 3 linhas referentes ao ID 105 são a causa da mudança repentina no indicador <code>N_usuarios</code> para a cor “Amarelo”. Porém, como podemos ver abaixo, a tabela <code>cores_de_pele</code> tem 1 única linha para o usuário de ID 105. Como essa única linha se transformou em três?</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>cores_de_pele</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -430,21 +452,20 @@ A regra de ouro da programação DRY (*do not repeat yourself*) também pode inf
 4   105 Amarelo</code></pre>
 </div>
 </div>
-<!-- Isso é um fato importante, pois muito analistas tendem a interpretar um LEFT JOIN como um JOIN que resulta em uma nova tabela com o mesmo número de linhas que a tabela à esquerda. Porém, a tabela à esquerda neste exemplo era a tabela `cores_de_pele`, a qual possui 4 linhas, e mesmo assim, o resultado do JOIN foi uma tabela de 6 linhas. -->
 </section>
-</section>
-<section id="o-que-é-um-join" class="level1">
-<h1>O que é um JOIN?</h1>
-<p>Um processo de JOIN é a união entre duas tabelas. Ou seja, se você tem uma tabela A com colunas <code>x</code> e <code>y</code>, e uma tabela B com colunas <code>j</code>, <code>k</code> e <code>l</code>, um JOIN entre essas duas tabelas resulta em uma nova tabela com colunas <code>x</code>, <code>y</code>, <code>j</code>, <code>k</code> e <code>l</code>.</p>
-<p>Uma característica fundamental de um JOIN, é que ele realiza um processo de pareamento dos dados durante essa união. Ou seja, um JOIN não vai simplesmente unir as colunas <code>x</code>, <code>y</code>, <code>j</code>, <code>k</code>, <code>l</code> e voa-lá! Temos uma nova tabela. Esse tipo de união que não inclui um processo de pareamento geralmente é denominado de <em>“bind”</em> ou <em>“concatenate”</em>, ao invés de <em>“join”</em>.</p>
-<p>Para realizar esse processo de pareamento dos dados, um JOIN utiliza uma coluna (ou um conjunto de colunas) presente em ambas as tabelas como as “chaves” do JOIN. Portanto, as <em>keys</em>, ou as “chaves” de um JOIN são a combinação de colunas utilizadas para realizar o processo de pareamento (ou <em>matching</em>) entre os dados das duas tabelas que estão sendo unidas no JOIN.</p>
-<p>Em <a href="#fig-pareamento">Figure&nbsp;1</a>, podemos visualizar esse processo de pareamento dos dados. Nesse exemplo, a coluna que representa a “chave” do JOIN é a coluna <code>ID</code>, pois ela é a única coluna que está presente em ambas as tabelas.</p>
+<section id="entendo-o-processo-de-pareamento-de-um-join" class="level2">
+<h2 class="anchored" data-anchor-id="entendo-o-processo-de-pareamento-de-um-join">Entendo o processo de pareamento de um JOIN</h2>
+<p>A única linha de ID 105 na tabela <code>cores_de_pele</code> se transformou em 3 linhas devido ao processo de pareamento dos dados realizado pelo JOIN. Todo JOIN, independe do tipo que ele seja (<em>left, inner, right, full</em>), vai sempre realizar um processo de pareamento entre os dados das duas tabelas, utilizando as colunas que representam as “chaves” do JOIN <span class="citation" data-cites="pedro2022">(<a href="#ref-pedro2022" role="doc-biblioref">Faria 2022</a>)</span>.</p>
+<p>No nosso exemplo, as chaves do JOIN são representadas pela coluna <code>ID</code>. Logo, o JOIN vai puxar os dados de uma tabela para a outra, utilizando os valores dessa coluna como guia. Podemos visualizar esse processo de pareamento dos dados em <a href="#fig-pareamento">Figure&nbsp;1</a>.</p>
 <div id="fig-pareamento" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="../pareamento1.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Figure&nbsp;1: Processo de pareamento realizado em um JOIN</figcaption><p></p>
 </figure>
 </div>
+<p>No exemplo de <a href="#fig-pareamento">Figure&nbsp;1</a>, ambas as tabelas que estão sendo unidas possuem uma linha para cada <code>ID</code>. Ou seja, não existe IDs duplicados em nenhuma das duas tabelas, formando assim, uma relação de um para um entre as chaves do JOIN.</p>
+<p>Contudo, apesar da tabela <code>cores_de_pele</code> não apresentar IDs duplicados, a tabela <code>alturas</code> por sua vez, possui três linhas diferentes para o mesmo ID 105. Nesse caso, como esse processo de pareamento do JOIN deve se comportar?</p>
+</section>
 </section>
 <section id="relações-entre-keys-de-um-join" class="level1">
 <h1>Relações entre <em>keys</em> de um JOIN</h1>
@@ -463,9 +484,14 @@ A regra de ouro da programação DRY (*do not repeat yourself*) também pode inf
 <p>Perceba pelo exemplo acima, que <strong>em nenhum momento nós mudamos a forma</strong> como o indicador <code>N_usuarios</code> estava sendo calculado. Porém, o simples fato de introduzirmos um JOIN no caminho gerou uma expansão dos dados que distorceu os valores desse indicador.</p>
 
 
+
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-pedro2022" class="csl-entry" role="doc-biblioentry">
+Faria, Pedro Duarte. 2022. <em>Introdução à Linguagem r: Seus Fundamentos e Sua Prática</em>. 4th ed. Belo Horizonte.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
