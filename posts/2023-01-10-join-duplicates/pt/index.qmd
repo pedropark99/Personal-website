@@ -8,13 +8,14 @@ bibliography: "../bibliography.bib"
 ```{r setup}
 #| include: false
 library(dplyr)
+library(tibble)
 
-cores_de_pele <- data.frame(
+cores_de_pele <- tibble(
     ID = c(100, 102, 104, 105),
     Cor = c("Pardo", "Branco", "Branco", "Amarelo")
 )
 
-alturas <- data.frame(
+alturas <- tibble(
     DataRegistro = as.Date(c(
         "2022-01-10", "2022-01-10",
         "2022-06-12", "2022-08-24"
@@ -36,9 +37,9 @@ Quando estamos construindo uma nova tabela de dados, é muito comum compararmos 
 
 > Uhmm... a tabela antiga indica que o número de maquininhas vendidas no mês de Dezembro foi de 1387. Porém, esse mesmo indicador na tabela nova está em 1824 para o mesmo mês de Dezembro. Porque esse aumento?
 
-Aumentos desse tipo podem ocorrer por uma variedade de razões. Porém, operações de JOIN tem sido uma razão específica que tenho enfrentado com muita frequência em meu trabalho. Em outras palavras, JOINs são fontes extremamente comums desse tipo de "efeito expansivo", e, muitos analistas não compreendem o porquê, ou não enxergam como isso pode ocorrer. 
+Aumentos desse tipo podem ocorrer por uma variedade de razões. Porém, operações de JOIN tem sido uma razão específica que tenho enfrentado com muita frequência em meu trabalho. Em outras palavras, JOINs são fontes extremamente comuns desse tipo de "efeito expansivo", e, muitos analistas não compreendem o porquê, ou não enxergam como isso pode ocorrer. 
 
-Nesse post, busco justamente esclarecer como uma operação de JOIN pode causar esse "efeito de aumento" em seus dados. Eu explico esse efeito em detalhes no capítulo 6 do meu livro introdutório da linguagem R. Mais especificamente, a partir da seção [Relações entre *keys: primary keys* são menos comuns do que você pensa](https://pedropark99.github.io/Introducao_R/introdu%C3%A7%C3%A3o-a-base-de-dados-relacionais-com-dplyr.html#rela%C3%A7%C3%B5es-entre-keys-primary-keys-s%C3%A3o-menos-comuns-do-que-voc%C3%AA-pensa). Portanto, grande parte do conhecimento exposto aqui são referências diretas ao livro.
+Nesse post, busco justamente esclarecer como uma operação de JOIN pode causar esse "efeito de aumento" em seus dados. Eu também explico esse efeito em detalhes no capítulo 6 do meu livro introdutório da linguagem R. Mais especificamente, a partir da seção [Relações entre *keys: primary keys* são menos comuns do que você pensa](https://pedropark99.github.io/Introducao_R/introdu%C3%A7%C3%A3o-a-base-de-dados-relacionais-com-dplyr.html#rela%C3%A7%C3%B5es-entre-keys-primary-keys-s%C3%A3o-menos-comuns-do-que-voc%C3%AA-pensa). Portanto, grande parte do conhecimento exposto aqui são referências diretas ao livro.
 
 
 # Esse efeito independe da linguagem de programação utilizada
@@ -90,7 +91,7 @@ indicadores <- dados |>
     group_by(Cor) |>
     summarise(
         N_usuarios = n(),
-        Altura_media = mean(Altura)
+        Altura_media = mean(Altura, na.rm = TRUE)
     )
 
 indicadores
@@ -98,8 +99,24 @@ indicadores
 
 Repare que nós não mudamos a fórmula de cálculo do indicador `N_usuarios`. Nós aplicamos a mesma função `n()` que utilizamos anteriormente. Nós também agrupamos a tabela `dados` pela coluna `Cor` com `group_by()`, da mesma forma que fizemos anteriormente. Porque esse aumento ocorreu?
 
-Nós de fato não mudamos nada na fórmula de cálculo do indicador `N_usuarios`. Porém, nós introduzimos um novo item na cadeia de transformações da tabela. Mais especificamente, um LEFT JOIN realizado pela função `left_join()`. Ou seja, **o JOIN é o que mudou nesse código**, e ele é o culpado por esse estranho e repentino aumento no número de usuários de cor amarela.
+Nós não mudamos nada na fórmula de cálculo do indicador `N_usuarios`. Porém, nós introduzimos um novo item na cadeia de transformações da tabela. Mais especificamente, um LEFT JOIN realizado pela função `left_join()`. Ou seja, **o JOIN é o que mudou nesse código**, e ele é o culpado por esse estranho e repentino aumento no número de usuários de cor amarela.
 
+## O que aconteceu?
+
+Se olharmos bem para a tabela resultado do JOIN (tabela `dados`) podemos começar a compreender o que aconteceu. Perceba que temos 6 linhas nessa tabela, isto é, temos 2 linhas a mais que a tabela `cores_de_pele` (que possui 4 linhas). Perceba também que temos 3 linhas nessa tabela descrevendo o mesmo usuário de ID 105. Ou seja, temos duplicatas para esse usuário.
+
+```{r}
+dados
+```
+
+O usuário de ID 105 é o único usuário de cor "Amarelo" na tabela. Portanto, essas 3 linhas referentes ao ID 105 são a causa da mudança repentina no indicador `N_usuarios` para a cor "Amarelo". Porém, a tabela `cores_de_pele` tinha 1 única linha referente ao usuário de ID 105, como você pode ver abaixo. Como essa única linha se transformou em três?
+
+```{r}
+cores_de_pele
+```
+
+
+<!-- Isso é um fato importante, pois muito analistas tendem a interpretar um LEFT JOIN como um JOIN que resulta em uma nova tabela com o mesmo número de linhas que a tabela à esquerda. Porém, a tabela à esquerda neste exemplo era a tabela `cores_de_pele`, a qual possui 4 linhas, e mesmo assim, o resultado do JOIN foi uma tabela de 6 linhas. -->
 
 
 # O que é um JOIN?

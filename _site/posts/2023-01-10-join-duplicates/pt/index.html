@@ -318,11 +318,11 @@ A regra de ouro da programação DRY (*do not repeat yourself*) também pode inf
 <blockquote class="blockquote">
 <p>Uhmm… a tabela antiga indica que o número de maquininhas vendidas no mês de Dezembro foi de 1387. Porém, esse mesmo indicador na tabela nova está em 1824 para o mesmo mês de Dezembro. Porque esse aumento?</p>
 </blockquote>
-<p>Aumentos desse tipo podem ocorrer por uma variedade de razões. Porém, operações de JOIN tem sido uma razão específica que tenho enfrentado com muita frequência em meu trabalho. Em outras palavras, JOINs são fontes extremamente comums desse tipo de “efeito expansivo”, e, muitos analistas não compreendem o porquê, ou não enxergam como isso pode ocorrer.</p>
-<p>Nesse post, busco justamente esclarecer como uma operação de JOIN pode causar esse “efeito de aumento” em seus dados. Eu explico esse efeito em detalhes no capítulo 6 do meu livro introdutório da linguagem R. Mais especificamente, a partir da seção <a href="https://pedropark99.github.io/Introducao_R/introdu%C3%A7%C3%A3o-a-base-de-dados-relacionais-com-dplyr.html#rela%C3%A7%C3%B5es-entre-keys-primary-keys-s%C3%A3o-menos-comuns-do-que-voc%C3%AA-pensa">Relações entre <em>keys: primary keys</em> são menos comuns do que você pensa</a>. Portanto, grande parte do conhecimento exposto aqui são referências diretas ao livro.</p>
+<p>Aumentos desse tipo podem ocorrer por uma variedade de razões. Porém, operações de JOIN tem sido uma razão específica que tenho enfrentado com muita frequência em meu trabalho. Em outras palavras, JOINs são fontes extremamente comuns desse tipo de “efeito expansivo”, e, muitos analistas não compreendem o porquê, ou não enxergam como isso pode ocorrer.</p>
+<p>Nesse post, busco justamente esclarecer como uma operação de JOIN pode causar esse “efeito de aumento” em seus dados. Eu também explico esse efeito em detalhes no capítulo 6 do meu livro introdutório da linguagem R. Mais especificamente, a partir da seção <a href="https://pedropark99.github.io/Introducao_R/introdu%C3%A7%C3%A3o-a-base-de-dados-relacionais-com-dplyr.html#rela%C3%A7%C3%B5es-entre-keys-primary-keys-s%C3%A3o-menos-comuns-do-que-voc%C3%AA-pensa">Relações entre <em>keys: primary keys</em> são menos comuns do que você pensa</a>. Portanto, grande parte do conhecimento exposto aqui são referências diretas ao livro.</p>
 </section>
-<section id="esse-efeito-independe-da-linguagem-de-programação" class="level1">
-<h1>Esse efeito independe da linguagem de programação</h1>
+<section id="esse-efeito-independe-da-linguagem-de-programação-utilizada" class="level1">
+<h1>Esse efeito independe da linguagem de programação utilizada</h1>
 <p>Por opção minha, vou utilizar exemplos na linguagem R para demonstrar esse “efeito expansivo” de JOINs ao longo desse post. Mas você poderia facilmente transpor todos esses exemplos para qualquer outra linguagem de sua preferência (e.g.&nbsp;como o Python).</p>
 <p>Ou seja, o conhecimento exposto aqui <strong>independe da linguagem utilizada</strong>. Pois o efeito expansivo descrito aqui é uma característica intrínseca ao processo de JOIN, e não da linguagem utilizada.</p>
 </section>
@@ -332,21 +332,25 @@ A regra de ouro da programação DRY (*do not repeat yourself*) também pode inf
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>cores_de_pele</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   ID     Cor
-1 100   Pardo
-2 102  Branco
-3 104  Branco
-4 105 Amarelo</code></pre>
+<pre><code># A tibble: 4 × 2
+     ID Cor    
+  &lt;dbl&gt; &lt;chr&gt;  
+1   100 Pardo  
+2   102 Branco 
+3   104 Branco 
+4   105 Amarelo</code></pre>
 </div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>alturas</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  DataRegistro  ID Altura
-1   2022-01-10 102   1.58
-2   2022-01-10 105   1.72
-3   2022-06-12 105   1.74
-4   2022-08-24 105   1.75</code></pre>
+<pre><code># A tibble: 4 × 3
+  DataRegistro    ID Altura
+  &lt;date&gt;       &lt;dbl&gt;  &lt;dbl&gt;
+1 2022-01-10     102   1.58
+2 2022-01-10     105   1.72
+3 2022-06-12     105   1.74
+4 2022-08-24     105   1.75</code></pre>
 </div>
 </div>
 <p>Vamos supor que, no início, você precisava manter um indicador de “número de usuários por cor de pele” em um relatório. Para isso, você simplesmente contava o número de linhas na tabela <code>cores_de_pele</code> agrupado pelos valores da coluna <code>Cor</code>. Como demonstrado abaixo:</p>
@@ -380,7 +384,7 @@ A regra de ouro da programação DRY (*do not repeat yourself*) também pode inf
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(Cor) <span class="sc">|&gt;</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">N_usuarios =</span> <span class="fu">n</span>(),</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">Altura_media =</span> <span class="fu">mean</span>(Altura)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">Altura_media =</span> <span class="fu">mean</span>(Altura, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>indicadores</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -389,12 +393,44 @@ A regra de ouro da programação DRY (*do not repeat yourself*) também pode inf
   Cor     N_usuarios Altura_media
   &lt;chr&gt;        &lt;int&gt;        &lt;dbl&gt;
 1 Amarelo          3         1.74
-2 Branco           2        NA   
-3 Pardo            1        NA   </code></pre>
+2 Branco           2         1.58
+3 Pardo            1       NaN   </code></pre>
 </div>
 </div>
 <p>Repare que nós não mudamos a fórmula de cálculo do indicador <code>N_usuarios</code>. Nós aplicamos a mesma função <code>n()</code> que utilizamos anteriormente. Nós também agrupamos a tabela <code>dados</code> pela coluna <code>Cor</code> com <code>group_by()</code>, da mesma forma que fizemos anteriormente. Porque esse aumento ocorreu?</p>
-<p>Nós de fato não mudamos nada na fórmula de cálculo do indicador <code>N_usuarios</code>. Porém, nós introduzimos um novo item na cadeia de transformações da tabela. Mais especificamente, um LEFT JOIN realizado pela função <code>left_join()</code>. Ou seja, <strong>o JOIN é o que mudou nesse código</strong>, e ele é o culpado por esse estranho e repentino aumento no número de usuários de cor amarela.</p>
+<p>Nós não mudamos nada na fórmula de cálculo do indicador <code>N_usuarios</code>. Porém, nós introduzimos um novo item na cadeia de transformações da tabela. Mais especificamente, um LEFT JOIN realizado pela função <code>left_join()</code>. Ou seja, <strong>o JOIN é o que mudou nesse código</strong>, e ele é o culpado por esse estranho e repentino aumento no número de usuários de cor amarela.</p>
+</section>
+<section id="o-que-aconteceu" class="level2">
+<h2 class="anchored" data-anchor-id="o-que-aconteceu">O que aconteceu?</h2>
+<p>Se olharmos bem para a tabela resultado do JOIN (tabela <code>dados</code>) podemos começar a compreender o que aconteceu. Perceba que temos 6 linhas nessa tabela, isto é, temos 2 linhas a mais que a tabela <code>cores_de_pele</code> (que possui 4 linhas). Perceba também que temos 3 linhas nessa tabela descrevendo o mesmo usuário de ID 105.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>dados</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 4
+     ID Cor     DataRegistro Altura
+  &lt;dbl&gt; &lt;chr&gt;   &lt;date&gt;        &lt;dbl&gt;
+1   100 Pardo   NA            NA   
+2   102 Branco  2022-01-10     1.58
+3   104 Branco  NA            NA   
+4   105 Amarelo 2022-01-10     1.72
+5   105 Amarelo 2022-06-12     1.74
+6   105 Amarelo 2022-08-24     1.75</code></pre>
+</div>
+</div>
+<p>O usuário de ID 105 é o único usuário de cor “Amarelo” na tabela. Portanto, essas 3 linhas referentes ao ID 105 são a causa da mudança repentina no indicador <code>N_usuarios</code> para a cor “Amarelo”. Porém, a tabela <code>cores_de_pele</code> tinha 1 única linha referente ao usuário de ID 105, como você pode ver abaixo. Como essa única linha se transformou em três?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>cores_de_pele</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 2
+     ID Cor    
+  &lt;dbl&gt; &lt;chr&gt;  
+1   100 Pardo  
+2   102 Branco 
+3   104 Branco 
+4   105 Amarelo</code></pre>
+</div>
+</div>
+<!-- Isso é um fato importante, pois muito analistas tendem a interpretar um LEFT JOIN como um JOIN que resulta em uma nova tabela com o mesmo número de linhas que a tabela à esquerda. Porém, a tabela à esquerda neste exemplo era a tabela `cores_de_pele`, a qual possui 4 linhas, e mesmo assim, o resultado do JOIN foi uma tabela de 6 linhas. -->
 </section>
 </section>
 <section id="o-que-é-um-join" class="level1">
