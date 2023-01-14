@@ -2,6 +2,7 @@
 title: JOINs são importantes fontes de duplicações em seus dados
 description: "Se os seus dados crescerem de forma repentina, sem explicação aparente, verifique se os seus JOINs são a fonte desse problema"
 date: 2023-01-10
+image: './../expansao.png'
 bibliography: "../bibliography.bib"
 ---
 
@@ -129,9 +130,15 @@ No exemplo de @fig-pareamento, ambas as tabelas que estão sendo unidas possuem 
 
 Contudo, apesar da tabela `cores_de_pele` não apresentar IDs duplicados, a tabela `alturas` por sua vez, possui três linhas diferentes para o mesmo ID 105. Nesse caso, como o processo de pareamento do JOIN deve se comportar? Bem, o seguinte vai acontecer...
 
-Primeiro, o JOIN vai pegar o ID 105 da tabela `cores_de_pele` e pesquisar por ele ao longo da tabela `alturas`. Como resultado, o JOIN vai localizar três linhas distintas para o ID 105. Segundo, o JOIN percebe que há um desequilíbrio (1 linha de `cores_de_pele` $\times$ 3 linhas de `alturas`). Terceiro, para reequilibrar essa balança, o JOIN vai executar um produto cartesiano entre as linhas dessas duas tabelas.
+Primeiro, o JOIN vai pegar o ID 105 da tabela `cores_de_pele` e pesquisar por ele ao longo da tabela `alturas`. Como resultado, o JOIN vai localizar três linhas distintas para o ID 105. Segundo, o JOIN percebe que há um desequilíbrio (1 linha de `cores_de_pele` $\times$ 3 linhas de `alturas`). Terceiro, para reequilibrar essa balança, o JOIN vai executar um produto cartesiano entre as linhas dessas duas tabelas. A @fig-desenho-expansao apresenta de forma visual esse produto cartesiano aplicado sobre o ID 105:
 
-Ou seja, o JOIN vai retornar como resultado, todas as combinações possíveis entre a linha única de `cores_de_pele` e as 3 linhas de `alturas`. Ou seja, a linha única de `cores_de_pele` é combinada com cada uma das 3 linhas de `alturas`. Como resultado, temos as 3 linhas que vimos na tabela `dados`.
+![Uma representação visual do efeito expansivo sobre o ID 105](./../expansao.png){#fig-desenho-expansao}
+
+Ou seja, o JOIN vai retornar como resultado, todas as combinações possíveis entre a linha única de `cores_de_pele` e as 3 linhas de `alturas`. Ou seja, a linha única de `cores_de_pele` é combinada com cada uma das 3 linhas de `alturas`. Como resultado, temos as 3 linhas de ID 105 na tabela `dados`.
+
+```{r}
+dados
+```
 
 
 

@@ -2,86 +2,86 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://pedro-faria.netlify.app/about.html</loc>
-    <lastmod>2022-12-22T16:28:54.811Z</lastmod>
+    <lastmod>2023-01-14T02:26:30.000Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/donate.html</loc>
-    <lastmod>2022-12-22T16:28:56.999Z</lastmod>
+    <lastmod>2023-01-14T02:26:32.331Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/index.html</loc>
-    <lastmod>2022-12-22T16:28:59.482Z</lastmod>
+    <lastmod>2023-01-14T02:42:23.063Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/posts/2020-10-17-formulario-pesquisa/pt/index.html</loc>
-    <lastmod>2022-12-22T16:29:00.504Z</lastmod>
+    <lastmod>2023-01-14T02:26:36.188Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/posts/2021-01-02-tabela-destinataria-fonte/en/index.html</loc>
-    <lastmod>2022-12-22T16:29:01.414Z</lastmod>
+    <lastmod>2023-01-14T02:26:37.190Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/posts/2021-01-02-tabela-destinataria-fonte/pt/index.html</loc>
-    <lastmod>2022-12-22T16:29:02.334Z</lastmod>
+    <lastmod>2023-01-14T02:26:38.123Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/posts/2021-05-26-2nd-edition-rbook/pt/index.html</loc>
-    <lastmod>2022-12-22T16:29:03.332Z</lastmod>
+    <lastmod>2023-01-14T02:26:39.124Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/posts/2022-04-06-3nd-edition-rbook/pt/index.html</loc>
-    <lastmod>2022-12-22T16:29:03.965Z</lastmod>
+    <lastmod>2023-01-14T02:26:39.771Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/posts/2022-11-06-figma-pkgv0.1.0/en/index.html</loc>
-    <lastmod>2022-12-22T16:29:04.856Z</lastmod>
+    <lastmod>2023-01-14T02:26:40.679Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/posts/2022-12-14-power-bi-memory-error/pt/index.html</loc>
-    <lastmod>2022-12-22T16:29:05.759Z</lastmod>
+    <lastmod>2023-01-14T02:26:41.562Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/posts/2022-12-21-spark-map-v0.2.3/en/index.html</loc>
-    <lastmod>2022-12-22T16:29:06.705Z</lastmod>
+    <lastmod>2023-01-14T02:26:42.727Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/posts/2022-12-26-4th-edition-rbook/pt/index.html</loc>
-    <lastmod>2022-12-22T16:29:07.346Z</lastmod>
-  </url>
-  <url>
-    <loc>https://pedro-faria.netlify.app/posts/en.html</loc>
-    <lastmod>2022-12-22T16:29:07.983Z</lastmod>
-  </url>
-  <url>
-    <loc>https://pedro-faria.netlify.app/posts/index.html</loc>
-    <lastmod>2022-12-22T16:29:08.765Z</lastmod>
-  </url>
-  <url>
-    <loc>https://pedro-faria.netlify.app/posts/pt.html</loc>
-    <lastmod>2022-12-22T16:29:09.498Z</lastmod>
-  </url>
-  <url>
-    <loc>https://pedro-faria.netlify.app/publications/book/introd-pyspark/en/index.html</loc>
-    <lastmod>2022-12-22T16:29:10.189Z</lastmod>
-  </url>
-  <url>
-    <loc>https://pedro-faria.netlify.app/publications/book/introducao_linguagem_R/pt/index.html</loc>
-    <lastmod>2022-12-22T16:29:10.796Z</lastmod>
-  </url>
-  <url>
-    <loc>https://pedro-faria.netlify.app/publications/en.html</loc>
-    <lastmod>2022-12-22T16:29:11.366Z</lastmod>
-  </url>
-  <url>
-    <loc>https://pedro-faria.netlify.app/publications/index.html</loc>
-    <lastmod>2022-12-22T16:29:12.028Z</lastmod>
-  </url>
-  <url>
-    <loc>https://pedro-faria.netlify.app/publications/pt.html</loc>
-    <lastmod>2022-12-22T16:29:12.716Z</lastmod>
+    <lastmod>2023-01-14T02:26:43.349Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/posts/2023-01-10-join-duplicates/pt/index.html</loc>
-    <lastmod>2023-01-13T20:06:04.829Z</lastmod>
+    <lastmod>2023-01-14T02:42:21.991Z</lastmod>
+  </url>
+  <url>
+    <loc>https://pedro-faria.netlify.app/posts/en.html</loc>
+    <lastmod>2023-01-14T02:26:45.230Z</lastmod>
+  </url>
+  <url>
+    <loc>https://pedro-faria.netlify.app/posts/index.html</loc>
+    <lastmod>2023-01-14T02:42:23.858Z</lastmod>
+  </url>
+  <url>
+    <loc>https://pedro-faria.netlify.app/posts/pt.html</loc>
+    <lastmod>2023-01-14T02:42:24.551Z</lastmod>
+  </url>
+  <url>
+    <loc>https://pedro-faria.netlify.app/publications/book/introd-pyspark/en/index.html</loc>
+    <lastmod>2023-01-14T02:26:48.034Z</lastmod>
+  </url>
+  <url>
+    <loc>https://pedro-faria.netlify.app/publications/book/introducao_linguagem_R/pt/index.html</loc>
+    <lastmod>2023-01-14T02:26:48.735Z</lastmod>
+  </url>
+  <url>
+    <loc>https://pedro-faria.netlify.app/publications/en.html</loc>
+    <lastmod>2023-01-14T02:26:49.282Z</lastmod>
+  </url>
+  <url>
+    <loc>https://pedro-faria.netlify.app/publications/index.html</loc>
+    <lastmod>2023-01-14T02:26:49.880Z</lastmod>
+  </url>
+  <url>
+    <loc>https://pedro-faria.netlify.app/publications/pt.html</loc>
+    <lastmod>2023-01-14T02:26:50.434Z</lastmod>
   </url>
 </urlset>
