@@ -10,7 +10,211 @@
 <atom:link href="https://pedro-faria.netlify.app/index.xml" rel="self" type="application/rss+xml"/>
 <description>A blog about programming and data analysis, specially with R and Python</description>
 <generator>quarto-1.2.269</generator>
-<lastBuildDate>Mon, 26 Dec 2022 03:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 10 Jan 2023 03:00:00 GMT</lastBuildDate>
+<item>
+  <title>JOINs são importantes fontes de duplicações em seus dados</title>
+  <dc:creator>Pedro Duarte Faria</dc:creator>
+  <link>https://pedro-faria.netlify.app/posts/2023-01-10-join-duplicates/pt/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="introdução" class="level1">
+<h1>Introdução</h1>
+<!--
+A regra de ouro da programação DRY (*do not repeat yourself*) também pode influenciar outras dimensões de sua vida. Por exemplo, se você der o mesmo conselho para uma pessoa pela terceira vez ou mais, é melhor que você escreva ou documente esse conselho de alguma forma. Desse modo, você pode disseminar esse conselho para outras pessoas de forma mais efetiva. Esse post é um reflexo direto disso:
+
+> When you’ve written the same code 3 times, write a function. When you’ve given the same in-person advice 3 times, write a blog post. ROBINSON, David, 2017 ^[Essa citação vem de um tweet de David Robinson, o qual está disponível no link: <https://twitter.com/drob/status/928447584712253440?s=20&t=5gy5SkBKGr6oXsWcg9LIag>].
+-->
+<p>Quando estamos construindo uma nova tabela de dados, é muito comum compararmos os nossos resultados com tabelas anteriores e nos depararmos com problemas de divergência nos dados. Isto é, situações como:</p>
+<blockquote class="blockquote">
+<p>Uhmm… a tabela antiga indica que o número de maquininhas vendidas no mês de Dezembro foi de 1387. Porém, esse mesmo indicador na tabela nova está em 1824 para o mesmo mês de Dezembro. Porque esse aumento?</p>
+</blockquote>
+<p>Aumentos desse tipo podem ocorrer por uma variedade de razões. Porém, operações de JOIN tem sido uma razão específica que tenho enfrentado com muita frequência em meu trabalho. Em outras palavras, JOINs são fontes extremamente comuns de dados duplicados. Como resultado, esses dados duplicados acabam gerando um “efeito expansivo” sobre os seus indicadores e suas tabelas.</p>
+<p>Muitos analistas não compreendem o porquê, ou não enxergam como isso pode ocorrer. Nesse post, busco justamente esclarecer como uma operação de JOIN pode causar esse “efeito expansivo” em seus dados. Eu também explico esse efeito em detalhes no capítulo 6 do meu livro introdutório da linguagem R. Mais especificamente, a partir da seção <a href="https://pedropark99.github.io/Introducao_R/introdu%C3%A7%C3%A3o-a-base-de-dados-relacionais-com-dplyr.html#rela%C3%A7%C3%B5es-entre-keys-primary-keys-s%C3%A3o-menos-comuns-do-que-voc%C3%AA-pensa">Relações entre <em>keys: primary keys</em> são menos comuns do que você pensa</a>. Portanto, grande parte do conhecimento exposto aqui são referências diretas ao livro.</p>
+</section>
+<section id="esse-efeito-independe-da-linguagem-de-programação-utilizada" class="level1">
+<h1>Esse efeito independe da linguagem de programação utilizada</h1>
+<p>Por opção minha, vou utilizar exemplos na linguagem R para demonstrar esse “efeito expansivo” de JOINs. Mas você poderia facilmente transpor todos esses exemplos para qualquer outra linguagem de sua preferência (e.g.&nbsp;como o Python).</p>
+<p>Ou seja, o conhecimento exposto aqui <strong>independe da linguagem utilizada</strong>. Pois o efeito descrito aqui é uma característica intrínseca ao processo de JOIN, e não da linguagem utilizada.</p>
+</section>
+<section id="um-exemplo-de-efeito-expansivo" class="level1">
+<h1>Um exemplo de efeito expansivo</h1>
+<p>Para demonstrar esse efeito expansivo, vou utilizar as tabelas <code>cores_de_pele</code> e <code>alturas</code> como exemplo. Podemos visualizar os dados dessas duas tabelas abaixo:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1">cores_de_pele</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 2
+     ID Cor    
+  &lt;dbl&gt; &lt;chr&gt;  
+1   100 Pardo  
+2   102 Branco 
+3   104 Branco 
+4   105 Amarelo</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">alturas</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 3
+  DataRegistro    ID Altura
+  &lt;date&gt;       &lt;dbl&gt;  &lt;dbl&gt;
+1 2022-01-10     102   1.58
+2 2022-01-10     105   1.72
+3 2022-06-12     105   1.74
+4 2022-08-24     105   1.75</code></pre>
+</div>
+</div>
+<section id="necessidade-inicial" class="level2">
+<h2 class="anchored" data-anchor-id="necessidade-inicial">Necessidade inicial</h2>
+<p>Vamos supor que, no início, você precisava manter um indicador de “número de usuários por cor de pele” em um relatório. Para isso, você simplesmente contava o número de linhas na tabela <code>cores_de_pele</code> agrupado pelos valores da coluna <code>Cor</code>. Como demonstrado abaixo:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;">library</span>(dplyr)</span>
+<span id="cb5-2">usuarios_por_cor <span class="ot" style="color: #003B4F;">&lt;-</span> cores_de_pele <span class="sc" style="color: #5E5E5E;">|&gt;</span></span>
+<span id="cb5-3">    <span class="fu" style="color: #4758AB;">group_by</span>(Cor) <span class="sc" style="color: #5E5E5E;">|&gt;</span></span>
+<span id="cb5-4">    <span class="fu" style="color: #4758AB;">summarise</span>(<span class="at" style="color: #657422;">N_usuarios =</span> <span class="fu" style="color: #4758AB;">n</span>())</span>
+<span id="cb5-5"></span>
+<span id="cb5-6">usuarios_por_cor</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  Cor     N_usuarios
+  &lt;chr&gt;        &lt;int&gt;
+1 Amarelo          1
+2 Branco           2
+3 Pardo            1</code></pre>
+</div>
+</div>
+</section>
+<section id="uma-nova-necessidade" class="level2">
+<h2 class="anchored" data-anchor-id="uma-nova-necessidade">Uma nova necessidade</h2>
+<p>Porém, uma nova necessidade surge no time. Agora, você precisa calcular também a “altura média por cor de pele”. Você sabe que as alturas dos usuários estão armazenadas na tabela <code>alturas</code>, contudo, você precisa trazer essas alturas para dentro da tabela <code>cores_de_pele</code>, para que você possa de fato calcular a altura média para cada cor de pele.</p>
+<p>Portanto, você precisa realizar um JOIN entre essas tabelas, e é isso que estamos fazendo no código abaixo:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1">dados <span class="ot" style="color: #003B4F;">&lt;-</span> cores_de_pele <span class="sc" style="color: #5E5E5E;">|&gt;</span></span>
+<span id="cb7-2">    <span class="fu" style="color: #4758AB;">left_join</span>(alturas, <span class="at" style="color: #657422;">by =</span> <span class="st" style="color: #20794D;">"ID"</span>)</span></code></pre></div>
+</div>
+<p>Agora, temos uma nova tabela chamada <code>dados</code> que contém todos os dados que precisamos para calcular ambos os indicadores (“número de usuários” e “altura média”) para cada cor de pele. Entretanto, quando calculamos esses indicadores com essa tabela <code>dados</code>, perceba que o número de usuários (indicador <code>N_usuarios</code>) de cor “Amarelo” sofreu um <strong>aumento repentino</strong>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1">indicadores <span class="ot" style="color: #003B4F;">&lt;-</span> dados <span class="sc" style="color: #5E5E5E;">|&gt;</span></span>
+<span id="cb8-2">    <span class="fu" style="color: #4758AB;">group_by</span>(Cor) <span class="sc" style="color: #5E5E5E;">|&gt;</span></span>
+<span id="cb8-3">    <span class="fu" style="color: #4758AB;">summarise</span>(</span>
+<span id="cb8-4">        <span class="at" style="color: #657422;">N_usuarios =</span> <span class="fu" style="color: #4758AB;">n</span>(),</span>
+<span id="cb8-5">        <span class="at" style="color: #657422;">Altura_media =</span> <span class="fu" style="color: #4758AB;">mean</span>(Altura, <span class="at" style="color: #657422;">na.rm =</span> <span class="cn" style="color: #8f5902;">TRUE</span>)</span>
+<span id="cb8-6">    )</span>
+<span id="cb8-7"></span>
+<span id="cb8-8">indicadores</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  Cor     N_usuarios Altura_media
+  &lt;chr&gt;        &lt;int&gt;        &lt;dbl&gt;
+1 Amarelo          3         1.74
+2 Branco           2         1.58
+3 Pardo            1       NaN   </code></pre>
+</div>
+</div>
+<p>Repare que nós não mudamos a fórmula de cálculo do indicador <code>N_usuarios</code>. Nós aplicamos a mesma função <code>n()</code> que utilizamos anteriormente. Nós também agrupamos a tabela <code>dados</code> pela coluna <code>Cor</code> com <code>group_by()</code>, da mesma forma que fizemos anteriormente. Porque esse aumento ocorreu?</p>
+<p>Nós não mudamos nada na fórmula de cálculo do indicador <code>N_usuarios</code>. Porém, nós introduzimos um novo item na cadeia de transformações da tabela. Mais especificamente, um LEFT JOIN realizado pela função <code>left_join()</code>. Ou seja, <strong>o JOIN é o que mudou nesse código</strong>, e ele é o culpado por esse estranho e repentino aumento no número de usuários de cor “Amarelo”.</p>
+</section>
+<section id="o-que-aconteceu" class="level2">
+<h2 class="anchored" data-anchor-id="o-que-aconteceu">O que aconteceu?</h2>
+<p>Se olharmos bem para a tabela resultado do JOIN (tabela <code>dados</code>) podemos começar a compreender o que aconteceu. Perceba que temos 6 linhas nessa tabela, isto é, temos 2 linhas a mais que a tabela <code>cores_de_pele</code> (que possui 4 linhas). Perceba também que temos 3 linhas nessa tabela descrevendo o mesmo usuário de ID 105. Ou seja, temos <strong>duplicatas</strong> para esse usuário.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1">dados</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 4
+     ID Cor     DataRegistro Altura
+  &lt;dbl&gt; &lt;chr&gt;   &lt;date&gt;        &lt;dbl&gt;
+1   100 Pardo   NA            NA   
+2   102 Branco  2022-01-10     1.58
+3   104 Branco  NA            NA   
+4   105 Amarelo 2022-01-10     1.72
+5   105 Amarelo 2022-06-12     1.74
+6   105 Amarelo 2022-08-24     1.75</code></pre>
+</div>
+</div>
+<p>O usuário de ID 105 é o único usuário de cor “Amarelo” na tabela. Portanto, essas 3 linhas referentes ao ID 105 são a causa da mudança repentina no indicador <code>N_usuarios</code> para a cor “Amarelo”. Porém, como podemos ver abaixo, a tabela <code>cores_de_pele</code> tem 1 única linha para o usuário de ID 105. Como essa única linha se transformou em três?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1">cores_de_pele</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 2
+     ID Cor    
+  &lt;dbl&gt; &lt;chr&gt;  
+1   100 Pardo  
+2   102 Branco 
+3   104 Branco 
+4   105 Amarelo</code></pre>
+</div>
+</div>
+</section>
+<section id="entenda-o-processo-de-pareamento-de-um-join" class="level2">
+<h2 class="anchored" data-anchor-id="entenda-o-processo-de-pareamento-de-um-join">Entenda o processo de pareamento de um JOIN</h2>
+<p>A única linha de ID 105 na tabela <code>cores_de_pele</code> se transformou em 3 linhas devido ao processo de pareamento dos dados realizado pelo JOIN. Todo JOIN, independe do tipo que ele seja (<em>left, inner, right, full</em>), vai sempre realizar um processo de pareamento entre os dados das duas tabelas, utilizando as colunas que representam as “chaves” do JOIN <span class="citation" data-cites="pedro2022">(Faria 2022)</span>.</p>
+<p>Podemos visualizar esse processo de pareamento dos dados em Figure&nbsp;1. Perceba que, tanto no exemplo dessa imagem, quanto nesse exemplo desse post, as chaves do JOIN são representadas pela coluna <code>ID</code>. Logo, o JOIN vai puxar os dados de uma tabela para a outra, utilizando os valores dessa coluna como guia.</p>
+<div id="fig-pareamento" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="https://pedro-faria.netlify.app/posts/2023-01-10-join-duplicates/pareamento1.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1: Processo de pareamento realizado em um JOIN</figcaption><p></p>
+</figure>
+</div>
+<p>No exemplo de Figure&nbsp;1, ambas as tabelas que estão sendo unidas possuem uma linha para cada <code>ID</code>. Ou seja, não existe IDs duplicados em nenhuma das duas tabelas, formando assim, uma relação de “um para um” entre as chaves do JOIN.</p>
+<p>Contudo, no exemplo deste post, a tabela <code>alturas</code> possui três linhas diferentes para o mesmo ID 105, enquanto a tabela <code>cores_de_pele</code> não apresenta IDs duplicados. Isso acaba formando uma relação de “um para muitos” entre as chaves do JOIN. Nesse caso, como o processo de pareamento do JOIN deve se comportar? Bem, o seguinte vai acontecer…</p>
+<ol type="1">
+<li><p>O JOIN vai pegar o ID 105 da tabela <code>cores_de_pele</code> e pesquisar por ele ao longo da tabela <code>alturas</code>. Como resultado, o JOIN vai localizar três linhas distintas para o ID 105.</p></li>
+<li><p>O JOIN percebe que há um desequilíbrio (1 linha de <code>cores_de_pele</code> <img src="https://latex.codecogs.com/png.latex?%5Ctimes"> 3 linhas de <code>alturas</code>).</p></li>
+<li><p>Para reequilibrar essa balança, o JOIN vai executar um produto cartesiano entre as linhas dessas duas tabelas.</p></li>
+</ol>
+<p>A Figure&nbsp;2 apresenta de forma visual esse produto cartesiano aplicado sobre o ID 105:</p>
+<div id="fig-desenho-expansao" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="https://pedro-faria.netlify.app/posts/2023-01-10-join-duplicates/expansao.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;2: Uma representação visual do efeito expansivo sobre o ID 105</figcaption><p></p>
+</figure>
+</div>
+<p>Ou seja, o JOIN vai retornar como resultado, todas as combinações possíveis entre a linha única de <code>cores_de_pele</code> e as 3 linhas de <code>alturas</code>. Ou seja, a linha única de <code>cores_de_pele</code> é combinada com cada uma das 3 linhas de <code>alturas</code>. Como resultado, temos as 3 linhas de ID 105 na tabela <code>dados</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1">dados</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 4
+     ID Cor     DataRegistro Altura
+  &lt;dbl&gt; &lt;chr&gt;   &lt;date&gt;        &lt;dbl&gt;
+1   100 Pardo   NA            NA   
+2   102 Branco  2022-01-10     1.58
+3   104 Branco  NA            NA   
+4   105 Amarelo 2022-01-10     1.72
+5   105 Amarelo 2022-06-12     1.74
+6   105 Amarelo 2022-08-24     1.75</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="conclusão" class="level1">
+<h1>Conclusão</h1>
+<p>Portanto, o produto cartesiano executado pelo JOIN gerou linhas duplicadas para o ID 105, e essa introdução de duplicatas acabou distorcendo o valor dos indicadores. <strong>O efeito expansivo está no produto cartesiano gerado pelo JOIN</strong>, e você deve ficar atento em todas as situações em que esse produto pode ocorrer.</p>
+<p>Mas então… em que momentos especificamente esse produto cartesiano é gerado? A resposta é: sempre que existir uma relação de “um para muitos” ou de “muitos para muitos” entre as chaves do JOIN. As “chaves” (ou <em>keys</em>) de todo JOIN podem formar três tipos de relação: 1) um para um; 2) um para muitos; e 3) muitos para muitos <span class="citation" data-cites="pedro2022">(Faria 2022)</span>. Em Figure&nbsp;3 apresentamos cada uma dessas relações de forma visual, onde a coluna <code>key</code> representa a “chave” do JOIN.</p>
+<div id="fig-relacoes" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="https://pedro-faria.netlify.app/posts/2023-01-10-join-duplicates/relacoes_keys.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;3: Resumo das relações possíveis entre <em>keys</em></figcaption><p></p>
+</figure>
+</div>
+<p>Perceba que, para o caso de relação um para um, o número de linhas na tabela resultado permanece inalterado. Porém, as relações que realmente nos interessam nesse post são as relações de “um para muitos” e de “muitos para muitos”. Perceba que um produto cartesiano ocorre nesses dois tipos de relação, e, como resultado, algum nível de “duplicação” de informações é gerado na tabela resultado do JOIN. É através dessa “duplicação” que pode ocorrer o que estamos chamando de “efeito expansivo” dos JOINs nesse post.</p>
+<p>Por último, vale destacar que este produto cartesiano independe do tipo de JOIN (<em>inner, left, right, full</em>) que você está executando, mas depende diretamente dos seus dados e da relação que eles formam entre as chaves do JOIN.</p>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-pedro2022" class="csl-entry">
+Faria, Pedro Duarte. 2022. <em>Introdução à Linguagem r: Seus Fundamentos e Sua Prática</em>. 4th ed. Belo Horizonte.
+</div>
+</div></section></div> ]]></description>
+  <category>JOINs</category>
+  <guid>https://pedro-faria.netlify.app/posts/2023-01-10-join-duplicates/pt/index.html</guid>
+  <pubDate>Tue, 10 Jan 2023 03:00:00 GMT</pubDate>
+  <media:content url="https://pedro-faria.netlify.app/posts/2023-01-10-join-duplicates/expansao.png" medium="image" type="image/png" height="81" width="144"/>
+</item>
 <item>
   <title>Novidades da 4° edição de Introdução à Linguagem R: seus fundamentos e sua prática</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
@@ -752,10 +956,8 @@ font-style: italic;">## A hora do dia de cada data:</span></span>
 </section>
 
  ]]></description>
-  <category>Joins</category>
+  <category>JOINs</category>
   <category>Teaching</category>
-  <category>Book</category>
-  <category>R Language</category>
   <guid>https://pedro-faria.netlify.app/posts/2021-01-02-tabela-destinataria-fonte/en/index.html</guid>
   <pubDate>Sat, 02 Jan 2021 03:00:00 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/posts/2021-01-02-tabela-destinataria-fonte/featured.png" medium="image" type="image/png" height="81" width="144"/>
@@ -859,10 +1061,8 @@ font-style: italic;">## A hora do dia de cada data:</span></span>
 </section>
 
  ]]></description>
-  <category>Joins</category>
+  <category>JOINs</category>
   <category>Teaching</category>
-  <category>Book</category>
-  <category>R Language</category>
   <guid>https://pedro-faria.netlify.app/posts/2021-01-02-tabela-destinataria-fonte/pt/index.html</guid>
   <pubDate>Sat, 02 Jan 2021 03:00:00 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/posts/2021-01-02-tabela-destinataria-fonte/featured.png" medium="image" type="image/png" height="81" width="144"/>
@@ -1142,7 +1342,7 @@ Damji, Jules, Brooke Wenig, Tathagata Das, and Denny Lee. 2020. <em>Learning Spa
   <category>Apache Spark</category>
   <category>Book</category>
   <guid>https://pedro-faria.netlify.app/publications/book/introd-pyspark/en/index.html</guid>
-  <pubDate>Thu, 22 Dec 2022 16:28:59 GMT</pubDate>
+  <pubDate>Sat, 14 Jan 2023 14:42:31 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/publications/book/introd-pyspark/featured.png" medium="image" type="image/png" height="215" width="144"/>
 </item>
 </channel>

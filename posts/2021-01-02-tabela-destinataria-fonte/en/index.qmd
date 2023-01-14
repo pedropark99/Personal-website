@@ -3,11 +3,9 @@ title: "Recipient table and source table"
 subtitle: "A second view on *outer joins*"
 description: "A different (maybe crazy) view on how to teach/explain *Outer joins* to students"
 
-categories: ["Joins", "Teaching", "Book", "R Language"]
+categories: ["JOINs", "Teaching"]
 date: 2021-01-02
-
 image: "./../featured.png"
-
 projects: ["R_curso"]
 ---
 
