@@ -3,11 +3,9 @@ title: "Tabela destinatária e tabela fonte"
 subtitle: "Uma segunda visão sobre *outer joins*"
 description: "Um visão diferente (talvez maluca) sobre como ensinar/explicar *Outer joins* para seus alunos"
 
-categories: ["Joins", "Teaching", "Book", "R Language"]
+categories: ["JOINs", "Teaching"]
 date: 2021-01-02
-
 image: "./../featured.png"
-
 projects: ["R_curso"]
 ---
 
