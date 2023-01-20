@@ -1,0 +1,12 @@
+---
+title: Storytelling
+description: ""
+
+date: 2023-01-20
+categories: ['Storytelling', 'Data Science']
+draft: true
+---
+
+# Model of the four C's
+
+Context, Conflict, Consequence, Council
