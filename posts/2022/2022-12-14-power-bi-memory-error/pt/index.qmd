@@ -4,6 +4,9 @@ description: "Neste post explico como um erro de memória no Power BI Online pod
 date: 2022-12-14
 categories: ["Power BI", "Power BI Online"]
 image: './../featured.png'
+
+aliases: 
+    - "./../../../2022-12-14-power-bi-memory-error/pt"
 ---
 
 

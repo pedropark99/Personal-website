@@ -5,6 +5,9 @@ date: '2022-12-21'
 image: './../spark-map-logo.png'
 categories: ['Python', 'Package', 'pyspark', 'Apache Spark']
 toc: true
+
+aliases: 
+    - "./../../../2022-12-21-spark-map-v0.2.3/en"
 ---
 
 ## Overview

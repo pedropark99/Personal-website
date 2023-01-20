@@ -2,7 +2,7 @@
 title: "Posts in English"
 listing:
   - id: posts-en
-    contents: "*/en/*.qmd"
+    contents: "*/*/en/index.qmd"
     categories: cloud
     type: default
     sort: "date desc"

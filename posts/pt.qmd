@@ -2,7 +2,7 @@
 title: "Posts em Português"
 listing:
   - id: posts-ptbr
-    contents: "*/pt/*.qmd"
+    contents: "*/*/pt/index.qmd"
     categories: cloud
     type: default
     sort: "date desc"

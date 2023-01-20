@@ -9,6 +9,9 @@ projects: ["R_curso"]
 links:
   - name: "Link to the Book"
     url: "https://pedro-faria.netlify.app/pt/publication/book/introducao_linguagem_r/"
+
+aliases: 
+    - "./../../../2022-12-26-4th-edition-rbook/pt"
 ---
 
 

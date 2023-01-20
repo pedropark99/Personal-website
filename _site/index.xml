@@ -14,7 +14,7 @@
 <item>
   <title>JOINs são importantes fontes de duplicações em seus dados</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
-  <link>https://pedro-faria.netlify.app/posts/2023-01-10-join-duplicates/pt/index.html</link>
+  <link>https://pedro-faria.netlify.app/posts/2023/2023-01-10-join-duplicates/pt/index.html</link>
   <description><![CDATA[ 
 
 
@@ -153,7 +153,7 @@ A regra de ouro da programação DRY (*do not repeat yourself*) também pode inf
 <p>Podemos visualizar esse processo de pareamento dos dados em Figure&nbsp;1. Perceba que, tanto no exemplo dessa imagem, quanto no exemplo desse post, as chaves do JOIN são representadas pela coluna <code>ID</code>. Logo, o JOIN vai puxar os dados de uma tabela para a outra, utilizando os valores dessa coluna como guia.</p>
 <div id="fig-pareamento" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="https://pedro-faria.netlify.app/posts/2023-01-10-join-duplicates/pareamento1.png" class="img-fluid figure-img"></p>
+<p><img src="https://pedro-faria.netlify.app/posts/2023/2023-01-10-join-duplicates/pareamento1.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Figure&nbsp;1: Processo de pareamento realizado em um JOIN</figcaption><p></p>
 </figure>
 </div>
@@ -167,7 +167,7 @@ A regra de ouro da programação DRY (*do not repeat yourself*) também pode inf
 <p>A Figure&nbsp;2 apresenta de forma visual essa conexão:</p>
 <div id="fig-desenho-expansao" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="https://pedro-faria.netlify.app/posts/2023-01-10-join-duplicates/expansao.png" class="img-fluid figure-img"></p>
+<p><img src="https://pedro-faria.netlify.app/posts/2023/2023-01-10-join-duplicates/expansao.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Figure&nbsp;2: Uma representação visual do efeito expansivo sobre o ID 105</figcaption><p></p>
 </figure>
 </div>
@@ -194,7 +194,7 @@ A regra de ouro da programação DRY (*do not repeat yourself*) também pode inf
 <p>Mas então… em que momentos especificamente esse produto cartesiano é gerado? A resposta é: sempre que existir uma relação de “um para muitos” ou de “muitos para muitos” entre as chaves do JOIN. As “chaves” (ou <em>keys</em>) de todo JOIN podem formar três tipos de relação: 1) um para um; 2) um para muitos; e 3) muitos para muitos <span class="citation" data-cites="pedro2022">(Faria 2022)</span>. Em Figure&nbsp;3 apresentamos de forma visual essas relações, e os produtos cartesianos que elas geram, onde a coluna <code>key</code> representa a “chave” do JOIN.</p>
 <div id="fig-relacoes" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="https://pedro-faria.netlify.app/posts/2023-01-10-join-duplicates/relacoes_keys.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p><img src="https://pedro-faria.netlify.app/posts/2023/2023-01-10-join-duplicates/relacoes_keys.png" class="img-fluid figure-img" style="width:80.0%"></p>
 <p></p><figcaption class="figure-caption">Figure&nbsp;3: Resumo das relações possíveis entre <em>keys</em> e seus respectivos produtos cartesianos</figcaption><p></p>
 </figure>
 </div>
@@ -214,14 +214,14 @@ Faria, Pedro Duarte. 2022. <em>Introdução à Linguagem r: Seus Fundamentos e S
 </div>
 </div></section></div> ]]></description>
   <category>JOINs</category>
-  <guid>https://pedro-faria.netlify.app/posts/2023-01-10-join-duplicates/pt/index.html</guid>
+  <guid>https://pedro-faria.netlify.app/posts/2023/2023-01-10-join-duplicates/pt/index.html</guid>
   <pubDate>Tue, 10 Jan 2023 03:00:00 GMT</pubDate>
-  <media:content url="https://pedro-faria.netlify.app/posts/2023-01-10-join-duplicates/expansao.png" medium="image" type="image/png" height="81" width="144"/>
+  <media:content url="https://pedro-faria.netlify.app/posts/2023/2023-01-10-join-duplicates/expansao.png" medium="image" type="image/png" height="81" width="144"/>
 </item>
 <item>
   <title>Novidades da 4° edição de Introdução à Linguagem R: seus fundamentos e sua prática</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
-  <link>https://pedro-faria.netlify.app/posts/2022-12-26-4th-edition-rbook/pt/index.html</link>
+  <link>https://pedro-faria.netlify.app/posts/2022/2022-12-26-4th-edition-rbook/pt/index.html</link>
   <description><![CDATA[ 
 
 
@@ -254,14 +254,14 @@ Faria, Pedro Duarte. 2022. <em>Introdução à Linguagem r: Seus Fundamentos e S
  ]]></description>
   <category>Book</category>
   <category>R Language</category>
-  <guid>https://pedro-faria.netlify.app/posts/2022-12-26-4th-edition-rbook/pt/index.html</guid>
+  <guid>https://pedro-faria.netlify.app/posts/2022/2022-12-26-4th-edition-rbook/pt/index.html</guid>
   <pubDate>Mon, 26 Dec 2022 03:00:00 GMT</pubDate>
-  <media:content url="https://pedro-faria.netlify.app/posts/2022-12-26-4th-edition-rbook/featured.png" medium="image" type="image/png" height="206" width="144"/>
+  <media:content url="https://pedro-faria.netlify.app/posts/2022/2022-12-26-4th-edition-rbook/featured.png" medium="image" type="image/png" height="206" width="144"/>
 </item>
 <item>
   <title>Introducing the {spark_map} Python package</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
-  <link>https://pedro-faria.netlify.app/posts/2022-12-21-spark-map-v0.2.3/en/index.html</link>
+  <link>https://pedro-faria.netlify.app/posts/2022/2022-12-21-spark-map-v0.2.3/en/index.html</link>
   <description><![CDATA[ 
 
 
@@ -338,14 +338,14 @@ Faria, Pedro Duarte. 2022. <em>Introdução à Linguagem r: Seus Fundamentos e S
   <category>Package</category>
   <category>pyspark</category>
   <category>Apache Spark</category>
-  <guid>https://pedro-faria.netlify.app/posts/2022-12-21-spark-map-v0.2.3/en/index.html</guid>
+  <guid>https://pedro-faria.netlify.app/posts/2022/2022-12-21-spark-map-v0.2.3/en/index.html</guid>
   <pubDate>Wed, 21 Dec 2022 03:00:00 GMT</pubDate>
-  <media:content url="https://pedro-faria.netlify.app/posts/2022-12-21-spark-map-v0.2.3/spark-map-logo.png" medium="image" type="image/png" height="76" width="144"/>
+  <media:content url="https://pedro-faria.netlify.app/posts/2022/2022-12-21-spark-map-v0.2.3/spark-map-logo.png" medium="image" type="image/png" height="76" width="144"/>
 </item>
 <item>
   <title>Erro de memória no Power BI Online? Hora de repensar o seu dashboard</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
-  <link>https://pedro-faria.netlify.app/posts/2022-12-14-power-bi-memory-error/pt/index.html</link>
+  <link>https://pedro-faria.netlify.app/posts/2022/2022-12-14-power-bi-memory-error/pt/index.html</link>
   <description><![CDATA[ 
 
 
@@ -363,7 +363,7 @@ Faria, Pedro Duarte. 2022. <em>Introdução à Linguagem r: Seus Fundamentos e S
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://pedro-faria.netlify.app/posts/2022-12-14-power-bi-memory-error/image.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<p><img src="https://pedro-faria.netlify.app/posts/2022/2022-12-14-power-bi-memory-error/image.png" class="img-fluid figure-img" style="width:70.0%"></p>
 <p></p><figcaption class="figure-caption">Mensagem de erro da atualização no Power BI Online</figcaption><p></p>
 </figure>
 </div>
@@ -378,7 +378,7 @@ Faria, Pedro Duarte. 2022. <em>Introdução à Linguagem r: Seus Fundamentos e S
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://pedro-faria.netlify.app/posts/2022-12-14-power-bi-memory-error/tabelas.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<p><img src="https://pedro-faria.netlify.app/posts/2022/2022-12-14-power-bi-memory-error/tabelas.png" class="img-fluid figure-img" style="width:50.0%"></p>
 <p></p><figcaption class="figure-caption">Tabelas associadas ao arquivo <code>.pbix</code></figcaption><p></p>
 </figure>
 </div>
@@ -394,7 +394,7 @@ Faria, Pedro Duarte. 2022. <em>Introdução à Linguagem r: Seus Fundamentos e S
 <p>Isso significa que, todos os dias, o Power BI estava coletando todas as <strong>80 milhões de linhas</strong> dessa tabela <code>input</code>. Devido a este volume monumental de dados, o serviço do Power BI decidiu interromper a atualização.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="https://pedro-faria.netlify.app/posts/2022-12-14-power-bi-memory-error/conversa.png" class="img-fluid" style="width:80.0%"></p>
+<p><img src="https://pedro-faria.netlify.app/posts/2022/2022-12-14-power-bi-memory-error/conversa.png" class="img-fluid" style="width:80.0%"></p>
 </div>
 </div>
 </section>
@@ -508,9 +508,9 @@ Faria, Pedro Duarte. 2022. <em>Introdução à Linguagem r: Seus Fundamentos e S
 </section></div> ]]></description>
   <category>Power BI</category>
   <category>Power BI Online</category>
-  <guid>https://pedro-faria.netlify.app/posts/2022-12-14-power-bi-memory-error/pt/index.html</guid>
+  <guid>https://pedro-faria.netlify.app/posts/2022/2022-12-14-power-bi-memory-error/pt/index.html</guid>
   <pubDate>Wed, 14 Dec 2022 03:00:00 GMT</pubDate>
-  <media:content url="https://pedro-faria.netlify.app/posts/2022-12-14-power-bi-memory-error/featured.png" medium="image" type="image/png" height="52" width="144"/>
+  <media:content url="https://pedro-faria.netlify.app/posts/2022/2022-12-14-power-bi-memory-error/featured.png" medium="image" type="image/png" height="52" width="144"/>
 </item>
 <item>
   <title>Introdução à Linguagem R: seus fundamentos e sua prática</title>
@@ -587,7 +587,7 @@ Faria, Pedro Duarte. 2022. <em>Introdução à Linguagem r: Seus Fundamentos e S
 <item>
   <title>Introducing the {figma} R package</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
-  <link>https://pedro-faria.netlify.app/posts/2022-11-06-figma-pkgv0.1.0/en/index.html</link>
+  <link>https://pedro-faria.netlify.app/posts/2022/2022-11-06-figma-pkgv0.1.0/en/index.html</link>
   <description><![CDATA[ 
 
 
@@ -680,14 +680,14 @@ Faria, Pedro Duarte. 2022. <em>Introdução à Linguagem r: Seus Fundamentos e S
   <category>Package</category>
   <category>Figma</category>
   <category>API</category>
-  <guid>https://pedro-faria.netlify.app/posts/2022-11-06-figma-pkgv0.1.0/en/index.html</guid>
+  <guid>https://pedro-faria.netlify.app/posts/2022/2022-11-06-figma-pkgv0.1.0/en/index.html</guid>
   <pubDate>Sun, 06 Nov 2022 03:00:00 GMT</pubDate>
-  <media:content url="https://pedro-faria.netlify.app/posts/2022-11-06-figma-pkgv0.1.0/featured.png" medium="image" type="image/png" height="79" width="144"/>
+  <media:content url="https://pedro-faria.netlify.app/posts/2022/2022-11-06-figma-pkgv0.1.0/featured.png" medium="image" type="image/png" height="79" width="144"/>
 </item>
 <item>
   <title>Novidades da 3° edição de Introdução à Linguagem R: seus fundamentos e sua prática</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
-  <link>https://pedro-faria.netlify.app/posts/2022-04-06-3nd-edition-rbook/pt/index.html</link>
+  <link>https://pedro-faria.netlify.app/posts/2022/2022-04-06-3nd-edition-rbook/pt/index.html</link>
   <description><![CDATA[ 
 
 
@@ -724,14 +724,14 @@ Faria, Pedro Duarte. 2022. <em>Introdução à Linguagem r: Seus Fundamentos e S
  ]]></description>
   <category>Book</category>
   <category>R Language</category>
-  <guid>https://pedro-faria.netlify.app/posts/2022-04-06-3nd-edition-rbook/pt/index.html</guid>
+  <guid>https://pedro-faria.netlify.app/posts/2022/2022-04-06-3nd-edition-rbook/pt/index.html</guid>
   <pubDate>Wed, 06 Apr 2022 03:00:00 GMT</pubDate>
-  <media:content url="https://pedro-faria.netlify.app/posts/2022-04-06-3nd-edition-rbook/featured.png" medium="image" type="image/png" height="206" width="144"/>
+  <media:content url="https://pedro-faria.netlify.app/posts/2022/2022-04-06-3nd-edition-rbook/featured.png" medium="image" type="image/png" height="206" width="144"/>
 </item>
 <item>
   <title>Novidades da 2° edição de Introdução à Linguagem R: seus fundamentos e sua prática</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
-  <link>https://pedro-faria.netlify.app/posts/2021-05-26-2nd-edition-rbook/pt/index.html</link>
+  <link>https://pedro-faria.netlify.app/posts/2021/2021-05-26-2nd-edition-rbook/pt/index.html</link>
   <description><![CDATA[ 
 
 
@@ -863,14 +863,14 @@ font-style: italic;">## A hora do dia de cada data:</span></span>
 </section></div> ]]></description>
   <category>Book</category>
   <category>R Language</category>
-  <guid>https://pedro-faria.netlify.app/posts/2021-05-26-2nd-edition-rbook/pt/index.html</guid>
+  <guid>https://pedro-faria.netlify.app/posts/2021/2021-05-26-2nd-edition-rbook/pt/index.html</guid>
   <pubDate>Wed, 26 May 2021 03:00:00 GMT</pubDate>
-  <media:content url="https://pedro-faria.netlify.app/posts/2021-05-26-2nd-edition-rbook/featured.png" medium="image" type="image/png" height="204" width="144"/>
+  <media:content url="https://pedro-faria.netlify.app/posts/2021/2021-05-26-2nd-edition-rbook/featured.png" medium="image" type="image/png" height="204" width="144"/>
 </item>
 <item>
   <title>Recipient table and source table</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
-  <link>https://pedro-faria.netlify.app/posts/2021-01-02-tabela-destinataria-fonte/en/index.html</link>
+  <link>https://pedro-faria.netlify.app/posts/2021/2021-01-02-tabela-destinataria-fonte/en/index.html</link>
   <description><![CDATA[ 
 
 
@@ -923,17 +923,17 @@ font-style: italic;">## A hora do dia de cada data:</span></span>
 <pre><code># A tibble: 5 × 5
       x     y z         r t    
   &lt;int&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;
-1     1  1.14 a       3.5 tzu  
-2     2  1.36 b       2.1 tzu  
-3     3  3.27 c       1   tzu  
-4     4  1.77 d       5.6 tzu  
-5     5  3.16 e       7.2 tzu  </code></pre>
+1     1  2.14 a       3.5 tzu  
+2     2  2.61 b       2.1 tzu  
+3     3  2.3  c       1   tzu  
+4     4  4.12 d       5.6 tzu  
+5     5  1.98 e       7.2 tzu  </code></pre>
 </div>
 </div>
 <p>With this, we are creating the idea that <strong>a <em>join</em> always has a direction</strong>. In other words, we first extract the columns from table <code>B</code>, and then we add those columns to table <code>A</code>. Note that we are always starting from table <code>B</code> towards table <code>A</code>.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="https://pedro-faria.netlify.app/posts/2021-01-02-tabela-destinataria-fonte/direcao.png" class="img-fluid" width="2200"></p>
+<p><img src="https://pedro-faria.netlify.app/posts/2021/2021-01-02-tabela-destinataria-fonte/direcao.png" class="img-fluid"></p>
 </div>
 </div>
 </section>
@@ -955,7 +955,7 @@ font-style: italic;">## A hora do dia de cada data:</span></span>
 <p>In a visual representation, we can reproduce below the initial image of this article, which marks the lines maintained by each of these two types of <em>join</em>.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="https://pedro-faria.netlify.app/posts/2021-01-02-tabela-destinataria-fonte/featured.png" class="img-fluid" width="2200"></p>
+<p><img src="https://pedro-faria.netlify.app/posts/2021/2021-01-02-tabela-destinataria-fonte/featured.png" class="img-fluid"></p>
 </div>
 </div>
 
@@ -965,14 +965,14 @@ font-style: italic;">## A hora do dia de cada data:</span></span>
  ]]></description>
   <category>JOINs</category>
   <category>Teaching</category>
-  <guid>https://pedro-faria.netlify.app/posts/2021-01-02-tabela-destinataria-fonte/en/index.html</guid>
+  <guid>https://pedro-faria.netlify.app/posts/2021/2021-01-02-tabela-destinataria-fonte/en/index.html</guid>
   <pubDate>Sat, 02 Jan 2021 03:00:00 GMT</pubDate>
-  <media:content url="https://pedro-faria.netlify.app/posts/2021-01-02-tabela-destinataria-fonte/featured.png" medium="image" type="image/png" height="81" width="144"/>
+  <media:content url="https://pedro-faria.netlify.app/posts/2021/2021-01-02-tabela-destinataria-fonte/featured.png" medium="image" type="image/png" height="81" width="144"/>
 </item>
 <item>
   <title>Tabela destinatária e tabela fonte</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
-  <link>https://pedro-faria.netlify.app/posts/2021-01-02-tabela-destinataria-fonte/pt/index.html</link>
+  <link>https://pedro-faria.netlify.app/posts/2021/2021-01-02-tabela-destinataria-fonte/pt/index.html</link>
   <description><![CDATA[ 
 
 
@@ -1028,17 +1028,17 @@ font-style: italic;">## A hora do dia de cada data:</span></span>
 <pre><code># A tibble: 5 × 5
       x     y z         r t    
   &lt;int&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;
-1     1  3.27 a       3.5 tzu  
-2     2  2.3  b       2.1 tzu  
-3     3  1.18 c       1   tzu  
-4     4  1.95 d       5.6 tzu  
-5     5  1.59 e       7.2 tzu  </code></pre>
+1     1  1.5  a       3.5 tzu  
+2     2  2.02 b       2.1 tzu  
+3     3  1.34 c       1   tzu  
+4     4  1.24 d       5.6 tzu  
+5     5  2.49 e       7.2 tzu  </code></pre>
 </div>
 </div>
 <p>Com isso, estamos criando a ideia de que <strong>um <em>join</em> possui sempre um sentido e uma direção</strong>. Em outras palavras, primeiro, extraímos as colunas da tabela <code>B</code>, e em seguida, acrescentamos essas colunas à tabela <code>A</code>. Repare que estamos sempre partindo da tabela <code>B</code> em direção a tabela <code>A</code>.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="https://pedro-faria.netlify.app/posts/2021-01-02-tabela-destinataria-fonte/direcao.png" class="img-fluid" width="2200"></p>
+<p><img src="https://pedro-faria.netlify.app/posts/2021/2021-01-02-tabela-destinataria-fonte/direcao.png" class="img-fluid"></p>
 </div>
 </div>
 </section>
@@ -1060,7 +1060,7 @@ font-style: italic;">## A hora do dia de cada data:</span></span>
 <p>Em uma representação visual, podemos reproduzir abaixo a imagem inicial desse artigo, que marca as linhas mantidas por cada um desses dois tipos de <em>join</em>.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="https://pedro-faria.netlify.app/posts/2021-01-02-tabela-destinataria-fonte/featured.png" class="img-fluid" width="2200"></p>
+<p><img src="https://pedro-faria.netlify.app/posts/2021/2021-01-02-tabela-destinataria-fonte/featured.png" class="img-fluid"></p>
 </div>
 </div>
 
@@ -1070,14 +1070,14 @@ font-style: italic;">## A hora do dia de cada data:</span></span>
  ]]></description>
   <category>JOINs</category>
   <category>Teaching</category>
-  <guid>https://pedro-faria.netlify.app/posts/2021-01-02-tabela-destinataria-fonte/pt/index.html</guid>
+  <guid>https://pedro-faria.netlify.app/posts/2021/2021-01-02-tabela-destinataria-fonte/pt/index.html</guid>
   <pubDate>Sat, 02 Jan 2021 03:00:00 GMT</pubDate>
-  <media:content url="https://pedro-faria.netlify.app/posts/2021-01-02-tabela-destinataria-fonte/featured.png" medium="image" type="image/png" height="81" width="144"/>
+  <media:content url="https://pedro-faria.netlify.app/posts/2021/2021-01-02-tabela-destinataria-fonte/featured.png" medium="image" type="image/png" height="81" width="144"/>
 </item>
 <item>
   <title>Resultados do Formulário de Pesquisa de Interesse - Curso Introdutório de R</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
-  <link>https://pedro-faria.netlify.app/posts/2020-10-17-formulario-pesquisa/pt/index.html</link>
+  <link>https://pedro-faria.netlify.app/posts/2020/2020-10-17-formulario-pesquisa/pt/index.html</link>
   <description><![CDATA[ 
 
 
@@ -1091,17 +1091,13 @@ font-style: italic;">## A hora do dia de cada data:</span></span>
 <p>No momento em que estou montando essa análise, tivemos no total, 122 respostas ao formulário. Mesmo sendo um número relativamente pequeno de pessoas, atingimos os mais diversos locais do país, abrangendo todas as cinco regiões do país.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;">nrow</span>(respostas)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
+</div>
 <pre><code>[1] 122</code></pre>
-</div>
-</div>
 <p>As respostas ao formulário não tinham um padrão bem definido, e por isso algumas respostas tiveram que ser ajustadas. Ao final desse ajuste, percebemos que pessoas de 61 instituições diferentes responderam ao formulário.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="fu" style="color: #4758AB;">nrow</span>(instituicoes)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
+</div>
 <pre><code>[1] 61</code></pre>
-</div>
-</div>
 <p>A maior parte das instituições às quais os respondentes pertenciam, estão localizadas na região Sudeste, com 22 instituições. O Nordeste vem logo em seguida, com 16 insituições. Agora, as instituições que não foram designadas para alguma região (<code>NA</code>), são na verdade instituições de fora do Brasil. Isso significa que tivemos 5 respostas vindas de outros países, ao formulário de interesse no curso.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;">library</span>(tidyverse)</span>
@@ -1109,7 +1105,7 @@ font-style: italic;">## A hora do dia de cada data:</span></span>
 <span id="cb5-3">instituicoes <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
 <span id="cb5-4">  <span class="fu" style="color: #4758AB;">group_by</span>(Regiao) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
 <span id="cb5-5">  <span class="fu" style="color: #4758AB;">summarise</span>(<span class="at" style="color: #657422;">contagem =</span> <span class="fu" style="color: #4758AB;">n</span>())</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
+</div>
 <pre><code># A tibble: 6 × 2
   Regiao       contagem
   &lt;chr&gt;           &lt;int&gt;
@@ -1118,115 +1114,98 @@ font-style: italic;">## A hora do dia de cada data:</span></span>
 3 Norte               9
 4 Sudeste            22
 5 Sul                 7
-6 &lt;NA&gt;                5</code></pre>
-</div>
-</div>
+6 NA                  5</code></pre>
 <p>A maioria das pessoas que responderam ao formulário, provinham de instituições localizadas no estado Minas Gerais. Grande parte das respostas foram da UFOP (que é a instituição na qual estudo), totalizando 22 respostas. Além disso, não recebemos respostas de alguns estados, que estão marcados em cinza no gráfico abaixo:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="fu" style="color: #4758AB;">library</span>(geobr)</span>
-<span id="cb7-2"></span>
-<span id="cb7-3">brasil <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">read_state</span>()</span></code></pre></div>
+<span id="cb7-2">brasil <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">read_state</span>()</span></code></pre></div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1">resp_sum <span class="ot" style="color: #003B4F;">&lt;-</span> respostas <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
 <span id="cb8-2">  <span class="fu" style="color: #4758AB;">select</span>(Regiao, Instituicao, abbrev, Estado) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
 <span id="cb8-3">  <span class="fu" style="color: #4758AB;">group_by</span>(Estado, Regiao) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
-<span id="cb8-4">  <span class="fu" style="color: #4758AB;">summarise</span>(<span class="at" style="color: #657422;">contagem =</span> <span class="fu" style="color: #4758AB;">n</span>())</span></code></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'Estado'. You can override using the
-`.groups` argument.</code></pre>
+<span id="cb8-4">  <span class="fu" style="color: #4758AB;">summarise</span>(<span class="at" style="color: #657422;">contagem =</span> <span class="fu" style="color: #4758AB;">n</span>())</span>
+<span id="cb8-5"></span>
+<span id="cb8-6">brasil <span class="ot" style="color: #003B4F;">&lt;-</span> brasil <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb8-7">  <span class="fu" style="color: #4758AB;">left_join</span>(resp_sum, <span class="at" style="color: #657422;">by =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"name_state"</span> <span class="ot" style="color: #003B4F;">=</span> <span class="st" style="color: #20794D;">"Estado"</span>))</span>
+<span id="cb8-8"></span>
+<span id="cb8-9"><span class="fu" style="color: #4758AB;">ggplot</span>(<span class="at" style="color: #657422;">data =</span> brasil) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb8-10">  <span class="fu" style="color: #4758AB;">geom_sf</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">fill =</span> Regiao)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb8-11">  <span class="fu" style="color: #4758AB;">stat_sf_coordinates</span>(</span>
+<span id="cb8-12">    <span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">label =</span> contagem),</span>
+<span id="cb8-13">    <span class="at" style="color: #657422;">geom =</span> <span class="st" style="color: #20794D;">"text"</span></span>
+<span id="cb8-14">  ) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb8-15">  <span class="fu" style="color: #4758AB;">theme_void</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb8-16">  <span class="fu" style="color: #4758AB;">labs</span>(</span>
+<span id="cb8-17">    <span class="at" style="color: #657422;">title =</span> <span class="st" style="color: #20794D;">"Número de respostas provenientes de cada estado brasileiro"</span>,</span>
+<span id="cb8-18">    <span class="at" style="color: #657422;">fill =</span> <span class="st" style="color: #20794D;">"Região"</span></span>
+<span id="cb8-19">  )</span></code></pre></div>
 </div>
-<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1">brasil <span class="ot" style="color: #003B4F;">&lt;-</span> brasil <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
-<span id="cb10-2">  <span class="fu" style="color: #4758AB;">left_join</span>(resp_sum, <span class="at" style="color: #657422;">by =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"name_state"</span> <span class="ot" style="color: #003B4F;">=</span> <span class="st" style="color: #20794D;">"Estado"</span>))</span>
-<span id="cb10-3"></span>
-<span id="cb10-4"><span class="fu" style="color: #4758AB;">ggplot</span>(<span class="at" style="color: #657422;">data =</span> brasil) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb10-5">  <span class="fu" style="color: #4758AB;">geom_sf</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">fill =</span> Regiao)) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb10-6">  <span class="fu" style="color: #4758AB;">stat_sf_coordinates</span>(</span>
-<span id="cb10-7">    <span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">label =</span> contagem),</span>
-<span id="cb10-8">    <span class="at" style="color: #657422;">geom =</span> <span class="st" style="color: #20794D;">"text"</span></span>
-<span id="cb10-9">  ) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb10-10">  <span class="fu" style="color: #4758AB;">theme_void</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb10-11">  <span class="fu" style="color: #4758AB;">labs</span>(</span>
-<span id="cb10-12">    <span class="at" style="color: #657422;">title =</span> <span class="st" style="color: #20794D;">"Número de respostas provenientes de cada estado brasileiro"</span>,</span>
-<span id="cb10-13">    <span class="at" style="color: #657422;">fill =</span> <span class="st" style="color: #20794D;">"Região"</span></span>
-<span id="cb10-14">  )</span></code></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in st_point_on_surface.sfc(sf::st_zm(x)): st_point_on_surface may not
-give correct results for longitude/latitude data</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 6 rows containing missing values (geom_text).</code></pre>
-</div>
-<div class="cell-output-display">
-<p><img src="https://pedro-faria.netlify.app/posts/2020-10-17-formulario-pesquisa/pt/index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
+<p><img src="https://pedro-faria.netlify.app/posts/2020/2020-10-17-formulario-pesquisa/resps-brasil.png" class="img-fluid"></p>
 <p>Talvez o mais impressionante de tudo isso, é que tivemos pessoas de outros países interessadas no curso. Cada um desses outros países obtiveram apenas uma assinatura, mas mesmo assim, é no mínimo interessante ver o quão longe fomos. Os países atingidos (fora o Brasil), e as respectivas instituições dos respondentes foram: Venezuela (Universidad de Carabobo); Cuba (Universidad de la Havana); Moçambique (ISRI - Instituto Superior De Relações Internacionais); e Peru (Universidad Nacional de Ingeniaria); Portugal (Universidade de Lisboa).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1">cores <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(</span>
-<span id="cb13-2">  <span class="st" style="color: #20794D;">"Brazil"</span> <span class="ot" style="color: #003B4F;">=</span> <span class="st" style="color: #20794D;">"#F8766D"</span>,</span>
-<span id="cb13-3">  <span class="st" style="color: #20794D;">"Cuba"</span> <span class="ot" style="color: #003B4F;">=</span> <span class="st" style="color: #20794D;">"#BB9D00"</span>,</span>
-<span id="cb13-4">  <span class="st" style="color: #20794D;">"Mozambique"</span> <span class="ot" style="color: #003B4F;">=</span> <span class="st" style="color: #20794D;">"#7CAE00"</span>,</span>
-<span id="cb13-5">  <span class="st" style="color: #20794D;">"Venezuela"</span> <span class="ot" style="color: #003B4F;">=</span> <span class="st" style="color: #20794D;">"#00A5FF"</span>,</span>
-<span id="cb13-6">  <span class="st" style="color: #20794D;">"Peru"</span> <span class="ot" style="color: #003B4F;">=</span> <span class="st" style="color: #20794D;">"#E76BF3"</span>,</span>
-<span id="cb13-7">  <span class="st" style="color: #20794D;">"Portugal"</span> <span class="ot" style="color: #003B4F;">=</span> <span class="st" style="color: #20794D;">"#4fc953"</span>,</span>
-<span id="cb13-8">  <span class="st" style="color: #20794D;">"Não foi atingido"</span> <span class="ot" style="color: #003B4F;">=</span> <span class="st" style="color: #20794D;">"#d4d4d4"</span></span>
-<span id="cb13-9">)</span>
-<span id="cb13-10"></span>
-<span id="cb13-11">world<span class="sc" style="color: #5E5E5E;">$</span>cores <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">unname</span>(cores[world<span class="sc" style="color: #5E5E5E;">$</span>marca])</span>
-<span id="cb13-12"></span>
-<span id="cb13-13"><span class="fu" style="color: #4758AB;">ggplot</span>(<span class="at" style="color: #657422;">data =</span> world) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb13-14">  <span class="fu" style="color: #4758AB;">geom_sf</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">fill =</span> cores)) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb13-15">  <span class="fu" style="color: #4758AB;">coord_sf</span>(<span class="at" style="color: #657422;">xlim =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">100</span>, <span class="dv" style="color: #AD0000;">50</span>), <span class="at" style="color: #657422;">ylim =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">60</span>, <span class="dv" style="color: #AD0000;">40</span>)) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb13-16">  <span class="fu" style="color: #4758AB;">theme_void</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb13-17">  <span class="fu" style="color: #4758AB;">labs</span>(</span>
-<span id="cb13-18">    <span class="at" style="color: #657422;">title =</span> <span class="st" style="color: #20794D;">"Países atingidos pelo formulário"</span>,</span>
-<span id="cb13-19">    <span class="at" style="color: #657422;">fill =</span> <span class="st" style="color: #20794D;">"País de referência"</span></span>
-<span id="cb13-20">  ) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb13-21">  <span class="fu" style="color: #4758AB;">theme</span>(<span class="at" style="color: #657422;">legend.position =</span> <span class="st" style="color: #20794D;">"bottom"</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb13-22">  <span class="fu" style="color: #4758AB;">scale_fill_identity</span>(</span>
-<span id="cb13-23">    <span class="at" style="color: #657422;">guide =</span> <span class="st" style="color: #20794D;">"legend"</span>,</span>
-<span id="cb13-24">    <span class="at" style="color: #657422;">labels =</span> <span class="fu" style="color: #4758AB;">names</span>(cores),</span>
-<span id="cb13-25">    <span class="at" style="color: #657422;">breaks =</span> <span class="fu" style="color: #4758AB;">unname</span>(cores)</span>
-<span id="cb13-26">  )</span></code></pre></div>
-<div class="cell-output-display">
-<p><img src="https://pedro-faria.netlify.app/posts/2020-10-17-formulario-pesquisa/pt/index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1">cores <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(</span>
+<span id="cb9-2">  <span class="st" style="color: #20794D;">"Brazil"</span> <span class="ot" style="color: #003B4F;">=</span> <span class="st" style="color: #20794D;">"#F8766D"</span>,</span>
+<span id="cb9-3">  <span class="st" style="color: #20794D;">"Cuba"</span> <span class="ot" style="color: #003B4F;">=</span> <span class="st" style="color: #20794D;">"#BB9D00"</span>,</span>
+<span id="cb9-4">  <span class="st" style="color: #20794D;">"Mozambique"</span> <span class="ot" style="color: #003B4F;">=</span> <span class="st" style="color: #20794D;">"#7CAE00"</span>,</span>
+<span id="cb9-5">  <span class="st" style="color: #20794D;">"Venezuela"</span> <span class="ot" style="color: #003B4F;">=</span> <span class="st" style="color: #20794D;">"#00A5FF"</span>,</span>
+<span id="cb9-6">  <span class="st" style="color: #20794D;">"Peru"</span> <span class="ot" style="color: #003B4F;">=</span> <span class="st" style="color: #20794D;">"#E76BF3"</span>,</span>
+<span id="cb9-7">  <span class="st" style="color: #20794D;">"Portugal"</span> <span class="ot" style="color: #003B4F;">=</span> <span class="st" style="color: #20794D;">"#4fc953"</span>,</span>
+<span id="cb9-8">  <span class="st" style="color: #20794D;">"Não foi atingido"</span> <span class="ot" style="color: #003B4F;">=</span> <span class="st" style="color: #20794D;">"#d4d4d4"</span></span>
+<span id="cb9-9">)</span>
+<span id="cb9-10"></span>
+<span id="cb9-11">world<span class="sc" style="color: #5E5E5E;">$</span>cores <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">unname</span>(cores[world<span class="sc" style="color: #5E5E5E;">$</span>marca])</span>
+<span id="cb9-12"></span>
+<span id="cb9-13"><span class="fu" style="color: #4758AB;">ggplot</span>(<span class="at" style="color: #657422;">data =</span> world) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb9-14">  <span class="fu" style="color: #4758AB;">geom_sf</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">fill =</span> cores)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb9-15">  <span class="fu" style="color: #4758AB;">coord_sf</span>(<span class="at" style="color: #657422;">xlim =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">100</span>, <span class="dv" style="color: #AD0000;">50</span>), <span class="at" style="color: #657422;">ylim =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">60</span>, <span class="dv" style="color: #AD0000;">40</span>)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb9-16">  <span class="fu" style="color: #4758AB;">theme_void</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb9-17">  <span class="fu" style="color: #4758AB;">labs</span>(</span>
+<span id="cb9-18">    <span class="at" style="color: #657422;">title =</span> <span class="st" style="color: #20794D;">"Países atingidos pelo formulário"</span>,</span>
+<span id="cb9-19">    <span class="at" style="color: #657422;">fill =</span> <span class="st" style="color: #20794D;">"País de referência"</span></span>
+<span id="cb9-20">  ) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb9-21">  <span class="fu" style="color: #4758AB;">theme</span>(<span class="at" style="color: #657422;">legend.position =</span> <span class="st" style="color: #20794D;">"bottom"</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb9-22">  <span class="fu" style="color: #4758AB;">scale_fill_identity</span>(</span>
+<span id="cb9-23">    <span class="at" style="color: #657422;">guide =</span> <span class="st" style="color: #20794D;">"legend"</span>,</span>
+<span id="cb9-24">    <span class="at" style="color: #657422;">labels =</span> <span class="fu" style="color: #4758AB;">names</span>(cores),</span>
+<span id="cb9-25">    <span class="at" style="color: #657422;">breaks =</span> <span class="fu" style="color: #4758AB;">unname</span>(cores)</span>
+<span id="cb9-26">  )</span></code></pre></div>
 </div>
-</div>
+<p><img src="https://pedro-faria.netlify.app/posts/2020/2020-10-17-formulario-pesquisa/resps-world.png" class="img-fluid"></p>
 </section>
 <section id="assuntos-requisitados" class="level1">
 <h1>Assuntos requisitados</h1>
 <p>O R é uma linguagem que foi criada por estatísticos, e por isso, é uma linguagem especializada em análise de dados e estatística. Com isso, não é nenhuma surpresa que Econometria e Análise de Séries Temporais, tenham sido as principais sugestões e assuntos requisitados para o curso, pelas pessoas que responderam o formulário.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><span class="fu" style="color: #4758AB;">library</span>(wordcloud)</span>
-<span id="cb14-2"><span class="fu" style="color: #4758AB;">library</span>(RColorBrewer)</span>
-<span id="cb14-3"></span>
-<span id="cb14-4">assuntos <span class="ot" style="color: #003B4F;">&lt;-</span> respostas <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
-<span id="cb14-5">  <span class="fu" style="color: #4758AB;">filter</span>(<span class="sc" style="color: #5E5E5E;">!</span><span class="fu" style="color: #4758AB;">is.na</span>(Sugestao)) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
-<span id="cb14-6">  <span class="fu" style="color: #4758AB;">group_by</span>(Sugestao) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
-<span id="cb14-7">  <span class="fu" style="color: #4758AB;">count</span>() <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
-<span id="cb14-8">  <span class="fu" style="color: #4758AB;">arrange</span>(n)</span>
-<span id="cb14-9"></span>
-<span id="cb14-10">cor <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">brewer.pal</span>(<span class="dv" style="color: #AD0000;">6</span>, <span class="st" style="color: #20794D;">"Dark2"</span>)</span>
-<span id="cb14-11"><span class="fu" style="color: #4758AB;">names</span>(cor) <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"1"</span>, <span class="st" style="color: #20794D;">"3"</span>, <span class="st" style="color: #20794D;">"5"</span>, <span class="st" style="color: #20794D;">"8"</span>, <span class="st" style="color: #20794D;">"2"</span>, <span class="st" style="color: #20794D;">"4"</span>)</span>
-<span id="cb14-12">assuntos<span class="sc" style="color: #5E5E5E;">$</span>color <span class="ot" style="color: #003B4F;">&lt;-</span> cor[<span class="fu" style="color: #4758AB;">as.character</span>(assuntos<span class="sc" style="color: #5E5E5E;">$</span>n)]</span>
-<span id="cb14-13"></span>
-<span id="cb14-14"></span>
-<span id="cb14-15"><span class="fu" style="color: #4758AB;">wordcloud</span>(</span>
-<span id="cb14-16">  <span class="at" style="color: #657422;">words =</span> assuntos<span class="sc" style="color: #5E5E5E;">$</span>Sugestao,</span>
-<span id="cb14-17">  <span class="at" style="color: #657422;">freq =</span> assuntos<span class="sc" style="color: #5E5E5E;">$</span>n,</span>
-<span id="cb14-18">  <span class="at" style="color: #657422;">min.freq =</span> <span class="dv" style="color: #AD0000;">1</span>,</span>
-<span id="cb14-19">  <span class="at" style="color: #657422;">max.words =</span> <span class="dv" style="color: #AD0000;">200</span>,</span>
-<span id="cb14-20">  <span class="at" style="color: #657422;">ordered.colors =</span> <span class="cn" style="color: #8f5902;">TRUE</span>,</span>
-<span id="cb14-21">  <span class="at" style="color: #657422;">rot.per =</span> <span class="fl" style="color: #AD0000;">0.35</span>,</span>
-<span id="cb14-22">  <span class="at" style="color: #657422;">use.r.layout =</span> <span class="cn" style="color: #8f5902;">FALSE</span>,</span>
-<span id="cb14-23">  <span class="at" style="color: #657422;">scale =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="dv" style="color: #AD0000;">2</span>,<span class="fl" style="color: #AD0000;">0.5</span>),</span>
-<span id="cb14-24">  <span class="at" style="color: #657422;">colors =</span> assuntos<span class="sc" style="color: #5E5E5E;">$</span>color</span>
-<span id="cb14-25">)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><span class="fu" style="color: #4758AB;">library</span>(wordcloud)</span>
+<span id="cb10-2"><span class="fu" style="color: #4758AB;">library</span>(RColorBrewer)</span>
+<span id="cb10-3"></span>
+<span id="cb10-4">assuntos <span class="ot" style="color: #003B4F;">&lt;-</span> respostas <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb10-5">  <span class="fu" style="color: #4758AB;">filter</span>(<span class="sc" style="color: #5E5E5E;">!</span><span class="fu" style="color: #4758AB;">is.na</span>(Sugestao)) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb10-6">  <span class="fu" style="color: #4758AB;">group_by</span>(Sugestao) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb10-7">  <span class="fu" style="color: #4758AB;">count</span>() <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb10-8">  <span class="fu" style="color: #4758AB;">arrange</span>(n)</span>
+<span id="cb10-9"></span>
+<span id="cb10-10">cor <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">brewer.pal</span>(<span class="dv" style="color: #AD0000;">6</span>, <span class="st" style="color: #20794D;">"Dark2"</span>)</span>
+<span id="cb10-11"><span class="fu" style="color: #4758AB;">names</span>(cor) <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"1"</span>, <span class="st" style="color: #20794D;">"3"</span>, <span class="st" style="color: #20794D;">"5"</span>, <span class="st" style="color: #20794D;">"8"</span>, <span class="st" style="color: #20794D;">"2"</span>, <span class="st" style="color: #20794D;">"4"</span>)</span>
+<span id="cb10-12">assuntos<span class="sc" style="color: #5E5E5E;">$</span>color <span class="ot" style="color: #003B4F;">&lt;-</span> cor[<span class="fu" style="color: #4758AB;">as.character</span>(assuntos<span class="sc" style="color: #5E5E5E;">$</span>n)]</span>
+<span id="cb10-13"></span>
+<span id="cb10-14"></span>
+<span id="cb10-15"><span class="fu" style="color: #4758AB;">wordcloud</span>(</span>
+<span id="cb10-16">  <span class="at" style="color: #657422;">words =</span> assuntos<span class="sc" style="color: #5E5E5E;">$</span>Sugestao,</span>
+<span id="cb10-17">  <span class="at" style="color: #657422;">freq =</span> assuntos<span class="sc" style="color: #5E5E5E;">$</span>n,</span>
+<span id="cb10-18">  <span class="at" style="color: #657422;">min.freq =</span> <span class="dv" style="color: #AD0000;">1</span>,</span>
+<span id="cb10-19">  <span class="at" style="color: #657422;">max.words =</span> <span class="dv" style="color: #AD0000;">200</span>,</span>
+<span id="cb10-20">  <span class="at" style="color: #657422;">ordered.colors =</span> <span class="cn" style="color: #8f5902;">TRUE</span>,</span>
+<span id="cb10-21">  <span class="at" style="color: #657422;">rot.per =</span> <span class="fl" style="color: #AD0000;">0.35</span>,</span>
+<span id="cb10-22">  <span class="at" style="color: #657422;">use.r.layout =</span> <span class="cn" style="color: #8f5902;">FALSE</span>,</span>
+<span id="cb10-23">  <span class="at" style="color: #657422;">scale =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="dv" style="color: #AD0000;">2</span>,<span class="fl" style="color: #AD0000;">0.5</span>),</span>
+<span id="cb10-24">  <span class="at" style="color: #657422;">colors =</span> assuntos<span class="sc" style="color: #5E5E5E;">$</span>color</span>
+<span id="cb10-25">)</span></code></pre></div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="https://pedro-faria.netlify.app/posts/2020-10-17-formulario-pesquisa/wordcloud.png" class="img-fluid" width="450"></p>
+<p><img src="https://pedro-faria.netlify.app/posts/2020/2020-10-17-formulario-pesquisa/wordcloud.png" class="img-fluid"></p>
 </div>
 </div>
 </section>
@@ -1234,51 +1213,44 @@ give correct results for longitude/latitude data</code></pre>
 <h1>Áreas dos respondentes</h1>
 <p>A enorme maioria das pessoas que responderam eram alunos de graduação, ou bachareis já formados. Como pode ser observado logo abaixo, tivemos também algumas pessoas com algum nível de pós-graduação.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><span class="fu" style="color: #4758AB;">table</span>(respostas<span class="sc" style="color: #5E5E5E;">$</span>Nivel)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Doutorado Graduação  Mestrado 
+<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><span class="fu" style="color: #4758AB;">table</span>(respostas<span class="sc" style="color: #5E5E5E;">$</span>Nivel)</span></code></pre></div>
+</div>
+<pre><code>Doutorado Graduação  Mestrado 
         4       113         5 </code></pre>
-</div>
-</div>
-<p>Curiosamente, das 10 pessoas que possuíam ou estavam fazendo pós-graduação (mestrado ou doutorado), 6 eram de alguma área da Saúde ou das Ciências Biológicas. Apenas uma dessas 10 pessoas, pertencia a área de Economia. Esse resultado faz sentido, visto que a linguagem R tem se expandido muito em algumas áreas como a epidemiologia e principalmente em análise genética, através de um conjunto de pacotes como o <code>Bioconductor</code><sup>3</sup>.</p>
+<p>Curiosamente, das 9 pessoas que possuíam ou estavam fazendo pós-graduação (mestrado ou doutorado), 6 eram de alguma área da Saúde ou das Ciências Biológicas. Apenas uma dessas 9 pessoas, pertencia a área de Economia. Esse resultado faz sentido, visto que a linguagem R tem se expandido muito em algumas áreas como a epidemiologia e principalmente em análise genética, através de um conjunto de pacotes como o <code>Bioconductor</code><sup>3</sup>.</p>
 <p>De qualquer maneira, olhando para o número geral de respondentes, a grande maioria do público atingido pelo formulário, foram graduandos (ou bachareis já formados) em Economia, totalizando 65 pessoas.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1">respostas <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
-<span id="cb17-2">  <span class="fu" style="color: #4758AB;">filter</span>(Curso <span class="sc" style="color: #5E5E5E;">==</span> <span class="st" style="color: #20794D;">"Economia"</span>) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
-<span id="cb17-3">  <span class="fu" style="color: #4758AB;">nrow</span>()</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 30</code></pre>
+<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1">respostas <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb13-2">  <span class="fu" style="color: #4758AB;">filter</span>(Curso <span class="sc" style="color: #5E5E5E;">==</span> <span class="st" style="color: #20794D;">"Economia"</span>) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb13-3">  <span class="fu" style="color: #4758AB;">nrow</span>()</span></code></pre></div>
 </div>
-</div>
+<pre><code>[1] 65</code></pre>
 <p>Quanto às 52 pessoas restantes que não pertencem à area de Economia, as áreas atingidas foram bem diversas. Foram 5 pessoas de Agronomia e 4 pessoas de Geologia. As demais áreas marcadas em laranja abaixo, correspondem a 2 pessoas, enquanto todas as outras em ciano obtiveram apenas 1 respondente.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1">areas <span class="ot" style="color: #003B4F;">&lt;-</span> respostas <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
-<span id="cb19-2">  <span class="fu" style="color: #4758AB;">filter</span>(Curso <span class="sc" style="color: #5E5E5E;">!=</span> <span class="st" style="color: #20794D;">"Economia"</span>) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
-<span id="cb19-3">  <span class="fu" style="color: #4758AB;">group_by</span>(Curso) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
-<span id="cb19-4">  <span class="fu" style="color: #4758AB;">count</span>() <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
-<span id="cb19-5">  <span class="fu" style="color: #4758AB;">arrange</span>(n)</span>
-<span id="cb19-6"></span>
-<span id="cb19-7">cor <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">brewer.pal</span>(<span class="dv" style="color: #AD0000;">5</span>, <span class="st" style="color: #20794D;">"Dark2"</span>)</span>
-<span id="cb19-8"><span class="fu" style="color: #4758AB;">names</span>(cor) <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">unique</span>(areas<span class="sc" style="color: #5E5E5E;">$</span>n)</span>
-<span id="cb19-9">areas<span class="sc" style="color: #5E5E5E;">$</span>color <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">unname</span>(cor[<span class="fu" style="color: #4758AB;">as.character</span>(areas<span class="sc" style="color: #5E5E5E;">$</span>n)])</span>
-<span id="cb19-10"></span>
-<span id="cb19-11"><span class="fu" style="color: #4758AB;">wordcloud</span>(</span>
-<span id="cb19-12">  <span class="at" style="color: #657422;">words =</span> areas<span class="sc" style="color: #5E5E5E;">$</span>Curso,</span>
-<span id="cb19-13">  <span class="at" style="color: #657422;">freq =</span> areas<span class="sc" style="color: #5E5E5E;">$</span>n,</span>
-<span id="cb19-14">  <span class="at" style="color: #657422;">min.freq =</span> <span class="dv" style="color: #AD0000;">1</span>,</span>
-<span id="cb19-15">  <span class="at" style="color: #657422;">max.words =</span> <span class="dv" style="color: #AD0000;">200</span>,</span>
-<span id="cb19-16">  <span class="at" style="color: #657422;">ordered.colors =</span> <span class="cn" style="color: #8f5902;">TRUE</span>,</span>
-<span id="cb19-17">  <span class="at" style="color: #657422;">rot.per =</span> <span class="fl" style="color: #AD0000;">0.35</span>,</span>
-<span id="cb19-18">  <span class="at" style="color: #657422;">use.r.layout =</span> <span class="cn" style="color: #8f5902;">FALSE</span>,</span>
-<span id="cb19-19">  <span class="at" style="color: #657422;">scale =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="dv" style="color: #AD0000;">2</span>,<span class="fl" style="color: #AD0000;">0.5</span>),</span>
-<span id="cb19-20">  <span class="at" style="color: #657422;">color =</span> areas<span class="sc" style="color: #5E5E5E;">$</span>color</span>
-<span id="cb19-21">)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1">areas <span class="ot" style="color: #003B4F;">&lt;-</span> respostas <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb15-2">  <span class="fu" style="color: #4758AB;">filter</span>(Curso <span class="sc" style="color: #5E5E5E;">!=</span> <span class="st" style="color: #20794D;">"Economia"</span>) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb15-3">  <span class="fu" style="color: #4758AB;">group_by</span>(Curso) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb15-4">  <span class="fu" style="color: #4758AB;">count</span>() <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb15-5">  <span class="fu" style="color: #4758AB;">arrange</span>(n)</span>
+<span id="cb15-6"></span>
+<span id="cb15-7">cor <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">brewer.pal</span>(<span class="dv" style="color: #AD0000;">5</span>, <span class="st" style="color: #20794D;">"Dark2"</span>)</span>
+<span id="cb15-8"><span class="fu" style="color: #4758AB;">names</span>(cor) <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">unique</span>(areas<span class="sc" style="color: #5E5E5E;">$</span>n)</span>
+<span id="cb15-9">areas<span class="sc" style="color: #5E5E5E;">$</span>color <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">unname</span>(cor[<span class="fu" style="color: #4758AB;">as.character</span>(areas<span class="sc" style="color: #5E5E5E;">$</span>n)])</span>
+<span id="cb15-10"></span>
+<span id="cb15-11"><span class="fu" style="color: #4758AB;">wordcloud</span>(</span>
+<span id="cb15-12">  <span class="at" style="color: #657422;">words =</span> areas<span class="sc" style="color: #5E5E5E;">$</span>Curso,</span>
+<span id="cb15-13">  <span class="at" style="color: #657422;">freq =</span> areas<span class="sc" style="color: #5E5E5E;">$</span>n,</span>
+<span id="cb15-14">  <span class="at" style="color: #657422;">min.freq =</span> <span class="dv" style="color: #AD0000;">1</span>,</span>
+<span id="cb15-15">  <span class="at" style="color: #657422;">max.words =</span> <span class="dv" style="color: #AD0000;">200</span>,</span>
+<span id="cb15-16">  <span class="at" style="color: #657422;">ordered.colors =</span> <span class="cn" style="color: #8f5902;">TRUE</span>,</span>
+<span id="cb15-17">  <span class="at" style="color: #657422;">rot.per =</span> <span class="fl" style="color: #AD0000;">0.35</span>,</span>
+<span id="cb15-18">  <span class="at" style="color: #657422;">use.r.layout =</span> <span class="cn" style="color: #8f5902;">FALSE</span>,</span>
+<span id="cb15-19">  <span class="at" style="color: #657422;">scale =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="dv" style="color: #AD0000;">2</span>,<span class="fl" style="color: #AD0000;">0.5</span>),</span>
+<span id="cb15-20">  <span class="at" style="color: #657422;">color =</span> areas<span class="sc" style="color: #5E5E5E;">$</span>color</span>
+<span id="cb15-21">)</span></code></pre></div>
 </div>
 <div class="cell">
-<div class="cell-output-display">
-<p><img src="https://pedro-faria.netlify.app/posts/2020-10-17-formulario-pesquisa/areas.png" class="img-fluid" width="700"></p>
-</div>
+
 </div>
 
 
@@ -1295,9 +1267,9 @@ Doutorado Graduação  Mestrado
 </section></div> ]]></description>
   <category>R Language</category>
   <category>Teaching</category>
-  <guid>https://pedro-faria.netlify.app/posts/2020-10-17-formulario-pesquisa/pt/index.html</guid>
+  <guid>https://pedro-faria.netlify.app/posts/2020/2020-10-17-formulario-pesquisa/pt/index.html</guid>
   <pubDate>Sat, 17 Oct 2020 03:00:00 GMT</pubDate>
-  <media:content url="https://pedro-faria.netlify.app/posts/2020-10-17-formulario-pesquisa/featured.jpg" medium="image" type="image/jpeg"/>
+  <media:content url="https://pedro-faria.netlify.app/posts/2020/2020-10-17-formulario-pesquisa/featured.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
   <title>Introduction to pyspark</title>
@@ -1340,7 +1312,7 @@ Damji, Jules, Brooke Wenig, Tathagata Das, and Denny Lee. 2020. <em>Learning Spa
   <category>Apache Spark</category>
   <category>Book</category>
   <guid>https://pedro-faria.netlify.app/publications/book/introd-pyspark/en/index.html</guid>
-  <pubDate>Fri, 20 Jan 2023 14:18:34 GMT</pubDate>
+  <pubDate>Fri, 20 Jan 2023 15:19:51 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/publications/book/introd-pyspark/featured.png" medium="image" type="image/png" height="215" width="144"/>
 </item>
 </channel>

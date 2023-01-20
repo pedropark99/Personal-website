@@ -7,6 +7,9 @@ categories: ["JOINs", "Teaching"]
 date: 2021-01-02
 image: "./../featured.png"
 projects: ["R_curso"]
+
+aliases: 
+    - "./../../../2021-01-02-tabela-destinataria-fonte/en/"
 ---
 
 

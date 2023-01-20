@@ -2,16 +2,16 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/2023-01-10-join-duplicates/pt/index.html",
-      "/posts/2022-12-26-4th-edition-rbook/pt/index.html",
-      "/posts/2022-12-21-spark-map-v0.2.3/en/index.html",
-      "/posts/2022-12-14-power-bi-memory-error/pt/index.html",
-      "/posts/2022-11-06-figma-pkgv0.1.0/en/index.html",
-      "/posts/2022-04-06-3nd-edition-rbook/pt/index.html",
-      "/posts/2021-05-26-2nd-edition-rbook/pt/index.html",
-      "/posts/2021-01-02-tabela-destinataria-fonte/en/index.html",
-      "/posts/2021-01-02-tabela-destinataria-fonte/pt/index.html",
-      "/posts/2020-10-17-formulario-pesquisa/pt/index.html",
+      "/posts/2023/2023-01-10-join-duplicates/pt/index.html",
+      "/posts/2022/2022-12-26-4th-edition-rbook/pt/index.html",
+      "/posts/2022/2022-12-21-spark-map-v0.2.3/en/index.html",
+      "/posts/2022/2022-12-14-power-bi-memory-error/pt/index.html",
+      "/posts/2022/2022-11-06-figma-pkgv0.1.0/en/index.html",
+      "/posts/2022/2022-04-06-3nd-edition-rbook/pt/index.html",
+      "/posts/2021/2021-05-26-2nd-edition-rbook/pt/index.html",
+      "/posts/2021/2021-01-02-tabela-destinataria-fonte/en/index.html",
+      "/posts/2021/2021-01-02-tabela-destinataria-fonte/pt/index.html",
+      "/posts/2020/2020-10-17-formulario-pesquisa/pt/index.html",
       "/publications/book/introd-pyspark/en/index.html",
       "/publications/book/introducao_linguagem_R/pt/index.html"
     ]
@@ -19,36 +19,36 @@
   {
     "listing": "/posts/en.html",
     "items": [
-      "/posts/2022-12-21-spark-map-v0.2.3/en/index.html",
-      "/posts/2022-11-06-figma-pkgv0.1.0/en/index.html",
-      "/posts/2021-01-02-tabela-destinataria-fonte/en/index.html"
+      "/posts/2022/2022-12-21-spark-map-v0.2.3/en/index.html",
+      "/posts/2022/2022-11-06-figma-pkgv0.1.0/en/index.html",
+      "/posts/2021/2021-01-02-tabela-destinataria-fonte/en/index.html"
     ]
   },
   {
     "listing": "/posts/index.html",
     "items": [
-      "/posts/2023-01-10-join-duplicates/pt/index.html",
-      "/posts/2022-12-26-4th-edition-rbook/pt/index.html",
-      "/posts/2022-12-21-spark-map-v0.2.3/en/index.html",
-      "/posts/2022-12-14-power-bi-memory-error/pt/index.html",
-      "/posts/2022-11-06-figma-pkgv0.1.0/en/index.html",
-      "/posts/2022-04-06-3nd-edition-rbook/pt/index.html",
-      "/posts/2021-05-26-2nd-edition-rbook/pt/index.html",
-      "/posts/2021-01-02-tabela-destinataria-fonte/en/index.html",
-      "/posts/2021-01-02-tabela-destinataria-fonte/pt/index.html",
-      "/posts/2020-10-17-formulario-pesquisa/pt/index.html"
+      "/posts/2023/2023-01-10-join-duplicates/pt/index.html",
+      "/posts/2022/2022-12-26-4th-edition-rbook/pt/index.html",
+      "/posts/2022/2022-12-21-spark-map-v0.2.3/en/index.html",
+      "/posts/2022/2022-12-14-power-bi-memory-error/pt/index.html",
+      "/posts/2022/2022-11-06-figma-pkgv0.1.0/en/index.html",
+      "/posts/2022/2022-04-06-3nd-edition-rbook/pt/index.html",
+      "/posts/2021/2021-05-26-2nd-edition-rbook/pt/index.html",
+      "/posts/2021/2021-01-02-tabela-destinataria-fonte/en/index.html",
+      "/posts/2021/2021-01-02-tabela-destinataria-fonte/pt/index.html",
+      "/posts/2020/2020-10-17-formulario-pesquisa/pt/index.html"
     ]
   },
   {
     "listing": "/posts/pt.html",
     "items": [
-      "/posts/2023-01-10-join-duplicates/pt/index.html",
-      "/posts/2022-12-26-4th-edition-rbook/pt/index.html",
-      "/posts/2022-12-14-power-bi-memory-error/pt/index.html",
-      "/posts/2022-04-06-3nd-edition-rbook/pt/index.html",
-      "/posts/2021-05-26-2nd-edition-rbook/pt/index.html",
-      "/posts/2021-01-02-tabela-destinataria-fonte/pt/index.html",
-      "/posts/2020-10-17-formulario-pesquisa/pt/index.html"
+      "/posts/2023/2023-01-10-join-duplicates/pt/index.html",
+      "/posts/2022/2022-12-26-4th-edition-rbook/pt/index.html",
+      "/posts/2022/2022-12-14-power-bi-memory-error/pt/index.html",
+      "/posts/2022/2022-04-06-3nd-edition-rbook/pt/index.html",
+      "/posts/2021/2021-05-26-2nd-edition-rbook/pt/index.html",
+      "/posts/2021/2021-01-02-tabela-destinataria-fonte/pt/index.html",
+      "/posts/2020/2020-10-17-formulario-pesquisa/pt/index.html"
     ]
   },
   {

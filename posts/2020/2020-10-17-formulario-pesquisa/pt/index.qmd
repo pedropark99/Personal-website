@@ -4,11 +4,14 @@ description: "Uma rápida análise sobre o impacto e as sugestões fornecidas ao
 date: 2020-10-17
 categories: ["R Language", "Teaching"]
 image: './../featured.jpg'
+
+aliases: 
+    - "./../../../2020-10-17-formulario-pesquisa/pt"
 ---
 
 ```{r setup}
 #| include: false
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(eval = FALSE)
 ```
 
 
@@ -55,12 +58,21 @@ No momento em que estou montando essa análise, tivemos no total, 122 respostas 
 nrow(respostas)
 ```
 
+```
+[1] 122
+```
+
 
 As respostas ao formulário não tinham um padrão bem definido, e por isso algumas respostas tiveram que ser ajustadas. Ao final desse ajuste, percebemos que pessoas de 61 instituições diferentes responderam ao formulário.
 
 ```{r}
 nrow(instituicoes)
 ```
+
+```
+[1] 61
+```
+
 
 
 A maior parte das instituições às quais os respondentes pertenciam, estão localizadas na região Sudeste, com 22 instituições. O Nordeste vem logo em seguida, com 16 insituições. Agora, as instituições que não foram designadas para alguma região (`NA`), são na verdade instituições de fora do Brasil. Isso significa que tivemos 5 respostas vindas de outros países, ao formulário de interesse no curso.
@@ -75,15 +87,23 @@ instituicoes %>%
   summarise(contagem = n())
 ```
 
-
+```
+# A tibble: 6 × 2
+  Regiao       contagem
+  <chr>           <int>
+1 Centro Oeste        3
+2 Nordeste           15
+3 Norte               9
+4 Sudeste            22
+5 Sul                 7
+6 NA                  5
+```
 
 A maioria das pessoas que responderam ao formulário, provinham de instituições localizadas no estado Minas Gerais. Grande parte das respostas foram da UFOP (que é a instituição na qual estudo), totalizando 22 respostas. Além disso, não recebemos respostas de alguns estados, que estão marcados em cinza no gráfico abaixo:
 
 
 ```{r}
-#| eval: false
 library(geobr)
-
 brasil <- read_state()
 ```
 
@@ -111,7 +131,7 @@ ggplot(data = brasil) +
   )
 ```
 
-
+![](./../resps-brasil.png)
 
 
 ```{r}
@@ -166,6 +186,7 @@ ggplot(data = world) +
   )
 ```
 
+![](./../resps-world.png)
 
 
 # Assuntos requisitados
@@ -204,6 +225,7 @@ wordcloud(
 
 ```{r}
 #| echo: false
+#| eval: true
 knitr::include_graphics("./../wordcloud.png")
 ```
 
@@ -229,6 +251,11 @@ respostas$Nivel[is.na(respostas$Nivel)] <- "Graduação"
 table(respostas$Nivel)
 ```
 
+```
+Doutorado Graduação  Mestrado 
+        4       113         5 
+```
+
 Curiosamente, das 9 pessoas que possuíam ou estavam fazendo pós-graduação (mestrado ou doutorado), 6 eram de alguma área da Saúde ou das Ciências Biológicas. Apenas uma dessas 9 pessoas, pertencia a área de Economia. Esse resultado faz sentido, visto que a linguagem R tem se expandido muito em algumas áreas como a epidemiologia e principalmente em análise genética, através de um conjunto de pacotes como o `Bioconductor`^[https://www.bioconductor.org/].
 
 
@@ -240,6 +267,10 @@ De qualquer maneira, olhando para o número geral de respondentes, a grande maio
 respostas %>% 
   filter(Curso == "Economia") %>% 
   nrow()
+```
+
+```
+[1] 65
 ```
 
 Quanto às 52 pessoas restantes que não pertencem à area de Economia, as áreas atingidas foram bem diversas. Foram 5 pessoas de Agronomia e 4 pessoas de Geologia. As demais áreas marcadas em laranja abaixo, correspondem a 2 pessoas, enquanto todas as outras em ciano obtiveram apenas 1 respondente.

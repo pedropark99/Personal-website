@@ -5,6 +5,9 @@ date: '2022-11-06'
 image: './../featured.png'
 categories: ['R Language', 'Package', 'Figma', 'API']
 toc: true
+
+aliases: 
+    - "./../../../2022-11-06-figma-pkgv0.1.0/en"
 ---
 
 ## Introduction
