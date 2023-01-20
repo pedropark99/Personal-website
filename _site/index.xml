@@ -523,7 +523,7 @@ Faria, Pedro Duarte. 2022. <em>Introdução à Linguagem r: Seus Fundamentos e S
 
 <section id="sobre-o-livro" class="level1">
 <h1>Sobre o livro</h1>
-<p><a href="https://www.amazon.com.br/dp/B0BNW4K232"> <button type="button" class="btn btn-primary">Compre uma versão física</button></a> <a href="https://pedropark99.github.io/Introducao_R/"> <button type="button" class="btn btn-primary">Leia online</button></a> <a href="./../respostas_complete.pdf"> <button type="button" class="btn btn-primary">Respostas dos exercícios</button></a></p>
+<p><a href="https://www.amazon.com.br/dp/B0BNW4K232"> <button type="button" class="btn btn-primary">Compre uma versão do livro</button></a> <a href="https://pedropark99.github.io/Introducao_R/"> <button type="button" class="btn btn-primary">Leia online</button></a> <a href="./../respostas_complete.pdf"> <button type="button" class="btn btn-primary">Respostas dos exercícios</button></a></p>
 <p>Este livro oferece uma descrição profunda sobre os fundamentos da linguagem R, e como eles se aplicam no contexto da análise de dados. Sua principal contribuição para a literatura brasileira hoje, está no combate de dois problemas recorrentes nos materiais disponíveis em português sobre a linguagem: 1) a falta de profundidade de muitos materiais, que tentam abordar muitos assuntos em um espaço muito curto; 2) a alta especialização de muitos materiais, que são de difícil transposição para aplicações gerais em análises de dados.</p>
 </section>
 <section id="o-que-você-aprende" class="level1">
@@ -568,6 +568,10 @@ Faria, Pedro Duarte. 2022. <em>Introdução à Linguagem r: Seus Fundamentos e S
 <section id="contribua-para-o-projeto" class="level1">
 <h1>Contribua para o projeto</h1>
 <p>Você também pode contribuir diretamente para a obra, ao postar <em>pull requests</em> ou <em>issues</em> no <a href="https://github.com/pedropark99/Introducao_R">repositório oficial do livro</a> no GitHub.</p>
+</section>
+<section id="capa-do-livro" class="level1">
+<h1>Capa do livro</h1>
+<p><img src="https://pedro-faria.netlify.app/publications/book/introducao_linguagem_R/featured.png" class="img-fluid" style="width:100.0%"></p>
 
 
 </section>
@@ -1311,23 +1315,14 @@ Doutorado Graduação  Mestrado
 <section id="about-the-book" class="level1">
 <h1>About the book</h1>
 <p><a href="https://github.com/pedropark99/Introd-pyspark"> <button type="button" class="btn btn-primary">Official repository</button></a> <a href="https://pedropark99.github.io/Introd-pyspark/"> <button type="button" class="btn btn-primary">Read online</button></a></p>
-<div style="float:left;display:flex;justify-content:space-between;padding:30px">
-<div class="about-this-book-text">
 <p>In summary, this book aims to give a solid introduction (for python and not python users) to the <code>pyspark</code> package, and on how to use it to build Spark applications for data pipelines and interactive data analysis.</p>
 <p>Although we have a good range of materials about Apache Spark in general, such as <span class="citation" data-cites="damji2020">Damji et al. (2020)</span> and <span class="citation" data-cites="chambers2018">Chambers and Zaharia (2018)</span>, we do not have much abundance of materials about the APIs of Spark in “foreign” languages, like the Python (<code>pyspark</code>) and R (<code>SparkR</code>) APIs.</p>
 <p>The reason for this is simple: the Spark API have a consistent structure across all languages. As consequence, a general book about Spark can fairly cover all languages at once. In other words, Spark code in Scala can be easily translated into python code with <code>pyspark</code>. Because the structure of the code is very similar between all languages.</p>
 <p>So why this book? First, python is a more popular and friendly language than Scala or Java. If the reader is not interested in learning Java or Scala, why show Java/Scala code to him? Is very important to focus solely on what interest the reader, specially if it is in a language that he is familiar with. Second, I had some time to spent, and a lot of practical experience with <code>pyspark</code> on production to share (so… why not write a book about it?).</p>
-</div>
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://pedro-faria.netlify.app/publications/book/introd-pyspark/featured.png" class="img-fluid figure-img" style="width:100.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
+</section>
+<section id="cover" class="level1">
+<h1>Cover</h1>
+<p><img src="https://pedro-faria.netlify.app/publications/book/introd-pyspark/featured.png" class="img-fluid" style="width:100.0%"></p>
 
 
 
@@ -1345,7 +1340,7 @@ Damji, Jules, Brooke Wenig, Tathagata Das, and Denny Lee. 2020. <em>Learning Spa
   <category>Apache Spark</category>
   <category>Book</category>
   <guid>https://pedro-faria.netlify.app/publications/book/introd-pyspark/en/index.html</guid>
-  <pubDate>Mon, 16 Jan 2023 11:43:52 GMT</pubDate>
+  <pubDate>Fri, 20 Jan 2023 14:18:34 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/publications/book/introd-pyspark/featured.png" medium="image" type="image/png" height="215" width="144"/>
 </item>
 </channel>

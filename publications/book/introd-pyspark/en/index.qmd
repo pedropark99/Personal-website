@@ -25,7 +25,9 @@ The reason for this is simple: the Spark API have a consistent structure across 
 
 So why this book? First, python is a more popular and friendly language than Scala or Java. If the reader is not interested in learning Java or Scala, why show Java/Scala code to him? Is very important to focus solely on what interest the reader, specially if it is in a language that he is familiar with. Second, I had some time to spent, and a lot of practical experience with `pyspark` on production to share (so... why not write a book about it?).
 
+# Cover
 
+![](./../featured.png){width="100%"}
 
 
 

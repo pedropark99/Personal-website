@@ -12,7 +12,7 @@ about:
       href: https://github.com/pedropark99
     - icon: mastodon
       text: Mastodon
-      href: https://fosstodon.org/web/\@pedropark99
+      href: https://fosstodon.org/web/@pedropark99
     - icon: twitter
       text: Twitter
       href: https://twitter.com/PedroPark9

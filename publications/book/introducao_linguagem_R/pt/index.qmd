@@ -63,3 +63,7 @@ cat(readLines("../cite.bib"), sep = '\n')
 
 Você também pode contribuir diretamente para a obra, ao postar *pull requests* ou *issues* no [repositório oficial do livro](https://github.com/pedropark99/Introducao_R) no GitHub.
 
+
+# Capa do livro
+
+![](./../featured.png){width="100%"}
