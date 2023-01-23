@@ -30,7 +30,7 @@ Para esses analistas, eu digo: "a visualização é um aspecto importante dessa 
 
 ## O relatório
 
-Na época, estávamos construindo um relatório mensal contendo vários indicadores e gráficos que mostravam o estado atual e a evolução recente dos serviços e produtos do Banco BMG ofertados no WhatsApp. Como você pode imaginar, esse relatório possui indicadores de acessos (e.g. número de visitas ao serviço), indicadores de vendas (e.g. número de produtos vendidos, valor total de vendas, taxa de conversão - proporção de usuários que geraram uma venda), e muitos outros.
+Na época, estávamos construindo um relatório mensal contendo vários indicadores e gráficos que mostravam o estado atual e a evolução recente dos serviços e produtos do Banco BMG ofertados no WhatsApp. Como você pode imaginar, esse relatório possuía indicadores de acessos (e.g. número de visitas ao serviço), indicadores de vendas (e.g. número de produtos vendidos, valor total de vendas, taxa de conversão - proporção de usuários que geraram uma venda), e muitos outros.
 
 
 
