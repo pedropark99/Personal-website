@@ -9,18 +9,26 @@ draft: true
 
 # Introduction
 
-This article discuss my experience on improving the Data Storytelling on a monthly report delivered to BMG Bank, which is one of the largest commercial banks in the brazilian market. I work as a Data Analyst at TakeBlip^[TakeBlip is a technology company that provide several services and infrastructure to many of the largest companies in the brazilian market, in a vast range of markets (e.g. financial services, telecomunications, health services, retail, and many others).], and one of my key responsibilities is to use data to guide my clients to improve their perfomance in our Blip platform.
+This article discuss my experience on improving the Data Storytelling on a monthly report delivered to [BMG Bank](https://www.bancobmg.com.br/), which is one of the largest commercial banks in the brazilian market. I work as a Data Analyst at TakeBlip[^footnote1], and one of my key responsibilities is to use data to guide my clients to improve their perfomance in our Blip platform.
+
+[^footnote1]: TakeBlip is a technology company that provide several services and infrastructure to many of the largest companies in the brazilian market, in a vast range of markets (e.g. financial services, telecomunications, health services, retail, and many others).
 
 # Data Storytelling is not about the "best visualization"
 
-The majority of analysts and scientists understand what "data storytelling" is about. However, there are a few analyts that understand "data storytelling" solely as a visualization problem, or, as the science of "choosing the best graphs" for your presentation, and designing innovative, beautiful and complex charts.
+The majority of analysts and scientists understand what "data storytelling" is about. However, a few analyts understand "data storytelling" solely as a visualization problem, or, as the science of "choosing the best graphs" for your presentation, and designing innovative, beautiful and complex charts.
 
 For these analysts, I say: "visualization is an important aspect of it. But data storytelling is about **telling stories**. Not about visualization". Yes! Choosing the right visualization, making it better, nicer and cleaner is really important! Because it will help you to engage with a larger audience, and to deliver your story in a clear and effective way.
 
-Data storytelling is about creating stories with data, and data visualization is just **a tool to deliver these stories** in a effective way. We do not choose the "best chart" to say "we are in compliance with data storytelling guidelines!". We choose the "best chart" to deliver our stories, our conclusions, and our recommendations to our clients in the best way as possible. 
+Data storytelling is about creating stories with data, and data visualization is just **a tool to deliver these stories** in a effective way. We do not choose the "best chart" to say "we are in compliance with data storytelling guidelines!". We choose the "best chart" to deliver our stories, our conclusions, and our recommendations to our clients in the best way as possible.
+
+# Context
+
+## The report
+
+Very briefly, the BMG Bank uses the Blip platform to offer several products and services through [WhatsApp](https://www.whatsapp.com/). Every month, we built a report containing several indicators and graphs that indicate the actual state and the recent evolution of these services and products offered at WhatsApp.
+
+How was this report before this process of improvements?
 
 # Model of the four C's
 
-The model of the four C's is about these four words:
-> Context, Conflict, Consequence, Council
-
+The model of the four C's is about these four words: \> Context, Conflict, Consequence, Council

@@ -1,0 +1,33 @@
+---
+title: "Um estudo de caso sobre Data Storytelling em um dos maiores bancos brasileiros"
+description: "Neste artigo discuto a minha experiência sobre construir e melhorar o Data Storytelling de minhas apresentações para um dos maiores bancos do mercado financeiro brasileiro."
+
+date: 2023-01-20
+categories: ['Storytelling', 'Data Storytelling', 'Data Science']
+draft: true
+---
+
+# Introdução
+
+Esse artigo discute a minha experiência sobre a construção de Data Storytelling para uma apresentação mensal entregue ao Banco BMG, o qual é um dos maiores bancos comerciais do mercado brasileiro. Eu trabalho como Analista de dados em TakeBlip[^footnote1]
+
+[^footnote1]: TakeBlip é uma empresa de tecnologia que fornece muitos serviços e infraestrutura que várias das grandes empresas do Brasil utilizam para vender produtos e serviços em canais de mensageria, como o WhatsApp, Facebook, Instagram, Apple Chat, etc.
+
+# Data Storytelling não é sobre escolher "o melhor gráfico"
+
+A maioria dos analistas e cientistas entendem o que é "data storytelling". No entanto, alguns poucos analistas entendem "data storytelling" apenas como um problema de visualização, ou, como a ciência de "escolher os melhores gráficos" para sua apresentação e projetar gráficos inovadores, bonitos e complexos.
+
+Para esses analistas, eu digo: "a visualização é um aspecto importante dessa matéria. Contudo, data storytelling é sobre **contar histórias**. Não sobre visualização". Sim! Escolher a visualização certa, torná-la melhor, mais bonita e mais limpa é muito importante sim! Porque isso vai ajudar você a se envolver com um público maior, e a contar sua história de uma maneira mais clara e eficaz.
+
+*Data storytelling* é sobre criar histórias com dados, e a visualização de dados é apenas **uma ferramenta para entregar essas histórias** de maneira eficaz. Não escolhemos o "melhor gráfico" para dizer "estamos em conformidade com as diretrizes de *data storytelling*!". Escolhemos o "melhor gráfico" para entregarmos nossas histórias, nossas conclusões e nossas recomendações aos nossos clientes da melhor forma possível.
+
+# Contexto
+
+## O relatório
+
+
+# Modelo dos quatro C's
+
+O modelo dos quatro C's se refere a essas quatro palavras:
+
+> Contexto, Conflito, Consequência, Conselho.
