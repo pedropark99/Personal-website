@@ -1,12 +1,26 @@
 ---
-title: Storytelling
-description: ""
+title: "A case study about Data Storytelling in one the largest brazilian banks"
+description: "This article discuss my experience on improving Data Storytelling on one the largest banks on the financial brazilian market"
 
 date: 2023-01-20
 categories: ['Storytelling', 'Data Science']
 draft: true
 ---
 
+# Introduction
+
+This article discuss my experience on improving the Data Storytelling on a monthly report delivered to BMG Bank, which is one of the largest commercial banks in the brazilian market. I work as a Data Analyst at TakeBlip^[TakeBlip is a technology company that provide several services and infrastructure to many of the largest companies in the brazilian market, in a vast range of markets (e.g. financial services, telecomunications, health services, retail, and many others).], and one of my key responsibilities is to use data to guide my clients to improve their perfomance in our Blip platform.
+
+# Data Storytelling is not about the "best visualization"
+
+The majority of analysts and scientists understand what "data storytelling" is about. However, there are a few analyts that understand "data storytelling" solely as a visualization problem, or, as the science of "choosing the best graphs" for your presentation, and designing innovative, beautiful and complex charts.
+
+For these analysts, I say: "visualization is an important aspect of it. But data storytelling is about **telling stories**. Not about visualization". Yes! Choosing the right visualization, making it better, nicer and cleaner is really important! Because it will help you to engage with a larger audience, and to deliver your story in a clear and effective way.
+
+Data storytelling is about creating stories with data, and data visualization is just **a tool to deliver these stories** in a effective way. We do not choose the "best chart" to say "we are in compliance with data storytelling guidelines!". We choose the "best chart" to deliver our stories, our conclusions, and our recommendations to our clients in the best way as possible. 
+
 # Model of the four C's
 
-Context, Conflict, Consequence, Council
+The model of the four C's is about these four words:
+> Context, Conflict, Consequence, Council
+
