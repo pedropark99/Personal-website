@@ -5,6 +5,7 @@ description: "Neste artigo discuto a minha experiência sobre construir e melhor
 date: 2023-01-20
 categories: ['Storytelling', 'Data Storytelling', 'Data Science']
 draft: true
+toc: true
 ---
 
 # Introdução
@@ -12,6 +13,10 @@ draft: true
 Esse artigo discute a minha experiência sobre a construção de Data Storytelling para uma apresentação mensal entregue ao Banco BMG, o qual é um dos maiores bancos comerciais do mercado brasileiro. Eu trabalho como Analista de dados em TakeBlip[^footnote1]
 
 [^footnote1]: TakeBlip é uma empresa de tecnologia que fornece muitos serviços e infraestrutura que várias das grandes empresas do Brasil utilizam para vender produtos e serviços em canais de mensageria, como o WhatsApp, Facebook, Instagram, Apple Chat, etc.
+
+::: {.callout-important}
+Todos os dados, gráficos e imagens mostrados neste artigo são meramente ilustrativos, e não representam os dados da plataforma Blip ou do Banco BMG de nenhuma forma ou dimensão! Todos os números apresentados foram gerados de forma aleatória por um computador!
+:::
 
 # Data Storytelling não é sobre escolher "o melhor gráfico"
 
@@ -24,6 +29,10 @@ Para esses analistas, eu digo: "a visualização é um aspecto importante dessa 
 # Contexto
 
 ## O relatório
+
+Na época, estávamos construindo um relatório mensal contendo vários indicadores e gráficos que mostravam o estado atual e a evolução recente dos serviços e produtos do Banco BMG ofertados no WhatsApp. Como você pode imaginar, esse relatório possui indicadores de acessos (e.g. número de visitas ao serviço), indicadores de vendas (e.g. número de produtos vendidos, valor total de vendas, taxa de conversão - proporção de usuários que geraram uma venda), e muitos outros.
+
+
 
 
 # Modelo dos quatro C's
