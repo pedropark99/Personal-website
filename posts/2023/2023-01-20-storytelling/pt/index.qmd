@@ -20,17 +20,21 @@ Todos os dados, gráficos e imagens mostrados neste artigo são meramente ilustr
 
 # Data Storytelling não é sobre escolher "o melhor gráfico"
 
-A maioria dos analistas e cientistas entendem o que é "data storytelling". No entanto, alguns poucos analistas entendem "data storytelling" apenas como um problema de visualização, ou, como a ciência de "escolher os melhores gráficos" para sua apresentação e projetar gráficos inovadores, bonitos e complexos.
+A maioria dos analistas e cientistas entendem o que é "data storytelling". No entanto, alguns poucos analistas entendem "data storytelling" apenas como um problema de visualização, ou, como a ciência de "escolher os melhores gráficos" para sua apresentação, ou como projetar gráficos inovadores, bonitos e complexos.
 
 Para esses analistas, eu digo: "a visualização é um aspecto importante dessa matéria. Contudo, data storytelling é sobre **contar histórias**. Não sobre visualização". Sim! Escolher a visualização certa, torná-la melhor, mais bonita e mais limpa é muito importante sim! Porque isso vai ajudar você a se envolver com um público maior, e a contar sua história de uma maneira mais clara e eficaz.
 
 *Data storytelling* é sobre criar histórias com dados, e a visualização de dados é apenas **uma ferramenta para entregar essas histórias** de maneira eficaz. Não escolhemos o "melhor gráfico" para dizer "estamos em conformidade com as diretrizes de *data storytelling*!". Escolhemos o "melhor gráfico" para entregarmos nossas histórias, nossas conclusões e nossas recomendações aos nossos clientes da melhor forma possível.
 
-# Contexto
+# Como era esse relatório antes ?
 
-## O relatório
+Na época, estávamos construindo um relatório mensal contendo vários indicadores e gráficos que mostravam o estado atual e a evolução recente dos serviços e produtos do Banco BMG ofertados no WhatsApp. Como você pode imaginar, esse relatório trazia indicadores de acessos (e.g. número de visitas ao serviço), indicadores de vendas (e.g. número de produtos vendidos, valor total de vendas, taxa de conversão - proporção de usuários que geraram uma venda), e muitos outros.
 
-Na época, estávamos construindo um relatório mensal contendo vários indicadores e gráficos que mostravam o estado atual e a evolução recente dos serviços e produtos do Banco BMG ofertados no WhatsApp. Como você pode imaginar, esse relatório possuía indicadores de acessos (e.g. número de visitas ao serviço), indicadores de vendas (e.g. número de produtos vendidos, valor total de vendas, taxa de conversão - proporção de usuários que geraram uma venda), e muitos outros.
+Contudo, o formato dessa apresentação era problemático. Nós trazíamos uma quantidade monumental de informações para o banco. A apresentação usualmente trazia em torno de 40 slides diferentes, com aproximadamente 36 gráficos e 70 indicadores diferentes. Para mais, nós tentávamos apresentar todo esse volume de informações em uma reunião de apenas 1 hora.
+
+O resultado final disso tudo era uma apresentação que trazia um volume monumental de informação, porém, poucos insights de negócio para os gestores que assistiam ela. Apenas para fornecer uma visão do que mais ou menos seria um slide dessa apresentação, temos o exemplo abaixo:
+
+
 
 
 
