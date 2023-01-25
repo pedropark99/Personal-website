@@ -15,7 +15,7 @@ Esse artigo discute a minha experiência sobre a construção de Data Storytelli
 [^footnote1]: TakeBlip é uma empresa de tecnologia que fornece muitos serviços e infraestrutura que várias das grandes empresas do Brasil utilizam para vender produtos e serviços em canais de mensageria, como o WhatsApp, Facebook, Instagram, Apple Chat, etc.
 
 ::: {.callout-important}
-Todos os dados, gráficos e imagens mostrados neste artigo são meramente ilustrativos, e não representam os dados da plataforma Blip ou do Banco BMG de nenhuma forma ou dimensão! Todos os números apresentados foram gerados de forma aleatória por um computador!
+Todos os dados, gráficos e imagens mostrados neste artigo são meramente ilustrativos. Todos os números apresentados foram gerados de forma aleatória por um computador! Portanto, eles não representam os dados reais da plataforma Blip ou do Banco BMG de nenhuma forma ou dimensão!
 :::
 
 # Data Storytelling não é sobre escolher "o melhor gráfico"
@@ -32,13 +32,23 @@ Na época, estávamos construindo um relatório mensal contendo vários indicado
 
 Contudo, o formato dessa apresentação era problemático. Nós trazíamos uma **quantidade monumental** de informações para o banco. A apresentação usualmente trazia em torno de 40 slides diferentes, com aproximadamente 36 gráficos e 70 indicadores diferentes. Para mais, nós tentávamos apresentar todo esse volume de informações em uma reunião de apenas 1 hora.
 
-O resultado final disso tudo era uma apresentação que trazia um volume monumental de informações, porém, um volume muito pequeno de insights e novas ideias de negócio para os gestores. Como um exemplo mais visual de como era essa apresentação, a imagem abaixo apresenta um dos vários slides dessa apresentação^[Vale relembrar que os números e gráficos apresentados nessa imagem são meramente ilustrativos, e, foram definidos de forma completamente aleatória.]:
+O resultado final disso tudo era uma apresentação que trazia um volume monumental de informações, porém, também trazia um volume muito pequeno de insights e novas ideias de negócio para os gestores. Como um exemplo mais visual de como era essa apresentação, a imagem abaixo representa um dos vários slides dessa apresentação^[Vale relembrar que os números e gráficos apresentados nessa imagem são meramente ilustrativos, e, foram definidos de forma completamente aleatória.]. Imagine que essa apresentação trazia em torno de 40 slides semelhantes a esse:
 
-![Representação de uma página da versão antiga do relatório](./../print-report1.png)
+![Representação de um slide da versão antiga do relatório](./../print-report1.png)
 
-Perceba que esse slide se parece mais com uma página de um dashboard, do que de um relatório apresentando as últimas tendências do mercado ou de uma parte específica do negócio. Isso é muito importante! Se a sua apresentação traz vários indicadores diferentes sem contextualizá-los, sem relacioná-los uns com os outros, sem trazer o significado/resultado deles, ela muito provavelmente vai se parecer muito com os dashboards que você já produz para o seu cliente.
+Perceba que esse slide se parece mais com uma página de um dashboard, do que de um relatório apresentando as últimas tendências do mercado ou de uma parte específica do negócio. Isso é muito importante! Se a sua apresentação traz vários indicadores diferentes espalhados pela página, sem contextualizá-los, sem relacioná-los uns com os outros, sem trazer o resultado deles, essa apresentação vai se parecer muito provavelmente com os dashboards que você já produz para o seu cliente.
 
-Logo, qual o incentivo/motivo/razão que o seu cliente possui para assistir a essa apresentação? Em outras palavras, se a sua apresentação mostra os mesmos gráficos/indicadores que os seus dashboards apresentam, o seu cliente não tem incentivo/motivo nenhum para assistir a sua apresentação. Pois **não há nada na sua apresentação que seja novo**, ou nenhuma informação da qual o seu cliente não tenha já acesso diretamente.
+Logo, qual é o incentivo/motivo/razão que o seu cliente tem para assistir a essa apresentação? Em outras palavras, se a sua apresentação mostra os mesmos gráficos/indicadores que os seus dashboards apresentam, o seu cliente não tem incentivo/motivo nenhum para assistir a sua apresentação. Pois **não há nada na sua apresentação que seja novo**, ou nenhuma informação da qual o seu cliente não tenha já acesso diretamente.
+
+# Como evoluímos ?
+
+Agora, nas próximas seções deste artigo, vamos discutir como nós utilizamos data storytelling para evoluir esse modelo de apresentação para algo de melhor, algo que fosse de maior clareza e impacto para o nosso cliente.
+
+## Uma guerra constante pela atenção
+
+Quando estamos apresentando algo, estamos constantemente batalhando pela atenção dos nossos espectadores. Essa é uma batalha difícil, não apenas porque nós podemos (sem querer) atrair a atenção de nossos espectadores para os lugares errados, mas também porque existem simplesmente fontes de distração em excesso no mundo moderno!
+
+Os seus espectadores podem estar mais interessados na mensagem que eles acabam de receber no celular, ou na quantidade de emails que eles precisam responder, do que no conteúdo de sua apresentação. 
 
 
 # Modelo dos quatro C's
