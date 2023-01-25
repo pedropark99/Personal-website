@@ -94,7 +94,7 @@ pl <- df |>
   ) +
   scale_fill_manual(values = cores) +
   tema_grafico +
-  labs(title = "Número de atendidos e perdidos por hora") +
+  labs(title = "Número de tickets atendidos e perdidos por hora") +
   guides(size = "none")
 
 
@@ -106,4 +106,6 @@ ragg::agg_png(
 )
 print(pl)
 dev.off()
+
+
 

@@ -32,11 +32,13 @@ Na época, estávamos construindo um relatório mensal contendo vários indicado
 
 Contudo, o formato dessa apresentação era problemático. Nós trazíamos uma quantidade monumental de informações para o banco. A apresentação usualmente trazia em torno de 40 slides diferentes, com aproximadamente 36 gráficos e 70 indicadores diferentes. Para mais, nós tentávamos apresentar todo esse volume de informações em uma reunião de apenas 1 hora.
 
-O resultado final disso tudo era uma apresentação que trazia um volume monumental de informação, porém, poucos insights de negócio para os gestores que assistiam ela. Apenas para fornecer uma visão do que mais ou menos seria um slide dessa apresentação, temos o exemplo abaixo:
+O resultado final disso tudo era uma apresentação que trazia um volume monumental de informação, porém, poucos insights de negócio para os gestores que assistiam a ela. Como um exemplo mais visual de como era essa apresentação, a imagem abaixo apresenta como era um dos vários slides dessa apresentação^[Vale relembrar que os números e gráficos apresentados nessa imagem são meramente ilustrativos, e, foram definidos de forma completamente aleatória.]:
 
+![Representação de uma página da versão antiga do relatório](./../print-report1.png)
 
+Perceba que esse slide se parece mais com uma página específica de um dashboard, do que de um relatório apresentando as últimas tendências do mercado ou de um negócio específico. Isso é muito importante. Se a sua apresentação/relatório de dados apresenta vários indicadores diferentes sem relacioná-los, sem trazer o significado/resultado deles, ela muito provavelmente vai se parecer muito com os dashboards que você já produz para o seu cliente.
 
-
+Logo, qual o incentivo/motivo/razão de você criar este relatório para o seu cliente? Em outras palavras, se a sua apresentação apresenta os mesmos gráficos/indicadores que os seus dashboards apresentam, o seu cliente não tem incentivo/motivo nenhum para assistir a sua apresentação. Pois não há nada na sua apresentação que seja novo, ou nenhuma informação da qual o seu cliente não tenha já acesso diretamente.
 
 
 # Modelo dos quatro C's
