@@ -69,16 +69,16 @@ Important
 </section>
 <section id="sec-texto-longo" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="sec-texto-longo"><span class="header-section-number">3.3</span> Evite textos longos em seus slides</h2>
-<p>Tente ser parsimonioso nos seus slides. Isto é, tente incluir o mínimo possível de informação dentro dele, e, em geral, evite incluir textos muito longos em seus slides. Veja o slide em Figure&nbsp;2 como exemplo. O problema principal desse slide, é que ele divide muito a atenção de seu espectador.</p>
+<p>Tente ser parsimonioso nos seus slides. Isto é, tente incluir o mínimo possível de informação dentro dele. Em geral, evite incluir textos muito longos em seus slides. Veja o slide em Figure&nbsp;2 como exemplo. O problema principal desse slide, é que ele divide muito a atenção de seu espectador.</p>
 <div id="fig-texto-longo" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="https://pedro-faria.netlify.app/posts/2023/2023-01-20-storytelling/texto-longo.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Figure&nbsp;2: Slide com um parágrafo longo</figcaption><p></p>
 </figure>
 </div>
-<p>Ao apresentar esse slide, os seus espectadores tem que prestar atenção na sua voz, no que você está comunicando verbalmente, e, ao mesmo tempo, prestar atenção também no conteúdo do slide. Contudo, esse longo parágrafo no canto esquerdo do slide é problemático. <strong>Pois ele chama atenção demais!</strong></p>
+<p>Ao apresentar esse slide, os seus espectadores tem que prestar atenção na sua voz. Isto é, no que você está comunicando verbalmente durante a apresentação. E ao mesmo tempo, eles também precisam prestar atenção no conteúdo do slide. Contudo, esse longo parágrafo no canto esquerdo do slide é problemático. <strong>Pois ele chama atenção demais!</strong></p>
 <p>Esse elemento desperta tanto a nossa curiosidade, que ao ver o slide acima, você (leitor) provavelmente tentou ler esse texto longo antes mesmo de ler o que estou descrevendo agora neste parágrafo. O mesmo vai acontecer com os espectadores de sua apresentação. Ou seja, os seus espectadores vão imediatamente tentar ler esse parágrafo longo.</p>
-<p>Contudo, ler e interpretar um texto longo, exige muita atenção. Como resultado, enquanto os seus espectadores leêm esse texto longo presente no slide, eles não vão conseguir prestar atenção em outros elementos de sua apresentação. Por exemplo, na sua fala. Isso pode ser crucial, pois talvez você traga uma informação a mais, ou uma conexão extremamente importante na sua fala, e eles podem acabar perdendo isso enquanto estão lendo.</p>
+<p>Contudo, ler e interpretar um texto longo, exige certo esforço e muita atenção. Como resultado, enquanto os seus espectadores leêm esse texto, eles não vão conseguir prestar atenção em outros elementos de sua apresentação. Por exemplo, na sua fala. Isso pode ser crucial, pois talvez você traga uma informação a mais, ou uma conexão extremamente importante na sua fala, e eles podem acabar perdendo isso enquanto estão lendo o texto.</p>
 </section>
 <section id="entregue-sua-história-aos-poucos" class="level2" data-number="3.4">
 <h2 data-number="3.4" class="anchored" data-anchor-id="entregue-sua-história-aos-poucos"><span class="header-section-number">3.4</span> Entregue sua história aos poucos</h2>
@@ -98,19 +98,20 @@ Important
 </figure>
 </div>
 <p>Apesar do resultado em Figure&nbsp;4 estar um pouco melhor, ainda temos muito conteúdo a ser apresentado e descrito em um slide só. Você pode verificar isso, ou ler os parágrafos longos que removemos do slide em Figure&nbsp;3.</p>
-<p>Temos vários efeitos sendo descritos ao mesmo tempo nesses parágrafos: 1) queda na volumetria; 2) aumento nas vendas; 3) aumento na taxa de conversão; 4) melhoria na taxa de sucesso de API; Qual desses vários efeitos é o principal resultado? Em outras palavras, qual desses efeitos é o que mais interessa os gerentes que estão assistindo à sua apresentação? Como esses efeitos estão correlacionados? Porque esses efeitos ocorreram?</p>
-<p>São muitas informações sendo descritas em um único slide, e como resultado, muitas dúvidas surgem dessas informações. Certamente o aumento sobre as vendas é o efeito que mais interessa os gerentes que estão assistindo a sua apresentação, porém, a atenção sobre esse efeito está dissipado em meio a tantos efeitos sendo descritos ao mesmo tempo.</p>
-<p>Uma estrutura melhor para esse slide seria forcarmos nossa atenção primeiro no efeito mais importante de todos. Ou seja, deveríamos montar um único slide que mostre claramente o aumento sobre as vendas. Depois, nos próximos slides, podemos relacionar os outros indicadores a esse aumento. Isto é, utilizar esses outros indicadores para explicar como esse aumento nas vendas ocorreu.</p>
+<p>Temos vários efeitos sendo descritos ao mesmo tempo nesses parágrafos: 1) queda na volumetria; 2) aumento nas vendas; 3) aumento na taxa de conversão; 4) melhoria na taxa de sucesso de API; Qual desses vários efeitos é o principal resultado? Em outras palavras, qual desses efeitos é o que mais interessa os gerentes que estão assistindo à sua apresentação? Como esses efeitos estão correlacionados? Porque ou como esses efeitos ocorreram?</p>
+<p>Imagine explicar tudo isso em sua fala. São muitas informações sendo descritas em um único slide, e como resultado, muitas dúvidas surgem dessas informações. Certamente o aumento sobre as vendas é o efeito que mais interessa os gerentes que estão assistindo à sua apresentação, porém, a atenção sobre esse efeito está diluída em meio a tantas outras coisas sendo descritas ao mesmo tempo.</p>
+<p>Uma estrutura melhor e mais eficaz seria forcarmos primeiro a nossa atenção no efeito mais importante de todos. Ou seja, deveríamos montar um único slide que mostre claramente o aumento sobre as vendas. Depois, nos próximos slides, podemos relacionar os outros indicadores a esse aumento. Isto é, utilizar esses outros indicadores para explicar como esse aumento nas vendas ocorreu.</p>
+<p>Isso também é muito importante! Todo gerente gosta muito de ouvir a palavra “aumento nas vendas”. Porém, ele também está sempre interessado em saber como esse aumento foi gerado. Ou seja, ele precisa saber quais foram as ações que geraram esse impacto positivo. Ao identificar essas ações, ele pode talvez replicá-las para outras partes de seu negócio, com o objetivo de ampliar ainda mais esses efeitos.</p>
 </section>
-</section>
-<section id="modelo-dos-quatro-cs" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Modelo dos quatro C’s</h1>
+<section id="o-modelo-dos-quatro-cs-como-um-excelente-guia" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="o-modelo-dos-quatro-cs-como-um-excelente-guia"><span class="header-section-number">3.5</span> O modelo dos quatro C’s como um excelente guia</h2>
 <p>O modelo dos quatro C’s se refere a essas quatro palavras:</p>
 <blockquote class="blockquote">
 <p>Contexto, Conflito, Consequência, Conselho.</p>
 </blockquote>
 
 
+</section>
 </section>
 
 
@@ -1428,7 +1429,7 @@ Damji, Jules, Brooke Wenig, Tathagata Das, and Denny Lee. 2020. <em>Learning Spa
   <category>Apache Spark</category>
   <category>Book</category>
   <guid>https://pedro-faria.netlify.app/publications/book/introd-pyspark/en/index.html</guid>
-  <pubDate>Thu, 26 Jan 2023 19:24:16 GMT</pubDate>
+  <pubDate>Thu, 26 Jan 2023 21:58:43 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/publications/book/introd-pyspark/featured.png" medium="image" type="image/png" height="215" width="144"/>
 </item>
 </channel>
