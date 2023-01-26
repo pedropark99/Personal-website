@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/2023/2023-01-20-storytelling/pt/index.html",
       "/posts/2023/2023-01-10-join-duplicates/pt/index.html",
       "/posts/2022/2022-12-26-4th-edition-rbook/pt/index.html",
       "/posts/2022/2022-12-21-spark-map-v0.2.3/en/index.html",
@@ -27,6 +28,7 @@
   {
     "listing": "/posts/index.html",
     "items": [
+      "/posts/2023/2023-01-20-storytelling/pt/index.html",
       "/posts/2023/2023-01-10-join-duplicates/pt/index.html",
       "/posts/2022/2022-12-26-4th-edition-rbook/pt/index.html",
       "/posts/2022/2022-12-21-spark-map-v0.2.3/en/index.html",
@@ -42,6 +44,7 @@
   {
     "listing": "/posts/pt.html",
     "items": [
+      "/posts/2023/2023-01-20-storytelling/pt/index.html",
       "/posts/2023/2023-01-10-join-duplicates/pt/index.html",
       "/posts/2022/2022-12-26-4th-edition-rbook/pt/index.html",
       "/posts/2022/2022-12-14-power-bi-memory-error/pt/index.html",

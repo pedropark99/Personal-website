@@ -10,7 +10,88 @@
 <atom:link href="https://pedro-faria.netlify.app/index.xml" rel="self" type="application/rss+xml"/>
 <description>A blog about programming and data analysis, specially with R and Python</description>
 <generator>quarto-1.2.262</generator>
-<lastBuildDate>Tue, 10 Jan 2023 03:00:00 GMT</lastBuildDate>
+<lastBuildDate>Fri, 20 Jan 2023 03:00:00 GMT</lastBuildDate>
+<item>
+  <title>Um estudo de caso sobre Data Storytelling em um dos maiores bancos brasileiros</title>
+  <dc:creator>Pedro Duarte Faria</dc:creator>
+  <link>https://pedro-faria.netlify.app/posts/2023/2023-01-20-storytelling/pt/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="introdução" class="level1">
+<h1>Introdução</h1>
+<p>Esse artigo discute o meu processo de construção de <em>Data Storytelling</em> dentro de um relatório mensal entregue ao Banco BMG, o qual é um dos maiores bancos comerciais do mercado brasileiro. Busco compartilhar o que aprendi nesse processo, e dou algumas dicas que possivelmente vão ajudá-lo a construir relatórios de dados mais intuitivos, claros e efetivos.</p>
+<p>Esse processo de construção levou alguns dias de análise, reflexão, planejamento e design, mas ele também levou vários meses de testes e feedbacks, com pequenos aprendizados e ajustes. E como todo grande trabalho, ele também envolveu mais de uma pessoa.</p>
+<p>Na época, eu tive ajuda de minha parceira de trabalho, a <a href="https://www.linkedin.com/in/andressa-de-souza-freitas-697195177/">Andressa de Souza Freitas</a>, e, principalmente, da UX Designer <a href="https://www.linkedin.com/in/alefernandesbranding/">Alê Fernandes</a>. Os conhecimentos da Alê de certa forma, revolucionaram a forma como eu construo minhas apresentações. Portanto, uma grande parte do conhecimento exposto neste artigo eu aprendi com ela ❤️.</p>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Todos os dados, gráficos e imagens mostrados neste artigo são meramente ilustrativos. Todos os números apresentados foram gerados de forma aleatória por um computador! Portanto, eles não representam os dados reais da plataforma Blip ou do Banco BMG de nenhuma forma ou dimensão!</p>
+</div>
+</div>
+</section>
+<section id="como-era-esse-relatório-antes" class="level1">
+<h1>Como era esse relatório antes ?</h1>
+<p>Na época, estávamos construindo um relatório mensal contendo vários indicadores e gráficos que mostravam o estado atual e a evolução recente dos serviços e produtos do Banco BMG ofertados dentro do canal do WhatsApp.</p>
+<p>Contudo, o formato dessa apresentação era problemático. Nós trazíamos uma <strong>quantidade monumental</strong> de informações para o banco. A apresentação usualmente trazia em torno de 40 slides diferentes, com aproximadamente 36 gráficos e 70 indicadores diferentes. Para mais, nós tentávamos apresentar todo esse volume de informações em uma reunião de apenas 1 hora.</p>
+<p>O resultado final disso tudo era uma apresentação que trazia um volume monumental de informações, porém, que também trazia um volume muito pequeno de insights e novas ideias de negócio para os gestores. Como um exemplo mais visual de como era essa apresentação, a imagem abaixo representa um dos vários slides dessa apresentação<sup>1</sup>. Imagine que essa apresentação trazia em torno de 40 slides semelhantes a esse:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://pedro-faria.netlify.app/posts/2023/2023-01-20-storytelling/print-report1.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Representação de um slide da versão antiga do relatório</figcaption><p></p>
+</figure>
+</div>
+<p>Perceba que esse slide se parece mais com uma página de um dashboard, do que de um relatório apresentando as últimas tendências do mercado ou do negócio do banco. <strong>Isso é muito importante!</strong> Se a sua apresentação traz vários indicadores diferentes espalhados pela página, sem contextualizá-los, sem relacioná-los uns com os outros, sem trazer o que eles significam em conjunto, essa apresentação vai muito provavelmente se parecer com os dashboards que você já produz para o seu cliente.</p>
+<p>Tendo isso em emten, qual é o incentivo/motivo/razão que o seu cliente tem para assistir à sua apresentação? Em outras palavras, se a sua apresentação mostra os mesmos gráficos/indicadores que os seus dashboards apresentam, o seu cliente não tem incentivo/motivo nenhum para assistir à sua apresentação. Pois <strong>não há nada na sua apresentação que seja novo</strong>, ou nenhuma informação da qual o seu cliente não tenha já acesso diretamente.</p>
+</section>
+<section id="como-evoluímos" class="level1">
+<h1>Como evoluímos ?</h1>
+<p>Agora que você possui uma noção do tamanho que era o problema, nas próximas seções deste artigo, vou discutir como nós utilizamos data storytelling para evoluir esse modelo de apresentação para algo melhor, algo que desse maior clareza e impacto para o nosso cliente.</p>
+<section id="data-storytelling-não-é-sobre-escolher-o-melhor-gráfico" class="level2">
+<h2 class="anchored" data-anchor-id="data-storytelling-não-é-sobre-escolher-o-melhor-gráfico">Data Storytelling não é sobre escolher “o melhor gráfico”</h2>
+<p>A maioria dos analistas e cientistas entendem o que é “data storytelling”. No entanto, alguns poucos analistas entendem “data storytelling” apenas como um problema de visualização, ou, como a ciência de “escolher os melhores gráficos” para sua apresentação, ou como projetar gráficos inovadores, bonitos e complexos.</p>
+<p>Para esses analistas, eu digo: “a visualização é um aspecto importante dessa matéria. Contudo, data storytelling é sobre <strong>contar histórias</strong>. Não sobre visualização”. Sim! Escolher a visualização certa, torná-la melhor, mais bonita e mais limpa é muito importante sim! Porque isso vai ajudar você a se envolver com um público maior, e a contar sua história de uma maneira mais clara e eficaz.</p>
+<p><em>Data storytelling</em> é sobre criar histórias com dados, e a visualização de dados é apenas <strong>uma ferramenta para entregar essas histórias</strong> de maneira eficaz. Não escolhemos o “melhor gráfico” para dizer “estamos em conformidade com as diretrizes de <em>data storytelling</em>!”. Escolhemos o “melhor gráfico” para entregarmos nossas histórias, nossas conclusões e nossas recomendações aos nossos clientes da melhor forma possível.</p>
+</section>
+<section id="uma-guerra-constante-pela-atenção" class="level2">
+<h2 class="anchored" data-anchor-id="uma-guerra-constante-pela-atenção">Uma guerra constante pela atenção</h2>
+<p>Quando estamos apresentando algo, estamos constantemente batalhando pela atenção dos nossos espectadores. Essa é uma batalha difícil, não apenas porque nós podemos (sem querer) atrair a atenção de nossos espectadores para os lugares errados, mas também porque existem simplesmente fontes de distração em excesso no mundo moderno!</p>
+<p>Os seus espectadores podem estar mais interessados na mensagem que eles acabam de receber no celular, ou na quantidade de emails que eles precisam responder, do que no conteúdo de sua apresentação.</p>
+</section>
+</section>
+<section id="modelo-dos-quatro-cs" class="level1">
+<h1>Modelo dos quatro C’s</h1>
+<p>O modelo dos quatro C’s se refere a essas quatro palavras:</p>
+<blockquote class="blockquote">
+<p>Contexto, Conflito, Consequência, Conselho.</p>
+</blockquote>
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>Vale relembrar que os números e gráficos apresentados nessa imagem são meramente ilustrativos, e, foram definidos de forma completamente aleatória.↩︎</p></li>
+</ol>
+</section></div> ]]></description>
+  <category>Storytelling</category>
+  <category>Data Storytelling</category>
+  <category>Data Science</category>
+  <guid>https://pedro-faria.netlify.app/posts/2023/2023-01-20-storytelling/pt/index.html</guid>
+  <pubDate>Fri, 20 Jan 2023 03:00:00 GMT</pubDate>
+  <media:content url="https://pedro-faria.netlify.app/posts/2023/2023-01-20-storytelling/mapa-featured.jpg" medium="image" type="image/jpeg"/>
+</item>
 <item>
   <title>JOINs são importantes fontes de duplicações em seus dados</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
@@ -1312,7 +1393,7 @@ Damji, Jules, Brooke Wenig, Tathagata Das, and Denny Lee. 2020. <em>Learning Spa
   <category>Apache Spark</category>
   <category>Book</category>
   <guid>https://pedro-faria.netlify.app/publications/book/introd-pyspark/en/index.html</guid>
-  <pubDate>Wed, 25 Jan 2023 20:43:40 GMT</pubDate>
+  <pubDate>Thu, 26 Jan 2023 15:01:33 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/publications/book/introd-pyspark/featured.png" medium="image" type="image/png" height="215" width="144"/>
 </item>
 </channel>

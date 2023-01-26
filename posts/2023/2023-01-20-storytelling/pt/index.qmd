@@ -4,7 +4,7 @@ description: "Neste artigo discuto a minha experiência sobre como eu construi e
 
 date: 2023-01-20
 categories: ['Storytelling', 'Data Storytelling', 'Data Science']
-draft: true
+draft: false
 toc: true
 
 image: "./../mapa-featured.jpg"
