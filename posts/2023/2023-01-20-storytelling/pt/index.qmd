@@ -54,7 +54,17 @@ Portanto, *data storytelling* é sobre criar histórias com dados, e a visualiza
 
 Quando estamos apresentando algo, estamos constantemente batalhando pela atenção dos nossos espectadores. Essa é uma batalha difícil, não apenas porque nós podemos (sem querer) atrair a atenção de nossos espectadores para os lugares errados, mas também porque existem simplesmente fontes de distração em excesso no mundo moderno (e.g. celulares, emails, etc.)!
 
-Portanto, tente ser parsimonioso nos seus slides. Isto é, tente incluir o mínimo necessário de informação.
+
+### Evite textos longos em seus slides
+
+Tente ser parsimonioso nos seus slides. Isto é, tente incluir o mínimo possível de informação dentro dele, e, em geral, evite incluir textos muito longos em seus slides. Veja o slide abaixo como exemplo. O problema principal desse slide, é que ele divide muito a atenção de seu espectador.
+
+![](./../texto-longo.png)
+
+Imagine você apresentando esse slide. Os seus espectadores tem que prestar atenção na sua voz, no que você está comunicando verbalmente, e, ao mesmo tempo, prestar atenção no conteúdo do slide. Contudo, esse longo parágrafo no canto esquerdo do slide é problemático. Pois ele chama atenção demais! Ele desperta tanto a nossa curiosidade, que ao ver a imagem acima, você mesmo provavelmente tentou ler esse parágrafo longo antes mesmo de ler o que estou descrevendo agora. O mesmo vai acontecer com os espectadores de sua apresentação.
+
+Ou seja, os seus espectadores vão imediatamente tentar ler esse parágrafo longo. Contudo, ler e interpretar um texto longo, exige muita atenção. Como resultado, enquanto os seus espectadores leêm esse parágrafo, eles não vão conseguir prestar atenção em outros elementos da apresentação. Por exemplo, na sua fala. Isso pode ser crucial, pois talvez você traga uma informação a mais, ou uma conexão extremamente importante na sua fala, e eles podem acabar perdendo isso.
+
 
 ### Entregue sua história aos poucos
 
@@ -62,7 +72,7 @@ O cérebro humano tem um limite de quantidade de informações que ele consegue 
 
 Portanto, **entregue aos poucos** as informações que compõe a sua história. Quando estamos explicando um problema/solução de alta complexidade, nós geralmente precisamos explicar vários pontos sobre esse problema/solução para o nosso público. Evite condensar todas essas informações em um único slide! Divida o conteúdo em partes, e explique uma parte de cada vez!
 
-Apenas para fornecer um exemplo bobo sobre isso.
+Apenas para fornecer um exemplo bobo sobre isso, veja o slide abaixo.
 
 
 # Modelo dos quatro C's
