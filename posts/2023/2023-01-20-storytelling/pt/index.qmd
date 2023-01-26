@@ -35,7 +35,7 @@ O resultado final disso tudo era uma apresentação que trazia um volume monumen
 
 Perceba que esse slide se parece mais com uma página de um dashboard, do que de um relatório apresentando as últimas tendências do mercado ou do negócio do banco. **Isso é muito importante!** Se a sua apresentação traz vários indicadores diferentes espalhados pela página, sem contextualizá-los, sem relacioná-los uns com os outros, sem trazer o que eles significam em conjunto, essa apresentação vai muito provavelmente se parecer com os dashboards que você já produz para o seu cliente.
 
-Tendo isso em emten, qual é o incentivo/motivo/razão que o seu cliente tem para assistir à sua apresentação? Em outras palavras, se a sua apresentação mostra os mesmos gráficos/indicadores que os seus dashboards apresentam, o seu cliente não tem incentivo/motivo nenhum para assistir à sua apresentação. Pois **não há nada na sua apresentação que seja novo**, ou nenhuma informação da qual o seu cliente não tenha já acesso diretamente.
+Tendo isso em mente, qual é o incentivo/motivo/razão que o seu cliente tem para assistir à sua apresentação? Em outras palavras, se a sua apresentação mostra os mesmos gráficos/indicadores que os seus dashboards apresentam, o seu cliente não tem incentivo/motivo nenhum para assistir à sua apresentação. Pois **não há nada na sua apresentação que seja novo**, ou nenhuma informação da qual o seu cliente não tenha já acesso diretamente.
 
 # Como evoluímos ?
 
@@ -48,13 +48,21 @@ A maioria dos analistas e cientistas entendem o que é "data storytelling". No e
 
 Para esses analistas, eu digo: "a visualização é um aspecto importante dessa matéria. Contudo, data storytelling é sobre **contar histórias**. Não sobre visualização". Sim! Escolher a visualização certa, torná-la melhor, mais bonita e mais limpa é muito importante sim! Porque isso vai ajudar você a se envolver com um público maior, e a contar sua história de uma maneira mais clara e eficaz.
 
-*Data storytelling* é sobre criar histórias com dados, e a visualização de dados é apenas **uma ferramenta para entregar essas histórias** de maneira eficaz. Não escolhemos o "melhor gráfico" para dizer "estamos em conformidade com as diretrizes de *data storytelling*!". Escolhemos o "melhor gráfico" para entregarmos nossas histórias, nossas conclusões e nossas recomendações aos nossos clientes da melhor forma possível.
+Portanto, *data storytelling* é sobre criar histórias com dados, e a visualização de dados é apenas **uma ferramenta para entregar essas histórias** de maneira eficaz. Nós escolhemos o "melhor gráfico" para entregarmos nossas histórias, nossas conclusões e nossas recomendações aos nossos clientes da melhor forma possível.
 
 ## Uma guerra constante pela atenção
 
-Quando estamos apresentando algo, estamos constantemente batalhando pela atenção dos nossos espectadores. Essa é uma batalha difícil, não apenas porque nós podemos (sem querer) atrair a atenção de nossos espectadores para os lugares errados, mas também porque existem simplesmente fontes de distração em excesso no mundo moderno!
+Quando estamos apresentando algo, estamos constantemente batalhando pela atenção dos nossos espectadores. Essa é uma batalha difícil, não apenas porque nós podemos (sem querer) atrair a atenção de nossos espectadores para os lugares errados, mas também porque existem simplesmente fontes de distração em excesso no mundo moderno (e.g. celulares, emails, etc.)!
 
-Os seus espectadores podem estar mais interessados na mensagem que eles acabam de receber no celular, ou na quantidade de emails que eles precisam responder, do que no conteúdo de sua apresentação. 
+Portanto, tente ser parsimonioso nos seus slides. Isto é, tente incluir o mínimo necessário de informação.
+
+### Entregue sua história aos poucos
+
+O cérebro humano tem um limite de quantidade de informações que ele consegue processar de uma vez só. Como resultado, se você tentar explicar várias informações de uma vez só para os seus espectadores, eles vão acabar atingindo esse limite, e simplesmente não vão conseguir raciocinar, compreender ou assimilar o que você está explicando.
+
+Portanto, **entregue aos poucos** as informações que compõe a sua história. Quando estamos explicando um problema/solução de alta complexidade, nós geralmente precisamos explicar vários pontos sobre esse problema/solução para o nosso público. Evite condensar todas essas informações em um único slide! Divida o conteúdo em partes, e explique uma parte de cada vez!
+
+Apenas para fornecer um exemplo bobo sobre isso.
 
 
 # Modelo dos quatro C's
