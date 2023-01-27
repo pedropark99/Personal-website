@@ -58,7 +58,7 @@ Quando estamos apresentando algo, estamos constantemente batalhando pela atenç�
 Boa parte do sucesso em *data storytelling* depende de você contar uma história cativante, que consiga capturar a atenção de seus espectadores. Por isso, as próximas seções vão focar bastante em dicas que contribuam para essa captura, ou que te ajudam a não dissipar, reduzir ou atrapalhar a atenção desses espectadores.
 
 
-## Evite textos longos em seus slides {#sec-texto-longo}
+## Por que evitar textos longos em seus slides? {#sec-texto-longo}
 
 Tente ser parsimonioso nos seus slides. Isto é, tente incluir o mínimo possível de informação dentro dele. Em geral, evite incluir textos muito longos em seus slides. Veja o slide em @fig-texto-longo como exemplo. O problema principal desse slide, é que ele divide muito a atenção de seu espectador.
 
@@ -71,31 +71,64 @@ Esse elemento desperta tanto a nossa curiosidade, que ao ver o slide acima, voc�
 Contudo, ler e interpretar um texto longo, exige certo esforço e muita atenção. Como resultado, enquanto os seus espectadores leêm esse texto, eles não vão conseguir prestar atenção em outros elementos de sua apresentação. Por exemplo, na sua fala. Isso pode ser crucial, pois talvez você traga uma informação a mais, ou uma conexão extremamente importante na sua fala, e eles podem acabar perdendo isso enquanto estão lendo o texto.
 
 
+## Trace relações entre os indicadores
+
+Vamos analisar o slide mostrado em @fig-divisao2. Perceba que esse slide, novamente, se parece muito com uma página de um dashboard. Como resultado, o slide não parece tão cativante à primeira vista, pois ele só mostra os indicadores, ele não constrói uma relação, ou **uma história** entre eles.
+
+![Falta de relação entre os indicadores](./../divisao2.png){#fig-divisao2}
+
+Se prestarmos atenção nesses indicadores, podemos identificar alguns efeitos que estão acontecendo ao longo deles. E se refletirmos um pouco mais sobre esses efeitos, vamos perceber que esses efeitos são relacionáveis!
+
+Por exemplo, perceba que há um aumento significativo nas vendas. Tanto no número de propostas vendidas quanto no valor total em si que essas propostas geraram. Porém, perceba que esse crescimento nas vendas não ocorreu no produto "Empréstimo Consignado", e sim, no produto "Empréstimo com garantia de veículos". Ou seja, o produto "Empréstimo Consignado" teve uma queda de vendas nesse mês, porém, o produto "Empréstimo com garantia de veículos" obteve um super resultado que conseguiu cobrir e muito essa queda, e no fim, conseguiu aumentar as vendas como um todo do banco.
+
+Outros efeitos que podemos perceber são os aumentos na taxa de conversão e na taxa de sucesso de API. Esses também são fatores que contribuíram para o aumento nas vendas. Pois um aumento na taxa de conversão significa que uma parcela maior dos nossos clientes está adquirindo os nossos produtos. Já um aumento na taxa de sucesso na API, significa que temos menos erros nos registros das vendas na plataforma, e isso é obviamente positivo, pois nós temos uma perda de vendas menor por causa de travamentos e erros nesse sistema de registro.
+
+Perceba que todas essas relações nos ajudam a **construir uma história** sobre como as vendas aumentaram nesse mês, e é justamente isso que queremos atingir.
+
+
+## Construa sua história em torno de uma mensagem principal
+
+Apenas para deixar claro essa ideia, ao enxergamos os vários efeitos que descrevemos na seção anterior, sobre o slide mostrado em @fig-divisao2, é interessante nos questionarmos: qual desses vários efeitos que descrevemos é o principal resultado? Em outras palavras, qual desses efeitos é o que mais interessa os gerentes que estão assistindo à sua apresentação?
+
+Certamente o aumento sobre as vendas é o efeito principal. É o efeito que mais interessa os gerentes que estão assistindo à sua apresentação. Portanto, tente construir a sua história em torno desse resultado, ou dessa mensagem principal. Use os outros indicadores para explicar como esse resultado principal aconteceu.
+
+Isso também é muito importante! Todo gerente gosta muito de ouvir a palavra "aumento nas vendas". Porém, ele também está sempre interessado em saber como esse aumento foi gerado. Ou seja, ele precisa saber quais foram as ações que geraram esse impacto positivo.
+
+Pois ao identificar essas ações, ele tem a capacidade de replicá-las para outras partes de seu negócio, com o objetivo de ampliar ainda mais esse efeito positivo. Por exemplo, se a melhoria na taxa de sucesso na API foi a ação principal que gerou esse aumento nas vendas, os gerentes podem pensar: "Ótimo! Vamos iniciar ações de revisão sobre as APIs utilizadas no fluxo de venda de outros produtos do banco. Com isso, talvez a gente identifique outros pontos de melhoria que podem ampliar as vendas nesses outros produtos também.".
+
 
 ## Entregue sua história aos poucos
 
 O cérebro humano consegue processar uma quantidade limitada de informações de uma vez só. Como resultado, se você tentar explicar várias informações para os seus espectadores, em um único slide, eles vão acabar atingindo esse limite, e simplesmente não vão conseguir raciocinar, compreender ou assimilar o que você está explicando.
 
-Portanto, **entregue a sua história aos poucos**. Evite condensar várias informações em um único slide! Divida o conteúdo em partes, e explique uma parte de cada vez! Apenas para fornecer um exemplo bobo sobre isso, vamos analisar o slide mostrado em @fig-divisao1.
+Portanto, **entregue a sua história aos poucos**. Evite condensar várias informações em um único slide! Divida o conteúdo em partes, e explique uma parte de cada vez! 
 
-![Muita informação em um único slide - Parte 1](./../divisao1.png){#fig-divisao1}
-
-Nós já vimos em @sec-texto-longo que precisamos sempre evitar textos longos em nossos slides. Portanto, uma melhoria imediata que podemos fazer no slide acima seria simplesmente retirar os textos e incorporá-los à nossa fala. O resultado dessa ação está em @fig-divisao2.
-
-![Muita informação em um único slide - Parte 2](./../divisao2.png){#fig-divisao2}
-
-Apesar do resultado em @fig-divisao2 estar um pouco melhor, ainda temos muito conteúdo a ser apresentado e descrito em um slide só. Você pode verificar isso, ou ler os parágrafos longos que removemos do slide em @fig-divisao1.
-
-Temos vários efeitos sendo descritos ao mesmo tempo nesses parágrafos: 1) queda na volumetria; 2) aumento nas vendas; 3) aumento na taxa de conversão; 4) melhoria na taxa de sucesso de API; Qual desses vários efeitos é o principal resultado? Em outras palavras, qual desses efeitos é o que mais interessa os gerentes que estão assistindo à sua apresentação? Como esses efeitos estão correlacionados? Porque ou como esses efeitos ocorreram?
-
-Imagine explicar tudo isso em sua fala. São muitas informações sendo descritas em um único slide, e como resultado, muitas dúvidas surgem dessas informações. Certamente o aumento sobre as vendas é o efeito que mais interessa os gerentes que estão assistindo à sua apresentação, porém, a atenção sobre esse efeito está diluída em meio a tantas outras coisas sendo descritas ao mesmo tempo.
+Imagine explicar tudo isso em sua fala. São muitas informações sendo descritas em um único slide, e como resultado, muitas dúvidas surgem dessas informações.
 
 Uma estrutura melhor e mais eficaz seria forcarmos primeiro a nossa atenção no efeito mais importante de todos. Ou seja, deveríamos montar um único slide que mostre claramente o aumento sobre as vendas. Depois, nos próximos slides, podemos relacionar os outros indicadores a esse aumento. Isto é, utilizar esses outros indicadores para explicar como esse aumento nas vendas ocorreu.
 
-Isso também é muito importante! Todo gerente gosta muito de ouvir a palavra "aumento nas vendas". Porém, ele também está sempre interessado em saber como esse aumento foi gerado. Ou seja, ele precisa saber quais foram as ações que geraram esse impacto positivo. Ao identificar essas ações, ele pode talvez replicá-las para outras partes de seu negócio, com o objetivo de ampliar ainda mais esses efeitos.
+## Colocando essas dicas em prática
+
+Portanto, nas seções passadas discutimos as seguintes dicas:
+
+1. Evite textos longos em seus slides;
+2. Trace relações entre os indicadores;
+3. Construa sua história em torno de uma mensagem principal;
+4. Entregue sua história aos poucos;
+
+Vamos botar essas dicas em prática, e reformular o slide mostrado em @fig-divisao2.
+
+
+# Histórias tem estrutura, use essas estruturas ao seu favor
+
 
 ## O modelo dos quatro C's como um excelente guia
 
 O modelo dos quatro C's se refere a essas quatro palavras:
 
 > Contexto, Conflito, Consequência, Conselho.
+
+
+## Evolução do personagem como uma outra alternativa
+
+Relatórios no final do ano são bastante apropriados para incluir seções que mostram a evolução do negócio (ou a evolução do personagem).
