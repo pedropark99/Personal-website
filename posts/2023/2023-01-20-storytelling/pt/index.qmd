@@ -4,9 +4,14 @@ description: "Neste artigo discuto a minha experiência sobre como eu construi e
 
 date: 2023-01-20
 categories: ['Storytelling', 'Data Storytelling', 'Data Science']
-draft: false
+draft: true
 toc: true
 number-sections: true
+
+crossref:
+  fig-title: "Figura"
+  fig-prefix: "Figura"
+  sec-prefix: "Seção"
 
 image: "./../mapa-featured.jpg"
 ---
@@ -45,11 +50,9 @@ Agora que você possui uma noção do tamanho que era o problema, nas próximas 
 
 ## Data Storytelling não é sobre escolher "o melhor gráfico"
 
-A maioria dos analistas e cientistas entendem o que é "data storytelling". No entanto, alguns poucos analistas entendem "data storytelling" apenas como um problema de visualização, ou, como a ciência de "escolher os melhores gráficos" para sua apresentação, ou como projetar gráficos inovadores, bonitos e complexos.
+Alguns poucos analistas entendem "data storytelling" como um problema de visualização, ou, como a ciência de "escolher os melhores gráficos" para sua apresentação, ou como projetar gráficos inovadores, bonitos e complexos.
 
-Para esses analistas, eu digo: "a visualização é um aspecto importante dessa matéria. Contudo, data storytelling é sobre **contar histórias**. Não sobre visualização". Sim! Escolher a visualização certa, torná-la melhor, mais bonita e mais limpa é muito importante sim! Porque isso vai ajudar você a se envolver com um público maior, e a contar sua história de uma maneira mais clara e eficaz.
-
-Portanto, *data storytelling* é sobre criar histórias com dados, e a visualização de dados é apenas **uma ferramenta para entregar essas histórias** de maneira eficaz. Nós escolhemos o "melhor gráfico" para entregarmos nossas histórias, nossas conclusões e nossas recomendações aos nossos clientes da melhor forma possível.
+Contudo, data storytelling é sobre **contar histórias com dados**. Não sobre construir visualizações. Escolher a visualização certa, torná-la melhor, mais bonita e mais limpa, é muito importante, porque isso vai te ajudar a contar sua história de uma maneira mais clara e eficaz, e, com isso, atingir um público maior.
 
 ## Uma guerra constante pela atenção
 
@@ -60,18 +63,20 @@ Boa parte do sucesso em *data storytelling* depende de você contar uma históri
 
 ## Por que evitar textos longos em seus slides? {#sec-texto-longo}
 
-Tente ser parsimonioso nos seus slides. Isto é, tente incluir o mínimo possível de informação dentro dele. Em geral, evite incluir textos muito longos em seus slides. Veja o slide em @fig-texto-longo como exemplo. O problema principal desse slide, é que ele divide muito a atenção de seu espectador.
+Tente ser parsimonioso nos seus slides! Isto é, tente incluir o mínimo possível de informação dentro dele. Em geral, evite incluir textos muito longos em seus slides.
+
+Veja o slide em @fig-texto-longo como exemplo. O problema principal desse slide, é que ele divide muito a atenção de seu espectador.
 
 ![Slide com um parágrafo longo](./../texto-longo.png){#fig-texto-longo}
 
-Ao apresentar esse slide, os seus espectadores tem que prestar atenção na sua voz. Isto é, no que você está comunicando verbalmente durante a apresentação. E ao mesmo tempo, eles também precisam prestar atenção no conteúdo do slide. Contudo, esse longo parágrafo no canto esquerdo do slide é problemático. **Pois ele chama atenção demais!** 
+Ao apresentar um slide, os seus espectadores tem que prestar atenção na sua voz. Isto é, no que você está comunicando verbalmente durante a apresentação. E ao mesmo tempo, eles também precisam prestar atenção no conteúdo do slide. Contudo, esse longo parágrafo no canto esquerdo do slide mostrado em @fig-texto-longo é problemático. **Pois ele chama atenção demais!** 
 
-Esse elemento desperta tanto a nossa curiosidade, que ao ver o slide acima, você (leitor) provavelmente tentou ler esse texto longo antes mesmo de ler o que estou descrevendo agora neste parágrafo. O mesmo vai acontecer com os espectadores de sua apresentação. Ou seja, os seus espectadores vão imediatamente tentar ler esse parágrafo longo.
+Esse elemento desperta tanto a nossa curiosidade, que ao ver esse slide, você (leitor) provavelmente tentou ler esse texto longo antes mesmo de ler o que estou descrevendo agora neste parágrafo. O mesmo vai acontecer com os espectadores de sua apresentação. Ou seja, os seus espectadores vão imediatamente tentar ler esse parágrafo longo.
 
 Contudo, ler e interpretar um texto longo, exige certo esforço e muita atenção. Como resultado, enquanto os seus espectadores leêm esse texto, eles não vão conseguir prestar atenção em outros elementos de sua apresentação. Por exemplo, na sua fala. Isso pode ser crucial, pois talvez você traga uma informação a mais, ou uma conexão extremamente importante na sua fala, e eles podem acabar perdendo isso enquanto estão lendo o texto.
 
 
-## Trace relações entre os indicadores
+## Trace relações entre os indicadores {#sec-relacoes}
 
 Vamos analisar o slide mostrado em @fig-divisao2. Perceba que esse slide, novamente, se parece muito com uma página de um dashboard. Como resultado, o slide não parece tão cativante à primeira vista, pois ele só mostra os indicadores, ele não constrói uma relação, ou **uma história** entre eles.
 
@@ -88,13 +93,13 @@ Perceba que todas essas relações nos ajudam a **construir uma história** sobr
 
 ## Construa sua história em torno de uma mensagem principal
 
-Apenas para deixar claro essa ideia, ao enxergamos os vários efeitos que descrevemos na seção anterior, sobre o slide mostrado em @fig-divisao2, é interessante nos questionarmos: qual desses vários efeitos que descrevemos é o principal resultado? Em outras palavras, qual desses efeitos é o que mais interessa os gerentes que estão assistindo à sua apresentação?
+Apenas para deixar claro essa ideia, ao identificar os vários efeitos que descrevemos em @sec-relacoes, sobre o slide mostrado em @fig-divisao2, é interessante nos questionarmos: qual desses vários efeitos é o principal resultado? Em outras palavras, qual desses efeitos é o que mais interessa os gerentes que estão assistindo à sua apresentação?
 
 Certamente o aumento sobre as vendas é o efeito principal. É o efeito que mais interessa os gerentes que estão assistindo à sua apresentação. Portanto, tente construir a sua história em torno desse resultado, ou dessa mensagem principal. Use os outros indicadores para explicar como esse resultado principal aconteceu.
 
 Isso também é muito importante! Todo gerente gosta muito de ouvir a palavra "aumento nas vendas". Porém, ele também está sempre interessado em saber como esse aumento foi gerado. Ou seja, ele precisa saber quais foram as ações que geraram esse impacto positivo.
 
-Pois ao identificar essas ações, ele tem a capacidade de replicá-las para outras partes de seu negócio, com o objetivo de ampliar ainda mais esse efeito positivo. Por exemplo, se a melhoria na taxa de sucesso na API foi a ação principal que gerou esse aumento nas vendas, os gerentes podem pensar: "Ótimo! Vamos iniciar ações de revisão sobre as APIs utilizadas no fluxo de venda de outros produtos do banco. Com isso, talvez a gente identifique outros pontos de melhoria que podem ampliar as vendas nesses outros produtos também.".
+Pois ao identificar essas ações, ele tem a capacidade de aplicar essas ações em outras partes de seu negócio, com o objetivo de disseminar esse efeito positivo que você descreveu.
 
 
 ## Entregue sua história aos poucos
@@ -102,10 +107,6 @@ Pois ao identificar essas ações, ele tem a capacidade de replicá-las para out
 O cérebro humano consegue processar uma quantidade limitada de informações de uma vez só. Como resultado, se você tentar explicar várias informações para os seus espectadores, em um único slide, eles vão acabar atingindo esse limite, e simplesmente não vão conseguir raciocinar, compreender ou assimilar o que você está explicando.
 
 Portanto, **entregue a sua história aos poucos**. Evite condensar várias informações em um único slide! Divida o conteúdo em partes, e explique uma parte de cada vez! 
-
-Imagine explicar tudo isso em sua fala. São muitas informações sendo descritas em um único slide, e como resultado, muitas dúvidas surgem dessas informações.
-
-Uma estrutura melhor e mais eficaz seria forcarmos primeiro a nossa atenção no efeito mais importante de todos. Ou seja, deveríamos montar um único slide que mostre claramente o aumento sobre as vendas. Depois, nos próximos slides, podemos relacionar os outros indicadores a esse aumento. Isto é, utilizar esses outros indicadores para explicar como esse aumento nas vendas ocorreu.
 
 ## Colocando essas dicas em prática
 

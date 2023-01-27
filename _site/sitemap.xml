@@ -2,90 +2,86 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://pedro-faria.netlify.app/about.html</loc>
-    <lastmod>2023-01-26T15:01:17.283Z</lastmod>
+    <lastmod>2023-01-27T17:54:27.011Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/donate.html</loc>
-    <lastmod>2023-01-26T15:01:21.008Z</lastmod>
+    <lastmod>2023-01-27T17:54:29.590Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/index.html</loc>
-    <lastmod>2023-01-27T16:49:01.034Z</lastmod>
+    <lastmod>2023-01-27T17:54:33.411Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/posts/2020/2020-10-17-formulario-pesquisa/pt/index.html</loc>
-    <lastmod>2023-01-26T15:01:35.008Z</lastmod>
+    <lastmod>2023-01-27T17:54:34.647Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/posts/2021/2021-01-02-tabela-destinataria-fonte/en/index.html</loc>
-    <lastmod>2023-01-26T15:01:36.254Z</lastmod>
+    <lastmod>2023-01-27T17:54:35.774Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/posts/2021/2021-01-02-tabela-destinataria-fonte/pt/index.html</loc>
-    <lastmod>2023-01-26T15:01:37.416Z</lastmod>
+    <lastmod>2023-01-27T17:54:37.053Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/posts/2021/2021-05-26-2nd-edition-rbook/pt/index.html</loc>
-    <lastmod>2023-01-26T15:01:38.660Z</lastmod>
+    <lastmod>2023-01-27T17:54:38.237Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/posts/2022/2022-04-06-3nd-edition-rbook/pt/index.html</loc>
-    <lastmod>2023-01-26T15:01:39.460Z</lastmod>
+    <lastmod>2023-01-27T17:54:39.165Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/posts/2022/2022-11-06-figma-pkgv0.1.0/en/index.html</loc>
-    <lastmod>2023-01-26T15:01:40.704Z</lastmod>
+    <lastmod>2023-01-27T17:54:40.437Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/posts/2022/2022-12-14-power-bi-memory-error/pt/index.html</loc>
-    <lastmod>2023-01-26T15:01:41.798Z</lastmod>
+    <lastmod>2023-01-27T17:54:41.612Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/posts/2022/2022-12-21-spark-map-v0.2.3/en/index.html</loc>
-    <lastmod>2023-01-26T15:01:43.372Z</lastmod>
+    <lastmod>2023-01-27T17:54:43.174Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/posts/2022/2022-12-26-4th-edition-rbook/pt/index.html</loc>
-    <lastmod>2023-01-26T15:01:44.232Z</lastmod>
+    <lastmod>2023-01-27T17:54:44.095Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/posts/2023/2023-01-10-join-duplicates/pt/index.html</loc>
-    <lastmod>2023-01-26T15:01:45.479Z</lastmod>
-  </url>
-  <url>
-    <loc>https://pedro-faria.netlify.app/posts/2023/2023-01-20-storytelling/pt/index.html</loc>
-    <lastmod>2023-01-27T16:48:59.721Z</lastmod>
+    <lastmod>2023-01-27T17:54:45.283Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/posts/en.html</loc>
-    <lastmod>2023-01-26T15:01:48.439Z</lastmod>
+    <lastmod>2023-01-27T17:54:47.839Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/posts/index.html</loc>
-    <lastmod>2023-01-27T16:49:01.972Z</lastmod>
+    <lastmod>2023-01-27T17:54:48.946Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/posts/pt.html</loc>
-    <lastmod>2023-01-27T16:49:02.922Z</lastmod>
+    <lastmod>2023-01-27T17:54:50.161Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/publications/book/introd-pyspark/en/index.html</loc>
-    <lastmod>2023-01-26T15:01:52.463Z</lastmod>
+    <lastmod>2023-01-27T17:54:51.017Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/publications/book/introducao_linguagem_R/pt/index.html</loc>
-    <lastmod>2023-01-26T15:01:53.487Z</lastmod>
+    <lastmod>2023-01-27T17:54:51.755Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/publications/en.html</loc>
-    <lastmod>2023-01-26T15:01:54.364Z</lastmod>
+    <lastmod>2023-01-27T17:54:52.649Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/publications/index.html</loc>
-    <lastmod>2023-01-26T15:01:55.294Z</lastmod>
+    <lastmod>2023-01-27T17:54:53.415Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/publications/pt.html</loc>
-    <lastmod>2023-01-26T15:01:56.380Z</lastmod>
+    <lastmod>2023-01-27T17:54:54.249Z</lastmod>
   </url>
 </urlset>

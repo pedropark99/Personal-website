@@ -254,7 +254,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
   <li><a href="#data-storytelling-não-é-sobre-escolher-o-melhor-gráfico" id="toc-data-storytelling-não-é-sobre-escolher-o-melhor-gráfico" class="nav-link" data-scroll-target="#data-storytelling-não-é-sobre-escolher-o-melhor-gráfico"><span class="toc-section-number">3.1</span>  Data Storytelling não é sobre escolher “o melhor gráfico”</a></li>
   <li><a href="#uma-guerra-constante-pela-atenção" id="toc-uma-guerra-constante-pela-atenção" class="nav-link" data-scroll-target="#uma-guerra-constante-pela-atenção"><span class="toc-section-number">3.2</span>  Uma guerra constante pela atenção</a></li>
   <li><a href="#sec-texto-longo" id="toc-sec-texto-longo" class="nav-link" data-scroll-target="#sec-texto-longo"><span class="toc-section-number">3.3</span>  Por que evitar textos longos em seus slides?</a></li>
-  <li><a href="#trace-relações-entre-os-indicadores" id="toc-trace-relações-entre-os-indicadores" class="nav-link" data-scroll-target="#trace-relações-entre-os-indicadores"><span class="toc-section-number">3.4</span>  Trace relações entre os indicadores</a></li>
+  <li><a href="#sec-relacoes" id="toc-sec-relacoes" class="nav-link" data-scroll-target="#sec-relacoes"><span class="toc-section-number">3.4</span>  Trace relações entre os indicadores</a></li>
   <li><a href="#construa-sua-história-em-torno-de-uma-mensagem-principal" id="toc-construa-sua-história-em-torno-de-uma-mensagem-principal" class="nav-link" data-scroll-target="#construa-sua-história-em-torno-de-uma-mensagem-principal"><span class="toc-section-number">3.5</span>  Construa sua história em torno de uma mensagem principal</a></li>
   <li><a href="#entregue-sua-história-aos-poucos" id="toc-entregue-sua-história-aos-poucos" class="nav-link" data-scroll-target="#entregue-sua-história-aos-poucos"><span class="toc-section-number">3.6</span>  Entregue sua história aos poucos</a></li>
   <li><a href="#colocando-essas-dicas-em-prática" id="toc-colocando-essas-dicas-em-prática" class="nav-link" data-scroll-target="#colocando-essas-dicas-em-prática"><span class="toc-section-number">3.7</span>  Colocando essas dicas em prática</a></li>
@@ -296,11 +296,11 @@ Important
 <h1 data-number="2"><span class="header-section-number">2</span> Como era esse relatório antes ?</h1>
 <p>Na época, estávamos construindo um relatório mensal contendo vários indicadores e gráficos que mostravam o estado atual e a evolução recente dos serviços e produtos do Banco BMG ofertados dentro do canal do WhatsApp.</p>
 <p>Contudo, o formato dessa apresentação era problemático. Nós trazíamos uma <strong>quantidade monumental</strong> de informações para o banco. A apresentação usualmente trazia em torno de 40 slides diferentes, com aproximadamente 36 gráficos e 70 indicadores diferentes. Para mais, nós tentávamos apresentar todo esse volume de informações em uma reunião de apenas 1 hora.</p>
-<p>O resultado final disso tudo era uma apresentação que trazia um volume monumental de informações, porém, que também trazia um volume muito pequeno de insights e novas ideias de negócio para os gestores. Em <a href="#fig-print-report1">Figure&nbsp;1</a> temos uma representação de um dos vários slides dessa apresentação<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. Imagine que essa apresentação trazia em torno de 40 slides semelhantes a esse:</p>
+<p>O resultado final disso tudo era uma apresentação que trazia um volume monumental de informações, porém, que também trazia um volume muito pequeno de insights e novas ideias de negócio para os gestores. Em <a href="#fig-print-report1">Figura&nbsp;1</a> temos uma representação de um dos vários slides dessa apresentação<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. Imagine que essa apresentação trazia em torno de 40 slides semelhantes a esse:</p>
 <div id="fig-print-report1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="./../print-report1.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;1: Representação de um slide da versão antiga do relatório</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;1: Representação de um slide da versão antiga do relatório</figcaption><p></p>
 </figure>
 </div>
 <p>Perceba que esse slide se parece mais com uma página de um dashboard, do que de um relatório apresentando as últimas tendências do mercado ou do negócio do banco. <strong>Isso é muito importante!</strong> Se a sua apresentação traz vários indicadores diferentes espalhados pela página, sem contextualizá-los, sem relacioná-los uns com os outros, sem trazer o que eles significam em conjunto, essa apresentação vai muito provavelmente se parecer com os dashboards que você já produz para o seu cliente.</p>
@@ -311,9 +311,8 @@ Important
 <p>Agora que você possui uma noção do tamanho que era o problema, nas próximas seções deste artigo, vou discutir como nós utilizamos data storytelling para evoluir esse modelo de apresentação para algo melhor, algo que desse maior clareza e impacto para o nosso cliente.</p>
 <section id="data-storytelling-não-é-sobre-escolher-o-melhor-gráfico" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="data-storytelling-não-é-sobre-escolher-o-melhor-gráfico"><span class="header-section-number">3.1</span> Data Storytelling não é sobre escolher “o melhor gráfico”</h2>
-<p>A maioria dos analistas e cientistas entendem o que é “data storytelling”. No entanto, alguns poucos analistas entendem “data storytelling” apenas como um problema de visualização, ou, como a ciência de “escolher os melhores gráficos” para sua apresentação, ou como projetar gráficos inovadores, bonitos e complexos.</p>
-<p>Para esses analistas, eu digo: “a visualização é um aspecto importante dessa matéria. Contudo, data storytelling é sobre <strong>contar histórias</strong>. Não sobre visualização”. Sim! Escolher a visualização certa, torná-la melhor, mais bonita e mais limpa é muito importante sim! Porque isso vai ajudar você a se envolver com um público maior, e a contar sua história de uma maneira mais clara e eficaz.</p>
-<p>Portanto, <em>data storytelling</em> é sobre criar histórias com dados, e a visualização de dados é apenas <strong>uma ferramenta para entregar essas histórias</strong> de maneira eficaz. Nós escolhemos o “melhor gráfico” para entregarmos nossas histórias, nossas conclusões e nossas recomendações aos nossos clientes da melhor forma possível.</p>
+<p>Alguns poucos analistas entendem “data storytelling” como um problema de visualização, ou, como a ciência de “escolher os melhores gráficos” para sua apresentação, ou como projetar gráficos inovadores, bonitos e complexos.</p>
+<p>Contudo, data storytelling é sobre <strong>contar histórias com dados</strong>. Não sobre construir visualizações. Escolher a visualização certa, torná-la melhor, mais bonita e mais limpa, é muito importante, porque isso vai te ajudar a contar sua história de uma maneira mais clara e eficaz, e, com isso, atingir um público maior.</p>
 </section>
 <section id="uma-guerra-constante-pela-atenção" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="uma-guerra-constante-pela-atenção"><span class="header-section-number">3.2</span> Uma guerra constante pela atenção</h2>
@@ -322,24 +321,25 @@ Important
 </section>
 <section id="sec-texto-longo" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="sec-texto-longo"><span class="header-section-number">3.3</span> Por que evitar textos longos em seus slides?</h2>
-<p>Tente ser parsimonioso nos seus slides. Isto é, tente incluir o mínimo possível de informação dentro dele. Em geral, evite incluir textos muito longos em seus slides. Veja o slide em <a href="#fig-texto-longo">Figure&nbsp;2</a> como exemplo. O problema principal desse slide, é que ele divide muito a atenção de seu espectador.</p>
+<p>Tente ser parsimonioso nos seus slides! Isto é, tente incluir o mínimo possível de informação dentro dele. Em geral, evite incluir textos muito longos em seus slides.</p>
+<p>Veja o slide em <a href="#fig-texto-longo">Figura&nbsp;2</a> como exemplo. O problema principal desse slide, é que ele divide muito a atenção de seu espectador.</p>
 <div id="fig-texto-longo" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="./../texto-longo.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;2: Slide com um parágrafo longo</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;2: Slide com um parágrafo longo</figcaption><p></p>
 </figure>
 </div>
-<p>Ao apresentar esse slide, os seus espectadores tem que prestar atenção na sua voz. Isto é, no que você está comunicando verbalmente durante a apresentação. E ao mesmo tempo, eles também precisam prestar atenção no conteúdo do slide. Contudo, esse longo parágrafo no canto esquerdo do slide é problemático. <strong>Pois ele chama atenção demais!</strong></p>
-<p>Esse elemento desperta tanto a nossa curiosidade, que ao ver o slide acima, você (leitor) provavelmente tentou ler esse texto longo antes mesmo de ler o que estou descrevendo agora neste parágrafo. O mesmo vai acontecer com os espectadores de sua apresentação. Ou seja, os seus espectadores vão imediatamente tentar ler esse parágrafo longo.</p>
+<p>Ao apresentar um slide, os seus espectadores tem que prestar atenção na sua voz. Isto é, no que você está comunicando verbalmente durante a apresentação. E ao mesmo tempo, eles também precisam prestar atenção no conteúdo do slide. Contudo, esse longo parágrafo no canto esquerdo do slide mostrado em <a href="#fig-texto-longo">Figura&nbsp;2</a> é problemático. <strong>Pois ele chama atenção demais!</strong></p>
+<p>Esse elemento desperta tanto a nossa curiosidade, que ao ver esse slide, você (leitor) provavelmente tentou ler esse texto longo antes mesmo de ler o que estou descrevendo agora neste parágrafo. O mesmo vai acontecer com os espectadores de sua apresentação. Ou seja, os seus espectadores vão imediatamente tentar ler esse parágrafo longo.</p>
 <p>Contudo, ler e interpretar um texto longo, exige certo esforço e muita atenção. Como resultado, enquanto os seus espectadores leêm esse texto, eles não vão conseguir prestar atenção em outros elementos de sua apresentação. Por exemplo, na sua fala. Isso pode ser crucial, pois talvez você traga uma informação a mais, ou uma conexão extremamente importante na sua fala, e eles podem acabar perdendo isso enquanto estão lendo o texto.</p>
 </section>
-<section id="trace-relações-entre-os-indicadores" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="trace-relações-entre-os-indicadores"><span class="header-section-number">3.4</span> Trace relações entre os indicadores</h2>
-<p>Vamos analisar o slide mostrado em <a href="#fig-divisao2">Figure&nbsp;3</a>. Perceba que esse slide, novamente, se parece muito com uma página de um dashboard. Como resultado, o slide não parece tão cativante à primeira vista, pois ele só mostra os indicadores, ele não constrói uma relação, ou <strong>uma história</strong> entre eles.</p>
+<section id="sec-relacoes" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="sec-relacoes"><span class="header-section-number">3.4</span> Trace relações entre os indicadores</h2>
+<p>Vamos analisar o slide mostrado em <a href="#fig-divisao2">Figura&nbsp;3</a>. Perceba que esse slide, novamente, se parece muito com uma página de um dashboard. Como resultado, o slide não parece tão cativante à primeira vista, pois ele só mostra os indicadores, ele não constrói uma relação, ou <strong>uma história</strong> entre eles.</p>
 <div id="fig-divisao2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="./../divisao2.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;3: Falta de relação entre os indicadores</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;3: Falta de relação entre os indicadores</figcaption><p></p>
 </figure>
 </div>
 <p>Se prestarmos atenção nesses indicadores, podemos identificar alguns efeitos que estão acontecendo ao longo deles. E se refletirmos um pouco mais sobre esses efeitos, vamos perceber que esses efeitos são relacionáveis!</p>
@@ -349,17 +349,15 @@ Important
 </section>
 <section id="construa-sua-história-em-torno-de-uma-mensagem-principal" class="level2" data-number="3.5">
 <h2 data-number="3.5" class="anchored" data-anchor-id="construa-sua-história-em-torno-de-uma-mensagem-principal"><span class="header-section-number">3.5</span> Construa sua história em torno de uma mensagem principal</h2>
-<p>Apenas para deixar claro essa ideia, ao enxergamos os vários efeitos que descrevemos na seção anterior, sobre o slide mostrado em <a href="#fig-divisao2">Figure&nbsp;3</a>, é interessante nos questionarmos: qual desses vários efeitos que descrevemos é o principal resultado? Em outras palavras, qual desses efeitos é o que mais interessa os gerentes que estão assistindo à sua apresentação?</p>
+<p>Apenas para deixar claro essa ideia, ao identificar os vários efeitos que descrevemos em <a href="#sec-relacoes">Seção&nbsp;3.4</a>, sobre o slide mostrado em <a href="#fig-divisao2">Figura&nbsp;3</a>, é interessante nos questionarmos: qual desses vários efeitos é o principal resultado? Em outras palavras, qual desses efeitos é o que mais interessa os gerentes que estão assistindo à sua apresentação?</p>
 <p>Certamente o aumento sobre as vendas é o efeito principal. É o efeito que mais interessa os gerentes que estão assistindo à sua apresentação. Portanto, tente construir a sua história em torno desse resultado, ou dessa mensagem principal. Use os outros indicadores para explicar como esse resultado principal aconteceu.</p>
 <p>Isso também é muito importante! Todo gerente gosta muito de ouvir a palavra “aumento nas vendas”. Porém, ele também está sempre interessado em saber como esse aumento foi gerado. Ou seja, ele precisa saber quais foram as ações que geraram esse impacto positivo.</p>
-<p>Pois ao identificar essas ações, ele tem a capacidade de replicá-las para outras partes de seu negócio, com o objetivo de ampliar ainda mais esse efeito positivo. Por exemplo, se a melhoria na taxa de sucesso na API foi a ação principal que gerou esse aumento nas vendas, os gerentes podem pensar: “Ótimo! Vamos iniciar ações de revisão sobre as APIs utilizadas no fluxo de venda de outros produtos do banco. Com isso, talvez a gente identifique outros pontos de melhoria que podem ampliar as vendas nesses outros produtos também.”.</p>
+<p>Pois ao identificar essas ações, ele tem a capacidade de aplicar essas ações em outras partes de seu negócio, com o objetivo de disseminar esse efeito positivo que você descreveu.</p>
 </section>
 <section id="entregue-sua-história-aos-poucos" class="level2" data-number="3.6">
 <h2 data-number="3.6" class="anchored" data-anchor-id="entregue-sua-história-aos-poucos"><span class="header-section-number">3.6</span> Entregue sua história aos poucos</h2>
 <p>O cérebro humano consegue processar uma quantidade limitada de informações de uma vez só. Como resultado, se você tentar explicar várias informações para os seus espectadores, em um único slide, eles vão acabar atingindo esse limite, e simplesmente não vão conseguir raciocinar, compreender ou assimilar o que você está explicando.</p>
 <p>Portanto, <strong>entregue a sua história aos poucos</strong>. Evite condensar várias informações em um único slide! Divida o conteúdo em partes, e explique uma parte de cada vez!</p>
-<p>Imagine explicar tudo isso em sua fala. São muitas informações sendo descritas em um único slide, e como resultado, muitas dúvidas surgem dessas informações.</p>
-<p>Uma estrutura melhor e mais eficaz seria forcarmos primeiro a nossa atenção no efeito mais importante de todos. Ou seja, deveríamos montar um único slide que mostre claramente o aumento sobre as vendas. Depois, nos próximos slides, podemos relacionar os outros indicadores a esse aumento. Isto é, utilizar esses outros indicadores para explicar como esse aumento nas vendas ocorreu.</p>
 </section>
 <section id="colocando-essas-dicas-em-prática" class="level2" data-number="3.7">
 <h2 data-number="3.7" class="anchored" data-anchor-id="colocando-essas-dicas-em-prática"><span class="header-section-number">3.7</span> Colocando essas dicas em prática</h2>
@@ -370,7 +368,7 @@ Important
 <li>Construa sua história em torno de uma mensagem principal;</li>
 <li>Entregue sua história aos poucos;</li>
 </ol>
-<p>Vamos botar essas dicas em prática, e reformular o slide mostrado em <a href="#fig-divisao2">Figure&nbsp;3</a>.</p>
+<p>Vamos botar essas dicas em prática, e reformular o slide mostrado em <a href="#fig-divisao2">Figura&nbsp;3</a>.</p>
 </section>
 </section>
 <section id="histórias-tem-estrutura-use-essas-estruturas-ao-seu-favor" class="level1" data-number="4">
