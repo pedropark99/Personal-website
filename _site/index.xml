@@ -10,7 +10,27 @@
 <atom:link href="https://pedro-faria.netlify.app/index.xml" rel="self" type="application/rss+xml"/>
 <description>A blog about programming and data analysis, specially with R and Python</description>
 <generator>quarto-1.2.262</generator>
-<lastBuildDate>Tue, 10 Jan 2023 03:00:00 GMT</lastBuildDate>
+<lastBuildDate>Mon, 30 Jan 2023 03:00:00 GMT</lastBuildDate>
+<item>
+  <title>What I learned from my first Python package</title>
+  <dc:creator>Pedro Duarte Faria</dc:creator>
+  <link>https://pedro-faria.netlify.app/posts/2023/2023-01-30-python-pckg/en/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+
+
+</section>
+
+ ]]></description>
+  <guid>https://pedro-faria.netlify.app/posts/2023/2023-01-30-python-pckg/en/index.html</guid>
+  <pubDate>Mon, 30 Jan 2023 03:00:00 GMT</pubDate>
+  <media:content url="https://pedro-faria.netlify.app/posts/2023/2023-01-30-python-pckg/package.jpg" medium="image" type="image/jpeg"/>
+</item>
 <item>
   <title>JOINs são importantes fontes de duplicações em seus dados</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
@@ -1312,7 +1332,7 @@ Damji, Jules, Brooke Wenig, Tathagata Das, and Denny Lee. 2020. <em>Learning Spa
   <category>Apache Spark</category>
   <category>Book</category>
   <guid>https://pedro-faria.netlify.app/publications/book/introd-pyspark/en/index.html</guid>
-  <pubDate>Wed, 25 Jan 2023 20:43:40 GMT</pubDate>
+  <pubDate>Mon, 30 Jan 2023 19:59:52 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/publications/book/introd-pyspark/featured.png" medium="image" type="image/png" height="215" width="144"/>
 </item>
 </channel>

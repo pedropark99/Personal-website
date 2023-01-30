@@ -1,0 +1,9 @@
+---
+title: What I learned from my first Python package
+description: Sharing my mistakes from developing my first Python package published at PyPI
+image: "./../package.jpg"
+
+date: 2023-01-30
+---
+
+# Introduction
