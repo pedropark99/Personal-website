@@ -1,9 +1,72 @@
 ---
 title: What I learned from my first Python package
-description: Sharing my mistakes from developing my first Python package published at PyPI
+description: Sharing what I learned from developing my first Python package published at PyPI
 image: "./../package.jpg"
 
 date: 2023-01-30
 ---
 
 # Introduction
+
+In 2022, I developed my first Python package called [`spark_map`](https://github.com/pedropark99/spark_map), and published it at PyPI. I wrote a [post introducing this package](https://pedro-faria.netlify.app/posts/2022/2022-12-21-spark-map-v0.2.3/en/), and showing a small use case, if you are interested.
+
+Although `spark_map` is a small package, I had a hard time developing it. More specifically, the python code was not hard to develop. But packaging it into a proper package was hard. In this post, I want to share a few things that I learned about Python package development.
+
+# Before I say anything, some references
+
+The development of this package involved reading several articles, and doing some practical tests. Here I share the best resources and references I discover during this process.
+
+First, a great article to start your project is the [Packaging Python Projects tutorial](https://packaging.python.org/en/latest/tutorials/packaging-projects/). This tutorial is written by the PyPA, or, [Python Packaging Authority](https://www.pypa.io/en/latest/) team[^foot1], and it seems to be "The Place" to search for the best practices on Python package projects.
+
+[^foot1]: Probably a bad name for a team. But, that is just my opinion.
+
+The PyPA team also have a very detailed documentation about [Packaging and distributing projects](https://packaging.python.org/en/latest/guides/distributing-packages-using-setuptools/) with `setuptools`. This is a more technical, detailed documentation, but, it can be a great resource too.
+
+Another very useful article to learn about the structure of a Python package, and the import process of Python, is the article entitled [Dead Simple Python: Project Structure and Imports](https://dev.to/codemouse92/dead-simple-python-project-structure-and-imports-38c6) from Jason C. McDonald.
+
+# Do not alter `PYTHONPATH` or `sys.path` variables
+
+We usually import a package in Python, by including a `import` statement at the beginning of our script. For example, to import the `pandas` package to my Python session, I could do this:
+
+```{python}
+import pandas
+```
+
+When you import a package in Python, the Python interpreter starts a search process trough your computer, to find the specific package you called in your script. Every Python package you use must be installed in your machine. Otherwise, Python will never find it, and, as a consequence, you can not use it. 
+
+`sys.path` is the variable that holds a list of locations in your computer where the Python interpreter will look for the packages you import. In other words, when you import a package, Python looks for this package inside one of these directories listed in this `sys.path` variable. In the other hand, the `PYTHONPATH` variable is a environment variable that can contain a complementary list of directories to be added to `sys.path`.
+
+You can access this `sys.path` variable by looking at the `path` attribute of the `sys` package. In other words, import the `sys` package into your python session, then, look for the `sys.path` variable, like this:
+
+```{python}
+import sys
+print(sys.path)
+```
+
+As you can imagine, the Python interpreter look into these directories in a sequential manner. That is, Python looks for the package at the first folder. If it does not find the package you called, then, it looks at the second folder. If it does not find the package again, it looks at the third folder. And goes on and on, until it hits the last folder of the list present at `sys.path`.
+
+If does not find the package you called at this last folder, Python will automatically raise a `ModuleNotFoundError`. This error means that Python could not find the package you called at any of the directories listed at `sys.path`.
+
+This `sys.path` variable is a normal Python list, and, as any other list, can be altered to include other directories that are not currently there. The same goes for the `PYTHONPATH` variable, which is an environment variable, and can be altered too. You might be tempted to alter these variables, to add other directories to this search path of Python. DO NOT DO IT! YOU SHOULD NEVER alter this list! At least, not in a Python package.
+
+Just to give you an example, if at some point inside your Python package, you execute a code like this:
+
+```{python}
+import sys
+sys.path.append('./../weird-unknow-folder')
+```
+
+just erase this code! Python packages are made to be used by other peoples, and altering the search path inside a Python session from another user, that is, a session that you do not have control over, is just a bad idea. You can produce very bad and confusing side effects to the session of the user with this action. 
+
+Besides, in the majority of times when you alter the `sys.path`, you are trying to overcome a bad structure of your files. In other words, you can always avoid altering the `sys.path` variable by changing the structure of your source files inside your project.
+
+
+# Structuring the package was one of the hardest parts
+
+From what I researched, every Python package follows the same basic directory structure. In other words, the files that compose a Python package are structured in a standard way. Understanding and using this structure effectively was one of the hardest parts for me. If you do not want to face weird error messages and frustrating behaviours, you must follow this structure in your project!
+
+However, what made really hard to understand this structure. and might change slightly from project to project. Looks like this structure have evolved over time, and some build systems available are used to one structure over the another.
+
+In other words, you might see some different approaches about the folder structure for Python packages. But, for the most part, a 
+
+# Different build systems behaviour differently
