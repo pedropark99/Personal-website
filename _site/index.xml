@@ -9,10 +9,10 @@
 <link>https://pedro-faria.netlify.app/index.html</link>
 <atom:link href="https://pedro-faria.netlify.app/index.xml" rel="self" type="application/rss+xml"/>
 <description>A blog about programming and data analysis, specially with R and Python</description>
-<generator>quarto-1.2.262</generator>
+<generator>quarto-1.2.280</generator>
 <lastBuildDate>Mon, 30 Jan 2023 03:00:00 GMT</lastBuildDate>
 <item>
-  <title>What I learned from my first Python package</title>
+  <title>What I learned from developing my first Python package</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
   <link>https://pedro-faria.netlify.app/posts/2023/2023-01-30-python-pckg/en/index.html</link>
   <description><![CDATA[ 
@@ -22,11 +22,62 @@
 
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
+<p>In 2022, I developed my first Python package called <a href="https://github.com/pedropark99/spark_map"><code>spark_map</code></a>, and published it at PyPI. I wrote a <a href="https://pedro-faria.netlify.app/posts/2022/2022-12-21-spark-map-v0.2.3/en/">post introducing this package</a>, and showing a small use case, if you are interested.</p>
+<p>Although <code>spark_map</code> is a small package, I had a hard time developing it. More specifically, the python code was not hard to develop. But packaging it into a proper package was hard. In this post, I want to share a few things that I learned about Python package development.</p>
+</section>
+<section id="before-i-say-anything-some-references" class="level1">
+<h1>Before I say anything, some references</h1>
+<p>The development of this package involved reading several articles, and doing some practical tests. Here I share the best resources and references I discover during this process.</p>
+<p>First, a great article to start your project is the <a href="https://packaging.python.org/en/latest/tutorials/packaging-projects/">Packaging Python Projects tutorial</a>. This tutorial is written by the PyPA, or, <a href="https://www.pypa.io/en/latest/">Python Packaging Authority</a> team<sup>1</sup>, and it seems to be “The Place” to search for the best practices on Python package projects.</p>
+<p>The PyPA team also have a very detailed documentation about <a href="https://packaging.python.org/en/latest/guides/distributing-packages-using-setuptools/">Packaging and distributing projects</a> with <code>setuptools</code>. This is a more technical, detailed documentation, but, it can be a great resource too.</p>
+<p>Another very useful article to learn about the structure of a Python package, and the import process of Python, is the article entitled <a href="https://dev.to/codemouse92/dead-simple-python-project-structure-and-imports-38c6">Dead Simple Python: Project Structure and Imports</a> from Jason C. McDonald.</p>
+</section>
+<section id="do-not-alter-pythonpath-or-sys.path-variables" class="level1">
+<h1>Do not alter <code>PYTHONPATH</code> or <code>sys.path</code> variables</h1>
+<p>We usually import a package in Python, by including a <code>import</code> statement at the beginning of our script. For example, to import the <code>pandas</code> package to my Python session, I could do this:</p>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;">import</span> pandas</span></code></pre></div>
+</div>
+<p>When you import a package in Python, the Python interpreter starts a search process trough your computer, to find the specific package you called in your script. Every Python package you use must be installed in your machine. Otherwise, Python will never find it, and, as a consequence, you can not use it.</p>
+<p>The Python interpreter will always look for the packages you import, inside a set of pre-defined locations of your computer. This pre-defined list is stored inside the <code>sys.path</code> variable. In other words, when you import a package, Python looks for this package inside each one of the directories listed at <code>sys.path</code> variable. You might find contents about the <code>PYTHONPATH</code> variable as well when searching for this subject. In essence, this is a environment variable that can contain a complementary list of directories to be added to <code>sys.path</code>.</p>
+<p>You can access this <code>sys.path</code> variable by looking at the <code>path</code> attribute of the <code>sys</code> package. In other words, import the <code>sys</code> package into your python session, then, look for the <code>sys.path</code> variable, like this:</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="im" style="color: #00769E;">import</span> sys</span>
+<span id="cb2-2"><span class="bu" style="color: null;">print</span>(sys.path)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>['/home/pedro/Documentos/Projetos/Personal-website/posts/2023/2023-01-30-python-pckg/en', '/usr/lib/python310.zip', '/usr/lib/python3.10', '/usr/lib/python3.10/lib-dynload', '', '/home/pedro/.local/lib/python3.10/site-packages', '/usr/local/lib/python3.10/dist-packages', '/usr/lib/python3/dist-packages', './../weird-unknow-folder']</code></pre>
+</div>
+</div>
+<p>As you can imagine, the Python interpreter look into these directories in a sequential manner. That is, Python looks for the package at the first folder. If it does not find the package you called, then, it looks at the second folder. If it does not find the package again, it looks at the third folder. And goes on and on, until it hits the last folder of the list present at <code>sys.path</code>.</p>
+<p>If does not find the package you called at this last folder, Python will automatically raise a <code>ModuleNotFoundError</code>. This error means that Python could not find the package you called at any of the directories listed at <code>sys.path</code>.</p>
+<p>This <code>sys.path</code> variable is a normal Python list, and, as any other list, can be altered to include other directories that are not currently there. The same goes for the <code>PYTHONPATH</code> variable, which is an environment variable, and can be altered too. You might be tempted to alter these variables, to add other directories to this search path of Python. DO NOT DO IT! YOU SHOULD NEVER alter this list! At least, not in a Python package.</p>
+<p>Just to give you an example, if at some point inside your Python package, you execute a code like this:</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="im" style="color: #00769E;">import</span> sys</span>
+<span id="cb4-2">sys.path.append(<span class="st" style="color: #20794D;">'./../weird-unknow-folder'</span>)</span></code></pre></div>
+</div>
+<p>just erase this code! Python packages are made to be used by other peoples, and altering the search path inside a Python session from another user, that is, a session that you do not have control over, is just a bad idea. You can produce very bad and confusing side effects to the session of the user with this action.</p>
+<p>Besides, in the majority of times when you alter the <code>sys.path</code>, you are trying to overcome a bad structure of your files. In other words, you can always avoid altering the <code>sys.path</code> variable by changing the structure of your source files inside your project.</p>
+</section>
+<section id="structuring-the-package-was-one-of-the-hardest-parts" class="level1">
+<h1>Structuring the package was one of the hardest parts</h1>
+<p>From what I researched, every Python package follows the same basic directory structure. In other words, the files that compose a Python package are structured in a standard way. Understanding and using this structure effectively was one of the hardest parts for me. If you do not want to face weird error messages and frustrating behaviours, you must follow this structure in your project!</p>
+<p>However, what made really hard to understand this structure. and might change slightly from project to project. Looks like this structure have evolved over time, and some build systems available are used to one structure over the another.</p>
+<p>In other words, you might see some different approaches about the folder structure for Python packages. But, for the most part, a</p>
+</section>
+<section id="different-build-systems-behaviour-differently" class="level1">
+<h1>Different build systems behaviour differently</h1>
 
 
 </section>
 
- ]]></description>
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>Probably a bad name for a team. But, that is just my opinion.↩︎</p></li>
+</ol>
+</section></div> ]]></description>
   <guid>https://pedro-faria.netlify.app/posts/2023/2023-01-30-python-pckg/en/index.html</guid>
   <pubDate>Mon, 30 Jan 2023 03:00:00 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/posts/2023/2023-01-30-python-pckg/package.jpg" medium="image" type="image/jpeg"/>
@@ -1332,7 +1383,7 @@ Damji, Jules, Brooke Wenig, Tathagata Das, and Denny Lee. 2020. <em>Learning Spa
   <category>Apache Spark</category>
   <category>Book</category>
   <guid>https://pedro-faria.netlify.app/publications/book/introd-pyspark/en/index.html</guid>
-  <pubDate>Mon, 30 Jan 2023 19:59:52 GMT</pubDate>
+  <pubDate>Tue, 31 Jan 2023 01:57:52 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/publications/book/introd-pyspark/featured.png" medium="image" type="image/png" height="215" width="144"/>
 </item>
 </channel>

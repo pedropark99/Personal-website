@@ -8,9 +8,9 @@
 
 <meta name="author" content="Pedro Duarte Faria">
 <meta name="dcterms.date" content="2023-01-30">
-<meta name="description" content="Sharing what I learned from developing my first Python package published at PyPI">
+<meta name="description" content="In this post, I want to share some of the challenges, and what I learned from developing my first Python package published at PyPI">
 
-<title>home |&gt; dplyr::glimpse() - What I learned from my first Python package</title>
+<title>home |&gt; dplyr::glimpse() - What I learned from developing my first Python package</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -260,10 +260,10 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">What I learned from my first Python package</h1>
+      <h1 class="title">What I learned from developing my first Python package</h1>
                   <div>
         <div class="description">
-          Sharing what I learned from developing my first Python package published at PyPI
+          In this post, I want to share some of the challenges, and what I learned from developing my first Python package published at PyPI
         </div>
       </div>
                 </div>
@@ -326,13 +326,13 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>When you import a package in Python, the Python interpreter starts a search process trough your computer, to find the specific package you called in your script. Every Python package you use must be installed in your machine. Otherwise, Python will never find it, and, as a consequence, you can not use it.</p>
-<p><code>sys.path</code> is the variable that holds a list of locations in your computer where the Python interpreter will look for the packages you import. In other words, when you import a package, Python looks for this package inside one of these directories listed in this <code>sys.path</code> variable. In the other hand, the <code>PYTHONPATH</code> variable is a environment variable that can contain a complementary list of directories to be added to <code>sys.path</code>.</p>
+<p>The Python interpreter will always look for the packages you import, inside a set of pre-defined locations of your computer. This pre-defined list is stored inside the <code>sys.path</code> variable. In other words, when you import a package, Python looks for this package inside each one of the directories listed at <code>sys.path</code> variable. You might find contents about the <code>PYTHONPATH</code> variable as well when searching for this subject. In essence, this is a environment variable that can contain a complementary list of directories to be added to <code>sys.path</code>.</p>
 <p>You can access this <code>sys.path</code> variable by looking at the <code>path</code> attribute of the <code>sys</code> package. In other words, import the <code>sys</code> package into your python session, then, look for the <code>sys.path</code> variable, like this:</p>
 <div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sys.path)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>['/home/pedro/Documentos/Projetos/Personal-website/posts/2023/2023-01-30-python-pckg/en', '/usr/lib/python310.zip', '/usr/lib/python3.10', '/usr/lib/python3.10/lib-dynload', '', '/home/pedro/.local/lib/python3.10/site-packages', '/usr/local/lib/python3.10/dist-packages', '/usr/lib/python3/dist-packages']</code></pre>
+<pre><code>['/home/pedro/Documentos/Projetos/Personal-website/posts/2023/2023-01-30-python-pckg/en', '/usr/lib/python310.zip', '/usr/lib/python3.10', '/usr/lib/python3.10/lib-dynload', '', '/home/pedro/.local/lib/python3.10/site-packages', '/usr/local/lib/python3.10/dist-packages', '/usr/lib/python3/dist-packages', './../weird-unknow-folder']</code></pre>
 </div>
 </div>
 <p>As you can imagine, the Python interpreter look into these directories in a sequential manner. That is, Python looks for the package at the first folder. If it does not find the package you called, then, it looks at the second folder. If it does not find the package again, it looks at the third folder. And goes on and on, until it hits the last folder of the list present at <code>sys.path</code>.</p>

@@ -1,6 +1,6 @@
 ---
-title: What I learned from my first Python package
-description: Sharing what I learned from developing my first Python package published at PyPI
+title: What I learned from developing my first Python package
+description: In this post, I want to share some of the challenges, and what I learned from developing my first Python package published at PyPI
 image: "./../package.jpg"
 
 date: 2023-01-30
@@ -10,13 +10,13 @@ date: 2023-01-30
 
 In 2022, I developed my first Python package called [`spark_map`](https://github.com/pedropark99/spark_map), and published it at PyPI. I wrote a [post introducing this package](https://pedro-faria.netlify.app/posts/2022/2022-12-21-spark-map-v0.2.3/en/), and showing a small use case, if you are interested.
 
-Although `spark_map` is a small package, I had a hard time developing it. More specifically, the python code was not hard to develop. But packaging it into a proper package was hard. In this post, I want to share a few things that I learned about Python package development.
+Although `spark_map` is a small package, I had a hard time developing it. More specifically, the python code was not hard to develop. But packaging it into a proper package was hard. In this post, I want to share a few things that I learned about Python package development in this process.
 
 # Before I say anything, some references
 
 The development of this package involved reading several articles, and doing some practical tests. Here I share the best resources and references I discover during this process.
 
-First, a great article to start your project is the [Packaging Python Projects tutorial](https://packaging.python.org/en/latest/tutorials/packaging-projects/). This tutorial is written by the PyPA, or, [Python Packaging Authority](https://www.pypa.io/en/latest/) team[^foot1], and it seems to be "The Place" to search for the best practices on Python package projects.
+First, a great article to start your project is the [Packaging Python Projects](https://packaging.python.org/en/latest/tutorials/packaging-projects/) tutorial. This tutorial is written by the PyPA, or, [Python Packaging Authority](https://www.pypa.io/en/latest/) team[^foot1], and it seems to be "The Place" to search for the best practices on Python package projects.
 
 [^foot1]: Probably a bad name for a team. But, that is just my opinion.
 
@@ -34,7 +34,9 @@ import pandas
 
 When you import a package in Python, the Python interpreter starts a search process trough your computer, to find the specific package you called in your script. Every Python package you use must be installed in your machine. Otherwise, Python will never find it, and, as a consequence, you can not use it. 
 
-`sys.path` is the variable that holds a list of locations in your computer where the Python interpreter will look for the packages you import. In other words, when you import a package, Python looks for this package inside one of these directories listed in this `sys.path` variable. In the other hand, the `PYTHONPATH` variable is a environment variable that can contain a complementary list of directories to be added to `sys.path`.
+The Python interpreter will always look for the packages you import, inside a set of pre-defined locations of your computer. This pre-defined list is stored inside the `sys.path` variable. In other words, when you import a package, Python looks for this package inside each one of the directories listed at `sys.path` variable. 
+
+You might find contents about the `PYTHONPATH` variable as well when searching for this subject. In essence, this is a environment variable that can contain a complementary list of directories to be added to `sys.path`.
 
 You can access this `sys.path` variable by looking at the `path` attribute of the `sys` package. In other words, import the `sys` package into your python session, then, look for the `sys.path` variable, like this:
 
@@ -52,6 +54,7 @@ This `sys.path` variable is a normal Python list, and, as any other list, can be
 Just to give you an example, if at some point inside your Python package, you execute a code like this:
 
 ```{python}
+#| eval: false
 import sys
 sys.path.append('./../weird-unknow-folder')
 ```
@@ -69,4 +72,4 @@ However, what made really hard to understand this structure. and might change sl
 
 In other words, you might see some different approaches about the folder structure for Python packages. But, for the most part, a 
 
-# Different build systems behaviour differently
+# Different build systems behave differently
