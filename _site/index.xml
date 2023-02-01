@@ -20,55 +20,102 @@
 
 
 
-<section id="introduction" class="level1">
-<h1>Introduction</h1>
+<section id="introduction" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
 <p>In 2022, I developed my first Python package called <a href="https://github.com/pedropark99/spark_map"><code>spark_map</code></a>, and published it at PyPI. I wrote a <a href="https://pedro-faria.netlify.app/posts/2022/2022-12-21-spark-map-v0.2.3/en/">post introducing this package</a>, and showing a small use case, if you are interested.</p>
-<p>Although <code>spark_map</code> is a small package, I had a hard time developing it. More specifically, the python code was not hard to develop. But packaging it into a proper package was hard. In this post, I want to share a few things that I learned about Python package development.</p>
+<p>Although <code>spark_map</code> is a small package, I had a hard time developing it. More specifically, the python code was not hard to develop. But packaging it into a proper package was hard. In this post, I want to share a few things that I learned about Python package development in this process.</p>
 </section>
-<section id="before-i-say-anything-some-references" class="level1">
-<h1>Before I say anything, some references</h1>
-<p>The development of this package involved reading several articles, and doing some practical tests. Here I share the best resources and references I discover during this process.</p>
-<p>First, a great article to start your project is the <a href="https://packaging.python.org/en/latest/tutorials/packaging-projects/">Packaging Python Projects tutorial</a>. This tutorial is written by the PyPA, or, <a href="https://www.pypa.io/en/latest/">Python Packaging Authority</a> team<sup>1</sup>, and it seems to be “The Place” to search for the best practices on Python package projects.</p>
+<section id="before-i-say-anything-some-references" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Before I say anything, some references</h1>
+<p>The development of this package involved reading several articles, and doing some practical tests. Here I share some of the best resources I discovered along the way.</p>
+<p>First, a great article to start your project is the <a href="https://packaging.python.org/en/latest/tutorials/packaging-projects/">Packaging Python Projects</a> tutorial. This tutorial is written by the PyPA, or, <a href="https://www.pypa.io/en/latest/">Python Packaging Authority</a> team<sup>1</sup>, and it seems to be “The Place” to search for the best practices on Python package projects.</p>
 <p>The PyPA team also have a very detailed documentation about <a href="https://packaging.python.org/en/latest/guides/distributing-packages-using-setuptools/">Packaging and distributing projects</a> with <code>setuptools</code>. This is a more technical, detailed documentation, but, it can be a great resource too.</p>
 <p>Another very useful article to learn about the structure of a Python package, and the import process of Python, is the article entitled <a href="https://dev.to/codemouse92/dead-simple-python-project-structure-and-imports-38c6">Dead Simple Python: Project Structure and Imports</a> from Jason C. McDonald.</p>
 </section>
-<section id="do-not-alter-pythonpath-or-sys.path-variables" class="level1">
-<h1>Do not alter <code>PYTHONPATH</code> or <code>sys.path</code> variables</h1>
+<section id="now-lets-dive-in" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Now, let’s dive in</h1>
+<section id="the-search-path-of-python" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="the-search-path-of-python"><span class="header-section-number">3.1</span> The search path of Python</h2>
 <p>We usually import a package in Python, by including a <code>import</code> statement at the beginning of our script. For example, to import the <code>pandas</code> package to my Python session, I could do this:</p>
 <div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;">import</span> pandas</span></code></pre></div>
 </div>
 <p>When you import a package in Python, the Python interpreter starts a search process trough your computer, to find the specific package you called in your script. Every Python package you use must be installed in your machine. Otherwise, Python will never find it, and, as a consequence, you can not use it.</p>
-<p>The Python interpreter will always look for the packages you import, inside a set of pre-defined locations of your computer. This pre-defined list is stored inside the <code>sys.path</code> variable. In other words, when you import a package, Python looks for this package inside each one of the directories listed at <code>sys.path</code> variable. You might find contents about the <code>PYTHONPATH</code> variable as well when searching for this subject. In essence, this is a environment variable that can contain a complementary list of directories to be added to <code>sys.path</code>.</p>
-<p>You can access this <code>sys.path</code> variable by looking at the <code>path</code> attribute of the <code>sys</code> package. In other words, import the <code>sys</code> package into your python session, then, look for the <code>sys.path</code> variable, like this:</p>
+<p>The Python interpreter will always look for the packages you import, inside a set of pre-defined locations of your computer. This pre-defined list is stored inside the <code>sys.path</code> variable<sup>2</sup>. In other words, when you import a package, Python looks for this package inside each one of the directories listed at <code>sys.path</code> variable.</p>
 <div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="im" style="color: #00769E;">import</span> sys</span>
 <span id="cb2-2"><span class="bu" style="color: null;">print</span>(sys.path)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>['/home/pedro/Documentos/Projetos/Personal-website/posts/2023/2023-01-30-python-pckg/en', '/usr/lib/python310.zip', '/usr/lib/python3.10', '/usr/lib/python3.10/lib-dynload', '', '/home/pedro/.local/lib/python3.10/site-packages', '/usr/local/lib/python3.10/dist-packages', '/usr/lib/python3/dist-packages', './../weird-unknow-folder']</code></pre>
+<pre><code>['/home/pedro/Documentos/Projetos/Personal-website/posts/2023/2023-01-30-python-pckg/en', '/usr/lib/python310.zip', '/usr/lib/python3.10', '/usr/lib/python3.10/lib-dynload', '', '/home/pedro/.local/lib/python3.10/site-packages', '/usr/local/lib/python3.10/dist-packages', '/usr/lib/python3/dist-packages']</code></pre>
 </div>
 </div>
-<p>As you can imagine, the Python interpreter look into these directories in a sequential manner. That is, Python looks for the package at the first folder. If it does not find the package you called, then, it looks at the second folder. If it does not find the package again, it looks at the third folder. And goes on and on, until it hits the last folder of the list present at <code>sys.path</code>.</p>
-<p>If does not find the package you called at this last folder, Python will automatically raise a <code>ModuleNotFoundError</code>. This error means that Python could not find the package you called at any of the directories listed at <code>sys.path</code>.</p>
-<p>This <code>sys.path</code> variable is a normal Python list, and, as any other list, can be altered to include other directories that are not currently there. The same goes for the <code>PYTHONPATH</code> variable, which is an environment variable, and can be altered too. You might be tempted to alter these variables, to add other directories to this search path of Python. DO NOT DO IT! YOU SHOULD NEVER alter this list! At least, not in a Python package.</p>
-<p>Just to give you an example, if at some point inside your Python package, you execute a code like this:</p>
+<p>You might also find contents about the <code>PYTHONPATH</code> variable when searching for this subject on the internet. In essence, <code>PYTHONPATH</code> is a environment variable that can contain a complementary list of directories to be added to <code>sys.path</code><sup>3</sup>.</p>
+<p>As you can imagine, the Python interpreter look into these directories in a sequential manner. That is, Python looks for the package at the first folder. If it does not find the package you called, then, it looks at the second folder. If it does not find the package again, it looks at the third folder. And goes on and on, until it hits the last folder of the list.</p>
+<p>If does not find the package you called at this last folder, Python will automatically raise a <code>ModuleNotFoundError</code> error. As you expect, this error means that Python could not find the package you called at any of the directories listed at <code>sys.path</code>.</p>
+</section>
+<section id="do-not-alter-pythonpath-or-sys.path-variables" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="do-not-alter-pythonpath-or-sys.path-variables"><span class="header-section-number">3.2</span> Do not alter <code>PYTHONPATH</code> or <code>sys.path</code> variables</h2>
+<p>The <code>sys.path</code> variable is a standard Python list, and, as any other list, can be altered to include other directories that are not currently there. The same goes for the <code>PYTHONPATH</code> variable, which is an environment variable, and can be altered too.</p>
+<p>As an example, when you try to import your package, which is stored at folder <code>A</code>, and, you face a <code>ModuleNotFoundError</code> error, you might be tempted to alter <code>PYTHONPATH</code> or <code>sys.path</code>, to add the folder <code>A</code> to this search path of Python. DO NOT DO IT! YOU SHOULD NEVER alter <code>PYTHONPATH</code> or <code>sys.path</code>! At least, not inside a Python package.</p>
+<p>In other words, if at some point inside the source code of your Python package, you execute a code like this:</p>
 <div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="im" style="color: #00769E;">import</span> sys</span>
 <span id="cb4-2">sys.path.append(<span class="st" style="color: #20794D;">'./../weird-unknow-folder'</span>)</span></code></pre></div>
 </div>
-<p>just erase this code! Python packages are made to be used by other peoples, and altering the search path inside a Python session from another user, that is, a session that you do not have control over, is just a bad idea. You can produce very bad and confusing side effects to the session of the user with this action.</p>
+<p>just erase this code! Python packages are made to be used by other peoples, and with a code like this above, you might alter the search path of this user in a very bad way. Altering the search path of the user is just a bad idea. Because you can accidentaly produce a bad and confusing side effect to the user’s session, which can be hard to debug and solve.</p>
 <p>Besides, in the majority of times when you alter the <code>sys.path</code>, you are trying to overcome a bad structure of your files. In other words, you can always avoid altering the <code>sys.path</code> variable by changing the structure of your source files inside your project.</p>
+<p>Just to be clear, is a bad idea to alter the <code>sys.path</code> inside the source code of your package. However, it is ok to alter these variables outside of your package.</p>
+<p>As a practical example, the Apache Spark project (which is open source) is written in Scala, but have an API available to Python trough the <code>pyspark</code> package. If you look closely into the source code of the project, or, more specifically at the <a href="https://github.com/apache/spark/blob/master/python/run-tests.py"><code>run-tests.py</code></a> file, you can see that new paths (or new directories) are appended to <code>sys.path</code>.</p>
+<p>However, this <code>run-tests.py</code> file IS NOT PART of the <code>pyspark</code> package itself. It is just an auxiliary script (outside of the package) used to support the test processes of <code>pyspark</code>. This means that <code>run-tests.py</code> contains code that is not intended to be executed by the users, but by the developers of <code>pyspark</code> instead.</p>
 </section>
-<section id="structuring-the-package-was-one-of-the-hardest-parts" class="level1">
-<h1>Structuring the package was one of the hardest parts</h1>
-<p>From what I researched, every Python package follows the same basic directory structure. In other words, the files that compose a Python package are structured in a standard way. Understanding and using this structure effectively was one of the hardest parts for me. If you do not want to face weird error messages and frustrating behaviours, you must follow this structure in your project!</p>
-<p>However, what made really hard to understand this structure. and might change slightly from project to project. Looks like this structure have evolved over time, and some build systems available are used to one structure over the another.</p>
-<p>In other words, you might see some different approaches about the folder structure for Python packages. But, for the most part, a</p>
+<section id="differences-between-a-package-and-a-module" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="differences-between-a-package-and-a-module"><span class="header-section-number">3.3</span> Differences between a package and a module</h2>
+<p>This is a very basic knowledge for a Python developer. However, until recently, I did not know the meaning of these two concepts. So, I will give it to you now, in case you do not have it yet.</p>
+<p>A Python module is a single Python file (i.e.&nbsp;a file with extension <code>.py</code>). Every Python script you write, is a Python module. In contrast, a Python package is a set of Python modules gathered together inside a folder. This folder must contain a particular Python module named as <code>__init__.py</code>. This <code>__init__.py</code> file, is the file that “initialize”, or, “identifies” this folder as a Python package<sup>4</sup>.</p>
+<p>You can have multiple Python packages inside a Python package. That is, inside the directory of your package, you can have multiple sub-directories with more Python modules and <code>__init__.py</code> files. In this case, these sub-directories become submodules of the package.</p>
 </section>
-<section id="different-build-systems-behaviour-differently" class="level1">
-<h1>Different build systems behaviour differently</h1>
+<section id="structuring-the-package-was-one-of-the-hardest-parts" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="structuring-the-package-was-one-of-the-hardest-parts"><span class="header-section-number">3.4</span> Structuring the package was one of the hardest parts</h2>
+<p>From what I researched, every Python package follows the same basic directory structure. In other words, the files that compose a Python package are structured in a standard way. But, understanding and using this structure effectively was one of the hardest parts for me.</p>
+<p>For the most part, a Python package contains these files:</p>
+<ul>
+<li><code>LICENSE.md</code> or <code>LICENSE.rst</code> (or both): a text file with the license of your package. It can be a Markdown file (<code>.md</code>), or, a reStructuredText markup file (<code>.rst</code>);</li>
+<li><code>README.md</code>: a Markdown file introducing your package. That is, a file that describes succintly the objective of the package, its main features, and showing a small example of use of the package;</li>
+</ul>
+<p>Also, a Python package usually contains these folders (or directories):</p>
+<ul>
+<li><code>src/&lt;package-name&gt;/</code> or <code>&lt;package-name&gt;/</code>: inside this directory you store all Python modules of your package, that is, the source code of your package;</li>
+<li><code>tests/</code>: inside this directory you store all unit tests of your package. In other words, the scripts and automated workflow used to test your package.</li>
+</ul>
+<!--
+- `doc/` or `docs/`: inside this directory you store all documentation files. That is, files that document your package, describe its contents, functionality and concepts;
+-->
+<p>The source code (or the python modules) of the package is always kept inside a folder with the same name as the package itself (i.e.&nbsp;the <code>&lt;package-name&gt;/</code> folder). So, for a package named <code>spark_map</code> we should keep the source files of this package inside a folder called <code>spark_map</code>. As a practical example, if you look at the source code of the <code>pandas</code> pacakge, you can see that the source code of the package is <a href="https://github.com/pandas-dev/pandas/tree/main/pandas">stored inside a folder called <code>pandas</code></a>.</p>
+<p>This <code>&lt;package-name&gt;/</code> folder might be (or might be not) inside another folder called <code>src/</code>, that is, the path to the source code might be <code>src/&lt;package-name&gt;/</code> instead of <code>&lt;package-name&gt;/</code>. The <code>pandas</code> package for example, do not uses the <code>src/</code> folder, so the source code is stored inside the <code>pandas/</code> folder. In contrast, the famous <code>flask</code> package uses the <code>flask/</code> folder inside a <code>src/</code> folder, <a href="https://github.com/pallets/flask/tree/main/src/flask">so the path to the source code becomes <code>src/flask</code></a>.</p>
+<p>So the folder structure to store the source code of the package might change very slightly from package to package. But in general, the source is always stored inside a folder with the same name as the package (i.e.&nbsp;the <code>&lt;package-name&gt;/</code> folder).</p>
+<p>Besides these standard files, a Python package usually have one, two, or more files that control the build process of the package (like <code>setup.py</code>, <code>pyproject.toml</code> or <code>setup.cfg</code>). I talk more about these files at Section&nbsp;3.5.</p>
+<p>For example, a possible file strucuture for a package named as <code>haven</code> could be:</p>
+<pre><code>.
+├── LICENSE.md
+├── LICENSE.rst
+├── README.md
+├── pyproject.toml
+├── src
+│   └── haven
+│       ├── __init__.py
+│       ├── functions.py
+│       ├── utils.py 
+│       └── haven.py
+│
+└── tests
+    ├── test_functions.py
+    └── test_haven.py</code></pre>
+</section>
+<section id="sec-build-systems" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="sec-build-systems"><span class="header-section-number">3.5</span> Different build systems behave differently</h2>
 
 
+</section>
 </section>
 
 
@@ -76,6 +123,9 @@
 
 <ol>
 <li id="fn1"><p>Probably a bad name for a team. But, that is just my opinion.↩︎</p></li>
+<li id="fn2"><p><a href="https://docs.python.org/3/tutorial/modules.html#the-module-search-path" class="uri">https://docs.python.org/3/tutorial/modules.html#the-module-search-path</a>↩︎</p></li>
+<li id="fn3"><p><a href="https://docs.python.org/3/using/cmdline.html#envvar-PYTHONPATH" class="uri">https://docs.python.org/3/using/cmdline.html#envvar-PYTHONPATH</a>↩︎</p></li>
+<li id="fn4"><p><a href="https://docs.python.org/3/tutorial/modules.html#packages" class="uri">https://docs.python.org/3/tutorial/modules.html#packages</a>↩︎</p></li>
 </ol>
 </section></div> ]]></description>
   <guid>https://pedro-faria.netlify.app/posts/2023/2023-01-30-python-pckg/en/index.html</guid>
@@ -1383,7 +1433,7 @@ Damji, Jules, Brooke Wenig, Tathagata Das, and Denny Lee. 2020. <em>Learning Spa
   <category>Apache Spark</category>
   <category>Book</category>
   <guid>https://pedro-faria.netlify.app/publications/book/introd-pyspark/en/index.html</guid>
-  <pubDate>Tue, 31 Jan 2023 01:57:52 GMT</pubDate>
+  <pubDate>Wed, 01 Feb 2023 01:01:35 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/publications/book/introd-pyspark/featured.png" medium="image" type="image/png" height="215" width="144"/>
 </item>
 </channel>
