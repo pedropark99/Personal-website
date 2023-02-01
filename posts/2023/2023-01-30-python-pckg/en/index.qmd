@@ -1,6 +1,6 @@
 ---
 title: What I learned from developing my first Python package
-description: In this post, I want to share some of the challenges, and what I learned from developing my first Python package published at PyPI
+description: In this post, I want to share some of the challenges, and what I learned from developing my first Python package 📦 published at PyPI
 image: "./../package.jpg"
 
 date: 2023-01-30
@@ -10,15 +10,15 @@ number-sections: true
 
 # Introduction
 
-In 2022, I developed my first Python package called [`spark_map`](https://github.com/pedropark99/spark_map), and published it at PyPI. I wrote a [post introducing this package](https://pedro-faria.netlify.app/posts/2022/2022-12-21-spark-map-v0.2.3/en/), and showing a small use case, if you are interested.
+In 2022, I developed my first Python package called [`spark_map`](https://github.com/pedropark99/spark_map), and published it at PyPI. [I introduced this package in a previous post](https://pedro-faria.netlify.app/posts/2022/2022-12-21-spark-map-v0.2.3/en/), where I show a small use case, if you are want to know more about this package 😉.
 
-Although `spark_map` is a small package, I had a hard time developing it. More specifically, the python code was not hard to develop. But packaging it into a proper package was hard. In this post, I want to share a few things that I learned about Python package development in this process.
+Although `spark_map` is a small Python package, I had a hard time developing it. More specifically, the Python code was not hard to develop. But packaging it into a proper package 📦 was hard. In this post, I want to share a few things that I learned about Python package development in this process.
 
 # Before I say anything, some references
 
-The development of this package involved reading several articles, and doing some practical tests. Here I share some of the best resources I discovered along the way.
+The development of this package involved reading several articles 📓, and doing some practical tests 🧪. Here I share some of the best resources I discovered along the way.
 
-First, a great article to start your project is the [Packaging Python Projects](https://packaging.python.org/en/latest/tutorials/packaging-projects/) tutorial. This tutorial is written by the PyPA, or, [Python Packaging Authority](https://www.pypa.io/en/latest/) team[^foot1], and it seems to be "The Place" to search for the best practices on Python package projects.
+First, a great article to start your project is the [Packaging Python Projects](https://packaging.python.org/en/latest/tutorials/packaging-projects/) tutorial. This tutorial is written by PyPA, or, the [Python Packaging Authority](https://www.pypa.io/en/latest/) team[^foot1], and it seems to be "The Place" to search for best practices on Python package projects.
 
 [^foot1]: Probably a bad name for a team. But, that is just my opinion.
 
@@ -36,7 +36,7 @@ We usually import a package in Python, by including a `import` statement at the 
 import pandas
 ```
 
-When you import a package in Python, the Python interpreter starts a search process trough your computer, to find the specific package you called in your script. Every Python package you use must be installed in your machine. Otherwise, Python will never find it, and, as a consequence, you can not use it. 
+When you import a package in Python, the Python interpreter starts a search process 🔍 trough your computer, to find the specific package you called in your script. Every Python package you use must be installed in your machine. Otherwise, Python will never find it, and, as a consequence, you can not use it. 
 
 The Python interpreter will always look for the packages you import, inside a set of pre-defined locations of your computer. This pre-defined list is stored inside the `sys.path` variable^[<https://docs.python.org/3/tutorial/modules.html#the-module-search-path>]. In other words, when you import a package, Python looks for this package inside each one of the directories listed at `sys.path` variable. 
 
@@ -51,11 +51,11 @@ As you can imagine, the Python interpreter look into these directories in a sequ
 
 If does not find the package you called at this last folder, Python will automatically raise a `ModuleNotFoundError` error. As you expect, this error means that Python could not find the package you called at any of the directories listed at `sys.path`.
 
-## Do not alter `PYTHONPATH` or `sys.path` variables
+## Do not change the `sys.path` or `PYTHONPATH` variable ⚠️
 
 The `sys.path` variable is a standard Python list, and, as any other list, can be altered to include other directories that are not currently there. The same goes for the `PYTHONPATH` variable, which is an environment variable, and can be altered too. 
 
-As an example, when you try to import your package, which is stored at folder `A`, and, you face a `ModuleNotFoundError` error, you might be tempted to alter `PYTHONPATH` or `sys.path`, to add the folder `A` to this search path of Python. DO NOT DO IT! YOU SHOULD NEVER alter `PYTHONPATH` or `sys.path`! At least, not inside a Python package.
+As an example, when you try to import your package, which is stored at folder `A`, and, you face a `ModuleNotFoundError` error, you might be tempted to alter `PYTHONPATH` or `sys.path`, to add the folder `A` to this search path of Python. DO NOT DO IT! YOU SHOULD NEVER alter `PYTHONPATH` or `sys.path` ⚠️ ! At least, not inside a Python package.
 
 In other words, if at some point inside the source code of your Python package, you execute a code like this:
 
@@ -65,15 +65,15 @@ import sys
 sys.path.append('./../weird-unknow-folder')
 ```
 
-just erase this code! Python packages are made to be used by other peoples, and with a code like this above, you might alter the search path of this user in a very bad way. Altering the search path of the user is just a bad idea. Because you can accidentaly produce a bad and confusing side effect to the user's session, which can be hard to debug and solve.
+just erase this code! Python packages are made to be used by other peoples, and with a code like this above, you will change the search path of this user. Changing the search path of a user is a bad idea. Because you can accidentaly produce bad and confusing side effects to the user's session, which can be hard to debug and solve.
 
 Besides, in the majority of times when you alter the `sys.path`, you are trying to overcome a bad structure of your files. In other words, you can always avoid altering the `sys.path` variable by changing the structure of your source files inside your project.
 
 Just to be clear, is a bad idea to alter the `sys.path` inside the source code of your package. However, it is ok to alter these variables outside of your package.
 
-As a practical example, the Apache Spark project (which is open source) is written in Scala, but have an API available to Python trough the `pyspark` package. If you look closely into the source code of the project, or, more specifically at the [`run-tests.py`](https://github.com/apache/spark/blob/master/python/run-tests.py) file, you can see that new paths (or new directories) are appended to `sys.path`.
+As a practical example, the Apache Spark project is written in Scala. But it have an API available to Python trough the `pyspark` package. If you look closely into the source code of the project, or, more specifically at the [`run-tests.py`](https://github.com/apache/spark/blob/master/python/run-tests.py) file, you can see that new paths (or new directories) are appended to `sys.path`.
 
-However, this `run-tests.py` file IS NOT PART of the `pyspark` package itself. It is just an auxiliary script (outside of the package) used to support the test processes of `pyspark`. This means that `run-tests.py` contains code that is not intended to be executed by the users, but by the developers of `pyspark` instead.
+However, this `run-tests.py` file IS NOT A PART of the `pyspark` package itself. It is just an auxiliary script (outside of the package) used to support the testing processes of `pyspark`. This means that `run-tests.py` contains code that is not intended to be executed by the users, but by the developers of `pyspark` instead.
 
 
 ## Differences between a package and a module
@@ -82,19 +82,21 @@ This is a very basic knowledge for a Python developer. However, until recently, 
 
 A Python module is a single Python file (i.e. a file with extension `.py`). Every Python script you write, is a Python module. In contrast, a Python package is a set of Python modules gathered together inside a folder. This folder must contain a particular Python module named as `__init__.py`. This `__init__.py` file, is the file that "initialize", or, "identifies" this folder as a Python package^[<https://docs.python.org/3/tutorial/modules.html#packages>].
 
-You can have multiple Python packages inside a Python package. That is, inside the directory of your package, you can have multiple sub-directories with more Python modules and `__init__.py` files. In this case, these sub-directories become submodules of the package.
+You can have multiple Python packages inside a Python package. That is, inside the directory of your package, you can have multiple sub-directories with more Python modules and `__init__.py` files. In this case, these sub-directories become submodules of the package. You can interpret them as sub-packages, if you prefer.
 
 
 ## Structuring the package was one of the hardest parts
 
-Every Python package follows the same basic file/directory structure. In other words, the files that compose a Python package are always structured in a standard way. But, understanding and using this structure effectively was one of the hardest parts for me. At this section, I want to explain this structure for you.
+Every Python package follows the same basic file/directory structure 🏛️. In other words, the files that compose a Python package are always structured in a standard way. But, understanding and using this structure effectively was one of the hardest parts for me. At this section, I want to explain this structure for you.
 
-For the most part, a Python package contains these files:
+In a Python package project, you usually have these files:
 
 - `LICENSE.md` or `LICENSE.rst` (or both): a text file with the license of your package. It can be a Markdown file (`.md`), or, a reStructuredText markup file (`.rst`);
 - `README.md`: a Markdown file introducing your package. That is, a file that describes succintly the objective of the package, its main features, and showing a small example of use of the package;
 
-Also, a Python package usually contains these folders (or directories):
+- `setup.py` or `pyproject.toml` or `setup.cfg`: these are files used by the build system you choose to build (or compile) your Python package into a compact and shareable format;
+
+Also, a Python package usually contains these folders (or directories) too:
 
 - `src/<package-name>/` or `<package-name>/`: inside this directory you store all Python modules of your package, that is, the source code of your package;
 - `tests/`: inside this directory you store all unit tests of your package. In other words, the scripts and automated workflow used to test your package.
@@ -109,7 +111,7 @@ This `<package-name>/` folder might be (or might be not) inside another folder c
 
 So the folder structure to store the source code of the package might change very slightly from package to package. But in general, the source is always stored inside a folder with the same name as the package (i.e. the `<package-name>/` folder).
 
-Besides these standard files and directories, every project of a Python package usually have one, two, or more files that **control the build process of the package** (like `setup.py`, `pyproject.toml` or `setup.cfg`). In other words, these files are not part of the package. But they are used by the build system to build (or compile) your package into a compact and shareable format. I talk more about these files at @sec-build-systems.
+Furthermore, every project of a Python package usually have one, two, or more files that **control the build process of the package** (like `setup.py`, `pyproject.toml` or `setup.cfg`). In other words, these files are not part of the package itself. But they are used by the **build system** to build (or compile) your package into a compact and shareable format. I talk more about these files at @sec-build-systems.
 
 Having in mind all these files that we described until here, we can build a example of file structure for a package. For example, a possible file strucuture for a package named `haven` could be:
 
