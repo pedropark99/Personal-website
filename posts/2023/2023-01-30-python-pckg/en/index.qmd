@@ -12,7 +12,7 @@ number-sections: true
 
 In 2022, I developed my first Python package called [`spark_map`](https://github.com/pedropark99/spark_map), and published it at PyPI. If you want to know more about this package 😉, you can check [a previous post here](https://pedro-faria.netlify.app/posts/2022/2022-12-21-spark-map-v0.2.3/en/), where I introduced the package, and described it's main features, and showed a small use case.
 
-Although `spark_map` is a small Python package, I had a hard time developing it. More specifically, the Python code was not hard to develop. But packaging it into a proper package 📦 was hard. In this post, I want to share a few things that I learned about Python package development in this process.
+Now, although `spark_map` is a small Python package, I had a hard time developing it. More specifically, the Python code was not hard at all to develop. But packaging it into a proper package 📦 was hard. In this post, I want to share a few things that I learned about Python package development in this process.
 
 # Before I say anything, some references
 
@@ -36,7 +36,7 @@ We usually import a package in Python, by including a `import` statement at the 
 import pandas
 ```
 
-When you import a package in Python, the Python interpreter starts a search process 🔍 trough your computer, to find the specific package you called in your script. Every Python package you use must be installed in your machine. Otherwise, Python will never find it, and, as a consequence, you can not use it. 
+When you import a package in Python, the Python interpreter starts a search process 🔍 through your computer, to find the specific package you called in your script. Every Python package you use must be installed in your machine. Otherwise, Python will never find it, and, as a consequence, you can not use it. 
 
 The Python interpreter will always look for the packages you import, inside a set of pre-defined locations of your computer. This pre-defined list is stored inside the `sys.path` variable^[<https://docs.python.org/3/tutorial/modules.html#the-module-search-path>]. In other words, when you import a package, Python looks for this package inside each one of the directories listed at `sys.path` variable. 
 
@@ -71,7 +71,7 @@ Besides, in the majority of times when you alter the `sys.path`, you are trying 
 
 Just to be clear, is a bad idea to alter the `sys.path` inside the source code of your package. However, it is ok to alter these variables outside of your package.
 
-As a practical example, Apache Spark is written in Scala. But it have an API available to Python trough the `pyspark` package. If you look closely into the source code of the project, or, more specifically at the [`run-tests.py`](https://github.com/apache/spark/blob/master/python/run-tests.py) file, you can see that new paths (or new directories) are appended to `sys.path` in this file.
+As a practical example, Apache Spark is written in Scala. But it have a Python API available through the `pyspark` package. If you look closely into the source code of the project, or, more specifically at the [`run-tests.py`](https://github.com/apache/spark/blob/master/python/run-tests.py) file, you can see that new paths (or new directories) are appended to `sys.path` in this file.
 
 However, this `run-tests.py` file IS NOT A PART of the `pyspark` package itself. It is just an auxiliary script (outside of the package) used to support the testing processes of `pyspark`. This means that `run-tests.py` contains code that is not intended to be executed by the users of the package, but by the developers of `pyspark` instead.
 
@@ -136,3 +136,9 @@ Having in mind all these files that we described until here, we can build a exam
 
 
 ## Different build systems behave differently {#sec-build-systems}
+
+When you are developing a package, you write multiple Python modules that perform all necessary tasks to solve the specific problem you want to solve with your package. However, in order to distribute this package to other peoples, that is, to make it available to the wide public, you need to compile (or build) your package into a compact and shareable format.
+
+This is what a build system does. It compiles all archives of your package into a single, compact and shareable format. This means that, when a user downloads your package (through `pip` for example), it downloads this compact and shareable version of your package. There are four main build systems for Python packages on the market, which are `hatchling`, `setuptools`, `flit` and `PDM`.
+
+No matter which one you use, just choose one, anyone. They do the same thing. Most of them use various metadata stored at the `pyproject.toml` file to build your project. The `setuptools` build system is probably the most "famous" system of all. Not because can use two other files to replace
