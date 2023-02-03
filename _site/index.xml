@@ -23,7 +23,7 @@
 <section id="introduction" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
 <p>In 2022, I developed my first Python package called <a href="https://github.com/pedropark99/spark_map"><code>spark_map</code></a>, and published it at PyPI. If you want to know more about this package 😉, you can check <a href="https://pedro-faria.netlify.app/posts/2022/2022-12-21-spark-map-v0.2.3/en/">a previous post here</a>, where I introduced the package, and described it’s main features, and showed a small use case.</p>
-<p>Although <code>spark_map</code> is a small Python package, I had a hard time developing it. More specifically, the Python code was not hard to develop. But packaging it into a proper package 📦 was hard. In this post, I want to share a few things that I learned about Python package development in this process.</p>
+<p>Now, although <code>spark_map</code> is a small Python package, I had a hard time developing it. More specifically, the Python code was not hard at all to develop. But packaging it into a proper package 📦 was hard. In this post, I want to share a few things that I learned about Python package development in this process.</p>
 </section>
 <section id="before-i-say-anything-some-references" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Before I say anything, some references</h1>
@@ -40,7 +40,7 @@
 <div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;">import</span> pandas</span></code></pre></div>
 </div>
-<p>When you import a package in Python, the Python interpreter starts a search process 🔍 trough your computer, to find the specific package you called in your script. Every Python package you use must be installed in your machine. Otherwise, Python will never find it, and, as a consequence, you can not use it.</p>
+<p>When you import a package in Python, the Python interpreter starts a search process 🔍 through your computer, to find the specific package you called in your script. Every Python package you use must be installed in your machine. Otherwise, Python will never find it, and, as a consequence, you can not use it.</p>
 <p>The Python interpreter will always look for the packages you import, inside a set of pre-defined locations of your computer. This pre-defined list is stored inside the <code>sys.path</code> variable<sup>2</sup>. In other words, when you import a package, Python looks for this package inside each one of the directories listed at <code>sys.path</code> variable.</p>
 <div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="im" style="color: #00769E;">import</span> sys</span>
@@ -65,7 +65,7 @@
 <p>just erase this code! Python packages are made to be used by other peoples, and with a code like this above, you will change the search path of this user. Changing the search path of a user is a bad idea. Because you can accidentaly produce bad and confusing side effects to the user’s session, which can be hard to debug and solve.</p>
 <p>Besides, in the majority of times when you alter the <code>sys.path</code>, you are trying to overcome a bad structure of your files. In other words, you can always avoid altering the <code>sys.path</code> variable by changing the structure of your source files inside your project.</p>
 <p>Just to be clear, is a bad idea to alter the <code>sys.path</code> inside the source code of your package. However, it is ok to alter these variables outside of your package.</p>
-<p>As a practical example, Apache Spark is written in Scala. But it have an API available to Python trough the <code>pyspark</code> package. If you look closely into the source code of the project, or, more specifically at the <a href="https://github.com/apache/spark/blob/master/python/run-tests.py"><code>run-tests.py</code></a> file, you can see that new paths (or new directories) are appended to <code>sys.path</code> in this file.</p>
+<p>As a practical example, Apache Spark is written in Scala. But it have a Python API available through the <code>pyspark</code> package. If you look closely into the source code of the project, or, more specifically at the <a href="https://github.com/apache/spark/blob/master/python/run-tests.py"><code>run-tests.py</code></a> file, you can see that new paths (or new directories) are appended to <code>sys.path</code> in this file.</p>
 <p>However, this <code>run-tests.py</code> file IS NOT A PART of the <code>pyspark</code> package itself. It is just an auxiliary script (outside of the package) used to support the testing processes of <code>pyspark</code>. This means that <code>run-tests.py</code> contains code that is not intended to be executed by the users of the package, but by the developers of <code>pyspark</code> instead.</p>
 </section>
 <section id="differences-between-a-package-and-a-module" class="level2" data-number="3.3">
@@ -92,8 +92,8 @@
 - `doc/` or `docs/`: inside this directory you store all documentation files. That is, files that document your package, describe its contents, functionality and concepts;
 -->
 <p>You must store the source code (or the python modules) of your package inside a folder with the same name as the package itself (i.e.&nbsp;the <code>&lt;package-name&gt;/</code> folder). So, for a package named <code>spark_map</code> we should keep the source files (i.e.&nbsp;the <code>.py</code> files) of this package inside a folder called <code>spark_map</code>. As a practical example, if you <a href="https://github.com/pandas-dev/pandas/tree/main/pandas">look at the source code</a> of the famous <code>pandas</code> package, you will see that all source code of the package is stored inside a folder called <code>pandas</code>.</p>
-<p>This <code>&lt;package-name&gt;/</code> folder might be (or might be not) inside another folder called <code>src/</code>, that is, the path to the source code might be <code>src/&lt;package-name&gt;/</code> instead of <code>&lt;package-name&gt;/</code>. The <code>pandas</code> package for example, do not uses the <code>src/</code> folder, so the source code is stored inside the <code>pandas/</code> folder. In contrast, the famous <code>flask</code> package uses the <code>flask/</code> folder inside a <code>src/</code> folder, <a href="https://github.com/pallets/flask/tree/main/src/flask">so the path to the source code becomes <code>src/flask</code></a>.</p>
-<p>So the folder structure to store the source code of the package might change very slightly from package to package. But in general, the source is always stored inside a folder with the same name as the package (i.e.&nbsp;the <code>&lt;package-name&gt;/</code> folder).</p>
+<p>In contrast, this <code>&lt;package-name&gt;/</code> folder might be (or might be not) inside another folder called <code>src/</code>, that is, the path to the source code might be <code>src/&lt;package-name&gt;/</code> instead of <code>&lt;package-name&gt;/</code>. The <code>pandas</code> package for example, do not uses the <code>src/</code> folder, so the source code is stored inside the <code>pandas/</code> folder. In contrast, the famous <code>flask</code> package uses the <code>flask/</code> folder inside a <code>src/</code> folder, so the path to the source code becomes <code>src/flask</code>. <a href="https://github.com/pallets/flask/tree/main/src/flask">You can check this by looking at the source code of the package.</a>.</p>
+<p>So the folder structure to store the source code of the package might change very slightly from package to package. There is no consensus about which one of these two structures is the best. But in general, the source is always stored inside a folder with the same name as the package (i.e.&nbsp;the <code>&lt;package-name&gt;/</code> folder). And this folder might be stored inside a <code>src/</code> folder.</p>
 <p>Furthermore, every project of a Python package usually have one, two, or more files that <strong>control the build process of the package</strong> (like <code>setup.py</code>, <code>pyproject.toml</code> or <code>setup.cfg</code>). In other words, these files are not part of the package itself. But they are used by the <strong>build system</strong> to build (or compile) your package into a compact and shareable format. I talk more about these files at Section&nbsp;3.5.</p>
 <p>Having in mind all these files that we described until here, we can build a example of file structure for a package. For example, a possible file strucuture for a package named <code>haven</code> could be:</p>
 <pre><code>.
@@ -113,20 +113,77 @@
     └── test_haven.py</code></pre>
 </section>
 <section id="sec-build-systems" class="level2" data-number="3.5">
-<h2 data-number="3.5" class="anchored" data-anchor-id="sec-build-systems"><span class="header-section-number">3.5</span> Different build systems behave differently</h2>
+<h2 data-number="3.5" class="anchored" data-anchor-id="sec-build-systems"><span class="header-section-number">3.5</span> Introducing build systems</h2>
+<p>When you are developing a package, you write multiple Python modules that perform all necessary tasks to solve the specific problem you want to solve with your package. However, in order to distribute this package to other peoples, that is, to make it available to the wide public, you need to compile (or build) your package into a compact and shareable format.</p>
+<p>This is what a build system does. It compiles all archives of your package into a single and compact file that you can publish at PyPI, and distribute to other peoples. This means that, when a user downloads your package (through <code>pip</code> for example), it downloads this compact and shareable version of your package.</p>
+<p>On the day of writing this article, there are four main build systems available on the market for Python packages, which are <code>hatchling</code>, <code>setuptools</code>, <code>flit</code> and <code>PDM</code>. No matter which one you use, just choose one, anyone. Because they do the same thing, and work in a very similar way.</p>
+<p>Most of them use various metadata stored at the <code>pyproject.toml</code> file to build your project. The <code>setuptools</code> build system is probably a exception to this rule, because this build system supports other kinds of files to store this metadata, which are <code>setup.py</code> and <code>setup.cfg</code>.</p>
+<section id="the-pyproject.toml-file-as-the-commom-ground" class="level3" data-number="3.5.1">
+<h3 data-number="3.5.1" class="anchored" data-anchor-id="the-pyproject.toml-file-as-the-commom-ground"><span class="header-section-number">3.5.1</span> The <code>pyproject.toml</code> file as the commom ground</h3>
+<p>The <a href="https://peps.python.org/pep-0517/">PEP517</a> and <a href="https://peps.python.org/pep-0518/">PEP518</a> were lauched to stablish the <code>pyproject.toml</code> file as the commom ground to every build system. Basically, the <code>pyproject.toml</code> is a file included at the root level of your project, and contains metadata about your package (e.g.&nbsp;it’s name, version, license, description, author, dependencies, etc.).</p>
+<p>The <code>build-system</code> table is the part of <code>pyproject.toml</code> file where you can specify options and configurations for the build system. As an example, to use the <code>setuptools</code> build system, you would add these lines to <code>pyproject.toml</code>:</p>
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode toml code-with-copy"><code class="sourceCode toml"><span id="cb6-1"><span class="kw" style="color: #003B4F;">[</span><span class="dt" style="color: #AD0000;">build-system</span><span class="kw" style="color: #003B4F;">]</span></span>
+<span id="cb6-2"><span class="dt" style="color: #AD0000;">requires</span> <span class="op" style="color: #5E5E5E;">=</span> <span class="op" style="color: #5E5E5E;">[</span><span class="st" style="color: #20794D;">"setuptools"</span><span class="op" style="color: #5E5E5E;">]</span></span>
+<span id="cb6-3"><span class="dt" style="color: #AD0000;">build-backend</span> <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"setuptools.build_meta"</span></span></code></pre></div>
+<p>In the other hand, if you want to use the <code>hatchling</code> build system instead, you would change the above lines to:</p>
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode toml code-with-copy"><code class="sourceCode toml"><span id="cb7-1"><span class="kw" style="color: #003B4F;">[</span><span class="dt" style="color: #AD0000;">build-system</span><span class="kw" style="color: #003B4F;">]</span></span>
+<span id="cb7-2"><span class="dt" style="color: #AD0000;">requires</span> <span class="op" style="color: #5E5E5E;">=</span> <span class="op" style="color: #5E5E5E;">[</span><span class="st" style="color: #20794D;">"hatchling"</span><span class="op" style="color: #5E5E5E;">]</span></span>
+<span id="cb7-3"><span class="dt" style="color: #AD0000;">build-backend</span> <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"hatchling.build"</span></span></code></pre></div>
+<p>Or, maybe you prefer <code>flit</code>:</p>
+<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode toml code-with-copy"><code class="sourceCode toml"><span id="cb8-1"><span class="kw" style="color: #003B4F;">[</span><span class="dt" style="color: #AD0000;">build-system</span><span class="kw" style="color: #003B4F;">]</span></span>
+<span id="cb8-2"><span class="dt" style="color: #AD0000;">requires</span> <span class="op" style="color: #5E5E5E;">=</span> <span class="op" style="color: #5E5E5E;">[</span><span class="st" style="color: #20794D;">"flit_core"</span><span class="op" style="color: #5E5E5E;">]</span></span>
+<span id="cb8-3"><span class="dt" style="color: #AD0000;">build-backend</span> <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"flit_core.buildapi"</span></span></code></pre></div>
+<p>Anyway, you get it. You use the options <code>requires</code> and <code>build-backend</code> under the <code>build-system</code> table to specificy which system you want to use in the building process of your package. All of these different systems will use <code>pyproject.toml</code> to collect other very important metadata about your package, like these metadata below:</p>
+<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode toml code-with-copy"><code class="sourceCode toml"><span id="cb9-1"><span class="kw" style="color: #003B4F;">[</span><span class="dt" style="color: #AD0000;">project</span><span class="kw" style="color: #003B4F;">]</span></span>
+<span id="cb9-2"><span class="dt" style="color: #AD0000;">name</span> <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"spark_map"</span></span>
+<span id="cb9-3"><span class="dt" style="color: #AD0000;">version</span> <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"0.2.77"</span></span>
+<span id="cb9-4"><span class="dt" style="color: #AD0000;">authors</span> <span class="op" style="color: #5E5E5E;">=</span> <span class="op" style="color: #5E5E5E;">[</span></span>
+<span id="cb9-5">  <span class="op" style="color: #5E5E5E;">{ </span><span class="dt" style="color: #AD0000;">name</span><span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"Pedro Faria"</span><span class="op" style="color: #5E5E5E;">, </span><span class="dt" style="color: #AD0000;">email</span><span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"pedropark99@gmail.com"</span> <span class="op" style="color: #5E5E5E;">}</span></span>
+<span id="cb9-6"><span class="op" style="color: #5E5E5E;">]</span></span>
+<span id="cb9-7"><span class="dt" style="color: #AD0000;">description</span> <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"Pyspark implementation of `map()` function for spark DataFrames"</span></span>
+<span id="cb9-8"><span class="dt" style="color: #AD0000;">readme</span> <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"README.md"</span></span>
+<span id="cb9-9"><span class="dt" style="color: #AD0000;">requires-python</span> <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"&gt;=3.7"</span></span>
+<span id="cb9-10"><span class="dt" style="color: #AD0000;">license</span> <span class="op" style="color: #5E5E5E;">=</span> <span class="op" style="color: #5E5E5E;">{ </span><span class="dt" style="color: #AD0000;">file</span><span class="op" style="color: #5E5E5E;"> =</span> <span class="st" style="color: #20794D;">"LICENSE.txt"</span> <span class="op" style="color: #5E5E5E;">}</span></span>
+<span id="cb9-11"><span class="dt" style="color: #AD0000;">classifiers</span> <span class="op" style="color: #5E5E5E;">=</span> <span class="op" style="color: #5E5E5E;">[</span></span>
+<span id="cb9-12">    <span class="st" style="color: #20794D;">"Programming Language :: Python :: 3"</span><span class="op" style="color: #5E5E5E;">,</span></span>
+<span id="cb9-13">    <span class="st" style="color: #20794D;">"License :: OSI Approved :: MIT License"</span><span class="op" style="color: #5E5E5E;">,</span></span>
+<span id="cb9-14">    <span class="st" style="color: #20794D;">"Operating System :: OS Independent"</span><span class="op" style="color: #5E5E5E;">,</span></span>
+<span id="cb9-15"><span class="op" style="color: #5E5E5E;">]</span></span>
+<span id="cb9-16"></span>
+<span id="cb9-17"><span class="dt" style="color: #AD0000;">dependencies</span> <span class="op" style="color: #5E5E5E;">=</span> <span class="op" style="color: #5E5E5E;">[</span></span>
+<span id="cb9-18">    <span class="st" style="color: #20794D;">"pyspark"</span><span class="op" style="color: #5E5E5E;">,</span></span>
+<span id="cb9-19">    <span class="st" style="color: #20794D;">"setuptools"</span><span class="op" style="color: #5E5E5E;">,</span></span>
+<span id="cb9-20">    <span class="st" style="color: #20794D;">"toml"</span></span>
+<span id="cb9-21"><span class="op" style="color: #5E5E5E;">]</span></span></code></pre></div>
+</section>
+<section id="the-setup.py-file" class="level3" data-number="3.5.2">
+<h3 data-number="3.5.2" class="anchored" data-anchor-id="the-setup.py-file"><span class="header-section-number">3.5.2</span> The <code>setup.py</code> file</h3>
+<p>The <code>setuptools</code> build system is more “versatile”<sup>5</sup> than the others, because it supports other kinds of files, besides <code>pyproject.toml</code>.</p>
+<p>The <code>setup.py</code> file is probably the most “famous”, or, the most associable to <code>setuptools</code>. In summary, you can replace <code>pyproject.toml</code> by the <code>setup.py</code> file. According to <span class="citation" data-cites="myrian2022">Myrianthous (2022)</span>, this file is supposed to serves two primary purposes:</p>
+<ul>
+<li><p>It contains various information relevant to your package including options and metadata, such as package name, version, author, license, minimal dependencies, entry points, data files and many more.</p></li>
+<li><p>Serves as the command line interface that enables the execution of packaging commands.</p></li>
+</ul>
+
 
 
 </section>
 </section>
+</section>
 
 
-<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-myrian2022" class="csl-entry">
+Myrianthous, Giorgos. 2022. <span>“Setup.py Vs Setup.cfg in Python: Using Setuptools to Manage Dependencies and Distribute Your Python Packages.”</span> <em>Towards Data Science</em>. <a href="https://towardsdatascience.com/setuptools-python-571e7d5500f2">https://towardsdatascience.com/setuptools-python-571e7d5500f2</a>.
+</div>
+</div></section><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
 <ol>
 <li id="fn1"><p>Probably a bad name for a team. But, that is just my opinion.↩︎</p></li>
 <li id="fn2"><p><a href="https://docs.python.org/3/tutorial/modules.html#the-module-search-path" class="uri">https://docs.python.org/3/tutorial/modules.html#the-module-search-path</a>↩︎</p></li>
 <li id="fn3"><p><a href="https://docs.python.org/3/using/cmdline.html#envvar-PYTHONPATH" class="uri">https://docs.python.org/3/using/cmdline.html#envvar-PYTHONPATH</a>↩︎</p></li>
 <li id="fn4"><p><a href="https://docs.python.org/3/tutorial/modules.html#packages" class="uri">https://docs.python.org/3/tutorial/modules.html#packages</a>↩︎</p></li>
+<li id="fn5"><p>And I mean these quotation marks, because I am not sure to call a system which can be out of the standard as “being more versatile”, or not.↩︎</p></li>
 </ol>
 </section></div> ]]></description>
   <guid>https://pedro-faria.netlify.app/posts/2023/2023-01-30-python-pckg/en/index.html</guid>
@@ -1434,7 +1491,7 @@ Damji, Jules, Brooke Wenig, Tathagata Das, and Denny Lee. 2020. <em>Learning Spa
   <category>Apache Spark</category>
   <category>Book</category>
   <guid>https://pedro-faria.netlify.app/publications/book/introd-pyspark/en/index.html</guid>
-  <pubDate>Thu, 02 Feb 2023 20:34:48 GMT</pubDate>
+  <pubDate>Fri, 03 Feb 2023 17:09:06 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/publications/book/introd-pyspark/featured.png" medium="image" type="image/png" height="215" width="144"/>
 </item>
 </channel>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.269">
+<meta name="generator" content="quarto-1.2.262">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -86,6 +86,25 @@ code span.st { color: #4070a0; } /* String */
 code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 
@@ -333,7 +352,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sys.path)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>['E:\\Users\\pedro\\Documents\\Projetos\\Personal-website\\posts\\2023\\2023-01-30-python-pckg\\en', 'C:\\Users\\pedro\\AppData\\Local\\Programs\\Python\\Python310\\python310.zip', 'C:\\Users\\pedro\\AppData\\Local\\Programs\\Python\\Python310\\DLLs', 'C:\\Users\\pedro\\AppData\\Local\\Programs\\Python\\Python310\\lib', 'C:\\Users\\pedro\\AppData\\Local\\Programs\\Python\\Python310', '', 'C:\\Users\\pedro\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages', 'C:\\Users\\pedro\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\win32', 'C:\\Users\\pedro\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\win32\\lib', 'C:\\Users\\pedro\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\Pythonwin']</code></pre>
+<pre><code>['C:\\Users\\pedro.duarte\\Documents\\projects\\Personal-website\\posts\\2023\\2023-01-30-python-pckg\\en', 'C:\\Users\\pedro.duarte\\AppData\\Local\\Programs\\Python\\Python311\\python311.zip', 'C:\\Users\\pedro.duarte\\AppData\\Local\\Programs\\Python\\Python311\\Lib', 'C:\\Users\\pedro.duarte\\AppData\\Local\\Programs\\Python\\Python311\\DLLs', 'C:\\Users\\pedro.duarte\\AppData\\Local\\Programs\\Python\\Python311', '', 'C:\\Users\\pedro.duarte\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages', 'C:\\Users\\pedro.duarte\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\win32', 'C:\\Users\\pedro.duarte\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\win32\\lib', 'C:\\Users\\pedro.duarte\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\Pythonwin']</code></pre>
 </div>
 </div>
 <p>You might also find contents about the <code>PYTHONPATH</code> variable when searching for this subject on the internet. In essence, <code>PYTHONPATH</code> is a environment variable that can contain a complementary list of directories to be added to <code>sys.path</code><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.</p>
@@ -400,23 +419,77 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
     └── test_haven.py</code></pre>
 </section>
 <section id="sec-build-systems" class="level2" data-number="3.5">
-<h2 data-number="3.5" class="anchored" data-anchor-id="sec-build-systems"><span class="header-section-number">3.5</span> Different build systems behave differently</h2>
+<h2 data-number="3.5" class="anchored" data-anchor-id="sec-build-systems"><span class="header-section-number">3.5</span> Introducing build systems</h2>
 <p>When you are developing a package, you write multiple Python modules that perform all necessary tasks to solve the specific problem you want to solve with your package. However, in order to distribute this package to other peoples, that is, to make it available to the wide public, you need to compile (or build) your package into a compact and shareable format.</p>
-<p>This is what a build system does. It compiles all archives of your package into a single, compact and shareable format. This means that, when a user downloads your package (through <code>pip</code> for example), it downloads this compact and shareable version of your package. There are four main build systems for Python packages on the market, which are <code>hatchling</code>, <code>setuptools</code>, <code>flit</code> and <code>PDM</code>.</p>
-<p>No matter which one you use, just choose one, anyone. They do the same thing. Most of them use various metadata stored at the <code>pyproject.toml</code> file to build your project. The <code>setuptools</code> build system is probably the most “modern” system of all. Not because can use two other files to replace</p>
+<p>This is what a build system does. It compiles all archives of your package into a single and compact file that you can publish at PyPI, and distribute to other peoples. This means that, when a user downloads your package (through <code>pip</code> for example), it downloads this compact and shareable version of your package.</p>
+<p>On the day of writing this article, there are four main build systems available on the market for Python packages, which are <code>hatchling</code>, <code>setuptools</code>, <code>flit</code> and <code>PDM</code>. No matter which one you use, just choose one, anyone. Because they do the same thing, and work in a very similar way.</p>
+<p>Most of them use various metadata stored at the <code>pyproject.toml</code> file to build your project. The <code>setuptools</code> build system is probably a exception to this rule, because this build system supports other kinds of files to store this metadata, which are <code>setup.py</code> and <code>setup.cfg</code>.</p>
+<section id="the-pyproject.toml-file-as-the-commom-ground" class="level3" data-number="3.5.1">
+<h3 data-number="3.5.1" class="anchored" data-anchor-id="the-pyproject.toml-file-as-the-commom-ground"><span class="header-section-number">3.5.1</span> The <code>pyproject.toml</code> file as the commom ground</h3>
+<p>The <a href="https://peps.python.org/pep-0517/">PEP517</a> and <a href="https://peps.python.org/pep-0518/">PEP518</a> were lauched to stablish the <code>pyproject.toml</code> file as the commom ground to every build system. Basically, the <code>pyproject.toml</code> is a file included at the root level of your project, and contains metadata about your package (e.g.&nbsp;it’s name, version, license, description, author, dependencies, etc.).</p>
+<p>The <code>build-system</code> table is the part of <code>pyproject.toml</code> file where you can specify options and configurations for the build system. As an example, to use the <code>setuptools</code> build system, you would add these lines to <code>pyproject.toml</code>:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode toml code-with-copy"><code class="sourceCode toml"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">build-system</span><span class="kw">]</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="dt">requires</span> <span class="op">=</span> <span class="op">[</span><span class="st">"setuptools"</span><span class="op">]</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="dt">build-backend</span> <span class="op">=</span> <span class="st">"setuptools.build_meta"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In the other hand, if you want to use the <code>hatchling</code> build system instead, you would change the above lines to:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode toml code-with-copy"><code class="sourceCode toml"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">build-system</span><span class="kw">]</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="dt">requires</span> <span class="op">=</span> <span class="op">[</span><span class="st">"hatchling"</span><span class="op">]</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="dt">build-backend</span> <span class="op">=</span> <span class="st">"hatchling.build"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Or, maybe you prefer <code>flit</code>:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode toml code-with-copy"><code class="sourceCode toml"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">build-system</span><span class="kw">]</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="dt">requires</span> <span class="op">=</span> <span class="op">[</span><span class="st">"flit_core"</span><span class="op">]</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="dt">build-backend</span> <span class="op">=</span> <span class="st">"flit_core.buildapi"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Anyway, you get it. You use the options <code>requires</code> and <code>build-backend</code> under the <code>build-system</code> table to specificy which system you want to use in the building process of your package. All of these different systems will use <code>pyproject.toml</code> to collect other very important metadata about your package, like these metadata below:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode toml code-with-copy"><code class="sourceCode toml"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">project</span><span class="kw">]</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="dt">name</span> <span class="op">=</span> <span class="st">"spark_map"</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="dt">version</span> <span class="op">=</span> <span class="st">"0.2.77"</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="dt">authors</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="op">{ </span><span class="dt">name</span><span class="op">=</span><span class="st">"Pedro Faria"</span><span class="op">, </span><span class="dt">email</span><span class="op">=</span><span class="st">"pedropark99@gmail.com"</span> <span class="op">}</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="dt">description</span> <span class="op">=</span> <span class="st">"Pyspark implementation of `map()` function for spark DataFrames"</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="dt">readme</span> <span class="op">=</span> <span class="st">"README.md"</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="dt">requires-python</span> <span class="op">=</span> <span class="st">"&gt;=3.7"</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="dt">license</span> <span class="op">=</span> <span class="op">{ </span><span class="dt">file</span><span class="op"> =</span> <span class="st">"LICENSE.txt"</span> <span class="op">}</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="dt">classifiers</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Programming Language :: Python :: 3"</span><span class="op">,</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"License :: OSI Approved :: MIT License"</span><span class="op">,</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Operating System :: OS Independent"</span><span class="op">,</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="dt">dependencies</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">"pyspark"</span><span class="op">,</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">"setuptools"</span><span class="op">,</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">"toml"</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="the-setup.py-file" class="level3" data-number="3.5.2">
+<h3 data-number="3.5.2" class="anchored" data-anchor-id="the-setup.py-file"><span class="header-section-number">3.5.2</span> The <code>setup.py</code> file</h3>
+<p>The <code>setuptools</code> build system is more “versatile”<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> than the others, because it supports other kinds of files, besides <code>pyproject.toml</code>.</p>
+<p>The <code>setup.py</code> file is probably the most “famous”, or, the most associable to <code>setuptools</code>. In summary, you can replace <code>pyproject.toml</code> by the <code>setup.py</code> file. According to <span class="citation" data-cites="myrian2022">Myrianthous (<a href="#ref-myrian2022" role="doc-biblioref">2022</a>)</span>, this file is supposed to serves two primary purposes:</p>
+<ul>
+<li><p>It contains various information relevant to your package including options and metadata, such as package name, version, author, license, minimal dependencies, entry points, data files and many more.</p></li>
+<li><p>Serves as the command line interface that enables the execution of packaging commands.</p></li>
+</ul>
+
 
 
 </section>
 </section>
+</section>
 
 
-<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-myrian2022" class="csl-entry" role="doc-biblioentry">
+Myrianthous, Giorgos. 2022. <span>“Setup.py Vs Setup.cfg in Python: Using Setuptools to Manage Dependencies and Distribute Your Python Packages.”</span> <em>Towards Data Science</em>. <a href="https://towardsdatascience.com/setuptools-python-571e7d5500f2">https://towardsdatascience.com/setuptools-python-571e7d5500f2</a>.
+</div>
+</div></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
 <ol>
 <li id="fn1"><p>Probably a bad name for a team. But, that is just my opinion.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p><a href="https://docs.python.org/3/tutorial/modules.html#the-module-search-path" class="uri">https://docs.python.org/3/tutorial/modules.html#the-module-search-path</a><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p><a href="https://docs.python.org/3/using/cmdline.html#envvar-PYTHONPATH" class="uri">https://docs.python.org/3/using/cmdline.html#envvar-PYTHONPATH</a><a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p><a href="https://docs.python.org/3/tutorial/modules.html#packages" class="uri">https://docs.python.org/3/tutorial/modules.html#packages</a><a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>And I mean these quotation marks, because I am not sure to call a system which can be out of the standard as “being more versatile”, or not.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

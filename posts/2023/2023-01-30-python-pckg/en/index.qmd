@@ -4,7 +4,7 @@ description: In this post, I want to share some of the challenges, and what I le
 image: "./../package.jpg"
 
 date: 2023-01-30
-
+bibliography: './../references.bib'
 number-sections: true
 ---
 
@@ -135,10 +135,80 @@ Having in mind all these files that we described until here, we can build a exam
 
 
 
-## Different build systems behave differently {#sec-build-systems}
+## Introducing build systems {#sec-build-systems}
 
 When you are developing a package, you write multiple Python modules that perform all necessary tasks to solve the specific problem you want to solve with your package. However, in order to distribute this package to other peoples, that is, to make it available to the wide public, you need to compile (or build) your package into a compact and shareable format.
 
-This is what a build system does. It compiles all archives of your package into a single, compact and shareable format. This means that, when a user downloads your package (through `pip` for example), it downloads this compact and shareable version of your package. There are four main build systems for Python packages on the market, which are `hatchling`, `setuptools`, `flit` and `PDM`.
+This is what a build system does. It compiles all archives of your package into a single and compact file that you can publish at PyPI, and distribute to other peoples. This means that, when a user downloads your package (through `pip` for example), it downloads this compact and shareable version of your package.
 
-No matter which one you use, just choose one, anyone. They do the same thing. Most of them use various metadata stored at the `pyproject.toml` file to build your project. The `setuptools` build system is probably the most "famous" system of all. Not because can use two other files to replace
+On the day of writing this article, there are four main build systems available on the market for Python packages, which are `hatchling`, `setuptools`, `flit` and `PDM`. No matter which one you use, just choose one, anyone. Because they do the same thing, and work in a very similar way.
+
+Most of them use various metadata stored at the `pyproject.toml` file to build your project. The `setuptools` build system is probably a exception to this rule, because this build system supports other kinds of files to store this metadata, which are `setup.py` and `setup.cfg`.
+
+
+### The `pyproject.toml` file as the commom ground
+
+The [PEP517](https://peps.python.org/pep-0517/) and [PEP518](https://peps.python.org/pep-0518/) were lauched to stablish the `pyproject.toml` file as the commom ground to every build system. Basically, the `pyproject.toml` is a file included at the root level of your project, and contains metadata about your package (e.g. it's name, version, license, description, author, dependencies, etc.).
+
+The `build-system` table is the part of `pyproject.toml` file where you can specify options and configurations for the build system. As an example, to use the `setuptools` build system, you would add these lines to `pyproject.toml`:
+
+```toml
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+```
+
+In the other hand, if you want to use the `hatchling` build system instead, you would change the above lines to:
+
+```toml
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+```
+
+Or, maybe you prefer `flit`:
+
+```toml
+[build-system]
+requires = ["flit_core"]
+build-backend = "flit_core.buildapi"
+```
+
+Anyway, you get it. You use the options `requires` and `build-backend` under the `build-system` table to specificy which system you want to use in the building process of your package. All of these different systems will use `pyproject.toml` to collect other very important metadata about your package, like these metadata below:
+
+```toml
+[project]
+name = "spark_map"
+version = "0.2.77"
+authors = [
+  { name="Pedro Faria", email="pedropark99@gmail.com" }
+]
+description = "Pyspark implementation of `map()` function for spark DataFrames"
+readme = "README.md"
+requires-python = ">=3.7"
+license = { file = "LICENSE.txt" }
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+dependencies = [
+    "pyspark",
+    "setuptools",
+    "toml"
+]
+```
+
+
+
+### The `setup.py` file
+
+The `setuptools` build system is more "versatile"^[And I mean these quotation marks, because I am not sure to call a system which can be out of the standard as "being more versatile", or not.] than the others, because it supports other kinds of files, besides `pyproject.toml`.
+
+The `setup.py` file is probably the most "famous", or, the most associable to `setuptools`. In summary, you can replace `pyproject.toml` by the `setup.py` file. According to @myrian2022, this file is supposed to serves two primary purposes:
+
+- It contains various information relevant to your package including options and metadata, such as package name, version, author, license, minimal dependencies, entry points, data files and many more.
+
+- Serves as the command line interface that enables the execution of packaging commands.
+
