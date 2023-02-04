@@ -3,7 +3,7 @@ title: What I learned from developing my first Python package
 description: In this post, I want to share some of the challenges, and what I learned from developing my first Python package 📦 published at PyPI
 image: "./../package.jpg"
 
-date: 2023-01-30
+date: 2023-02-06
 bibliography: './../references.bib'
 number-sections: true
 ---
@@ -38,14 +38,14 @@ import pandas
 
 When you import a package in Python, the Python interpreter starts a search process 🔍 through your computer, to find the specific package you called in your script. Every Python package you use must be installed in your machine. Otherwise, Python will never find it, and, as a consequence, you can not use it. 
 
-The Python interpreter will always look for the packages you import, inside a set of pre-defined locations of your computer. This pre-defined list is stored inside the `sys.path` variable^[<https://docs.python.org/3/tutorial/modules.html#the-module-search-path>]. In other words, when you import a package, Python looks for this package inside each one of the directories listed at `sys.path` variable. 
+The Python interpreter will always look for the packages you import, inside a set of pre-defined locations of your computer. This pre-defined list is stored inside the `sys.path` variable [@pymodule]. In other words, when you import a package, Python looks for this package inside each one of the directories listed at `sys.path` variable. 
 
 ```{python}
 import sys
 print(sys.path)
 ```
 
-You might also find contents about the `PYTHONPATH` variable when searching for this subject on the internet. In essence, `PYTHONPATH` is a environment variable that can contain a complementary list of directories to be added to `sys.path`^[<https://docs.python.org/3/using/cmdline.html#envvar-PYTHONPATH>].
+You might also find contents about the `PYTHONPATH` variable when searching for this subject on the internet. In essence, `PYTHONPATH` is a environment variable that can contain a complementary list of directories to be added to `sys.path` [@pypathvar].
 
 As you can imagine, the Python interpreter look into these directories in a sequential manner. That is, Python looks for the package at the first folder. If it does not find the package you called, then, it looks at the second folder. If it does not find the package again, it looks at the third folder. And goes on and on, until it hits the last folder of the list.
 
@@ -80,7 +80,7 @@ However, this `run-tests.py` file IS NOT A PART of the `pyspark` package itself.
 
 This is a very basic knowledge for a Python developer. However, until recently, I did not know the meaning of these two concepts. So, I will give it to you now, in case you do not have it yet.
 
-A Python module is a single Python file (i.e. a file with extension `.py`). Every Python script you write, is a Python module. In contrast, a Python package is a set of Python modules gathered together inside a folder. This folder must contain a particular Python module named as `__init__.py`. This `__init__.py` is the file that "initialize", or, "identifies" this folder as a Python package^[<https://docs.python.org/3/tutorial/modules.html#packages>].
+A Python module is a single Python file (i.e. a file with extension `.py`). Every Python script you write, is a Python module. In contrast, a Python package is a set of Python modules gathered together inside a folder. This folder must contain a particular Python module named as `__init__.py`. This `__init__.py` is the file that "initialize", or, "identifies" this folder as a Python package [@pypackages].
 
 You can have multiple Python packages inside a Python package. That is, inside the directory of your package, you can have multiple sub-directories with more Python modules and `__init__.py` files. In this case, these sub-directories become submodules of the package. You can interpret them as sub-packages, if you prefer.
 
@@ -150,7 +150,9 @@ Most of them use various metadata stored at the `pyproject.toml` file to build y
 
 The [PEP517](https://peps.python.org/pep-0517/) and [PEP518](https://peps.python.org/pep-0518/) were lauched to stablish the `pyproject.toml` file as the commom ground to every build system. Basically, the `pyproject.toml` is a file included at the root level of your project, and contains metadata about your package (e.g. it's name, version, license, description, author, dependencies, etc.).
 
-The `build-system` table is the part of `pyproject.toml` file where you can specify options and configurations for the build system. As an example, to use the `setuptools` build system, you would add these lines to `pyproject.toml`:
+It represents a "commom ground" because all build systems available can read and use this file to build (or compile) your package. As a consequence, with this file, you can change very easily the build system you use in your package, without having to change various configurantions and files. All you have to do is to change the options under the `build-system` table.
+
+This `build-system` table is the part of `pyproject.toml` file where you can specify options and configurations for the build system. As an example, to use the `setuptools` build system, you would add these lines to `pyproject.toml`:
 
 ```toml
 [build-system]
@@ -202,13 +204,81 @@ dependencies = [
 
 
 
-### The `setup.py` file
+### The `setuptools` build system
 
-The `setuptools` build system is more "versatile"^[And I mean these quotation marks, because I am not sure to call a system which can be out of the standard as "being more versatile", or not.] than the others, because it supports other kinds of files, besides `pyproject.toml`.
+The `setuptools` build system is the system that I use to build `spark_map`. It is kind of a more "versatile"^[And I mean these quotation marks, because I am not sure to call a system which can be out of the standard as "being more versatile", or not.] system than the others, only because it supports other kinds of files besides `pyproject.toml`.
 
-The `setup.py` file is probably the most "famous", or, the most associable to `setuptools`. In summary, you can replace `pyproject.toml` by the `setup.py` file. According to @myrian2022, this file is supposed to serves two primary purposes:
+The `setup.py` file is probably the most "famous" file, or, the most associable to `setuptools`. Although this is changing in recent years (more about this at the next section), the `setup.py` is still considered the traditional way of using the system, as the documentation itself says:
 
-- It contains various information relevant to your package including options and metadata, such as package name, version, author, license, minimal dependencies, entry points, data files and many more.
+> The traditional `setuptools` way of packaging Python modules uses a `setup()` function within the `setup.py` script. [@setuptools]
 
-- Serves as the command line interface that enables the execution of packaging commands.
+In summary, you can replace `pyproject.toml` with the `setup.py` file. Just as an example, I could replace the `pyproject.toml` file for `spark_map` with a `setup.py` file similar to the file below. The whole `setup.py` file is usually composed of just a single call to the `setuptools.setup()` function, and nothing more. All of the various metadata about the package stored at `pyproject.toml` are translated to named arguments to this `setup()` function.
 
+```{python}
+#| eval: false
+# setup.py placed at root directory
+from setuptools import setup
+setup(
+    name = 'spark_map'
+    version = '0.2.77',
+    author = 'Pedro Faria',
+    description = 'Pyspark implementation of `map()` function for spark DataFrames',
+    long_description = 'README.md',
+    license = { file = "LICENSE.txt" }
+    classifiers = [
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+    ],
+    python_requires = '>=3.7',
+    install_requires = ['pyspark'],
+    extras_require = ['setuptools', 'toml']
+)
+```
+
+However, if you use a `setup.py` file you become kind of locked into the `setuptools` framework. This one the reasons why many developers prefer to use the `pyproject.toml` file instead. Because it becomes so much more easy to change between build systems if you want to.
+
+Another "clash point" about the `setup.py` file is that it changes the way, or the steps (or the worflow) to build the package. The standard or the most supported strategy to build a package, is to use the `build` module command of Python at the terminal. This command will build your package, no matter which build system you use:
+
+```bash
+# If you are on Windows:
+py -m build
+# If you are on Linux:
+python3 -m build
+```
+
+In contrast, when you use the `setup.py` file, you have to execute directly the script with some additional options, like `sdist`:
+
+```bash
+# If you are on Windows:
+py setup.py sdist
+# If you are on Linux:
+python3 setup.py sdist
+```
+
+Again, this is bad, because it forces you into a certain framework, or, a certain workflow that is different than the standard way of building a package. 
+
+### Avoid `setup.py` and use `pyproject.toml` instead
+
+The Python community understood this problem, and now, executing the `setup.py` script directly is heavily discouraged [@ganssle]. Actually, the `setuptools` project itself started a movement to migrate it's functionality to `pyproject.toml` and `setup.cfg` files.
+
+This concern is clearly documented at [the "Quick Start" section](https://setuptools.pypa.io/en/latest/userguide/quickstart.html#basic-use) of the official documentation for the project:
+
+> Setuptools offers first class support for `setup.py` files as a configuration mechanism ... It is important to remember, however, that running this file as a script (e.g. `python setup.py sdist`) is strongly discouraged, and that the majority of the command line interfaces **are (or will be) deprecated** (e.g. `python setup.py install`, `python setup.py bdist_wininst`, ...) ... We also recommend users to expose as much as possible configuration in a more declarative way via the `pyproject.toml` or `setup.cfg`, and keep the `setup.py` minimal with only the dynamic parts (**or even omit it completely if applicable**).
+
+In resume, avoid using `setup.py` in your project, and use `pyproject.toml` instead with the `python -m build` command. This a much more recommended workflow for building your package.
+
+# Conclusion
+
+In this article, I intended to share what I learned trough my journey of building my first Python package. In summary, the main subjects discussed here were:
+
+
+- Do not change the `sys.path` or `PYTHONPATH` variable inside your package ⚠️;
+
+- Differences between a package and a module;
+
+- Nailing the structure 🏛️ of your package can be one the hardest parts;
+
+- If you use `setuptools` to build your package, avoid `setup.py` and use `pyproject.toml` instead;
+
+I hope this content help you to develop your projects. See you later 😉 !
