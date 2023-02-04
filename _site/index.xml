@@ -10,11 +10,159 @@
 <atom:link href="https://pedro-faria.netlify.app/index.xml" rel="self" type="application/rss+xml"/>
 <description>A blog about programming and data analysis, specially with R and Python</description>
 <generator>quarto-1.2.280</generator>
-<lastBuildDate>Mon, 06 Feb 2023 03:00:00 GMT</lastBuildDate>
+<lastBuildDate>Fri, 24 Feb 2023 03:00:00 GMT</lastBuildDate>
+<item>
+  <title>Um estudo de caso sobre Data Storytelling em um dos maiores bancos brasileiros</title>
+  <dc:creator>Pedro Duarte Faria</dc:creator>
+  <link>https://pedro-faria.netlify.app/posts/2023/2023-01-20-storytelling/pt/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="introdução" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introdução</h1>
+<p>Este artigo discute como eu melhorei o meu processo de <em>Data Storytelling</em> dentro de um relatório mensal que foi entregue ao Banco BMG (o qual é um dos maiores bancos comerciais do mercado brasileiro). Busco compartilhar o que aprendi nesse processo, e dou algumas dicas que possivelmente vão ajudá-lo a construir relatórios de dados mais intuitivos, cativantes, claros e efetivos.</p>
+<p>Em resumo, vamos discutir neste artigo as seguintes dicas:</p>
+<ul>
+<li><em>Data Storytelling</em> é sobre contar histórias através de dados;</li>
+<li>Evite textos longos em seus slides;</li>
+<li>Trace relações entre os indicadores;</li>
+<li>Construa sua história em torno de uma mensagem principal;</li>
+<li>Entregue sua história aos poucos;</li>
+<li>Histórias tem estrutura, use essas estruturas ao seu favor (modelo dos 4 C’s e evolução do personagem);</li>
+</ul>
+<p>A maior parte desses conhecimentos foram construídos através de intensa pesquisa, reflexão e planejamento sobre as minhas apresentações, e, posteriormente, adquirindo feedbacks, e realizando pequenos ajustes aqui e ali. Sendo assim, um grande trabalho como um todo, e, como você pode esperar, esse processo também envolveu mais de uma pessoa.</p>
+<p>Durante esse processo, eu tive ajuda de <a href="https://www.linkedin.com/in/andressa-de-souza-freitas-697195177/">Andressa de Souza Freitas</a>, e, principalmente, da UX Designer <a href="https://www.linkedin.com/in/alefernandesbranding/">Alê Fernandes</a>. Os conhecimentos da Alê revolucionaram a maneira como eu construo minhas apresentações, e, por isso, eu sou imensamente grato a ela ❤️.</p>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Todos os dados, gráficos e imagens mostrados neste artigo são meramente ilustrativos. Todos os números apresentados foram gerados de forma aleatória por um computador! Portanto, eles não representam os dados reais da plataforma Blip ou do Banco BMG de nenhuma forma ou dimensão!</p>
+</div>
+</div>
+</section>
+<section id="como-era-esse-relatório-antes" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Como era esse relatório antes ?</h1>
+<p>Na época, estávamos construindo um relatório mensal contendo vários indicadores e gráficos que mostravam o estado atual e a evolução recente dos serviços e produtos do Banco BMG ofertados dentro do canal do WhatsApp.</p>
+<p>Contudo, o formato dessa apresentação era problemático. Nós trazíamos uma <strong>quantidade monumental</strong> de informações para o banco. A apresentação usualmente trazia em torno de 40 slides diferentes, com aproximadamente 36 gráficos e 70 indicadores diferentes. Para mais, nós tentávamos apresentar todo esse volume de informações em uma reunião de apenas 1 hora.</p>
+<p>O resultado final disso tudo era uma apresentação que trazia um volume monumental de informações, porém, que também trazia um volume muito pequeno de insights e novas ideias de negócio para os gestores. Em Figura&nbsp;1 temos uma representação de um dos vários slides dessa apresentação<sup>1</sup>. Imagine que essa apresentação trazia em torno de 40 slides semelhantes a esse:</p>
+<div id="fig-print-report1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="https://pedro-faria.netlify.app/posts/2023/2023-01-20-storytelling/print-report1.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;1: Representação de um slide da versão antiga do relatório</figcaption><p></p>
+</figure>
+</div>
+<p>Perceba que esse slide se parece mais com uma página de um dashboard, do que de um relatório apresentando as últimas tendências do mercado ou do negócio do banco. <strong>Isso é muito importante!</strong> Se a sua apresentação traz vários indicadores diferentes espalhados pela página, sem contextualizá-los, sem relacioná-los uns com os outros, sem trazer o que eles significam em conjunto, essa apresentação vai muito provavelmente se parecer com os dashboards que você já produz para o seu cliente.</p>
+<p>Tendo isso em mente, qual é o incentivo/motivo/razão que o seu cliente tem para assistir à sua apresentação? Em outras palavras, se a sua apresentação mostra os mesmos gráficos/indicadores que os seus dashboards apresentam, o seu cliente não tem incentivo/motivo nenhum para assistir à sua apresentação. Pois <strong>não há nada na sua apresentação que seja novo</strong>, ou nenhuma informação da qual o seu cliente não tenha já acesso diretamente.</p>
+</section>
+<section id="como-evoluímos" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Como evoluímos ?</h1>
+<p>Agora que você possui uma noção do tamanho que era o problema, nas próximas seções deste artigo, vou discutir como nós utilizamos data storytelling para evoluir esse modelo de apresentação para algo melhor, algo que desse maior clareza e impacto para o nosso cliente.</p>
+<section id="data-storytelling-não-é-sobre-escolher-o-melhor-gráfico" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="data-storytelling-não-é-sobre-escolher-o-melhor-gráfico"><span class="header-section-number">3.1</span> Data Storytelling não é sobre escolher “o melhor gráfico”</h2>
+<p>Alguns poucos analistas entendem “data storytelling” como um problema de visualização, ou, como a ciência de “escolher os melhores gráficos” para sua apresentação, ou como projetar gráficos inovadores, bonitos e complexos.</p>
+<p>Contudo, data storytelling é sobre <strong>contar histórias com dados</strong>. Não sobre como construir visualizações. Escolher a visualização certa para apresentar os seus dados, torná-la melhor, mais bonita e mais limpa, é apenas uma parte do processo. Uma parte muito importante, pois isso vai te ajudar a contar sua história de uma maneira mais clara e eficaz, e, com isso, atingir um público maior.</p>
+</section>
+<section id="uma-guerra-constante-pela-atenção" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="uma-guerra-constante-pela-atenção"><span class="header-section-number">3.2</span> Uma guerra constante pela atenção</h2>
+<p>Quando estamos apresentando algo, estamos constantemente batalhando pela atenção dos nossos espectadores. Essa é uma batalha difícil, não apenas porque nós podemos (sem querer) atrair a atenção para os lugares errados, mas também porque existem muitas fontes de distração no mundo moderno (e.g.&nbsp;celulares, emails, etc.)!</p>
+<p>Boa parte do sucesso em <em>data storytelling</em> depende de você contar uma história cativante, que consiga capturar a atenção de seus espectadores. Por isso, as próximas seções vão focar bastante em dicas que contribuam para essa captura, ou que te ajudam a não dissipar, reduzir ou atrapalhar a atenção desses espectadores.</p>
+</section>
+<section id="sec-texto-longo" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="sec-texto-longo"><span class="header-section-number">3.3</span> Por que evitar textos longos em seus slides?</h2>
+<p>Tente ser parsimonioso nos seus slides! Isto é, tente incluir o mínimo possível de informação dentro dele. Em geral, evite incluir textos muito longos em seus slides.</p>
+<p>Veja o slide em Figura&nbsp;2 como exemplo. O problema principal desse slide, é que ele divide muito a atenção de seu espectador.</p>
+<div id="fig-texto-longo" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="https://pedro-faria.netlify.app/posts/2023/2023-01-20-storytelling/texto-longo.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;2: Slide com um parágrafo longo</figcaption><p></p>
+</figure>
+</div>
+<p>Ao apresentar um slide, os seus espectadores tem que prestar atenção na sua voz. Isto é, no que você está comunicando verbalmente durante a apresentação. E ao mesmo tempo, eles também precisam prestar atenção no conteúdo do slide. Contudo, esse longo parágrafo no canto esquerdo do slide mostrado em Figura&nbsp;2 é problemático. <strong>Pois ele chama atenção demais!</strong></p>
+<p>Esse elemento desperta tanto a nossa curiosidade, que ao ver esse slide, você (leitor) provavelmente tentou ler esse texto longo antes mesmo de ler o que estou descrevendo agora neste parágrafo. O mesmo vai acontecer com os espectadores de sua apresentação. Ou seja, os seus espectadores vão imediatamente tentar ler esse parágrafo longo.</p>
+<p>Contudo, ler e interpretar um texto longo, exige certo esforço e muita atenção. Como resultado, enquanto os seus espectadores leêm esse texto, eles não vão conseguir prestar atenção em outros elementos de sua apresentação. Por exemplo, na sua fala.</p>
+<p>Isso pode ser crucial, pois talvez você traga uma informação a mais, ou uma conexão extremamente importante na sua fala, e eles podem acabar perdendo isso enquanto estão tentando ler esse texto. Portanto, evite ao máximo incluir textos muito longos em seus slides.</p>
+</section>
+<section id="sec-relacoes" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="sec-relacoes"><span class="header-section-number">3.4</span> Trace relações entre os indicadores</h2>
+<p>Agora, vamos analisar o slide mostrado em Figura&nbsp;3. Perceba que esse slide, novamente, lembra muito uma página de um dashboard. Como resultado, o slide não parece tão cativante à primeira vista, pois ele só mostra os indicadores, ele não constrói uma relação, ou <strong>uma história</strong> entre eles.</p>
+<div id="fig-divisao2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="https://pedro-faria.netlify.app/posts/2023/2023-01-20-storytelling/divisao2.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;3: Falta de relação entre os indicadores</figcaption><p></p>
+</figure>
+</div>
+<p>Se prestarmos atenção nesses indicadores, podemos identificar alguns efeitos que estão acontecendo ao longo deles. E se refletirmos um pouco mais sobre esses efeitos, vamos perceber que esses efeitos são relacionáveis!</p>
+<p>Por exemplo, perceba que há um aumento significativo nas vendas. Tanto no número de propostas vendidas quanto no valor total em si que essas propostas geraram. Porém, perceba que esse crescimento nas vendas não ocorreu no produto “Empréstimo Consignado”, e sim, no produto “Empréstimo com garantia de veículos”. Ou seja, o produto “Empréstimo Consignado” teve uma queda de vendas nesse mês, porém, o produto “Empréstimo com garantia de veículos” obteve um super resultado que conseguiu cobrir e muito essa queda, e no fim, conseguiu aumentar as vendas como um todo do banco.</p>
+<p>Além disso, outros efeitos que podemos perceber são os aumentos na taxa de conversão e na taxa de sucesso de API. Esses também são fatores que contribuíram para o aumento nas vendas. Pois um aumento na taxa de conversão significa que uma parcela maior dos nossos clientes está adquirindo os nossos produtos. Já um aumento na taxa de sucesso na API, significa que temos menos erros nos registros das vendas na plataforma, e isso é obviamente positivo, pois nós temos uma perda de vendas menor por causa de travamentos e erros nesse sistema de registro.</p>
+<p>Perceba que todas essas relações nos ajudam a <strong>construir uma história</strong> sobre como as vendas aumentaram nesse mês, e é justamente isso que queremos atingir. Portanto, tente sempre construir relações entre os seus indicadores, de modo a formar uma história sobre um resultado principal.</p>
+</section>
+<section id="construa-sua-história-em-torno-de-uma-mensagem-principal" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="construa-sua-história-em-torno-de-uma-mensagem-principal"><span class="header-section-number">3.5</span> Construa sua história em torno de uma mensagem principal</h2>
+<p>Apenas para deixar claro essa ideia, ao identificar os vários efeitos que descrevemos em Seção&nbsp;3.4, sobre o slide mostrado em Figura&nbsp;3, é interessante nos questionarmos: qual desses vários efeitos é o principal resultado? Em outras palavras, qual desses efeitos é o que mais interessa os gerentes do banco que estão assistindo à sua apresentação?</p>
+<p>Certamente o aumento sobre as vendas é o <strong>efeito principal</strong>. É o efeito que mais interessa os gerentes que estão assistindo à sua apresentação. Portanto, tente construir a sua história em torno desse resultado, ou dessa mensagem principal. Use os outros indicadores para explicar como esse resultado principal aconteceu.</p>
+<p>Isso também é muito importante! Todo gerente gosta muito de ouvir a palavra “aumento nas vendas”. Porém, ele também está sempre interessado em saber o <strong>“como esse aumento foi gerado?”</strong>. Ou seja, ele precisa saber quais foram as ações realizadas que geraram esse impacto positivo.</p>
+<p>Pois ao identificar essas ações, esse gerente tem a capacidade de aplicar essas ações em outras partes de seu negócio, e, com certa esperança, ele pode acabar disseminando esse efeito positivo que você descreveu para outras áreas, e, como resultado, ele pode acabar aumentando ainda mais as vendas da empresa.</p>
+</section>
+<section id="entregue-sua-história-aos-poucos" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="entregue-sua-história-aos-poucos"><span class="header-section-number">3.6</span> Entregue sua história aos poucos</h2>
+<p>O cérebro humano consegue processar uma quantidade limitada de informações de uma vez só. Como resultado, se você tentar explicar várias informações para os seus espectadores, em um único slide, eles vão acabar atingindo esse limite 🤯, e simplesmente não vão conseguir raciocinar, compreender ou assimilar o que você está explicando.</p>
+<p>Portanto, <strong>entregue a sua história aos poucos</strong>. Evite condensar várias informações em um único slide! Divida o conteúdo em partes, e explique uma parte de cada vez!</p>
+</section>
+<section id="colocando-essas-dicas-em-prática" class="level2" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="colocando-essas-dicas-em-prática"><span class="header-section-number">3.7</span> Colocando essas dicas em prática</h2>
+<p>Portanto, nas seções passadas discutimos as seguintes dicas:</p>
+<ol type="1">
+<li>Evite textos longos em seus slides;</li>
+<li>Trace relações entre os indicadores;</li>
+<li>Construa sua história em torno de uma mensagem principal;</li>
+<li>Entregue sua história aos poucos;</li>
+</ol>
+<p>Vamos botar essas dicas em prática, e reformular o slide mostrado em Figura&nbsp;3.</p>
+</section>
+</section>
+<section id="histórias-tem-estrutura-use-essas-estruturas-ao-seu-favor" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Histórias tem estrutura, use essas estruturas ao seu favor</h1>
+<section id="o-modelo-dos-quatro-cs-como-um-excelente-guia" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="o-modelo-dos-quatro-cs-como-um-excelente-guia"><span class="header-section-number">4.1</span> O modelo dos quatro C’s como um excelente guia</h2>
+<p>O modelo dos quatro C’s se refere a essas quatro palavras:</p>
+<blockquote class="blockquote">
+<p>Contexto, Conflito, Consequência, Conselho.</p>
+</blockquote>
+</section>
+<section id="evolução-do-personagem-como-uma-outra-alternativa" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="evolução-do-personagem-como-uma-outra-alternativa"><span class="header-section-number">4.2</span> Evolução do personagem como uma outra alternativa</h2>
+<p>Relatórios no final do ano são bastante apropriados para incluir seções que mostram a evolução do negócio (ou a evolução do personagem).</p>
+
+
+</section>
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>Vale relembrar que os números e gráficos apresentados nessa imagem são meramente ilustrativos, e, foram definidos de forma completamente aleatória.↩︎</p></li>
+</ol>
+</section></div> ]]></description>
+  <category>Storytelling</category>
+  <category>Data Storytelling</category>
+  <category>Data Science</category>
+  <guid>https://pedro-faria.netlify.app/posts/2023/2023-01-20-storytelling/pt/index.html</guid>
+  <pubDate>Fri, 24 Feb 2023 03:00:00 GMT</pubDate>
+  <media:content url="https://pedro-faria.netlify.app/posts/2023/2023-01-20-storytelling/mapa-featured.jpg" medium="image" type="image/jpeg"/>
+</item>
 <item>
   <title>What I learned from developing my first Python package</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
-  <link>https://pedro-faria.netlify.app/posts/2023/2023-01-30-python-pckg/en/index.html</link>
+  <link>https://pedro-faria.netlify.app/posts/2023/2023-02-06-python-pckg/en/index.html</link>
   <description><![CDATA[ 
 
 
@@ -46,7 +194,7 @@
 <div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="im" style="color: #00769E;">import</span> sys</span>
 <span id="cb2-2"><span class="bu" style="color: null;">print</span>(sys.path)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>['/home/pedro/Documentos/Projetos/Personal-website/posts/2023/2023-01-30-python-pckg/en', '/usr/lib/python310.zip', '/usr/lib/python3.10', '/usr/lib/python3.10/lib-dynload', '', '/home/pedro/.local/lib/python3.10/site-packages', '/usr/local/lib/python3.10/dist-packages', '/usr/lib/python3/dist-packages']</code></pre>
+<pre><code>['/home/pedro/Documentos/Projetos/Personal-website/posts/2023/2023-02-06-python-pckg/en', '/usr/lib/python310.zip', '/usr/lib/python3.10', '/usr/lib/python3.10/lib-dynload', '', '/home/pedro/.local/lib/python3.10/site-packages', '/usr/local/lib/python3.10/dist-packages', '/usr/lib/python3/dist-packages']</code></pre>
 </div>
 </div>
 <p>You might also find contents about the <code>PYTHONPATH</code> variable when searching for this subject on the internet. In essence, <code>PYTHONPATH</code> is a environment variable that can contain a complementary list of directories to be added to <code>sys.path</code> <span class="citation" data-cites="pypathvar">(Foundation 2023a)</span>.</p>
@@ -248,9 +396,9 @@ Ganssle, Paul. 2021. <span>“Why You Shouldn’t Invoke Setup.py Directly.”</
 <li id="fn2"><p>And I mean these quotation marks, because I am not sure to call a system which can be out of the standard as “being more versatile”, or not.↩︎</p></li>
 </ol>
 </section></div> ]]></description>
-  <guid>https://pedro-faria.netlify.app/posts/2023/2023-01-30-python-pckg/en/index.html</guid>
+  <guid>https://pedro-faria.netlify.app/posts/2023/2023-02-06-python-pckg/en/index.html</guid>
   <pubDate>Mon, 06 Feb 2023 03:00:00 GMT</pubDate>
-  <media:content url="https://pedro-faria.netlify.app/posts/2023/2023-01-30-python-pckg/package.jpg" medium="image" type="image/jpeg"/>
+  <media:content url="https://pedro-faria.netlify.app/posts/2023/2023-02-06-python-pckg/package.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
   <title>JOINs são importantes fontes de duplicações em seus dados</title>
@@ -1553,7 +1701,7 @@ Damji, Jules, Brooke Wenig, Tathagata Das, and Denny Lee. 2020. <em>Learning Spa
   <category>Apache Spark</category>
   <category>Book</category>
   <guid>https://pedro-faria.netlify.app/publications/book/introd-pyspark/en/index.html</guid>
-  <pubDate>Sat, 04 Feb 2023 18:41:24 GMT</pubDate>
+  <pubDate>Sat, 04 Feb 2023 19:53:58 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/publications/book/introd-pyspark/featured.png" medium="image" type="image/png" height="215" width="144"/>
 </item>
 </channel>

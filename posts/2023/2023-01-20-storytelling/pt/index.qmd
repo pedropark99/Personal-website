@@ -2,9 +2,9 @@
 title: "Um estudo de caso sobre Data Storytelling em um dos maiores bancos brasileiros"
 description: "Neste artigo discuto a minha experiência sobre como eu construi e melhorei o *Data Storytelling* de minhas apresentações para um dos maiores bancos do mercado brasileiro."
 
-date: 2023-01-20
+date: 2023-02-24
 categories: ['Storytelling', 'Data Storytelling', 'Data Science']
-draft: true
+draft: false
 toc: true
 number-sections: true
 
@@ -18,11 +18,20 @@ image: "./../mapa-featured.jpg"
 
 # Introdução
 
-Esse artigo discute o meu processo de construção de *Data Storytelling* dentro de um relatório mensal entregue ao Banco BMG, o qual é um dos maiores bancos comerciais do mercado brasileiro. Busco compartilhar o que aprendi nesse processo, e dou algumas dicas que possivelmente vão ajudá-lo a construir relatórios de dados mais intuitivos, claros e efetivos.
+Este artigo discute como eu melhorei o meu processo de *Data Storytelling* dentro de um relatório mensal que foi entregue ao Banco BMG (o qual é um dos maiores bancos comerciais do mercado brasileiro). Busco compartilhar o que aprendi nesse processo, e dou algumas dicas que possivelmente vão ajudá-lo a construir relatórios de dados mais intuitivos, cativantes, claros e efetivos.
 
-Esse processo de construção levou alguns dias de análise, reflexão, planejamento e design, mas ele também levou vários meses de testes e feedbacks, com pequenos aprendizados e ajustes. E como todo grande trabalho, ele também envolveu mais de uma pessoa. 
+Em resumo, vamos discutir neste artigo as seguintes dicas:
 
-Na época, eu tive ajuda de minha parceira de trabalho, a [Andressa de Souza Freitas](https://www.linkedin.com/in/andressa-de-souza-freitas-697195177/), e, principalmente, da UX Designer [Alê Fernandes](https://www.linkedin.com/in/alefernandesbranding/). Os conhecimentos da Alê de certa forma, revolucionaram a forma como eu construo minhas apresentações. Portanto, uma grande parte do conhecimento exposto neste artigo eu aprendi com ela ❤️.
+- *Data Storytelling* é sobre contar histórias através de dados;
+- Evite textos longos em seus slides;
+- Trace relações entre os indicadores;
+- Construa sua história em torno de uma mensagem principal;
+- Entregue sua história aos poucos;
+- Histórias tem estrutura, use essas estruturas ao seu favor (modelo dos 4 C's e evolução do personagem);
+
+A maior parte desses conhecimentos foram construídos através de intensa pesquisa, reflexão e planejamento sobre as minhas apresentações, e, posteriormente, adquirindo feedbacks, e realizando pequenos ajustes aqui e ali. Sendo assim, um grande trabalho como um todo, e, como você pode esperar, esse processo também envolveu mais de uma pessoa.
+
+Durante esse processo, eu tive ajuda de [Andressa de Souza Freitas](https://www.linkedin.com/in/andressa-de-souza-freitas-697195177/), e, principalmente, da UX Designer [Alê Fernandes](https://www.linkedin.com/in/alefernandesbranding/). Os conhecimentos da Alê revolucionaram a maneira como eu construo minhas apresentações, e, por isso, eu sou imensamente grato a ela ❤️.
 
 
 ::: {.callout-important}
@@ -52,7 +61,7 @@ Agora que você possui uma noção do tamanho que era o problema, nas próximas 
 
 Alguns poucos analistas entendem "data storytelling" como um problema de visualização, ou, como a ciência de "escolher os melhores gráficos" para sua apresentação, ou como projetar gráficos inovadores, bonitos e complexos.
 
-Contudo, data storytelling é sobre **contar histórias com dados**. Não sobre construir visualizações. Escolher a visualização certa, torná-la melhor, mais bonita e mais limpa, é muito importante, porque isso vai te ajudar a contar sua história de uma maneira mais clara e eficaz, e, com isso, atingir um público maior.
+Contudo, data storytelling é sobre **contar histórias com dados**. Não sobre como construir visualizações. Escolher a visualização certa para apresentar os seus dados, torná-la melhor, mais bonita e mais limpa, é apenas uma parte do processo. Uma parte muito importante, pois isso vai te ajudar a contar sua história de uma maneira mais clara e eficaz, e, com isso, atingir um público maior.
 
 ## Uma guerra constante pela atenção
 
@@ -73,12 +82,14 @@ Ao apresentar um slide, os seus espectadores tem que prestar atenção na sua vo
 
 Esse elemento desperta tanto a nossa curiosidade, que ao ver esse slide, você (leitor) provavelmente tentou ler esse texto longo antes mesmo de ler o que estou descrevendo agora neste parágrafo. O mesmo vai acontecer com os espectadores de sua apresentação. Ou seja, os seus espectadores vão imediatamente tentar ler esse parágrafo longo.
 
-Contudo, ler e interpretar um texto longo, exige certo esforço e muita atenção. Como resultado, enquanto os seus espectadores leêm esse texto, eles não vão conseguir prestar atenção em outros elementos de sua apresentação. Por exemplo, na sua fala. Isso pode ser crucial, pois talvez você traga uma informação a mais, ou uma conexão extremamente importante na sua fala, e eles podem acabar perdendo isso enquanto estão lendo o texto.
+Contudo, ler e interpretar um texto longo, exige certo esforço e muita atenção. Como resultado, enquanto os seus espectadores leêm esse texto, eles não vão conseguir prestar atenção em outros elementos de sua apresentação. Por exemplo, na sua fala. 
+
+Isso pode ser crucial, pois talvez você traga uma informação a mais, ou uma conexão extremamente importante na sua fala, e eles podem acabar perdendo isso enquanto estão tentando ler esse texto. Portanto, evite ao máximo incluir textos muito longos em seus slides.
 
 
 ## Trace relações entre os indicadores {#sec-relacoes}
 
-Vamos analisar o slide mostrado em @fig-divisao2. Perceba que esse slide, novamente, se parece muito com uma página de um dashboard. Como resultado, o slide não parece tão cativante à primeira vista, pois ele só mostra os indicadores, ele não constrói uma relação, ou **uma história** entre eles.
+Agora, vamos analisar o slide mostrado em @fig-divisao2. Perceba que esse slide, novamente, lembra muito uma página de um dashboard. Como resultado, o slide não parece tão cativante à primeira vista, pois ele só mostra os indicadores, ele não constrói uma relação, ou **uma história** entre eles.
 
 ![Falta de relação entre os indicadores](./../divisao2.png){#fig-divisao2}
 
@@ -86,27 +97,27 @@ Se prestarmos atenção nesses indicadores, podemos identificar alguns efeitos q
 
 Por exemplo, perceba que há um aumento significativo nas vendas. Tanto no número de propostas vendidas quanto no valor total em si que essas propostas geraram. Porém, perceba que esse crescimento nas vendas não ocorreu no produto "Empréstimo Consignado", e sim, no produto "Empréstimo com garantia de veículos". Ou seja, o produto "Empréstimo Consignado" teve uma queda de vendas nesse mês, porém, o produto "Empréstimo com garantia de veículos" obteve um super resultado que conseguiu cobrir e muito essa queda, e no fim, conseguiu aumentar as vendas como um todo do banco.
 
-Outros efeitos que podemos perceber são os aumentos na taxa de conversão e na taxa de sucesso de API. Esses também são fatores que contribuíram para o aumento nas vendas. Pois um aumento na taxa de conversão significa que uma parcela maior dos nossos clientes está adquirindo os nossos produtos. Já um aumento na taxa de sucesso na API, significa que temos menos erros nos registros das vendas na plataforma, e isso é obviamente positivo, pois nós temos uma perda de vendas menor por causa de travamentos e erros nesse sistema de registro.
+Além disso, outros efeitos que podemos perceber são os aumentos na taxa de conversão e na taxa de sucesso de API. Esses também são fatores que contribuíram para o aumento nas vendas. Pois um aumento na taxa de conversão significa que uma parcela maior dos nossos clientes está adquirindo os nossos produtos. Já um aumento na taxa de sucesso na API, significa que temos menos erros nos registros das vendas na plataforma, e isso é obviamente positivo, pois nós temos uma perda de vendas menor por causa de travamentos e erros nesse sistema de registro.
 
-Perceba que todas essas relações nos ajudam a **construir uma história** sobre como as vendas aumentaram nesse mês, e é justamente isso que queremos atingir.
+Perceba que todas essas relações nos ajudam a **construir uma história** sobre como as vendas aumentaram nesse mês, e é justamente isso que queremos atingir. Portanto, tente sempre construir relações entre os seus indicadores, de modo a formar uma história sobre um resultado principal.
 
 
 ## Construa sua história em torno de uma mensagem principal
 
-Apenas para deixar claro essa ideia, ao identificar os vários efeitos que descrevemos em @sec-relacoes, sobre o slide mostrado em @fig-divisao2, é interessante nos questionarmos: qual desses vários efeitos é o principal resultado? Em outras palavras, qual desses efeitos é o que mais interessa os gerentes que estão assistindo à sua apresentação?
+Apenas para deixar claro essa ideia, ao identificar os vários efeitos que descrevemos em @sec-relacoes, sobre o slide mostrado em @fig-divisao2, é interessante nos questionarmos: qual desses vários efeitos é o principal resultado? Em outras palavras, qual desses efeitos é o que mais interessa os gerentes do banco que estão assistindo à sua apresentação?
 
-Certamente o aumento sobre as vendas é o efeito principal. É o efeito que mais interessa os gerentes que estão assistindo à sua apresentação. Portanto, tente construir a sua história em torno desse resultado, ou dessa mensagem principal. Use os outros indicadores para explicar como esse resultado principal aconteceu.
+Certamente o aumento sobre as vendas é o **efeito principal**. É o efeito que mais interessa os gerentes que estão assistindo à sua apresentação. Portanto, tente construir a sua história em torno desse resultado, ou dessa mensagem principal. Use os outros indicadores para explicar como esse resultado principal aconteceu.
 
-Isso também é muito importante! Todo gerente gosta muito de ouvir a palavra "aumento nas vendas". Porém, ele também está sempre interessado em saber como esse aumento foi gerado. Ou seja, ele precisa saber quais foram as ações que geraram esse impacto positivo.
+Isso também é muito importante! Todo gerente gosta muito de ouvir a palavra "aumento nas vendas". Porém, ele também está sempre interessado em saber o **"como esse aumento foi gerado?"**. Ou seja, ele precisa saber quais foram as ações realizadas que geraram esse impacto positivo.
 
-Pois ao identificar essas ações, ele tem a capacidade de aplicar essas ações em outras partes de seu negócio, com o objetivo de disseminar esse efeito positivo que você descreveu.
+Pois ao identificar essas ações, esse gerente tem a capacidade de aplicar essas ações em outras partes de seu negócio, e, com certa esperança, ele pode acabar disseminando esse efeito positivo que você descreveu para outras áreas, e, como resultado, ele pode acabar aumentando ainda mais as vendas da empresa.
 
 
 ## Entregue sua história aos poucos
 
-O cérebro humano consegue processar uma quantidade limitada de informações de uma vez só. Como resultado, se você tentar explicar várias informações para os seus espectadores, em um único slide, eles vão acabar atingindo esse limite, e simplesmente não vão conseguir raciocinar, compreender ou assimilar o que você está explicando.
+O cérebro humano consegue processar uma quantidade limitada de informações de uma vez só. Como resultado, se você tentar explicar várias informações para os seus espectadores, em um único slide, eles vão acabar atingindo esse limite 🤯, e simplesmente não vão conseguir raciocinar, compreender ou assimilar o que você está explicando.
 
-Portanto, **entregue a sua história aos poucos**. Evite condensar várias informações em um único slide! Divida o conteúdo em partes, e explique uma parte de cada vez! 
+Portanto, **entregue a sua história aos poucos**. Evite condensar várias informações em um único slide! Divida o conteúdo em partes, e explique uma parte de cada vez!
 
 ## Colocando essas dicas em prática
 
