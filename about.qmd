@@ -25,14 +25,17 @@ about:
 ---
  
 ## Bio
-Hey! I'm Pedro Duarte Faria. A brazilian economist, data analyst and software enginner, working mainly with R, SQL, Python and Apache Spark. I do a lot of data analysis these days, but I do love teaching software development and building open-source software too.
+Hey! I'm Pedro Duarte Faria. A brazilian economist, data engineer and software engineer, working mainly with R, SQL, Python and Apache Spark. I do a lot of data engineering these days, but I do love teaching software development and building open-source software too.
 
 -----------------------------------------------------------------------------------------------------------------------------------
 
 ## Experience
 
+**Data Engineer**,
+Take Blip, Feb 2023 - present.
+
 **Data Analyst**,
-Take Blip, May 2021 - present.
+Take Blip, May 2021 - Feb 2023.
 
 **Research engineering Intern**,
 João Pinheiro Foundation, August 2019 - March 2021.
