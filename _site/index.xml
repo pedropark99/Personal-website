@@ -9,7 +9,7 @@
 <link>https://pedro-faria.netlify.app/index.html</link>
 <atom:link href="https://pedro-faria.netlify.app/index.xml" rel="self" type="application/rss+xml"/>
 <description>A blog about programming and data analysis, specially with R and Python</description>
-<generator>quarto-1.2.280</generator>
+<generator>quarto-1.2.269</generator>
 <lastBuildDate>Mon, 06 Feb 2023 03:00:00 GMT</lastBuildDate>
 <item>
   <title>What I learned from developing my first Python package</title>
@@ -46,7 +46,7 @@
 <div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="im" style="color: #00769E;">import</span> sys</span>
 <span id="cb2-2"><span class="bu" style="color: null;">print</span>(sys.path)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>['/home/pedro/Documentos/Projetos/Personal-website/posts/2023/2023-01-30-python-pckg/en', '/usr/lib/python310.zip', '/usr/lib/python3.10', '/usr/lib/python3.10/lib-dynload', '', '/home/pedro/.local/lib/python3.10/site-packages', '/usr/local/lib/python3.10/dist-packages', '/usr/lib/python3/dist-packages']</code></pre>
+<pre><code>['E:\\Users\\pedro\\Documents\\Projetos\\Personal-website\\posts\\2023\\2023-01-30-python-pckg\\en', 'C:\\Users\\pedro\\AppData\\Local\\Programs\\Python\\Python310\\python310.zip', 'C:\\Users\\pedro\\AppData\\Local\\Programs\\Python\\Python310\\DLLs', 'C:\\Users\\pedro\\AppData\\Local\\Programs\\Python\\Python310\\lib', 'C:\\Users\\pedro\\AppData\\Local\\Programs\\Python\\Python310', '', 'C:\\Users\\pedro\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages', 'C:\\Users\\pedro\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\win32', 'C:\\Users\\pedro\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\win32\\lib', 'C:\\Users\\pedro\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\Pythonwin']</code></pre>
 </div>
 </div>
 <p>You might also find contents about the <code>PYTHONPATH</code> variable when searching for this subject on the internet. In essence, <code>PYTHONPATH</code> is a environment variable that can contain a complementary list of directories to be added to <code>sys.path</code> <span class="citation" data-cites="pypathvar">(Foundation 2023a)</span>.</p>
@@ -248,6 +248,9 @@ Ganssle, Paul. 2021. <span>“Why You Shouldn’t Invoke Setup.py Directly.”</
 <li id="fn2"><p>And I mean these quotation marks, because I am not sure to call a system which can be out of the standard as “being more versatile”, or not.↩︎</p></li>
 </ol>
 </section></div> ]]></description>
+  <category>Python</category>
+  <category>Package</category>
+  <category>Development workflow</category>
   <guid>https://pedro-faria.netlify.app/posts/2023/2023-01-30-python-pckg/en/index.html</guid>
   <pubDate>Mon, 06 Feb 2023 03:00:00 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/posts/2023/2023-01-30-python-pckg/package.jpg" medium="image" type="image/jpeg"/>
@@ -1553,7 +1556,7 @@ Damji, Jules, Brooke Wenig, Tathagata Das, and Denny Lee. 2020. <em>Learning Spa
   <category>Apache Spark</category>
   <category>Book</category>
   <guid>https://pedro-faria.netlify.app/publications/book/introd-pyspark/en/index.html</guid>
-  <pubDate>Sat, 04 Feb 2023 18:37:33 GMT</pubDate>
+  <pubDate>Sat, 04 Feb 2023 18:47:18 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/publications/book/introd-pyspark/featured.png" medium="image" type="image/png" height="215" width="144"/>
 </item>
 </channel>

@@ -4,6 +4,7 @@ description: In this post, I want to share some of the challenges, and what I le
 image: "./../package.jpg"
 
 date: 2023-02-06
+categories: ['Python', 'Package', 'Development workflow']
 bibliography: './../references.bib'
 number-sections: true
 ---

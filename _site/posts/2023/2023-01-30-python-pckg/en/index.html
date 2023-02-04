@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.280">
+<meta name="generator" content="quarto-1.2.269">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -285,7 +285,12 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
           In this post, I want to share some of the challenges, and what I learned from developing my first Python package 📦 published at PyPI
         </div>
       </div>
-                </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Python</div>
+                <div class="quarto-category">Package</div>
+                <div class="quarto-category">Development workflow</div>
+              </div>
+                  </div>
   </div>
     
   <div class="quarto-title-meta-author">
@@ -352,7 +357,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sys.path)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>['/home/pedro/Documentos/Projetos/Personal-website/posts/2023/2023-01-30-python-pckg/en', '/usr/lib/python310.zip', '/usr/lib/python3.10', '/usr/lib/python3.10/lib-dynload', '', '/home/pedro/.local/lib/python3.10/site-packages', '/usr/local/lib/python3.10/dist-packages', '/usr/lib/python3/dist-packages']</code></pre>
+<pre><code>['E:\\Users\\pedro\\Documents\\Projetos\\Personal-website\\posts\\2023\\2023-01-30-python-pckg\\en', 'C:\\Users\\pedro\\AppData\\Local\\Programs\\Python\\Python310\\python310.zip', 'C:\\Users\\pedro\\AppData\\Local\\Programs\\Python\\Python310\\DLLs', 'C:\\Users\\pedro\\AppData\\Local\\Programs\\Python\\Python310\\lib', 'C:\\Users\\pedro\\AppData\\Local\\Programs\\Python\\Python310', '', 'C:\\Users\\pedro\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages', 'C:\\Users\\pedro\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\win32', 'C:\\Users\\pedro\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\win32\\lib', 'C:\\Users\\pedro\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\Pythonwin']</code></pre>
 </div>
 </div>
 <p>You might also find contents about the <code>PYTHONPATH</code> variable when searching for this subject on the internet. In essence, <code>PYTHONPATH</code> is a environment variable that can contain a complementary list of directories to be added to <code>sys.path</code> <span class="citation" data-cites="pypathvar">(<a href="#ref-pypathvar" role="doc-biblioref">Foundation 2023a</a>)</span>.</p>
