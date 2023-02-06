@@ -330,6 +330,6 @@ packages = ["spark_map"]
 package-dir = {"" = "src"}
 ```
 
-Such a hard bug to find, with such a simple and straightforward solution to fix it 😑 (poker face). With these options, `setuptools` could finally find all the Python modules of my package, and, as a consequence, include them in the built versions of the package (in the source and in the wheel distributions).
+It was so hard to find this bug, yet, it was quite simple and straightforward to fix it 😑 (poker face). With these options, `setuptools` could finally find all the Python modules of my package, and, as a consequence, include them in the built versions of the package (in the source and in the wheel distributions).
 
 Therefore, if you face a `ModuleNotFoundError` error when you try to import your package, after you installed it in your computer with `pip`, I recommend you to check if your Python modules are being included on the built versions of your package.

@@ -245,7 +245,7 @@
 <div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode toml code-with-copy"><code class="sourceCode toml"><span id="cb13-1"><span class="kw" style="color: #003B4F;">[</span><span class="dt" style="color: #AD0000;">tool</span><span class="kw" style="color: #003B4F;">.</span><span class="dt" style="color: #AD0000;">setuptools</span><span class="kw" style="color: #003B4F;">]</span></span>
 <span id="cb13-2"><span class="dt" style="color: #AD0000;">packages</span> <span class="op" style="color: #5E5E5E;">=</span> <span class="op" style="color: #5E5E5E;">[</span><span class="st" style="color: #20794D;">"spark_map"</span><span class="op" style="color: #5E5E5E;">]</span></span>
 <span id="cb13-3"><span class="dt" style="color: #AD0000;">package-dir</span> <span class="op" style="color: #5E5E5E;">=</span> <span class="op" style="color: #5E5E5E;">{</span><span class="dt" style="color: #AD0000;">""</span><span class="op" style="color: #5E5E5E;"> =</span> <span class="st" style="color: #20794D;">"src"</span><span class="op" style="color: #5E5E5E;">}</span></span></code></pre></div>
-<p>Such a hard bug to find, with such a simple and straightforward solution to fix it 😑 (poker face). With these options, <code>setuptools</code> could finally find all the Python modules of my package, and, as a consequence, include them in the built versions of the package (in the source and in the wheel distributions).</p>
+<p>It was so hard to find this bug, yet, it was quite simple and straightforward to fix it 😑 (poker face). With these options, <code>setuptools</code> could finally find all the Python modules of my package, and, as a consequence, include them in the built versions of the package (in the source and in the wheel distributions).</p>
 <p>Therefore, if you face a <code>ModuleNotFoundError</code> error when you try to import your package, after you installed it in your computer with <code>pip</code>, I recommend you to check if your Python modules are being included on the built versions of your package.</p>
 
 
@@ -1585,7 +1585,7 @@ Damji, Jules, Brooke Wenig, Tathagata Das, and Denny Lee. 2020. <em>Learning Spa
   <category>Apache Spark</category>
   <category>Book</category>
   <guid>https://pedro-faria.netlify.app/publications/book/introd-pyspark/en/index.html</guid>
-  <pubDate>Mon, 06 Feb 2023 16:36:39 GMT</pubDate>
+  <pubDate>Mon, 06 Feb 2023 16:46:34 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/publications/book/introd-pyspark/featured.png" medium="image" type="image/png" height="215" width="144"/>
 </item>
 </channel>
