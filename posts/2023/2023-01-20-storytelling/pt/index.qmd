@@ -1,6 +1,6 @@
 ---
-title: "Um estudo de caso sobre Data Storytelling em um dos maiores bancos brasileiros"
-description: "Neste artigo discuto a minha experiência sobre como eu construi e melhorei o *Data Storytelling* de minhas apresentações para um dos maiores bancos do mercado brasileiro."
+title: "Um estudo de caso sobre Data Storytelling em alguns dos maiores bancos brasileiros"
+description: "Neste artigo discuto a minha experiência sobre como eu construi e melhorei o *Data Storytelling* de minhas apresentações para dois dos maiores bancos do mercado brasileiro."
 
 date: 2023-02-24
 categories: ['Storytelling', 'Data Storytelling', 'Data Science']
@@ -18,7 +18,7 @@ image: "./../mapa-featured.jpg"
 
 # Introdução
 
-Este artigo discute como eu melhorei o meu processo de *Data Storytelling* dentro de um relatório mensal que foi entregue ao Banco BMG (o qual é um dos maiores bancos comerciais do mercado brasileiro). Busco compartilhar o que aprendi nesse processo, e dou algumas dicas que possivelmente vão ajudá-lo a construir relatórios de dados mais intuitivos, cativantes, claros e efetivos.
+Este artigo discute como eu melhorei o meu processo de *Data Storytelling* dentro das minhas apresentações e relatórios entregues ao Banco BMG e ao Banco Pan (os quais são dois dos maiores bancos comerciais do mercado brasileiro). Busco compartilhar o que aprendi nesse processo, e dou algumas dicas que possivelmente vão ajudá-lo a construir relatórios de dados mais intuitivos, cativantes, claros e efetivos.
 
 Em resumo, vamos discutir neste artigo as seguintes dicas:
 
@@ -31,11 +31,11 @@ Em resumo, vamos discutir neste artigo as seguintes dicas:
 
 A maior parte desses conhecimentos foram construídos através de intensa pesquisa, reflexão e planejamento sobre as minhas apresentações, e, posteriormente, adquirindo feedbacks, e realizando pequenos ajustes aqui e ali. Sendo assim, um grande trabalho como um todo, e, como você pode esperar, esse processo também envolveu mais de uma pessoa.
 
-Durante esse processo, eu tive ajuda de [Andressa de Souza Freitas](https://www.linkedin.com/in/andressa-de-souza-freitas-697195177/), e, principalmente, da UX Designer [Alê Fernandes](https://www.linkedin.com/in/alefernandesbranding/). Os conhecimentos da Alê revolucionaram a maneira como eu construo minhas apresentações, e, por isso, eu sou imensamente grato a ela ❤️.
+Durante esse processo, eu tive ajuda de meus colegas de trabalho, [Andressa de Souza Freitas](https://www.linkedin.com/in/andressa-de-souza-freitas-697195177/) e [Guilherme Gomes](https://www.linkedin.com/in/guilhermeggarcia/), mas também, tive uma grande ajuda da UX Designer [Alê Fernandes](https://www.linkedin.com/in/alefernandesbranding/). Vários dos conhecimentos apresentados aqui, eu aprendi com a Alê. Esses conhecimentos revolucionaram a maneira como eu construo minhas apresentações, e, por isso, eu sou imensamente grato a ela ❤️.
 
 
 ::: {.callout-important}
-Todos os dados, gráficos e imagens mostrados neste artigo são meramente ilustrativos. Todos os números apresentados foram gerados de forma aleatória por um computador! Portanto, eles não representam os dados reais da plataforma Blip ou do Banco BMG de nenhuma forma ou dimensão!
+Todos os dados, gráficos e imagens mostrados neste artigo são meramente ilustrativos. Todos os números apresentados foram gerados de forma aleatória por um computador! Portanto, eles não representam os dados reais da plataforma Blip ou do Banco BMG, ou do Banco Pan de nenhuma forma ou dimensão!
 :::
 
 # Como era esse relatório antes ?
@@ -133,12 +133,69 @@ Vamos botar essas dicas em prática, e reformular o slide mostrado em @fig-divis
 
 # Histórias tem estrutura, use essas estruturas ao seu favor
 
+Nas próximas seções, vou mostrar dois exemplos de estruturas bastante comuns em histórias. Essas estruturas servem como um guia durante a construção de sua história. Elas te ajudam muito a organizar as suas ideias em um formato claro e efetivo.
 
-## O modelo dos quatro C's como um excelente guia
+## O modelo dos quatro C's
 
-O modelo dos quatro C's se refere a essas quatro palavras:
+O modelo dos quatro C's se refere a estas quatro palavras:
 
 > Contexto, Conflito, Consequência, Conselho.
+
+Estas quatro palavras, te ajudam a trazer uma estrutura consistente para a sua história. Além disso, essas palavras também te ajudam a mexer um pouco com as emoções de seus espectadores, e, com isso, capturar mais a atenção deles.
+
+Ao seguir esse modelo, sua história vai sempre se dividir em quatro partes: contexto, conflito, consequência e conselho. Precisamente nesta ordem. Esse estrutura gira em torno de um problema, ou um conflito principal que você identificou no negócio de seu cliente.
+
+O interessante dessa estrutura, é que você pode estacar vários problemas em sequência. Como resultado, você tem um bloco de 4 C's (contexto, conflito, consequência e conselho), seguido de um outro bloco com mais 4 C's (contexto, conflito, consequência e conselho). Ou também, você pode começar a apresentação por um contexto, e, em seguida, dois blocos de 3 C's (conflito, consequência e conselho) em sequência.
+
+Enfim, chega de papo, e vamos descrever em mais detalhes cada uma das partes dessa estrutura.
+
+### Começe por um contexto geral
+
+Portanto, ao seguir esse modelo, a sua história vai sempre se iniciar por um contexto geral. Algo apenas para contextualizar o espectador sobre qual é o estado atual do negócio.
+
+Lembre-se que, o modelo dos 4 C's é construído em torno de um conflito, ou de um problema central. Tendo isso em mente, se, por exemplo, o conflito que você for discutir na sua história, for um problema que afeta o serviço de venda de maquininhas de cartão, é importante que você foque nessa parte do contexto, em dar um *overview* sobre o produto "maquininhas de cartão".
+
+Em outras palavras, evite trazer contextos nesta parte que não estão relacionados ao problema/conflito que você vai apresentar na seção seguinte. Pois esse conflito é a parte central de sua história.
+
+### Apresente um conflito/problema/desafio a ser superado
+
+Em seguida, você deve apresentar um conflito. Isto é, um problema, um desafio ou uma barreira que você tenha identificado no produto/serviço que você está analisando. É aqui que vamos mexer um pouco com a emoção do espectador, e usar isso ao nosso favor para capturar a sua atenção.
+
+Vamos refletir um pouco sobre isso. Ao colocarmos palavras como "problema", "cuidado", "desafio", "alerta", especialmente em letras garrafais, além de incluir emojis que transmitem esse intuito, como ⚠️ e ⛔. Isso rapidamente chama a atenção de qualquer pessoa, pois te dá uma sensação de perigo, e você entra em um estado de alerta.
+
+Se você refletir mais um pouco sobre isso, você provavelmente vai perceber que você tem esse mesmo instinto quando você está assistindo a um filme, ou a uma série, e o herói dessa história de repente entra em uma situação de perigo. Você rapidamente presta mais atenção no que está acontecendo, pois você quer ver como o herói vai sair dessa enrascada, ou você está torcendo muito para que ele sobreviva e supere esse problema.
+
+Ao apresentarmos um problema sobre o produto/serviço que você está analisando, estamos querendo causar esse mesmo efeito em nossos espectadores. Ao dizermos que temos um desafio/problema que está afetando as vendas da empresa, os gerentes rapidamente começam a prestar mais atenção no que você está dizendo, pois eles querem saber como eles podem sair dessa enrascada!
+
+### Esconder os problemas é uma péssima ideia
+
+Isso é muito importante! Alguns analistas tem medo ou receio de jogar luz sobre os problemas existentes, e, por isso, acabam escodendo eles ou omitindo de suas apresentações. Porém, você não está entregando valor nenhum para o seu cliente dessa forma! Você não está ajudando o seu cliente a resolver os problemas e a crescer o negócio dele! 
+
+E se os problemas não são solucionados, se eles continuam existindo, eles vão crescer, e crescer, até que eles explodirem, gerando assim um caos generalizado. Em vista disso, quanto mais cedo você identificar esse problema, avisar os gerentes sobre ele, e apresentar possíveis soluções para ele, melhor para os gerentes, que já saem com um plano de ação para resolver esse problema, e é melhor para você também, pois estamos entregando valor e soluções para o cliente.
+
+Portanto, uma boa apresentação, ou um bom relatório de dados, é aquele que entrega valor para o seu cliente! Ao mostrar novas oportunidades de negócio (e.g. atingir uma nova parcela do público com um produto), e também, apresentar soluções para problemas atuais que estão limitando ou impedindo o crescimento do negócio.
+
+Porém, uma apresentação que apenas comenta pontos positivos, que fala que está tudo bem... não traz valor nenhum para os gerentes. Os gerentes não te contrataram para falar que está tudo bem. Eles te contrataram para que você ajude eles a descobrir e solucionar problemas no negócio deles, através da análise de dados.
+
+
+### Apresente as consequências do conflito/problema/desafio que você identificou
+
+Portanto, após apresentar um conflito/problema/desafio que está afetando o negócio para o seu espectador, é importante que você apresente logo em seguida a consequência desse problema. Isso ajuda os gerentes a terem uma dimensão do tamanho que esse problema representa para o negócio deles.
+
+Tudo bem se você não conseguir mensurar em números o tamanho do impacto que esse conflito gerou no negócio. Tente medir esse impacto da melhor forma que você puder. Um valor aproximado do impacto já pode trazer bastante clareza sobre o tamanho do perigo que esse conflito representa para o negócio de seus espectadores.
+
+Você também pode fornecer um *range*, ou um intervalo possível do impacto se você puder (e.g. o impacto estimado está entre R$ 20 mil e R$ 340 mil). Essa também é uma forma válida de expor o tamanho do problema.
+
+Caso for realmente impossível de mensurar esse impacto em números, então, explique nesta parte, quais são os pontos do processo de venda do produto/serviço que são afetados por esse problema. Em outras palavras, apresente quais são os lugares do negócio que estão sendo, em teoria, afetados por esse conflito.
+
+
+### Aconselhe o seu cliente, apresente possíveis soluções para o problema
+
+Ok, apresentamos um problema, ou um conflito para os nossos espectadores. Também discutimos os impactos desse conflito sobre o negócio de nosso cliente. Agora, precisamos apresentar possíveis soluções para esse problema.
+
+Portanto, entenda o problema/conflito que você está apresentando, e tente listar quais seriam as principais soluções para esse problema, e inclua essas soluções nesta parte de sua apresentação.
+
+É interessante também incluir uma relação dos *trade-offs* de cada solução, principalmente em questão de complexidade e esforço de cada solução. Gerentes estão constantemente interessados nessa relação, e querem sempre escolher a solução que seja mais simples e menos complexa de ser implementada.
 
 
 ## Evolução do personagem como uma outra alternativa
