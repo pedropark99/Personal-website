@@ -193,7 +193,7 @@ Caso for realmente impossível de mensurar esse impacto em números, então, exp
 
 Ok, apresentamos um problema, ou um conflito para os nossos espectadores. Também discutimos os impactos desse conflito sobre o negócio de nosso cliente. Agora, precisamos apresentar possíveis soluções para esse problema.
 
-Portanto, entenda o problema/conflito que você está apresentando, e tente listar quais seriam as principais soluções para esse problema, e inclua essas soluções nesta parte de sua apresentação.
+Portanto, entenda o problema/conflito que você está apresentando, e tente listar quais seriam as principais soluções para esse problema, e inclua essas soluções nesta parte de sua apresentação. Vale a pena explicar e discutir esse problema com outros colegas de trabalho também, pois eles também podem sugerir soluções interessantes que estavam fora de seu radar.
 
 É interessante também incluir uma relação dos *trade-offs* de cada solução, principalmente em questão de complexidade e esforço de cada solução. Gerentes estão constantemente interessados nessa relação, e querem sempre escolher a solução que seja mais simples e menos complexa de ser implementada.
 
