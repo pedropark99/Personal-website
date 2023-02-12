@@ -9,8 +9,131 @@
 <link>https://pedro-faria.netlify.app/index.html</link>
 <atom:link href="https://pedro-faria.netlify.app/index.xml" rel="self" type="application/rss+xml"/>
 <description>A blog about programming and data analysis, specially with R and Python</description>
-<generator>quarto-1.2.262</generator>
-<lastBuildDate>Mon, 06 Feb 2023 03:00:00 GMT</lastBuildDate>
+<generator>quarto-1.2.269</generator>
+<lastBuildDate>Sat, 11 Feb 2023 03:00:00 GMT</lastBuildDate>
+<item>
+  <title>Introducing the {ggfunnel} R package</title>
+  <dc:creator>Pedro Duarte Faria</dc:creator>
+  <link>https://pedro-faria.netlify.app/posts/2023/2023-02-11-funnel-pkg-v010/en/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>At my work, I use a lot of funnel charts. Because they are a very effective visualization to see losses trough a sequence of steps in a sales process (or a “sales path”). I usually build these funnel charts in a very popular Microsoft tool called Power BI.</p>
+<p>This tool is very popular to build interactive dashboards, and it offers many different native visuals and type of charts to build your visualizations. One visual in particular, is the native funnel chart visual which you can use to visualize your data in a funnel chart, like in the example below:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://pedro-faria.netlify.app/posts/2023/2023-02-11-funnel-pkg-v010/power-bi.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">A funnel chart at Power BI</figcaption><p></p>
+</figure>
+</div>
+<p>But after working a lot with these charts in Power BI, I tought to myself: “could I make a funnel chart in R?”. The answer is obviously yes! You could definitely drawn a funnel chart with frameworks such as the <code>ggplot2</code> package. However, there was no packages in the community that could build such visualization out of the box.</p>
+<p>So I decided to develop a small and experimental R package that could drawn this type of chart. This is how <code>{ggfunnel}</code> was born. In essence, with <code>{ggfunnel}</code>, you can build Power BI like funnel charts in R. The <code>{ggfunnel}</code> package uses the <code>{ggplot2}</code> package (or, more specifically, the <code>ggplot2::geom_tile()</code> geom) to build the funnel chart.</p>
+<p><a href="https://github.com/pedropark99/ggfunnel"> <button type="button" class="btn btn-primary">Official repository</button></a> <a href="https://pedropark99.github.io/ggfunnel/"> <button type="button" class="btn btn-primary">Package website</button></a></p>
+</section>
+<section id="how-to-get-it" class="level1">
+<h1>How to get it ?</h1>
+<p>For now, <code>{ggfunnel}</code> is available only at GitHub. You can download and install the package with the <code>devtools::install_github()</code> function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1">devtools<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">install_github</span>(<span class="st" style="color: #20794D;">"pedropark99/ggfunnel"</span>)</span></code></pre></div>
+</div>
+</section>
+<section id="a-small-example-of-use" class="level1">
+<h1>A small example of use</h1>
+<p>The main functionality of the package is at a function called <code>ggfunnel::funnel()</code>, which is responsible for producing the plot. You usually define 3 arguments in this function, which are:</p>
+<ul>
+<li><code>data</code>: the data.frame with the data you want to use in the plot;</li>
+<li><code>values</code>: the column name where are the values you want to display in your funnel chart. In other words, the numerical data that you want to visualize in the chart;</li>
+<li><code>levels</code>: the column name with the “levels” (or the “groups”) you want to display in your funnel chart. In other words, the categorical data that identifies each level in the funnel;</li>
+</ul>
+<p>In the example below, we are using the <code>ggfunnel::aggregates</code> data.frame to build a basic funnel chart:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="fu" style="color: #4758AB;">library</span>(ggfunnel)</span>
+<span id="cb2-2">ggfunnel<span class="sc" style="color: #5E5E5E;">::</span>aggregates</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Step N_users
+1    A    4389
+2    B    3100
+3    C    2005
+4    D     500
+5    E     120</code></pre>
+</div>
+</div>
+<p>The <code>N_users</code> column is the column with numerical data, so I give it to the <code>values</code> argument of the function. This way, these values will be used to determine the widths of each rectangle in the funnel chart.</p>
+<p>In contrast, the <code>Step</code> column contains the categorical data of the dataset. That is why I gave this column to the <code>levels</code> argument of the function. As a result, the values of this column will be used to determine the “levels” of the funnel chart.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1">plot <span class="ot" style="color: #003B4F;">&lt;-</span> ggfunnel<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">funnel</span>(</span>
+<span id="cb4-2">    <span class="at" style="color: #657422;">data =</span> ggfunnel<span class="sc" style="color: #5E5E5E;">::</span>aggregates,</span>
+<span id="cb4-3">    <span class="at" style="color: #657422;">values =</span> N_users, <span class="at" style="color: #657422;">levels =</span> Step</span>
+<span id="cb4-4">  )</span>
+<span id="cb4-5"></span>
+<span id="cb4-6"><span class="fu" style="color: #4758AB;">print</span>(plot)</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://pedro-faria.netlify.app/posts/2023/2023-02-11-funnel-pkg-v010/en/index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The above plot is very simple. However, since the output of <code>ggfunnel::funnel()</code> is a native <code>ggplot</code> object, you can customize and extend the plot greatly with the <code>{ggplot2}</code> package. I give examples and details on how you can customize this output at the main vignette (<code>vignette("funnel")</code>) of the package, which you can <a href="https://pedropark99.github.io/ggfunnel/articles/funnel.html">read at the website of the package</a>.</p>
+<p>Just as a small demonstration, I can add titles to the plot, adjust the theme, and add some notes and arrows to emphasize some parts of the plot. I can also use other packages which extends <code>{ggplot2}</code> to add more custom outputs to the plot, such as the <code>{ggtext}</code> package:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1">plot <span class="ot" style="color: #003B4F;">&lt;-</span> ggfunnel<span class="sc" style="color: #5E5E5E;">::</span>aggregates <span class="sc" style="color: #5E5E5E;">|&gt;</span></span>
+<span id="cb5-2">  ggfunnel<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">funnel</span>(</span>
+<span id="cb5-3">    <span class="at" style="color: #657422;">values =</span> N_users, <span class="at" style="color: #657422;">levels =</span> Step,</span>
+<span id="cb5-4">    <span class="at" style="color: #657422;">text_specs =</span> <span class="fu" style="color: #4758AB;">list</span>(</span>
+<span id="cb5-5">      <span class="at" style="color: #657422;">nudge_x =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="fu" style="color: #4758AB;">rep</span>(<span class="dv" style="color: #AD0000;">0</span>, <span class="at" style="color: #657422;">times =</span> <span class="dv" style="color: #AD0000;">4</span>), <span class="fl" style="color: #AD0000;">0.05</span>),</span>
+<span id="cb5-6">      <span class="at" style="color: #657422;">colour =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="fu" style="color: #4758AB;">rep</span>(<span class="st" style="color: #20794D;">"white"</span>, <span class="at" style="color: #657422;">times =</span> <span class="dv" style="color: #AD0000;">4</span>), <span class="st" style="color: #20794D;">"black"</span>)</span>
+<span id="cb5-7">    )</span>
+<span id="cb5-8">  )</span>
+<span id="cb5-9"></span>
+<span id="cb5-10">note <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="st" style="color: #20794D;">"We lost **75% of the users**&lt;br&gt;from step </span><span class="sc" style="color: #5E5E5E;">\"</span><span class="st" style="color: #20794D;">C</span><span class="sc" style="color: #5E5E5E;">\"</span><span class="st" style="color: #20794D;"> to step </span><span class="sc" style="color: #5E5E5E;">\"</span><span class="st" style="color: #20794D;">D</span><span class="sc" style="color: #5E5E5E;">\"</span><span class="st" style="color: #20794D;">"</span></span>
+<span id="cb5-11"></span>
+<span id="cb5-12">plot <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb5-13">  ggplot2<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">labs</span>(</span>
+<span id="cb5-14">    <span class="at" style="color: #657422;">title =</span> <span class="st" style="color: #20794D;">"Funnel of users in each step of the sales path"</span>,</span>
+<span id="cb5-15">    <span class="at" style="color: #657422;">subtitle =</span> <span class="st" style="color: #20794D;">"The biggest loss of users is at the </span><span class="sc" style="color: #5E5E5E;">\"</span><span class="st" style="color: #20794D;">D</span><span class="sc" style="color: #5E5E5E;">\"</span><span class="st" style="color: #20794D;"> step"</span>,</span>
+<span id="cb5-16">    <span class="at" style="color: #657422;">y =</span> <span class="cn" style="color: #8f5902;">NULL</span></span>
+<span id="cb5-17">  ) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb5-18">  ggplot2<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">theme</span>(</span>
+<span id="cb5-19">    <span class="at" style="color: #657422;">plot.title =</span> ggplot2<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">element_text</span>(<span class="at" style="color: #657422;">face =</span> <span class="st" style="color: #20794D;">"bold"</span>, <span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">16</span>),</span>
+<span id="cb5-20">    <span class="at" style="color: #657422;">plot.title.position =</span> <span class="st" style="color: #20794D;">"plot"</span></span>
+<span id="cb5-21">  ) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb5-22">  ggtext<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">geom_richtext</span>(</span>
+<span id="cb5-23">    ggplot2<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">x =</span> <span class="fl" style="color: #AD0000;">0.35</span>, <span class="at" style="color: #657422;">y =</span> <span class="st" style="color: #20794D;">"D"</span>,</span>
+<span id="cb5-24">    <span class="at" style="color: #657422;">label =</span> note),</span>
+<span id="cb5-25">    <span class="at" style="color: #657422;">label.color =</span> <span class="cn" style="color: #8f5902;">NA</span></span>
+<span id="cb5-26">  ) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb5-27">  ggplot2<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">geom_segment</span>(</span>
+<span id="cb5-28">    ggplot2<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">x =</span> <span class="fl" style="color: #AD0000;">0.17</span>, <span class="at" style="color: #657422;">xend =</span> <span class="fl" style="color: #AD0000;">0.07</span>, <span class="at" style="color: #657422;">y =</span> <span class="st" style="color: #20794D;">"D"</span>, <span class="at" style="color: #657422;">yend =</span> <span class="st" style="color: #20794D;">"D"</span>), </span>
+<span id="cb5-29">    <span class="at" style="color: #657422;">arrow =</span> ggplot2<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">arrow</span>(</span>
+<span id="cb5-30">      <span class="at" style="color: #657422;">length =</span> ggplot2<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">unit</span>(<span class="fl" style="color: #AD0000;">0.25</span>, <span class="st" style="color: #20794D;">"cm"</span>)</span>
+<span id="cb5-31">    )</span>
+<span id="cb5-32">  )</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://pedro-faria.netlify.app/posts/2023/2023-02-11-funnel-pkg-v010/en/index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="a-simple-but-far-from-perfect-approach" class="level1">
+<h1>A simple (but far from perfect) approach</h1>
+<p><code>{ggfunnel}</code> is a very simple (and kind of experimental) package, and it is far from perfect. This means that, currently, <code>{ggfunnel}</code> gives you the minimal code necessary to produce a decent funnel chart. But it does give much more functionality than that.</p>
+<p>It also makes some assumptions about your data that might not hold, and it does not contain some features that you might find at Power BI (e.g.&nbsp;percentage labels).</p>
+<p>But, even being a very simple package, <code>ggfunnel::funnel()</code> always returns the raw <code>ggplot</code> object that describes the funnel chart. This means that the package gives you a lot of freedom to customize (or to complement) the output in the way you might need. See <a href="https://pedropark99.github.io/ggfunnel/articles/funnel.html"><code>vignette("funnel")</code></a> for more details on how to customize/complement the <code>ggfunnel::funnel()</code> output.</p>
+<p>However, the package needs some work to be a more robust and complete piece of code, for sure. If you think you can make <code>{ggfunnel}</code> better I would be happy to review a PR from you!</p>
+
+
+</section>
+
+ ]]></description>
+  <category>R Language</category>
+  <category>Package</category>
+  <category>Power BI</category>
+  <category>Funnel charts</category>
+  <guid>https://pedro-faria.netlify.app/posts/2023/2023-02-11-funnel-pkg-v010/en/index.html</guid>
+  <pubDate>Sat, 11 Feb 2023 03:00:00 GMT</pubDate>
+  <media:content url="https://pedro-faria.netlify.app/posts/2023/2023-02-11-funnel-pkg-v010/background-ggfunnel.png" medium="image" type="image/png" height="84" width="144"/>
+</item>
 <item>
   <title>What I learned from developing my first Python package</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
@@ -1585,7 +1708,7 @@ Damji, Jules, Brooke Wenig, Tathagata Das, and Denny Lee. 2020. <em>Learning Spa
   <category>Apache Spark</category>
   <category>Book</category>
   <guid>https://pedro-faria.netlify.app/publications/book/introd-pyspark/en/index.html</guid>
-  <pubDate>Mon, 06 Feb 2023 16:46:34 GMT</pubDate>
+  <pubDate>Sun, 12 Feb 2023 00:31:35 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/publications/book/introd-pyspark/featured.png" medium="image" type="image/png" height="215" width="144"/>
 </item>
 </channel>
