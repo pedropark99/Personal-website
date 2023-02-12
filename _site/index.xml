@@ -9,7 +9,7 @@
 <link>https://pedro-faria.netlify.app/index.html</link>
 <atom:link href="https://pedro-faria.netlify.app/index.xml" rel="self" type="application/rss+xml"/>
 <description>A blog about programming and data analysis, specially with R and Python</description>
-<generator>quarto-1.2.280</generator>
+<generator>quarto-1.2.269</generator>
 <lastBuildDate>Sat, 11 Feb 2023 03:00:00 GMT</lastBuildDate>
 <item>
   <title>Introducing the {ggfunnel} R package</title>
@@ -22,11 +22,17 @@
 
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
-<p>At my work, I tend to drawn many and many funnel charts. Because they are a very effective visualization to see losses trough a sequence of steps in a sales process (or a “sales path”). I usually build these funnel charts in a very popular Microsoft tool called Power BI.</p>
-<p><a href="https://github.com/pedropark99/ggfunnel"> <button type="button" class="btn btn-primary">Official repository</button></a> <a href="https://pedropark99.github.io/ggfunnel/"> <button type="button" class="btn btn-primary">Package website</button></a></p>
+<p>At my work, I use a lot of funnel charts. Because they are a very effective visualization to see losses trough a sequence of steps in a sales process (or a “sales path”). I usually build these funnel charts in a very popular Microsoft tool called Power BI.</p>
 <p>This tool is very popular to build interactive dashboards, and it offers many different native visuals and type of charts to build your visualizations. One visual in particular, is the native funnel chart visual which you can use to visualize your data in a funnel chart, like in the example below:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://pedro-faria.netlify.app/posts/2023/2023-02-11-funnel-pkg-v010/power-bi.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">A funnel chart at Power BI</figcaption><p></p>
+</figure>
+</div>
 <p>But after working a lot with these charts in Power BI, I tought to myself: “could I make a funnel chart in R?”. The answer is obviously yes! You could definitely drawn a funnel chart with frameworks such as the <code>ggplot2</code> package. However, there was no packages in the community that could build such visualization out of the box.</p>
 <p>So I decided to develop a small and experimental R package that could drawn this type of chart. This is how <code>{ggfunnel}</code> was born. In essence, with <code>{ggfunnel}</code>, you can build Power BI like funnel charts in R. The <code>{ggfunnel}</code> package uses the <code>{ggplot2}</code> package (or, more specifically, the <code>ggplot2::geom_tile()</code> geom) to build the funnel chart.</p>
+<p><a href="https://github.com/pedropark99/ggfunnel"> <button type="button" class="btn btn-primary">Official repository</button></a> <a href="https://pedropark99.github.io/ggfunnel/"> <button type="button" class="btn btn-primary">Package website</button></a></p>
 </section>
 <section id="how-to-get-it" class="level1">
 <h1>How to get it ?</h1>
@@ -1702,7 +1708,7 @@ Damji, Jules, Brooke Wenig, Tathagata Das, and Denny Lee. 2020. <em>Learning Spa
   <category>Apache Spark</category>
   <category>Book</category>
   <guid>https://pedro-faria.netlify.app/publications/book/introd-pyspark/en/index.html</guid>
-  <pubDate>Sun, 12 Feb 2023 00:06:46 GMT</pubDate>
+  <pubDate>Sun, 12 Feb 2023 00:31:35 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/publications/book/introd-pyspark/featured.png" medium="image" type="image/png" height="215" width="144"/>
 </item>
 </channel>
