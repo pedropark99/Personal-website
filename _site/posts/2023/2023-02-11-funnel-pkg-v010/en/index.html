@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Pedro Duarte Faria">
-<meta name="dcterms.date" content="2022-11-06">
-<meta name="description" content="With this package, you can access the Figma API to bring your design files to R 🎨!">
+<meta name="dcterms.date" content="2023-02-11">
+<meta name="description" content="In this post, I want to introduce an experimental R package 📦 which you can use to build Power BI like funnel charts in R.">
 
-<title>home |&gt; dplyr::glimpse() - Introducing the {figma} R package</title>
+<title>home |&gt; dplyr::glimpse() - Introducing the {ggfunnel} R package</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -138,7 +138,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <link rel="stylesheet" href="../../../../styles.css">
 </head>
 
-<body class="nav-fixed">
+<body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -260,17 +260,17 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Introducing the <code>{figma}</code> R package</h1>
+      <h1 class="title">Introducing the <code>{ggfunnel}</code> R package</h1>
                   <div>
         <div class="description">
-          With this package, you can access the Figma API to bring your design files to R 🎨!
+          In this post, I want to introduce an experimental R package 📦 which you can use to build Power BI like funnel charts in R.
         </div>
       </div>
                           <div class="quarto-categories">
                 <div class="quarto-category">R Language</div>
                 <div class="quarto-category">Package</div>
-                <div class="quarto-category">Figma</div>
-                <div class="quarto-category">API</div>
+                <div class="quarto-category">Power BI</div>
+                <div class="quarto-category">Funnel charts</div>
               </div>
                   </div>
   </div>
@@ -295,7 +295,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">November 6, 2022</p>
+        <p class="date">February 11, 2023</p>
       </div>
     </div>
     
@@ -306,102 +306,108 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#getting-started" id="toc-getting-started" class="nav-link" data-scroll-target="#getting-started">Getting started</a></li>
-  <li><a href="#use-get_figma_file-to-get-your-figma-file" id="toc-use-get_figma_file-to-get-your-figma-file" class="nav-link" data-scroll-target="#use-get_figma_file-to-get-your-figma-file">Use <code>get_figma_file()</code> to get your Figma file</a></li>
-  <li><a href="#other-scopes-of-data" id="toc-other-scopes-of-data" class="nav-link" data-scroll-target="#other-scopes-of-data">Other scopes of data</a></li>
-  </ul>
-</nav>
-    </div>
+    
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>I’m very happy to announce the realease of <code>figma</code> R package to CRAN! This package provides a R interface (or a web client/wrapper) to the <a href="https://www.figma.com/developers/api">Figma API</a>. Below we have all the important links about this package:</p>
-<p><a href="https://github.com/pedropark99/figma"> <button type="button" class="btn btn-primary">Official repository</button></a> <a href="https://pedropark99.github.io/figma/"> <button type="button" class="btn btn-primary">Package website</button></a> <a href="https://cran.r-project.org/package=figma"> <button type="button" class="btn btn-primary">Page on CRAN</button></a></p>
-<p>This is the first release (or the first version) of the package, and for now, it have all the necessary functionality to get all data from a Figma file, and bring it to your R session. But in the future, the package will include more functionalities and endpoints. Please, if you can, test this package and give feedbacks or report bugs by <a href="https://github.com/pedropark99/figma/issues">sending Issues on the official repository</a>.</p>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>At my work, I tend to drawn many and many funnel charts. Because they are a very effective visualization to see losses trough a sequence of steps in a sales process (or a “sales path”). I usually build these funnel charts in a very popular Microsoft tool called Power BI.</p>
+<p><a href="https://github.com/pedropark99/ggfunnel"> <button type="button" class="btn btn-primary">Official repository</button></a> <a href="https://pedropark99.github.io/ggfunnel/"> <button type="button" class="btn btn-primary">Package website</button></a></p>
+<p>This tool is very popular to build interactive dashboards, and it offers many different native visuals and type of charts to build your visualizations. One visual in particular, is the native funnel chart visual which you can use to visualize your data in a funnel chart, like in the example below:</p>
+<p>But after working a lot with these charts in Power BI, I tought to myself: “could I make a funnel chart in R?”. The answer is obviously yes! You could definitely drawn a funnel chart with frameworks such as the <code>ggplot2</code> package. However, there was no packages in the community that could build such visualization out of the box.</p>
+<p>So I decided to develop a small and experimental R package that could drawn this type of chart. This is how <code>{ggfunnel}</code> was born. In essence, with <code>{ggfunnel}</code>, you can build Power BI like funnel charts in R. The <code>{ggfunnel}</code> package uses the <code>{ggplot2}</code> package (or, more specifically, the <code>ggplot2::geom_tile()</code> geom) to build the funnel chart.</p>
 </section>
-<section id="getting-started" class="level2">
-<h2 class="anchored" data-anchor-id="getting-started">Getting started</h2>
-<p>Fist of all, you need to install the package on your machine, and to do that, you can use this code:</p>
+<section id="how-to-get-it" class="level1">
+<h1>How to get it ?</h1>
+<p>For now, <code>{ggfunnel}</code> is available only at GitHub. You can download and install the package with the <code>devtools::install_github()</code> function:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"figma"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"pedropark99/ggfunnel"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Or, to install the development version directly from GitHub:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"pedropark99/figma"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Now, to get the data of a Figma file through the Figma API, you have to collect two key variables about your file and your credentials. They are:</p>
+</section>
+<section id="a-small-example-of-use" class="level1">
+<h1>A small example of use</h1>
+<p>The main functionality of the package is at a function called <code>ggfunnel::funnel()</code>, which is responsible for producing the plot. You usually define 3 arguments in this function, which are:</p>
 <ul>
-<li><code>file_key</code>: The ID (or the “key”) that identifies your Figma file;</li>
-<li><code>token</code>: Your personal access token from the Figma platform;</li>
+<li><code>data</code>: the data.frame with the data you want to use in the plot;</li>
+<li><code>values</code>: the column name where are the values you want to display in your funnel chart. In other words, the numerical data that you want to visualize in the chart;</li>
+<li><code>levels</code>: the column name with the “levels” (or the “groups”) you want to display in your funnel chart. In other words, the categorical data that identifies each level in the funnel;</li>
 </ul>
-<p>To use specifically the <code>figma::get_figma_page()</code> function, you will need to collect a third information, which is the <code>node_id</code>, or the ID that identifies a canvas/page of your Figma file. I explain, in details, on how to collect these key variables on the <a href="https://pedropark99.github.io/figma/articles/figma.html">main vignette package</a>. For brevity reasons, lets assume in this blog post that you already have collected these variables.</p>
+<p>In the example below, we are using the <code>ggfunnel::aggregates</code> data.frame to build a basic funnel chart:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggfunnel)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>ggfunnel<span class="sc">::</span>aggregates</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Step N_users
+1    A    4389
+2    B    3100
+3    C    2005
+4    D     500
+5    E     120</code></pre>
+</div>
+</div>
+<p>The <code>N_users</code> column is the column with numerical data, so I give it to the <code>values</code> argument of the function. This way, these values will be used to determine the widths of each rectangle in the funnel chart.</p>
+<p>In contrast, the <code>Step</code> column contains the categorical data of the dataset. That is why I gave this column to the <code>levels</code> argument of the function. As a result, the values of this column will be used to determine the “levels” of the funnel chart.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>plot <span class="ot">&lt;-</span> ggfunnel<span class="sc">::</span><span class="fu">funnel</span>(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> ggfunnel<span class="sc">::</span>aggregates,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> N_users, <span class="at">levels =</span> Step</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The above plot is very simple. However, since the output of <code>ggfunnel::funnel()</code> is a native <code>ggplot</code> object, you can customize and extend the plot greatly with the <code>{ggplot2}</code> package. I give examples and details on how you can customize this output at the main vignette (<code>vignette("funnel")</code>) of the package, which you can <a href="https://pedropark99.github.io/ggfunnel/articles/funnel.html">read at the website of the package</a>.</p>
+<p>Just as a small demonstration, I can add titles to the plot, adjust the theme, and add some notes and arrows to emphasize some parts of the plot. I can also use other packages which extends <code>{ggplot2}</code> to add more custom outputs to the plot, such as the <code>{ggtext}</code> package:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>plot <span class="ot">&lt;-</span> ggfunnel<span class="sc">::</span>aggregates <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  ggfunnel<span class="sc">::</span><span class="fu">funnel</span>(</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> N_users, <span class="at">levels =</span> Step,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">text_specs =</span> <span class="fu">list</span>(</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">nudge_x =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">0</span>, <span class="at">times =</span> <span class="dv">4</span>), <span class="fl">0.05</span>),</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">colour =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"white"</span>, <span class="at">times =</span> <span class="dv">4</span>), <span class="st">"black"</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>note <span class="ot">&lt;-</span> <span class="st">"We lost **75% of the users**&lt;br&gt;from step </span><span class="sc">\"</span><span class="st">C</span><span class="sc">\"</span><span class="st"> to step </span><span class="sc">\"</span><span class="st">D</span><span class="sc">\"</span><span class="st">"</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>plot <span class="sc">+</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">labs</span>(</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Funnel of users in each step of the sales path"</span>,</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"The biggest loss of users is at the </span><span class="sc">\"</span><span class="st">D</span><span class="sc">\"</span><span class="st"> step"</span>,</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="cn">NULL</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme</span>(</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> ggplot2<span class="sc">::</span><span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">16</span>),</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title.position =</span> <span class="st">"plot"</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>  ggtext<span class="sc">::</span><span class="fu">geom_richtext</span>(</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> <span class="fl">0.35</span>, <span class="at">y =</span> <span class="st">"D"</span>,</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> note),</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">label.color =</span> <span class="cn">NA</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_segment</span>(</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> <span class="fl">0.17</span>, <span class="at">xend =</span> <span class="fl">0.07</span>, <span class="at">y =</span> <span class="st">"D"</span>, <span class="at">yend =</span> <span class="st">"D"</span>), </span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">arrow =</span> ggplot2<span class="sc">::</span><span class="fu">arrow</span>(</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>      <span class="at">length =</span> ggplot2<span class="sc">::</span><span class="fu">unit</span>(<span class="fl">0.25</span>, <span class="st">"cm"</span>)</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 </section>
-<section id="use-get_figma_file-to-get-your-figma-file" class="level2">
-<h2 class="anchored" data-anchor-id="use-get_figma_file-to-get-your-figma-file">Use <code>get_figma_file()</code> to get your Figma file</h2>
-<p>Now that you have the key (or ID) that identifies your Figma file, and your personal token that identifies yourself, you can use <code>figma::get_figma_file()</code> to get your Figma file:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(figma)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>file_key <span class="ot">&lt;-</span> <span class="st">"hch8YlkIrYbU3raDzjPvCz"</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Insert your personal token:</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>token <span class="ot">&lt;-</span> <span class="st">"Your personal token ..."</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Returns a `httr::response` object:</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>figma_file <span class="ot">&lt;-</span> figma<span class="sc">::</span><span class="fu">get_figma_file</span>(</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  file_key, token</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>The functions from <code>figma</code> package returns a <code>httr::response</code> object by default. But you can use the <code>.output_format</code> argument to fit the data into a more intuitive data strucuture. For example, a <code>tibble::tibble</code> object:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Returns a `tibble::tibble` object:</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>figma_file <span class="ot">&lt;-</span> figma<span class="sc">::</span><span class="fu">get_figma_file</span>(</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  file_key, token,</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">.output_format =</span> <span class="st">"tibble"</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(figma_file)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<pre><code>#&gt; # A tibble: 5 × 7
-#&gt;   canvas_id canvas_name canvas_type object_id object_name   objec…¹ object_att…²
-#&gt;   &lt;chr&gt;     &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;     &lt;chr&gt;         &lt;chr&gt;   &lt;list&gt;      
-#&gt; 1 0:1       Page 1      CANVAS      1:2       Background    RECTAN… &lt;named list&gt;
-#&gt; 2 0:1       Page 1      CANVAS      5:2       Paragraph     TEXT    &lt;named list&gt;
-#&gt; 3 0:1       Page 1      CANVAS      5:3       Arrow         VECTOR  &lt;named list&gt;
-#&gt; 4 5:4       Page 2      CANVAS      5:5       BackgroundPa… RECTAN… &lt;named list&gt;
-#&gt; 5 5:4       Page 2      CANVAS      5:6       Texto da pág… TEXT    &lt;named list&gt;
-#&gt; # … with abbreviated variable names ¹​object_type, ²​object_attributes</code></pre>
-<p>Each row in the above <code>data.frame</code> is an object drawn in a canvas/page in your Figma file. Every object that you drawn in the canvas of your Figma file, can have a different type (like RECTANGLE, CIRCLE, TEXT, etc.). And objects of different types usually have different attributes.</p>
-<p>For example, TEXT objects have a <code>characters</code> attribute, which have the exact text that is written in the text box. In the other hand, RECTANGLE objects does not have such attribute.</p>
-<p>All the attributes of each object are in the <code>​object_attributes</code> column, which is a <code>&lt;list&gt;</code> column. Each row (or, if you prefer, each element) in this column is a list with all the attributes of the object described in the corresponding row. For example, to collect the <code>characters</code> attribute of the first TEXT object described in <code>figma_file</code> (which is in the 2nd row), you could do this:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>figma_file<span class="sc">$</span>object_attributes[[<span class="dv">2</span>]][[<span class="st">"characters"</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<pre><code>[1] "Um texto qualquer, que não sei se vai dar certo"</code></pre>
-<p>Or, you could the functions from <code>dplyr</code> and <code>purrr</code> packages to extract the <code>characters</code> attribute from all TEXT objects of your Figma file, like this:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>text_objects <span class="ot">&lt;-</span> figma_file <span class="sc">|&gt;</span> </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(object_type <span class="sc">==</span> <span class="st">'TEXT'</span>) </span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>text_objects[[<span class="st">'object_attributes'</span>]] <span class="sc">|&gt;</span> </span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  purrr<span class="sc">::</span><span class="fu">map_chr</span>(<span class="st">'characters'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<pre><code>[1] "Um texto qualquer, que não sei se vai dar certo" "Texto da página 2"</code></pre>
-</section>
-<section id="other-scopes-of-data" class="level1">
-<h1>Other scopes of data</h1>
-<p>The <code>figma::get_figma_file()</code> get the data of all objects drawn in all canvas/pages of a Figma file. But, maybe, you don’t need all data from your file. Maybe you just need the data from a section, or a specific part of your Figma file.</p>
-<p>For these occasions, the <code>figma</code> package offers the <code>figma::get_figma_page()</code> (get data of objects drawn in a specific canvas/page of your file) and <code>figma::get_document_info()</code> (get metadata about your Figma file) functions.</p>
-<p>These functions work basically the same way as <code>figma::get_figma_file()</code>, they have the same arguments (except <code>figma::get_figma_page()</code> which have a extra argument <code>node_id</code>). Check the <a href="https://pedropark99.github.io/figma/reference/index.html">documentation of these functions</a>, and the <a href="https://pedropark99.github.io/figma/articles/figma.html">main vignette of the package</a> to see examples.</p>
+<section id="a-simple-but-far-from-perfect-approach" class="level1">
+<h1>A simple (but far from perfect) approach</h1>
+<p><code>{ggfunnel}</code> is a very simple (and kind of experimental) package, and it is far from perfect. This means that, currently, <code>{ggfunnel}</code> gives you the minimal code necessary to produce a decent funnel chart. But it does give much more functionality than that.</p>
+<p>It also makes some assumptions about your data that might not hold, and it does not contain some features that you might find at Power BI (e.g.&nbsp;percentage labels).</p>
+<p>But, even being a very simple package, <code>ggfunnel::funnel()</code> always returns the raw <code>ggplot</code> object that describes the funnel chart. This means that the package gives you a lot of freedom to customize (or to complement) the output in the way you might need. See <a href="https://pedropark99.github.io/ggfunnel/articles/funnel.html"><code>vignette("funnel")</code></a> for more details on how to customize/complement the <code>ggfunnel::funnel()</code> output.</p>
+<p>However, the package needs some work to be a more robust and complete piece of code, for sure. If you think you can make <code>{ggfunnel}</code> better I would be happy to review a PR from you!</p>
 
 
 </section>

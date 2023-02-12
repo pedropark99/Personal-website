@@ -1,0 +1,111 @@
+---
+title: Introducing the `{ggfunnel}` R package
+description: In this post, I want to introduce an experimental R package 📦 which you can use to build Power BI like funnel charts in R.
+image: "./../background-ggfunnel.png"
+
+date: 2023-02-11
+categories: ['R Language', 'Package', 'Power BI', 'Funnel charts']
+toc: false
+---
+
+# Introduction
+
+At my work, I use a lot of funnel charts. Because they are a very effective visualization to see losses trough a sequence of steps in a sales process (or a "sales path"). I usually build these funnel charts in a very popular Microsoft tool called Power BI. 
+
+This tool is very popular to build interactive dashboards, and it offers many different native visuals and type of charts to build your visualizations. One visual in particular, is the native funnel chart visual which you can use to visualize your data in a funnel chart, like in the example below:
+
+But after working a lot with these charts in Power BI, I tought to myself: "could I make a funnel chart in R?". The answer is obviously yes! You could definitely drawn a funnel chart with frameworks such as the `ggplot2` package. However, there was no packages in the community that could build such visualization out of the box.
+
+So I decided to develop a small and experimental R package that could drawn this type of chart. This is how `{ggfunnel}` was born. In essence, with `{ggfunnel}`, you can build Power BI like funnel charts in R. The `{ggfunnel}` package uses the `{ggplot2}` package (or, more specifically, the `ggplot2::geom_tile()` geom) to build the funnel chart.
+
+{{< include ../buttons-en.html >}}
+
+# How to get it ?
+
+For now, `{ggfunnel}` is available only at GitHub. You can download and install the package with the `devtools::install_github()` function:
+
+```{r}
+#| eval: false
+devtools::install_github("pedropark99/ggfunnel")
+```
+
+
+# A small example of use
+
+The main functionality of the package is at a function called `ggfunnel::funnel()`, which is responsible for producing the plot. You usually define 3 arguments in this function, which are:
+
+- `data`: the data.frame with the data you want to use in the plot;
+- `values`: the column name where are the values you want to display in your funnel chart. In other words, the numerical data that you want to visualize in the chart;
+- `levels`: the column name with the “levels” (or the “groups”) you want to display in your funnel chart. In other words, the categorical data that identifies each level in the funnel;
+
+In the example below, we are using the `ggfunnel::aggregates` data.frame to build a basic funnel chart:
+
+```{r}
+library(ggfunnel)
+ggfunnel::aggregates
+```
+
+
+The `N_users` column is the column with numerical data, so I give it to the `values` argument of the function. This way, these values will be used to determine the widths of each rectangle in the funnel chart.
+
+In contrast, the `Step` column contains the categorical data of the dataset. That is why I gave this column to the `levels` argument of the function. As a result, the values of this column will be used to determine the “levels” of the funnel chart.
+
+```{r}
+plot <- ggfunnel::funnel(
+    data = ggfunnel::aggregates,
+    values = N_users, levels = Step
+  )
+
+print(plot)
+```
+
+The above plot is very simple. However, since the output of `ggfunnel::funnel()` is a native `ggplot` object, you can customize and extend the plot greatly with the `{ggplot2}` package. I give examples and details on how you can customize this output at the main vignette (`vignette("funnel")`) of the package, which you can [read at the website of the package](https://pedropark99.github.io/ggfunnel/articles/funnel.html).
+
+Just as a small demonstration, I can add titles to the plot, adjust the theme, and add some notes and arrows to emphasize some parts of the plot. I can also use other packages which extends `{ggplot2}` to add more custom outputs to the plot, such as the `{ggtext}` package:
+
+```{r}
+plot <- ggfunnel::aggregates |>
+  ggfunnel::funnel(
+    values = N_users, levels = Step,
+    text_specs = list(
+      nudge_x = c(rep(0, times = 4), 0.05),
+      colour = c(rep("white", times = 4), "black")
+    )
+  )
+
+note <- "We lost **75% of the users**<br>from step \"C\" to step \"D\""
+
+plot +
+  ggplot2::labs(
+    title = "Funnel of users in each step of the sales path",
+    subtitle = "The biggest loss of users is at the \"D\" step",
+    y = NULL
+  ) +
+  ggplot2::theme(
+    plot.title = ggplot2::element_text(face = "bold", size = 16),
+    plot.title.position = "plot"
+  ) +
+  ggtext::geom_richtext(
+    ggplot2::aes(x = 0.35, y = "D",
+    label = note),
+    label.color = NA
+  ) +
+  ggplot2::geom_segment(
+    ggplot2::aes(x = 0.17, xend = 0.07, y = "D", yend = "D"), 
+    arrow = ggplot2::arrow(
+      length = ggplot2::unit(0.25, "cm")
+    )
+  )
+```
+
+
+
+# A simple (but far from perfect) approach
+
+`{ggfunnel}` is a very simple (and kind of experimental) package, and it is far from perfect. This means that, currently, `{ggfunnel}` gives you the minimal code necessary to produce a decent funnel chart. But it does give much more functionality than that. 
+
+It also makes some assumptions about your data that might not hold, and it does not contain some features that you might find at Power BI (e.g. percentage labels).
+
+But, even being a very simple package, `ggfunnel::funnel()` always returns the raw `ggplot` object that describes the funnel chart. This means that the package gives you a lot of freedom to customize (or to complement) the output in the way you might need. See [`vignette("funnel")`](https://pedropark99.github.io/ggfunnel/articles/funnel.html) for more details on how to customize/complement the `ggfunnel::funnel()` output.
+
+However, the package needs some work to be a more robust and complete piece of code, for sure. If you think you can make `{ggfunnel}` better I would be happy to review a PR from you!
