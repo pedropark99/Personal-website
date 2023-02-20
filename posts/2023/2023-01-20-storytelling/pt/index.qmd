@@ -52,9 +52,9 @@ Perceba que esse slide se parece mais com uma página de um dashboard, do que de
 
 Tendo isso em mente, qual é o incentivo/motivo/razão que o seu cliente tem para assistir à sua apresentação? Em outras palavras, se a sua apresentação mostra os mesmos gráficos/indicadores que os seus dashboards apresentam, o seu cliente não tem incentivo/motivo nenhum para assistir à sua apresentação. Pois **não há nada na sua apresentação que seja novo**, ou nenhuma informação da qual o seu cliente não tenha já acesso diretamente.
 
-# Como evoluímos ?
+# Como podemos melhorar?
 
-Agora que você possui uma noção do tamanho que era o problema, nas próximas seções deste artigo, vou discutir como nós utilizamos data storytelling para evoluir esse modelo de apresentação para algo melhor, algo que desse maior clareza e impacto para o nosso cliente.
+Agora que você possui uma noção do tamanho que era o problema, nas próximas seções deste artigo, vou discutir algumas dicas essenciais (ou, algumas *"ground rules"*) que mostram como nós podemos melhorar e evoluir os modelos e as histórias de nossas apresentações para algo melhor, algo que desse maior clareza e impacto para o nosso cliente.
 
 
 ## Data Storytelling não é sobre escolher "o melhor gráfico"
@@ -72,7 +72,7 @@ Boa parte do sucesso em *data storytelling* depende de você contar uma históri
 
 ## Por que evitar textos longos em seus slides? {#sec-texto-longo}
 
-Tente ser parsimonioso nos seus slides! Isto é, tente incluir o mínimo possível de informação dentro dele. Em geral, evite incluir textos muito longos em seus slides.
+Tente ser parsimonioso nos seus slides! Isto é, tente incluir o mínimo possível de informação dentro dele. Se você precisa repassar várias informações em um slide, tente incorporar o máximo possível desse conteúdo em sua fala, e o mínino possível dele em forma escrita neste slide. Em geral, evite incluir textos muito longos em seus slides.
 
 Veja o slide em @fig-texto-longo como exemplo. O problema principal desse slide, é que ele divide muito a atenção de seu espectador.
 
@@ -102,7 +102,7 @@ Além disso, outros efeitos que podemos perceber são os aumentos na taxa de con
 Perceba que todas essas relações nos ajudam a **construir uma história** sobre como as vendas aumentaram nesse mês, e é justamente isso que queremos atingir. Portanto, tente sempre construir relações entre os seus indicadores, de modo a formar uma história sobre um resultado principal.
 
 
-## Construa sua história em torno de uma mensagem principal
+## Construa sua história em torno de uma mensagem principal {#sec-mensagem-principal}
 
 Apenas para deixar claro essa ideia, ao identificar os vários efeitos que descrevemos em @sec-relacoes, sobre o slide mostrado em @fig-divisao2, é interessante nos questionarmos: qual desses vários efeitos é o principal resultado? Em outras palavras, qual desses efeitos é o que mais interessa os gerentes do banco que estão assistindo à sua apresentação?
 
@@ -119,7 +119,7 @@ O cérebro humano consegue processar uma quantidade limitada de informações de
 
 Portanto, **entregue a sua história aos poucos**. Evite condensar várias informações em um único slide! Divida o conteúdo em partes, e explique uma parte de cada vez!
 
-## Colocando essas dicas em prática
+# Colocando essas dicas em prática
 
 Portanto, nas seções passadas discutimos as seguintes dicas:
 
@@ -128,7 +128,27 @@ Portanto, nas seções passadas discutimos as seguintes dicas:
 3. Construa sua história em torno de uma mensagem principal;
 4. Entregue sua história aos poucos;
 
-Vamos botar essas dicas em prática, e reformular o slide mostrado em @fig-divisao2.
+Vamos botar essas dicas em prática, e reformular o slide mostrado em @fig-divisao2. Você lembra das relações que descrevemos em @sec-relacoes? Lembra que essas relações traçam uma história sobre o aumento de vendas? Vamos aproveitar essa história para aplicarmos as dicas acima.
+
+Primeiro, estabelecemos que nossa história deve sempre ser construída em torno de uma mensagem principal. Portanto, vamos começar a nossa apresentando nos concentrando em um único slide para mostrar essa mensagem principal.
+
+![A mensagem principal da apresentação](./../mensagem-principal.png)
+
+Agora que sabemos qual é o assunto principal da apresentação, podemos começar a cavar mais fundo, e descrever esse assunto em mais detalhes. Como um próximo passo, uma pergunta que respondemos indiretamente em @sec-relacoes foi "onde esse aumento de vendas ocorreu?"
+
+Isso pode ser uma pergunta bastante relevante para sua apresentação especialmente se você está apresentando para vários gerentes de diferentes áreas ao mesmo tempo, ou também, se você estiver apresentando para um gerente mais alto na hierarquia, que supervisiona várias áreas/produtos ao mesmo tempo. Nesses casos, eles vão logicamente se perguntar onde esse aumento de vendas ocorreu. Será que foi no produto x? Ou foi no produto y? Etc.
+
+Enfim, vamos responder essa pergunta em um novo slide:
+
+![Onde vendemos mais?](./../onde-vendemos.png)
+
+A próxima pergunta que precisamos responder é "como?". Como esse super resultado nas vendas foi gerado? Nós discutimos isso na @sec-mensagem-principal, que após descobrirem um resultado tão importante, os gerentes vão certamente estar interessados em entender como esse resultado foi gerado, para que eles possam difundir esse efeito positivo para outras áreas do negócio.
+
+Lembre-se que temos dois efeitos principais discutidos em @sec-relacoes que explicam essa melhoria nas vendas. Vamos listar de maneira clara e curta esses efeitos no próximo slide:
+
+![Por que vendemos mais?](./../porque-vendemos.png)
+
+Deixe os detalhes mais específicos dos dois efeitos acima (como: "qual melhoria na API foi feita?", "como isso é uma melhoria?", "o que é uma taxa de conversão? E como isso afeta o processo de venda?") para a sua fala. Lembre-se, tente evitar ao máximo colocar textos longos em suas apresentações, e tente dar mais detalhes ou responder às perguntas dos espectadores através da fala.
 
 
 # Histórias tem estrutura, use essas estruturas ao seu favor
