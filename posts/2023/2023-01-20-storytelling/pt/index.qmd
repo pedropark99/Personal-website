@@ -74,7 +74,7 @@ Boa parte do sucesso em *data storytelling* depende de você contar uma históri
 
 Tente ser parsimonioso nos seus slides! Isto é, tente incluir o mínimo possível de informação dentro dele. Se você precisa repassar várias informações em um slide, tente incorporar o máximo possível desse conteúdo em sua fala, e o mínino possível dele em forma escrita neste slide. Em geral, evite incluir textos muito longos em seus slides.
 
-Veja o slide em @fig-texto-longo como exemplo. O problema principal desse slide, é que ele divide muito a atenção de seu espectador.
+Veja o slide em @fig-texto-longo como exemplo. O problema principal desse slide, é que ele **divide muito a atenção de seu espectador**.
 
 ![Slide com um parágrafo longo](./../texto-longo.png){#fig-texto-longo}
 
@@ -130,25 +130,29 @@ Portanto, nas seções passadas discutimos as seguintes dicas:
 
 Vamos botar essas dicas em prática, e reformular o slide mostrado em @fig-divisao2. Você lembra das relações que descrevemos em @sec-relacoes? Lembra que essas relações traçam uma história sobre o aumento de vendas? Vamos aproveitar essa história para aplicarmos as dicas acima.
 
-Primeiro, estabelecemos que nossa história deve sempre ser construída em torno de uma mensagem principal. Portanto, vamos começar a nossa apresentando nos concentrando em um único slide para mostrar essa mensagem principal.
+Primeiro, estabelecemos que nossa história deve sempre ser construída em torno de uma mensagem principal. Portanto, vamos começar a nossa apresentação nos concentrando em um único slide que mostra essa mensagem principal.
 
 ![A mensagem principal da apresentação](./../mensagem-principal.png)
 
-Agora que sabemos qual é o assunto principal da apresentação, podemos começar a cavar mais fundo, e descrever esse assunto em mais detalhes. Como um próximo passo, uma pergunta que respondemos indiretamente em @sec-relacoes foi "onde esse aumento de vendas ocorreu?"
+Agora que sabemos qual é o assunto principal da apresentação, podemos começar a cavar mais fundo, e descrever esse assunto em mais detalhes. Como um próximo passo, uma pergunta que respondemos indiretamente em @sec-relacoes foi "onde esse aumento de vendas ocorreu?".
 
-Isso pode ser uma pergunta bastante relevante para sua apresentação especialmente se você está apresentando para vários gerentes de diferentes áreas ao mesmo tempo, ou também, se você estiver apresentando para um gerente mais alto na hierarquia, que supervisiona várias áreas/produtos ao mesmo tempo. Nesses casos, eles vão logicamente se perguntar onde esse aumento de vendas ocorreu. Será que foi no produto x? Ou foi no produto y? Etc.
+Essa pergunta pode ser bastante relevante para sua apresentação, especialmente se você está apresentando para vários gerentes de diferentes áreas ao mesmo tempo, ou também, se você estiver apresentando para um gerente mais alto na hierarquia, que supervisiona várias áreas/produtos ao mesmo tempo. Nesses casos, eles vão logicamente se perguntar onde esse aumento de vendas ocorreu. Será que foi no produto x? Ou foi no produto y? Etc.
 
-Enfim, vamos responder essa pergunta em um novo slide:
+Enfim, vamos responder essa pergunta em um novo slide. Com esse slide, deixamos claro para os espectadores, que um novo produto do banco (empréstimo com garantia sobre veículos) foi a grande estrela do mês, ao gerar R$ 12 Mil em vendas logo no primeiro mês, superando inclusive o valor de vendas do produto já consolidado (empréstimo consignado).
 
 ![Onde vendemos mais?](./../onde-vendemos.png)
 
 A próxima pergunta que precisamos responder é "como?". Como esse super resultado nas vendas foi gerado? Nós discutimos isso na @sec-mensagem-principal, que após descobrirem um resultado tão importante, os gerentes vão certamente estar interessados em entender como esse resultado foi gerado, para que eles possam difundir esse efeito positivo para outras áreas do negócio.
 
-Lembre-se que temos dois efeitos principais discutidos em @sec-relacoes que explicam essa melhoria nas vendas. Vamos listar de maneira clara e curta esses efeitos no próximo slide:
+Lembre-se que temos dois efeitos principais discutidos em @sec-relacoes que explicam essa melhoria nas vendas. Vamos listá-los de maneira clara e curta em um novo slide:
 
 ![Por que vendemos mais?](./../porque-vendemos.png)
 
 Deixe os detalhes mais específicos dos dois efeitos acima (como: "qual melhoria na API foi feita?", "como isso é uma melhoria?", "o que é uma taxa de conversão? E como isso afeta o processo de venda?") para a sua fala. Lembre-se, tente evitar ao máximo colocar textos longos em suas apresentações, e tente dar mais detalhes ou responder às perguntas dos espectadores através da fala.
+
+Portanto, com esses três slides nós temos uma estrutura e um conteúdo muito mais interessantes para a nossa apresentação, pois estamos contando uma história sobre como vendemos mais em um determinado mês.
+
+Perceba que a estrutura da apresentação (1: mensagem principal, 2: onde? , 3: como?) nos ajuda a criar o conteúdo e essa história de forma coesa. Nas próximas seções deste artigo, vou discutir duas estruturas que podem te ajudar a estruturar e a contar sua histórias.
 
 
 # Histórias tem estrutura, use essas estruturas ao seu favor
@@ -220,4 +224,21 @@ Portanto, entenda o problema/conflito que você está apresentando, e tente list
 
 ## Evolução do personagem como uma outra alternativa
 
-Relatórios no final do ano são bastante apropriados para incluir seções que mostram a evolução do negócio (ou a evolução do personagem).
+A evolução do personagem (ou a "jornada do herói") é provavelmente a estrutura de história mais conhecida hoje. Você começa por um personagem, ou, um herói para a história, que no nosso caso aqui, pode ser o negócio do nosso cliente, ou um produto específico dele.
+
+Nossa missão é mostrar como esse personagem/herói evoluiu nos últimos meses. Por isso, essa estrutura de evolução é bastante apropriada para relatórios no final do ano. Pois esses relatórios são interessantes para mostrarmos a evolução do negócio (ou a evolução do personagem) no último ano.
+
+Comece apresentando como o personagem (o negócio/produto) começou o ano, e, logo em seguida, como ele terminou o ano. Desse modo, os espectadores tem uma noção do quanto o negócio evoluiu durante o ano.
+
+Depois de apresentar como começamos e como terminamos, é interessante mostrarmos logo em seguida quais foram os principais desafios que enfrentamos durante essa travessia, e como superamos eles.
+
+Nesse ponto da apresentação temos uma outra oportunidade interessante. Pois você pode, entregar valor ao seu cliente, e, ao mesmo tempo, também valorizar o trabalho de sua equipe, especialmente se foi essa a equipe que descobriu e aplicou as soluções que resolveram os problemas que você está descrevendo. Isso é uma oportunidade de ouro! Aproveite ela!
+
+Lembre-se que você não trabalha sozinho. Você quase sempre está trabalhando dentro de uma equipe de pessoas, e é sempre importante saber como valorizar o trabalho de seus colegas.
+
+Portanto, nesse ponto, a ideia é estruturarmos os slides da seguinte maneira:
+
+- apresente rapidamente como começamos e como terminamos a jornada;
+- apresente os principais desafios que enfrentamos durante o ano;
+- quais foram as soluções que aplicamos para solucionar os problemas;
+- reforce a evolução do personagem, ao mostrar novamente os resultados atingidos com as soluções acima;
