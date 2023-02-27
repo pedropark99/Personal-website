@@ -38,6 +38,25 @@ Como você pode esperar de todo grande trabalho como este, ele também envolveu 
 Todos os dados, gráficos e imagens mostrados neste artigo são meramente ilustrativos. Todos os números apresentados foram gerados de forma aleatória por um computador! Portanto, eles não representam os dados reais de TakeBlip, do Banco BMG, ou do Banco Pan de nenhuma forma ou dimensão!
 :::
 
+# Resumo da estrutura deste artigo
+
+Na próxima seção, eu descrevo como era esses relatórios que eu apresentava para o Banco BMG. Ou seja, eu mostro como esses relatórios eram antes das melhorias, e descrevo quais eram os seus problemas e suas limitações.
+
+Nas seções seguintes, eu dou dicas sobre como melhorei esses relatórios. Eu entendo que boa parte do sucesso em *data storytelling* (ou das melhorias que fiz em meus relatórios) está concentrada em dois pontos:
+
+1. construir uma apresentação que seja simples e clara;
+2. construir uma apresentação que tenha uma boa estrutura, isto é, uma estrutura que te ajude a contar uma história através de seus dados;
+
+Por isso, a @sec-guerra-atencao fornece duas dicas que te ajudam a trazer simplicidade e clareza para sua apresentação, além de discutir o que se deve evitar para não atrair a atenção de seus espectadores para os lugares errados.
+
+Na @sec-historia-conteudo discuto algumas dicas sobre como formar o conteúdo da apresentação, e sobre como esse conteúdo te ajuda a formar uma história.
+
+Já na @sec-pratica, nós pegamos as dicas que discutimos até então no artigo, e tentamos aplicar elas sobre o slide mostrado em @fig-divisao2, com o objetivo de demonstrar como essas dicas podem melhorar sua apresentação.
+
+Por outro lado, na @sec-historias-tem-estrutura, nós discutimos bastante sobre estrutura. Mais especificamente, eu discuto dois exemplos de estruturas que podem servir como um guia, ao fornecer uma base simples que você pode utilizar para construir a sua história.
+
+Enfim, vamos prosseguir...
+
 # Como era esse relatório antes ?
 
 Na época, estávamos construindo um relatório mensal contendo vários indicadores e gráficos que mostravam o estado atual e a evolução recente dos serviços e produtos do Banco BMG ofertados dentro do canal do WhatsApp.
@@ -52,25 +71,27 @@ Perceba que esse slide se parece mais com uma página de um dashboard, do que de
 
 Tendo isso em mente, qual é o incentivo/motivo/razão que o seu cliente tem para assistir à sua apresentação? Em outras palavras, se a sua apresentação mostra os mesmos gráficos/indicadores que os seus dashboards apresentam, o seu cliente não tem incentivo/motivo nenhum para assistir à sua apresentação. Pois **não há nada na sua apresentação que seja novo**, ou nenhuma informação da qual o seu cliente não tenha já acesso diretamente.
 
-# Como podemos melhorar?
+
+# Como podemos melhorar ?
 
 Agora que você possui uma noção do tamanho que era o problema, nas próximas seções deste artigo, vou discutir algumas dicas essenciais que demonstram como nós podemos melhorar o modelo de apresentação mostrado em @fig-print-report1.
 
-No meu entendimento, existem dois caminhos principais que podemos utilizar para atingirmos um modelo mais claro e efetivo de apresentação:
+No meu entendimento, boa parte do sucesso em *data storytelling* está em duas ações:
 
 1. Evitar itens que dispersam a atenção dos nossos espectadores;
-2. Construírmos uma história para a nossa apresentação;
+2. Construir uma história cativante para a nossa apresentação;
 
-O primeiro item acima está mais relacionado à remover itens desnecessários, e a apresentar o conteúdo da apresentação de forma mais simples e clara. Já o segundo item está mais relacionado ao conteúdo e à estrutura de nossa apresentação.
+O primeiro item acima está mais relacionado à **clareza e simplicidade** da apresentação, enquanto o segundo item está mais relacionado ao **conteúdo e estrutura** da apresentação.
+
 
 Vamos começar pelo primeiro item...
 
 
-## Uma guerra constante pela atenção
+## Uma guerra constante pela atenção {#sec-guerra-atencao}
 
 Quando estamos apresentando algo, estamos constantemente batalhando pela atenção dos nossos espectadores. Essa é uma batalha difícil, não apenas porque nós podemos (sem querer) atrair a atenção para os lugares errados, mas também porque existem muitas fontes de distração no mundo moderno (e.g. celulares, emails, etc.)!
 
-Boa parte do sucesso em *data storytelling* depende de você contar uma história cativante, que consiga capturar a atenção de seus espectadores. Por isso, as próximas seções vão focar bastante em dicas que contribuam para essa captura, ou que te ajudam a não dissipar, reduzir ou atrapalhar a atenção desses espectadores.
+Um bom *data storytelling* depende de você contar uma história cativante, que consiga capturar a atenção de seus espectadores. Por isso, as próximas seções vão focar bastante em dicas que contribuam para essa captura, ou que te ajudam a não dissipar, reduzir ou atrapalhar a atenção desses espectadores.
 
 
 ### Por que evitar textos longos em seus slides? {#sec-texto-longo}
@@ -95,15 +116,15 @@ O cérebro humano consegue processar uma quantidade limitada de informações de
 
 Portanto, **entregue a sua história aos poucos**. Evite condensar várias informações em um único slide! Divida o conteúdo em partes, e explique uma parte de cada vez!
 
-Isso ajuda a tornar o conteúdo mais simples. Quando você buscou aprender um assunto complexo, você provavelmente dividiu o conteúdo em várias partes e foi aprendendo uma parte de cada vez. Não foi? Traga essa experiência também para as suas apresentações.
+Isso ajuda a tornar o conteúdo mais simples, e, como resultado, isso ajuda os seus espectadores a entenderem melhor sobre o que você está falando. Pense um pouco sobre isso. Quando você busca aprender sobre um assunto complexo, você provavelmente divide o conteúdo em várias partes pequenas, e, vai aprendendo uma parte de cada vez. Não é assim que você faz? Traga essa experiência também para as suas apresentações.
 
 
 
-## Discutindo histórias e conteúdo
+## Discutindo histórias e conteúdo {#sec-historia-conteudo}
 
 Agora que vimos duas regras básicas sobre a atenção de seus espectadores (i.e. evite textos longos e entregue sua história aos poucos), vamos discutir algumas dicas sobre o conteúdo de sua apresentação, e, sobre como construir histórias com dados.
 
-Em seguida, vamos tentar aplicar as dicas discutidas até o momento para melhorar o slide mostrado em @fig-divisao2. Depois dessa pequena demonstração, vou discutir algumas estruturas básicas que podem servir como guias muito úteis para a construção de sua história.
+Na @sec-pratica, vamos tentar aplicar as dicas discutidas até o momento para melhorar o slide mostrado em @fig-divisao2. Depois dessa pequena demonstração, vou discutir na @sec-historias-tem-estrutura, algumas estruturas básicas que podem servir como guias muito úteis para a construção de sua história.
 
 
 ### Data Storytelling não é sobre escolher "o melhor gráfico"
@@ -140,7 +161,7 @@ Pois ao identificar essas ações, esse gerente tem a capacidade de aplicar essa
 
 
 
-# Colocando algumas dicas em prática
+# Colocando algumas dicas em prática {#sec-pratica}
 
 Até aqui, nós discutimos as seguintes dicas:
 
@@ -163,7 +184,7 @@ Enfim, vamos responder essa pergunta em um novo slide. Com esse slide, deixamos 
 
 ![Onde vendemos mais?](./../onde-vendemos.png)
 
-A próxima pergunta que precisamos responder é "como?". Como esse super resultado nas vendas foi gerado? Nós discutimos isso na @sec-mensagem-principal, que após descobrirem um resultado tão importante, os gerentes vão certamente estar interessados em entender como esse resultado foi gerado, para que eles possam difundir esse efeito positivo para outras áreas do negócio. Então, vamos responder essa dúvida deles!
+A próxima pergunta que precisamos responder é "como?". Como esse super resultado nas vendas foi gerado? Nós discutimos isso na @sec-mensagem-principal, que após descobrirem um resultado tão importante, os gerentes vão certamente estar interessados em entender como esse resultado foi gerado, para que eles possam difundir esse efeito positivo para outras áreas do negócio.
 
 Lembre-se que temos dois efeitos principais discutidos em @sec-relacoes que explicam essa melhoria nas vendas. Vamos listá-los de maneira clara e curta em um novo slide:
 
@@ -176,7 +197,7 @@ Portanto, com esses três slides nós temos uma estrutura e um conteúdo muito m
 Perceba que a estrutura da apresentação (1: mensagem principal, 2: onde? , 3: como?) nos ajuda a criar o conteúdo e essa história de forma coesa. Nas próximas seções deste artigo, vou discutir duas estruturas que podem te ajudar a estruturar e a contar sua histórias.
 
 
-# Histórias tem estrutura, use essas estruturas ao seu favor
+# Histórias tem estrutura, use essas estruturas ao seu favor {#sec-historias-tem-estrutura}
 
 Nas próximas seções, vou mostrar dois exemplos de estruturas bastante comuns em histórias. Essas estruturas servem como um guia durante a construção de sua história. Elas te ajudam muito a organizar as suas ideias em um formato claro e efetivo.
 
@@ -245,21 +266,44 @@ Portanto, entenda o problema/conflito que você está apresentando, e tente list
 
 ## Evolução do personagem como uma outra alternativa
 
-A evolução do personagem (ou a "jornada do herói") é provavelmente a estrutura de história mais conhecida hoje. Você começa por um personagem, ou, um herói para a história, que no nosso caso aqui, pode ser o negócio do nosso cliente, ou um produto específico dele.
+A evolução do personagem (ou a "jornada do herói") é uma estrutura de história bem popular. Você começa por um personagem, ou, um herói para a história, que no nosso caso aqui, pode ser o negócio do nosso cliente, ou um produto específico dele.
 
 Nossa missão é mostrar como esse personagem/herói evoluiu nos últimos meses. Por isso, essa estrutura de evolução é bastante apropriada para relatórios no final do ano. Pois esses relatórios são interessantes para mostrarmos a evolução do negócio (ou a evolução do personagem) no último ano.
 
-Comece apresentando como o personagem (o negócio/produto) começou o ano, e, logo em seguida, como ele terminou o ano. Desse modo, os espectadores tem uma noção do quanto o negócio evoluiu durante o ano.
+### O início e o fim da jornada
 
-Depois de apresentar como começamos e como terminamos, é interessante mostrarmos logo em seguida quais foram os principais desafios que enfrentamos durante essa travessia, e como superamos eles.
+Se você preferir, você pode começar a sua apresentação apresentando como o seu personagem estava no início da jornada, e, terminar essa apresentação mostrando como esse personagem terminou essa jornada.
 
-Nesse ponto da apresentação temos uma outra oportunidade interessante. Pois você pode, entregar valor ao seu cliente, e, ao mesmo tempo, também valorizar o trabalho de sua equipe, especialmente se foi essa a equipe que descobriu e aplicou as soluções que resolveram os problemas que você está descrevendo. Isso é uma oportunidade de ouro! Aproveite ela!
+Essa é uma opção, porém, eu prefiro começar a apresentação mostrando o início e o fim ao mesmo tempo. Desse modo, os espectadores já começam a apresentação tendo uma noção do quanto o negócio evoluiu durante o ano. Portanto, eu começo apresentando como o personagem (ou o negócio/produto) começou o ano, e, logo em seguida, como ele terminou o ano.
 
-Lembre-se que você não trabalha sozinho. Você quase sempre está trabalhando dentro de uma equipe de pessoas, e é sempre importante saber como valorizar o trabalho de seus colegas.
+### Apresentando os desafios e percalços
 
-Portanto, nesse ponto, a ideia é estruturarmos os slides da seguinte maneira:
+Em todo negócio/produto, qualquer que ele seja, nós sempre enfrentamos grandes desafios que podem ameaçar o sucesso, ou, limitar a evolução deste negócio/produto.
+
+Portanto, ao longo de qualquer jornada, nós sempre enfrentamos desafios e percalços, e aplicamos ações para tentar superar esses desafios. Ao superar esses desafios, nós podemos com certa esperança gerar a evolução e melhoria desse negócio/produto. Isto é, chegar ao final dessa jornada com um negócio/produto melhor, mais robusto e mais rentável.
+
+Tudo isso significa que o "como percorremos o meio da jornada" pode ser muito mais importante/interessante que o início ou o final dessa jornada. Sendo assim, reserve uma parte de sua apresentação para apresentar os principais desafios que enfrentamos durante essa travessia, e como superamos eles.
+
+### Se possível, aproveite para valorizar o trabalho de sua equipe
+
+Nesse ponto específico da apresentação, você geralmente tem uma oportunidade muito interessante! Pois você pode, entregar valor ao seu cliente, e, ao mesmo tempo, também valorizar o trabalho de sua equipe, especialmente se foi essa a equipe que descobriu os desafios, e, aplicou as ações que superaram esses desafios que você está descrevendo.
+
+Isso é uma oportunidade de ouro! Portanto, se você tiver essa oportunidade em suas mãos, proveite ela! Lembre-se que você não trabalha sozinho. Você quase sempre está trabalhando dentro de uma equipe de pessoas, e é sempre importante saber como valorizar o trabalho de seus colegas.
+
+Contudo, essa oportunidade nem sempre vai aparecer para você. Pois talvez os desafios que você está apresentando, foram superados de outra forma, por uma outra equipe que você não conhece, ou que não possui conexão direta.
+
+
+### Reforce os resultados alcançados
+
+Também é útil terminar a sua apresentação, mostrando um resumo dos resultados alcançados ao longo do ano. Isto pode ser um *bulletpoint* simples, resumindo os principais resultados. Isso ajuda a refrescar a memória de seus espectadores, mostrando a eles não apenas sobre como terminamos a jornada do ano passado, mas também, sobre como nós começamos a jornada do próximo ano 😉.
+
+### Um resumo da estrutura
+
+Portanto, nas seções anteriores discutimos uma ideia de estrutura que seria similar à uma "evolução do personagem". No final, temos uma história que segue a seguinte sequência:
 
 - apresente rapidamente como começamos e como terminamos a jornada;
 - apresente os principais desafios que enfrentamos durante o ano;
 - quais foram as soluções que aplicamos para solucionar os problemas;
 - reforce a evolução do personagem, ao mostrar novamente os resultados atingidos com as soluções acima;
+
+
