@@ -23,19 +23,19 @@ Este artigo discute como eu melhorei o meu processo de *Data Storytelling* dentr
 Em resumo, vamos discutir neste artigo as seguintes dicas:
 
 - *Data Storytelling* é sobre contar histórias através de dados;
-- Evite textos longos em seus slides;
-- Trace relações entre os indicadores;
+- Histórias tem estrutura, use essas estruturas ao seu favor;
+- Evite dividir muito a atenção com textos longos em seus slides;
+- Trace relações entre os seus dados;
 - Construa sua história em torno de uma mensagem principal;
 - Entregue sua história aos poucos;
-- Histórias tem estrutura, use essas estruturas ao seu favor (modelo dos 4 C's e evolução do personagem);
 
-A maior parte desses conhecimentos foram construídos através de intensa pesquisa, reflexão e planejamento sobre as minhas apresentações, e, posteriormente, adquirindo feedbacks, e realizando pequenos ajustes aqui e ali. Sendo assim, um grande trabalho como um todo, e, como você pode esperar, esse processo também envolveu mais de uma pessoa.
+A maior parte desses conhecimentos foram construídos através de intensa pesquisa, reflexão e planejamento sobre as minhas apresentações, e, posteriormente, adquirindo feedbacks, e realizando pequenos ajustes aqui e ali. 
 
-Durante esse processo, eu tive ajuda de meus colegas de trabalho, [Andressa de Souza Freitas](https://www.linkedin.com/in/andressa-de-souza-freitas-697195177/) e [Guilherme Gomes](https://www.linkedin.com/in/guilhermeggarcia/), mas também, tive uma grande ajuda da UX Designer [Alê Fernandes](https://www.linkedin.com/in/alefernandesbranding/). Vários dos conhecimentos apresentados aqui, eu aprendi com a Alê. Esses conhecimentos revolucionaram a maneira como eu construo minhas apresentações, e, por isso, eu sou imensamente grato a ela ❤️.
+Como você pode esperar de todo grande trabalho como este, ele também envolveu outras pessoas. Durante esse processo, eu tive ajuda de meus colegas de trabalho, [Andressa de Souza Freitas](https://www.linkedin.com/in/andressa-de-souza-freitas-697195177/) e [Guilherme Gomes](https://www.linkedin.com/in/guilhermeggarcia/), mas também, tive uma grande ajuda da UX Designer [Alê Fernandes](https://www.linkedin.com/in/alefernandesbranding/). Portanto, vários dos conhecimentos apresentados aqui, eu aprendi com a Alê. Esses conhecimentos revolucionaram a maneira como eu construo minhas apresentações, e, por isso, eu sou imensamente grato a ela ❤️.
 
 
 ::: {.callout-important}
-Todos os dados, gráficos e imagens mostrados neste artigo são meramente ilustrativos. Todos os números apresentados foram gerados de forma aleatória por um computador! Portanto, eles não representam os dados reais da plataforma Blip ou do Banco BMG, ou do Banco Pan de nenhuma forma ou dimensão!
+Todos os dados, gráficos e imagens mostrados neste artigo são meramente ilustrativos. Todos os números apresentados foram gerados de forma aleatória por um computador! Portanto, eles não representam os dados reais de TakeBlip, do Banco BMG, ou do Banco Pan de nenhuma forma ou dimensão!
 :::
 
 # Como era esse relatório antes ?
@@ -54,14 +54,17 @@ Tendo isso em mente, qual é o incentivo/motivo/razão que o seu cliente tem par
 
 # Como podemos melhorar?
 
-Agora que você possui uma noção do tamanho que era o problema, nas próximas seções deste artigo, vou discutir algumas dicas essenciais (ou, algumas *"ground rules"*) que mostram como nós podemos melhorar e evoluir os modelos e as histórias de nossas apresentações para algo melhor, algo que desse maior clareza e impacto para o nosso cliente.
+Agora que você possui uma noção do tamanho que era o problema, nas próximas seções deste artigo, vou discutir algumas dicas essenciais que demonstram como nós podemos melhorar o modelo de apresentação mostrado em @fig-print-report1.
 
+No meu entendimento, existem dois caminhos principais que podemos utilizar para atingirmos um modelo mais claro e efetivo de apresentação:
 
-## Data Storytelling não é sobre escolher "o melhor gráfico"
+1. Evitar itens que dispersam a atenção dos nossos espectadores;
+2. Construírmos uma história para a nossa apresentação;
 
-Alguns poucos analistas entendem "data storytelling" como um problema de visualização, ou, como a ciência de "escolher os melhores gráficos" para sua apresentação, ou como projetar gráficos inovadores, bonitos e complexos.
+O primeiro item acima está mais relacionado à remover itens desnecessários, e a apresentar o conteúdo da apresentação de forma mais simples e clara. Já o segundo item está mais relacionado ao conteúdo e à estrutura de nossa apresentação.
 
-Contudo, data storytelling é sobre **contar histórias com dados**. Não sobre como construir visualizações. Escolher a visualização certa para apresentar os seus dados, torná-la melhor, mais bonita e mais limpa, é apenas uma parte do processo. Uma parte muito importante, pois isso vai te ajudar a contar sua história de uma maneira mais clara e eficaz, e, com isso, atingir um público maior.
+Vamos começar pelo primeiro item...
+
 
 ## Uma guerra constante pela atenção
 
@@ -70,7 +73,7 @@ Quando estamos apresentando algo, estamos constantemente batalhando pela atenç�
 Boa parte do sucesso em *data storytelling* depende de você contar uma história cativante, que consiga capturar a atenção de seus espectadores. Por isso, as próximas seções vão focar bastante em dicas que contribuam para essa captura, ou que te ajudam a não dissipar, reduzir ou atrapalhar a atenção desses espectadores.
 
 
-## Por que evitar textos longos em seus slides? {#sec-texto-longo}
+### Por que evitar textos longos em seus slides? {#sec-texto-longo}
 
 Tente ser parsimonioso nos seus slides! Isto é, tente incluir o mínimo possível de informação dentro dele. Se você precisa repassar várias informações em um slide, tente incorporar o máximo possível desse conteúdo em sua fala, e o mínino possível dele em forma escrita neste slide. Em geral, evite incluir textos muito longos em seus slides.
 
@@ -86,8 +89,30 @@ Contudo, ler e interpretar um texto longo, exige certo esforço e muita atençã
 
 Isso pode ser crucial, pois talvez você traga uma informação a mais, ou uma conexão extremamente importante na sua fala, e eles podem acabar perdendo isso enquanto estão tentando ler esse texto. Portanto, evite ao máximo incluir textos muito longos em seus slides.
 
+### Entregue sua história aos poucos
 
-## Trace relações entre os indicadores {#sec-relacoes}
+O cérebro humano consegue processar uma quantidade limitada de informações de uma vez só. Como resultado, se você tentar explicar várias informações para os seus espectadores, em um único slide, eles vão acabar atingindo esse limite 🤯, e simplesmente não vão conseguir raciocinar, compreender ou assimilar o que você está explicando.
+
+Portanto, **entregue a sua história aos poucos**. Evite condensar várias informações em um único slide! Divida o conteúdo em partes, e explique uma parte de cada vez!
+
+Isso ajuda a tornar o conteúdo mais simples. Quando você buscou aprender um assunto complexo, você provavelmente dividiu o conteúdo em várias partes e foi aprendendo uma parte de cada vez. Não foi? Traga essa experiência também para as suas apresentações.
+
+
+
+## Discutindo histórias e conteúdo
+
+Agora que vimos duas regras básicas sobre a atenção de seus espectadores (i.e. evite textos longos e entregue sua história aos poucos), vamos discutir algumas dicas sobre o conteúdo de sua apresentação, e, sobre como construir histórias com dados.
+
+Em seguida, vamos tentar aplicar as dicas discutidas até o momento para melhorar o slide mostrado em @fig-divisao2. Depois dessa pequena demonstração, vou discutir algumas estruturas básicas que podem servir como guias muito úteis para a construção de sua história.
+
+
+### Data Storytelling não é sobre escolher "o melhor gráfico"
+
+Alguns poucos analistas entendem "data storytelling" como um problema de visualização, ou, como a ciência de "escolher os melhores gráficos" para sua apresentação, ou como projetar gráficos inovadores, bonitos e complexos.
+
+Contudo, data storytelling é sobre **contar histórias com dados**. Não sobre como construir visualizações. Escolher a visualização certa para apresentar os seus dados, torná-la melhor, mais bonita e mais limpa, é apenas uma parte do processo. Uma parte muito importante, pois isso vai te ajudar a contar sua história de uma maneira mais clara e eficaz, e, com isso, atingir um público maior.
+
+### Trace relações entre os indicadores {#sec-relacoes}
 
 Agora, vamos analisar o slide mostrado em @fig-divisao2. Perceba que esse slide, novamente, lembra muito uma página de um dashboard. Como resultado, o slide não parece tão cativante à primeira vista, pois ele só mostra os indicadores, ele não constrói uma relação, ou **uma história** entre eles.
 
@@ -102,7 +127,7 @@ Além disso, outros efeitos que podemos perceber são os aumentos na taxa de con
 Perceba que todas essas relações nos ajudam a **construir uma história** sobre como as vendas aumentaram nesse mês, e é justamente isso que queremos atingir. Portanto, tente sempre construir relações entre os seus indicadores, de modo a formar uma história sobre um resultado principal.
 
 
-## Construa sua história em torno de uma mensagem principal {#sec-mensagem-principal}
+### Construa sua história em torno de uma mensagem principal {#sec-mensagem-principal}
 
 Apenas para deixar claro essa ideia, ao identificar os vários efeitos que descrevemos em @sec-relacoes, sobre o slide mostrado em @fig-divisao2, é interessante nos questionarmos: qual desses vários efeitos é o principal resultado? Em outras palavras, qual desses efeitos é o que mais interessa os gerentes do banco que estão assistindo à sua apresentação?
 
@@ -113,15 +138,11 @@ Isso também é muito importante! Todo gerente gosta muito de ouvir a palavra "a
 Pois ao identificar essas ações, esse gerente tem a capacidade de aplicar essas ações em outras partes de seu negócio, e, com certa esperança, ele pode acabar disseminando esse efeito positivo que você descreveu para outras áreas, e, como resultado, ele pode acabar aumentando ainda mais as vendas da empresa.
 
 
-## Entregue sua história aos poucos
 
-O cérebro humano consegue processar uma quantidade limitada de informações de uma vez só. Como resultado, se você tentar explicar várias informações para os seus espectadores, em um único slide, eles vão acabar atingindo esse limite 🤯, e simplesmente não vão conseguir raciocinar, compreender ou assimilar o que você está explicando.
 
-Portanto, **entregue a sua história aos poucos**. Evite condensar várias informações em um único slide! Divida o conteúdo em partes, e explique uma parte de cada vez!
+# Colocando algumas dicas em prática
 
-# Colocando essas dicas em prática
-
-Portanto, nas seções passadas discutimos as seguintes dicas:
+Até aqui, nós discutimos as seguintes dicas:
 
 1. Evite textos longos em seus slides;
 2. Trace relações entre os indicadores;
@@ -130,19 +151,19 @@ Portanto, nas seções passadas discutimos as seguintes dicas:
 
 Vamos botar essas dicas em prática, e reformular o slide mostrado em @fig-divisao2. Você lembra das relações que descrevemos em @sec-relacoes? Lembra que essas relações traçam uma história sobre o aumento de vendas? Vamos aproveitar essa história para aplicarmos as dicas acima.
 
-Primeiro, estabelecemos que nossa história deve sempre ser construída em torno de uma mensagem principal. Portanto, vamos começar a nossa apresentação nos concentrando em um único slide que mostra essa mensagem principal.
+Primeiro, estabelecemos que nossa história deve sempre ser construída em torno de uma mensagem principal. Portanto, vamos começar a nossa apresentação nos concentrando em um único slide que mostra essa mensagem principal de forma clara.
 
 ![A mensagem principal da apresentação](./../mensagem-principal.png)
 
-Agora que sabemos qual é o assunto principal da apresentação, podemos começar a cavar mais fundo, e descrever esse assunto em mais detalhes. Como um próximo passo, uma pergunta que respondemos indiretamente em @sec-relacoes foi "onde esse aumento de vendas ocorreu?".
+Agora que sabemos qual é o assunto principal da apresentação, podemos começar a cavar mais fundo, e descrever esse assunto em mais detalhes. Como um próximo passo, podemos responder à pergunta "onde esse aumento de vendas ocorreu?".
 
-Essa pergunta pode ser bastante relevante para sua apresentação, especialmente se você está apresentando para vários gerentes de diferentes áreas ao mesmo tempo, ou também, se você estiver apresentando para um gerente mais alto na hierarquia, que supervisiona várias áreas/produtos ao mesmo tempo. Nesses casos, eles vão logicamente se perguntar onde esse aumento de vendas ocorreu. Será que foi no produto x? Ou foi no produto y? Etc.
+Essa pergunta pode ser bastante relevante para sua apresentação, especialmente se: 1) você está apresentando para vários gerentes de diferentes áreas ao mesmo tempo; 2) ou também, se você estiver apresentando para um gerente mais alto na hierarquia, que supervisiona várias áreas/produtos ao mesmo tempo. Pois nestes casos, esses gerentes vão logicamente se perguntar onde esse aumento de vendas ocorreu. Será que foi no produto x? Ou foi no produto y? Etc.
 
 Enfim, vamos responder essa pergunta em um novo slide. Com esse slide, deixamos claro para os espectadores, que um novo produto do banco (empréstimo com garantia sobre veículos) foi a grande estrela do mês, ao gerar R$ 12 Mil em vendas logo no primeiro mês, superando inclusive o valor de vendas do produto já consolidado (empréstimo consignado).
 
 ![Onde vendemos mais?](./../onde-vendemos.png)
 
-A próxima pergunta que precisamos responder é "como?". Como esse super resultado nas vendas foi gerado? Nós discutimos isso na @sec-mensagem-principal, que após descobrirem um resultado tão importante, os gerentes vão certamente estar interessados em entender como esse resultado foi gerado, para que eles possam difundir esse efeito positivo para outras áreas do negócio.
+A próxima pergunta que precisamos responder é "como?". Como esse super resultado nas vendas foi gerado? Nós discutimos isso na @sec-mensagem-principal, que após descobrirem um resultado tão importante, os gerentes vão certamente estar interessados em entender como esse resultado foi gerado, para que eles possam difundir esse efeito positivo para outras áreas do negócio. Então, vamos responder essa dúvida deles!
 
 Lembre-se que temos dois efeitos principais discutidos em @sec-relacoes que explicam essa melhoria nas vendas. Vamos listá-los de maneira clara e curta em um novo slide:
 
