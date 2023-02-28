@@ -10,11 +10,11 @@
 <atom:link href="https://pedro-faria.netlify.app/index.xml" rel="self" type="application/rss+xml"/>
 <description>A blog about programming and data analysis, specially with R and Python</description>
 <generator>quarto-1.2.262</generator>
-<lastBuildDate>Fri, 24 Feb 2023 03:00:00 GMT</lastBuildDate>
+<lastBuildDate>Mon, 06 Mar 2023 03:00:00 GMT</lastBuildDate>
 <item>
   <title>Um estudo de caso sobre Data Storytelling em alguns dos maiores bancos brasileiros</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
-  <link>https://pedro-faria.netlify.app/posts/2023/2023-01-20-storytelling/pt/index.html</link>
+  <link>https://pedro-faria.netlify.app/posts/2023/2023-03-06-storytelling/pt/index.html</link>
   <description><![CDATA[ 
 
 
@@ -69,7 +69,7 @@ Important
 <p>O resultado final disso tudo era uma apresentação que trazia um volume monumental de informações, porém, que também trazia um volume muito pequeno de insights e novas ideias de negócio para os gestores. Em Figura&nbsp;1 temos uma representação de um dos vários slides dessa apresentação<sup>1</sup>. Imagine que essa apresentação trazia em torno de 40 slides semelhantes a esse:</p>
 <div id="fig-print-report1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="https://pedro-faria.netlify.app/posts/2023/2023-01-20-storytelling/print-report1.png" class="img-fluid figure-img"></p>
+<p><img src="https://pedro-faria.netlify.app/posts/2023/2023-03-06-storytelling/print-report1.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Figura&nbsp;1: Representação de um slide da versão antiga do relatório</figcaption><p></p>
 </figure>
 </div>
@@ -96,7 +96,7 @@ Important
 <p>Veja o slide em Figura&nbsp;2 como exemplo. O problema principal desse slide, é que ele <strong>divide muito a atenção de seu espectador</strong>.</p>
 <div id="fig-texto-longo" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="https://pedro-faria.netlify.app/posts/2023/2023-01-20-storytelling/texto-longo.png" class="img-fluid figure-img"></p>
+<p><img src="https://pedro-faria.netlify.app/posts/2023/2023-03-06-storytelling/texto-longo.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Figura&nbsp;2: Slide com um parágrafo longo</figcaption><p></p>
 </figure>
 </div>
@@ -126,7 +126,7 @@ Important
 <p>Agora, vamos analisar o slide mostrado em Figura&nbsp;3. Perceba que esse slide, novamente, lembra muito uma página de um dashboard. Como resultado, o slide não parece tão cativante à primeira vista, pois ele só mostra os indicadores, ele não constrói uma relação, ou <strong>uma história</strong> entre eles.</p>
 <div id="fig-divisao2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="https://pedro-faria.netlify.app/posts/2023/2023-01-20-storytelling/divisao2.png" class="img-fluid figure-img"></p>
+<p><img src="https://pedro-faria.netlify.app/posts/2023/2023-03-06-storytelling/divisao2.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Figura&nbsp;3: Falta de relação entre os indicadores</figcaption><p></p>
 </figure>
 </div>
@@ -157,7 +157,7 @@ Important
 <p>Primeiro, estabelecemos que nossa história deve sempre ser construída em torno de uma mensagem principal. Portanto, vamos começar a nossa apresentação nos concentrando em um único slide que mostra essa mensagem principal de forma clara.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://pedro-faria.netlify.app/posts/2023/2023-01-20-storytelling/mensagem-principal.png" class="img-fluid figure-img"></p>
+<p><img src="https://pedro-faria.netlify.app/posts/2023/2023-03-06-storytelling/mensagem-principal.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">A mensagem principal da apresentação</figcaption><p></p>
 </figure>
 </div>
@@ -166,7 +166,7 @@ Important
 <p>Enfim, vamos responder essa pergunta em um novo slide. Com esse slide, deixamos claro para os espectadores, que um novo produto do banco (empréstimo com garantia sobre veículos) foi a grande estrela do mês, ao gerar R$ 12 Mil em vendas logo no primeiro mês, superando inclusive o valor de vendas do produto já consolidado (empréstimo consignado).</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://pedro-faria.netlify.app/posts/2023/2023-01-20-storytelling/onde-vendemos.png" class="img-fluid figure-img"></p>
+<p><img src="https://pedro-faria.netlify.app/posts/2023/2023-03-06-storytelling/onde-vendemos.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Onde vendemos mais?</figcaption><p></p>
 </figure>
 </div>
@@ -174,7 +174,7 @@ Important
 <p>Lembre-se que temos dois efeitos principais discutidos em Seção&nbsp;4.2.2 que explicam essa melhoria nas vendas. Vamos listá-los de maneira clara e curta em um novo slide:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://pedro-faria.netlify.app/posts/2023/2023-01-20-storytelling/porque-vendemos.png" class="img-fluid figure-img"></p>
+<p><img src="https://pedro-faria.netlify.app/posts/2023/2023-03-06-storytelling/porque-vendemos.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Por que vendemos mais?</figcaption><p></p>
 </figure>
 </div>
@@ -279,9 +279,9 @@ Important
   <category>Storytelling</category>
   <category>Data Storytelling</category>
   <category>Data Science</category>
-  <guid>https://pedro-faria.netlify.app/posts/2023/2023-01-20-storytelling/pt/index.html</guid>
-  <pubDate>Fri, 24 Feb 2023 03:00:00 GMT</pubDate>
-  <media:content url="https://pedro-faria.netlify.app/posts/2023/2023-01-20-storytelling/mapa-featured.jpg" medium="image" type="image/jpeg"/>
+  <guid>https://pedro-faria.netlify.app/posts/2023/2023-03-06-storytelling/pt/index.html</guid>
+  <pubDate>Mon, 06 Mar 2023 03:00:00 GMT</pubDate>
+  <media:content url="https://pedro-faria.netlify.app/posts/2023/2023-03-06-storytelling/mapa-featured.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
   <title>Introducing the {ggfunnel} R package</title>
@@ -1951,7 +1951,7 @@ Damji, Jules, Brooke Wenig, Tathagata Das, and Denny Lee. 2020. <em>Learning Spa
   <category>Apache Spark</category>
   <category>Book</category>
   <guid>https://pedro-faria.netlify.app/publications/book/introd-pyspark/en/index.html</guid>
-  <pubDate>Mon, 27 Feb 2023 23:59:41 GMT</pubDate>
+  <pubDate>Tue, 28 Feb 2023 01:08:36 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/publications/book/introd-pyspark/featured.png" medium="image" type="image/png" height="215" width="144"/>
 </item>
 </channel>

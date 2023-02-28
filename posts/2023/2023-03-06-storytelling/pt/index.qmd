@@ -2,7 +2,7 @@
 title: "Um estudo de caso sobre Data Storytelling em alguns dos maiores bancos brasileiros"
 description: "Neste artigo discuto a minha experiência sobre como eu construi e melhorei o *Data Storytelling* de minhas apresentações para dois dos maiores bancos do mercado brasileiro."
 
-date: 2023-02-24
+date: 2023-03-06
 categories: ['Storytelling', 'Data Storytelling', 'Data Science']
 draft: false
 toc: true
