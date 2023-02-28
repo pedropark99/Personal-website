@@ -31,7 +31,7 @@ Em resumo, vamos discutir neste artigo as seguintes dicas:
 
 A maior parte desses conhecimentos foram construídos através de intensa pesquisa, reflexão e planejamento sobre as minhas apresentações, e, posteriormente, adquirindo feedbacks, e realizando pequenos ajustes aqui e ali. 
 
-Como você pode esperar de todo grande trabalho como este, ele também envolveu outras pessoas. Durante esse processo, eu tive ajuda de meus colegas de trabalho, [Andressa de Souza Freitas](https://www.linkedin.com/in/andressa-de-souza-freitas-697195177/) e [Guilherme Gomes](https://www.linkedin.com/in/guilhermeggarcia/), mas também, tive uma grande ajuda da UX Designer [Alê Fernandes](https://www.linkedin.com/in/alefernandesbranding/). Portanto, vários dos conhecimentos apresentados aqui, eu aprendi com a Alê. Esses conhecimentos revolucionaram a maneira como eu construo minhas apresentações, e, por isso, eu sou imensamente grato a ela ❤️.
+Como você pode esperar de todo grande trabalho como este, ele também envolveu outras pessoas. Durante esse processo, eu recebi ajuda e feedbacks de meus colegas de trabalho, [Andressa de Souza Freitas](https://www.linkedin.com/in/andressa-de-souza-freitas-697195177/) e [Guilherme Gomes](https://www.linkedin.com/in/guilhermeggarcia/). Eu também tive uma grande ajuda da UX Designer [Alê Fernandes](https://www.linkedin.com/in/alefernandesbranding/). Vários dos conhecimentos apresentados aqui, eu aprendi na prática com a Alê. Esses conhecimentos revolucionaram a maneira como eu construo minhas apresentações, e, por isso, eu sou imensamente grato a ela ❤️.
 
 
 ::: {.callout-important}
@@ -40,14 +40,14 @@ Todos os dados, gráficos e imagens mostrados neste artigo são meramente ilustr
 
 # Resumo da estrutura deste artigo
 
-Na próxima seção, eu descrevo como era esses relatórios que eu apresentava para o Banco BMG. Ou seja, eu mostro como esses relatórios eram antes das melhorias, e descrevo quais eram os seus problemas e suas limitações.
+Na @sec-como-era-antes, eu descrevo como eram antes esses relatórios que eu apresentava para o Banco BMG, e quais eram os seus principais problemas e limitações.
 
-Nas seções seguintes, eu dou dicas sobre como melhorei esses relatórios. Eu entendo que boa parte do sucesso em *data storytelling* (ou das melhorias que fiz em meus relatórios) está concentrada em dois pontos:
+A partir da @sec-como-melhorar, eu dou dicas sobre como melhorei esses relatórios. Você vai perceber que boa parte dessas melhorias estão concentradas em dois pontos:
 
 1. construir uma apresentação que seja simples e clara;
 2. construir uma apresentação que tenha uma boa estrutura, isto é, uma estrutura que te ajude a contar uma história através de seus dados;
 
-Por isso, a @sec-guerra-atencao fornece duas dicas que te ajudam a trazer simplicidade e clareza para sua apresentação, além de discutir o que se deve evitar para não atrair a atenção de seus espectadores para os lugares errados.
+A @sec-guerra-atencao fornece duas dicas que te ajudam a trazer simplicidade e clareza para sua apresentação, além de discutir o que se deve evitar para não atrair a atenção de seus espectadores para os lugares errados.
 
 Na @sec-historia-conteudo discuto algumas dicas sobre como formar o conteúdo da apresentação, e sobre como esse conteúdo te ajuda a formar uma história.
 
@@ -57,7 +57,7 @@ Por outro lado, na @sec-historias-tem-estrutura, nós discutimos bastante sobre 
 
 Enfim, vamos prosseguir...
 
-# Como era esse relatório antes ?
+# Como era esse relatório antes ? {#sec-como-era-antes}
 
 Na época, estávamos construindo um relatório mensal contendo vários indicadores e gráficos que mostravam o estado atual e a evolução recente dos serviços e produtos do Banco BMG ofertados dentro do canal do WhatsApp.
 
@@ -72,7 +72,7 @@ Perceba que esse slide se parece mais com uma página de um dashboard, do que de
 Tendo isso em mente, qual é o incentivo/motivo/razão que o seu cliente tem para assistir à sua apresentação? Em outras palavras, se a sua apresentação mostra os mesmos gráficos/indicadores que os seus dashboards apresentam, o seu cliente não tem incentivo/motivo nenhum para assistir à sua apresentação. Pois **não há nada na sua apresentação que seja novo**, ou nenhuma informação da qual o seu cliente não tenha já acesso diretamente.
 
 
-# Como podemos melhorar ?
+# Como podemos melhorar ? {#sec-como-melhorar}
 
 Agora que você possui uma noção do tamanho que era o problema, nas próximas seções deste artigo, vou discutir algumas dicas essenciais que demonstram como nós podemos melhorar o modelo de apresentação mostrado em @fig-print-report1.
 
@@ -288,9 +288,9 @@ Tudo isso significa que o "como percorremos o meio da jornada" pode ser muito ma
 
 Nesse ponto específico da apresentação, você geralmente tem uma oportunidade muito interessante! Pois você pode, entregar valor ao seu cliente, e, ao mesmo tempo, também valorizar o trabalho de sua equipe, especialmente se foi essa a equipe que descobriu os desafios, e, aplicou as ações que superaram esses desafios que você está descrevendo.
 
-Isso é uma oportunidade de ouro! Portanto, se você tiver essa oportunidade em suas mãos, proveite ela! Lembre-se que você não trabalha sozinho. Você quase sempre está trabalhando dentro de uma equipe de pessoas, e é sempre importante saber como valorizar o trabalho de seus colegas.
+Isso é uma oportunidade de ouro! Portanto, se você tiver essa oportunidade em suas mãos, aproveite ela! Lembre-se que você não trabalha sozinho. Você quase sempre está trabalhando dentro de uma equipe de pessoas, e é sempre importante saber como valorizar o trabalho de seus colegas.
 
-Contudo, essa oportunidade nem sempre vai aparecer para você. Pois talvez os desafios que você está apresentando, foram superados de outra forma, por uma outra equipe que você não conhece, ou que não possui conexão direta.
+Contudo, essa oportunidade nem sempre vai aparecer para você. Talvez os desafios que você está apresentando, foram superados de outra forma, por uma outra equipe que você não conhece, ou que não possui conexão direta.
 
 
 ### Reforce os resultados alcançados
