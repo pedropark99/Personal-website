@@ -40,20 +40,20 @@ Todos os dados, gráficos e imagens mostrados neste artigo são meramente ilustr
 
 # Resumo da estrutura deste artigo
 
-Na @sec-como-era-antes, eu descrevo como eram antes esses relatórios que eu apresentava para o Banco BMG, e quais eram os seus principais problemas e limitações.
+Na @sec-como-era-antes, eu forneço contexto sobre esses relatórios que eu apresentava para o Banco BMG e Banco Pan, qual era o formato desses relatórios e quais eram os seus principais problemas e limitações.
 
-A partir da @sec-como-melhorar, eu dou dicas sobre como melhorei esses relatórios. Você vai perceber que boa parte dessas melhorias estão concentradas em dois pontos:
+Mas a partir da @sec-como-melhorar, nós começamos a discutir sobre como melhorei esses relatórios. Você vai perceber que boa parte dessas melhorias estão concentradas em dois pontos:
 
 1. construir uma apresentação que seja simples e clara;
 2. construir uma apresentação que tenha uma boa estrutura, isto é, uma estrutura que te ajude a contar uma história através de seus dados;
 
-A @sec-guerra-atencao fornece duas dicas que te ajudam a trazer simplicidade e clareza para sua apresentação, além de discutir o que se deve evitar para não atrair a atenção de seus espectadores para os lugares errados.
+A @sec-guerra-atencao fornece duas dicas que te ajudam a trazer simplicidade e clareza para sua apresentação, além de discutir o porquê de textos longos em slides serem tão perversos para a atenção de seus espectadores.
 
-Na @sec-historia-conteudo discuto algumas dicas sobre como formar o conteúdo da apresentação, e sobre como esse conteúdo te ajuda a formar uma história.
+Na @sec-historia-conteudo discuto algumas dicas sobre como formar o conteúdo da apresentação, mais especificamente, um conteúdo que te ajude a construir uma história em sua apresentação.
 
 Já na @sec-pratica, nós pegamos as dicas que discutimos até então no artigo, e tentamos aplicar elas sobre o slide mostrado em @fig-divisao2, com o objetivo de demonstrar como essas dicas podem melhorar sua apresentação.
 
-Por outro lado, na @sec-historias-tem-estrutura, nós discutimos bastante sobre estrutura. Mais especificamente, eu discuto dois exemplos de estruturas que podem servir como um guia, ao fornecer uma base simples que você pode utilizar para construir a sua história.
+Por último, na @sec-historias-tem-estrutura, nós discutimos bastante sobre estrutura. Mais especificamente, eu discuto dois exemplos de estruturas que podem servir como um guia, ao fornecer uma base simples que você pode utilizar para construir a sua história.
 
 Enfim, vamos prosseguir...
 
@@ -63,20 +63,24 @@ Na época, estávamos construindo um relatório mensal contendo vários indicado
 
 Contudo, o formato dessa apresentação era problemático. Nós trazíamos uma **quantidade monumental** de informações para o banco. A apresentação usualmente trazia em torno de 40 slides diferentes, com aproximadamente 36 gráficos e 70 indicadores diferentes. Para mais, nós tentávamos apresentar todo esse volume de informações em uma reunião de apenas 1 hora.
 
-O resultado final disso tudo era uma apresentação que trazia um volume monumental de informações, porém, que também trazia um volume muito pequeno de insights e novas ideias de negócio para os gestores. Em @fig-print-report1 temos uma representação de um dos vários slides dessa apresentação^[Vale relembrar que os números e gráficos apresentados nessa imagem são meramente ilustrativos, e, foram definidos de forma completamente aleatória.]. Imagine que essa apresentação trazia em torno de 40 slides semelhantes a esse:
+O resultado final disso tudo era uma apresentação que trazia um volume monumental de informações, porém, que também trazia um **volume muito pequeno de insights e novas ideias de negócio para os gestores**.
+
+Em @fig-print-report1 temos uma representação de um dos vários slides dessa apresentação^[Vale relembrar que os números e gráficos apresentados nessa imagem são meramente ilustrativos, e, foram definidos de forma completamente aleatória.]. Imagine que essa apresentação trazia em torno de 40 slides semelhantes a esse:
 
 ![Representação de um slide da versão antiga do relatório](./../print-report1.png){#fig-print-report1}
 
-Perceba que esse slide se parece mais com uma página de um dashboard, do que de um relatório apresentando as últimas tendências do mercado ou do negócio do banco. **Isso é muito importante!** Se a sua apresentação traz vários indicadores diferentes espalhados pela página, sem contextualizá-los, sem relacioná-los uns com os outros, sem trazer o que eles significam em conjunto, essa apresentação vai muito provavelmente se parecer com os dashboards que você já produz para o seu cliente.
+Perceba que esse slide se parece mais com uma página de um dashboard, do que de um relatório apresentando as últimas tendências do mercado ou do negócio do banco.
+
+**Isso é muito importante!** Se a sua apresentação traz vários indicadores diferentes espalhados pela página, sem contextualizá-los, sem relacioná-los uns com os outros, sem trazer o que eles significam em conjunto, essa apresentação vai muito provavelmente se parecer com os dashboards que você já produz para o seu cliente.
 
 Tendo isso em mente, qual é o incentivo/motivo/razão que o seu cliente tem para assistir à sua apresentação? Em outras palavras, se a sua apresentação mostra os mesmos gráficos/indicadores que os seus dashboards apresentam, o seu cliente não tem incentivo/motivo nenhum para assistir à sua apresentação. Pois **não há nada na sua apresentação que seja novo**, ou nenhuma informação da qual o seu cliente não tenha já acesso diretamente.
 
 
 # Como podemos melhorar ? {#sec-como-melhorar}
 
-Agora que você possui uma noção do tamanho que era o problema, nas próximas seções deste artigo, vou discutir algumas dicas essenciais que demonstram como nós podemos melhorar o modelo de apresentação mostrado em @fig-print-report1.
+Agora que você possui uma noção do tamanho do problema que as versões anteriores desses relatórios representavam, nas próximas seções deste artigo, vou discutir algumas dicas essenciais que demonstram como nós podemos melhorar o modelo de apresentação mostrado em @fig-print-report1.
 
-No meu entendimento, boa parte do sucesso em *data storytelling* está em duas ações:
+No meu entendimento, boa parte do sucesso em **data storytelling** pode ser resumido em duas ações, ou dois objetivos principais:
 
 1. Evitar itens que dispersam a atenção dos nossos espectadores;
 2. Construir uma história cativante para a nossa apresentação;
@@ -91,20 +95,23 @@ Vamos começar pelo primeiro item...
 
 Quando estamos apresentando algo, estamos constantemente batalhando pela atenção dos nossos espectadores. Essa é uma batalha difícil, não apenas porque nós podemos (sem querer) atrair a atenção para os lugares errados, mas também porque existem muitas fontes de distração no mundo moderno (e.g. celulares, emails, etc.)!
 
-Um bom *data storytelling* depende de você contar uma história cativante, que consiga capturar a atenção de seus espectadores. Por isso, as próximas seções vão focar bastante em dicas que contribuam para essa captura, ou que te ajudam a não dissipar, reduzir ou atrapalhar a atenção desses espectadores.
+Um bom **data storytelling** depende de você contar uma história cativante, que consiga capturar a atenção de seus espectadores. Por isso, as próximas seções vão focar bastante em dicas que contribuam para essa captura, ou que te ajudam a não dissipar, reduzir ou atrapalhar a atenção desses espectadores.
 
 
 ### Por que evitar textos longos em seus slides? {#sec-texto-longo}
 
-Tente ser parsimonioso nos seus slides! Isto é, tente incluir o mínimo possível de informação dentro dele. Se você precisa repassar várias informações em um slide, tente incorporar o máximo possível desse conteúdo em sua fala, e o mínino possível dele em forma escrita neste slide. Em geral, evite incluir textos muito longos em seus slides.
+Tente ser parsimonioso nos seus slides! Isto é, tente incluir o mínimo possível de informação dentro dele. Se você precisa repassar várias informações em um slide, tente incorporar o máximo possível desse conteúdo em sua fala, e o mínino possível dele em forma escrita neste slide. Em geral, evite ao máximo incluir textos muito longos em seus slides.
+
+É estranho pensar nisso, mas geralmente, os gestores vão participar e assistir à sua apresentação porque eles estão interessados no que **você** tem a dizer sobre o negócio deles. Portanto, os seus slides são apenas um material de suporte, eles devem ser secundários, um coadjuvante de sua apresentação. Pois a peça principal da apresentação deve ser sempre a sua fala e a história que você quer contar através dela.
+
 
 Veja o slide em @fig-texto-longo como exemplo. O problema principal desse slide, é que ele **divide muito a atenção de seu espectador**.
 
 ![Slide com um parágrafo longo](./../texto-longo.png){#fig-texto-longo}
 
-Ao apresentar um slide, os seus espectadores tem que prestar atenção na sua voz. Isto é, no que você está comunicando verbalmente durante a apresentação. E ao mesmo tempo, eles também precisam prestar atenção no conteúdo do slide. Contudo, esse longo parágrafo no canto esquerdo do slide mostrado em @fig-texto-longo é problemático. **Pois ele chama atenção demais!** 
+Ao apresentar um slide, os seus espectadores tem que prestar atenção na sua fala. Isto é, no que você está comunicando verbalmente durante a apresentação. E ao mesmo tempo, eles também precisam prestar atenção no conteúdo do slide. Contudo, esse longo parágrafo no canto esquerdo do slide mostrado em @fig-texto-longo é problemático. **Pois ele chama atenção demais!** 
 
-Esse elemento desperta tanto a nossa curiosidade, que ao ver esse slide, você (leitor) provavelmente tentou ler esse texto longo antes mesmo de ler o que estou descrevendo agora neste parágrafo. O mesmo vai acontecer com os espectadores de sua apresentação. Ou seja, os seus espectadores vão imediatamente tentar ler esse parágrafo longo.
+Esse elemento desperta tanto a nossa curiosidade, que ao ver esse slide, você (leitor deste artigo) provavelmente tentou ler esse texto longo antes mesmo de ler o que estou descrevendo agora neste parágrafo. O mesmo vai acontecer com os espectadores de sua apresentação. Ou seja, os seus espectadores vão imediatamente tentar ler esse parágrafo longo.
 
 Contudo, ler e interpretar um texto longo, exige certo esforço e muita atenção. Como resultado, enquanto os seus espectadores leêm esse texto, eles não vão conseguir prestar atenção em outros elementos de sua apresentação. Por exemplo, na sua fala. 
 
@@ -116,7 +123,9 @@ O cérebro humano consegue processar uma quantidade limitada de informações de
 
 Portanto, **entregue a sua história aos poucos**. Evite condensar várias informações em um único slide! Divida o conteúdo em partes, e explique uma parte de cada vez!
 
-Isso ajuda a tornar o conteúdo mais simples, e, como resultado, isso ajuda os seus espectadores a entenderem melhor sobre o que você está falando. Pense um pouco sobre isso. Quando você busca aprender sobre um assunto complexo, você provavelmente divide o conteúdo em várias partes pequenas, e, vai aprendendo uma parte de cada vez. Não é assim que você faz? Traga essa experiência também para as suas apresentações.
+Isso ajuda a tornar o conteúdo mais simples, e, como resultado, isso ajuda os seus espectadores a entenderem melhor sobre o que você está falando.
+
+Pense um pouco sobre isso. Quando você busca aprender sobre um assunto complexo (e.g. regressão linear), você provavelmente divide o conteúdo em várias partes pequenas, e, vai aprendendo uma parte de cada vez. Não é assim que você faz? Então traga essa experiência também para as suas apresentações.
 
 
 
@@ -124,22 +133,20 @@ Isso ajuda a tornar o conteúdo mais simples, e, como resultado, isso ajuda os s
 
 Agora que vimos duas regras básicas sobre a atenção de seus espectadores (i.e. evite textos longos e entregue sua história aos poucos), vamos discutir algumas dicas sobre o conteúdo de sua apresentação, e, sobre como construir histórias com dados.
 
-Na @sec-pratica, vamos tentar aplicar as dicas discutidas até o momento para melhorar o slide mostrado em @fig-divisao2. Depois dessa pequena demonstração, vou discutir na @sec-historias-tem-estrutura, algumas estruturas básicas que podem servir como guias muito úteis para a construção de sua história.
 
+### *Data Storytelling* não é sobre escolher "o melhor gráfico"
 
-### Data Storytelling não é sobre escolher "o melhor gráfico"
+Alguns poucos analistas entendem "*data storytelling*" como um problema de visualização, ou, como a ciência de "escolher os melhores gráficos" para sua apresentação, ou como projetar gráficos inovadores, bonitos e complexos.
 
-Alguns poucos analistas entendem "data storytelling" como um problema de visualização, ou, como a ciência de "escolher os melhores gráficos" para sua apresentação, ou como projetar gráficos inovadores, bonitos e complexos.
-
-Contudo, data storytelling é sobre **contar histórias com dados**. Não sobre como construir visualizações. Escolher a visualização certa para apresentar os seus dados, torná-la melhor, mais bonita e mais limpa, é apenas uma parte do processo. Uma parte muito importante, pois isso vai te ajudar a contar sua história de uma maneira mais clara e eficaz, e, com isso, atingir um público maior.
+Contudo, *data storytelling* é sobre **contar histórias com dados**. Não sobre como construir visualizações. Escolher a visualização certa para apresentar os seus dados, torná-la melhor, mais bonita e mais limpa, é apenas uma parte do processo. Uma parte muito importante, pois isso vai te ajudar a contar sua história de uma maneira mais clara e eficaz, e, com isso, atingir um público maior.
 
 ### Trace relações entre os indicadores {#sec-relacoes}
 
-Agora, vamos analisar o slide mostrado em @fig-divisao2. Perceba que esse slide, novamente, lembra muito uma página de um dashboard. Como resultado, o slide não parece tão cativante à primeira vista, pois ele só mostra os indicadores, ele não constrói uma relação, ou **uma história** entre eles.
+Agora, vamos analisar o slide mostrado em @fig-divisao2. Perceba que esse slide, novamente, lembra muito uma página de um dashboard. O slide não parece tão cativante à primeira vista, pois ele só mostra os indicadores, ele não constrói uma relação, ou **uma história** entre eles.
 
 ![Falta de relação entre os indicadores](./../divisao2.png){#fig-divisao2}
 
-Se prestarmos atenção nesses indicadores, podemos identificar alguns efeitos que estão acontecendo ao longo deles. E se refletirmos um pouco mais sobre esses efeitos, vamos perceber que esses efeitos são relacionáveis!
+Se prestarmos atenção nesses indicadores, podemos identificar alguns efeitos que estão acontecendo ao longo deles. E se refletirmos um pouco mais sobre esses efeitos, vamos perceber que esses efeitos são relacionáveis! E que em conjunto, eles podem contar uma história.
 
 Por exemplo, perceba que há um aumento significativo nas vendas. Tanto no número de propostas vendidas quanto no valor total em si que essas propostas geraram. Porém, perceba que esse crescimento nas vendas não ocorreu no produto "Empréstimo Consignado", e sim, no produto "Empréstimo com garantia de veículos". Ou seja, o produto "Empréstimo Consignado" teve uma queda de vendas nesse mês, porém, o produto "Empréstimo com garantia de veículos" obteve um super resultado que conseguiu cobrir e muito essa queda, e no fim, conseguiu aumentar as vendas como um todo do banco.
 
@@ -186,15 +193,15 @@ Enfim, vamos responder essa pergunta em um novo slide. Com esse slide, deixamos 
 
 A próxima pergunta que precisamos responder é "como?". Como esse super resultado nas vendas foi gerado? Nós discutimos isso na @sec-mensagem-principal, que após descobrirem um resultado tão importante, os gerentes vão certamente estar interessados em entender como esse resultado foi gerado, para que eles possam difundir esse efeito positivo para outras áreas do negócio.
 
-Lembre-se que temos dois efeitos principais discutidos em @sec-relacoes que explicam essa melhoria nas vendas. Vamos listá-los de maneira clara e curta em um novo slide:
+Lembre-se que temos dois efeitos principais discutidos em @sec-relacoes que explicam como essa melhoria nas vendas ocorreu. Vamos listá-los de maneira clara e curta em um novo slide:
 
 ![Por que vendemos mais?](./../porque-vendemos.png)
 
-Deixe os detalhes mais específicos dos dois efeitos acima (como: "qual melhoria na API foi feita?", "como isso é uma melhoria?", "o que é uma taxa de conversão? E como isso afeta o processo de venda?") para a sua fala. Lembre-se, tente evitar ao máximo colocar textos longos em suas apresentações, e tente dar mais detalhes ou responder às perguntas dos espectadores através da fala.
+Deixe os detalhes mais específicos dos dois efeitos acima ("qual era o problema na API, e como superamos ele?", "como isso é uma melhoria?", "o que é uma taxa de conversão? E como isso afeta o processo de venda?") para a sua fala. Lembre-se, tente evitar ao máximo colocar textos longos em suas apresentações, e tente dar mais detalhes ou responder às perguntas dos seus espectadores através da fala.
 
 Portanto, com esses três slides nós temos uma estrutura e um conteúdo muito mais interessantes para a nossa apresentação, pois estamos contando uma história sobre como vendemos mais em um determinado mês.
 
-Perceba que a estrutura da apresentação (1: mensagem principal, 2: onde? , 3: como?) nos ajuda a criar o conteúdo e essa história de forma coesa. Nas próximas seções deste artigo, vou discutir duas estruturas que podem te ajudar a estruturar e a contar sua histórias.
+Perceba que a estrutura da apresentação (1: mensagem principal, 2: onde? , 3: como?) nos ajuda a criar o conteúdo e essa história de forma coesa. Nas próximas seções deste artigo, vou discutir duas outras estruturas que podem te ajudar a estruturar e a contar sua histórias de maneira coesa.
 
 
 # Histórias tem estrutura, use essas estruturas ao seu favor {#sec-historias-tem-estrutura}
