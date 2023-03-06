@@ -2,15 +2,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.269">
+<meta name="generator" content="quarto-1.2.262">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Pedro Duarte Faria">
 <meta name="dcterms.date" content="2023-01-20">
-<meta name="description" content="Neste artigo discuto a minha experiência sobre como eu construi e melhorei o Data Storytelling de minhas apresentações para um dos maiores bancos do mercado brasileiro.">
+<meta name="description" content="This article discuss my experience on improving Data Storytelling on one the largest banks on the financial brazilian market">
 
-<title>home |&gt; dplyr::glimpse() - Um estudo de caso sobre Data Storytelling em um dos maiores bancos brasileiros</title>
+<title>home |&gt; dplyr::glimpse() - A case study about Data Storytelling in one the largest brazilian banks</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -75,7 +75,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <link rel="stylesheet" href="../../../../styles.css">
 </head>
 
-<body class="nav-fixed">
+<body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -197,15 +197,14 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Um estudo de caso sobre Data Storytelling em um dos maiores bancos brasileiros</h1>
+      <h1 class="title">A case study about Data Storytelling in one the largest brazilian banks</h1>
                   <div>
         <div class="description">
-          Neste artigo discuto a minha experiência sobre como eu construi e melhorei o <em>Data Storytelling</em> de minhas apresentações para um dos maiores bancos do mercado brasileiro.
+          This article discuss my experience on improving Data Storytelling on one the largest banks on the financial brazilian market
         </div>
       </div>
                           <div class="quarto-categories">
                 <div class="quarto-category">Storytelling</div>
-                <div class="quarto-category">Data Storytelling</div>
                 <div class="quarto-category">Data Science</div>
               </div>
                   </div>
@@ -242,82 +241,34 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#introdução" id="toc-introdução" class="nav-link active" data-scroll-target="#introdução">Introdução</a></li>
-  <li><a href="#como-era-esse-relatório-antes" id="toc-como-era-esse-relatório-antes" class="nav-link" data-scroll-target="#como-era-esse-relatório-antes">Como era esse relatório antes ?</a></li>
-  <li><a href="#como-evoluímos" id="toc-como-evoluímos" class="nav-link" data-scroll-target="#como-evoluímos">Como evoluímos ?</a>
-  <ul class="collapse">
-  <li><a href="#data-storytelling-não-é-sobre-escolher-o-melhor-gráfico" id="toc-data-storytelling-não-é-sobre-escolher-o-melhor-gráfico" class="nav-link" data-scroll-target="#data-storytelling-não-é-sobre-escolher-o-melhor-gráfico">Data Storytelling não é sobre escolher “o melhor gráfico”</a></li>
-  <li><a href="#uma-guerra-constante-pela-atenção" id="toc-uma-guerra-constante-pela-atenção" class="nav-link" data-scroll-target="#uma-guerra-constante-pela-atenção">Uma guerra constante pela atenção</a></li>
-  </ul></li>
-  <li><a href="#modelo-dos-quatro-cs" id="toc-modelo-dos-quatro-cs" class="nav-link" data-scroll-target="#modelo-dos-quatro-cs">Modelo dos quatro C’s</a></li>
-  </ul>
-</nav>
-    </div>
+    
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
-<section id="introdução" class="level1">
-<h1>Introdução</h1>
-<p>Esse artigo discute o meu processo de construção de <em>Data Storytelling</em> dentro de um relatório mensal entregue ao Banco BMG, o qual é um dos maiores bancos comerciais do mercado brasileiro. Busco compartilhar o que aprendi nesse processo, e dou algumas dicas que possivelmente vão ajudá-lo a construir relatórios de dados mais intuitivos, claros e efetivos.</p>
-<p>Esse processo de construção levou alguns dias de análise, reflexão, planejamento e design, mas ele também levou vários meses de testes e feedbacks, com pequenos aprendizados e ajustes. E como todo grande trabalho, ele também envolveu mais de uma pessoa.</p>
-<p>Na época, eu tive ajuda de minha parceira de trabalho, a <a href="https://www.linkedin.com/in/andressa-de-souza-freitas-697195177/">Andressa de Souza Freitas</a>, e, principalmente, da UX Designer <a href="https://www.linkedin.com/in/alefernandesbranding/">Alê Fernandes</a>. Os conhecimentos da Alê de certa forma, revolucionaram a forma como eu construo minhas apresentações. Portanto, uma grande parte do conhecimento exposto neste artigo eu aprendi com ela ❤️.</p>
-<div class="callout-important callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Todos os dados, gráficos e imagens mostrados neste artigo são meramente ilustrativos. Todos os números apresentados foram gerados de forma aleatória por um computador! Portanto, eles não representam os dados reais da plataforma Blip ou do Banco BMG de nenhuma forma ou dimensão!</p>
-</div>
-</div>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>This article discuss my experience on improving the Data Storytelling on a monthly report delivered to <a href="https://www.bancobmg.com.br/">BMG Bank</a>, which is one of the largest commercial banks in the brazilian market. I work as a Data Analyst at TakeBlip<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, and one of my key responsibilities is to use data to guide my clients to improve their perfomance in our Blip platform.</p>
 </section>
-<section id="como-era-esse-relatório-antes" class="level1">
-<h1>Como era esse relatório antes ?</h1>
-<p>Na época, estávamos construindo um relatório mensal contendo vários indicadores e gráficos que mostravam o estado atual e a evolução recente dos serviços e produtos do Banco BMG ofertados dentro do canal do WhatsApp.</p>
-<p>Contudo, o formato dessa apresentação era problemático. Nós trazíamos uma <strong>quantidade monumental</strong> de informações para o banco. A apresentação usualmente trazia em torno de 40 slides diferentes, com aproximadamente 36 gráficos e 70 indicadores diferentes. Para mais, nós tentávamos apresentar todo esse volume de informações em uma reunião de apenas 1 hora.</p>
-<p>O resultado final disso tudo era uma apresentação que trazia um volume monumental de informações, porém, que também trazia um volume muito pequeno de insights e novas ideias de negócio para os gestores. Como um exemplo mais visual de como era essa apresentação, a imagem abaixo representa um dos vários slides dessa apresentação<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. Imagine que essa apresentação trazia em torno de 40 slides semelhantes a esse:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="./../print-report1.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Representação de um slide da versão antiga do relatório</figcaption><p></p>
-</figure>
-</div>
-<p>Perceba que esse slide se parece mais com uma página de um dashboard, do que de um relatório apresentando as últimas tendências do mercado ou do negócio do banco. <strong>Isso é muito importante!</strong> Se a sua apresentação traz vários indicadores diferentes espalhados pela página, sem contextualizá-los, sem relacioná-los uns com os outros, sem trazer o que eles significam em conjunto, essa apresentação vai muito provavelmente se parecer com os dashboards que você já produz para o seu cliente.</p>
-<p>Tendo isso em emten, qual é o incentivo/motivo/razão que o seu cliente tem para assistir à sua apresentação? Em outras palavras, se a sua apresentação mostra os mesmos gráficos/indicadores que os seus dashboards apresentam, o seu cliente não tem incentivo/motivo nenhum para assistir à sua apresentação. Pois <strong>não há nada na sua apresentação que seja novo</strong>, ou nenhuma informação da qual o seu cliente não tenha já acesso diretamente.</p>
+<section id="data-storytelling-is-not-about-the-best-visualization" class="level1">
+<h1>Data Storytelling is not about the “best visualization”</h1>
+<p>The majority of analysts and scientists understand what “data storytelling” is about. However, a few analyts understand “data storytelling” solely as a visualization problem, or, as the science of “choosing the best graphs” for your presentation, and designing innovative, beautiful and complex charts.</p>
+<p>For these analysts, I say: “visualization is an important aspect of it. But data storytelling is about <strong>telling stories</strong>. Not about visualization”. Yes! Choosing the right visualization, making it better, nicer and cleaner is really important! Because it will help you to engage with a larger audience, and to deliver your story in a clear and effective way.</p>
+<p>Data storytelling is about creating stories with data, and data visualization is just <strong>a tool to deliver these stories</strong> in a effective way. We do not choose the “best chart” to say “we are in compliance with data storytelling guidelines!”. We choose the “best chart” to deliver our stories, our conclusions, and our recommendations to our clients in the best way as possible.</p>
 </section>
-<section id="como-evoluímos" class="level1">
-<h1>Como evoluímos ?</h1>
-<p>Agora que você possui uma noção do tamanho que era o problema, nas próximas seções deste artigo, vou discutir como nós utilizamos data storytelling para evoluir esse modelo de apresentação para algo melhor, algo que desse maior clareza e impacto para o nosso cliente.</p>
-<section id="data-storytelling-não-é-sobre-escolher-o-melhor-gráfico" class="level2">
-<h2 class="anchored" data-anchor-id="data-storytelling-não-é-sobre-escolher-o-melhor-gráfico">Data Storytelling não é sobre escolher “o melhor gráfico”</h2>
-<p>A maioria dos analistas e cientistas entendem o que é “data storytelling”. No entanto, alguns poucos analistas entendem “data storytelling” apenas como um problema de visualização, ou, como a ciência de “escolher os melhores gráficos” para sua apresentação, ou como projetar gráficos inovadores, bonitos e complexos.</p>
-<p>Para esses analistas, eu digo: “a visualização é um aspecto importante dessa matéria. Contudo, data storytelling é sobre <strong>contar histórias</strong>. Não sobre visualização”. Sim! Escolher a visualização certa, torná-la melhor, mais bonita e mais limpa é muito importante sim! Porque isso vai ajudar você a se envolver com um público maior, e a contar sua história de uma maneira mais clara e eficaz.</p>
-<p><em>Data storytelling</em> é sobre criar histórias com dados, e a visualização de dados é apenas <strong>uma ferramenta para entregar essas histórias</strong> de maneira eficaz. Não escolhemos o “melhor gráfico” para dizer “estamos em conformidade com as diretrizes de <em>data storytelling</em>!”. Escolhemos o “melhor gráfico” para entregarmos nossas histórias, nossas conclusões e nossas recomendações aos nossos clientes da melhor forma possível.</p>
-</section>
-<section id="uma-guerra-constante-pela-atenção" class="level2">
-<h2 class="anchored" data-anchor-id="uma-guerra-constante-pela-atenção">Uma guerra constante pela atenção</h2>
-<p>Quando estamos apresentando algo, estamos constantemente batalhando pela atenção dos nossos espectadores. Essa é uma batalha difícil, não apenas porque nós podemos (sem querer) atrair a atenção de nossos espectadores para os lugares errados, mas também porque existem simplesmente fontes de distração em excesso no mundo moderno!</p>
-<p>Os seus espectadores podem estar mais interessados na mensagem que eles acabam de receber no celular, ou na quantidade de emails que eles precisam responder, do que no conteúdo de sua apresentação.</p>
+<section id="context" class="level1">
+<h1>Context</h1>
+<section id="the-report" class="level2">
+<h2 class="anchored" data-anchor-id="the-report">The report</h2>
+<p>Very briefly, the BMG Bank uses the Blip platform to offer several products and services through <a href="https://www.whatsapp.com/">WhatsApp</a>. Every month, we built a report containing several indicators and graphs that indicate the actual state and the recent evolution of these services and products offered at WhatsApp.</p>
+<p>How was this report before this process of improvements?</p>
 </section>
 </section>
-<section id="modelo-dos-quatro-cs" class="level1">
-<h1>Modelo dos quatro C’s</h1>
-<p>O modelo dos quatro C’s se refere a essas quatro palavras:</p>
-<blockquote class="blockquote">
-<p>Contexto, Conflito, Consequência, Conselho.</p>
-</blockquote>
+<section id="model-of-the-four-cs" class="level1">
+<h1>Model of the four C’s</h1>
+<p>The model of the four C’s is about these four words: &gt; Context, Conflict, Consequence, Council</p>
 
 
 </section>
@@ -326,7 +277,7 @@ Important
 <div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
 <ol>
-<li id="fn1"><p>Vale relembrar que os números e gráficos apresentados nessa imagem são meramente ilustrativos, e, foram definidos de forma completamente aleatória.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>TakeBlip is a technology company that provide several services and infrastructure to many of the largest companies in the brazilian market, in a vast range of markets (e.g.&nbsp;financial services, telecomunications, health services, retail, and many others).<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
