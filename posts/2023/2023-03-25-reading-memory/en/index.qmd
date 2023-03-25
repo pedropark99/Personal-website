@@ -1,0 +1,13 @@
+---
+title: "How to ready memory, binary and hexadecimal values ?"
+description: "What are hexadecimal values ?"
+
+date: 2023-03-25
+categories: ['Memory', 'Hexadecimal', 'Number systems']
+draft: true
+---
+
+^1: https://en.wikipedia.org/wiki/Hexadecimal
+In mathematics, a subscript is typically used to specify the base. For example, the decimal value 25,125 would be expressed in hexadecimal as 622516. In programming, a number of notations are used to denote hexadecimal numbers, usually involving a prefix. The prefix 0x is used in C, which would denote this value as 0x6225.
+
+https://www.suse.com/c/making-sense-hexdump/

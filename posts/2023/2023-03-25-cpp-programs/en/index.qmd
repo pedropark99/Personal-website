@@ -1,10 +1,21 @@
 ---
-title: "A case study about Data Storytelling in one the largest brazilian banks"
-description: "This article discuss my experience on improving Data Storytelling on one the largest banks on the financial brazilian market"
+title: "How a C++ program is composed"
+description: "What is a compiler C++? What are the components of a C++ program? Which purpose they fulfill? These are the questions I want to answer in this post"
 
 date: 2023-03-25
-categories: ['Storytelling', 'Data Science']
+categories: ['C++', 'Header files']
 draft: true
 ---
 
 # Introduction
+
+A C++ program is described by a set of files, and you use a C++ compiler to output the actual C++ program that is described by these files. This post introduces the components of a C++ program to a beginner in the C++ language.
+
+First of all, lets list the components that will be described here:
+
+- C++ compiler;
+- C++ translation unit;
+- C++ header;
+- Include directories;
+- External libraries;
+

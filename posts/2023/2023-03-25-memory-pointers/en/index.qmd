@@ -1,0 +1,16 @@
+---
+title: "How C and C++ memory pointers work?"
+description: "What is memory pointer in C or C++? How they work? How memory work?"
+
+date: 2023-03-25
+categories: ['C++', 'Header files']
+draft: true
+---
+
+# Introduction
+
+A memory pointer in C and C++ is just a variable that stores a memory adress. Is that it. If you have a variable in your C or C++ program that stores a memory adress, than, this variable is a memory pointer. As you can imagine, this stored adress corresponds to a point in the memory of your computer.
+
+So, an **memory adress is a location in the memory of your computer**. In contrast, a **memory pointer is a variable that stores a memory adress**.
+
+
