@@ -1,0 +1,10 @@
+---
+title: "A case study about Data Storytelling in one the largest brazilian banks"
+description: "This article discuss my experience on improving Data Storytelling on one the largest banks on the financial brazilian market"
+
+date: 2023-03-25
+categories: ['Storytelling', 'Data Science']
+draft: true
+---
+
+# Introduction
