@@ -1,11 +1,44 @@
 ---
-title: "How to ready memory, binary and hexadecimal values ?"
-description: "What are hexadecimal values ?"
+title: "How to read binary and hexadecimal values ?"
+description: "What are binary and hexadecimal values ? What they mean ?"
 
 date: 2023-03-25
-categories: ['Memory', 'Hexadecimal', 'Number systems']
+categories: ['Binary', 'Hexadecimal', 'Number systems']
 draft: true
 ---
+
+
+# Introduction
+
+Being able to read and understand binary or hexadecimal values is usually a not essential or commom skill to a programmer. Specially if they work a lot with high-level programming languages - such as JavaScript or Python.
+
+However, being able to read these values can be quite useful to:
+
+- learn and understand more of how your computer works;
+- which are the weakiness and limits of your computer;
+- how we can save memory and improve performance;
+- understand how security exploits (such as the buffer overflow-like exploits) happens, and can be avoided;
+
+Anyway, lets dive into it.
+
+# How a computer stores data
+
+Computers only speak one language, which is binary. This means that the only language that a computer can understand is zeros - 0 and ones - 1, nothing more, nothing less. 
+
+This means that literally everything in your computer is stored as specific combinations of zeros and ones. Each zero and one is called a bit. So a single bit in a computer, is either a zero, or a one. These bits are organized into groups of 8 bits. Each group of 8 bits is called a byte. So the following binary data '00110101' is a single byte, or, a group of 8 bits.
+
+For example, the text "hello" is stored as the bytes "68 65 6c 6c 6f"
+
+```r
+charToRaw("hello")
+```
+
+```sh
+echo "hello" | hexdump
+```
+
+
+# How text is represented on a computer
 
 ^1: https://en.wikipedia.org/wiki/Hexadecimal
 In mathematics, a subscript is typically used to specify the base. For example, the decimal value 25,125 would be expressed in hexadecimal as 622516. In programming, a number of notations are used to denote hexadecimal numbers, usually involving a prefix. The prefix 0x is used in C, which would denote this value as 0x6225.
