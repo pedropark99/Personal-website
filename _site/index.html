@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.262">
+<meta name="generator" content="quarto-1.3.353">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -17,7 +17,7 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
 </style>
@@ -127,6 +127,7 @@ gtag('js', new Date());
 gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 </script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="styles.css">
@@ -143,109 +144,111 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
     <span class="navbar-title">home |&gt; dplyr::glimpse()</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html">
+    <a class="nav-link" href="./about.html" rel="" target="">
  <span class="menu-text">About Me</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
  <span class="menu-text">Posts</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-posts">    
         <li>
-    <a class="dropdown-item" href="./posts/index.html">
+    <a class="dropdown-item" href="./posts/index.html" rel="" target="">
  <span class="dropdown-text">All posts</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./posts/en.html">
+    <a class="dropdown-item" href="./posts/en.html" rel="" target="">
  <span class="dropdown-text">Posts in english</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./posts/pt.html">
+    <a class="dropdown-item" href="./posts/pt.html" rel="" target="">
  <span class="dropdown-text">Posts em português</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-publications" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-publications" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
  <span class="menu-text">Publications</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-publications">    
         <li>
-    <a class="dropdown-item" href="./publications/index.html">
+    <a class="dropdown-item" href="./publications/index.html" rel="" target="">
  <span class="dropdown-text">All publications</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./publications/en.html">
+    <a class="dropdown-item" href="./publications/en.html" rel="" target="">
  <span class="dropdown-text">Publications in English</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./publications/pt.html">
+    <a class="dropdown-item" href="./publications/pt.html" rel="" target="">
  <span class="dropdown-text">Publicações em Português</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="./donate.html">
+    <a class="nav-link" href="./donate.html" rel="" target="">
  <span class="menu-text">Donate or Sponsor Me</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-cv" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-cv" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
  <span class="menu-text">CV</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-cv">    
         <li>
-    <a class="dropdown-item" href="./files/cv/cv-english.pdf">
+    <a class="dropdown-item" href="./files/cv/cv-english.pdf" rel="" target="">
  <span class="dropdown-text">CV in English</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./files/cv/cv-portuguese.pdf">
+    <a class="dropdown-item" href="./files/cv/cv-portuguese.pdf" rel="" target="">
  <span class="dropdown-text">CV em Português</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item compact">
-    <a class="nav-link" href="mailto:pedropark99@gmail.com"><i class="bi bi-envelope-fill" role="img" aria-label="Email for contact">
+    <a class="nav-link" href="mailto:pedropark99@gmail.com" rel="" target=""><i class="bi bi-envelope-fill" role="img" aria-label="Email for contact">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/pedropark99"><i class="bi bi-github" role="img" aria-label="Github profile">
+    <a class="nav-link" href="https://github.com/pedropark99" rel="" target=""><i class="bi bi-github" role="img" aria-label="Github profile">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://fosstodon.org/web/@pedropark99"><i class="bi bi-mastodon" role="img" aria-label="Mastodon profile">
+    <a class="nav-link" href="https://fosstodon.org/web/@pedropark99" rel="" target=""><i class="bi bi-mastodon" role="img" aria-label="Mastodon profile">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://medium.com/@pedropark99"><i class="bi bi-medium" role="img" aria-label="Medium profile">
+    <a class="nav-link" href="https://medium.com/@pedropark99" rel="" target=""><i class="bi bi-medium" role="img" aria-label="Medium profile">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/PedroPark9"><i class="bi bi-twitter" role="img" aria-label="Twitter profile">
+    <a class="nav-link" href="https://twitter.com/PedroPark9" rel="" target=""><i class="bi bi-twitter" role="img" aria-label="Twitter profile">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://www.linkedin.com/in/pedro-faria-a68140209/"><i class="bi bi-linkedin" role="img" aria-label="Linkedin profile">
+    <a class="nav-link" href="https://www.linkedin.com/in/pedro-faria-a68140209/" rel="" target=""><i class="bi bi-linkedin" role="img" aria-label="Linkedin profile">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://pedro-faria.netlify.app/index.xml"><i class="bi bi-rss" role="img" aria-label="RSS feed for Pedro's blog">
+    <a class="nav-link" href="https://pedro-faria.netlify.app/index.xml" rel="" target=""><i class="bi bi-rss" role="img" aria-label="RSS feed for Pedro's blog">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
+            <div class="quarto-navbar-tools">
+</div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
@@ -260,7 +263,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Hi there 🖐️!</h1>
+<h1 class="title">Hi there <code>r emoji::emoji('raised_hand_with_fingers_splayed')</code>!</h1>
 <p class="subtitle lead">I’m Pedro, and welcome to my website! I love to write books about programming, and to develop open-source software</p>
 </div>
 
@@ -276,12 +279,12 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 
 </header>
 
-<p>In this page, you can quickly scan through my latest published books 📚 and blog posts 📌. But, if you prefer, you can read a quick resume of me and my work in the <a href="./about.html">About Me</a> section too. Be free to contact me via email if you have an interesting proposal 😉. If you want to support me monetarily, you can send me a Pix (more info in the <a href="./donate.html">Donate or Sponsor Me</a> section).</p>
+<p>In this page, you can quickly scan through my latest published books <code>r emoji::emoji("books")</code> and blog posts <code>r emoji::emoji("pushpin")</code>. But, if you prefer, you can read a quick resume of me and my work in the <a href="./about.html">About Me</a> section too. Be free to contact me via email if you have an interesting proposal <code>r emoji::emoji('winking_face')</code>. If you want to support me monetarily, you can send me a Pix (more info in the <a href="./donate.html">Donate or Sponsor Me</a> section).</p>
 <section id="my-books" class="level2">
 <h2 class="anchored" data-anchor-id="my-books">My books</h2>
 <div id="listing-books" class="quarto-listing quarto-listing-container-grid">
 <div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-categories="Python,Apache Spark,Book" data-listing-file-modified-sort="1674224024847" data-listing-reading-time-sort="1.33">
+<div class="g-col-1" data-index="0" data-categories="Python,Apache Spark,Book" data-listing-file-modified-sort="1675814875283" data-listing-reading-time-sort="2">
 <a href="./publications/book/introd-pyspark/en/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -303,7 +306,7 @@ Pedro Duarte Faria
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="1" data-categories="R Language,Book,Brazil" data-listing-date-sort="1669863600000" data-listing-file-modified-sort="1674224300965" data-listing-reading-time-sort="2.045">
+<div class="g-col-1" data-index="1" data-categories="R Language,Book,Brazil" data-listing-date-sort="1669863600000" data-listing-file-modified-sort="1675814875310" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
 <a href="./publications/book/introducao_linguagem_R/pt/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -338,7 +341,7 @@ No matching items
 <h2 class="anchored" data-anchor-id="posts">Posts</h2>
 <div id="listing-posts" class="quarto-listing quarto-listing-container-grid">
 <div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-categories="Storytelling,Data Storytelling,Data Science" data-listing-date-sort="1678071600000" data-listing-file-modified-sort="1677935438578" data-listing-reading-time-sort="22.28">
+<div class="g-col-1" data-index="0" data-categories="Storytelling,Data Storytelling,Data Science" data-listing-date-sort="1678071600000" data-listing-file-modified-sort="1684196980647" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="23">
 <a href="./posts/2023/2023-03-06-storytelling/pt/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -363,7 +366,7 @@ Mar 6, 2023
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="1" data-categories="R Language,Package,Power BI,Funnel charts" data-listing-date-sort="1676084400000" data-listing-file-modified-sort="1676735592463" data-listing-reading-time-sort="4.655">
+<div class="g-col-1" data-index="1" data-categories="R Language,Package,Power BI,Funnel charts" data-listing-date-sort="1676084400000" data-listing-file-modified-sort="1676841439054" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5">
 <a href="./posts/2023/2023-02-11-funnel-pkg-v010/en/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -388,7 +391,7 @@ Feb 11, 2023
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="2" data-categories="Python,Package,Development workflow" data-listing-date-sort="1675652400000" data-listing-file-modified-sort="1677546435654" data-listing-reading-time-sort="20.01">
+<div class="g-col-1" data-index="2" data-categories="Python,Package,Development workflow" data-listing-date-sort="1675652400000" data-listing-file-modified-sort="1684196980594" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="21">
 <a href="./posts/2023/2023-02-06-python-pckg/en/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -413,7 +416,7 @@ Feb 6, 2023
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="3" data-categories="JOINs" data-listing-date-sort="1673319600000" data-listing-file-modified-sort="1674227854613" data-listing-reading-time-sort="8.97">
+<div class="g-col-1" data-index="3" data-categories="JOINs" data-listing-date-sort="1673319600000" data-listing-file-modified-sort="1675814875226" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9">
 <a href="./posts/2023/2023-01-10-join-duplicates/pt/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -438,7 +441,7 @@ Jan 10, 2023
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="4" data-categories="Book,R Language" data-listing-date-sort="1672023600000" data-listing-file-modified-sort="1674227824205" data-listing-reading-time-sort="1.945">
+<div class="g-col-1" data-index="4" data-categories="Book,R Language" data-listing-date-sort="1672023600000" data-listing-file-modified-sort="1675814875221" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
 <a href="./posts/2022/2022-12-26-4th-edition-rbook/pt/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -463,7 +466,7 @@ Dec 26, 2022
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="5" data-categories="Python,Package,pyspark,Apache Spark" data-listing-date-sort="1671591600000" data-listing-file-modified-sort="1674227772735" data-listing-reading-time-sort="3.965">
+<div class="g-col-1" data-index="5" data-categories="Python,Package,pyspark,Apache Spark" data-listing-date-sort="1671591600000" data-listing-file-modified-sort="1675814875213" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4">
 <a href="./posts/2022/2022-12-21-spark-map-v0.2.3/en/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -488,7 +491,7 @@ Dec 21, 2022
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="6" data-categories="Power BI,Power BI Online" data-listing-date-sort="1670986800000" data-listing-file-modified-sort="1674227689232" data-listing-reading-time-sort="12.83">
+<div class="g-col-1" data-index="6" data-categories="Power BI,Power BI Online" data-listing-date-sort="1670986800000" data-listing-file-modified-sort="1675814875210" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="13">
 <a href="./posts/2022/2022-12-14-power-bi-memory-error/pt/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -513,7 +516,7 @@ Dec 14, 2022
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="7" data-categories="R Language,Package,Figma,API" data-listing-date-sort="1667703600000" data-listing-file-modified-sort="1674227658840" data-listing-reading-time-sort="4.66">
+<div class="g-col-1" data-index="7" data-categories="R Language,Package,Figma,API" data-listing-date-sort="1667703600000" data-listing-file-modified-sort="1675814875201" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5">
 <a href="./posts/2022/2022-11-06-figma-pkgv0.1.0/en/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -538,7 +541,7 @@ Nov 6, 2022
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="8" data-categories="Book,R Language" data-listing-date-sort="1649214000000" data-listing-file-modified-sort="1674227623353" data-listing-reading-time-sort="2.905">
+<div class="g-col-1" data-index="8" data-categories="Book,R Language" data-listing-date-sort="1649214000000" data-listing-file-modified-sort="1675814875198" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
 <a href="./posts/2022/2022-04-06-3nd-edition-rbook/pt/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -563,7 +566,7 @@ Apr 6, 2022
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="9" data-categories="Book,R Language" data-listing-date-sort="1621998000000" data-listing-file-modified-sort="1673361048936" data-listing-reading-time-sort="5.625">
+<div class="g-col-1" data-index="9" data-categories="Book,R Language" data-listing-date-sort="1621998000000" data-listing-file-modified-sort="1675814875191" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6">
 <a href="./posts/2021/2021-05-26-2nd-edition-rbook/pt/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -588,7 +591,7 @@ May 26, 2021
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="10" data-categories="JOINs,Teaching" data-listing-date-sort="1609556400000" data-listing-file-modified-sort="1674227440099" data-listing-reading-time-sort="4.805">
+<div class="g-col-1" data-index="10" data-categories="JOINs,Teaching" data-listing-date-sort="1609556400000" data-listing-file-modified-sort="1675814875178" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5">
 <a href="./posts/2021/2021-01-02-tabela-destinataria-fonte/en/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -613,7 +616,7 @@ Jan 2, 2021
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="11" data-categories="JOINs,Teaching" data-listing-date-sort="1609556400000" data-listing-file-modified-sort="1674227543611" data-listing-reading-time-sort="4.525">
+<div class="g-col-1" data-index="11" data-categories="JOINs,Teaching" data-listing-date-sort="1609556400000" data-listing-file-modified-sort="1675814875181" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5">
 <a href="./posts/2021/2021-01-02-tabela-destinataria-fonte/pt/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -638,7 +641,7 @@ Jan 2, 2021
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="12" data-categories="R Language,Teaching" data-listing-date-sort="1602903600000" data-listing-file-modified-sort="1674227574243" data-listing-reading-time-sort="6.13">
+<div class="g-col-1" data-index="12" data-categories="R Language,Teaching" data-listing-date-sort="1602903600000" data-listing-file-modified-sort="1675814875166" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7">
 <a href="./posts/2020/2020-10-17-formulario-pesquisa/pt/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -702,9 +705,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -769,6 +786,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
