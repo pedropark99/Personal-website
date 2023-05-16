@@ -1,5 +1,5 @@
 ---
-title: "Hi there `r emoji::emoji('raised_hand_with_fingers_splayed')`!"
+title: "Hi there 🖐️!"
 subtitle: "I'm Pedro, and welcome to my website! I love to write books about programming, and to develop open-source software"
 title-block-banner: false
 comments: false 
@@ -21,7 +21,7 @@ listing:
 freeze: true
 ---
 
-In this page, you can quickly scan through my latest published books `r emoji::emoji("books")` and blog posts `r emoji::emoji("pushpin")`. But, if you prefer, you can read a quick resume of me and my work in the [About Me](about.qmd) section too. Be free to contact me via email if you have an interesting proposal `r emoji::emoji('winking_face')`. If you want to support me monetarily, you can send me a Pix (more info in the [Donate or Sponsor Me](donate.qmd) section).
+In this page, you can quickly scan through my latest published books 📚 and blog posts 📌. But, if you prefer, you can read a quick resume of me and my work in the [About Me](about.qmd) section too. Be free to contact me via email if you have an interesting proposal 😉. If you want to support me monetarily, you can send me a Pix (more info in the [Donate or Sponsor Me](donate.qmd) section).
 
 ## My books
 
