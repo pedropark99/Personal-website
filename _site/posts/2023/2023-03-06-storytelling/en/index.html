@@ -2,15 +2,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.353">
+<meta name="generator" content="quarto-99.9.9">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Pedro Duarte Faria">
-<meta name="dcterms.date" content="2023-01-20">
-<meta name="description" content="This article discuss my experience on improving Data Storytelling on one the largest banks on the financial brazilian market">
+<meta name="dcterms.date" content="2023-05-22">
+<meta name="description" content="This article discuss my experience on how I improved the Data Storytelling of my presentations and reports to two of the largest banks on the financial brazilian market">
 
-<title>home |&gt; dplyr::glimpse() - A case study about Data Storytelling in one the largest brazilian banks</title>
+<title>home |&gt; dplyr::glimpse() - A case study about Data Storytelling at some of the largest brazilian banks</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -75,7 +75,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <link rel="stylesheet" href="../../../../styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -199,14 +199,15 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">A case study about Data Storytelling in one the largest brazilian banks</h1>
+      <h1 class="title">A case study about Data Storytelling at some of the largest brazilian banks</h1>
                   <div>
         <div class="description">
-          This article discuss my experience on improving Data Storytelling on one the largest banks on the financial brazilian market
+          This article discuss my experience on how I improved the Data Storytelling of my presentations and reports to two of the largest banks on the financial brazilian market
         </div>
       </div>
                           <div class="quarto-categories">
                 <div class="quarto-category">Storytelling</div>
+                <div class="quarto-category">Data Storytelling</div>
                 <div class="quarto-category">Data Science</div>
               </div>
                   </div>
@@ -232,7 +233,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">January 20, 2023</p>
+        <p class="date">May 22, 2023</p>
       </div>
     </div>
     
@@ -243,43 +244,314 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
+  <li><a href="#summary-of-the-structure-of-this-article" id="toc-summary-of-the-structure-of-this-article" class="nav-link" data-scroll-target="#summary-of-the-structure-of-this-article"><span class="header-section-number">2</span> Summary of the structure of this article</a></li>
+  <li><a href="#sec-como-era-antes" id="toc-sec-como-era-antes" class="nav-link" data-scroll-target="#sec-como-era-antes"><span class="header-section-number">3</span> How was this report before ?</a></li>
+  <li><a href="#sec-como-melhorar" id="toc-sec-como-melhorar" class="nav-link" data-scroll-target="#sec-como-melhorar"><span class="header-section-number">4</span> How can we improve?</a>
+  <ul class="collapse">
+  <li><a href="#sec-guerra-atencao" id="toc-sec-guerra-atencao" class="nav-link" data-scroll-target="#sec-guerra-atencao"><span class="header-section-number">4.1</span> A constant war for attention</a>
+  <ul class="collapse">
+  <li><a href="#sec-long-text" id="toc-sec-long-text" class="nav-link" data-scroll-target="#sec-long-text"><span class="header-section-number">4.1.1</span> Why you should avoid long text on your slides?</a></li>
+  <li><a href="#deliver-your-story-in-small-pieces" id="toc-deliver-your-story-in-small-pieces" class="nav-link" data-scroll-target="#deliver-your-story-in-small-pieces"><span class="header-section-number">4.1.2</span> Deliver your story in small pieces</a></li>
+  </ul></li>
+  <li><a href="#sec-historia-conteudo" id="toc-sec-historia-conteudo" class="nav-link" data-scroll-target="#sec-historia-conteudo"><span class="header-section-number">4.2</span> Discussing stories and content</a>
+  <ul class="collapse">
+  <li><a href="#data-storytelling-is-not-about-choosing-the-best-chart" id="toc-data-storytelling-is-not-about-choosing-the-best-chart" class="nav-link" data-scroll-target="#data-storytelling-is-not-about-choosing-the-best-chart"><span class="header-section-number">4.2.1</span> <em>Data Storytelling</em> is not about choosing “the best chart”</a></li>
+  <li><a href="#sec-relacoes" id="toc-sec-relacoes" class="nav-link" data-scroll-target="#sec-relacoes"><span class="header-section-number">4.2.2</span> Trace relationships between indicators</a></li>
+  <li><a href="#sec-key-message" id="toc-sec-key-message" class="nav-link" data-scroll-target="#sec-key-message"><span class="header-section-number">4.2.3</span> Build your story around a key message</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#sec-pratica" id="toc-sec-pratica" class="nav-link" data-scroll-target="#sec-pratica"><span class="header-section-number">5</span> Putting some tips into practice</a></li>
+  <li><a href="#sec-historias-tem-estrutura" id="toc-sec-historias-tem-estrutura" class="nav-link" data-scroll-target="#sec-historias-tem-estrutura"><span class="header-section-number">6</span> Stories have structure, use these structures to your advantage</a>
+  <ul class="collapse">
+  <li><a href="#the-four-cs-model" id="toc-the-four-cs-model" class="nav-link" data-scroll-target="#the-four-cs-model"><span class="header-section-number">6.1</span> The four C’s model</a>
+  <ul class="collapse">
+  <li><a href="#start-with-a-context" id="toc-start-with-a-context" class="nav-link" data-scroll-target="#start-with-a-context"><span class="header-section-number">6.1.1</span> Start with a context</a></li>
+  <li><a href="#present-a-conflictproblemchallenge-to-be-overcome" id="toc-present-a-conflictproblemchallenge-to-be-overcome" class="nav-link" data-scroll-target="#present-a-conflictproblemchallenge-to-be-overcome"><span class="header-section-number">6.1.2</span> Present a conflict/problem/challenge to be overcome</a></li>
+  <li><a href="#hiding-the-problems-is-a-bad-idea" id="toc-hiding-the-problems-is-a-bad-idea" class="nav-link" data-scroll-target="#hiding-the-problems-is-a-bad-idea"><span class="header-section-number">6.1.3</span> Hiding the problems is a bad idea</a></li>
+  <li><a href="#present-the-consequences-of-the-conflictproblemchallenge-you-have-identified" id="toc-present-the-consequences-of-the-conflictproblemchallenge-you-have-identified" class="nav-link" data-scroll-target="#present-the-consequences-of-the-conflictproblemchallenge-you-have-identified"><span class="header-section-number">6.1.4</span> Present the consequences of the conflict/problem/challenge you have identified</a></li>
+  <li><a href="#advise-your-customer-present-possible-solutions-to-the-problem" id="toc-advise-your-customer-present-possible-solutions-to-the-problem" class="nav-link" data-scroll-target="#advise-your-customer-present-possible-solutions-to-the-problem"><span class="header-section-number">6.1.5</span> Advise your customer, present possible solutions to the problem</a></li>
+  </ul></li>
+  <li><a href="#character-evolution-as-another-alternative" id="toc-character-evolution-as-another-alternative" class="nav-link" data-scroll-target="#character-evolution-as-another-alternative"><span class="header-section-number">6.2</span> Character evolution as another alternative</a>
+  <ul class="collapse">
+  <li><a href="#the-beginning-and-end-of-the-journey" id="toc-the-beginning-and-end-of-the-journey" class="nav-link" data-scroll-target="#the-beginning-and-end-of-the-journey"><span class="header-section-number">6.2.1</span> The beginning and end of the journey</a></li>
+  <li><a href="#presenting-the-challenges-and-pitfalls" id="toc-presenting-the-challenges-and-pitfalls" class="nav-link" data-scroll-target="#presenting-the-challenges-and-pitfalls"><span class="header-section-number">6.2.2</span> Presenting the challenges and pitfalls</a></li>
+  <li><a href="#if-possible-take-the-opportunity-to-value-your-teams-work" id="toc-if-possible-take-the-opportunity-to-value-your-teams-work" class="nav-link" data-scroll-target="#if-possible-take-the-opportunity-to-value-your-teams-work"><span class="header-section-number">6.2.3</span> If possible, take the opportunity to value your team’s work</a></li>
+  <li><a href="#reinforce-the-results-achieved" id="toc-reinforce-the-results-achieved" class="nav-link" data-scroll-target="#reinforce-the-results-achieved"><span class="header-section-number">6.2.4</span> Reinforce the results achieved</a></li>
+  <li><a href="#a-summary-of-the-structure" id="toc-a-summary-of-the-structure" class="nav-link" data-scroll-target="#a-summary-of-the-structure"><span class="header-section-number">6.2.5</span> A summary of the structure</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
-<section id="introduction" class="level1">
-<h1>Introduction</h1>
-<p>This article discuss my experience on improving the Data Storytelling on a monthly report delivered to <a href="https://www.bancobmg.com.br/">BMG Bank</a>, which is one of the largest commercial banks in the brazilian market. I work as a Data Analyst at TakeBlip<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, and one of my key responsibilities is to use data to guide my clients to improve their perfomance in our Blip platform.</p>
+<section id="introduction" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
+<p>This article discusses how I improved my <em>Data Storytelling</em> process within my presentations and reports delivered to Banco BMG and Banco Pan (which are two of the largest commercial banks in the Brazilian market). I try to share what I learned in this process, and I give some tips that will possibly help you to build more intuitive, captivating, clear and effective data reports.</p>
+<p>In summary, we will discuss in this article the following tips:</p>
+<ul>
+<li><em>Data Storytelling</em> is about telling stories through data;</li>
+<li>Stories have structure, use these structures in your favor;</li>
+<li>Avoid sharing too much attention with long texts on your slides;</li>
+<li>Trace relationships between your data;</li>
+<li>Build your story around a main message;</li>
+<li>Deliver your story at small pieces;</li>
+</ul>
+<p>Most of this knowledge was built through intense research, reflection and planning about my presentations, and later, getting feedback, and making small adjustments here and there.</p>
+<p>As you might expect with every great work like this, it also involved other peoples. During this process, I received help and feedback from my co-workers. Specially from <a href="https://www.linkedin.com/in/andressa-de-souza-freitas-697195177/">Andressa de Souza Freitas</a> and <a href="https://www.linkedin.com/in/guilhermeggarcia/">Guilherme Gomes</a>. I also had great help from the UX Designer <a href="https://www.linkedin.com/in/alefernandesbranding/">Alê Fernandes</a>. Most of the knowledge presented here, I learned in practice with Alê. This knowledge revolutionized the way I build my presentations, and for that I am immensely grateful to her ❤️.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>All data, graphics and images shown in this article are merely illustrative. All numbers shown were randomly generated by a computer! Therefore, they do not represent the actual data of TakeBlip, Banco BMG, or Banco Pan in any way or dimension!</p>
+</div>
+</div>
 </section>
-<section id="data-storytelling-is-not-about-the-best-visualization" class="level1">
-<h1>Data Storytelling is not about the “best visualization”</h1>
-<p>The majority of analysts and scientists understand what “data storytelling” is about. However, a few analyts understand “data storytelling” solely as a visualization problem, or, as the science of “choosing the best graphs” for your presentation, and designing innovative, beautiful and complex charts.</p>
-<p>For these analysts, I say: “visualization is an important aspect of it. But data storytelling is about <strong>telling stories</strong>. Not about visualization”. Yes! Choosing the right visualization, making it better, nicer and cleaner is really important! Because it will help you to engage with a larger audience, and to deliver your story in a clear and effective way.</p>
-<p>Data storytelling is about creating stories with data, and data visualization is just <strong>a tool to deliver these stories</strong> in a effective way. We do not choose the “best chart” to say “we are in compliance with data storytelling guidelines!”. We choose the “best chart” to deliver our stories, our conclusions, and our recommendations to our clients in the best way as possible.</p>
+<section id="summary-of-the-structure-of-this-article" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Summary of the structure of this article</h1>
+<p>In <a href="#sec-como-era-antes">Seção&nbsp;3</a> I provide more context about these reports that I delivered to Banco BMG and Banco Pan. What was the usual format of these reports ? What were their main problems and limitations ?</p>
+<p>But from <a href="#sec-como-melhorar">Seção&nbsp;4</a> and on, I start to discuss about how I improved these reports. You will notice that most of these improvements are concentrated in two areas:</p>
+<ol type="1">
+<li>build a presentation that is simple and clear;</li>
+<li>build a presentation that has a good structure, that is, a structure that helps you to tell a story through your data;</li>
+</ol>
+<p><a href="#sec-guerra-atencao">Seção&nbsp;4.1</a> provides two tips that help you bring simplicity and clarity to your presentation, in addition to discussing why long texts on slides are so perverse for your viewers’ attention.</p>
+<p>At <a href="#sec-historia-conteudo">Seção&nbsp;4.2</a> I discuss some tips on how to form the content of the presentation, more specifically, content that helps you build a story in your presentation.</p>
+<p>At <a href="#sec-pratica">Seção&nbsp;5</a>, we take the tips that we discussed so far in the article, and we try to apply them to the slide shown in <a href="#fig-divisao2">Figura&nbsp;3</a>, with the objective of demonstrating how these tips can improve your presentation.</p>
+<p>Lastly, at <a href="#sec-historias-tem-estrutura">Seção&nbsp;6</a>, we discuss structure a lot. More specifically, I discuss two examples of frameworks that can serve as guides. They provide a simple foundation that you can use to build your story.</p>
+<p>Anyway, let’s move on…</p>
 </section>
-<section id="context" class="level1">
-<h1>Context</h1>
-<section id="the-report" class="level2">
-<h2 class="anchored" data-anchor-id="the-report">The report</h2>
-<p>Very briefly, the BMG Bank uses the Blip platform to offer several products and services through <a href="https://www.whatsapp.com/">WhatsApp</a>. Every month, we built a report containing several indicators and graphs that indicate the actual state and the recent evolution of these services and products offered at WhatsApp.</p>
-<p>How was this report before this process of improvements?</p>
+<section id="sec-como-era-antes" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> How was this report before ?</h1>
+<p>At the time, we were building a monthly report containing several indicators and graphs that showed the current status and recent evolution of Banco BMG and Banco Pan services and products offered within the WhatsApp channel.</p>
+<p>However, the format of this presentation was problematic. We brought a <strong>monumental amount</strong> of information to the bank. The presentation usually had around 40 different slides, with approximately 36 charts and 70 different indicators. Furthermore, we tried to present all this volume of information in a meeting of just 1 hour.</p>
+<p>The end result was a presentation that brought a monumental volume of information, however, which also brought a <strong>very small volume of insights and new business ideas for managers</strong>.</p>
+<p>In <a href="#fig-print-report1">Figura&nbsp;1</a> we have a representation of one of the several slides of this presentation<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. Imagine that this presentation had around 40 slides similar to this one:</p>
+<div id="fig-print-report1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="./../print-report1.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;1: A single slide from the old version of the report</figcaption><p></p>
+</figure>
+</div>
+<p>Note that this slide looks more like a dashboard page than a report showing the latest trends in the products and services of the bank, or, on the financial market as a whole.</p>
+<p><strong>This is very important!</strong> If your presentation has a lot of different indicators scattered around the page, without contextualizing them, without relating them to each other, without bringing out what they mean together, this presentation will likely look very similar to the dashboards you already produce for your client.</p>
+<p>With that in mind, what is your customer’s incentive/motive/reason for attending your presentation? In other words, if your presentation shows the same graphs/indicators that your dashboards show, your client has no incentive/reason to watch your presentation. Because <strong>there is nothing in your presentation that is new</strong>, or any information that your client does not already have direct access to.</p>
+</section>
+<section id="sec-como-melhorar" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> How can we improve?</h1>
+<p>Now that you have a sense of the size of the problem that the previous versions of these reports represented, over the next sections of this article, I will discuss some essential tips that demonstrate how we can improve the presentation model shown in <a href="#fig-print-report1">Figura&nbsp;1</a>.</p>
+<p>In my understanding, a good part of the success in <strong>data storytelling</strong> can be summarized in two actions, or two main objectives:</p>
+<ol type="1">
+<li>Avoid items that distract our viewers’ attention;</li>
+<li>Build a captivating story for your presentation;</li>
+</ol>
+<p>The first item above is more related to the <strong>clarity and simplicity</strong> of the presentation, while the second item is more related to the <strong>content and structure</strong> of the presentation.</p>
+<p>Let’s start with the first item…</p>
+<section id="sec-guerra-atencao" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="sec-guerra-atencao"><span class="header-section-number">4.1</span> A constant war for attention</h2>
+<p>When we’re presenting something, we’re constantly battling for our viewers attention. This is a hard battle, not only because we can (unintentionally) attract attention to the wrong places, but also, because there are so many sources of distraction in the modern world (e.g.&nbsp;cell phones, emails, etc.)!</p>
+<p>A good <strong>data storytelling</strong> depends on telling a captivating story that manages to capture the attention of your viewers. Therefore, the next sections will focus a lot on tips that contribute to this capture, or that help you not to dissipate, reduce or disturb the attention of these spectators.</p>
+<section id="sec-long-text" class="level3" data-number="4.1.1">
+<h3 data-number="4.1.1" class="anchored" data-anchor-id="sec-long-text"><span class="header-section-number">4.1.1</span> Why you should avoid long text on your slides?</h3>
+<p>Try to be parsimonious in your slides! That is, try to include as little information as possible within it. If you need to convey a lot of information on a single slide, then try to incorporate most of this content into your speech, and as little of it as possible in written form on this slide. In general, avoid including very long texts in your slides as much as possible.</p>
+<p>It’s weird to think about, but generally, managers will jump in and watch your presentation because they’re interested in what <strong>you</strong> have to say about their business. Therefore, your slides are only support material, they must be secondary, a supporting element of your presentation. Because the main piece of the presentation should always be your speech and the story you want to tell through it.</p>
+<p>See the slide at <a href="#fig-texto-longo">Figura&nbsp;2</a> as an example. The main problem with this slide is that it <strong>divides the viewer’s attention a lot</strong>.</p>
+<div id="fig-texto-longo" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="./../long-text.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;2: Slide with a long paragraph</figcaption><p></p>
+</figure>
+</div>
+<p>When presenting a slide, your viewers have to pay attention to your speech. That is, what you are verbally communicating during the presentation. And at the same time, they also need to pay attention to the slide content. However, that long paragraph in the left corner of the slide shown in <a href="#fig-texto-longo">Figura&nbsp;2</a> is problematic. <strong>Because he draws too much attention!</strong></p>
+<p>The long paragraph element arouses our curiosity so much that, when you saw the above slide, you (the reader of this article) probably tried to read that long paragraph, even before reading what I am describing right now in this paragraph. The same will happen with the viewers of your presentation. Meaning your viewers will immediately try to read that long paragraph.</p>
+<p>However, reading and interpreting a long text requires some effort and a lot of attention. As a result, while your viewers are trying to read that text, they won’t be able to pay attention to other elements of your presentation. For example, in your speech.</p>
+<p>This can be crucial, as you may bring extra information, or an extremely important connection in your speech, and they may end up missing it while they are trying to read this text. Therefore, avoid as much as possible including very long texts in your slides.</p>
+</section>
+<section id="deliver-your-story-in-small-pieces" class="level3" data-number="4.1.2">
+<h3 data-number="4.1.2" class="anchored" data-anchor-id="deliver-your-story-in-small-pieces"><span class="header-section-number">4.1.2</span> Deliver your story in small pieces</h3>
+<p>The human brain can process a limited amount of information at once. As a result, if you try to explain a lot of information to your viewers, in a single slide, they will end up hitting that limit 🤯, and they simply won’t be able to reason, understand or assimilate what you’re explaining.</p>
+<p>So <strong>deliver your story in small pieces</strong>. Avoid condensing a lot of information into a single slide! Divide the content into parts, and explain one part at a time!</p>
+<p>This helps make the content simpler, and as a result, it helps your viewers better understand what you’re talking about.</p>
+<p>Think about this for a while. When you’re looking to learn about a complex subject (e.g.&nbsp;linear regression), you’re likely to divide the content into many small pieces, and learn one piece at a time. Isn’t that how you do it? So bring that strategy into your presentations as well.</p>
 </section>
 </section>
-<section id="model-of-the-four-cs" class="level1">
-<h1>Model of the four C’s</h1>
-<p>The model of the four C’s is about these four words: &gt; Context, Conflict, Consequence, Council</p>
+<section id="sec-historia-conteudo" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="sec-historia-conteudo"><span class="header-section-number">4.2</span> Discussing stories and content</h2>
+<p>Now that we’ve seen two basic rules about keeping your viewers attention (i.e.&nbsp;avoid long texts and deliver your story at small pieces), let’s discuss some tips about the content of your presentation, and how to build stories with data.</p>
+<section id="data-storytelling-is-not-about-choosing-the-best-chart" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="data-storytelling-is-not-about-choosing-the-best-chart"><span class="header-section-number">4.2.1</span> <em>Data Storytelling</em> is not about choosing “the best chart”</h3>
+<p>A few analysts understand “<em>data storytelling</em>” as a visualization problem, or, as the science of “choosing the best chart” for your presentation, or how to design innovative, beautiful, and complex graphic designs.</p>
+<p>However, <em>data storytelling</em> is about <strong>telling stories with data</strong>. Not about building charts/graphics. Choosing the right visualization to present your data, making it better, prettier and cleaner is only part of the process. A very important part, as this will help you tell your story more clearly and effectively, and thus reach a larger audience.</p>
+</section>
+<section id="sec-relacoes" class="level3" data-number="4.2.2">
+<h3 data-number="4.2.2" class="anchored" data-anchor-id="sec-relacoes"><span class="header-section-number">4.2.2</span> Trace relationships between indicators</h3>
+<p>Now, let’s analyze the slide shown in <a href="#fig-divisao2">Figura&nbsp;3</a>. Notice that this slide, again, is very reminiscent of a dashboard page. The slide doesn’t look so captivating at first glance, as it only shows the indicators, it doesn’t build a relationship, or <strong>a story</strong>, between them.</p>
+<div id="fig-divisao2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="./../divisao2.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;3: Lack of relationship between indicators</figcaption><p></p>
+</figure>
+</div>
+<p>If we pay attention to these indicators, we can identify some effects that are happening along them. And if we think about these effects a little more, we will realize that these effects are relatable! And that together, they can tell a story.</p>
+<p>For example, notice that there is a significant increase in sales. Both in the number of proposals sold and in the total value that these proposals generated. However, notice that this growth in sales did not occur in the “Payroll Loan” product, but in the “Vehicle secured loan” product. In other words, the product “Loan Payroll” had a drop in sales at that month, however, the product “Loan with vehicle guarantee” obtained a big result that surpassed this drop by a lot, and in the end, managed to increase the bank sales as a whole.</p>
+<p>In addition, we can also see other effects like the increases in both conversion rate and in the API (<em>Application Programming Interface</em>) success rate. These are also factors that contributed to the increase in sales. Because an increase in the conversion rate means that a larger portion of our customers are purchasing our products. And an increase in the success rate in the API means that we have fewer errors in the registration of sales on the platform, and this is obviously positive, as we have a smaller loss of sales due to crashes and errors in this registration system.</p>
+<p>Note that all these relationships together help us to <strong>build a story</strong> about how sales increased at this specific month, and that’s exactly what we want to achieve. So always try to build relationships between your metrics to form a story about a key result that you perceived.</p>
+</section>
+<section id="sec-key-message" class="level3" data-number="4.2.3">
+<h3 data-number="4.2.3" class="anchored" data-anchor-id="sec-key-message"><span class="header-section-number">4.2.3</span> Build your story around a key message</h3>
+<p>Just to make this idea clear, when we identify the various effects that we described at <a href="#sec-relacoes">Seção&nbsp;4.2.2</a>, on the slide shown in <a href="#fig-divisao2">Figura&nbsp;3</a>, it is interesting to ask ourselves: which of these various effects is the main result? In other words, which one of these effects is of most interest to the bank managers who are watching your presentation?</p>
+<p>Certainly the increase in sales is the <strong>main effect</strong>. It is the <strong>key result</strong>. It’s the effect that most interests managers watching your presentation. So try to build your story around this result, or this main message. Use the other indicators to explain how this key result came about.</p>
+<p>This is also very important! Every manager is very fond of hearing the word “increase in sales”. However, he is also always interested in knowing the <strong>“how was this increase generated?”</strong>. That is, he needs to know what actions were taken that generated this positive impact.</p>
+<p>Because by identifying these actions, this manager has the ability to apply these actions to other parts of his business, and, hopefully, he can end up spreading this positive effect that you described to other areas, and, as a result, he can end up further increasing the company’s sales.</p>
+</section>
+</section>
+</section>
+<section id="sec-pratica" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Putting some tips into practice</h1>
+<p>So far, we’ve discussed the following tips:</p>
+<ol type="1">
+<li>Avoid long texts on your slides;</li>
+<li>Trace relationships between the indicators;</li>
+<li>Build your story around a main message;</li>
+<li>Deliver your story slowly, at small pieces;</li>
+</ol>
+<p>Let’s put these tips into practice, and redesign the slide shown in <a href="#fig-divisao2">Figura&nbsp;3</a>. Do you remember the relationships we described in <a href="#sec-relacoes">Seção&nbsp;4.2.2</a>? Remember how these relationships tell a story about increased sales? Let’s take advantage of this story to apply the tips above.</p>
+<p>First, we established that our story should always be built around a core message. So let’s start our presentation by focusing on a single slide that makes this main message clear.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./../main-message.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">The main message of the presentation</figcaption><p></p>
+</figure>
+</div>
+<p>Now that we know what the main subject of the presentation is, we can start to dig deeper, and describe that subject in more detail. As a next step, we can answer the question “where did this increase in sales came from?”.</p>
+<p>This question can be very relevant for your presentation, especially if: 1) you are presenting to several managers from different areas at the same time; 2) or also, if you are presenting to a manager higher in the hierarchy, who oversees several areas/products at the same time. Because in these cases, these managers will logically wonder where this increase in sales occurred. Was it in product x? Or was it in product y? Or area z? Etc.</p>
+<p>Anyway, let’s answer this question on a new slide. With this slide, we make it clear to viewers that a new bank product (car loan with guarantee on vehicles) was the big star of the month, generating around $12 thousand in sales in the first month, even surpassing the sales value of the already consolidated product (payroll loan).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./../onde-vendemos.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Where did we sell more?</figcaption><p></p>
+</figure>
+</div>
+<p>The next question we need to answer is “how?”. How was this super result in sales generated? We discussed this in <a href="#sec-key-message">Seção&nbsp;4.2.3</a> that after discovering such an important result, managers will certainly be interested in understanding how this result was generated, so that they can spread this positive effect to other areas of the business.</p>
+<p>Remember that we have two main effects discussed in <a href="#sec-relacoes">Seção&nbsp;4.2.2</a> that explain how this improvement in sales occurred. Let’s list them clearly and succintly on a new slide:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./../why-we-sell.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Why did we sell more?</figcaption><p></p>
+</figure>
+</div>
+<p>Please, try to use your speech to elaborate the two effects above (“What was the problem with the API, and how did we overcome it?”, “How is this an improvement?”, “What is a conversion rate? And how does it affect the process of sale?”). Remember, try to avoid putting long texts in your presentations as much as possible, and try to give more details or answer your viewers questions through speech.</p>
+<p>With these three slides we have a much more interesting structure and content for our presentation as we are telling a story about how we sold more in a given month.</p>
+<p>Note that the structure of the presentation (1: main message, 2: where? , 3: how?) helps us to cohesively create the content and this story. In the next sections of this article, I’ll discuss two other frameworks that can help you structure and cohesively tell your stories.</p>
+</section>
+<section id="sec-historias-tem-estrutura" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Stories have structure, use these structures to your advantage</h1>
+<p>Over the next sections, I’ll show you two examples of structures that are quite common in stories. These structures serve as a guide as you build your story. They will help you a lot to organize your ideas in a clear and effective format.</p>
+<section id="the-four-cs-model" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="the-four-cs-model"><span class="header-section-number">6.1</span> The four C’s model</h2>
+<p>The four C’s model refers to these four words in Portuguese:</p>
+<blockquote class="blockquote">
+<p>Contexto, Conflito, Consequência, Conselho.</p>
+</blockquote>
+<p>These four words can be translated into <em>Context, Conflict, Consequence, Advice</em>, and they help you bring a consistent structure to your story. In addition, these words also help you to stir up your viewers’ emotions a little, and, with that, capture their attention more.</p>
+<p>By following this model, your story will always break down into four parts: context, conflict, consequence, and advice. Precisely in this order. This framework revolves around a major problem or conflict that you have identified in your client’s business.</p>
+<p>The interesting thing about this structure is that you can stake several problems in sequence. As a result, you have a block of 4 C’s (context, conflict, consequence and advice), followed by another block with 4 more C’s (context, conflict, consequence and advice). Or, you can start the presentation with a context, and then two blocks of 3 C’s (conflict, consequence and advice) in sequence.</p>
+<p>Anyway, enough talking, and let’s describe in more detail each one of these four parts of this structure.</p>
+<section id="start-with-a-context" class="level3" data-number="6.1.1">
+<h3 data-number="6.1.1" class="anchored" data-anchor-id="start-with-a-context"><span class="header-section-number">6.1.1</span> Start with a context</h3>
+<p>Therefore, when following this model, your story will always start with a context. Something just to contextualize the viewer on what the current state of the business is.</p>
+<p>Remember, the 4 C’s model is built around a conflict, or a core problem. Bearing this in mind, if, for example, the conflict that you are going to discuss in your story is a problem that affects the service for selling card machines, it is important that you focus on giving an <em>overview</em> about the service for selling card machines.</p>
+<p>In other words, avoid bringing contexts in this part that are not related to the problem/conflict that you will talk in the next section. Because this conflict is the central part of the story.</p>
+</section>
+<section id="present-a-conflictproblemchallenge-to-be-overcome" class="level3" data-number="6.1.2">
+<h3 data-number="6.1.2" class="anchored" data-anchor-id="present-a-conflictproblemchallenge-to-be-overcome"><span class="header-section-number">6.1.2</span> Present a conflict/problem/challenge to be overcome</h3>
+<p>Then you must show a conflict. That is, a problem, challenge or barrier that you have identified in the product/service you are looking at. This is where we’re going to play with the viewer’s emotions a bit, and use that to our advantage to capture their attention.</p>
+<p>Let’s reflect on this a little. By putting words like “problem”, “care”, “challenge”, “alert”, especially in bold letters, in addition to including emojis that convey this purpose, such as ⚠️ and ⛔. This quickly draws anyone’s attention, as it gives you a sense of danger, and you enter a state of alert.</p>
+<p>If you think about it a little more, you’ll probably realize that you have that same instinct when you’re watching a movie, or a series, and the hero of that story suddenly gets into a dangerous situation. You quickly pay more attention to what is happening, because you want to see how the hero is going to get out of this hole, or you are really rooting for him to survive and overcome this problem.</p>
+<p>When we present an issue about the product/service you are reviewing, we want to cause the same effect on our viewers. When we say that we have a challenge/problem that is affecting the company’s sales, managers quickly start to pay more attention to what you are saying, as they want to know how they can get out of this hole!</p>
+</section>
+<section id="hiding-the-problems-is-a-bad-idea" class="level3" data-number="6.1.3">
+<h3 data-number="6.1.3" class="anchored" data-anchor-id="hiding-the-problems-is-a-bad-idea"><span class="header-section-number">6.1.3</span> Hiding the problems is a bad idea</h3>
+<p>This is very important! Some analysts are afraid or apprehensive of shedding light on existing problems, and therefore, end up hiding them or omitting them from their presentations. However, you are not delivering any value to your customer that way! You are not helping your customer to solve their problems and to grow their business!</p>
+<p>And if the problems are not solved, if they continue to exist, they will grow, and grow, until they explode, thus generating generalized chaos. The sooner you identify the problem, notify managers about it, and present possible solutions for it, the better for managers, who already leave with an action plan to solve this problem, and it is better for you too, because you are delivering value and solutions to your customer.</p>
+<p>Therefore, a good presentation, or a good data report, is one that delivers value to your customer! By showing new business opportunities (e.g.&nbsp;reaching a new portion of the public with a product), and also by presenting solutions to current problems that are limiting or preventing business growth.</p>
+<p>However, a presentation that only comments on positive points, that says that everything is fine… does not bring any value to managers. Managers didn’t hire you to tell you everything is fine. They hired you to help them discover and solve problems in their business through data analysis.</p>
+</section>
+<section id="present-the-consequences-of-the-conflictproblemchallenge-you-have-identified" class="level3" data-number="6.1.4">
+<h3 data-number="6.1.4" class="anchored" data-anchor-id="present-the-consequences-of-the-conflictproblemchallenge-you-have-identified"><span class="header-section-number">6.1.4</span> Present the consequences of the conflict/problem/challenge you have identified</h3>
+<p>Therefore, after presenting a conflict/problem/challenge that is affecting the business, it is important that you present the consequence of this problem right away. This helps managers to have a dimension of the size that this problem represents for their business.</p>
+<p>It’s okay if you can’t measure in numbers the size of the impact that this conflict had on the business. Try to measure that impact as best you can. An approximate value of the impact can already bring enough clarity about the size of the danger that this conflict represents for the business.</p>
+<p>You can also provide a <em>range</em>, or a possible range of the impact if you can (e.g.&nbsp;the estimated impact is between $20 thousand and $340 thousand). This is also a valid way of exposing the size of the problem.</p>
+<p>If it is really impossible to measure this impact in numbers, then explain in this part, which are the points of the product/service sales process that are affected by this problem. In other words, present which are the places in the business that are being, in theory, affected by this conflict.</p>
+</section>
+<section id="advise-your-customer-present-possible-solutions-to-the-problem" class="level3" data-number="6.1.5">
+<h3 data-number="6.1.5" class="anchored" data-anchor-id="advise-your-customer-present-possible-solutions-to-the-problem"><span class="header-section-number">6.1.5</span> Advise your customer, present possible solutions to the problem</h3>
+<p>Okay, we present a problem, or a conflict for our viewers. We also discussed the impacts of this conflict on our client’s business. Now, we need to present possible solutions to this problem.</p>
+<p>Therefore, understand the problem/conflict you are presenting, and try to list what would be the main solutions for this problem, and include these solutions in this part of your presentation. It’s worth explaining and discussing this issue with other co-workers as well, as they might also come up with interesting solutions that were off your radar.</p>
+<p>It is also interesting to include a list of <em>trade-offs</em> for each solution, especially in terms of complexity and effort for each solution. Managers are constantly interested in this relationship, and always want to choose the solution that is simpler and faster to implement.</p>
+</section>
+</section>
+<section id="character-evolution-as-another-alternative" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="character-evolution-as-another-alternative"><span class="header-section-number">6.2</span> Character evolution as another alternative</h2>
+<p>Character evolution (or the “hero’s journey”) is a popular story structure. You start with a character, or a hero for the story, which in our case here, could be our client’s business, or a specific product of this business.</p>
+<p>Our mission is to show how this character/hero has evolved in recent months. Therefore, this evolution structure is very suitable for year-end reports. Because these reports are interesting to show the evolution of the business (or the evolution of the character) over the last year.</p>
+<section id="the-beginning-and-end-of-the-journey" class="level3" data-number="6.2.1">
+<h3 data-number="6.2.1" class="anchored" data-anchor-id="the-beginning-and-end-of-the-journey"><span class="header-section-number">6.2.1</span> The beginning and end of the journey</h3>
+<p>If you prefer, you can start your presentation by showing how your character was at the beginning of the journey, and end this presentation by showing how that character ended that journey.</p>
+<p>This is an option, however, I prefer to start the presentation by showing the start and end at the same time. In this way, viewers begin the presentation with an idea of how much the business has evolved during the year. Therefore, I start by showing how the character (or the business/product) started the year, and then how he ended the year.</p>
+</section>
+<section id="presenting-the-challenges-and-pitfalls" class="level3" data-number="6.2.2">
+<h3 data-number="6.2.2" class="anchored" data-anchor-id="presenting-the-challenges-and-pitfalls"><span class="header-section-number">6.2.2</span> Presenting the challenges and pitfalls</h3>
+<p>In every business/product, whatever it may be, we always face major challenges that can threaten the success, or limit the evolution of this business/product.</p>
+<p>Therefore, along any journey, we always face challenges and setbacks, and we apply actions to try to overcome these challenges. By overcoming these challenges, we can hopefully generate the evolution and improvement of this business/product. That is, reaching the end of this journey with a better, more robust and more profitable business/product.</p>
+<p>All of this means that “how we get through the middle of the journey” can be much more important/interesting than the beginning or end of that journey. Therefore, reserve a part of your presentation to present the main challenges we faced during this journey, and how we overcame them.</p>
+</section>
+<section id="if-possible-take-the-opportunity-to-value-your-teams-work" class="level3" data-number="6.2.3">
+<h3 data-number="6.2.3" class="anchored" data-anchor-id="if-possible-take-the-opportunity-to-value-your-teams-work"><span class="header-section-number">6.2.3</span> If possible, take the opportunity to value your team’s work</h3>
+<p>At this particular point in the presentation, you usually have a very interesting opportunity! Because you can deliver value to your customer and, at the same time, also value the work of your team, especially if this was the team that discovered the challenges, and applied the actions that overcame the challenges you are describing.</p>
+<p>This is a golden opportunity! Therefore, if you have this opportunity in your hands, take advantage of it! Remember that you don’t work alone. You’re almost always working within a team of people, and it’s always important to know how to value your colleagues’ work.</p>
+<p>However, this opportunity will not always appear for you. Perhaps the challenges you are presenting were overcome in another way, by another team that you do not know, or that you do not have a direct connection with.</p>
+</section>
+<section id="reinforce-the-results-achieved" class="level3" data-number="6.2.4">
+<h3 data-number="6.2.4" class="anchored" data-anchor-id="reinforce-the-results-achieved"><span class="header-section-number">6.2.4</span> Reinforce the results achieved</h3>
+<p>It is also useful to end your presentation by showing a summary of the results achieved during the year. This could be a simple <em>bulletpoint</em> summarizing the main results. This helps to jog your viewers’ memory, showing them not only how we ended last year’s journey, but also, how we begin next year’s journey 😉.</p>
+</section>
+<section id="a-summary-of-the-structure" class="level3" data-number="6.2.5">
+<h3 data-number="6.2.5" class="anchored" data-anchor-id="a-summary-of-the-structure"><span class="header-section-number">6.2.5</span> A summary of the structure</h3>
+<p>Therefore, over the previous sections we discussed an idea of structure that would be similar to a “character evolution”. In the end, we have a story that follows the sequence below:</p>
+<ul>
+<li>quickly present how we started and how we ended the journey;</li>
+<li>present the main challenges we faced during the year;</li>
+<li>what were the solutions we applied to solve the problems;</li>
+<li>reinforce the evolution of the character, by showing again the results achieved with the solutions above;</li>
+</ul>
 
 
+</section>
+</section>
 </section>
 
 
 <div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
 <ol>
-<li id="fn1"><p>TakeBlip is a technology company that provide several services and infrastructure to many of the largest companies in the brazilian market, in a vast range of markets (e.g.&nbsp;financial services, telecomunications, health services, retail, and many others).<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>It is worth remembering that the numbers and graphs presented in this image are merely illustrative, and were defined in a completely random way.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

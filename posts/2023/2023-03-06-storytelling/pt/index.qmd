@@ -59,7 +59,7 @@ Enfim, vamos prosseguir...
 
 # Como era esse relatório antes ? {#sec-como-era-antes}
 
-Na época, estávamos construindo um relatório mensal contendo vários indicadores e gráficos que mostravam o estado atual e a evolução recente dos serviços e produtos do Banco BMG ofertados dentro do canal do WhatsApp.
+Na época, estávamos construindo um relatório mensal contendo vários indicadores e gráficos que mostravam o estado atual e a evolução recente dos serviços e produtos do Banco BMG e Banco Pan ofertados dentro do canal do WhatsApp.
 
 Contudo, o formato dessa apresentação era problemático. Nós trazíamos uma **quantidade monumental** de informações para o banco. A apresentação usualmente trazia em torno de 40 slides diferentes, com aproximadamente 36 gráficos e 70 indicadores diferentes. Para mais, nós tentávamos apresentar todo esse volume de informações em uma reunião de apenas 1 hora.
 
@@ -268,7 +268,7 @@ Ok, apresentamos um problema, ou um conflito para os nossos espectadores. També
 
 Portanto, entenda o problema/conflito que você está apresentando, e tente listar quais seriam as principais soluções para esse problema, e inclua essas soluções nesta parte de sua apresentação. Vale a pena explicar e discutir esse problema com outros colegas de trabalho também, pois eles também podem sugerir soluções interessantes que estavam fora de seu radar.
 
-É interessante também incluir uma relação dos *trade-offs* de cada solução, principalmente em questão de complexidade e esforço de cada solução. Gerentes estão constantemente interessados nessa relação, e querem sempre escolher a solução que seja mais simples e menos complexa de ser implementada.
+É interessante também incluir uma relação dos *trade-offs* de cada solução, principalmente em questão de complexidade e esforço de cada solução. Gerentes estão constantemente interessados nessa relação, e querem sempre escolher a solução que seja mais simples e mais rápida de ser implementada.
 
 
 ## Evolução do personagem como uma outra alternativa
