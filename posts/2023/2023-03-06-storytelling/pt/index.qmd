@@ -18,7 +18,7 @@ image: "./../mapa-featured.jpg"
 
 # Introdução
 
-Este artigo discute como eu melhorei o meu processo de *Data Storytelling* dentro das minhas apresentações e relatórios entregues ao Banco BMG e ao Banco Pan (os quais são dois dos maiores bancos comerciais do mercado brasileiro). Busco compartilhar o que aprendi nesse processo, e dou algumas dicas que possivelmente vão ajudá-lo a construir relatórios de dados mais intuitivos, cativantes, claros e efetivos.
+Este artigo discute como eu melhorei o meu processo de *Data Storytelling* dentro das minhas apresentações e relatórios entregues para dois dos maiores bancos comerciais do mercado brasileiro. Busco compartilhar o que aprendi nesse processo, e dou algumas dicas que possivelmente vão ajudá-lo a construir relatórios de dados mais intuitivos, cativantes, claros e efetivos.
 
 Em resumo, vamos discutir neste artigo as seguintes dicas:
 
@@ -35,12 +35,12 @@ Como você pode esperar de todo grande trabalho como este, ele também envolveu 
 
 
 ::: {.callout-important}
-Todos os dados, gráficos e imagens mostrados neste artigo são meramente ilustrativos. Todos os números apresentados foram gerados de forma aleatória por um computador! Portanto, eles não representam os dados reais de TakeBlip, do Banco BMG, ou do Banco Pan de nenhuma forma ou dimensão!
+Todos os dados, gráficos e imagens mostrados neste artigo são meramente ilustrativos. Todos os números apresentados foram gerados de forma aleatória por um computador! Portanto, eles não representam os dados reais de TakeBlip ou dos bancos comerciais brasileiros envolvidos de nenhuma forma ou dimensão!
 :::
 
 # Resumo da estrutura deste artigo
 
-Na @sec-como-era-antes, eu forneço contexto sobre esses relatórios que eu apresentava para o Banco BMG e Banco Pan, qual era o formato desses relatórios e quais eram os seus principais problemas e limitações.
+Na @sec-como-era-antes, eu forneço contexto sobre esses relatórios que eu apresentava para dois dos maiores bancos comerciais brasileiros, qual era o formato desses relatórios e quais eram os seus principais problemas e limitações.
 
 Mas a partir da @sec-como-melhorar, nós começamos a discutir sobre como melhorei esses relatórios. Você vai perceber que boa parte dessas melhorias estão concentradas em dois pontos:
 
@@ -59,7 +59,7 @@ Enfim, vamos prosseguir...
 
 # Como era esse relatório antes ? {#sec-como-era-antes}
 
-Na época, estávamos construindo um relatório mensal contendo vários indicadores e gráficos que mostravam o estado atual e a evolução recente dos serviços e produtos do Banco BMG ofertados dentro do canal do WhatsApp.
+Na época, estávamos construindo um relatório mensal contendo vários indicadores e gráficos que mostravam o estado atual e a evolução recente dos serviços e produtos dos bancos ofertados dentro do canal do WhatsApp.
 
 Contudo, o formato dessa apresentação era problemático. Nós trazíamos uma **quantidade monumental** de informações para o banco. A apresentação usualmente trazia em torno de 40 slides diferentes, com aproximadamente 36 gráficos e 70 indicadores diferentes. Para mais, nós tentávamos apresentar todo esse volume de informações em uma reunião de apenas 1 hora.
 
