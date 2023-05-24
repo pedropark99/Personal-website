@@ -33,6 +33,10 @@ Já o formato físico do livro, está disponível no momento em 3 lojas distinta
 - Clube dos Autores: <https://clubedeautores.com.br/livro/introducao-a-linguagem-r>
 - Amazon (pode estar indisponível): <https://www.amazon.com.br/dp/6500578724>
 
+# Leia o livro online
+
+Caso você não possa comprar uma versão física do livro, você ainda pode ler gratuitamente a obra completa através de seu [site](https://pedropark99.github.io/Introducao_R/).
+
 
 # O que você aprende ?
 
@@ -51,10 +55,6 @@ Através deste livro, você pode aprender sobre os fundamentos da linguagem R, e
 - ***Debugging*** e ***environments***: conheça as principais técnicas de *debugging* existentes na linguagem R, e, aprenda como investigar erros em suas funções. Além disso, entenda como a linguagem procura pelos seus objetos e, como você pode produzir resultados inesperados durante essa busca.
 
 
-
-# Leia o livro online
-
-Caso você não possa comprar uma versão física do livro, você ainda pode ler gratuitamente a obra completa através de seu [site](https://pedropark99.github.io/Introducao_R/).
 
 # Citando o livro
 
