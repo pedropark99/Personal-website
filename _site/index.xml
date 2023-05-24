@@ -297,7 +297,7 @@ Important
 
 <section id="introdução" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Introdução</h1>
-<p>Este artigo discute como eu melhorei o meu processo de <em>Data Storytelling</em> dentro das minhas apresentações e relatórios entregues ao Banco BMG e ao Banco Pan (os quais são dois dos maiores bancos comerciais do mercado brasileiro). Busco compartilhar o que aprendi nesse processo, e dou algumas dicas que possivelmente vão ajudá-lo a construir relatórios de dados mais intuitivos, cativantes, claros e efetivos.</p>
+<p>Este artigo discute como eu melhorei o meu processo de <em>Data Storytelling</em> dentro das minhas apresentações e relatórios entregues para dois dos maiores bancos comerciais do mercado brasileiro. Busco compartilhar o que aprendi nesse processo, e dou algumas dicas que possivelmente vão ajudá-lo a construir relatórios de dados mais intuitivos, cativantes, claros e efetivos.</p>
 <p>Em resumo, vamos discutir neste artigo as seguintes dicas:</p>
 <ul>
 <li><em>Data Storytelling</em> é sobre contar histórias através de dados;</li>
@@ -319,13 +319,13 @@ Important
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Todos os dados, gráficos e imagens mostrados neste artigo são meramente ilustrativos. Todos os números apresentados foram gerados de forma aleatória por um computador! Portanto, eles não representam os dados reais de TakeBlip, do Banco BMG, ou do Banco Pan de nenhuma forma ou dimensão!</p>
+<p>Todos os dados, gráficos e imagens mostrados neste artigo são meramente ilustrativos. Todos os números apresentados foram gerados de forma aleatória por um computador! Portanto, eles não representam os dados reais de TakeBlip ou dos bancos comerciais brasileiros envolvidos de nenhuma forma ou dimensão!</p>
 </div>
 </div>
 </section>
 <section id="resumo-da-estrutura-deste-artigo" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Resumo da estrutura deste artigo</h1>
-<p>Na Seção&nbsp;3, eu forneço contexto sobre esses relatórios que eu apresentava para o Banco BMG e Banco Pan, qual era o formato desses relatórios e quais eram os seus principais problemas e limitações.</p>
+<p>Na Seção&nbsp;3, eu forneço contexto sobre esses relatórios que eu apresentava para dois dos maiores bancos comerciais brasileiros, qual era o formato desses relatórios e quais eram os seus principais problemas e limitações.</p>
 <p>Mas a partir da Seção&nbsp;4, nós começamos a discutir sobre como melhorei esses relatórios. Você vai perceber que boa parte dessas melhorias estão concentradas em dois pontos:</p>
 <ol type="1">
 <li>construir uma apresentação que seja simples e clara;</li>
@@ -339,14 +339,14 @@ Important
 </section>
 <section id="sec-como-era-antes" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Como era esse relatório antes ?</h1>
-<p>Na época, estávamos construindo um relatório mensal contendo vários indicadores e gráficos que mostravam o estado atual e a evolução recente dos serviços e produtos do Banco BMG e Banco Pan ofertados dentro do canal do WhatsApp.</p>
+<p>Na época, estávamos construindo um relatório mensal contendo vários indicadores e gráficos que mostravam o estado atual e a evolução recente dos serviços e produtos dos bancos ofertados dentro do canal do WhatsApp.</p>
 <p>Contudo, o formato dessa apresentação era problemático. Nós trazíamos uma <strong>quantidade monumental</strong> de informações para o banco. A apresentação usualmente trazia em torno de 40 slides diferentes, com aproximadamente 36 gráficos e 70 indicadores diferentes. Para mais, nós tentávamos apresentar todo esse volume de informações em uma reunião de apenas 1 hora.</p>
 <p>O resultado final disso tudo era uma apresentação que trazia um volume monumental de informações, porém, que também trazia um <strong>volume muito pequeno de insights e novas ideias de negócio para os gestores</strong>.</p>
 <p>Em Figura&nbsp;1 temos uma representação de um dos vários slides dessa apresentação<sup>1</sup>. Imagine que essa apresentação trazia em torno de 40 slides semelhantes a esse:</p>
 <div id="fig-print-report1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="https://pedro-faria.netlify.app/posts/2023/2023-03-06-storytelling/print-report1.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;1: Representação de um slide da versão antiga do relatório</figcaption><p></p>
+<figcaption class="figure-caption">Figura&nbsp;1: Representação de um slide da versão antiga do relatório</figcaption>
 </figure>
 </div>
 <p>Perceba que esse slide se parece mais com uma página de um dashboard, do que de um relatório apresentando as últimas tendências do mercado ou do negócio do banco.</p>
@@ -375,7 +375,7 @@ Important
 <div id="fig-texto-longo" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="https://pedro-faria.netlify.app/posts/2023/2023-03-06-storytelling/texto-longo.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;2: Slide com um parágrafo longo</figcaption><p></p>
+<figcaption class="figure-caption">Figura&nbsp;2: Slide com um parágrafo longo</figcaption>
 </figure>
 </div>
 <p>Ao apresentar um slide, os seus espectadores tem que prestar atenção na sua fala. Isto é, no que você está comunicando verbalmente durante a apresentação. E ao mesmo tempo, eles também precisam prestar atenção no conteúdo do slide. Contudo, esse longo parágrafo no canto esquerdo do slide mostrado em Figura&nbsp;2 é problemático. <strong>Pois ele chama atenção demais!</strong></p>
@@ -405,7 +405,7 @@ Important
 <div id="fig-divisao2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="https://pedro-faria.netlify.app/posts/2023/2023-03-06-storytelling/divisao2.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;3: Falta de relação entre os indicadores</figcaption><p></p>
+<figcaption class="figure-caption">Figura&nbsp;3: Falta de relação entre os indicadores</figcaption>
 </figure>
 </div>
 <p>Se prestarmos atenção nesses indicadores, podemos identificar alguns efeitos que estão acontecendo ao longo deles. E se refletirmos um pouco mais sobre esses efeitos, vamos perceber que esses efeitos são relacionáveis! E que em conjunto, eles podem contar uma história.</p>
@@ -436,7 +436,7 @@ Important
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://pedro-faria.netlify.app/posts/2023/2023-03-06-storytelling/mensagem-principal.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">A mensagem principal da apresentação</figcaption><p></p>
+<figcaption class="figure-caption">A mensagem principal da apresentação</figcaption>
 </figure>
 </div>
 <p>Agora que sabemos qual é o assunto principal da apresentação, podemos começar a cavar mais fundo, e descrever esse assunto em mais detalhes. Como um próximo passo, podemos responder à pergunta “onde esse aumento de vendas ocorreu?”.</p>
@@ -445,7 +445,7 @@ Important
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://pedro-faria.netlify.app/posts/2023/2023-03-06-storytelling/onde-vendemos.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Onde vendemos mais?</figcaption><p></p>
+<figcaption class="figure-caption">Onde vendemos mais?</figcaption>
 </figure>
 </div>
 <p>A próxima pergunta que precisamos responder é “como?”. Como esse super resultado nas vendas foi gerado? Nós discutimos isso na Seção&nbsp;4.2.3, que após descobrirem um resultado tão importante, os gerentes vão certamente estar interessados em entender como esse resultado foi gerado, para que eles possam difundir esse efeito positivo para outras áreas do negócio.</p>
@@ -453,7 +453,7 @@ Important
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://pedro-faria.netlify.app/posts/2023/2023-03-06-storytelling/porque-vendemos.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Por que vendemos mais?</figcaption><p></p>
+<figcaption class="figure-caption">Por que vendemos mais?</figcaption>
 </figure>
 </div>
 <p>Deixe os detalhes mais específicos dos dois efeitos acima (“qual era o problema na API, e como superamos ele?”, “como isso é uma melhoria?”, “o que é uma taxa de conversão? E como isso afeta o processo de venda?”) para a sua fala. Lembre-se, tente evitar ao máximo colocar textos longos em suas apresentações, e tente dar mais detalhes ou responder às perguntas dos seus espectadores através da fala.</p>
@@ -577,7 +577,7 @@ Important
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://pedro-faria.netlify.app/posts/2023/2023-02-11-funnel-pkg-v010/power-bi.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">A funnel chart at Power BI</figcaption><p></p>
+<figcaption class="figure-caption">A funnel chart at Power BI</figcaption>
 </figure>
 </div>
 <p>But after working a lot with these charts in Power BI, I tought to myself: “could I make a funnel chart in R?”. The answer is obviously yes! You could definitely drawn a funnel chart with frameworks such as the <code>ggplot2</code> package. However, there was no packages in the community that could build such visualization out of the box.</p>
@@ -1593,7 +1593,7 @@ font-style: inherit;">TRUE</span>)</span>
 <div id="fig-pareamento" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="https://pedro-faria.netlify.app/posts/2023/2023-01-10-join-duplicates/pareamento1.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;1: Processo de pareamento realizado em um JOIN</figcaption><p></p>
+<figcaption class="figure-caption">Figure&nbsp;1: Processo de pareamento realizado em um JOIN</figcaption>
 </figure>
 </div>
 <p>No exemplo de Figure&nbsp;1, ambas as tabelas que estão sendo unidas possuem uma linha para cada <code>ID</code>. Ou seja, não existe IDs duplicados em nenhuma das duas tabelas, formando assim, uma relação de “um para um” entre as chaves do JOIN.</p>
@@ -1607,7 +1607,7 @@ font-style: inherit;">TRUE</span>)</span>
 <div id="fig-desenho-expansao" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="https://pedro-faria.netlify.app/posts/2023/2023-01-10-join-duplicates/expansao.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;2: Uma representação visual do efeito expansivo sobre o ID 105</figcaption><p></p>
+<figcaption class="figure-caption">Figure&nbsp;2: Uma representação visual do efeito expansivo sobre o ID 105</figcaption>
 </figure>
 </div>
 <p>Ou seja, o JOIN vai retornar como resultado, <strong>todas as combinações possíveis</strong> entre a linha única de <code>cores_de_pele</code> e as 3 linhas de <code>alturas</code>. Ou seja, a linha única de <code>cores_de_pele</code> é combinada com cada uma das 3 linhas de <code>alturas</code>. Como resultado, temos as 3 linhas de ID 105 na tabela <code>dados</code>:</p>
@@ -1634,7 +1634,7 @@ font-style: inherit;">TRUE</span>)</span>
 <div id="fig-relacoes" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="https://pedro-faria.netlify.app/posts/2023/2023-01-10-join-duplicates/relacoes_keys.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;3: Resumo das relações possíveis entre <em>keys</em> e seus respectivos produtos cartesianos</figcaption><p></p>
+<figcaption class="figure-caption">Figure&nbsp;3: Resumo das relações possíveis entre <em>keys</em> e seus respectivos produtos cartesianos</figcaption>
 </figure>
 </div>
 <p>Perceba que, para o caso de relação um para um, o número de linhas na tabela resultado permanece inalterado. Porém, as relações que realmente nos interessam nesse post são as relações de “um para muitos” e de “muitos para muitos”. Perceba que um produto cartesiano ocorre nesses dois tipos de relação, e, como resultado, algum nível de “duplicação” de informações é gerado na tabela resultado do JOIN.</p>
@@ -1875,7 +1875,7 @@ font-style: inherit;">sum</span>)</span></code></pre></div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://pedro-faria.netlify.app/posts/2022/2022-12-14-power-bi-memory-error/image.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<p></p><figcaption class="figure-caption">Mensagem de erro da atualização no Power BI Online</figcaption><p></p>
+<figcaption class="figure-caption">Mensagem de erro da atualização no Power BI Online</figcaption>
 </figure>
 </div>
 </div>
@@ -1890,7 +1890,7 @@ font-style: inherit;">sum</span>)</span></code></pre></div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://pedro-faria.netlify.app/posts/2022/2022-12-14-power-bi-memory-error/tabelas.png" class="img-fluid figure-img" style="width:50.0%"></p>
-<p></p><figcaption class="figure-caption">Tabelas associadas ao arquivo <code>.pbix</code></figcaption><p></p>
+<figcaption class="figure-caption">Tabelas associadas ao arquivo <code>.pbix</code></figcaption>
 </figure>
 </div>
 </div>
@@ -3558,7 +3558,7 @@ Damji, Jules, Brooke Wenig, Tathagata Das, and Denny Lee. 2020. <em>Learning Spa
   <category>Apache Spark</category>
   <category>Book</category>
   <guid>https://pedro-faria.netlify.app/publications/book/introd-pyspark/en/index.html</guid>
-  <pubDate>Tue, 23 May 2023 20:05:20 GMT</pubDate>
+  <pubDate>Wed, 24 May 2023 13:40:37 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/publications/book/introd-pyspark/featured.png" medium="image" type="image/png" height="215" width="144"/>
 </item>
 </channel>
