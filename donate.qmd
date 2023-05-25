@@ -5,7 +5,6 @@ title-block-banner: true
 ---
 
 
-# Payment methods
 
 Currently, I only support direct transfers made via [Pix](https://business.ebanx.com/en/resources/payments-explained/pix-instant-payment-system). Which is a brazilian payment method available in most banks operating in the Brazilian market.
 
@@ -18,15 +17,13 @@ function copyText() {
 }
 ```
 
-# Copy and paste it
 
-You can click in the button to copy my Pix key to your clipboard:
+To get my Pix key, you can click in the button below to copy the key to your clipboard:
 
 <button type="button" class="btn btn-primary" onclick="copyText()">Copy Pix Key</button>
+</br>
 
-# Scan a QR Code
-
-Or, if you prefer, you can get my Pix key with this QR Code:
+Or, if you prefer, you can also get my Pix key by scanning the QR Code below:
 
 ```{r, out.width="50%", fig.align='center', echo=FALSE}
 knitr::include_graphics("files/images/pix-qrcode.jpg")
