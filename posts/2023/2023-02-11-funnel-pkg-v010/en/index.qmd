@@ -104,7 +104,7 @@ plot +
 
 # A simple (but far from perfect) approach
 
-`{ggfunnel}` is a very simple (and kind of experimental) package, and it is far from perfect. This means that, currently, `{ggfunnel}` gives you the minimal code necessary to produce a decent funnel chart. But it does give much more functionality than that. 
+`{ggfunnel}` is a very simple (and kind of experimental) package, and it is far from perfect. This means that, currently, `{ggfunnel}` gives you the minimal code necessary to produce a decent funnel chart. But it does not give you much more functionality than that. 
 
 It also makes some assumptions about your data that might not hold, and it does not contain some features that you might find at Power BI (e.g. percentage labels).
 

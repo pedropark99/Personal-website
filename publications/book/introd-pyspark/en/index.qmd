@@ -9,7 +9,7 @@ categories: ['Python', 'Apache Spark', 'Book']
 image: "../featured.png"
 ---
 
-# Still under construction `r emoji::emoji("hammer_and_wrench")` `r emoji::emoji("warning")`!
+# Still under construction 🛠️⚠️!
 
 This book is still under active construction and development! This means that not all chapters are ready yet, and the current contents might change in the close future. However, you can already read some of its parts by [visiting its website](https://pedropark99.github.io/Introd-pyspark/).
 

@@ -383,7 +383,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 </section>
 <section id="a-simple-but-far-from-perfect-approach" class="level1">
 <h1>A simple (but far from perfect) approach</h1>
-<p><code>{ggfunnel}</code> is a very simple (and kind of experimental) package, and it is far from perfect. This means that, currently, <code>{ggfunnel}</code> gives you the minimal code necessary to produce a decent funnel chart. But it does give much more functionality than that.</p>
+<p><code>{ggfunnel}</code> is a very simple (and kind of experimental) package, and it is far from perfect. This means that, currently, <code>{ggfunnel}</code> gives you the minimal code necessary to produce a decent funnel chart. But it does not give you much more functionality than that.</p>
 <p>It also makes some assumptions about your data that might not hold, and it does not contain some features that you might find at Power BI (e.g.&nbsp;percentage labels).</p>
 <p>But, even being a very simple package, <code>ggfunnel::funnel()</code> always returns the raw <code>ggplot</code> object that describes the funnel chart. This means that the package gives you a lot of freedom to customize (or to complement) the output in the way you might need. See <a href="https://pedropark99.github.io/ggfunnel/articles/funnel.html"><code>vignette("funnel")</code></a> for more details on how to customize/complement the <code>ggfunnel::funnel()</code> output.</p>
 <p>However, the package needs some work to be a more robust and complete piece of code, for sure. If you think you can make <code>{ggfunnel}</code> better I would be happy to review a PR from you!</p>
