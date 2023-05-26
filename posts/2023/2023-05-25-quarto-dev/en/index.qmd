@@ -1,0 +1,19 @@
+---
+title: "How to develop Quarto"
+date: 2023-05-25
+format: html
+---
+
+1. Clone the repo
+2. Run configure;
+3. Run Deno with special flags/options
+
+
+
+If you try to run quarto.ts directly without any special options, you get an relative path import error
+
+![](./../run1.png)
+
+To fix that, you need to add the import_map to allow wildcards in the import paths.
+
+![](./../run2.png)
