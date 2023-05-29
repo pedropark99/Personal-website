@@ -4,7 +4,7 @@ description: "Este livro oferece uma descrição profunda sobre os fundamentos d
 authors: ["Pedro Duarte Faria"]
 date: "2022-12-01"
 isbn: "978-65-00-57872-0"
-
+number-sections: true
 categories: [R Language, Book, Brazil]
 image: "../featured.png"
 projects: [R_curso]
@@ -20,7 +20,6 @@ aliases:
 {{< include ../buttons-pt.html >}}
 
 Este livro oferece uma descrição profunda sobre os fundamentos da linguagem R, e como eles se aplicam no contexto da análise de dados. Sua principal contribuição para a literatura brasileira hoje, está no combate de dois problemas recorrentes nos materiais disponíveis em português sobre a linguagem: 1) a falta de profundidade de muitos materiais, que tentam abordar muitos assuntos em um espaço muito curto; 2) a alta especialização de muitos materiais, que são de difícil transposição para aplicações gerais em análises de dados.
-
 
 
 # O que você aprende ?
@@ -40,14 +39,27 @@ Através deste livro, você pode aprender sobre os fundamentos da linguagem R, e
 - ***Debugging*** e ***environments***: conheça as principais técnicas de *debugging* existentes na linguagem R, e, aprenda como investigar erros em suas funções. Além disso, entenda como a linguagem procura pelos seus objetos e, como você pode produzir resultados inesperados durante essa busca.
 
 
-# Compre uma versão física do livro!
+# Compre uma versão do livro {#sec-versoes}
 
-Você pode adquirir uma [versão física do livro através da loja da Amazon](https://www.amazon.com.br/dp/B0BNW4K232). Uma versão eBook do livro também está disponível. Ao adquirir esses produtos, você estará me ajudando a continuar com esse projeto e a contribuir com nossa comunidade brasileira de R.
+Hoje, o livro está disponível para compra em duas versões: como ebook (Kindle), e como livro físico (Amazon, Estante Virtual e Clube dos Autores). No momento, o formato ebook do livro está disponível somente na Amazon.
+
+- Versão em ebook: <https://www.amazon.com.br/dp/B0BNW4K232>
+
+Já o formato físico do livro, está disponível no momento em 3 lojas distintas. Falando especificamente da Amazon, o livro ainda não tinha estoque da última vez que consultei pela plataforma, portanto, o livro pode estar indisponível nessa loja especificamente. Porém ele já está disponível nas outras 2 lojas abaixo.
+
+- Estante Virtual: <https://www.estantevirtual.com.br/clube-de-autores/pedro-duarte-faria-introducao-a-linguagem-r-3850927716>
+- Clube dos Autores: <https://clubedeautores.com.br/livro/introducao-a-linguagem-r>
+- Amazon (pode estar indisponível): <https://www.amazon.com.br/dp/6500578724>
 
 
-# Leia o livro online
+Caso você não possa comprar uma versão do livro, você ainda pode ler gratuitamente a obra completa através de seu [website](https://pedropark99.github.io/Introducao_R/).
 
-Caso você não possa comprar uma versão física do livro, você ainda pode ler gratuitamente a obra completa através de seu [site](https://pedropark99.github.io/Introducao_R/).
+# Formas de contribuir para o livro
+
+Caso você queira contribuir monetariamente para o livro e para o autor, mas, não queira/possa pagar o preço total da obra, você ainda pode mandar um [PIX como uma doação](https://pedro-faria.netlify.app/donate.html).
+
+Além disso, você também pode contribuir com conteúdo (imagens, capítulos, artes, etc.) diretamente para a obra, ao postar *pull requests* ou *issues* no [repositório oficial do livro](https://github.com/pedropark99/Introducao_R) no GitHub.
+
 
 # Citando o livro
 
@@ -58,10 +70,6 @@ cat(readLines("../cite.bib"), sep = '\n')
 ```
 
 
-
-# Contribua para o projeto
-
-Você também pode contribuir diretamente para a obra, ao postar *pull requests* ou *issues* no [repositório oficial do livro](https://github.com/pedropark99/Introducao_R) no GitHub.
 
 
 # Capa do livro

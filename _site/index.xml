@@ -600,7 +600,7 @@ font-style: inherit;">"cm"</span>)</span>
 </section>
 <section id="a-simple-but-far-from-perfect-approach" class="level1">
 <h1>A simple (but far from perfect) approach</h1>
-<p><code>{ggfunnel}</code> is a very simple (and kind of experimental) package, and it is far from perfect. This means that, currently, <code>{ggfunnel}</code> gives you the minimal code necessary to produce a decent funnel chart. But it does give much more functionality than that.</p>
+<p><code>{ggfunnel}</code> is a very simple (and kind of experimental) package, and it is far from perfect. This means that, currently, <code>{ggfunnel}</code> gives you the minimal code necessary to produce a decent funnel chart. But it does not give you much more functionality than that.</p>
 <p>It also makes some assumptions about your data that might not hold, and it does not contain some features that you might find at Power BI (e.g.&nbsp;percentage labels).</p>
 <p>But, even being a very simple package, <code>ggfunnel::funnel()</code> always returns the raw <code>ggplot</code> object that describes the funnel chart. This means that the package gives you a lot of freedom to customize (or to complement) the output in the way you might need. See <a href="https://pedropark99.github.io/ggfunnel/articles/funnel.html"><code>vignette("funnel")</code></a> for more details on how to customize/complement the <code>ggfunnel::funnel()</code> output.</p>
 <p>However, the package needs some work to be a more robust and complete piece of code, for sure. If you think you can make <code>{ggfunnel}</code> better I would be happy to review a PR from you!</p>
@@ -1757,13 +1757,13 @@ font-style: inherit;">sum</span>)</span></code></pre></div>
 
 
 
-<section id="sobre-o-livro" class="level1">
-<h1>Sobre o livro</h1>
-<p><a href="https://www.amazon.com.br/dp/B0BNW4K232"> <button type="button" class="btn btn-primary">Compre uma versão do livro</button></a> <a href="https://pedropark99.github.io/Introducao_R/"> <button type="button" class="btn btn-primary">Leia online</button></a> <a href="./../exec_complete.pdf"> <button type="button" class="btn btn-primary">Exercícios de cada capítulo</button></a> <a href="./../respostas_complete.pdf"> <button type="button" class="btn btn-primary">Respostas dos exercícios</button></a></p>
+<section id="sobre-o-livro" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Sobre o livro</h1>
+<p> <button type="button" class="btn btn-primary">Compre uma versão do livro</button> <a href="https://pedropark99.github.io/Introducao_R/"> <button type="button" class="btn btn-primary">Leia online</button></a> <a href="./../exec_complete.pdf"> <button type="button" class="btn btn-primary">Exercícios de cada capítulo</button></a> <a href="./../respostas_complete.pdf"> <button type="button" class="btn btn-primary">Respostas dos exercícios</button></a></p>
 <p>Este livro oferece uma descrição profunda sobre os fundamentos da linguagem R, e como eles se aplicam no contexto da análise de dados. Sua principal contribuição para a literatura brasileira hoje, está no combate de dois problemas recorrentes nos materiais disponíveis em português sobre a linguagem: 1) a falta de profundidade de muitos materiais, que tentam abordar muitos assuntos em um espaço muito curto; 2) a alta especialização de muitos materiais, que são de difícil transposição para aplicações gerais em análises de dados.</p>
 </section>
-<section id="o-que-você-aprende" class="level1">
-<h1>O que você aprende ?</h1>
+<section id="o-que-você-aprende" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> O que você aprende ?</h1>
 <p>Através deste livro, você pode aprender sobre os fundamentos da linguagem R, e como eles se aplicam a área de análise de dados. Em mais detalhes:</p>
 <ul>
 <li><p><strong>Introduzindo a linguagem</strong>: aprenda sobre como definir e como trabalhar com objetos; conheça as estruturas e tipos de dados oferecidos pela linguagem; entenda como os processos de coerção e os valores especiais da linguagem podem afetar os seus resultados.</p></li>
@@ -1774,16 +1774,27 @@ font-style: inherit;">sum</span>)</span></code></pre></div>
 <li><p><strong><em>Debugging</em></strong> e <strong><em>environments</em></strong>: conheça as principais técnicas de <em>debugging</em> existentes na linguagem R, e, aprenda como investigar erros em suas funções. Além disso, entenda como a linguagem procura pelos seus objetos e, como você pode produzir resultados inesperados durante essa busca.</p></li>
 </ul>
 </section>
-<section id="compre-uma-versão-física-do-livro" class="level1">
-<h1>Compre uma versão física do livro!</h1>
-<p>Você pode adquirir uma <a href="https://www.amazon.com.br/dp/B0BNW4K232">versão física do livro através da loja da Amazon</a>. Uma versão eBook do livro também está disponível. Ao adquirir esses produtos, você estará me ajudando a continuar com esse projeto e a contribuir com nossa comunidade brasileira de R.</p>
+<section id="sec-versoes" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Compre uma versão do livro</h1>
+<p>Hoje, o livro está disponível para compra em duas versões: como ebook (Kindle), e como livro físico (Amazon, Estante Virtual e Clube dos Autores). No momento, o formato ebook do livro está disponível somente na Amazon.</p>
+<ul>
+<li>Versão em ebook: <a href="https://www.amazon.com.br/dp/B0BNW4K232" class="uri">https://www.amazon.com.br/dp/B0BNW4K232</a></li>
+</ul>
+<p>Já o formato físico do livro, está disponível no momento em 3 lojas distintas. Falando especificamente da Amazon, o livro ainda não tinha estoque da última vez que consultei pela plataforma, portanto, o livro pode estar indisponível nessa loja especificamente. Porém ele já está disponível nas outras 2 lojas abaixo.</p>
+<ul>
+<li>Estante Virtual: <a href="https://www.estantevirtual.com.br/clube-de-autores/pedro-duarte-faria-introducao-a-linguagem-r-3850927716" class="uri">https://www.estantevirtual.com.br/clube-de-autores/pedro-duarte-faria-introducao-a-linguagem-r-3850927716</a></li>
+<li>Clube dos Autores: <a href="https://clubedeautores.com.br/livro/introducao-a-linguagem-r" class="uri">https://clubedeautores.com.br/livro/introducao-a-linguagem-r</a></li>
+<li>Amazon (pode estar indisponível): <a href="https://www.amazon.com.br/dp/6500578724" class="uri">https://www.amazon.com.br/dp/6500578724</a></li>
+</ul>
+<p>Caso você não possa comprar uma versão do livro, você ainda pode ler gratuitamente a obra completa através de seu <a href="https://pedropark99.github.io/Introducao_R/">website</a>.</p>
 </section>
-<section id="leia-o-livro-online" class="level1">
-<h1>Leia o livro online</h1>
-<p>Caso você não possa comprar uma versão física do livro, você ainda pode ler gratuitamente a obra completa através de seu <a href="https://pedropark99.github.io/Introducao_R/">site</a>.</p>
+<section id="formas-de-contribuir-para-o-livro" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Formas de contribuir para o livro</h1>
+<p>Caso você queira contribuir monetariamente para o livro e para o autor, mas, não queira/possa pagar o preço total da obra, você ainda pode mandar um <a href="https://pedro-faria.netlify.app/donate.html">PIX como uma doação</a>.</p>
+<p>Além disso, você também pode contribuir com conteúdo (imagens, capítulos, artes, etc.) diretamente para a obra, ao postar <em>pull requests</em> ou <em>issues</em> no <a href="https://github.com/pedropark99/Introducao_R">repositório oficial do livro</a> no GitHub.</p>
 </section>
-<section id="citando-o-livro" class="level1">
-<h1>Citando o livro</h1>
+<section id="citando-o-livro" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Citando o livro</h1>
 <p>Arquivo BibTex:</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -1801,12 +1812,8 @@ font-style: inherit;">sum</span>)</span></code></pre></div>
 </div>
 </div>
 </section>
-<section id="contribua-para-o-projeto" class="level1">
-<h1>Contribua para o projeto</h1>
-<p>Você também pode contribuir diretamente para a obra, ao postar <em>pull requests</em> ou <em>issues</em> no <a href="https://github.com/pedropark99/Introducao_R">repositório oficial do livro</a> no GitHub.</p>
-</section>
-<section id="capa-do-livro" class="level1">
-<h1>Capa do livro</h1>
+<section id="capa-do-livro" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Capa do livro</h1>
 <p><img src="https://pedro-faria.netlify.app/publications/book/introducao_linguagem_R/featured.png" class="img-fluid" style="width:100.0%"></p>
 
 
@@ -3251,8 +3258,8 @@ font-style: inherit;">$</span>color</span>
 
 
 
-<section id="still-under-construction-r-emojiemojihammer_and_wrench-r-emojiemojiwarning" class="level1">
-<h1>Still under construction <code>r emoji::emoji("hammer_and_wrench")</code> <code>r emoji::emoji("warning")</code>!</h1>
+<section id="still-under-construction" class="level1">
+<h1>Still under construction 🛠️⚠️!</h1>
 <p>This book is still under active construction and development! This means that not all chapters are ready yet, and the current contents might change in the close future. However, you can already read some of its parts by <a href="https://pedropark99.github.io/Introd-pyspark/">visiting its website</a>.</p>
 </section>
 <section id="about-the-book" class="level1">
@@ -3283,7 +3290,7 @@ Damji, Jules, Brooke Wenig, Tathagata Das, and Denny Lee. 2020. <em>Learning Spa
   <category>Apache Spark</category>
   <category>Book</category>
   <guid>https://pedro-faria.netlify.app/publications/book/introd-pyspark/en/index.html</guid>
-  <pubDate>Wed, 24 May 2023 13:35:15 GMT</pubDate>
+  <pubDate>Mon, 29 May 2023 12:23:30 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/publications/book/introd-pyspark/featured.png" medium="image" type="image/png" height="215" width="144"/>
 </item>
 </channel>
