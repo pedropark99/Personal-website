@@ -8,13 +8,13 @@ y <- c(1, 0.9, 0.82, 0.79, 0.6, 0.45, 0.3)
 y <- y * rnorm(length(datas), mean = 320, sd = 50)
 y <- abs(y)
 
-df <- tibble(
+df_linhas <- tibble(
   Data = datas,
   UsuariosAtivos = y,
   UsuariosEngajados = 0.75 * y
 )
 
-por_mes <- df |>
+por_mes <- df_linhas |>
   group_by(Mes = month(Data)) |>
   summarise(
     UsuariosAtivos = as.integer(sum(UsuariosAtivos)),
@@ -23,8 +23,8 @@ por_mes <- df |>
 
 tema_grafico <- theme(
   axis.title = element_blank(),
-  axis.text = element_text(size = 16, family = "Nunito Sans", face = "bold", colour = "#222222"),
-  text = element_text(size = 16, family = "Nunito Sans", face = "bold", colour = "#222222"),
+  axis.text = element_text(size = 16, family = "Nunito Sans 7pt", face = "bold", colour = "#222222"),
+  text = element_text(size = 16, family = "Nunito Sans 7pt", face = "bold", colour = "#222222"),
   plot.title.position = "plot",
   plot.title = element_text(size = 25, hjust = 0.5),
   panel.background = element_rect(fill = "white"),
@@ -38,7 +38,7 @@ tema_grafico <- theme(
 cores <- c("#e63946", "#1d3557")
 
 
-pl <- df |>
+pl <- df_linhas |>
   filter(month(Data) == 11) |>
   ggplot() +
   geom_line(
@@ -107,5 +107,81 @@ ragg::agg_png(
 print(pl)
 dev.off()
 
+
+
+
+
+
+
+
+##### GRÁFICOS EM INGLÊS ======================
+
+pl <- df_linhas |>
+  filter(month(Data) == 11) |>
+  ggplot() +
+  geom_line(
+    aes(x = Data, y = UsuariosAtivos, color = "Active users"),
+    size = 1
+  ) +
+  geom_line(
+    aes(x = Data, y = UsuariosEngajados, color = "Engaged users"),
+    size = 1
+  ) +
+  labs(title = "Daily evolution of active users") +
+  scale_color_manual(values = cores) +
+  tema_grafico
+
+ragg::agg_png(
+  "posts/2023/2023-01-20-storytelling/usuarios-ativos-diario-en.png",
+  width = 2000, height = 1000, res = 200
+)
+print(pl)
+dev.off()
+
+
+
+
+
+
+y <- c(
+  0.05, 0.05, 0.25, 0.25, 0.27, 0.36, 0.42, 0.7, 0.78,
+  0.95, 0.98, 0.98, 0.9, 0.8, 0.78, 0.75, 0.74, 0.7,
+  0.5, 0.4, 0.4, 0.38, 0.35, 0.34
+)
+
+set.seed(40)
+taxa_perdidos <- rnorm(24, 0.1, 0.02)
+taxa_perdidos <- abs(taxa_perdidos)
+
+df <- tibble(
+  Hour = 0:23,
+  `Answered Tickets` = y * 2400,
+  `Lost Tickets` = y * 2400 * 0.1
+)
+
+
+pl <- df |>
+  pivot_longer(
+    cols = c("Answered Tickets", "Lost Tickets"),
+    names_to = "Indicator",
+    values_to = "Value"
+  ) |>
+  ggplot() +
+  geom_bar(
+    aes(x = Hour, y = Value, fill = Indicator),
+    position = "stack", stat = "sum"
+  ) +
+  scale_fill_manual(values = cores) +
+  tema_grafico +
+  labs(title = "Number of answered and lost tickets per hour") +
+  guides(size = "none")
+
+
+ragg::agg_png(
+  "posts/2023/2023-01-20-storytelling/tickets-hora-en.png",
+  width = 2000, height = 1000, res = 200
+)
+print(pl)
+dev.off()
 
 
