@@ -47,9 +47,9 @@ Hoje, o livro está disponível para compra em duas versões: como ebook (Kindle
 
 Já o formato físico do livro, está disponível no momento em 3 lojas distintas. Falando especificamente da Amazon, o livro ainda não tinha estoque da última vez que consultei pela plataforma, portanto, o livro pode estar indisponível nessa loja especificamente. Porém ele já está disponível nas outras 2 lojas abaixo.
 
+- Amazon: <https://www.amazon.com.br/dp/6500578724>
 - Estante Virtual: <https://www.estantevirtual.com.br/clube-de-autores/pedro-duarte-faria-introducao-a-linguagem-r-3850927716>
 - Clube dos Autores: <https://clubedeautores.com.br/livro/introducao-a-linguagem-r>
-- Amazon (pode estar indisponível): <https://www.amazon.com.br/dp/6500578724>
 
 
 Caso você não possa comprar uma versão do livro, você ainda pode ler gratuitamente a obra completa através de seu [website](https://pedropark99.github.io/Introducao_R/).
