@@ -32,10 +32,10 @@ Hey! I'm Pedro Duarte Faria. A brazilian economist, data engineer and software e
 ## Experience
 
 **Data Engineer**,
-Take Blip, Feb 2023 - present.
+Blip, Feb 2023 - present.
 
 **Data Analyst**,
-Take Blip, May 2021 - Feb 2023.
+Blip, May 2021 - Feb 2023.
 
 **Research engineering Intern**,
 João Pinheiro Foundation, August 2019 - March 2021.
