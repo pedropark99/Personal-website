@@ -43,6 +43,20 @@ However, we just did not found the data pipeline, it had simply disapeared from 
 we were positive that some pipeline existed at some point in the past. But where did this pipeline go? Why it disappeared?
 
 
+# Investigating the commmits
+
+
+# Why did I made this decision?
+
+
+# Another part of the problem
+
+
+# What mistakes were made?
+
+
+
+
 # How Git helped us to solve the issue
 
 We use Git to store and track any changes in all of our data pipelines. As you well know, files
@@ -71,4 +85,3 @@ And by identifying these issues, we can now address them, so we do not make thes
 
 Over the next sections, I explain what happened, what mistakes were made, and how we could have avoided this problem.
 
-# What mistakes were made?
