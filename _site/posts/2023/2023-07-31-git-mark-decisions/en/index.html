@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Pedro Duarte Faria">
-<meta name="dcterms.date" content="2022-04-06">
-<meta name="description" content="Uma grande reforma sobre a obra foi feita para esta nova edição. Como resultado, temos seis novos capítulos para você!">
+<meta name="dcterms.date" content="2023-07-31">
+<meta name="description" content="This article uses a real world situation that me and my team encountered to show how you can improve decision making in your team by tracking the decisions you make with Git">
 
-<title>home |&gt; dplyr::glimpse() - Novidades da 3° edição de Introdução à Linguagem R: seus fundamentos e sua prática</title>
+<title>home |&gt; dplyr::glimpse() - Improving decision making with Git and why you should care</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -200,17 +200,13 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Novidades da 3° edição de Introdução à Linguagem R: seus fundamentos e sua prática</h1>
+      <h1 class="title">Improving decision making with Git and why you should care</h1>
                   <div>
         <div class="description">
-          Uma grande reforma sobre a obra foi feita para esta nova edição. Como resultado, temos seis novos capítulos para você!
+          This article uses a real world situation that me and my team encountered to show how you can improve decision making in your team by tracking the decisions you make with Git
         </div>
       </div>
-                          <div class="quarto-categories">
-                <div class="quarto-category">Book</div>
-                <div class="quarto-category">R Language</div>
-              </div>
-                  </div>
+                </div>
   </div>
     
   <div class="quarto-title-meta-author">
@@ -233,7 +229,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">April 6, 2022</p>
+        <p class="date">July 31, 2023</p>
       </div>
     </div>
     
@@ -251,30 +247,17 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 
 
 
-<section id="introdução" class="level1">
-<h1>Introdução</h1>
-<p>É com muito prazer que venho compartilhar com você as novidades que estou trazendo para essa nova edição do livro <a href="https://pedro-faria.netlify.app/pt/publication/book/introducao_linguagem_r/">Introdução à Linguagem R: seus fundamentos e sua prática</a>. O lançamento desta nova edição deve ocorrer ainda no meio de Abril de 2022 📆, portanto, fique atento 😉.</p>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>In the last week, me and my team encountered a situation where we need to find out why and how a certain problem occurred. We needed to understand which decisions led to this problem, and how they were made. Pretty normal stuff right?</p>
+<p>But understanding what did happened was only possible for us because we do track every change and decision that we make with Git, by signing commits and writing Pull Requests (or PRs for short). This article uses this real world situation that we faced to showcase how Git and formal processes to register changes in the codebase (like PRs) are a critical part for improving decision making and understanding how your past decisions are affecting you in the present.</p>
 </section>
-<section id="o-que-temos-de-novo" class="level1">
-<h1>O que temos de novo?</h1>
-<p>Temos seis novos capítulos 🤯, os quais compõe uma nova parte do livro e, trazem consigo, grandes avanços sobre o processo de desenvolvimento de programas no R. Além disso, várias melhorias foram feitas em seções específicas do livro, especialmente sobre o capítulo 2.</p>
-<p>Primeiro, houve uma reorganização significativa do livro. Os capítulos pré-existentes foram reorganizados em quatro partes diferentes. Já a quinta e nova parte (Funções e <em>Loops</em>: construindo os seus próprios programas e automatizando tarefas) é composta pelos seis novos capítulos introduzidos nesta edição.</p>
-<p>Segundo, o capítulo de Funções e <em>Loops</em> foi completamente reescrito, expandido, e, repartido em dois novos capítulos 🥳🎉🎉🎉. Mais especificamente, os capítulos 14 (Funções) e 15 (<em>Loops</em>) desta edição.</p>
-<p>Terceiro, o capítulo 16 desta edição traz uma das novidades programadas desde a segunda edição: um novo (e robusto) capítulo sobre <em>functional programming</em>. Com essa adição, esta obra se torna uma referência mais moderna e, se aproxima dos padrões adotados hoje pela comunidade internacional de R 😎.</p>
-<p>Quarto, <em>environments</em> e as regras de <em>scoping</em> da linguagem são dois tópicos relativamente avançados, e que costumam causar certa confusão em muitos iniciantes. Por isso, um novo capítulo foi produzido para descrever essas funcionalidades que sustentam partes essenciais da linguagem, assim como de alguns dos pacotes que introduzimos ao longo do livro (e.g.&nbsp;<code>dplyr</code> e <code>ggplot2</code>).</p>
-<p>Quinto, várias adições e melhorias foram feitas no capítulo 6 (Introdução a base de dados relacionais com <code>dplyr</code>) e, principalmente, no capítulo 2 (Fundamentos da Linguagem R). Dentre elas, temos: um novo estudo de caso (Importando os dados da PINTEC); novas seções sobre as funções <code>str()</code> e <code>is.*()</code>; melhorias significativas sobre as seções de Coerção no R e Valores especiais do R.</p>
-<p>Sexto, foi introduzido um novo capítulo que descreve os controles condicionais de fluxo (<code>if else</code> <em>statements</em> e <code>switch()</code>) que a linguagem R oferece.</p>
-<p>Sétimo, um novo e pequeno capítulo foi adicionado à segunda parte do livro, com o objetivo de introduzir o universo do <code>tidyverse</code> ao leitor de maneira mais clara e amigável 🥰.</p>
-<p>Oitavo, o apêndice contendo as respostas dos exercícios foi retirado, com o objetivo de reduzir o número de páginas do livro. Consequentemente, as respostas dos exercícios estão sendo disponibilizadas em um PDF separado, o qual pode ser baixado gratuitamente, a partir da página de <a href="https://pedro-faria.netlify.app/pt/publication/book/introducao_linguagem_r/">publicação do livro</a>.</p>
+<section id="context-about-the-problem-that-we-needed-to-understand" class="level1">
+<h1>Context about the problem that we needed to understand</h1>
 </section>
-<section id="sobre-onde-encontrar-o-livro" class="level1">
-<h1>Sobre onde encontrar o livro</h1>
-<p>Assim como ocorreu nas edições anteriores, você poderá ler toda a obra de maneira gratuita e aberta através de seu <a href="https://pedropark99.github.io/Introducao_R/">website</a> 📖.</p>
-<p>Contudo, diferente das edições anteriores, a versão em PDF da obra não será aberta. Você poderá adquirir uma versão em PDF ou física do livro através da loja da Amazon. Ao comprar essas versões, você estará me ajudando a continuar contribuindo com a nossa comunidade ❤️.</p>
-</section>
-<section id="contribua-para-a-obra-ou-faça-sugestões" class="level1">
-<h1>Contribua para a obra ou faça sugestões!</h1>
-<p>Caso seja de seu interesse, você pode contribuir diretamente para a obra, ao postar <em>pull requests</em> dentro de seu <a href="https://github.com/pedropark99/Introducao_R">repositório oficial</a>. Para mais, você também pode fazer sugestões ou comentários, ao postar <em>issues</em> neste mesmo repositório.</p>
+<section id="how-git-solved" class="level1">
+<h1>How Git solved</h1>
+<p>However, this problem was not so simple for a team of only 2 peoples that makes every week ~50 commits, and do maintanance of 800 data pipelines, and works with ~30 cards from technical support. When you make so many changes, or, in other words, when you make so many decisions per week like this, is really hard to remember what happened on the week before, or even yesterday.</p>
 
 
 </section>

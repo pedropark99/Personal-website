@@ -9,8 +9,37 @@
 <link>https://pedro-faria.netlify.app/index.html</link>
 <atom:link href="https://pedro-faria.netlify.app/index.xml" rel="self" type="application/rss+xml"/>
 <description>A blog about programming and data analysis, specially with R and Python</description>
-<generator>quarto-1.3.353</generator>
-<lastBuildDate>Mon, 22 May 2023 03:00:00 GMT</lastBuildDate>
+<generator>quarto-1.3.433</generator>
+<lastBuildDate>Mon, 31 Jul 2023 03:00:00 GMT</lastBuildDate>
+<item>
+  <title>Improving decision making with Git and why you should care</title>
+  <dc:creator>Pedro Duarte Faria</dc:creator>
+  <link>https://pedro-faria.netlify.app/posts/2023/2023-07-31-git-mark-decisions/en/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>In the last week, me and my team encountered a situation where we need to find out why and how a certain problem occurred. We needed to understand which decisions led to this problem, and how they were made. Pretty normal stuff right?</p>
+<p>But understanding what did happened was only possible for us because we do track every change and decision that we make with Git, by signing commits and writing Pull Requests (or PRs for short). This article uses this real world situation that we faced to showcase how Git and formal processes to register changes in the codebase (like PRs) are a critical part for improving decision making and understanding how your past decisions are affecting you in the present.</p>
+</section>
+<section id="context-about-the-problem-that-we-needed-to-understand" class="level1">
+<h1>Context about the problem that we needed to understand</h1>
+</section>
+<section id="how-git-solved" class="level1">
+<h1>How Git solved</h1>
+<p>However, this problem was not so simple for a team of only 2 peoples that makes every week ~50 commits, and do maintanance of 800 data pipelines, and works with ~30 cards from technical support. When you make so many changes, or, in other words, when you make so many decisions per week like this, is really hard to remember what happened on the week before, or even yesterday.</p>
+
+
+</section>
+
+ ]]></description>
+  <guid>https://pedro-faria.netlify.app/posts/2023/2023-07-31-git-mark-decisions/en/index.html</guid>
+  <pubDate>Mon, 31 Jul 2023 03:00:00 GMT</pubDate>
+  <media:content url="https://pedro-faria.netlify.app/posts/2023/2023-07-31-git-mark-decisions/git-logo.png" medium="image" type="image/png" height="70" width="144"/>
+</item>
 <item>
   <title>A case study about Data Storytelling at some of the largest brazilian banks</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
@@ -3562,7 +3591,7 @@ Damji, Jules, Brooke Wenig, Tathagata Das, and Denny Lee. 2020. <em>Learning Spa
   <category>Apache Spark</category>
   <category>Book</category>
   <guid>https://pedro-faria.netlify.app/publications/book/introd-pyspark/en/index.html</guid>
-  <pubDate>Mon, 03 Jul 2023 15:41:00 GMT</pubDate>
+  <pubDate>Wed, 02 Aug 2023 07:48:01 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/publications/book/introd-pyspark/featured.png" medium="image" type="image/png" height="215" width="144"/>
 </item>
 </channel>
