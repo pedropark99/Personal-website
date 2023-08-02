@@ -25,12 +25,38 @@
 <p>In the last week, me and my team encountered a situation where we need to find out why and how a certain problem occurred. We needed to understand which decisions led to this problem, and how they were made. Pretty normal stuff right?</p>
 <p>But understanding what did happened was only possible for us because we do track every change and decision that we make with Git, by signing commits and writing Pull Requests (or PRs for short). This article uses this real world situation that we faced to showcase how Git and formal processes to register changes in the codebase (like PRs) are a critical part for improving decision making and understanding how your past decisions are affecting you in the present.</p>
 </section>
-<section id="context-about-the-problem-that-we-needed-to-understand" class="level1">
-<h1>Context about the problem that we needed to understand</h1>
+<section id="the-data-pipeline-where-the-problem-occurred" class="level1">
+<h1>The data pipeline where the problem occurred</h1>
+<p>The problem occurred in one of the many data pipelines that we manage and support. This specific data pipeline was a “aggregate the data and send the results to client” type of pipeline. In more technical details, this pipeline triggered the execution of a Python notebook. This notebook was perfoming the following steps:</p>
+<ol type="1">
+<li>aggregates the raw data of sales made in a specific channel.</li>
+<li>saves the result in a CSV or Excel file.</li>
+<li>send this CSV or Excel file by email to the client.</li>
+</ol>
+<p>The following diagram show these steps in a visual manner:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://pedro-faria.netlify.app/posts/2023/2023-07-31-git-mark-decisions/diagrams-en.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">A diagram that summarises the data pipeline were the problem occurred</figcaption>
+</figure>
+</div>
 </section>
-<section id="how-git-solved" class="level1">
-<h1>How Git solved</h1>
-<p>However, this problem was not so simple for a team of only 2 peoples that makes every week ~50 commits, and do maintanance of 800 data pipelines, and works with ~30 cards from technical support. When you make so many changes, or, in other words, when you make so many decisions per week like this, is really hard to remember what happened on the week before, or even yesterday.</p>
+<section id="what-problem-occurred" class="level1">
+<h1>What problem occurred ?</h1>
+<p>In essence, the data pipeline disappeared! Our client notified us saying that they were not receiving the CSV files for about a week. So we started to search for this data pipeline, and look at it’s execution logs, and search for problems.</p>
+<p>However, we just did not found the data pipeline, it had simply disapeared from our repository. The client did received some files a few weeks ago, so, we were positive that some pipeline existed at some point in the past. But where did this pipeline go? Why it disappeared?</p>
+</section>
+<section id="how-git-helped-us-to-solve-the-issue" class="level1">
+<h1>How Git helped us to solve the issue</h1>
+<p>We use Git to store and track any changes in all of our data pipelines. As you well know, files does not simply dissappear from a Git repository. When a file is removed from a Git repository, is because someone intentionally deleted the file and committed the change to the repository.</p>
+<p>So we needed to find who deleted the data pipeline, why this person made this decision, and when the deletion was made. Thanks to the our Git history of commits, we just follow the trails of commits and we found the exact commit that deleted the pipeline, and understand how our previous actions triggered the current problem.</p>
+<p>Me and my team perform many decisions all the time that affect the maintained pipelines. As a consequence, when you make so many decisions and changes to the codebase like this, is really hard to remember what decision you made, when and why you made it, etc. That is why Git help us so much, because it tracks all of these changes for us.</p>
+<p>Because of Git, we manage to track down and understand how and why did this data pipeline disappeared, and we were able to locate the data pipeline again, and restore it to it’s previous state, and re-send the files.</p>
+<p>Not only did we fixed the issue, but also, by understanding what happened, and what decisions were made that led to the dissapeareance of the data pipeline, we could identify the flaws in our decision making process. And by identifying these issues, we can now address them, so we do not make these mistakes again.</p>
+<p>Over the next sections, I explain what happened, what mistakes were made, and how we could have avoided this problem.</p>
+</section>
+<section id="what-mistakes-were-made" class="level1">
+<h1>What mistakes were made?</h1>
 
 
 </section>
@@ -3591,7 +3617,7 @@ Damji, Jules, Brooke Wenig, Tathagata Das, and Denny Lee. 2020. <em>Learning Spa
   <category>Apache Spark</category>
   <category>Book</category>
   <guid>https://pedro-faria.netlify.app/publications/book/introd-pyspark/en/index.html</guid>
-  <pubDate>Wed, 02 Aug 2023 07:48:01 GMT</pubDate>
+  <pubDate>Wed, 02 Aug 2023 10:20:26 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/publications/book/introd-pyspark/featured.png" medium="image" type="image/png" height="215" width="144"/>
 </item>
 </channel>
