@@ -78,6 +78,8 @@ that commit. We knew at that point that it was me that deleted the pipeline, a f
 But that alone does not answers another part of the problem. We still need to know why did I made that decision.
 Why did I intentionally deleted this pipeline? This is the point where PRs are essential.
 
+
+<!--
 In essence, a Pull Request (or PR) is a **proposal** to perform a `git merge` operation. 
 In other words, you create a PR when you want to merge the changes you made in a branch into another branch
 (most of the times the main branch). The "proposal" aspect of a PR means that it needs be approved to be effectively performed.
@@ -94,7 +96,7 @@ documentation.
 
 Since you need approval from another person, you usually document inside the PR what changes did you made, and, why you
 made some decisions along the way. This way, the approver of the PR can quickly understand these changes and the decisions involved.
-
+-->
 
 
 
