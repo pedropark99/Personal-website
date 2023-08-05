@@ -28,7 +28,8 @@
 </section>
 <section id="the-data-pipeline-where-the-problem-occurred" class="level1">
 <h1>The data pipeline where the problem occurred</h1>
-<p>The problem occurred in one of the many data pipelines<sup>1</sup> that we manage and support. This specific data pipeline was a “aggregate the data and send the results to client” type of pipeline. In more technical details, this pipeline triggered the execution of a Python notebook. This notebook was perfoming the following steps:</p>
+<p>The problem occurred in one of the many data pipelines<sup>1</sup> that we manage and support. This specific data pipeline was a “aggregate the data and send the results to client” type of pipeline. In more technical details, this pipeline was a JSON file that cointained all metadata that described what this pipeline was, what steps it performed, what were the dependencies and settings for each task, which specific time of the day these tasks should be performed, etc.</p>
+<p>The main step (or task) performed in this pipeline was triggering the execution of a Python notebook. This notebook was perfoming the following steps:</p>
 <ol type="1">
 <li>aggregates the raw data to get the total sales made per channel.</li>
 <li>saves the result in a CSV or Excel file.</li>
@@ -44,23 +45,21 @@
 </section>
 <section id="what-problem-occurred" class="level1">
 <h1>What problem occurred ?</h1>
-<p>In essence, both the Python notebook and the data pipeline itself disappeared! Our client notified us saying that they were not receiving the CSV files for about a week. So we started to search for this data pipeline, and look at it’s execution logs to search for problems.</p>
-<p>However, we just did not found the data pipeline. Neither did we finded the Python notebook that represented the core of the pipeline. Without this notebook, is the same as not having any pipeline at all. They both had simply disapeared from our repository. But the client did received some files a few weeks ago, so, we were positive that this pipeline did existed at some point in the past. But where did it go? Why it disappeared?</p>
-<p>The data pipeline was basically a JSON file that described the steps (or tasks) that should be performed, and, which specific time of the day these tasks should be performed, what were the dependencies, etc. The Python notebook was one of the tasks described inside this data pipeline. So the data pipeline referenced the notebook directly as one of it’s main tasks.</p>
+<p>Our client notified us saying that they were not receiving the CSV files for about a week. So we started to search for this data pipeline, to look at it’s execution logs. But we did not find anything! Both the Python notebook and the JSON file that described the data pipeline itself disappeared! Is like they never existed.</p>
+<p>Not having the Python notebook, is the same as not having any pipeline at all. Both Python and JSON files had simply disapeared from our repository. But the client did received some files a few weeks ago, so, we were positive that this pipeline did existed at some point in the past. But where did it go? Why it disappeared?</p>
 </section>
 <section id="investigating-the-commmits" class="level1">
 <h1>Investigating the commmits</h1>
-<p>We use Git to store and track any changes in all of our data pipelines. As you well know, a file do not simply disappear from a Git repository. When a file is removed from a Git repository, is because someone intentionally deleted the file and committed the change to the repository.</p>
-<p>Since we knew that this data pipeline existed at some point in the time, I started to investigate, and follow the history of commits. Took around 30 minutes to find the exact commit that deleted the data pipeline, and, oops! The commit was created by me! I deleted the data pipeline from our repository. Wait! What? … Why? Why did I deleted this data pipeline?</p>
-<p>At this point, the commit already answered two very important questions which were: 1. Who deleted the pipeline? 2. When it was deleted? Because every commit you create in Git have a timestamp associated with it, and the name of the author of that commit. We knew at that point that it was me that deleted the pipeline, a few weeks ago.</p>
+<p>We use Git to store and track any changes in all of our data pipelines. In other words, all changes that we make to the JSON files that describes each one of our data pipelines are tracked by Git. As you well know, a file do not simply disappear from a Git repository. When a file is removed from a Git repository, is because someone intentionally deleted the file and committed the change to the repository.</p>
+<p>Since we knew that this data pipeline existed at some point in the time, I started to investigate, and follow the history of commits. Took around 30 minutes to find the exact commit that deleted the data pipeline, and, oops! The commit was created by me! I deleted the data pipeline from our repository. Ok… now Why? Why did I deleted this data pipeline?</p>
+<p>At this point, Git already helped me to answer two very important questions which were: 1. Who deleted the pipeline? 2. When it was deleted? Because every commit you create in Git have a timestamp associated with it, and the name of the author of that commit, we knew at that point that it was me that deleted the pipeline, a few weeks ago.</p>
 </section>
-<section id="why-did-i-made-this-decision" class="level1">
-<h1>Why did I made this decision?</h1>
-<p>But that alone does not answers another part of the problem. We still need to know why did I made that decision. Why did I intentionally deleted this pipeline? This is the point where PRs are essential.</p>
-<p>In essence, a Pull Request (or PR) is a <strong>proposal</strong> to perform a <code>git merge</code> operation. In other words, you create a PR when you want to merge the changes you made in a branch into another branch (most of the times the main branch). The “proposal” aspect of a PR means that it needs be approved to be effectively performed.</p>
-<p>A PR is not a feature from Git. It is actually a standard feature from most Git service providers. So you create a PR inside a Git services platform such as GitHub, GitLab and Azure DevOps, and not inside Git itself. If you are not familiar with PRs, the <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests">GitHub documentation has an excellent article about it</a>.</p>
-<p>This means that in a PR, other people analyse your changes, they analyse your decisions. Having this feedback (or this approval) from another coworker is always important to develop better decision making. But also, PRs are very important source of documentation.</p>
-<p>Since you need approval from another person, you usually document inside the PR what changes did you made, and, why you made some decisions along the way. This way, the approver of the PR can quickly understand these changes and the decisions involved.</p>
+<section id="why-i-made-this-decision" class="level1">
+<h1>Why I made this decision?</h1>
+<p>But that alone does not answers another part of the problem. We still need to know why I made that decision. Why did I intentionally deleted this pipeline? This is the point where Pull Requests<sup>2</sup> can help us.</p>
+<p>Every time we want to publish some changes that we made to a data pipeline, we need to document these changes in a PR. We describe what changes we made, and why we made them. I found the associated PR that contained the commit I made, and in the description of that PR I found the reason why I deleted the pipeline.</p>
+<p>The pipeline was constantly failing with a “notebook not found” error. In other words, the pipeline was trying to trigger the execution of the Python notebook that I mentioned before. But the notebook itself was not found, and because of that, it was throwing this error. As a consequence, the pipeline was basically useless, it was creating execution costs without delivering any value.</p>
+<p>So I deleted the pipeline. This way we were not spending our resources trying to execute something that we know is going to throw an error, and will not give any value.</p>
 </section>
 <section id="another-part-of-the-problem" class="level1">
 <h1>Another part of the problem</h1>
@@ -84,6 +83,7 @@
 
 <ol>
 <li id="fn1"><p>What is a pipeline? A pipeline is just a sequence of steps (or tasks) to be performed at a specific time of the day (or a specific day of the week or of the month, etc.). And a data pipeline is a pipeline that contains tasks that load, transform, send, or ingest data in some form.↩︎</p></li>
+<li id="fn2"><p>In essence, a Pull Request (or PR) is a <strong>proposal</strong> to perform a <code>git merge</code> operation. In other words, you create a PR when you want to merge the changes you made in a branch into another branch (most of the times the main branch). The “proposal” aspect of a PR means that it needs be approved to be effectively performed. A PR is not a feature from Git. It is actually a standard feature from most Git service providers. So you create a PR inside a Git services platform such as GitHub, GitLab and Azure DevOps, and not inside Git itself. If you are not familiar with PRs, the <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests">GitHub documentation has an excellent article about it</a>↩︎</p></li>
 </ol>
 </section></div> ]]></description>
   <guid>https://pedro-faria.netlify.app/posts/2023/2023-07-31-git-mark-decisions/en/index.html</guid>
@@ -3641,7 +3641,7 @@ Damji, Jules, Brooke Wenig, Tathagata Das, and Denny Lee. 2020. <em>Learning Spa
   <category>Apache Spark</category>
   <category>Book</category>
   <guid>https://pedro-faria.netlify.app/publications/book/introd-pyspark/en/index.html</guid>
-  <pubDate>Wed, 02 Aug 2023 22:40:00 GMT</pubDate>
+  <pubDate>Sat, 05 Aug 2023 13:56:07 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/publications/book/introd-pyspark/featured.png" medium="image" type="image/png" height="215" width="144"/>
 </item>
 </channel>
