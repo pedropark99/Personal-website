@@ -316,23 +316,48 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 ...</code></pre>
 <p>That looks weird, because it go against our naming conventions. Me and my team do not name files like this. Than, we raised the question: “wait! I think someone is renaming these notebooks”. Later that day, our suspicions were confirmed. A colleague outside of our team was intentionally renaming the Python notebooks that were published in the production environment. That is why we were not finding the notebooks, because their names were modified.</p>
 <p>The immediate consequence of this renaming action was that the link between the Python notebooks and the data pipelines was lost. That is, the data pipelines were trying to execute these notebooks, but they did not find these notebooks, because their original names were lost.</p>
-<p>If we did used Git to track every change made to these python notebooks, we would have discovered this problem much earlier, and could acted to fix it. But the damage was already made. We had to:</p>
+<p>If we did used Git to track every change made to these python notebooks, we would have discovered this problem much earlier, and could acted to fix it. But the damage was already made. As next steps, we had to:</p>
 <ol type="1">
 <li>rename the notebooks back to their original names;</li>
-<li>remove the some of privileges of our colleague in the Databricks environment;</li>
+<li>remove some of the privileges of our colleague in the Databricks environment;</li>
 <li>advise this colleague about what happened, and how his actions caused harm.</li>
 </ol>
 </section>
 <section id="what-mistakes-were-made" class="level1">
 <h1>What mistakes were made?</h1>
+<p>Below we have the timeline of important events we described:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./../timeline.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">The timeline of events</figcaption>
+</figure>
+</div>
+<p>In my head, there was at least three mistakes that were made across this timeline:</p>
+<ol type="1">
+<li>I did not communicated the removal of the pipeline properly;</li>
+<li>Our colleague renamed a notebook in a production environment;</li>
+<li>Not using Git to track changes in the notebooks at production environment.</li>
+</ol>
+<p>Deleting the pipeline was not a mistake. But my mistake was to not <strong>communicate my action</strong> properly. I mean, I did communicated the removal of the pipeline to my peers, but I did not communicate it to my colleague outside of my team that was also involved with this specific client, the same colleague that started to rename multiple notebooks.</p>
+<p>In other words, if I had communicated to him that I deleted the pipeline, we would probably have a dialog similar to this:</p>
+<ul>
+<li><p>Colleague: “wait! Our client is still using this data pipeline, why did you removed it?”</p></li>
+<li><p>Me: “because the pipeline was not finding the notebook”</p></li>
+<li><p>Colleague: “but why is it not finding the notebook?”</p></li>
+<li><p>Me: “well, the pipeline is looking for a notebook called ‘X’, but this notebook disappeared. It does not exist in our environment.”</p></li>
+<li><p>Colleague: “wait! I remember of this notebook! I think I just renamed it a few days ago”</p></li>
+<li><p>Me: “wait! You renamed a notebook in production?”</p></li>
+<li><p>Colleague: “yes, I think so”</p></li>
+</ul>
+<p>With this dialog we could probably solved the puzzle much quicker, and we could fix the mistakes before any more harm could be created. So if I did communicated to this colleague that I deleted the pipeline, we would probably reach the core of the problem more quickly.</p>
+<p>Everything started when our colleague decided to rename a notebook directly in the production environment without us knowing. This was certainly a mistake, but who does not mistakes sometimes right? As we described in the article, the “Revision system” of Databricks is limited, and did not tracked this very important change, and because of that, we initially had no idea what have happened with the notebook.</p>
+<p>We took one week to actually figure it out what was causing the “disappearance” of the notebooks. If we did use Git to track all changes made to the notebooks published in the production environment, we would spot the “renaming action” made much, much, much quicker. So not using Git over these notebooks was a mistake too.</p>
 </section>
 <section id="how-git-helped-us-to-solve-the-issue" class="level1">
 <h1>How Git helped us to solve the issue</h1>
-<p>So we needed to find who deleted the data pipeline, why this person made this decision, and when the deletion was made. Thanks to the our Git history of commits, we just follow the trails of commits and we found the exact commit that deleted the pipeline, and understand how our previous actions triggered the current problem.</p>
-<p>Me and my team perform many decisions all the time that affect the maintained pipelines. As a consequence, when you make so many decisions and changes to the codebase like this, is really hard to remember what decision you made, when and why you made it, etc. That is why Git help us so much, because it tracks all of these changes for us.</p>
-<p>Because of Git, we manage to track down and understand how and why did this data pipeline disappeared, and we were able to locate the data pipeline again, and restore it to it’s previous state, and re-send the files.</p>
+<p>Git is an extremely powerful tool, and by having a centrallized server that register all changes you make to the project, you can look at the past, understand what changes you made. You can actually see the evolution or the timeline of your project, and perceive how much features, or, how much improvements you made to the project. You can also spot the decisions you made in the past. This gives you the ability to re-think your decision making process.</p>
+<p>One fact we knew from the beggining: a data pipeline and a Python notebook simply disappeared from our environment. With Git we manage to track down and understand how, when and why did the data pipeline disappeared, and we were able to locate the data pipeline again, and restore it to it’s previous state, and re-send the files. If we did used Git on the notebooks, we could also track down the renaming operations made to these notebooks as well.</p>
 <p>Not only did we fixed the issue, but also, by understanding what happened, and what decisions were made that led to the dissapeareance of the data pipeline, we could identify the flaws in our decision making process. And by identifying these issues, we can now address them, so we do not make these mistakes again.</p>
-<p>Over the next sections, I explain what happened, what mistakes were made, and how we could have avoided this problem.</p>
 
 
 </section>

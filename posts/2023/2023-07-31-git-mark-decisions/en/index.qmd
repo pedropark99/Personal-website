@@ -176,37 +176,79 @@ If we did used Git to track every change made to these python notebooks, we woul
 and could acted to fix it. But the damage was already made. As next steps, we had to:
 
 1. rename the notebooks back to their original names;
-2. remove the some of privileges of our colleague in the Databricks environment;
+2. remove some of the privileges of our colleague in the Databricks environment;
 3. advise this colleague about what happened, and how his actions caused harm.
 
 
 
 # What mistakes were made?
 
+Below we have the timeline of important events we described:
+
+![The timeline of events](./../timeline.png)
+
+In my head, there was at least three mistakes that were made across this timeline:
+
+1. I did not communicated the removal of the pipeline properly;
+2. Our colleague renamed a notebook in a production environment;
+3. Not using Git to track changes in the notebooks at production environment.
+
+
+Deleting the pipeline was not a mistake. But my mistake was to not **communicate my action** properly.
+I mean, I did communicated the removal of the pipeline to my peers, but
+I did not communicate it to my colleague outside of my team that was also involved with this specific client,
+the same colleague that started to rename multiple notebooks.
+
+In other words, if I had communicated to him that I deleted the pipeline, we would probably have a dialog similar to this:
+
+- Colleague: "wait! Our client is still using this data pipeline, why did you removed it?"
+
+- Me: "because the pipeline was not finding the notebook"
+
+- Colleague: "but why is it not finding the notebook?"
+
+- Me: "well, the pipeline is looking for a notebook called 'X', but this notebook disappeared. It does not exist in our environment."
+
+- Colleague: "wait! I remember of this notebook! I think I just renamed it a few days ago"
+
+- Me: "wait! You renamed a notebook in production?"
+
+- Colleague: "yes, I think so"
+
+With this dialog we could probably solved the puzzle much quicker, and we could fix the mistakes before any
+more harm could be created. So if I did communicated to this colleague that I deleted the pipeline, we would probably
+reach the core of the problem more quickly.
+
+
+Everything started when our colleague decided to rename a notebook directly in the production environment without us knowing.
+This was certainly a mistake, but who does not mistakes sometimes right?
+As we described in the article, the "Revision system" of Databricks is limited, and did not tracked this very important
+change, and because of that, we initially had no idea what have happened with the notebook.
+
+We took one week to actually figure it out what was causing the "disappearance" of the notebooks. If we did use Git to
+track all changes made to the notebooks published in the production environment, we would spot the "renaming action"
+made much, much, much quicker. So not using Git over these notebooks was a mistake too.
+
 
 
 
 # How Git helped us to solve the issue
 
+Git is an extremely powerful tool, and by having a centrallized server that register all changes you make to the
+project, you can look at the past, understand what changes you made. You can actually see the evolution or
+the timeline of your project, and perceive how much features, or, how much improvements
+you made to the project. You can also spot the decisions you made in the past. This gives you the ability to re-think your
+decision making process.
 
-So we needed to find who deleted the data pipeline, why this person made this decision, and when the deletion
-was made. Thanks to the our Git history of commits, we just follow the trails of commits and we found the exact
-commit that deleted the pipeline, and understand how our previous actions triggered the current problem.
-
-
-Me and my team perform many decisions all the time that affect the maintained pipelines.
-As a consequence, when you make so many decisions and changes to the codebase like this, is really hard to remember what decision you made, when and
-why you made it, etc. That is why Git help us so much, because it tracks all of these changes for us.
-
-
-
-Because of Git, we manage to track down and understand how and why did this data pipeline disappeared, and
+One fact we knew from the beggining: a data pipeline and a Python notebook simply disappeared from our environment. 
+With Git we manage to track down and understand how, when and why did the data pipeline disappeared, and
 we were able to locate the data pipeline again, and restore it to it's previous state,
-and re-send the files.
+and re-send the files. If we did used Git on the notebooks, we could also track down the renaming operations made
+to these notebooks as well.
 
 Not only did we fixed the issue, but also, by understanding what happened, and what decisions were made
 that led to the dissapeareance of the data pipeline, we could identify the flaws in our decision making process.
 And by identifying these issues, we can now address them, so we do not make these mistakes again.
 
-Over the next sections, I explain what happened, what mistakes were made, and how we could have avoided this problem.
+
 
