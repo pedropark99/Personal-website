@@ -285,11 +285,43 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <h1>Why I made this decision?</h1>
 <p>But that alone does not answers another part of the problem. We still need to know why I made that decision. Why did I intentionally deleted this pipeline? This is the point where Pull Requests<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> can help us.</p>
 <p>Every time we want to publish some changes that we made to a data pipeline, we need to document these changes in a PR. We describe what changes we made, and why we made them. I found the associated PR that contained the commit I made, and in the description of that PR I found the reason why I deleted the pipeline.</p>
-<p>The pipeline was constantly failing with a “notebook not found” error. In other words, the pipeline was trying to trigger the execution of the Python notebook that I mentioned before. But the notebook itself was not found, and because of that, it was throwing this error. As a consequence, the pipeline was basically useless, it was creating execution costs without delivering any value.</p>
+<p>The pipeline was constantly failing with a “notebook not found” error. In other words, the pipeline was trying to trigger the execution of the Python notebook that I mentioned before. But the notebook itself was not found, and because of that, it was throwing this error. This means that the pipeline was basically useless, it was creating execution costs without delivering any value. It also means, that the Python notebook disappeared before the pipeline was deleted.</p>
 <p>So I deleted the pipeline. This way we were not spending our resources trying to execute something that we know is going to throw an error, and will not give any value.</p>
 </section>
 <section id="another-part-of-the-problem" class="level1">
 <h1>Another part of the problem</h1>
+<p>Ok, now we know why I deleted the pipeline. But that in itself raises some new questions for us. Why did the Python notebook disappeared? The reality is that… we didn’t know why. Unfortunately, our Python notebooks were not hosted inside a Git repository. This means that we did not traced any changes that were made to the notebook.</p>
+<p>To be fair, our Python notebooks are hosted inside a Databricks instance, and, if you are familiar with Databricks, you know that actually the Databricks platform do track (to some extent) every change that is made to the notebook, with the <a href="https://docs.databricks.com/pt/notebooks/notebooks-code.html#version-control">Revisions pannel</a>.</p>
+<p>So yes, we do have some level of monitoring over the changes made to these notebooks. But not enough to actually understand why that particular notebook was missing. In other words, this “Revision” pannel of Databricks is not capable of tracking removal actions over notebooks.</p>
+<p>We were only able to figure it out what was happening in the week after, when we discover that other Python notebooks were also missing. Was a set of three notebooks, called <code>Job_ClientX_Opened_Sessions</code>, <code>Job_ClientX_Sales_per_Channel</code> and <code>Job_ClientX_Opened_Tickets</code>. These three notebooks were located at the folder <code>ClientX</code>. So we had a file structure like this:</p>
+<pre><code>├───📁 ClientX
+│    ├───Job_ClientX_Opened_Sessions.py
+│    ├───Job_ClientX_Sales_per_Channel.py
+│    └───Job_ClientX_Opened_Tickets.py
+│ 
+├───📁 ClientY
+├───📁 ClientW
+└───📁 ClientZ
+...</code></pre>
+<p>At that specific day, we found in the execution logs that , close to 08:00 AM, this set of notebooks was avaialable, in other words, they did existed in our Databricks environment close to 08:00 AM. But on that same day, when we searched again at 11:00 AM for these same notebooks in the Databricks environment, we did not found them anymore.</p>
+<p>We knew at that point, that these notebooks disappeared within the last 3 hours. It was very recent. But a detail called our attention. The folder <code>ClientX</code>, where these notebooks were supposed to be, was filled with other notebooks with similar names, like this:</p>
+<pre><code>├───📁 ClientX
+│    ├───[ClientX] Opened sessions.py
+│    ├───[ClientX] Sales per Channel.py
+│    └───[ClientX] Opened Tickets.py
+│ 
+├───📁 ClientY
+├───📁 ClientW
+└───📁 ClientZ
+...</code></pre>
+<p>That looks weird, because it go against our naming conventions. Me and my team do not name files like this. Than, we raised the question: “wait! I think someone is renaming these notebooks”. Later that day, our suspicions were confirmed. A colleague outside of our team was intentionally renaming the Python notebooks that were published in the production environment. That is why we were not finding the notebooks, because their names were modified.</p>
+<p>The immediate consequence of this renaming action was that the link between the Python notebooks and the data pipelines was lost. That is, the data pipelines were trying to execute these notebooks, but they did not find these notebooks, because their original names were lost.</p>
+<p>If we did used Git to track every change made to these python notebooks, we would have discovered this problem much earlier, and could acted to fix it. But the damage was already made. We had to:</p>
+<ol type="1">
+<li>rename the notebooks back to their original names;</li>
+<li>remove the some of privileges of our colleague in the Databricks environment;</li>
+<li>advise this colleague about what happened, and how his actions caused harm.</li>
+</ol>
 </section>
 <section id="what-mistakes-were-made" class="level1">
 <h1>What mistakes were made?</h1>
