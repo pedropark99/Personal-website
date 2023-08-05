@@ -9,7 +9,7 @@
 <link>https://pedro-faria.netlify.app/index.html</link>
 <atom:link href="https://pedro-faria.netlify.app/index.xml" rel="self" type="application/rss+xml"/>
 <description>A blog about programming and data analysis, specially with R and Python</description>
-<generator>quarto-1.3.353</generator>
+<generator>quarto-1.3.433</generator>
 <lastBuildDate>Mon, 22 May 2023 03:00:00 GMT</lastBuildDate>
 <item>
   <title>A case study about Data Storytelling at some of the largest brazilian banks</title>
@@ -3562,7 +3562,7 @@ Damji, Jules, Brooke Wenig, Tathagata Das, and Denny Lee. 2020. <em>Learning Spa
   <category>Apache Spark</category>
   <category>Book</category>
   <guid>https://pedro-faria.netlify.app/publications/book/introd-pyspark/en/index.html</guid>
-  <pubDate>Mon, 03 Jul 2023 15:41:00 GMT</pubDate>
+  <pubDate>Sat, 05 Aug 2023 20:10:35 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/publications/book/introd-pyspark/featured.png" medium="image" type="image/png" height="215" width="144"/>
 </item>
 </channel>

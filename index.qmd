@@ -8,10 +8,16 @@ format:
   html:
     page-layout: full
 listing:
-  - id: posts
+  - id: posts-en-index
     type: grid
     sort: "date desc"
-    contents: posts/**/*/index.qmd
+    contents: posts/*/*/en/index.qmd
+    max-items: 6
+  - id: posts-pt-index
+    type: grid
+    sort: "date desc"
+    contents: posts/*/*/pt/index.qmd
+    max-items: 6
   - id: books
     type: grid
     sort: "date desc"
@@ -19,6 +25,7 @@ listing:
     feed: true
 
 freeze: true
+
 ---
 
 In this page, you can quickly scan through my latest published books 📚 and blog posts 📌. But, if you prefer, you can read a quick resume of me and my work in the [About Me](about.qmd) section too. Be free to contact me via email if you have an interesting proposal 😉. If you want to support me monetarily, you can send me a Pix (more info in the [Donate or Sponsor Me](donate.qmd) section).
@@ -28,12 +35,16 @@ In this page, you can quickly scan through my latest published books 📚 and bl
 ::: {#books}
 :::
 
-## Posts
+## Most recent Posts in English
 
-::: {#posts}
+::: {#posts-en-index}
 :::
 
-<br>
+## Posts mais recentes em Português
+
+::: {#posts-pt-index}
+:::
+
 
 
 
