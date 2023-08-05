@@ -173,7 +173,7 @@ That is, the data pipelines were trying to execute these notebooks, but they did
 names were lost.
 
 If we did used Git to track every change made to these python notebooks, we would have discovered this problem much earlier,
-and could acted to fix it. But the damage was already made. We had to:
+and could acted to fix it. But the damage was already made. As next steps, we had to:
 
 1. rename the notebooks back to their original names;
 2. remove the some of privileges of our colleague in the Databricks environment;
