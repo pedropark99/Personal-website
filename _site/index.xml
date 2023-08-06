@@ -10,7 +10,279 @@
 <atom:link href="https://pedro-faria.netlify.app/index.xml" rel="self" type="application/rss+xml"/>
 <description>A blog about programming and data analysis, specially with R and Python</description>
 <generator>quarto-1.3.433</generator>
-<lastBuildDate>Mon, 22 May 2023 03:00:00 GMT</lastBuildDate>
+<lastBuildDate>Mon, 31 Jul 2023 03:00:00 GMT</lastBuildDate>
+<item>
+  <title>Improving decision making with Git and why you should care</title>
+  <dc:creator>Pedro Duarte Faria</dc:creator>
+  <link>https://pedro-faria.netlify.app/posts/2023/2023-07-31-git-mark-decisions/en/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>Last week, me and my team encountered a situation where we need to find out why and how a certain problem occurred. We needed to understand which decisions led to this problem, and why they were made. Pretty normal stuff right?</p>
+<p>But understanding what happened was only possible for us because we track every change and every decision that we make with Git, by signing commits and writing Pull Requests (or PRs for short). This article uses this real world situation that we faced to showcase how Git and formal processes to register changes in the codebase (like PRs) are a critical part for improving decision making and understanding how your past decisions are affecting you in the present.</p>
+<p>I begin the article describing what problem occurred, and in sequence, I explain what mistakes were made, and how Git helped us to identify those mistakes.</p>
+</section>
+<section id="the-data-pipeline-where-the-problem-occurred" class="level1">
+<h1>The data pipeline where the problem occurred</h1>
+<p>The problem occurred in one of the many data pipelines<sup>1</sup> that we manage and support. This specific data pipeline was a “aggregate the data and send the results to client” type of pipeline. In more technical details, this pipeline was a JSON file that cointained all metadata that described what this pipeline was, what steps it performed, what were the dependencies and settings for each task, which specific time of the day these tasks should be performed, etc.</p>
+<p>The main step (or task) performed in this pipeline was triggering the execution of a Python notebook. This notebook was perfoming the following steps:</p>
+<ol type="1">
+<li>aggregates the raw data to get the total sales made per channel.</li>
+<li>saves the result in a CSV or Excel file.</li>
+<li>send this CSV or Excel file by email to the client.</li>
+</ol>
+<p>The following diagram show these steps in a visual manner:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://pedro-faria.netlify.app/posts/2023/2023-07-31-git-mark-decisions/diagrams-en.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">A diagram that summarises the data pipeline were the problem occurred</figcaption>
+</figure>
+</div>
+</section>
+<section id="what-problem-occurred" class="level1">
+<h1>What problem occurred ?</h1>
+<p>Our client notified us saying that they were not receiving the CSV files for about a week. So we started to search for this data pipeline, to look at it’s execution logs. But we did not find anything! Both the Python notebook and the JSON file that described the data pipeline itself disappeared! Is like they never existed.</p>
+<p>Not having the Python notebook, is the same as not having any pipeline at all. Both Python and JSON files had simply disapeared from our repository. But the client did received some files a few weeks ago, so, we were positive that this pipeline did existed at some point in the past. But where did it go? Why it disappeared?</p>
+</section>
+<section id="investigating-the-commmits" class="level1">
+<h1>Investigating the commmits</h1>
+<p>We use Git to store and track any changes in all of our data pipelines. In other words, all changes that we make to the JSON files that describes each one of our data pipelines are tracked by Git. As you well know, a file do not simply disappear from a Git repository. When a file is removed from a Git repository, is because someone intentionally deleted the file and committed the change to the repository.</p>
+<p>Since we knew that this data pipeline existed at some point in the time, I started to investigate, and follow the history of commits. Took around 30 minutes to find the exact commit that deleted the data pipeline, and, oops! The commit was created by me! I deleted the data pipeline from our repository. Ok… now Why? Why did I deleted this data pipeline?</p>
+<p>At this point, Git already helped me to answer two very important questions which were: 1. Who deleted the pipeline? 2. When it was deleted? Because every commit you create in Git have a timestamp associated with it, and the name of the author of that commit, we knew at that point that it was me that deleted the pipeline, a few weeks ago.</p>
+</section>
+<section id="why-i-made-this-decision" class="level1">
+<h1>Why I made this decision?</h1>
+<p>But that alone does not answers another part of the problem. We still need to know why I made that decision. Why did I intentionally deleted this pipeline? This is the point where Pull Requests<sup>2</sup> can help us.</p>
+<p>Every time we want to publish some changes that we made to a data pipeline, we need to document these changes in a PR. We describe what changes we made, and why we made them. I found the associated PR that contained the commit I made, and in the description of that PR I found the reason why I deleted the pipeline.</p>
+<p>The pipeline was constantly failing with a “notebook not found” error. In other words, the pipeline was trying to trigger the execution of the Python notebook that I mentioned before. But the notebook itself was not found, and because of that, it was throwing this error. This means that the pipeline was basically useless, it was creating execution costs without delivering any value. It also means, that the Python notebook disappeared before the pipeline was deleted.</p>
+<p>So I deleted the pipeline. This way we were not spending our resources trying to execute something that we know is going to throw an error, and will not give any value.</p>
+</section>
+<section id="another-part-of-the-problem" class="level1">
+<h1>Another part of the problem</h1>
+<p>Ok, now we know why I deleted the pipeline. But that in itself raises some new questions for us. Why did the Python notebook disappeared? The reality is that… we didn’t know why. Unfortunately, our Python notebooks were not hosted inside a Git repository. This means that we did not traced any changes that were made to the notebook.</p>
+<p>To be fair, our Python notebooks are hosted inside a Databricks instance, and, if you are familiar with Databricks, you know that actually the Databricks platform do track (to some extent) every change that is made to the notebook, with the <a href="https://docs.databricks.com/pt/notebooks/notebooks-code.html#version-control">Revisions pannel</a>.</p>
+<p>So yes, we do have some level of monitoring over the changes made to these notebooks. But not enough to actually understand why that particular notebook was missing. In other words, this “Revision” pannel of Databricks is not capable of tracking removal actions over notebooks.</p>
+<p>We were only able to figure it out what was happening in the week after, when we discover that other Python notebooks were also missing. Was a set of three notebooks, called <code>Job_ClientX_Opened_Sessions</code>, <code>Job_ClientX_Sales_per_Channel</code> and <code>Job_ClientX_Opened_Tickets</code>. These three notebooks were located at the folder <code>ClientX</code>. So we had a file structure like this:</p>
+<pre><code>├───📁 ClientX
+│    ├───Job_ClientX_Opened_Sessions.py
+│    ├───Job_ClientX_Sales_per_Channel.py
+│    └───Job_ClientX_Opened_Tickets.py
+│ 
+├───📁 ClientY
+├───📁 ClientW
+└───📁 ClientZ
+...</code></pre>
+<p>At that specific day, we found in the execution logs that , close to 08:00 AM, this set of notebooks was avaialable, in other words, they did existed in our Databricks environment close to 08:00 AM. But on that same day, when we searched again at 11:00 AM for these same notebooks in the Databricks environment, we did not found them anymore.</p>
+<p>We knew at that point, that these notebooks disappeared within the last 3 hours. It was very recent. But a detail called our attention. The folder <code>ClientX</code>, where these notebooks were supposed to be, was filled with other notebooks with similar names, like this:</p>
+<pre><code>├───📁 ClientX
+│    ├───[ClientX] Opened sessions.py
+│    ├───[ClientX] Sales per Channel.py
+│    └───[ClientX] Opened Tickets.py
+│ 
+├───📁 ClientY
+├───📁 ClientW
+└───📁 ClientZ
+...</code></pre>
+<p>That looks weird, because it go against our naming conventions. Me and my team do not name files like this. Than, we raised the question: “wait! I think someone is renaming these notebooks”. Later that day, our suspicions were confirmed. A colleague outside of our team was intentionally renaming the Python notebooks that were published in the production environment. That is why we were not finding the notebooks, because their names were modified.</p>
+<p>The immediate consequence of this renaming action was that the link between the Python notebooks and the data pipelines was lost. That is, the data pipelines were trying to execute these notebooks, but they did not find these notebooks, because their original names were lost.</p>
+<p>If we did used Git to track every change made to these python notebooks, we would have discovered this problem much earlier, and could acted to fix it. But the damage was already made. As next steps, we had to:</p>
+<ol type="1">
+<li>rename the notebooks back to their original names;</li>
+<li>remove some of the privileges of our colleague in the Databricks environment;</li>
+<li>advise this colleague about what happened, and how his actions caused harm.</li>
+</ol>
+</section>
+<section id="what-mistakes-were-made" class="level1">
+<h1>What mistakes were made?</h1>
+<p>Below we have the timeline of important events we described:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://pedro-faria.netlify.app/posts/2023/2023-07-31-git-mark-decisions/timeline.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">The timeline of events</figcaption>
+</figure>
+</div>
+<p>In my head, there was at least three mistakes that were made across this timeline:</p>
+<ol type="1">
+<li>I did not communicated the removal of the pipeline properly;</li>
+<li>Our colleague renamed a notebook in a production environment;</li>
+<li>Not using Git to track changes in the notebooks at production environment.</li>
+</ol>
+<p>Deleting the pipeline was not a mistake. But my mistake was to not <strong>communicate my action</strong> properly. I mean, I did communicated the removal of the pipeline to my peers, but I did not communicate it to my colleague outside of my team that was also involved with this specific client, the same colleague that started to rename multiple notebooks.</p>
+<p>In other words, if I had communicated to him that I deleted the pipeline, we would probably have a dialog similar to this:</p>
+<ul>
+<li><p>Colleague: “wait! Our client is still using this data pipeline, why did you removed it?”</p></li>
+<li><p>Me: “because the pipeline was not finding the notebook”</p></li>
+<li><p>Colleague: “but why is it not finding the notebook?”</p></li>
+<li><p>Me: “well, the pipeline is looking for a notebook called ‘X’, but this notebook disappeared. It does not exist in our environment.”</p></li>
+<li><p>Colleague: “wait! I remember of this notebook! I think I just renamed it a few days ago”</p></li>
+<li><p>Me: “wait! You renamed a notebook in production?”</p></li>
+<li><p>Colleague: “yes, I think so”</p></li>
+</ul>
+<p>With this dialog we could probably solved the puzzle much quicker, and we could fix the mistakes before any more harm could be created. So if I did communicated to this colleague that I deleted the pipeline, we would probably reach the core of the problem more quickly.</p>
+<p>Everything started when our colleague decided to rename a notebook directly in the production environment without us knowing. This was certainly a mistake, but who does not mistakes sometimes right? As we described in the article, the “Revision system” of Databricks is limited, and did not tracked this very important change, and because of that, we initially had no idea what have happened with the notebook.</p>
+<p>We took one week to actually figure it out what was causing the “disappearance” of the notebooks. If we did use Git to track all changes made to the notebooks published in the production environment, we would spot the “renaming action” made much, much, much quicker. So not using Git over these notebooks was a mistake too.</p>
+</section>
+<section id="how-git-helped-us-to-solve-the-issue" class="level1">
+<h1>How Git helped us to solve the issue</h1>
+<p>Git is an extremely powerful tool, and by having a centrallized server that register all changes you make to the project, you can look at the past, understand what changes you made. You can actually see the evolution or the timeline of your project, and perceive how much features, or, how much improvements you made to the project. You can also spot the decisions you made in the past. This gives you the ability to re-think your decision making process.</p>
+<p>One fact we knew from the beggining: a data pipeline and a Python notebook simply disappeared from our environment. With Git we manage to track down and understand how, when and why did the data pipeline disappeared, and we were able to locate the data pipeline again, and restore it to it’s previous state, and re-send the files. If we did used Git on the notebooks, we could also track down the renaming operations made to these notebooks as well.</p>
+<p>Not only did we fixed the issue, but also, by understanding what happened, and what decisions were made that led to the dissapeareance of the data pipeline, we could identify the flaws in our decision making process. And by identifying these issues, we can now address them, so we do not make these mistakes again.</p>
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>What is a pipeline? A pipeline is just a sequence of steps (or tasks) to be performed at a specific time of the day (or a specific day of the week or of the month, etc.). And a data pipeline is a pipeline that contains tasks that load, transform, send, or ingest data in some form.↩︎</p></li>
+<li id="fn2"><p>In essence, a Pull Request (or PR) is a <strong>proposal</strong> to perform a <code>git merge</code> operation. In other words, you create a PR when you want to merge the changes you made in a branch into another branch (most of the times the main branch). The “proposal” aspect of a PR means that it needs be approved to be effectively performed. A PR is not a feature from Git. It is actually a standard feature from most Git service providers. So you create a PR inside a Git services platform such as GitHub, GitLab and Azure DevOps, and not inside Git itself. If you are not familiar with PRs, the <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests">GitHub documentation has an excellent article about it</a>↩︎</p></li>
+</ol>
+</section></div> ]]></description>
+  <guid>https://pedro-faria.netlify.app/posts/2023/2023-07-31-git-mark-decisions/en/index.html</guid>
+  <pubDate>Mon, 31 Jul 2023 03:00:00 GMT</pubDate>
+  <media:content url="https://pedro-faria.netlify.app/posts/2023/2023-07-31-git-mark-decisions/git-logo.png" medium="image" type="image/png" height="70" width="144"/>
+</item>
+<item>
+  <title>Melhorando a tomada de decisão com Git e porquê você deveria se importar</title>
+  <dc:creator>Pedro Duarte Faria</dc:creator>
+  <link>https://pedro-faria.netlify.app/posts/2023/2023-07-31-git-mark-decisions/pt/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="introdução" class="level2">
+<h2 class="anchored" data-anchor-id="introdução">Introdução</h2>
+<p>Na semana passada, eu e minha equipe nos deparamos com uma situação em que precisávamos descobrir por que e como ocorreu um determinado problema. Precisávamos entender quais decisões levaram a esse problema. Algo bem normal, não é?</p>
+<p>Mas entender o que aconteceu só foi possível para nós porque rastreamos cada mudança e cada decisão que tomamos com o Git, assinando commits e escrevendo Pull Requests (ou PRs para abreviar). Este artigo usa essa situação do mundo real que enfrentamos para mostrar como o Git e os processos formais para registrar alterações na base de código (como PRs) são uma parte crítica para melhorar a tomada de decisões e entender como suas decisões passadas estão afetando você no presente.</p>
+<p>Começo o artigo descrevendo qual foi o problema que nós enfrentamos e, na sequência, explico quais erros foram cometidos e como o Git nos ajudou a identificar esses erros.</p>
+</section>
+<section id="o-pipeline-de-dados-onde-ocorreu-o-problema" class="level2">
+<h2 class="anchored" data-anchor-id="o-pipeline-de-dados-onde-ocorreu-o-problema">O pipeline de dados onde ocorreu o problema</h2>
+<p>O problema ocorreu em um dos muitos pipelines de dados<sup>1</sup> que gerenciamos e oferecemos suporte. Esse pipeline de dados específico era um pipeline do tipo “agregar os dados e enviar os resultados ao cliente”. Em detalhes mais técnicos, esse pipeline era um arquivo JSON que continha todos os metadados que descreviam o que era esse pipeline, quais etapas deveriam ser executavas, quais eram as dependências e configurações de cada tarefa, em que horário específico do dia essas tarefas deveriam ser executadas, etc.</p>
+<p>A principal etapa (ou tarefa) executada nesse pipeline era a execução de um notebook de Python. Este notebook estava executando as seguintes etapas:</p>
+<ul>
+<li>agregar os dados brutos para obter o total de vendas feitas por canal.</li>
+<li>salva o resultado em um arquivo CSV ou Excel.</li>
+<li>enviar este arquivo CSV ou Excel por e-mail para o cliente.</li>
+</ul>
+<p>O diagrama a seguir mostra essas etapas de maneira visual:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://pedro-faria.netlify.app/posts/2023/2023-07-31-git-mark-decisions/diagrams-pt.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Um diagrama que resume o pipeline de dados onde o problema ocorreu</figcaption>
+</figure>
+</div>
+</section>
+<section id="qual-foi-o-problema-que-ocorreu" class="level2">
+<h2 class="anchored" data-anchor-id="qual-foi-o-problema-que-ocorreu">Qual foi o problema que ocorreu?</h2>
+<p>Um dia, nosso cliente nos notificou dizendo que não estava recebendo os arquivos CSV há cerca de uma semana. Então começamos a procurar por esse pipeline de dados, com o objetivo de verificar os seus logs de execução. Contudo, nós simplesmente não encontramos nada! Tanto o notebook Python quanto o arquivo JSON que descrevia o próprio pipeline de dados desapareceram! É como se eles nunca tivessem existido.</p>
+<p>Não ter o notebook Python era a mesma coisa que não ter pipeline nenhum. Os arquivos Python e JSON simplesmente desapareceram de nosso repositório. Mas nós sabíamos que o cliente tinha recebido alguns arquivos a algumas semanas atrás, portanto, tínhamos certeza de que esse pipeline existia em algum momento no passado. Mas para onde ele foi? Por que ele desapareceu?</p>
+</section>
+<section id="investigando-os-commits" class="level2">
+<h2 class="anchored" data-anchor-id="investigando-os-commits">Investigando os commits</h2>
+<p>Usamos o Git para armazenar e rastrear quaisquer alterações feitas em todos os nossos pipelines de dados. Em outras palavras, todas as alterações que fazemos nos arquivos JSON que descrevem cada um de nossos pipelines de dados são rastreadas pelo Git. Como você bem sabe, um arquivo simplesmente não desaparece de um repositório Git. Quando um arquivo é removido de um repositório Git, é porque alguém excluiu intencionalmente o arquivo, e criou o commit da alteração no repositório.</p>
+<p>Como sabíamos que esse pipeline de dados existia em algum momento, eu comecei a investigar e seguir o histórico de commits. Demorou cerca de 30 minutos para encontrar o commit exato que excluiu o pipeline de dados e, oops! O commit foi criado por mim! Eu excluí o pipeline de dados do nosso repositório. Ok… agora, por quê? Por que eu excluí esse pipeline de dados?</p>
+<p>A essa altura, o Git já me ajudou a responder duas questões muito importantes que eram: 1. Quem deletou o pipeline? 2. Quando foi excluído? Pois todo commit que você cria no Git tem um carimbo de data/hora associado a ele e o nome do autor desse commit, sabíamos naquele momento que fui eu quem excluiu o pipeline, a algumas semanas atrás.</p>
+</section>
+<section id="por-que-tomei-essa-decisão" class="level2">
+<h2 class="anchored" data-anchor-id="por-que-tomei-essa-decisão">Por que tomei essa decisão?</h2>
+<p>Mas isso por si só não responde a outra parte do problema. Ainda precisamos saber o porquê tomei essa decisão. Por que excluí intencionalmente este pipeline? Este é o ponto onde Pull Requests<sup>2</sup> podem nos ajudar.</p>
+<p>Sempre que quisermos publicar alguma alteração que fizemos em um pipeline de dados, precisamos documentar essa alteração em um PR. Descrevemos quais mudanças foram feitas e por que as fizemos. Encontrei o PR associado que continha o commit que fiz e, na descrição desse PR, descobri o motivo pelo qual excluí o pipeline.</p>
+<p>O pipeline estava constantemente falhando com um erro de “notebook não encontrado”. Em outras palavras, o pipeline estava tentando acionar a execução do notebook Python que mencionei anteriormente. Porém o notebook em si não foi encontrado, e por conta disso, estava dando esse erro. Isso significa que o pipeline era basicamente inútil, ele estava criando custos de execução sem entregar nenhum valor. Isso também significa que o notebook Python desapareceu antes que o pipeline fosse excluído.</p>
+<p>Então eu apaguei o pipeline. Dessa forma, nós deixamos de gastar nossos recursos tentando executar algo que sabemos que vai gerar um erro de execução, e, consequentemente, não vai gerar nenhum valor.</p>
+</section>
+<section id="a-outra-parte-do-problema" class="level2">
+<h2 class="anchored" data-anchor-id="a-outra-parte-do-problema">A outra parte do problema</h2>
+<p>Ok, agora sabemos o porquê de eu ter excluído o pipeline. Mas isso por si só levanta algumas novas questões. Por que o notebook Python desapareceu? Todavia, a realidade é que… não sabíamos o porquê. Infelizmente, nossos notebooks Python não estavan hospedados em um repositório Git. Isso significa que não nenhuma alteração feita no notebook era rastreada.</p>
+<p>Porém, para ser justo, nossos notebooks Python são hospedados dentro de uma instância do Databricks e, se você estiver familiarizado com o Databricks, saberá que, na verdade, a plataforma Databricks rastreia sim (até certo ponto) alterações feitas no notebook, através do <a href="https://docs.databricks.com/pt/notebooks/notebooks-code.html#version-control">painel de “Revisions”</a>.</p>
+<p>Então, sim, temos algum nível de monitoramento sobre as alterações feitas nesses notebooks. Mas não temos um nível suficiente para realmente entendermos por que aquele caderno em particular estava faltando. Em outras palavras, esse painel de “Revisions” do Databricks não é capaz de rastrear ações de remoção em notebooks.</p>
+<p>Nós só conseguimos descobrir o que estava acontecendo na semana seguinte, quando identificamos que outros notebooks de Python também haviam sumido misteriosamente da pasta do mesmo cliente. Era um conjunto de três notebooks, chamados <code>Job_ClientX_Opened_Sessions</code>, <code>Job_ClientX_Sales_per_Channel</code> e <code>Job_ClientX_Opened_Tickets</code>. Esses três notebooks estavam localizados na pasta <code>ClientX</code>. Então, tínhamos uma estrutura de arquivo como esta:</p>
+<pre><code>├───📁 ClientX
+│    ├───Job_ClientX_Opened_Sessions.py
+│    ├───Job_ClientX_Sales_per_Channel.py
+│    └───Job_ClientX_Opened_Tickets.py
+│ 
+├───📁 ClientY
+├───📁 ClientW
+└───📁 ClientZ
+...</code></pre>
+<p>Nesse dia específico, descobrimos através dos logs de execução que, por volta das 08:00 AM, esse conjunto de notebooks estava sim disponíveis (ou seja, eles existiam de fato) em nosso ambiente Databricks por volta das 08:00. Mas nesse mesmo dia, quando nós procuramos novamente às 11:00 por esses mesmos notebooks no ambiente Databricks, não os encontramos mais.</p>
+<p>Sabíamos naquele momento que esses notebooks haviam desaparecido nas últimas 3 horas. Era algo muito recente. Contudo, um detalhe chamou a nossa atenção. A pasta <code>ClientX</code>, que era onde deveriam estar esses notebooks, estava preenchida com outros notebooks que possuíam nomes semelhantes aos que estávamos procurando, como estes:</p>
+<pre><code>├───📁 ClientX
+│    ├───[ClientX] Opened sessions.py
+│    ├───[ClientX] Sales per Channel.py
+│    └───[ClientX] Opened Tickets.py
+│ 
+├───📁 ClientY
+├───📁 ClientW
+└───📁 ClientZ
+...</code></pre>
+<p>A princípio, isso parecia muito estranho para nós, pois esses nomes iam contra as nossas convenções de nomenclatura. Ou seja, eu e minha equipe não nomeamos arquivos dessa forma. Então, novas desconfiança surgiram, e levantamos a seguinte hipótese: “espere! Acho que alguém está renomeando esses notebooks”. Mais tarde naquele dia, nossas suspeitas foram confirmadas. Um colega de fora de nossa equipe estava renomeando intencionalmente os notebooks de Python desse cliente que foram publicados no ambiente de produção. Por isso não estávamos encontrando mais os notebooks, pois os seus nomes foram modificados.</p>
+<p>A consequência imediata dessa ação de nosso colega foi que a conexão entre os notebooks de Python e os pipelines de dados foi perdida. Ou seja, os pipelines de dados estavam tentando executar esses notebooks, mas esses pipelines não estavam encontrando mais esses notebooks, pois os seus nomes originais foram perdidos.</p>
+<p>Se usássemos o Git para rastrear todas as alterações feitas nesses notebooks de Python, talvez nós teríamos descoberto esse problema muito mais cedo, e, com isso, poderíamos agir para corrigi-lo. Porém o estrago já havia sido feito. Como próximos passos, o nosso time teve que:</p>
+<ul>
+<li>renomear os notebooks de volta para os seus nomes originais;</li>
+<li>remover alguns dos privilégios de nosso colega no ambiente Databricks;</li>
+<li>aconselhar este colega sobre o que aconteceu e como as suas ações causaram danos.</li>
+</ul>
+</section>
+<section id="quais-erros-foram-cometidos" class="level2">
+<h2 class="anchored" data-anchor-id="quais-erros-foram-cometidos">Quais erros foram cometidos?</h2>
+<p>Abaixo temos a linha do tempo dos eventos importantes que descrevemos até aqui:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://pedro-faria.netlify.app/posts/2023/2023-07-31-git-mark-decisions/timeline-pt.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Uma timeline dos eventos</figcaption>
+</figure>
+</div>
+<p>Na minha cabeça, existem pelo menos três erros que foram cometidos ao longo desta linha do tempo:</p>
+<ul>
+<li>Eu não comuniquei a retirada do pipeline de forma adequada;</li>
+<li>Nosso colega estava renomeando notebooks em um ambiente de produção;</li>
+<li>Não usamos o Git para rastrear alterações nos notebooks no ambiente de produção.</li>
+</ul>
+<p>Excluir o pipeline não foi um erro. Na realdiade, o meu erro foi não comunicar a minha ação da forma adequada. Quer dizer, eu comuniquei a remoção do pipeline aos meus colegas, mas eu não comuniquei essa remoção ao meu colega de fora da minha equipe que também estava envolvido com esse cliente específico, o mesmo colega que começou a renomear vários notebooks em produção.</p>
+<p>Em outras palavras, se eu tivesse comunicado a ele que excluí o pipeline, provavelmente o seguinte diálogo teria acontecido:</p>
+<ul>
+<li><p>Colega: “espere! Nosso cliente ainda está usando esse pipeline de dados, por que você o removeu?”</p></li>
+<li><p>Eu: “porque o pipeline não estava encontrando o notebook”</p></li>
+<li><p>Colega: “mas porque ele não estava achando o notebook?”</p></li>
+<li><p>Eu: “bom, o pipeline está procurando um notebook chamado ‘X’, mas esse notebook sumiu. Não existe em nosso ambiente”.</p></li>
+<li><p>Colega: “espere! Eu me lembro deste caderno! Acho que acabei de renomeá-lo há alguns dias”</p></li>
+<li><p>Eu: “espere! Você renomeou um notebook em produção?”</p></li>
+<li><p>Colega: “sim, acho que sim”</p></li>
+</ul>
+<p>Com este diálogo, provavelmente poderíamos ter resolvido o quebra-cabeça muito mais rapidamente e corrigido os erros antes que mais danos pudessem ser criados. Portanto, se eu tivesse comunicado a esse colega que excluí o pipeline, provavelmente atingiríamos o cerne do problema mais rapidamente.</p>
+<p>Tudo começou quando esse nosso colega decidiu renomear um notebook diretamente no ambiente de produção sem que soubéssemos. Isso com certeza foi um erro, mas quem não erra as vezes né? Além disso, como descrevemos no artigo, o sistema de “Revisions” do Databricks é limitado e não foi capaz de gravar essa mudança tão importante no notebook e, por causa disso, nós inicialmente ficamos no escuro. Nós não tínhamos ideia do que havia acontecido com o notebook.</p>
+<p>Levamos uma semana para realmente descobrir o que estava causando o “desaparecimento” dos notebooks. Se usássemos o Git para rastrear todas as alterações feitas nos notebooks publicados no ambiente de produção, nós teríamos identificado a “ação de renomear” muito, muito, muito mais rápido. Portanto, não usar o Git nesses notebooks também foi um erro.</p>
+</section>
+<section id="como-o-git-nos-ajudou-a-resolver-o-problema" class="level2">
+<h2 class="anchored" data-anchor-id="como-o-git-nos-ajudou-a-resolver-o-problema">Como o Git nos ajudou a resolver o problema</h2>
+<p>O Git é uma ferramenta extremamente poderosa. Ao termos um servidor centralizado que registra todas as mudanças que cada pessoa faz no projeto, conseguimos olhar para o passado, e entender quais mudanças foram feitas. Você pode realmente ver a evolução ou a linha do tempo do seu projeto e perceber quantos recursos ou melhorias você fez no projeto. Você também pode identificar as decisões que tomou no passado. Isso lhe dá a capacidade de repensar o seu processo de tomada de decisão.</p>
+<p>Um fato que sabíamos desde o início: um pipeline de dados e um notebook de Python simplesmente desapareceram de nosso ambiente. Com o Git conseguimos rastrear e entender como, quando e por que o pipeline de dados desapareceu, e conseguimos localizar o pipeline de dados novamente, restaurá-lo ao seu estado anterior e reenviar os arquivos que o nosso cliente precisava. Se usássemos o Git nos notebooks, também poderíamos rastrear as operações de “renomear” que haviam sido feitas nesses notebooks.</p>
+<p>Nós não apenas corrigimos o problema, mas também, ao entender o que aconteceu e quais decisões foram tomadas que levaram ao desaparecimento do pipeline de dados, pudemos identificar as falhas em nosso processo de tomada de decisão. E ao identificar esses problemas, agora podemos resolvê-los, para não cometermos esses erros novamente.</p>
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>O que é um pipeline? Um pipeline é apenas uma sequência de etapas (ou tarefas) a serem realizada em uma hora específica do dia (ou em um dia específico da semana ou do mês, etc.). E um pipeline de dados é um pipeline que contém tarefas que carregam, transformam, enviam ou ingerem dados de alguma forma.↩︎</p></li>
+<li id="fn2"><p>Em resumo, um Pull Request (ou PR) é uma <strong>proposta</strong> para realizar uma operação <code>git merge</code>. Em outras palavras, você cria um PR quando deseja mesclar as alterações feitas em uma branch em outra branch (na maioria das vezes a main branch). O aspecto de “proposta” de uma PR significa que este PR precisa ser aprovado para ser efetivamente executado. Um PR não é um recurso do Git. Na verdade, é um recurso padrão da maioria dos provedores de serviços Git. Então você cria um PR dentro de uma plataforma de serviços Git como GitHub, GitLab e Azure DevOps, e não dentro do próprio Git. Se você não está familiarizado com PRs, a <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests">documentação do GitHub tem um excelente artigo sobre isso</a>.↩︎</p></li>
+</ol>
+</section></div> ]]></description>
+  <guid>https://pedro-faria.netlify.app/posts/2023/2023-07-31-git-mark-decisions/pt/index.html</guid>
+  <pubDate>Mon, 31 Jul 2023 03:00:00 GMT</pubDate>
+  <media:content url="https://pedro-faria.netlify.app/posts/2023/2023-07-31-git-mark-decisions/git-logo.png" medium="image" type="image/png" height="70" width="144"/>
+</item>
 <item>
   <title>A case study about Data Storytelling at some of the largest brazilian banks</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
@@ -3562,7 +3834,7 @@ Damji, Jules, Brooke Wenig, Tathagata Das, and Denny Lee. 2020. <em>Learning Spa
   <category>Apache Spark</category>
   <category>Book</category>
   <guid>https://pedro-faria.netlify.app/publications/book/introd-pyspark/en/index.html</guid>
-  <pubDate>Sat, 05 Aug 2023 20:10:35 GMT</pubDate>
+  <pubDate>Sun, 06 Aug 2023 21:41:11 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/publications/book/introd-pyspark/featured.png" medium="image" type="image/png" height="215" width="144"/>
 </item>
 </channel>
