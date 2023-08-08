@@ -5,7 +5,7 @@ image: "./../git-logo.png"
 date: "2023-07-31"
 ---
 
-## Introdução
+# Introdução
 
 Na semana passada, eu e minha equipe nos deparamos com uma situação em que precisávamos descobrir por que e como ocorreu um determinado problema. Precisávamos entender quais decisões levaram a esse problema. Algo bem normal, não é?
 
@@ -14,7 +14,22 @@ Mas entender o que aconteceu só foi possível para nós porque rastreamos cada 
 Começo o artigo descrevendo qual foi o problema que nós enfrentamos e, na sequência, explico quais erros foram cometidos e como o Git nos ajudou a identificar esses erros.
 
 
-## O pipeline de dados onde ocorreu o problema
+# Qual é o argumento deste artigo?
+
+Para melhorar o seu processo de tomada de decisão, você precisa primeiro se lembrar de quais foram as decisões que você tomou. 
+Às vezes, essa lembrança se torna uma tarefa realmente difícil.
+
+Diferentes pessoas adotam estratégias diferentes para acompanhar as decisões que tomaram. Algumas pessoas mantêm várias anotações sobre
+cada decisão, outros, gostam de documentar suas decisões dentro dos cartões (ou *cards*) criados dentro do quadro kanban de sua equipe.
+Mas independentemente de qual seja a estratégia que você escolher, ela sempre vai envolver algum tipo (ou nível) de rastreamento e também de documentação dessas decisões que
+você faz ao longo do caminho.
+
+Neste artigo, mostro um exemplo do mundo real em que o Git e o Pull Request formal desempenharam esse papel.
+Em outras palavras, este artigo busca mostrar como Git e Pull Requests podem te ajudar a acompanhar as decisões
+que estão sendo feitas em sua equipe. Quem e por que eles tomaram essas decisões? Quando essas decisões aconteceram? etc.
+
+
+# O pipeline de dados onde ocorreu o problema
 
 O problema ocorreu em um dos muitos pipelines de dados[^what-is-pipelines] que gerenciamos e oferecemos suporte. Esse pipeline de dados específico era um pipeline do tipo "agregar os dados e enviar os resultados ao cliente". Em detalhes mais técnicos, esse pipeline era um arquivo JSON que continha todos os metadados que descreviam o que era esse pipeline, quais etapas deveriam ser executavas, quais eram as dependências e configurações de cada tarefa, em que horário específico do dia essas tarefas deveriam ser executadas, etc.
 
@@ -33,14 +48,14 @@ O diagrama a seguir mostra essas etapas de maneira visual:
 ![Um diagrama que resume o pipeline de dados onde o problema ocorreu](./../diagrams-pt.png)
 
 
-## Qual foi o problema que ocorreu?
+# Qual foi o problema que ocorreu?
 
 Um dia, nosso cliente nos notificou dizendo que não estava recebendo os arquivos CSV há cerca de uma semana. Então começamos a procurar por esse pipeline de dados, com o objetivo de verificar os seus logs de execução. Contudo, nós simplesmente não encontramos nada! Tanto o notebook Python quanto o arquivo JSON que descrevia o próprio pipeline de dados desapareceram! É como se eles nunca tivessem existido.
 
 Não ter o notebook Python era a mesma coisa que não ter pipeline nenhum. Os arquivos Python e JSON simplesmente desapareceram de nosso repositório. Mas nós sabíamos que o cliente tinha recebido alguns arquivos a algumas semanas atrás, portanto, tínhamos certeza de que esse pipeline existia em algum momento no passado. Mas para onde ele foi? Por que ele desapareceu?
 
 
-## Investigando os commits
+# Investigando os commits
 
 Usamos o Git para armazenar e rastrear quaisquer alterações feitas em todos os nossos pipelines de dados. Em outras palavras, todas as alterações que fazemos nos arquivos JSON que descrevem cada um de nossos pipelines de dados são rastreadas pelo Git. Como você bem sabe, um arquivo simplesmente não desaparece de um repositório Git. Quando um arquivo é removido de um repositório Git, é porque alguém excluiu intencionalmente o arquivo, e criou o commit da alteração no repositório.
 
@@ -49,7 +64,7 @@ Como sabíamos que esse pipeline de dados existia em algum momento, eu comecei a
 A essa altura, o Git já me ajudou a responder duas questões muito importantes que eram: 1. Quem deletou o pipeline? 2. Quando foi excluído? Pois todo commit que você cria no Git tem um carimbo de data/hora associado a ele e o nome do autor desse commit, sabíamos naquele momento que fui eu quem excluiu o pipeline, a algumas semanas atrás.
 
 
-## Por que tomei essa decisão?
+# Por que tomei essa decisão?
 
 Mas isso por si só não responde a outra parte do problema. Ainda precisamos saber o porquê tomei essa decisão. Por que excluí intencionalmente este pipeline? Este é o ponto onde Pull Requests[^what-are-prs] podem nos ajudar.
 
@@ -65,7 +80,7 @@ O pipeline estava constantemente falhando com um erro de "notebook não encontra
 Então eu apaguei o pipeline. Dessa forma, nós deixamos de gastar nossos recursos tentando executar algo que sabemos que vai gerar um erro de execução, e, consequentemente, não vai gerar nenhum valor.
 
 
-## A outra parte do problema
+# A outra parte do problema
 
 Ok, agora sabemos o porquê de eu ter excluído o pipeline. Mas isso por si só levanta algumas novas questões. Por que o notebook Python desapareceu? Todavia, a realidade é que... não sabíamos o porquê. Infelizmente, nossos notebooks Python não estavan hospedados em um repositório Git. Isso significa que não nenhuma alteração feita no notebook era rastreada.
 
@@ -99,7 +114,19 @@ Sabíamos naquele momento que esses notebooks haviam desaparecido nas últimas 3
 │    ├───[ClientX] Sales per Channel.py
 │    └───[ClientX] Opened Tickets.py
 │ 
-├───📁 ClientY
+├───📁 ClientY# Qual é o argumento deste artigo?
+
+Para melhorar seu processo de tomada de decisão, você precisa realmente se lembrar de quais decisões você tomou em primeiro lugar.
+Às vezes, essa lembrança é realmente difícil.
+
+Pessoas diferentes usam estratégias diferentes para acompanhar as decisões que tomaram. Algumas pessoas mantêm várias anotações sobre
+cada decisão, outros, gostam de documentar suas decisões dentro dos cartões criados no quadro kanban.
+
+Independentemente da estratégia que você escolher, ela sempre envolverá algum tipo (ou nível) de rastreamento e documentação das decisões
+você faz ao longo do caminho. Neste artigo, mostro um exemplo do mundo real em que o Git e o Pull Request formal desempenharam esse papel.
+
+Em outras palavras, este artigo busca mostrar como Git e Pull Requests podem te ajudar a acompanhar as decisões
+que estão sendo feitas em sua equipe. Quem e por que eles tomaram essas decisões? Quando essas decisões aconteceram? etc.
 ├───📁 ClientW
 └───📁 ClientZ
 ...
@@ -119,7 +146,7 @@ Se usássemos o Git para rastrear todas as alterações feitas nesses notebooks 
 
 
 
-## Quais erros foram cometidos?
+# Quais erros foram cometidos?
 
 Abaixo temos a linha do tempo dos eventos importantes que descrevemos até aqui:
 
@@ -161,7 +188,7 @@ Tudo começou quando esse nosso colega decidiu renomear um notebook diretamente 
 Levamos uma semana para realmente descobrir o que estava causando o "desaparecimento" dos notebooks. Se usássemos o Git para rastrear todas as alterações feitas nos notebooks publicados no ambiente de produção, nós teríamos identificado a "ação de renomear" muito, muito, muito mais rápido. Portanto, não usar o Git nesses notebooks também foi um erro.
 
 
-## Como o Git nos ajudou a resolver o problema
+# Como o Git nos ajudou a resolver o problema
 
 O Git é uma ferramenta extremamente poderosa. Ao termos um servidor centralizado que registra todas as mudanças que cada pessoa faz no projeto, conseguimos olhar para o passado, e entender quais mudanças foram feitas. Você pode realmente ver a evolução ou a linha do tempo do seu projeto e perceber quantos recursos ou melhorias você fez no projeto. Você também pode identificar as decisões que tomou no passado. Isso lhe dá a capacidade de repensar o seu processo de tomada de decisão.
 

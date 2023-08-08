@@ -247,14 +247,20 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 
 
 
-<section id="introdução" class="level2">
-<h2 class="anchored" data-anchor-id="introdução">Introdução</h2>
+<section id="introdução" class="level1">
+<h1>Introdução</h1>
 <p>Na semana passada, eu e minha equipe nos deparamos com uma situação em que precisávamos descobrir por que e como ocorreu um determinado problema. Precisávamos entender quais decisões levaram a esse problema. Algo bem normal, não é?</p>
 <p>Mas entender o que aconteceu só foi possível para nós porque rastreamos cada mudança e cada decisão que tomamos com o Git, assinando commits e escrevendo Pull Requests (ou PRs para abreviar). Este artigo usa essa situação do mundo real que enfrentamos para mostrar como o Git e os processos formais para registrar alterações na base de código (como PRs) são uma parte crítica para melhorar a tomada de decisões e entender como suas decisões passadas estão afetando você no presente.</p>
 <p>Começo o artigo descrevendo qual foi o problema que nós enfrentamos e, na sequência, explico quais erros foram cometidos e como o Git nos ajudou a identificar esses erros.</p>
 </section>
-<section id="o-pipeline-de-dados-onde-ocorreu-o-problema" class="level2">
-<h2 class="anchored" data-anchor-id="o-pipeline-de-dados-onde-ocorreu-o-problema">O pipeline de dados onde ocorreu o problema</h2>
+<section id="qual-é-o-argumento-deste-artigo" class="level1">
+<h1>Qual é o argumento deste artigo?</h1>
+<p>Para melhorar o seu processo de tomada de decisão, você precisa primeiro se lembrar de quais foram as decisões que você tomou. Às vezes, essa lembrança se torna uma tarefa realmente difícil.</p>
+<p>Diferentes pessoas adotam estratégias diferentes para acompanhar as decisões que tomaram. Algumas pessoas mantêm várias anotações sobre cada decisão, outros, gostam de documentar suas decisões dentro dos cartões (ou <em>cards</em>) criados dentro do quadro kanban de sua equipe. Mas independentemente de qual seja a estratégia que você escolher, ela sempre vai envolver algum tipo (ou nível) de rastreamento e também de documentação dessas decisões que você faz ao longo do caminho.</p>
+<p>Neste artigo, mostro um exemplo do mundo real em que o Git e o Pull Request formal desempenharam esse papel. Em outras palavras, este artigo busca mostrar como Git e Pull Requests podem te ajudar a acompanhar as decisões que estão sendo feitas em sua equipe. Quem e por que eles tomaram essas decisões? Quando essas decisões aconteceram? etc.</p>
+</section>
+<section id="o-pipeline-de-dados-onde-ocorreu-o-problema" class="level1">
+<h1>O pipeline de dados onde ocorreu o problema</h1>
 <p>O problema ocorreu em um dos muitos pipelines de dados<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> que gerenciamos e oferecemos suporte. Esse pipeline de dados específico era um pipeline do tipo “agregar os dados e enviar os resultados ao cliente”. Em detalhes mais técnicos, esse pipeline era um arquivo JSON que continha todos os metadados que descreviam o que era esse pipeline, quais etapas deveriam ser executavas, quais eram as dependências e configurações de cada tarefa, em que horário específico do dia essas tarefas deveriam ser executadas, etc.</p>
 <p>A principal etapa (ou tarefa) executada nesse pipeline era a execução de um notebook de Python. Este notebook estava executando as seguintes etapas:</p>
 <ul>
@@ -270,26 +276,26 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 </figure>
 </div>
 </section>
-<section id="qual-foi-o-problema-que-ocorreu" class="level2">
-<h2 class="anchored" data-anchor-id="qual-foi-o-problema-que-ocorreu">Qual foi o problema que ocorreu?</h2>
+<section id="qual-foi-o-problema-que-ocorreu" class="level1">
+<h1>Qual foi o problema que ocorreu?</h1>
 <p>Um dia, nosso cliente nos notificou dizendo que não estava recebendo os arquivos CSV há cerca de uma semana. Então começamos a procurar por esse pipeline de dados, com o objetivo de verificar os seus logs de execução. Contudo, nós simplesmente não encontramos nada! Tanto o notebook Python quanto o arquivo JSON que descrevia o próprio pipeline de dados desapareceram! É como se eles nunca tivessem existido.</p>
 <p>Não ter o notebook Python era a mesma coisa que não ter pipeline nenhum. Os arquivos Python e JSON simplesmente desapareceram de nosso repositório. Mas nós sabíamos que o cliente tinha recebido alguns arquivos a algumas semanas atrás, portanto, tínhamos certeza de que esse pipeline existia em algum momento no passado. Mas para onde ele foi? Por que ele desapareceu?</p>
 </section>
-<section id="investigando-os-commits" class="level2">
-<h2 class="anchored" data-anchor-id="investigando-os-commits">Investigando os commits</h2>
+<section id="investigando-os-commits" class="level1">
+<h1>Investigando os commits</h1>
 <p>Usamos o Git para armazenar e rastrear quaisquer alterações feitas em todos os nossos pipelines de dados. Em outras palavras, todas as alterações que fazemos nos arquivos JSON que descrevem cada um de nossos pipelines de dados são rastreadas pelo Git. Como você bem sabe, um arquivo simplesmente não desaparece de um repositório Git. Quando um arquivo é removido de um repositório Git, é porque alguém excluiu intencionalmente o arquivo, e criou o commit da alteração no repositório.</p>
 <p>Como sabíamos que esse pipeline de dados existia em algum momento, eu comecei a investigar e seguir o histórico de commits. Demorou cerca de 30 minutos para encontrar o commit exato que excluiu o pipeline de dados e, oops! O commit foi criado por mim! Eu excluí o pipeline de dados do nosso repositório. Ok… agora, por quê? Por que eu excluí esse pipeline de dados?</p>
 <p>A essa altura, o Git já me ajudou a responder duas questões muito importantes que eram: 1. Quem deletou o pipeline? 2. Quando foi excluído? Pois todo commit que você cria no Git tem um carimbo de data/hora associado a ele e o nome do autor desse commit, sabíamos naquele momento que fui eu quem excluiu o pipeline, a algumas semanas atrás.</p>
 </section>
-<section id="por-que-tomei-essa-decisão" class="level2">
-<h2 class="anchored" data-anchor-id="por-que-tomei-essa-decisão">Por que tomei essa decisão?</h2>
+<section id="por-que-tomei-essa-decisão" class="level1">
+<h1>Por que tomei essa decisão?</h1>
 <p>Mas isso por si só não responde a outra parte do problema. Ainda precisamos saber o porquê tomei essa decisão. Por que excluí intencionalmente este pipeline? Este é o ponto onde Pull Requests<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> podem nos ajudar.</p>
 <p>Sempre que quisermos publicar alguma alteração que fizemos em um pipeline de dados, precisamos documentar essa alteração em um PR. Descrevemos quais mudanças foram feitas e por que as fizemos. Encontrei o PR associado que continha o commit que fiz e, na descrição desse PR, descobri o motivo pelo qual excluí o pipeline.</p>
 <p>O pipeline estava constantemente falhando com um erro de “notebook não encontrado”. Em outras palavras, o pipeline estava tentando acionar a execução do notebook Python que mencionei anteriormente. Porém o notebook em si não foi encontrado, e por conta disso, estava dando esse erro. Isso significa que o pipeline era basicamente inútil, ele estava criando custos de execução sem entregar nenhum valor. Isso também significa que o notebook Python desapareceu antes que o pipeline fosse excluído.</p>
 <p>Então eu apaguei o pipeline. Dessa forma, nós deixamos de gastar nossos recursos tentando executar algo que sabemos que vai gerar um erro de execução, e, consequentemente, não vai gerar nenhum valor.</p>
 </section>
-<section id="a-outra-parte-do-problema" class="level2">
-<h2 class="anchored" data-anchor-id="a-outra-parte-do-problema">A outra parte do problema</h2>
+<section id="a-outra-parte-do-problema" class="level1">
+<h1>A outra parte do problema</h1>
 <p>Ok, agora sabemos o porquê de eu ter excluído o pipeline. Mas isso por si só levanta algumas novas questões. Por que o notebook Python desapareceu? Todavia, a realidade é que… não sabíamos o porquê. Infelizmente, nossos notebooks Python não estavan hospedados em um repositório Git. Isso significa que não nenhuma alteração feita no notebook era rastreada.</p>
 <p>Porém, para ser justo, nossos notebooks Python são hospedados dentro de uma instância do Databricks e, se você estiver familiarizado com o Databricks, saberá que, na verdade, a plataforma Databricks rastreia sim (até certo ponto) alterações feitas no notebook, através do <a href="https://docs.databricks.com/pt/notebooks/notebooks-code.html#version-control">painel de “Revisions”</a>.</p>
 <p>Então, sim, temos algum nível de monitoramento sobre as alterações feitas nesses notebooks. Mas não temos um nível suficiente para realmente entendermos por que aquele caderno em particular estava faltando. Em outras palavras, esse painel de “Revisions” do Databricks não é capaz de rastrear ações de remoção em notebooks.</p>
@@ -310,7 +316,19 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 │    ├───[ClientX] Sales per Channel.py
 │    └───[ClientX] Opened Tickets.py
 │ 
-├───📁 ClientY
+├───📁 ClientY# Qual é o argumento deste artigo?
+
+Para melhorar seu processo de tomada de decisão, você precisa realmente se lembrar de quais decisões você tomou em primeiro lugar.
+Às vezes, essa lembrança é realmente difícil.
+
+Pessoas diferentes usam estratégias diferentes para acompanhar as decisões que tomaram. Algumas pessoas mantêm várias anotações sobre
+cada decisão, outros, gostam de documentar suas decisões dentro dos cartões criados no quadro kanban.
+
+Independentemente da estratégia que você escolher, ela sempre envolverá algum tipo (ou nível) de rastreamento e documentação das decisões
+você faz ao longo do caminho. Neste artigo, mostro um exemplo do mundo real em que o Git e o Pull Request formal desempenharam esse papel.
+
+Em outras palavras, este artigo busca mostrar como Git e Pull Requests podem te ajudar a acompanhar as decisões
+que estão sendo feitas em sua equipe. Quem e por que eles tomaram essas decisões? Quando essas decisões aconteceram? etc.
 ├───📁 ClientW
 └───📁 ClientZ
 ...</code></pre>
@@ -323,8 +341,8 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <li>aconselhar este colega sobre o que aconteceu e como as suas ações causaram danos.</li>
 </ul>
 </section>
-<section id="quais-erros-foram-cometidos" class="level2">
-<h2 class="anchored" data-anchor-id="quais-erros-foram-cometidos">Quais erros foram cometidos?</h2>
+<section id="quais-erros-foram-cometidos" class="level1">
+<h1>Quais erros foram cometidos?</h1>
 <p>Abaixo temos a linha do tempo dos eventos importantes que descrevemos até aqui:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -353,8 +371,8 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <p>Tudo começou quando esse nosso colega decidiu renomear um notebook diretamente no ambiente de produção sem que soubéssemos. Isso com certeza foi um erro, mas quem não erra as vezes né? Além disso, como descrevemos no artigo, o sistema de “Revisions” do Databricks é limitado e não foi capaz de gravar essa mudança tão importante no notebook e, por causa disso, nós inicialmente ficamos no escuro. Nós não tínhamos ideia do que havia acontecido com o notebook.</p>
 <p>Levamos uma semana para realmente descobrir o que estava causando o “desaparecimento” dos notebooks. Se usássemos o Git para rastrear todas as alterações feitas nos notebooks publicados no ambiente de produção, nós teríamos identificado a “ação de renomear” muito, muito, muito mais rápido. Portanto, não usar o Git nesses notebooks também foi um erro.</p>
 </section>
-<section id="como-o-git-nos-ajudou-a-resolver-o-problema" class="level2">
-<h2 class="anchored" data-anchor-id="como-o-git-nos-ajudou-a-resolver-o-problema">Como o Git nos ajudou a resolver o problema</h2>
+<section id="como-o-git-nos-ajudou-a-resolver-o-problema" class="level1">
+<h1>Como o Git nos ajudou a resolver o problema</h1>
 <p>O Git é uma ferramenta extremamente poderosa. Ao termos um servidor centralizado que registra todas as mudanças que cada pessoa faz no projeto, conseguimos olhar para o passado, e entender quais mudanças foram feitas. Você pode realmente ver a evolução ou a linha do tempo do seu projeto e perceber quantos recursos ou melhorias você fez no projeto. Você também pode identificar as decisões que tomou no passado. Isso lhe dá a capacidade de repensar o seu processo de tomada de decisão.</p>
 <p>Um fato que sabíamos desde o início: um pipeline de dados e um notebook de Python simplesmente desapareceram de nosso ambiente. Com o Git conseguimos rastrear e entender como, quando e por que o pipeline de dados desapareceu, e conseguimos localizar o pipeline de dados novamente, restaurá-lo ao seu estado anterior e reenviar os arquivos que o nosso cliente precisava. Se usássemos o Git nos notebooks, também poderíamos rastrear as operações de “renomear” que haviam sido feitas nesses notebooks.</p>
 <p>Nós não apenas corrigimos o problema, mas também, ao entender o que aconteceu e quais decisões foram tomadas que levaram ao desaparecimento do pipeline de dados, pudemos identificar as falhas em nosso processo de tomada de decisão. E ao identificar esses problemas, agora podemos resolvê-los, para não cometermos esses erros novamente.</p>

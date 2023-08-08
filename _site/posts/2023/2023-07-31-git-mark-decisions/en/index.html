@@ -253,6 +253,12 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <p>But understanding what happened was only possible for us because we track every change and every decision that we make with Git, by signing commits and writing Pull Requests (or PRs for short). This article uses this real world situation that we faced to showcase how Git and formal processes to register changes in the codebase (like PRs) are a critical part for improving decision making and understanding how your past decisions are affecting you in the present.</p>
 <p>I begin the article describing what problem occurred, and in sequence, I explain what mistakes were made, and how Git helped us to identify those mistakes.</p>
 </section>
+<section id="what-is-the-argument-in-this-article" class="level1">
+<h1>What is the argument in this article?</h1>
+<p>To improve your decision making process, you need to actually remember what decisions you made in the first place. Sometimes, that remembering is actually hard.</p>
+<p>Different people use different strategies to keep track of the decisions they made. Some people keep various notes about each decision, others, like to document their decisions inside the cards created in the kanban board. But regardless of what strategy you choose, it will always involve some kind (or level) of tracking and documenting the decisions you make along the way.</p>
+<p>In this article, I show an real world example where Git and formal Pull Request played this role. In other words, this article seeks to show how Git and Pull Requests can help you to keep track of the decisions that are being made in your team. Who and why they made these decisions? When these decisions took place? etc.</p>
+</section>
 <section id="the-data-pipeline-where-the-problem-occurred" class="level1">
 <h1>The data pipeline where the problem occurred</h1>
 <p>The problem occurred in one of the many data pipelines<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> that we manage and support. This specific data pipeline was a “aggregate the data and send the results to client” type of pipeline. In more technical details, this pipeline was a JSON file that cointained all metadata that described what this pipeline was, what steps it performed, what were the dependencies and settings for each task, which specific time of the day these tasks should be performed, etc.</p>

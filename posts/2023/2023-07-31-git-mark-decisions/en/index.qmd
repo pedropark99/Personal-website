@@ -19,6 +19,21 @@ improving decision making and understanding how your past decisions are affectin
 I begin the article describing what problem occurred, and in sequence, I explain what mistakes were made, and how Git helped
 us to identify those mistakes.
 
+# What is the argument in this article?
+
+To improve your decision making process, you need to actually remember what decisions you made in the first place.
+Sometimes, that remembering is actually hard.
+
+Different people use different strategies to keep track of the decisions they made. Some people keep various notes about
+each decision, others, like to document their decisions inside the cards created in the kanban board.
+But regardless of what strategy you choose, it will always involve some kind (or level) of tracking and documenting the decisions
+you make along the way.
+
+In this article, I show an real world example where Git and formal Pull Request played this role.
+In other words, this article seeks to show how Git and Pull Requests can help you to keep track of the decisions
+that are being made in your team. Who and why they made these decisions? When these decisions took place? etc.
+
+
 # The data pipeline where the problem occurred
 
 The problem occurred in one of the many data pipelines[^what-is-pipelines] that we manage and support.
