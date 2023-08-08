@@ -114,19 +114,7 @@ Sabíamos naquele momento que esses notebooks haviam desaparecido nas últimas 3
 │    ├───[ClientX] Sales per Channel.py
 │    └───[ClientX] Opened Tickets.py
 │ 
-├───📁 ClientY# Qual é o argumento deste artigo?
-
-Para melhorar seu processo de tomada de decisão, você precisa realmente se lembrar de quais decisões você tomou em primeiro lugar.
-Às vezes, essa lembrança é realmente difícil.
-
-Pessoas diferentes usam estratégias diferentes para acompanhar as decisões que tomaram. Algumas pessoas mantêm várias anotações sobre
-cada decisão, outros, gostam de documentar suas decisões dentro dos cartões criados no quadro kanban.
-
-Independentemente da estratégia que você escolher, ela sempre envolverá algum tipo (ou nível) de rastreamento e documentação das decisões
-você faz ao longo do caminho. Neste artigo, mostro um exemplo do mundo real em que o Git e o Pull Request formal desempenharam esse papel.
-
-Em outras palavras, este artigo busca mostrar como Git e Pull Requests podem te ajudar a acompanhar as decisões
-que estão sendo feitas em sua equipe. Quem e por que eles tomaram essas decisões? Quando essas decisões aconteceram? etc.
+├───📁 ClientY
 ├───📁 ClientW
 └───📁 ClientZ
 ...

@@ -231,19 +231,7 @@
 │    ├───[ClientX] Sales per Channel.py
 │    └───[ClientX] Opened Tickets.py
 │ 
-├───📁 ClientY# Qual é o argumento deste artigo?
-
-Para melhorar seu processo de tomada de decisão, você precisa realmente se lembrar de quais decisões você tomou em primeiro lugar.
-Às vezes, essa lembrança é realmente difícil.
-
-Pessoas diferentes usam estratégias diferentes para acompanhar as decisões que tomaram. Algumas pessoas mantêm várias anotações sobre
-cada decisão, outros, gostam de documentar suas decisões dentro dos cartões criados no quadro kanban.
-
-Independentemente da estratégia que você escolher, ela sempre envolverá algum tipo (ou nível) de rastreamento e documentação das decisões
-você faz ao longo do caminho. Neste artigo, mostro um exemplo do mundo real em que o Git e o Pull Request formal desempenharam esse papel.
-
-Em outras palavras, este artigo busca mostrar como Git e Pull Requests podem te ajudar a acompanhar as decisões
-que estão sendo feitas em sua equipe. Quem e por que eles tomaram essas decisões? Quando essas decisões aconteceram? etc.
+├───📁 ClientY
 ├───📁 ClientW
 └───📁 ClientZ
 ...</code></pre>
@@ -3858,7 +3846,7 @@ Damji, Jules, Brooke Wenig, Tathagata Das, and Denny Lee. 2020. <em>Learning Spa
   <category>Apache Spark</category>
   <category>Book</category>
   <guid>https://pedro-faria.netlify.app/publications/book/introd-pyspark/en/index.html</guid>
-  <pubDate>Tue, 08 Aug 2023 23:26:58 GMT</pubDate>
+  <pubDate>Tue, 08 Aug 2023 23:45:31 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/publications/book/introd-pyspark/featured.png" medium="image" type="image/png" height="215" width="144"/>
 </item>
 </channel>
