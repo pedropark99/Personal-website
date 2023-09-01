@@ -1,0 +1,8 @@
+---
+title: "A study case: making better decisions with data"
+description: "This article describes a real world situation where me and my team used data to convince a client to do a better decision."
+
+date: "2023-09-01"
+---
+
+# Introduction
