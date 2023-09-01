@@ -6,3 +6,9 @@ date: "2023-09-01"
 ---
 
 # Introduction
+
+This article describes a real-world situation where me and my team used data
+to convince our client (which is one of the biggest companines in the brazilian
+financial market) at the time to make a better decision.
+
+Making decisions is hard.
