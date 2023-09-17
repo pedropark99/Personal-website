@@ -1,7 +1,8 @@
 ---
 title: "A study case: making better decisions with data"
 description: "This article describes a real world situation where me and my team used data to convince a client to do a better decision."
-
+number-sections: true
+image: "./../decision.avif"
 date: "2023-09-01"
 ---
 
@@ -50,3 +51,49 @@ the loan.
 In essence, we had a flow that worked a bit like this:
 
 ![](./../flow.png)
+
+
+## Banks are always facing a trade-off between risk and profit
+
+Loans are one of the main products offered by every commercial bank in the world.
+However, a loan is a profit opportunity that always come at some cost for the bank.
+This cost comes in the format of risk.
+
+That is, when a bank make a loan to somebody, there is always a risk that this "somebody"
+will not pay this loan back to the bank. This risk might be low or high, depending on
+several factors about this "somebody".
+
+That is why banks are usually very good at analysing and estimating risks. When a person
+looks to acquire a loan, the bank starts to analyze several factors
+in order to estimate how much risky is to give a loan to this person.
+
+## Why this weird criteria existed?
+
+I do not personally know any employee from the bank, neither do I know the hole bank strategy.
+But I do know that the bank probably made this weird decision, because of this risk trade-off
+that I described above.
+
+So the bank probably decided that the user needed to have this specific black credit card
+to acquire this loan, because the bank estimated that the risk is higher for people that do
+not have this black credit card. If the estimated risk is higher, then, the bank have a good reason to not offer this loan to
+those people who do not have a black credit card.
+
+
+# What we discovered
+
+We discovered that the bank was constantly losing a huge opportunity because of this
+specific criteria, or, this specific business rule. In essence, we used the data from
+the API to identify which users did have, and which did not have this specific black
+credit card.
+
+Doing some basic math, we identified that **more than 80% of the users that visited our channel did not have this black credit card**. This means that we were automatically losing 80%
+of the potential leads in this communication channel, because they were quickly rejected
+in the flow as a result of this criteria.
+
+This finding raises some important possibilities for us:
+
+- Are we reaching the right audience?
+- Maybe we should focus in attract only people that do have the black credit card to our channel? 
+- Is this trade-off worth it?
+- People that do not have the black credit card have a risk that is 80% higher?
+
