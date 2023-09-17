@@ -14,7 +14,7 @@
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/posts/index.html</loc>
-    <lastmod>2023-08-08T23:45:33.287Z</lastmod>
+    <lastmod>2023-09-17T16:08:06.426Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/posts/2023/2023-07-31-git-mark-decisions/pt/index.html</loc>
@@ -50,7 +50,7 @@
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/index.html</loc>
-    <lastmod>2023-08-08T23:45:31.666Z</lastmod>
+    <lastmod>2023-09-17T16:08:03.772Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/about.html</loc>
@@ -94,7 +94,7 @@
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/posts/en.html</loc>
-    <lastmod>2023-08-08T23:26:34.613Z</lastmod>
+    <lastmod>2023-09-17T16:08:04.629Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/posts/pt.html</loc>
@@ -107,5 +107,9 @@
   <url>
     <loc>https://pedro-faria.netlify.app/publications/index.html</loc>
     <lastmod>2023-08-06T21:41:30.896Z</lastmod>
+  </url>
+  <url>
+    <loc>https://pedro-faria.netlify.app/posts/2023/2023-08-31-data-decisions/en/index.html</loc>
+    <lastmod>2023-09-17T16:08:02.227Z</lastmod>
   </url>
 </urlset>
