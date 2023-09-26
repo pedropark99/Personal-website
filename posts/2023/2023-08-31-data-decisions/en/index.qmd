@@ -1,6 +1,6 @@
 ---
-title: "A study case: making better decisions with data"
-description: "This article describes a real world situation where me and my team used data to convince a client to do a better decision."
+title: "A small example on how to make better decisions with data"
+description: "This article describes a real world situation where me and my team used data to convince our client to do a better decision."
 number-sections: true
 image: "./../decision.avif"
 date: "2023-09-01"
@@ -18,6 +18,27 @@ to guide you into a safer and better outcome. When you do not have data to back 
 you are basically in the dark. That is, you make the decision, but you do not know
 upfront what are the possible outcomes of that decision. You just hope for the best,
 and this is always a hard position to be in.
+
+
+## A Data Analyst should focus on understanding the business
+
+You will probably notice that a big part of this article is dedicated
+to give context and explain the business behind this study case.
+
+This is intentional, because, one of the real values of this article is
+to show that we come up with a good proposal to our client, because we
+understood his business, and we raised some good hypothesis about this business,
+and by analyzing these hypothesis we come up with a good new strategy.
+
+If you do not understand the business you are analyzing, is less
+likely that you will come up with a good strategy, or, a good
+data analysis. By having a good understanding of the business,
+you will likely have much better ideas on "how" to analyze the data you have.
+
+Our job as data analysts is to use data to bring insights and
+new business opportunities to our clients. How do you expect
+to come up with new sales/business strategy if you do not understand the basics of
+the business you are analyzing?
 
 
 # Context
@@ -65,53 +86,30 @@ the loan.
 
 In essence, we had a flow that worked a bit like this:
 
-![](./../flow-extended.png)
+![A small representation of the sales path](./../flow-extended.png)
 
-<!--
-## Banks are always facing a trade-off between risk and profit
+Every time a user entered our flow, we collected the social ID of this user.
+Because with this social ID we can use the bank's API to check multiple informations
+about this person. One of the many things we checked, was whether or not
+this user had the specific black credit card I mentioned earlier.
 
-Loans are one of the main products offered by every commercial bank in the world.
-However, a loan is a profit opportunity that always come at some cost for the bank.
-This cost comes in the format of risk.
-
-That is, when a bank make a loan to somebody, there is always a risk that this "somebody"
-will not pay this loan back to the bank. This risk might be low or high, depending on
-several factors about this "somebody".
-
-That is why banks are usually very good at analysing and estimating risks. When a person
-looks to acquire a loan, the bank starts to analyze several factors
-in order to estimate how much risky is to give a loan to this person.
-
-## Why this weird criteria existed?
-
-I do not personally know any employee from the bank, neither do I know the hole bank strategy.
-But I do know that the bank probably made this weird decision, because of this risk trade-off
-that I described above.
-
-So the bank probably decided that the user needed to have this specific black credit card
-to acquire this loan, because the bank estimated that the risk is higher for people that do
-not have this black credit card. If the estimated risk is higher, then, the bank have a good reason to not offer this loan to
-those people who do not have a black credit card.
--->
 
 # What we discovered
 
-Every time a user enters the sales path, we want to collect the social ID of this user.
-Because with this social ID we can use the bank's API to check multiple informations
-about this person. One of the many things we checked, was whether or not
-this user had this specific black credit card.
-
-We started to analyze the data returned by the bank's API to investigate the users metadata,
-and we discovered that the bank was constantly losing a huge opportunity because of this
+We had the hypothesis that this business rule (about the black credit card)
+was severely affecting the sales result. But a hypothesis is just a hypothesis.
+To test this hypothesis, we started to analyze the data returned by the bank's API
+to investigate the users metadata, and potentially measure the size of the hole.
+As a result, we discovered that the bank was constantly losing a huge opportunity because of this
 specific criteria, or, this specific business rule.
 
 Doing some basic math, we identified that
 **67% of the users that visited our channel did not have this black credit card**.
-This means that 67% of the users were automatically rejected inside our sales path.
-We were constantly losing 67% of potential leads
+This means that 67% of the users that entered our channel were automatically rejected.
+We were constantly losing a huge chunk of potential leads
 because they did not fitted into this criteria.
 
-So if 13,000 users entered in our channel, only $(1 - 0.67) * 13,000 = 4,290$
+So, for example, if 13,000 users entered our channel, only $(1 - 0.67) \times 13,000 = 4,290$
 of these users could potentially finish the path and acquire the loan. The
 remaining 8,710 users were automatically lost. They were just rejected
 because they did not had a specific credit card.
@@ -121,5 +119,51 @@ This discovery generated some important possibilities for us:
 - Are we reaching the right audience?
 - Maybe we should focus in attract only people that do have the black credit card to our channel? 
 - Is this criteria or business-rule worth it?
-- People that do not have the black credit card have a risk higher than 67%?
 
+
+## You should not underestimate the bank
+
+Do not think that the bank was dumb. Everything exists for a reason.
+Despite the black credit card being a weird criteria, the bank
+certainly had a good reason to include this specific business rule
+inside the sales path.
+
+Banks are constantly facing a trade-off between risk and profit. In
+other words, a secured loan like this is always a good profit opportunity.
+However, this profit opportunity always come at some cost. Mostly in the form of risk.
+
+That is why banks are usually very good at analysing and estimating risks. When a person
+looks to acquire a loan, the bank starts to analyze several factors
+in order to estimate how much risky is to give a loan to this person.
+
+This means that the bank probably decided to include the rule,
+because it estimated that the risk is considerably higher for people that do
+not have this black credit card. If the estimated risk is higher, then,
+the bank have a good reason to not offer this loan to
+those people who do not have a black credit card.
+
+
+## Using data to get a better outcome
+
+Our job was to use the data we collected, to show the bank that the potential gains of
+selling loans to these "black-card-less" users were much higher than the
+potential risk they offered. By using data, we can show the bank (in
+numbers) the size of the opportunity they were losing. And that is exactly what we did.
+
+Our argument was divided into two separate parts:
+
+1. The size of the lost;
+1. The size of the potential gain;
+
+The first part of the presentation, we focused on the 67% number. We shown the
+bank that 67% of the users (which is a huge number) were constantly rejected in the flow.
+But this number alone does not have much flavor. The bank does not care if they say "no"
+to 60%, 80% or 90% of the users. They do care if they are maximizing their profit, or not.
+
+That is why in the second part, we did some more basic math to estimate the potential
+gains they were losing by not selling to this 67% of users.
+
+
+## Estimates are better than you think
+
+A data analyst should not realy solely on hard numbers to defend they hypothesis.

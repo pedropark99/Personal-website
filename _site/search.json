@@ -30,16 +30,16 @@
   {
     "objectID": "posts/2023/2023-08-31-data-decisions/en/index.html",
     "href": "posts/2023/2023-08-31-data-decisions/en/index.html",
-    "title": "A study case: making better decisions with data",
+    "title": "A small example on how to make better decisions with data",
     "section": "",
-    "text": "This article describes a real-world situation where me and my team used data to convince our client (which is one of the biggest companines in the brazilian financial market) at the time to make a better decision. Special thanks to Guilherme Goes and Paulo Gonçalves. They both help me to present these ideas and insights to our client.\nMaking decisions is hard. But you always make a better decision when you have data to guide you into a safer and better outcome. When you do not have data to back you up, you are basically in the dark. That is, you make the decision, but you do not know upfront what are the possible outcomes of that decision. You just hope for the best, and this is always a hard position to be in."
+    "text": "This article describes a real-world situation where me and my team used data to convince our client (which is one of the biggest companines in the brazilian financial market) at the time to make a better decision. Special thanks to Guilherme Goes and Paulo Gonçalves. They both help me to present these ideas and insights to our client.\nMaking decisions is hard. But you always make a better decision when you have data to guide you into a safer and better outcome. When you do not have data to back you up, you are basically in the dark. That is, you make the decision, but you do not know upfront what are the possible outcomes of that decision. You just hope for the best, and this is always a hard position to be in.\n\n\nYou will probably notice that a big part of this article is dedicated to give context and explain the business behind this study case.\nThis is intentional, because, one of the real values of this article is to show that we come up with a good proposal to our client, because we understood his business, and we raised some good hypothesis about this business, and by analyzing these hypothesis we come up with a good new strategy.\nIf you do not understand the business you are analyzing, is less likely that you will come up with a good strategy, or, a good data analysis. By having a good understanding of the business, you will likely have much better ideas on “how” to analyze the data you have.\nOur job as data analysts is to use data to bring insights and new business opportunities to our clients. How do you expect to come up with new sales/business strategy if you do not understand the basics of the business you are analyzing?"
   },
   {
     "objectID": "posts/2023/2023-08-31-data-decisions/en/index.html#the-weird-criteria",
     "href": "posts/2023/2023-08-31-data-decisions/en/index.html#the-weird-criteria",
-    "title": "A study case: making better decisions with data",
-    "section": "2.1 The weird criteria",
-    "text": "2.1 The weird criteria\nBut one of the many criterias was a bit strange for us. Identify the exact criteria is not important for the content of this article, neither is important to explain how the data helped us to advise our client. That is why I am going to use a random criteria here in this article.\nLet’s just say that, to be elegible for this loan, the user needed to have a black credit card. If the user did not had this black credit card, we automatically rejected the user’s request for the loan.\nIn essence, we had a flow that worked a bit like this:"
+    "title": "A small example on how to make better decisions with data",
+    "section": "2.2 The weird criteria",
+    "text": "2.2 The weird criteria\nBut one of the many criterias was a bit strange for us. Identify the exact criteria is not important for the content of this article. That is why I am going to use a random criteria here in this article.\nLet’s just say that, to be elegible for this loan, the user needed to have a black credit card. If the user did not had this black credit card, we automatically rejected the user’s request for the loan.\nIn essence, we had a flow that worked a bit like this:\n\n\n\nA small representation of the sales path\n\n\nEvery time a user entered our flow, we collected the social ID of this user. Because with this social ID we can use the bank’s API to check multiple informations about this person. One of the many things we checked, was whether or not this user had the specific black credit card I mentioned earlier."
   },
   {
     "objectID": "posts/2023/2023-08-31-data-decisions/en/index.html#banks-are-always-facing-a-trade-off-between-risk-and-profit",
@@ -565,5 +565,40 @@
     "title": "All Publications",
     "section": "",
     "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\n\n\nIntroduction to pyspark\n\n\n\nPython\n\n\nApache Spark\n\n\nBook\n\n\n\nThis book offers a introduction on how to build Spark applications using the pyspark python package\n\n\n\nPedro Duarte Faria\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nIntrodução à Linguagem R: seus fundamentos e sua prática\n\n\n\nR Language\n\n\nBook\n\n\nBrazil\n\n\n\nEste livro oferece uma descrição profunda sobre os fundamentos da linguagem R, e como eles se aplicam no contexto da análise de dados.\n\n\n\nPedro Duarte Faria\n\n\nDec 1, 2022\n\n\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/2023/2023-08-31-data-decisions/en/index.html#the-secured-loan-product",
+    "href": "posts/2023/2023-08-31-data-decisions/en/index.html#the-secured-loan-product",
+    "title": "A small example on how to make better decisions with data",
+    "section": "2.1 The secured loan product",
+    "text": "2.1 The secured loan product\nA secured loan was one of several products offered by the bank on WhatsApp. To acquire this product, the user needed to answer several questions, and also, fit into some criterias.\nDepending on the type of industry you work in, your company might call this the sales flow, or, the sales path, which is the path (or the steps) that the user needs to follow to acquire the product your selling.\nMost companies wants to make this path as short as possible so that the user gets to the product faster. However, we are talking about a bank selling a loan. Although acquiring a loan through WhatsApp might be easy, fast and secure for the user, the bank certainly needs a lot of personal information about the user.\nSo in this example, the user needed to answer a considerable amount of questions through WhatsApp to get to the final step of the sales path, that is, to confirm the loan. Most of these questions were requestions some personal information.\nWith this personal information at hand, we used some APIs to check whether the user fitted or not into some important criterias. Most of these criterias were very standard for any type of loan, like… the person should not have any legal debts with the government, he/she needs to have a social ID, a stable home address, etc. Some other criterias were purelly financial and assets related, and were also a very commom practice among banks, like… the person need to be fully employed, he/she needs to have a car which is fully paid, and, this car needs to be a personal property of the person, i.e. it cannot be a borrowed car from another person."
+  },
+  {
+    "objectID": "posts/2023/2023-08-31-data-decisions/en/index.html#you-should-not-underestimate-the-bank",
+    "href": "posts/2023/2023-08-31-data-decisions/en/index.html#you-should-not-underestimate-the-bank",
+    "title": "A small example on how to make better decisions with data",
+    "section": "3.1 You should not underestimate the bank",
+    "text": "3.1 You should not underestimate the bank\nDo not think that the bank was dumb. Everything exists for a reason. Despite the black credit card being a weird criteria, the bank certainly had a good reason to include this specific business rule inside the sales path.\nBanks are constantly facing a trade-off between risk and profit. In other words, a secured loan like this is always a good profit opportunity. However, this profit opportunity always come at some cost. Mostly in the form of risk.\nThat is why banks are usually very good at analysing and estimating risks. When a person looks to acquire a loan, the bank starts to analyze several factors in order to estimate how much risky is to give a loan to this person.\nThis means that the bank probably decided to include the rule, because it estimated that the risk is considerably higher for people that do not have this black credit card. If the estimated risk is higher, then, the bank have a good reason to not offer this loan to those people who do not have a black credit card."
+  },
+  {
+    "objectID": "posts/2023/2023-08-31-data-decisions/en/index.html#using-data-to-get-a-better-outcome",
+    "href": "posts/2023/2023-08-31-data-decisions/en/index.html#using-data-to-get-a-better-outcome",
+    "title": "A small example on how to make better decisions with data",
+    "section": "3.2 Using data to get a better outcome",
+    "text": "3.2 Using data to get a better outcome\nOur job was to use the data we collected, to show the bank that the potential gains of selling loans to these “black-card-less” users were much higher than the potential risk they offered. By using data, we can show the bank (in numbers) the size of the opportunity they were losing. And that is exactly what we did.\nOur argument was divided into two separate parts:\n\nThe size of the lost;\nThe size of the potential gain;\n\nThe first part of the presentation, we focused on the 67% number. We shown the bank that 67% of the users (which is a huge number) were constantly rejected in the flow. But this number alone does not have much flavor. The bank does not care if they say “no” to 60%, 80% or 90% of the users. They do care if they are maximizing their profit, or not.\nThat is why in the second part, we did some more basic math to estimate the potential gains they were losing by not selling to this 67% of users."
+  },
+  {
+    "objectID": "posts/2023/2023-08-31-data-decisions/en/index.html#a-data-analyst-should-focus-on-understanding-the-business",
+    "href": "posts/2023/2023-08-31-data-decisions/en/index.html#a-data-analyst-should-focus-on-understanding-the-business",
+    "title": "A small example on how to make better decisions with data",
+    "section": "",
+    "text": "You will probably notice that a big part of this article is dedicated to give context and explain the business behind this study case.\nThis is intentional, because, one of the real values of this article is to show that we come up with a good proposal to our client, because we understood his business, and we raised some good hypothesis about this business, and by analyzing these hypothesis we come up with a good new strategy.\nIf you do not understand the business you are analyzing, is less likely that you will come up with a good strategy, or, a good data analysis. By having a good understanding of the business, you will likely have much better ideas on “how” to analyze the data you have.\nOur job as data analysts is to use data to bring insights and new business opportunities to our clients. How do you expect to come up with new sales/business strategy if you do not understand the basics of the business you are analyzing?"
+  },
+  {
+    "objectID": "posts/2023/2023-08-31-data-decisions/en/index.html#estimates-are-better-than-you-think",
+    "href": "posts/2023/2023-08-31-data-decisions/en/index.html#estimates-are-better-than-you-think",
+    "title": "A small example on how to make better decisions with data",
+    "section": "3.3 Estimates are better than you think",
+    "text": "3.3 Estimates are better than you think\nA data analyst should not realy solely on hard numbers to defend they hypothesis."
   }
 ]
