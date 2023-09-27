@@ -23,7 +23,7 @@ and this is always a hard position to be in.
 ## A Data Analyst should focus on understanding the business
 
 You will probably notice that a big part of this article is dedicated
-to give context and explain the business behind this study case.
+to give context and explain the business behind this example.
 
 This is intentional, because, one of the real values of this article is
 to show that we come up with a good proposal to our client, because we
@@ -34,11 +34,6 @@ If you do not understand the business you are analyzing, is less
 likely that you will come up with a good strategy, or, a good
 data analysis. By having a good understanding of the business,
 you will likely have much better ideas on "how" to analyze the data you have.
-
-Our job as data analysts is to use data to bring insights and
-new business opportunities to our clients. How do you expect
-to come up with new sales/business strategy if you do not understand the basics of
-the business you are analyzing?
 
 
 # Context
@@ -54,24 +49,27 @@ A secured loan was one of several products offered by the bank on WhatsApp.
 To acquire this product, the user needed to answer several questions, and also,
 fit into some criterias.
 
-Depending on the type of industry you work in, your company might call this the *sales flow*,
+Depending on the type of industry you work in, you might call this as the *sales flow*,
 or, the *sales path*, which is the path (or the steps) that the user needs
-to follow to acquire the product your selling.
+to follow to acquire the product you are selling.
 
-Most companies wants to make this path as short as possible so that the user
-gets to the product faster. However, we are talking about a bank selling a loan.
-Although acquiring a loan through WhatsApp might be easy, fast and secure for
-the user, the bank certainly needs a lot of personal information about the user.
+Most companies want to make this path as short as possible so that the user
+gets to the product faster. However, we are talking about a loan,
+so the bank certainly needs a lot of personal and financial information about the user
+before it gives the loan.
 
 So in this example, the user needed to answer a considerable amount
 of questions through WhatsApp to get to the final step of the sales path, that is,
-to confirm the loan. Most of these questions were requestions some personal information.
+to confirm the loan.
 
-With this personal information at hand, we used some APIs to check whether the user fitted or not into some important criterias. Most of these criterias were very standard for any type of loan, like... the person should not have any legal debts
-with the government, he/she needs to have a social ID, a stable home address, etc.
+Most of these questions were asking for some personal information, specially the social ID.
+With the social ID at hand, we used some APIs to check whether this particular user
+fitted or not into some important criterias. Most of these criterias
+were very standard for any type of loan, like... the person should not have any legal debts
+with the government.
 Some other criterias were purelly financial and assets related,
 and were also a very commom practice among banks, like...
-the person need to be fully employed, he/she needs to have a car which is
+the person needs to be fully employed, he/she needs to have a car which is
 fully paid, and, this car needs to be a personal property of the person, i.e. it cannot be 
 a borrowed car from another person.
 
@@ -89,20 +87,48 @@ In essence, we had a flow that worked a bit like this:
 ![A small representation of the sales path](./../flow-extended.png)
 
 Every time a user entered our flow, we collected the social ID of this user.
-Because with this social ID we can use the bank's API to check multiple informations
+Because with this social ID we can use the API to check multiple informations
 about this person. One of the many things we checked, was whether or not
 this user had the specific black credit card I mentioned earlier.
+
+
+## You should not underestimate the bank
+
+You should not think that the bank was dumb. Everything exists for a reason.
+Despite the black credit card being a weird criteria, the bank
+certainly included this specific business rule
+inside the sales path for "risk trade-off" reasons.
+
+Banks are constantly facing a trade-off between risk and profit. In
+other words, a secured loan like this is always a good profit opportunity.
+However, this profit opportunity always come at a cost, mostly in the form of risk.
+
+That is why banks are usually very good at analysing and estimating risks. When a person
+looks to acquire a loan, the bank starts to analyze several factors
+in order to estimate how much risky is to give a loan to this person.
+
+This means that the bank probably decided to include this rule,
+because it estimated that the risk is considerably higher for people that do
+not have this black credit card. If the estimated risk is higher, then,
+the bank have a good reason to not offer this loan to
+those people who do not have a black credit card.
+
+
 
 
 # What we discovered
 
 We had the hypothesis that this business rule (about the black credit card)
-was severely affecting the sales result. But a hypothesis is just a hypothesis.
-To test this hypothesis, we started to analyze the data returned by the bank's API
-to investigate the users metadata, and potentially measure the size of the hole.
+was severely affecting the sales result. But we needed to confirm this hypothesis.
+
+Since we had the data returned from the API, we could potentially identify
+which users did have the black card, and which did not have. So we used R to collect the data
+from the API, and to analyze this data to investigate the users metadata,
+and potentially measure the size of the hole
+that these "black-card-less" users were creating.
+
 As a result, we discovered that the bank was constantly losing a huge opportunity because of this
 specific criteria, or, this specific business rule.
-
 Doing some basic math, we identified that
 **67% of the users that visited our channel did not have this black credit card**.
 This means that 67% of the users that entered our channel were automatically rejected.
@@ -121,26 +147,6 @@ This discovery generated some important possibilities for us:
 - Is this criteria or business-rule worth it?
 
 
-## You should not underestimate the bank
-
-Do not think that the bank was dumb. Everything exists for a reason.
-Despite the black credit card being a weird criteria, the bank
-certainly had a good reason to include this specific business rule
-inside the sales path.
-
-Banks are constantly facing a trade-off between risk and profit. In
-other words, a secured loan like this is always a good profit opportunity.
-However, this profit opportunity always come at some cost. Mostly in the form of risk.
-
-That is why banks are usually very good at analysing and estimating risks. When a person
-looks to acquire a loan, the bank starts to analyze several factors
-in order to estimate how much risky is to give a loan to this person.
-
-This means that the bank probably decided to include the rule,
-because it estimated that the risk is considerably higher for people that do
-not have this black credit card. If the estimated risk is higher, then,
-the bank have a good reason to not offer this loan to
-those people who do not have a black credit card.
 
 
 ## Using data to get a better outcome
@@ -155,10 +161,10 @@ Our argument was divided into two separate parts:
 1. The size of the lost;
 1. The size of the potential gain;
 
-The first part of the presentation, we focused on the 67% number. We shown the
+The first part of our presentation focused on the 67% number. We shown the
 bank that 67% of the users (which is a huge number) were constantly rejected in the flow.
-But this number alone does not have much flavor. The bank does not care if they say "no"
-to 60%, 80% or 90% of the users. They do care if they are maximizing their profit, or not.
+But this number alone does not have much flavor. As long as they are maximizing their profit,
+the bank does not care if they say "no" to 60%, 80% of the users or whatever.
 
 That is why in the second part, we did some more basic math to estimate the potential
 gains they were losing by not selling to this 67% of users.
@@ -167,3 +173,29 @@ gains they were losing by not selling to this 67% of users.
 ## Estimates are better than you think
 
 A data analyst should not realy solely on hard numbers to defend they hypothesis.
+
+<!--
+# Collecting the users metadata with R
+
+To identify which users did and did not had the
+black credit card, we needed the data returned by the API.
+But we had to effectively collect this data. In other words,
+this data was not readily and easily available to us.
+
+We had to ask to the API for the metadata of each individual user.
+So in essence, we just collected the data returned by the API for each
+individual user, then, we organized this data into a concise and structured
+form, then, we store it, and then, we analyze it.
+
+To do that, we first collected the social IDs of all the users that
+entered in our flow over the last month, and we stored inside a CSV file.
+Then, we just imported this CSV file to R, like this:
+
+```{r}
+#| eval: false
+library(readr)
+social_ids <- read_csv("social-ids.csv")
+```
+
+After that, we just created 
+-->

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.3.353">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -58,8 +58,7 @@ ul.task-list li input[type="checkbox"] {
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
+    "search-submit-button-title": "Submit"
   }
 }</script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-7E6XG4WKHE"></script>
@@ -255,10 +254,9 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <p><strong>Making decisions is hard</strong>. But you always make a better decision when you have data to guide you into a safer and better outcome. When you do not have data to back you up, you are basically in the dark. That is, you make the decision, but you do not know upfront what are the possible outcomes of that decision. You just hope for the best, and this is always a hard position to be in.</p>
 <section id="a-data-analyst-should-focus-on-understanding-the-business" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="a-data-analyst-should-focus-on-understanding-the-business"><span class="header-section-number">1.1</span> A Data Analyst should focus on understanding the business</h2>
-<p>You will probably notice that a big part of this article is dedicated to give context and explain the business behind this study case.</p>
+<p>You will probably notice that a big part of this article is dedicated to give context and explain the business behind this example.</p>
 <p>This is intentional, because, one of the real values of this article is to show that we come up with a good proposal to our client, because we understood his business, and we raised some good hypothesis about this business, and by analyzing these hypothesis we come up with a good new strategy.</p>
 <p>If you do not understand the business you are analyzing, is less likely that you will come up with a good strategy, or, a good data analysis. By having a good understanding of the business, you will likely have much better ideas on “how” to analyze the data you have.</p>
-<p>Our job as data analysts is to use data to bring insights and new business opportunities to our clients. How do you expect to come up with new sales/business strategy if you do not understand the basics of the business you are analyzing?</p>
 </section>
 </section>
 <section id="context" class="level1" data-number="2">
@@ -267,10 +265,10 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <section id="the-secured-loan-product" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="the-secured-loan-product"><span class="header-section-number">2.1</span> The secured loan product</h2>
 <p>A secured loan was one of several products offered by the bank on WhatsApp. To acquire this product, the user needed to answer several questions, and also, fit into some criterias.</p>
-<p>Depending on the type of industry you work in, your company might call this the <em>sales flow</em>, or, the <em>sales path</em>, which is the path (or the steps) that the user needs to follow to acquire the product your selling.</p>
-<p>Most companies wants to make this path as short as possible so that the user gets to the product faster. However, we are talking about a bank selling a loan. Although acquiring a loan through WhatsApp might be easy, fast and secure for the user, the bank certainly needs a lot of personal information about the user.</p>
-<p>So in this example, the user needed to answer a considerable amount of questions through WhatsApp to get to the final step of the sales path, that is, to confirm the loan. Most of these questions were requestions some personal information.</p>
-<p>With this personal information at hand, we used some APIs to check whether the user fitted or not into some important criterias. Most of these criterias were very standard for any type of loan, like… the person should not have any legal debts with the government, he/she needs to have a social ID, a stable home address, etc. Some other criterias were purelly financial and assets related, and were also a very commom practice among banks, like… the person need to be fully employed, he/she needs to have a car which is fully paid, and, this car needs to be a personal property of the person, i.e.&nbsp;it cannot be a borrowed car from another person.</p>
+<p>Depending on the type of industry you work in, you might call this as the <em>sales flow</em>, or, the <em>sales path</em>, which is the path (or the steps) that the user needs to follow to acquire the product you are selling.</p>
+<p>Most companies want to make this path as short as possible so that the user gets to the product faster. However, we are talking about a loan, so the bank certainly needs a lot of personal and financial information about the user before it gives the loan.</p>
+<p>So in this example, the user needed to answer a considerable amount of questions through WhatsApp to get to the final step of the sales path, that is, to confirm the loan.</p>
+<p>Most of these questions were asking for some personal information, specially the social ID. With the social ID at hand, we used some APIs to check whether this particular user fitted or not into some important criterias. Most of these criterias were very standard for any type of loan, like… the person should not have any legal debts with the government. Some other criterias were purelly financial and assets related, and were also a very commom practice among banks, like… the person needs to be fully employed, he/she needs to have a car which is fully paid, and, this car needs to be a personal property of the person, i.e.&nbsp;it cannot be a borrowed car from another person.</p>
 </section>
 <section id="the-weird-criteria" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="the-weird-criteria"><span class="header-section-number">2.2</span> The weird criteria</h2>
@@ -283,13 +281,21 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <figcaption class="figure-caption">A small representation of the sales path</figcaption>
 </figure>
 </div>
-<p>Every time a user entered our flow, we collected the social ID of this user. Because with this social ID we can use the bank’s API to check multiple informations about this person. One of the many things we checked, was whether or not this user had the specific black credit card I mentioned earlier.</p>
+<p>Every time a user entered our flow, we collected the social ID of this user. Because with this social ID we can use the API to check multiple informations about this person. One of the many things we checked, was whether or not this user had the specific black credit card I mentioned earlier.</p>
+</section>
+<section id="you-should-not-underestimate-the-bank" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="you-should-not-underestimate-the-bank"><span class="header-section-number">2.3</span> You should not underestimate the bank</h2>
+<p>You should not think that the bank was dumb. Everything exists for a reason. Despite the black credit card being a weird criteria, the bank certainly included this specific business rule inside the sales path for “risk trade-off” reasons.</p>
+<p>Banks are constantly facing a trade-off between risk and profit. In other words, a secured loan like this is always a good profit opportunity. However, this profit opportunity always come at a cost, mostly in the form of risk.</p>
+<p>That is why banks are usually very good at analysing and estimating risks. When a person looks to acquire a loan, the bank starts to analyze several factors in order to estimate how much risky is to give a loan to this person.</p>
+<p>This means that the bank probably decided to include this rule, because it estimated that the risk is considerably higher for people that do not have this black credit card. If the estimated risk is higher, then, the bank have a good reason to not offer this loan to those people who do not have a black credit card.</p>
 </section>
 </section>
 <section id="what-we-discovered" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> What we discovered</h1>
-<p>We had the hypothesis that this business rule (about the black credit card) was severely affecting the sales result. But a hypothesis is just a hypothesis. To test this hypothesis, we started to analyze the data returned by the bank’s API to investigate the users metadata, and potentially measure the size of the hole. As a result, we discovered that the bank was constantly losing a huge opportunity because of this specific criteria, or, this specific business rule.</p>
-<p>Doing some basic math, we identified that <strong>67% of the users that visited our channel did not have this black credit card</strong>. This means that 67% of the users that entered our channel were automatically rejected. We were constantly losing a huge chunk of potential leads because they did not fitted into this criteria.</p>
+<p>We had the hypothesis that this business rule (about the black credit card) was severely affecting the sales result. But we needed to confirm this hypothesis.</p>
+<p>Since we had the data returned from the API, we could potentially identify which users did have the black card, and which did not have. So we used R to collect the data from the API, and to analyze this data to investigate the users metadata, and potentially measure the size of the hole that these “black-card-less” users were creating.</p>
+<p>As a result, we discovered that the bank was constantly losing a huge opportunity because of this specific criteria, or, this specific business rule. Doing some basic math, we identified that <strong>67% of the users that visited our channel did not have this black credit card</strong>. This means that 67% of the users that entered our channel were automatically rejected. We were constantly losing a huge chunk of potential leads because they did not fitted into this criteria.</p>
 <p>So, for example, if 13,000 users entered our channel, only <span class="math inline">\((1 - 0.67) \times 13,000 = 4,290\)</span> of these users could potentially finish the path and acquire the loan. The remaining 8,710 users were automatically lost. They were just rejected because they did not had a specific credit card.</p>
 <p>This discovery generated some important possibilities for us:</p>
 <ul>
@@ -297,15 +303,8 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <li>Maybe we should focus in attract only people that do have the black credit card to our channel?</li>
 <li>Is this criteria or business-rule worth it?</li>
 </ul>
-<section id="you-should-not-underestimate-the-bank" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="you-should-not-underestimate-the-bank"><span class="header-section-number">3.1</span> You should not underestimate the bank</h2>
-<p>Do not think that the bank was dumb. Everything exists for a reason. Despite the black credit card being a weird criteria, the bank certainly had a good reason to include this specific business rule inside the sales path.</p>
-<p>Banks are constantly facing a trade-off between risk and profit. In other words, a secured loan like this is always a good profit opportunity. However, this profit opportunity always come at some cost. Mostly in the form of risk.</p>
-<p>That is why banks are usually very good at analysing and estimating risks. When a person looks to acquire a loan, the bank starts to analyze several factors in order to estimate how much risky is to give a loan to this person.</p>
-<p>This means that the bank probably decided to include the rule, because it estimated that the risk is considerably higher for people that do not have this black credit card. If the estimated risk is higher, then, the bank have a good reason to not offer this loan to those people who do not have a black credit card.</p>
-</section>
-<section id="using-data-to-get-a-better-outcome" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="using-data-to-get-a-better-outcome"><span class="header-section-number">3.2</span> Using data to get a better outcome</h2>
+<section id="using-data-to-get-a-better-outcome" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="using-data-to-get-a-better-outcome"><span class="header-section-number">3.1</span> Using data to get a better outcome</h2>
 <p>Our job was to use the data we collected, to show the bank that the potential gains of selling loans to these “black-card-less” users were much higher than the potential risk they offered. By using data, we can show the bank (in numbers) the size of the opportunity they were losing. And that is exactly what we did.</p>
 <p>Our argument was divided into two separate parts:</p>
 <ol type="1">
@@ -315,9 +314,38 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <p>The first part of the presentation, we focused on the 67% number. We shown the bank that 67% of the users (which is a huge number) were constantly rejected in the flow. But this number alone does not have much flavor. The bank does not care if they say “no” to 60%, 80% or 90% of the users. They do care if they are maximizing their profit, or not.</p>
 <p>That is why in the second part, we did some more basic math to estimate the potential gains they were losing by not selling to this 67% of users.</p>
 </section>
-<section id="estimates-are-better-than-you-think" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="estimates-are-better-than-you-think"><span class="header-section-number">3.3</span> Estimates are better than you think</h2>
+<section id="estimates-are-better-than-you-think" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="estimates-are-better-than-you-think"><span class="header-section-number">3.2</span> Estimates are better than you think</h2>
 <p>A data analyst should not realy solely on hard numbers to defend they hypothesis.</p>
+<!--
+# Collecting the users metadata with R
+
+To identify which users did and did not had the
+black credit card, we needed the data returned by the API.
+But we had to effectively collect this data. In other words,
+this data was not readily and easily available to us.
+
+We had to ask to the API for the metadata of each individual user.
+So in essence, we just collected the data returned by the API for each
+individual user, then, we organized this data into a concise and structured
+form, then, we store it, and then, we analyze it.
+
+To do that, we first collected the social IDs of all the users that
+entered in our flow over the last month, and we stored inside a CSV file.
+Then, we just imported this CSV file to R, like this:
+
+
+::: {.cell}
+
+```{.r .cell-code}
+library(readr)
+social_ids <- read_csv("social-ids.csv")
+```
+:::
+
+
+After that, we just created 
+-->
 
 
 </section>
