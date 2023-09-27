@@ -39,7 +39,7 @@
     "href": "posts/2023/2023-08-31-data-decisions/en/index.html#the-weird-criteria",
     "title": "A small example on how to make better decisions with data",
     "section": "2.2 The weird criteria",
-    "text": "2.2 The weird criteria\nBut one of the many criterias was a bit strange for us. Identify the exact criteria is not important for the content of this article. That is why I am going to use a random criteria here in this article.\nLet’s just say that, to be elegible for this loan, the user needed to have a black credit card. If the user did not had this black credit card, we automatically rejected the user’s request for the loan.\nIn essence, we had a flow that worked a bit like this:\n\n\n\nA small representation of the sales path\n\n\nEvery time a user entered our flow, we collected the social ID of this user. Because with this social ID we can use the API to check multiple informations about this person. One of the many things we checked, was whether or not this user had the specific black credit card I mentioned earlier."
+    "text": "2.2 The weird criteria\nBut one of the many criterias was a bit strange for us. Identify the exact criteria is not important for the content of this article. Let’s just say that, to be elegible for this loan, the user needed to be elegible to three different modalities.\nEach modality corresponded to a different type of loan. If the user was not elegible to all of these three modalities, we automatically rejected the user’s request for the loan.\nIn essence, we had a flow that worked a bit like this:\n\n\n\nA small representation of the sales path\n\n\nEvery time a user entered our flow, we collected the social ID of this user. Because with this social ID we can use the API to check multiple informations about this person. One of the many things we checked, was whether or not this user was elegible to these three modalities."
   },
   {
     "objectID": "posts/2023/2023-08-31-data-decisions/en/index.html#banks-are-always-facing-a-trade-off-between-risk-and-profit",
@@ -585,7 +585,7 @@
     "href": "posts/2023/2023-08-31-data-decisions/en/index.html#using-data-to-get-a-better-outcome",
     "title": "A small example on how to make better decisions with data",
     "section": "3.1 Using data to get a better outcome",
-    "text": "3.1 Using data to get a better outcome\nOur job was to use the data we collected, to show the bank that the potential gains of selling loans to these “black-card-less” users were much higher than the potential risk they offered. By using data, we can show the bank (in numbers) the size of the opportunity they were losing. And that is exactly what we did.\nOur argument was divided into two separate parts:\n\nThe size of the lost;\nThe size of the potential gain;\n\nThe first part of the presentation, we focused on the 67% number. We shown the bank that 67% of the users (which is a huge number) were constantly rejected in the flow. But this number alone does not have much flavor. The bank does not care if they say “no” to 60%, 80% or 90% of the users. They do care if they are maximizing their profit, or not.\nThat is why in the second part, we did some more basic math to estimate the potential gains they were losing by not selling to this 67% of users."
+    "text": "3.1 Using data to get a better outcome\nOur job was to use the data we collected, to show the bank that the potential gains of selling different types of loans to these users that did not had the three modalities, were much higher than the potential risk they offered. By using data, we can show the bank (in numbers) the size of the opportunity they were losing. And that is exactly what we did.\nOur argument was divided into two separate parts:\n\nThe size of the lost;\nThe size of the potential gain;\n\nThe first part of our presentation focused on the 67% number. We shown the bank that 67% of the users (which is a huge number) were constantly rejected in the flow. But this number alone does not have much flavor. As long as they are maximizing their profit, the bank does not care if they say “no” to 60%, 80% of the users or whatever.\nThat is why in the second part, we did some more basic math to estimate the potential gains they were losing by not selling to this 67% of users."
   },
   {
     "objectID": "posts/2023/2023-08-31-data-decisions/en/index.html#a-data-analyst-should-focus-on-understanding-the-business",
@@ -600,5 +600,19 @@
     "title": "A small example on how to make better decisions with data",
     "section": "3.2 Estimates are better than you think",
     "text": "3.2 Estimates are better than you think\nA data analyst should not realy solely on hard numbers to defend they hypothesis."
+  },
+  {
+    "objectID": "posts/2023/2023-08-31-data-decisions/en/index.html#why-this-was-weird",
+    "href": "posts/2023/2023-08-31-data-decisions/en/index.html#why-this-was-weird",
+    "title": "A small example on how to make better decisions with data",
+    "section": "2.3 Why this was weird?",
+    "text": "2.3 Why this was weird?\nThis was a weird criteria, because… if a user called “Ana” is elegible to modality A, then, why not offer a loan of modality A to “Ana” ? If a user “Mike” is elegible both to modalities A and B, then, we should offer both modalities (A and B) to him. Let him get whatever loan he wants, right?\nWhy only users that are elegible to all three modalities (A, B and C) get to decide which loan they want to get? In our head, this criteria did not made much sense, because if an user is elegible to one modality of loan, he should be able to get a loan on this modality he is elegible to."
+  },
+  {
+    "objectID": "posts/2023/2023-08-31-data-decisions/en/index.html#why-this-criteria-existed",
+    "href": "posts/2023/2023-08-31-data-decisions/en/index.html#why-this-criteria-existed",
+    "title": "A small example on how to make better decisions with data",
+    "section": "2.4 Why this criteria existed?",
+    "text": "2.4 Why this criteria existed?\nThis criteria existed either because a MVP strategy or a “risk trade-off” strategy. The MVP strategy means that the bank included this weird criteria because it greatly simplified the development of the sales path. By simplifying the development, the bank could deliver a MVP (minimal viable product) as fast as possible.\nOn the other side, the “risk trade-off” means that the bank included this weird criteria, because it probably estimated that the risk is considerably higher for people that are not elegible to all three modalities. If the estimated risk is higher, then, the bank have a good reason to not offer this loan to people that are elegible to only one or two modalities.\nBanks are constantly facing a trade-off between risk and profit. In other words, a secured loan like this is always a good profit opportunity. However, this profit opportunity always come at a cost, mostly in the form of risk.\nThat is why banks are usually very good at analysing and estimating risks. When a person looks to acquire a loan, the bank starts to analyze several factors in order to estimate how much risky is to give a loan to this person."
   }
 ]

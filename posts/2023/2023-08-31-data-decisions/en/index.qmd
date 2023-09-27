@@ -25,7 +25,7 @@ and this is always a hard position to be in.
 You will probably notice that a big part of this article is dedicated
 to give context and explain the business behind this example.
 
-This is intentional, because, one of the real values of this article is
+This is intentional! Because, one of the real values of this article is
 to show that we come up with a good proposal to our client, because we
 understood his business, and we raised some good hypothesis about this business,
 and by analyzing these hypothesis we come up with a good new strategy.
@@ -74,13 +74,15 @@ fully paid, and, this car needs to be a personal property of the person, i.e. it
 a borrowed car from another person.
 
 
+
 ## The weird criteria
 
-But one of the many criterias was a bit strange for us. Identify the exact criteria is not important for the content of this article. That is why I am going to use a random criteria here in this article.
+But one of the many criterias was a bit strange for us. Identify the exact criteria is not important for the content of this article. Let's just say that, to be elegible for this loan, **the user needed to be elegible to three different modalities**.
 
-Let's just say that, to be elegible for this loan, **the user needed to have a black credit card**.
-If the user did not had this black credit card, we automatically rejected the user's request for
-the loan.
+Each modality corresponded to a different type of loan.
+If the user was not elegible to all of these three modalities, or,
+these three different types of loan,
+we automatically rejected the user's request for the loan.
 
 In essence, we had a flow that worked a bit like this:
 
@@ -89,15 +91,36 @@ In essence, we had a flow that worked a bit like this:
 Every time a user entered our flow, we collected the social ID of this user.
 Because with this social ID we can use the API to check multiple informations
 about this person. One of the many things we checked, was whether or not
-this user had the specific black credit card I mentioned earlier.
+this user was elegible to these three modalities.
+
+## Why this was weird?
+
+This was a weird criteria, because... if a user called "Ana" is elegible to modality A,
+then, why not offer a loan of modality A to "Ana" ? If a user "Mike" is elegible
+both to modalities A and B, then, we should offer both modalities (A and B) to him.
+Let him get whatever loan he wants, right?
+
+Why only users that are elegible to all
+three modalities (A, B and C) get to decide which loan they want to get?
+In our head, this criteria did not made much sense, because if an user
+is elegible to one modality of loan, he should be able to get
+a loan on this modality he is elegible to.
 
 
-## You should not underestimate the bank
+## Why this criteria existed?
 
-You should not think that the bank was dumb. Everything exists for a reason.
-Despite the black credit card being a weird criteria, the bank
-certainly included this specific business rule
-inside the sales path for "risk trade-off" reasons.
+This criteria existed either because a MVP strategy or a "risk trade-off" strategy.
+The MVP strategy means that the bank included this weird criteria because it
+greatly simplified the development of the sales path. By simplifying the
+development, the bank could deliver a MVP (minimal viable product)
+as fast as possible.
+
+On the other side, the "risk trade-off" means that
+the bank included this weird criteria, because it probably estimated
+that the risk is considerably higher for people that are not
+elegible to all three modalities. If the estimated risk is higher, then,
+the bank have a good reason to not offer this loan to people
+that are elegible to only one or two modalities.
 
 Banks are constantly facing a trade-off between risk and profit. In
 other words, a secured loan like this is always a good profit opportunity.
@@ -107,30 +130,23 @@ That is why banks are usually very good at analysing and estimating risks. When 
 looks to acquire a loan, the bank starts to analyze several factors
 in order to estimate how much risky is to give a loan to this person.
 
-This means that the bank probably decided to include this rule,
-because it estimated that the risk is considerably higher for people that do
-not have this black credit card. If the estimated risk is higher, then,
-the bank have a good reason to not offer this loan to
-those people who do not have a black credit card.
-
-
 
 
 # What we discovered
 
-We had the hypothesis that this business rule (about the black credit card)
+We had the hypothesis that this business rule (about the three modalities)
 was severely affecting the sales result. But we needed to confirm this hypothesis.
 
 Since we had the data returned from the API, we could potentially identify
-which users did have the black card, and which did not have. So we used R to collect the data
+which users did have the three modalities, and which did not have. So we used R to collect the data
 from the API, and to analyze this data to investigate the users metadata,
 and potentially measure the size of the hole
-that these "black-card-less" users were creating.
+that these users were creating.
 
 As a result, we discovered that the bank was constantly losing a huge opportunity because of this
 specific criteria, or, this specific business rule.
 Doing some basic math, we identified that
-**67% of the users that visited our channel did not have this black credit card**.
+**67% of the users that visited our channel were not elegible to all three modalities**.
 This means that 67% of the users that entered our channel were automatically rejected.
 We were constantly losing a huge chunk of potential leads
 because they did not fitted into this criteria.
@@ -138,12 +154,12 @@ because they did not fitted into this criteria.
 So, for example, if 13,000 users entered our channel, only $(1 - 0.67) \times 13,000 = 4,290$
 of these users could potentially finish the path and acquire the loan. The
 remaining 8,710 users were automatically lost. They were just rejected
-because they did not had a specific credit card.
+because they did not had these three modalities.
 
 This discovery generated some important possibilities for us:
 
 - Are we reaching the right audience?
-- Maybe we should focus in attract only people that do have the black credit card to our channel? 
+- Maybe we should focus in attract only people that do have the three modalities to our channel? 
 - Is this criteria or business-rule worth it?
 
 
@@ -152,8 +168,8 @@ This discovery generated some important possibilities for us:
 ## Using data to get a better outcome
 
 Our job was to use the data we collected, to show the bank that the potential gains of
-selling loans to these "black-card-less" users were much higher than the
-potential risk they offered. By using data, we can show the bank (in
+selling different types of loans to these users that did not had the three modalities,
+were much higher than the potential risk they offered. By using data, we can show the bank (in
 numbers) the size of the opportunity they were losing. And that is exactly what we did.
 
 Our argument was divided into two separate parts:
@@ -164,15 +180,44 @@ Our argument was divided into two separate parts:
 The first part of our presentation focused on the 67% number. We shown the
 bank that 67% of the users (which is a huge number) were constantly rejected in the flow.
 But this number alone does not have much flavor. As long as they are maximizing their profit,
-the bank does not care if they say "no" to 60%, 80% of the users or whatever.
+the bank does not care if they say "no" to 60%, 70%, 80% of the users or whatever.
 
 That is why in the second part, we did some more basic math to estimate the potential
 gains they were losing by not selling to this 67% of users.
 
+# The new strategy
+
+A quick recap. Each individual user that entered inside our sales path, wants to
+get a loan. But, this user needed to be elegible to three different types of
+loan to actually acquire the loan he wanted through our channel.
+
+But, what if we change the sales path, so that:
+
+- An user does not need to be elegible to all three modalities to acquire a loan;
+- If an user is elegible to modality A, then, we should offer a loan of modality A to him;
+- If is elegible to modality A and B, then, we offer both loans of modality A and B;
+- If is elegible to modality A, B, and C, then, we offer all three types of loans (A, B and C);
+
+We estimated that, if we changed the sales path so that it would fit the descriptions above,
+then, we would increase the users coverage to 96.8%! This means that we could sell a loan to
+96.8% of the users that entered our sales path, instead of only 33%.
+
+If you are thinking that 33% + 67% should be equal to 100% instead,
+you are forgetting that the user needs to fit into other criterias that I did not mentioned here.
+In other words, even if we included the 67%, 96.8 - 100 = 3.2% of users would still be
+rejected because they did not fit into other necessary criterias.
+
+Doing some basic rule of three, this could mean a potential sales increase of 193%!
+On the first month after we implemented this new strategy on production,
+the sales increased approximately 142%, and on the second month, 400%.
+The sales of this specific loan have a strong seasonal component to it, that is why you
+have such a big variation from 142% to 400%. But nevertheless, this
+demonstrates the positive impact of our strategy.
+
 
 ## Estimates are better than you think
 
-A data analyst should not realy solely on hard numbers to defend they hypothesis.
+A data analyst should not rely solely on hard numbers to defend they hypothesis.
 
 <!--
 # Collecting the users metadata with R

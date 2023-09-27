@@ -44,8 +44,8 @@
 </section>
 <section id="the-weird-criteria" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="the-weird-criteria"><span class="header-section-number">2.2</span> The weird criteria</h2>
-<p>But one of the many criterias was a bit strange for us. Identify the exact criteria is not important for the content of this article. That is why I am going to use a random criteria here in this article.</p>
-<p>Let’s just say that, to be elegible for this loan, <strong>the user needed to have a black credit card</strong>. If the user did not had this black credit card, we automatically rejected the user’s request for the loan.</p>
+<p>But one of the many criterias was a bit strange for us. Identify the exact criteria is not important for the content of this article. Let’s just say that, to be elegible for this loan, <strong>the user needed to be elegible to three different modalities</strong>.</p>
+<p>Each modality corresponded to a different type of loan. If the user was not elegible to all of these three modalities, we automatically rejected the user’s request for the loan.</p>
 <p>In essence, we had a flow that worked a bit like this:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -53,37 +53,42 @@
 <figcaption class="figure-caption">A small representation of the sales path</figcaption>
 </figure>
 </div>
-<p>Every time a user entered our flow, we collected the social ID of this user. Because with this social ID we can use the API to check multiple informations about this person. One of the many things we checked, was whether or not this user had the specific black credit card I mentioned earlier.</p>
+<p>Every time a user entered our flow, we collected the social ID of this user. Because with this social ID we can use the API to check multiple informations about this person. One of the many things we checked, was whether or not this user was elegible to these three modalities.</p>
 </section>
-<section id="you-should-not-underestimate-the-bank" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="you-should-not-underestimate-the-bank"><span class="header-section-number">2.3</span> You should not underestimate the bank</h2>
-<p>You should not think that the bank was dumb. Everything exists for a reason. Despite the black credit card being a weird criteria, the bank certainly included this specific business rule inside the sales path for “risk trade-off” reasons.</p>
+<section id="why-this-was-weird" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="why-this-was-weird"><span class="header-section-number">2.3</span> Why this was weird?</h2>
+<p>This was a weird criteria, because… if a user called “Ana” is elegible to modality A, then, why not offer a loan of modality A to “Ana” ? If a user “Mike” is elegible both to modalities A and B, then, we should offer both modalities (A and B) to him. Let him get whatever loan he wants, right?</p>
+<p>Why only users that are elegible to all three modalities (A, B and C) get to decide which loan they want to get? In our head, this criteria did not made much sense, because if an user is elegible to one modality of loan, he should be able to get a loan on this modality he is elegible to.</p>
+</section>
+<section id="why-this-criteria-existed" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="why-this-criteria-existed"><span class="header-section-number">2.4</span> Why this criteria existed?</h2>
+<p>This criteria existed either because a MVP strategy or a “risk trade-off” strategy. The MVP strategy means that the bank included this weird criteria because it greatly simplified the development of the sales path. By simplifying the development, the bank could deliver a MVP (minimal viable product) as fast as possible.</p>
+<p>On the other side, the “risk trade-off” means that the bank included this weird criteria, because it probably estimated that the risk is considerably higher for people that are not elegible to all three modalities. If the estimated risk is higher, then, the bank have a good reason to not offer this loan to people that are elegible to only one or two modalities.</p>
 <p>Banks are constantly facing a trade-off between risk and profit. In other words, a secured loan like this is always a good profit opportunity. However, this profit opportunity always come at a cost, mostly in the form of risk.</p>
 <p>That is why banks are usually very good at analysing and estimating risks. When a person looks to acquire a loan, the bank starts to analyze several factors in order to estimate how much risky is to give a loan to this person.</p>
-<p>This means that the bank probably decided to include this rule, because it estimated that the risk is considerably higher for people that do not have this black credit card. If the estimated risk is higher, then, the bank have a good reason to not offer this loan to those people who do not have a black credit card.</p>
 </section>
 </section>
 <section id="what-we-discovered" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> What we discovered</h1>
-<p>We had the hypothesis that this business rule (about the black credit card) was severely affecting the sales result. But we needed to confirm this hypothesis.</p>
-<p>Since we had the data returned from the API, we could potentially identify which users did have the black card, and which did not have. So we used R to collect the data from the API, and to analyze this data to investigate the users metadata, and potentially measure the size of the hole that these “black-card-less” users were creating.</p>
-<p>As a result, we discovered that the bank was constantly losing a huge opportunity because of this specific criteria, or, this specific business rule. Doing some basic math, we identified that <strong>67% of the users that visited our channel did not have this black credit card</strong>. This means that 67% of the users that entered our channel were automatically rejected. We were constantly losing a huge chunk of potential leads because they did not fitted into this criteria.</p>
-<p>So, for example, if 13,000 users entered our channel, only <img src="https://latex.codecogs.com/png.latex?(1%20-%200.67)%20%5Ctimes%2013,000%20=%204,290"> of these users could potentially finish the path and acquire the loan. The remaining 8,710 users were automatically lost. They were just rejected because they did not had a specific credit card.</p>
+<p>We had the hypothesis that this business rule (about the three modalities) was severely affecting the sales result. But we needed to confirm this hypothesis.</p>
+<p>Since we had the data returned from the API, we could potentially identify which users did have the three modalities, and which did not have. So we used R to collect the data from the API, and to analyze this data to investigate the users metadata, and potentially measure the size of the hole that these users were creating.</p>
+<p>As a result, we discovered that the bank was constantly losing a huge opportunity because of this specific criteria, or, this specific business rule. Doing some basic math, we identified that <strong>67% of the users that visited our channel were not elegible to all three modalities</strong>. This means that 67% of the users that entered our channel were automatically rejected. We were constantly losing a huge chunk of potential leads because they did not fitted into this criteria.</p>
+<p>So, for example, if 13,000 users entered our channel, only <img src="https://latex.codecogs.com/png.latex?(1%20-%200.67)%20%5Ctimes%2013,000%20=%204,290"> of these users could potentially finish the path and acquire the loan. The remaining 8,710 users were automatically lost. They were just rejected because they did not had these three modalities.</p>
 <p>This discovery generated some important possibilities for us:</p>
 <ul>
 <li>Are we reaching the right audience?</li>
-<li>Maybe we should focus in attract only people that do have the black credit card to our channel?</li>
+<li>Maybe we should focus in attract only people that do have the three modalities to our channel?</li>
 <li>Is this criteria or business-rule worth it?</li>
 </ul>
 <section id="using-data-to-get-a-better-outcome" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="using-data-to-get-a-better-outcome"><span class="header-section-number">3.1</span> Using data to get a better outcome</h2>
-<p>Our job was to use the data we collected, to show the bank that the potential gains of selling loans to these “black-card-less” users were much higher than the potential risk they offered. By using data, we can show the bank (in numbers) the size of the opportunity they were losing. And that is exactly what we did.</p>
+<p>Our job was to use the data we collected, to show the bank that the potential gains of selling different types of loans to these users that did not had the three modalities, were much higher than the potential risk they offered. By using data, we can show the bank (in numbers) the size of the opportunity they were losing. And that is exactly what we did.</p>
 <p>Our argument was divided into two separate parts:</p>
 <ol type="1">
 <li>The size of the lost;</li>
 <li>The size of the potential gain;</li>
 </ol>
-<p>The first part of the presentation, we focused on the 67% number. We shown the bank that 67% of the users (which is a huge number) were constantly rejected in the flow. But this number alone does not have much flavor. The bank does not care if they say “no” to 60%, 80% or 90% of the users. They do care if they are maximizing their profit, or not.</p>
+<p>The first part of our presentation focused on the 67% number. We shown the bank that 67% of the users (which is a huge number) were constantly rejected in the flow. But this number alone does not have much flavor. As long as they are maximizing their profit, the bank does not care if they say “no” to 60%, 80% of the users or whatever.</p>
 <p>That is why in the second part, we did some more basic math to estimate the potential gains they were losing by not selling to this 67% of users.</p>
 </section>
 <section id="estimates-are-better-than-you-think" class="level2" data-number="3.2">
@@ -3963,7 +3968,7 @@ Damji, Jules, Brooke Wenig, Tathagata Das, and Denny Lee. 2020. <em>Learning Spa
   <category>Apache Spark</category>
   <category>Book</category>
   <guid>https://pedro-faria.netlify.app/publications/book/introd-pyspark/en/index.html</guid>
-  <pubDate>Wed, 27 Sep 2023 16:58:39 GMT</pubDate>
+  <pubDate>Wed, 27 Sep 2023 18:31:44 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/publications/book/introd-pyspark/featured.png" medium="image" type="image/png" height="215" width="144"/>
 </item>
 </channel>
