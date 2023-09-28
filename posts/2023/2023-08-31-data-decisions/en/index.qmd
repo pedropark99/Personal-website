@@ -202,10 +202,32 @@ We estimated that, if we changed the sales path so that it would fit the descrip
 then, we would increase the users coverage to 96.8%! This means that we could sell a loan to
 96.8% of the users that entered our sales path, instead of only 33%.
 
-If you are thinking that 33% + 67% should be equal to 100% instead,
+Now, if you are thinking that 33% + 67% should be equal to 100% instead,
 you are forgetting that the user needs to fit into other criterias that I did not mentioned here.
-In other words, even if we included the 67%, 96.8 - 100 = 3.2% of users would still be
+In other words, 96.8 - 100 = 3.2% of users would still be
 rejected because they did not fit into other necessary criterias.
+
+
+## Estimates are better than you think
+
+A big part of our education is dedicated to answer precise questions, with well defined problems,
+and, with well defined answers (or solutions).
+Unfortunately, this experience can create some insecurities on most data analysts.
+Since they are used to give precise answers, they usually become "afraid", or,
+they try to avoid estimates (which is to some extent, a "non-precise" answer) at all costs.
+
+So, if you are a data analyst that rely too much on solid and precise numbers, let me give
+you a quick insight. The thing about precise numbers, is that **they are known**!
+This property makes them not that much special, because anyone that knows
+a lit bit of math can calculate these numbers!
+
+In other words, when you present a 
+
+Or maybe,
+they end up avoidying estimates on all ocasions.
+A data analyst should not rely solely on hard numbers to defend they hypothesis.
+
+
 
 Doing some basic rule of three, this could mean a potential sales increase of 193%!
 On the first month after we implemented this new strategy on production,
@@ -215,9 +237,6 @@ have such a big variation from 142% to 400%. But nevertheless, this
 demonstrates the positive impact of our strategy.
 
 
-## Estimates are better than you think
-
-A data analyst should not rely solely on hard numbers to defend they hypothesis.
 
 <!--
 # Collecting the users metadata with R
