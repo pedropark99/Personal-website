@@ -2,6 +2,7 @@
 title: "Improving decision making with Git and why you should care"
 description: "This article uses a real world situation that me and my team encountered to show how you can improve decision making in your team by tracking the decisions you make with Git"
 image: "./../git-logo.png"
+categories: ['Git', 'Decisions', 'Documentation']
 date: "2023-07-31"
 ---
 

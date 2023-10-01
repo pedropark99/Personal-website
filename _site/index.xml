@@ -149,6 +149,9 @@
 <li id="fn2"><p>In essence, a Pull Request (or PR) is a <strong>proposal</strong> to perform a <code>git merge</code> operation. In other words, you create a PR when you want to merge the changes you made in a branch into another branch (most of the times the main branch). The “proposal” aspect of a PR means that it needs be approved to be effectively performed. A PR is not a feature from Git. It is actually a standard feature from most Git service providers. So you create a PR inside a Git services platform such as GitHub, GitLab and Azure DevOps, and not inside Git itself. If you are not familiar with PRs, the <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests">GitHub documentation has an excellent article about it</a>↩︎</p></li>
 </ol>
 </section></div> ]]></description>
+  <category>Git</category>
+  <category>Decisions</category>
+  <category>Documentation</category>
   <guid>https://pedro-faria.netlify.app/posts/2023/2023-07-31-git-mark-decisions/en/index.html</guid>
   <pubDate>Mon, 31 Jul 2023 03:00:00 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/posts/2023/2023-07-31-git-mark-decisions/git-logo.png" medium="image" type="image/png" height="70" width="144"/>
@@ -291,6 +294,9 @@
 <li id="fn2"><p>Em resumo, um Pull Request (ou PR) é uma <strong>proposta</strong> para realizar uma operação <code>git merge</code>. Em outras palavras, você cria um PR quando deseja mesclar as alterações feitas em uma branch em outra branch (na maioria das vezes a main branch). O aspecto de “proposta” de uma PR significa que este PR precisa ser aprovado para ser efetivamente executado. Um PR não é um recurso do Git. Na verdade, é um recurso padrão da maioria dos provedores de serviços Git. Então você cria um PR dentro de uma plataforma de serviços Git como GitHub, GitLab e Azure DevOps, e não dentro do próprio Git. Se você não está familiarizado com PRs, a <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests">documentação do GitHub tem um excelente artigo sobre isso</a>.↩︎</p></li>
 </ol>
 </section></div> ]]></description>
+  <category>Git</category>
+  <category>Decisions</category>
+  <category>Documentation</category>
   <guid>https://pedro-faria.netlify.app/posts/2023/2023-07-31-git-mark-decisions/pt/index.html</guid>
   <pubDate>Mon, 31 Jul 2023 03:00:00 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/posts/2023/2023-07-31-git-mark-decisions/git-logo.png" medium="image" type="image/png" height="70" width="144"/>
@@ -3846,7 +3852,7 @@ Damji, Jules, Brooke Wenig, Tathagata Das, and Denny Lee. 2020. <em>Learning Spa
   <category>Apache Spark</category>
   <category>Book</category>
   <guid>https://pedro-faria.netlify.app/publications/book/introd-pyspark/en/index.html</guid>
-  <pubDate>Tue, 08 Aug 2023 23:45:31 GMT</pubDate>
+  <pubDate>Sun, 01 Oct 2023 02:02:28 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/publications/book/introd-pyspark/featured.png" medium="image" type="image/png" height="215" width="144"/>
 </item>
 </channel>

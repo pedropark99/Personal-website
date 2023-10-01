@@ -2,6 +2,7 @@
 title: "Melhorando a tomada de decisão com Git e porquê você deveria se importar"
 description: "Esse artigo usa um caso real que eu e meu time enfrentamos para mostrar como você pode melhorar a tomada de decisão de seu time, ao rastrear as suas decisões com Git"
 image: "./../git-logo.png"
+categories: ['Git', 'Decisions', 'Documentation']
 date: "2023-07-31"
 ---
 

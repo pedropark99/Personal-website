@@ -3,10 +3,13 @@
 
 // Import fonts
 @import url('https://fonts.googleapis.com/css2?family=Inconsolata&family=Nunito+Sans:wght@900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400&family=Roboto&display=swap');
+
 
 // Colors
 $dark-blue: #0e326b;
-$light-blue: #deeafc;
+$light-blue: #f0f6ff;
 $purple: #9954BB;
 $dark-purple: #752f98;
 $light-black: #222222;
@@ -43,8 +46,8 @@ $font-family-monospace: 'Inconsolata';
     color: $light-black;
 }
 .quarto-grid-item .listing-categories .listing-category {
-    color: $dark-blue;
-    border-color: $dark-blue;
+    color: $light-black;
+    border-color: $light-black;
 }
 .card {
     background-color: $light-green2;
@@ -85,7 +88,7 @@ $font-family-monospace: 'Inconsolata';
 
 // Inline code
 code {
-    font-size: 14pt;
+    font-size: 13pt;
 }
 // Inline code inside Headers and Navigation bars
 h1 code {
@@ -95,8 +98,9 @@ h2 code {
     font-size: calc(1.3rem + 0.6vw);
 }
 h3 code {
-    font-size: calc(1.255rem + 0.6vw);
+    font-size: calc(0.9rem + 0.6vw);
 }
+
 
 .nav-link code {
     font-size: .875rem;
@@ -124,5 +128,9 @@ h1.title{
 
 h1, h2, h3, h4, h5 {
     font-family: 'Nunito Sans', sans-serif;
-    color: $dark-blue;
+    color: $light-black;
+}
+
+p, li {
+    font-family: 'Hanken Grotesk', sans-serif;
 }
