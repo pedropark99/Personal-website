@@ -23,7 +23,7 @@ and this is always a hard position to be in.
 ## A Data Analyst should focus on understanding the business
 
 You will probably notice that a big part of this article is dedicated
-to give context and explain the business behind this example.
+to give you context and explain the business behind this example.
 
 This is intentional! Because, one of the real values of this article is
 to show that we come up with a good proposal to our client, because we
@@ -32,7 +32,7 @@ and by analyzing these hypothesis we come up with a good new strategy.
 
 If you do not understand the business you are analyzing, is less
 likely that you will come up with a good strategy, or, a good
-data analysis. By having a good understanding of the business,
+data analysis. In other words, by having a good understanding of the business,
 you will likely have much better ideas on "how" to analyze the data you have.
 
 
@@ -62,11 +62,9 @@ So in this example, the user needed to answer a considerable amount
 of questions through WhatsApp to get to the final step of the sales path, that is,
 to confirm the loan.
 
-Most of these questions were asking for some personal information, specially the social ID.
-With the social ID at hand, we used some APIs to check whether this particular user
-fitted or not into some important criterias. Most of these criterias
-were very standard for any type of loan, like... the person should not have any legal debts
-with the government.
+Most of these questions were asking for some personal information, to check whether this particular user fitted or not into some important criterias.
+Most of these criterias were very standard for any type of loan,
+like... the person should not have any legal debts with the government.
 Some other criterias were purelly financial and assets related,
 and were also a very commom practice among banks, like...
 the person needs to be fully employed, he/she needs to have a car which is
@@ -77,12 +75,11 @@ a borrowed car from another person.
 
 ## The weird criteria
 
-But one of the many criterias was a bit strange for us. Identify the exact criteria is not important for the content of this article. Let's just say that, to be elegible for this loan, **the user needed to be elegible to three different modalities**.
+But one of the many criterias was a bit strange for us. Identify the exact criteria is not important for the content of this article. So let's just say that, to be elegible for this loan, **the user needed to be elegible to three different modalities**.
 
 Each modality corresponded to a different type of loan.
-If the user was not elegible to all of these three modalities, or,
-these three different types of loan,
-we automatically rejected the user's request for the loan.
+If the user was not elegible to all of these three modalities (or types of loan),
+then, we would automatically rejected the user's request for the loan.
 
 In essence, we had a flow that worked a bit like this:
 
@@ -91,14 +88,15 @@ In essence, we had a flow that worked a bit like this:
 Every time a user entered our flow, we collected the social ID of this user.
 Because with this social ID we can use the API to check multiple informations
 about this person. One of the many things we checked, was whether or not
-this user was elegible to these three modalities.
+this user was elegible or not to these three modalities of loan.
 
 ## Why this was weird?
 
 This was a weird criteria, because... if a user called "Ana" is elegible to modality A,
-then, why not offer a loan of modality A to "Ana" ? If a user "Mike" is elegible
-both to modalities A and B, then, we should offer both modalities (A and B) to him.
-Let him get whatever loan he wants, right?
+then, why not offer a loan of modality A to "Ana" ? As another example, if a
+user "Mike" is elegible to both modalities A and B, then, why not offer both
+of these modalities (A and B) to him? Let the user get whatever type of loan
+he is elegible to, right?
 
 Why only users that are elegible to all
 three modalities (A, B and C) get to decide which loan they want to get?
@@ -109,11 +107,12 @@ a loan on this modality he is elegible to.
 
 ## Why this criteria existed?
 
-This criteria existed either because a MVP strategy or a "risk trade-off" strategy.
+But let's face it. Despite this being a weird criteria, there certainly is a reason for it.
+In essence, this criteria existed either because a MVP strategy or a "risk trade-off" strategy.
 The MVP strategy means that the bank included this weird criteria because it
 greatly simplified the development of the sales path. By simplifying the
 development, the bank could deliver a MVP (minimal viable product)
-as fast as possible.
+as fast as possible, and, as a consequence, he could make a profit out of it faster.
 
 On the other side, the "risk trade-off" means that
 the bank included this weird criteria, because it probably estimated
