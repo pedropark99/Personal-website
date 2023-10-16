@@ -20,7 +20,7 @@ upfront what are the possible outcomes of that decision. You just hope for the b
 and this is always a hard position to be in.
 
 
-## A Data Analyst should focus on understanding the business
+# A Data Analyst should focus on understanding the business
 
 You will probably notice that a big part of this article is dedicated
 to give you context and explain the business behind this example.
@@ -93,8 +93,8 @@ this user was elegible or not to these three modalities of loan.
 
 ## Why this was weird?
 
-This was a weird criteria, because... if a user called "Ana" is elegible to modality A,
-then, why not offer a loan of modality A to "Ana" ? As another example, if a
+This was a weird criteria, because... if an user called "Ana" is elegible to modality A,
+then, why not offer a loan of modality A to "Ana" ? As another example, if an
 user "Mike" is elegible to both modalities A and B, then, why not offer both
 of these modalities (A and B) to him? Let the user get whatever type of loan
 he is elegible to, right?
@@ -138,8 +138,8 @@ in order to estimate how much risky is to give a loan to this person.
 
 # What we discovered
 
-Regardless of which of the above strategies was the exact bank's strategy,
-we had the hypothesis that this business rule (about the three modalities)
+Regardless of which of the above options was the exact bank's strategy,
+we had the hypothesis that this business rule (or this "weird criteria")
 was severely affecting the sales result.
 
 In other words, we suspected
@@ -150,9 +150,9 @@ this criteria into the sales path. But we needed to confirm this hypothesis.
 Since we had the data returned from the API, we could potentially identify
 which users did have the three modalities, and which did not have. So I setted up a simple
 R script to collect the data of each user that visited our sales path
-in the last month from the API, and putted this script to run through the night.
+in the last month from the API, and I putted this script to run through the night.
 
-In the next day, I had all of the data, and we started to analyze it,
+In the next day, I had all of the data locally, and we started to analyze it,
 investigating the metadata of each user, and potentially measuring the size of the hole
 that this business rule was creating.
 
@@ -178,7 +178,7 @@ This discovery generated some important possibilities for us:
 
 
 
-## Using data to get a better outcome
+# Using data to get a better outcome
 
 Our job was to use the data we collected, to show the bank that the potential gains of
 selling different types of loans to these users that did not had the three modalities,
@@ -231,15 +231,21 @@ Spoiler! This estimate was way low compared to the end result we got. But that i
 what estimates are right? They are just estimates.
 
 So the bank was very happy with the proposal. The managers quickly accepted the idea. A low effort for a
-potentail high gain. If your reflect a bit on this article, you will see that the new strategy
-was very simple, but our proposal was very clear and effective (it was just 3 slides basically).
+potentail high gain.
+
+If you think about it, this new strategy we come up with was very simple.
+It just provided more options to the users that did not fitted into the ideal scenario for the bank.
+But despite it being simple, we wroted a very short, clear and effective proposal (it was just 4 slides basically).
+We showed the size of the hole to the bank, and we showed the size of the opportunity we
+could get if we implemented our new strategy, and we also showed that this new
+strategy was relatively easy and quick to implement.
 
 However, the end result was enormous.
 On the first month after we implemented this new strategy on production,
 the sales increased approximately 142%, and on the second month, 400%.
 The sales of this specific loan have a strong seasonal component to it, that is why you
 have such a big variation from 142% to 400%. But nevertheless, this
-demonstrates the positive impact of our strategy.
+demonstrates the positive impact of our new strategy.
 This end result of **400% sales increase** because of our proposal was humongous.
 
 
