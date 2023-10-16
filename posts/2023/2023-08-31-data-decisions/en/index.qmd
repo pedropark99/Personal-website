@@ -13,7 +13,7 @@ to convince our client (which is one of the biggest companines in the brazilian
 financial market) at the time to make a better decision. Special thanks to
 [Guilherme Goes](https://www.linkedin.com/in/guilhermeggarcia/) and [Paulo Gonçalves](https://www.linkedin.com/in/paulo-gon-oli/). They both help me to present these ideas and insights to our client.
 
-**Making decisions is hard**. But you always make a better decision when you have data
+In essence, **making decisions is hard**. But you always make a better decision when you have data
 to guide you into a safer and better outcome. When you do not have data to back you up,
 you are basically in the dark. That is, you make the decision, but you do not know
 upfront what are the possible outcomes of that decision. You just hope for the best,
@@ -60,7 +60,7 @@ before it gives the loan.
 
 So in this example, the user needed to answer a considerable amount
 of questions through WhatsApp to get to the final step of the sales path, that is,
-to confirm the loan.
+to acquire the loan.
 
 Most of these questions were asking for some personal information, to check whether this particular user fitted or not into some important criterias.
 Most of these criterias were very standard for any type of loan,
@@ -75,7 +75,8 @@ a borrowed car from another person.
 
 ## The weird criteria
 
-But one of the many criterias was a bit strange for us. Identify the exact criteria is not important for the content of this article. So let's just say that, to be elegible for this loan, **the user needed to be elegible to three different modalities**.
+But one of the many criterias was a bit strange for us. Identify the exact criteria is not important for the content of this article.
+Let's just say that, to be elegible for this loan, **the user needed to be elegible to three different modalities**.
 
 Each modality corresponded to a different type of loan.
 If the user was not elegible to all of these three modalities (or types of loan),
@@ -108,7 +109,11 @@ a loan on this modality he is elegible to.
 ## Why this criteria existed?
 
 But let's face it. Despite this being a weird criteria, there certainly is a reason for it.
-In essence, this criteria existed either because a MVP strategy or a "risk trade-off" strategy.
+Nothing exists without a reason. We thought this weird criteria probably existed either because:
+
+1. a MVP strategy.
+2. or a "risk trade-off" strategy.
+
 The MVP strategy means that the bank included this weird criteria because it
 greatly simplified the development of the sales path. By simplifying the
 development, the bank could deliver a MVP (minimal viable product)
@@ -133,24 +138,33 @@ in order to estimate how much risky is to give a loan to this person.
 
 # What we discovered
 
-We had the hypothesis that this business rule (about the three modalities)
-was severely affecting the sales result. But we needed to confirm this hypothesis.
+Regardless of which of the above strategies was the exact bank's strategy,
+we had the hypothesis that this business rule (about the three modalities)
+was severely affecting the sales result.
+
+In other words, we suspected
+that this strategy of rejecting users that did not had all three modalities was
+not worth it, despite of what decisions the bank actually made to include
+this criteria into the sales path. But we needed to confirm this hypothesis.
 
 Since we had the data returned from the API, we could potentially identify
-which users did have the three modalities, and which did not have. So we used R to collect the data
-from the API, and to analyze this data to investigate the users metadata,
-and potentially measure the size of the hole
-that these users were creating.
+which users did have the three modalities, and which did not have. So I setted up a simple
+R script to collect the data of each user that visited our sales path
+in the last month from the API, and putted this script to run through the night.
 
-As a result, we discovered that the bank was constantly losing a huge opportunity because of this
-specific criteria, or, this specific business rule.
+In the next day, I had all of the data, and we started to analyze it,
+investigating the metadata of each user, and potentially measuring the size of the hole
+that this business rule was creating.
+
+As a result, we discovered that the bank was constantly **losing a huge opportunity** because of this
+weird criteria, or, this specific business rule.
 Doing some basic math, we identified that
 **67% of the users that visited our channel were not elegible to all three modalities**.
 This means that 67% of the users that entered our channel were automatically rejected.
 We were constantly losing a huge chunk of potential leads
 because they did not fitted into this criteria.
 
-So, for example, if 13,000 users entered our channel, only $(1 - 0.67) \times 13,000 = 4,290$
+So, for example, if 13,000 users entered our channel, only (1 - 0.67) x 13,000 = 4,290
 of these users could potentially finish the path and acquire the loan. The
 remaining 8,710 users were automatically lost. They were just rejected
 because they did not had these three modalities.
@@ -168,10 +182,12 @@ This discovery generated some important possibilities for us:
 
 Our job was to use the data we collected, to show the bank that the potential gains of
 selling different types of loans to these users that did not had the three modalities,
-were much higher than the potential risk they offered. By using data, we can show the bank (in
-numbers) the size of the opportunity they were losing. And that is exactly what we did.
+were much higher than the potential risk they offered, or than the effort to develop
+some improvements over the sales path to use the new strategy.
 
-Our argument was divided into two separate parts:
+By using data, we can show the bank (in
+numbers) the size of the opportunity they were losing. And that is exactly what we did.
+Our argument was basically divided into two separate parts:
 
 1. The size of the lost;
 1. The size of the potential gain;
@@ -179,7 +195,7 @@ Our argument was divided into two separate parts:
 The first part of our presentation focused on the 67% number. We shown the
 bank that 67% of the users (which is a huge number) were constantly rejected in the flow.
 But this number alone does not have much flavor. As long as they are maximizing their profit,
-the bank does not care if they say "no" to 60%, 70%, 80% of the users or whatever.
+the bank does not care if he is saying "no" to 60%, 70%, 80% of the users or whatever.
 
 That is why in the second part, we did some more basic math to estimate the potential
 gains they were losing by not selling to this 67% of users.
@@ -193,72 +209,51 @@ loan to actually acquire the loan he wanted through our channel.
 But, what if we change the sales path, so that:
 
 - An user does not need to be elegible to all three modalities to acquire a loan;
-- If an user is elegible to modality A, then, we should offer a loan of modality A to him;
-- If is elegible to modality A and B, then, we offer both loans of modality A and B;
-- If is elegible to modality A, B, and C, then, we offer all three types of loans (A, B and C);
+- If an user is elegible to one modality, then, we should offer a loan of this modality he is elegible to;
+- If an user is elegible to more than one modality, then, we should offer multiple options of loans for the user, one for each modality he is elegible to;
 
 We estimated that, if we changed the sales path so that it would fit the descriptions above,
 then, we would increase the users coverage to 96.8%! This means that we could sell a loan to
 96.8% of the users that entered our sales path, instead of only 33%.
 
 Now, if you are thinking that 33% + 67% should be equal to 100% instead,
-you are forgetting that the user needs to fit into other criterias that I did not mentioned here.
+you are forgetting that the user needs to fit into some other criterias that I did not mentioned here.
 In other words, 96.8 - 100 = 3.2% of users would still be
 rejected because they did not fit into other necessary criterias.
 
 
-## Estimates are better than you think
+# The end result
 
-A big part of our education is dedicated to answer precise questions, with well defined problems,
-and, with well defined answers (or solutions).
-Unfortunately, this experience can create some insecurities on most data analysts.
-Since they are used to give precise answers, they usually become "afraid", or,
-they try to avoid estimates (which is to some extent, a "non-precise" answer) at all costs.
+The time and effort necessary to develop this new strategy into the sales path
+was relatively low, and the potential gains of it were quite high! By increasing
+the users coverage from 33% to 96.8%, we estimated that the sales could have a potential 193% increase.
+Spoiler! This estimate was way low compared to the end result we got. But that is
+what estimates are right? They are just estimates.
 
-So, if you are a data analyst that rely too much on solid and precise numbers, let me give
-you a quick insight. The thing about precise numbers, is that **they are known**!
-This property makes them not that much special, because anyone that knows
-a lit bit of math can calculate these numbers!
+So the bank was very happy with the proposal. The managers quickly accepted the idea. A low effort for a
+potentail high gain. If your reflect a bit on this article, you will see that the new strategy
+was very simple, but our proposal was very clear and effective (it was just 3 slides basically).
 
-In other words, when you present a 
-
-Or maybe,
-they end up avoidying estimates on all ocasions.
-A data analyst should not rely solely on hard numbers to defend they hypothesis.
-
-
-
-Doing some basic rule of three, this could mean a potential sales increase of 193%!
+However, the end result was enormous.
 On the first month after we implemented this new strategy on production,
 the sales increased approximately 142%, and on the second month, 400%.
 The sales of this specific loan have a strong seasonal component to it, that is why you
 have such a big variation from 142% to 400%. But nevertheless, this
 demonstrates the positive impact of our strategy.
+This end result of **400% sales increase** because of our proposal was humongous.
 
 
+# Conclusion
 
-<!--
-# Collecting the users metadata with R
+We identified a weird criteria that our cliente included on the sales path.
+We raised some simple hypothesis about this weird criteria,
+and we used data to confirm or test this hypothesis.
 
-To identify which users did and did not had the
-black credit card, we needed the data returned by the API.
-But we had to effectively collect this data. In other words,
-this data was not readily and easily available to us.
+By analysing this data, we identified a huge opportunity for our
+client. We then builded a simple presentation with a proposal
+to our client, with the numbers that we calculated from the
+data analysis that did.
 
-We had to ask to the API for the metadata of each individual user.
-So in essence, we just collected the data returned by the API for each
-individual user, then, we organized this data into a concise and structured
-form, then, we store it, and then, we analyze it.
-
-To do that, we first collected the social IDs of all the users that
-entered in our flow over the last month, and we stored inside a CSV file.
-Then, we just imported this CSV file to R, like this:
-
-```{r}
-#| eval: false
-library(readr)
-social_ids <- read_csv("social-ids.csv")
-```
-
-After that, we just created 
--->
+At the end, this proposal was a huge success for our team, and for
+our client too that got a huge sales increase after we implemented
+the improvements that we proposed.

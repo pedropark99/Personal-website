@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Pedro Duarte Faria">
+<meta name="dcterms.date" content="2023-03-06">
+<meta name="description" content="Neste artigo discuto a minha experiência sobre como eu construi e melhorei o Data Storytelling de minhas apresentações para dois dos maiores bancos do mercado brasileiro.">
+
+<title>home |&gt; dplyr::glimpse() - Um estudo de caso sobre Data Storytelling em alguns dos maiores bancos brasileiros</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../">
+<script src="../../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-7E6XG4WKHE"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
+</script>
+
+
+<link rel="stylesheet" href="../../../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../../../index.html">
+    <span class="navbar-title">home |&gt; dplyr::glimpse()</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../about.html" rel="" target="">
+ <span class="menu-text">About Me</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Posts</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-posts">    
+        <li>
+    <a class="dropdown-item" href="../../../../posts/index.html" rel="" target="">
+ <span class="dropdown-text">All posts</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../posts/en.html" rel="" target="">
+ <span class="dropdown-text">Posts in english</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../posts/pt.html" rel="" target="">
+ <span class="dropdown-text">Posts em português</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-publications" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Publications</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-publications">    
+        <li>
+    <a class="dropdown-item" href="../../../../publications/index.html" rel="" target="">
+ <span class="dropdown-text">All publications</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../publications/en.html" rel="" target="">
+ <span class="dropdown-text">Publications in English</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../publications/pt.html" rel="" target="">
+ <span class="dropdown-text">Publicações em Português</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../donate.html" rel="" target="">
+ <span class="menu-text">Donate or Sponsor Me</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-cv" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">CV</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-cv">    
+        <li>
+    <a class="dropdown-item" href="../../../../files/cv/cv-english.pdf" rel="" target="">
+ <span class="dropdown-text">CV in English</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../files/cv/cv-portuguese.pdf" rel="" target="">
+ <span class="dropdown-text">CV em Português</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item compact">
+    <a class="nav-link" href="mailto:pedropark99@gmail.com" rel="" target=""><i class="bi bi-envelope-fill" role="img" aria-label="Email for contact">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/pedropark99" rel="" target=""><i class="bi bi-github" role="img" aria-label="Github profile">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://fosstodon.org/web/@pedropark99" rel="" target=""><i class="bi bi-mastodon" role="img" aria-label="Mastodon profile">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://medium.com/@pedropark99" rel="" target=""><i class="bi bi-medium" role="img" aria-label="Medium profile">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/PedroPark9" rel="" target=""><i class="bi bi-twitter" role="img" aria-label="Twitter profile">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/pedro-faria-a68140209/" rel="" target=""><i class="bi bi-linkedin" role="img" aria-label="Linkedin profile">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://pedro-faria.netlify.app/index.xml" rel="" target=""><i class="bi bi-rss" role="img" aria-label="RSS feed for Pedro's blog">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Um estudo de caso sobre Data Storytelling em alguns dos maiores bancos brasileiros</h1>
+                  <div>
+        <div class="description">
+          Neste artigo discuto a minha experiência sobre como eu construi e melhorei o <em>Data Storytelling</em> de minhas apresentações para dois dos maiores bancos do mercado brasileiro.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Storytelling</div>
+                <div class="quarto-category">Data Storytelling</div>
+                <div class="quarto-category">Data Science</div>
+              </div>
+                  </div>
+  </div>
+    
+  <div class="quarto-title-meta-author">
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-heading">Affiliation</div>
+    
+      <div class="quarto-title-meta-contents">
+      <p class="author">Pedro Duarte Faria </p>
+    </div>
+      <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              Blip
+            </p>
+        </div>
+      </div>
+
+  <div class="quarto-title-meta">
+
+        
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">March 6, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introdução" id="toc-introdução" class="nav-link active" data-scroll-target="#introdução"><span class="header-section-number">1</span> Introdução</a></li>
+  <li><a href="#resumo-da-estrutura-deste-artigo" id="toc-resumo-da-estrutura-deste-artigo" class="nav-link" data-scroll-target="#resumo-da-estrutura-deste-artigo"><span class="header-section-number">2</span> Resumo da estrutura deste artigo</a></li>
+  <li><a href="#sec-como-era-antes" id="toc-sec-como-era-antes" class="nav-link" data-scroll-target="#sec-como-era-antes"><span class="header-section-number">3</span> Como era esse relatório antes ?</a></li>
+  <li><a href="#sec-como-melhorar" id="toc-sec-como-melhorar" class="nav-link" data-scroll-target="#sec-como-melhorar"><span class="header-section-number">4</span> Como podemos melhorar ?</a>
+  <ul class="collapse">
+  <li><a href="#sec-guerra-atencao" id="toc-sec-guerra-atencao" class="nav-link" data-scroll-target="#sec-guerra-atencao"><span class="header-section-number">4.1</span> Uma guerra constante pela atenção</a>
+  <ul class="collapse">
+  <li><a href="#sec-texto-longo" id="toc-sec-texto-longo" class="nav-link" data-scroll-target="#sec-texto-longo"><span class="header-section-number">4.1.1</span> Por que evitar textos longos em seus slides?</a></li>
+  <li><a href="#entregue-sua-história-aos-poucos" id="toc-entregue-sua-história-aos-poucos" class="nav-link" data-scroll-target="#entregue-sua-história-aos-poucos"><span class="header-section-number">4.1.2</span> Entregue sua história aos poucos</a></li>
+  </ul></li>
+  <li><a href="#sec-historia-conteudo" id="toc-sec-historia-conteudo" class="nav-link" data-scroll-target="#sec-historia-conteudo"><span class="header-section-number">4.2</span> Discutindo histórias e conteúdo</a>
+  <ul class="collapse">
+  <li><a href="#data-storytelling-não-é-sobre-escolher-o-melhor-gráfico" id="toc-data-storytelling-não-é-sobre-escolher-o-melhor-gráfico" class="nav-link" data-scroll-target="#data-storytelling-não-é-sobre-escolher-o-melhor-gráfico"><span class="header-section-number">4.2.1</span> <em>Data Storytelling</em> não é sobre escolher “o melhor gráfico”</a></li>
+  <li><a href="#sec-relacoes" id="toc-sec-relacoes" class="nav-link" data-scroll-target="#sec-relacoes"><span class="header-section-number">4.2.2</span> Trace relações entre os indicadores</a></li>
+  <li><a href="#sec-mensagem-principal" id="toc-sec-mensagem-principal" class="nav-link" data-scroll-target="#sec-mensagem-principal"><span class="header-section-number">4.2.3</span> Construa sua história em torno de uma mensagem principal</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#sec-pratica" id="toc-sec-pratica" class="nav-link" data-scroll-target="#sec-pratica"><span class="header-section-number">5</span> Colocando algumas dicas em prática</a></li>
+  <li><a href="#sec-historias-tem-estrutura" id="toc-sec-historias-tem-estrutura" class="nav-link" data-scroll-target="#sec-historias-tem-estrutura"><span class="header-section-number">6</span> Histórias tem estrutura, use essas estruturas ao seu favor</a>
+  <ul class="collapse">
+  <li><a href="#o-modelo-dos-quatro-cs" id="toc-o-modelo-dos-quatro-cs" class="nav-link" data-scroll-target="#o-modelo-dos-quatro-cs"><span class="header-section-number">6.1</span> O modelo dos quatro C’s</a>
+  <ul class="collapse">
+  <li><a href="#começe-por-um-contexto-geral" id="toc-começe-por-um-contexto-geral" class="nav-link" data-scroll-target="#começe-por-um-contexto-geral"><span class="header-section-number">6.1.1</span> Começe por um contexto geral</a></li>
+  <li><a href="#apresente-um-conflitoproblemadesafio-a-ser-superado" id="toc-apresente-um-conflitoproblemadesafio-a-ser-superado" class="nav-link" data-scroll-target="#apresente-um-conflitoproblemadesafio-a-ser-superado"><span class="header-section-number">6.1.2</span> Apresente um conflito/problema/desafio a ser superado</a></li>
+  <li><a href="#esconder-os-problemas-é-uma-péssima-ideia" id="toc-esconder-os-problemas-é-uma-péssima-ideia" class="nav-link" data-scroll-target="#esconder-os-problemas-é-uma-péssima-ideia"><span class="header-section-number">6.1.3</span> Esconder os problemas é uma péssima ideia</a></li>
+  <li><a href="#apresente-as-consequências-do-conflitoproblemadesafio-que-você-identificou" id="toc-apresente-as-consequências-do-conflitoproblemadesafio-que-você-identificou" class="nav-link" data-scroll-target="#apresente-as-consequências-do-conflitoproblemadesafio-que-você-identificou"><span class="header-section-number">6.1.4</span> Apresente as consequências do conflito/problema/desafio que você identificou</a></li>
+  <li><a href="#aconselhe-o-seu-cliente-apresente-possíveis-soluções-para-o-problema" id="toc-aconselhe-o-seu-cliente-apresente-possíveis-soluções-para-o-problema" class="nav-link" data-scroll-target="#aconselhe-o-seu-cliente-apresente-possíveis-soluções-para-o-problema"><span class="header-section-number">6.1.5</span> Aconselhe o seu cliente, apresente possíveis soluções para o problema</a></li>
+  </ul></li>
+  <li><a href="#evolução-do-personagem-como-uma-outra-alternativa" id="toc-evolução-do-personagem-como-uma-outra-alternativa" class="nav-link" data-scroll-target="#evolução-do-personagem-como-uma-outra-alternativa"><span class="header-section-number">6.2</span> Evolução do personagem como uma outra alternativa</a>
+  <ul class="collapse">
+  <li><a href="#o-início-e-o-fim-da-jornada" id="toc-o-início-e-o-fim-da-jornada" class="nav-link" data-scroll-target="#o-início-e-o-fim-da-jornada"><span class="header-section-number">6.2.1</span> O início e o fim da jornada</a></li>
+  <li><a href="#apresentando-os-desafios-e-percalços" id="toc-apresentando-os-desafios-e-percalços" class="nav-link" data-scroll-target="#apresentando-os-desafios-e-percalços"><span class="header-section-number">6.2.2</span> Apresentando os desafios e percalços</a></li>
+  <li><a href="#se-possível-aproveite-para-valorizar-o-trabalho-de-sua-equipe" id="toc-se-possível-aproveite-para-valorizar-o-trabalho-de-sua-equipe" class="nav-link" data-scroll-target="#se-possível-aproveite-para-valorizar-o-trabalho-de-sua-equipe"><span class="header-section-number">6.2.3</span> Se possível, aproveite para valorizar o trabalho de sua equipe</a></li>
+  <li><a href="#reforce-os-resultados-alcançados" id="toc-reforce-os-resultados-alcançados" class="nav-link" data-scroll-target="#reforce-os-resultados-alcançados"><span class="header-section-number">6.2.4</span> Reforce os resultados alcançados</a></li>
+  <li><a href="#um-resumo-da-estrutura" id="toc-um-resumo-da-estrutura" class="nav-link" data-scroll-target="#um-resumo-da-estrutura"><span class="header-section-number">6.2.5</span> Um resumo da estrutura</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="introdução" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introdução</h1>
+<p>Este artigo discute como eu melhorei o meu processo de <em>Data Storytelling</em> dentro das minhas apresentações e relatórios entregues para dois dos maiores bancos comerciais do mercado brasileiro. Busco compartilhar o que aprendi nesse processo, e dou algumas dicas que possivelmente vão ajudá-lo a construir relatórios de dados mais intuitivos, cativantes, claros e efetivos.</p>
+<p>Em resumo, vamos discutir neste artigo as seguintes dicas:</p>
+<ul>
+<li><em>Data Storytelling</em> é sobre contar histórias através de dados;</li>
+<li>Histórias tem estrutura, use essas estruturas ao seu favor;</li>
+<li>Evite dividir muito a atenção com textos longos em seus slides;</li>
+<li>Trace relações entre os seus dados;</li>
+<li>Construa sua história em torno de uma mensagem principal;</li>
+<li>Entregue sua história aos poucos;</li>
+</ul>
+<p>A maior parte desses conhecimentos foram construídos através de intensa pesquisa, reflexão e planejamento sobre as minhas apresentações, e, posteriormente, adquirindo feedbacks, e realizando pequenos ajustes aqui e ali.</p>
+<p>Como você pode esperar de todo grande trabalho como este, ele também envolveu outras pessoas. Durante esse processo, eu recebi ajuda e feedbacks de meus colegas de trabalho, <a href="https://www.linkedin.com/in/andressa-de-souza-freitas-697195177/">Andressa de Souza Freitas</a> e <a href="https://www.linkedin.com/in/guilhermeggarcia/">Guilherme Gomes</a>. Eu também tive uma grande ajuda da UX Designer <a href="https://www.linkedin.com/in/alefernandesbranding/">Alê Fernandes</a>. Vários dos conhecimentos apresentados aqui, eu aprendi na prática com a Alê. Esses conhecimentos revolucionaram a maneira como eu construo minhas apresentações, e, por isso, eu sou imensamente grato a ela ❤️.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Todos os dados, gráficos e imagens mostrados neste artigo são meramente ilustrativos. Todos os números apresentados foram gerados de forma aleatória por um computador! Portanto, eles não representam os dados reais de TakeBlip ou dos bancos comerciais brasileiros envolvidos de nenhuma forma ou dimensão!</p>
+</div>
+</div>
+</section>
+<section id="resumo-da-estrutura-deste-artigo" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Resumo da estrutura deste artigo</h1>
+<p>Na <a href="#sec-como-era-antes">Seção&nbsp;3</a>, eu forneço contexto sobre esses relatórios que eu apresentava para dois dos maiores bancos comerciais brasileiros, qual era o formato desses relatórios e quais eram os seus principais problemas e limitações.</p>
+<p>Mas a partir da <a href="#sec-como-melhorar">Seção&nbsp;4</a>, nós começamos a discutir sobre como melhorei esses relatórios. Você vai perceber que boa parte dessas melhorias estão concentradas em dois pontos:</p>
+<ol type="1">
+<li>construir uma apresentação que seja simples e clara;</li>
+<li>construir uma apresentação que tenha uma boa estrutura, isto é, uma estrutura que te ajude a contar uma história através de seus dados;</li>
+</ol>
+<p>A <a href="#sec-guerra-atencao">Seção&nbsp;4.1</a> fornece duas dicas que te ajudam a trazer simplicidade e clareza para sua apresentação, além de discutir o porquê de textos longos em slides serem tão perversos para a atenção de seus espectadores.</p>
+<p>Na <a href="#sec-historia-conteudo">Seção&nbsp;4.2</a> discuto algumas dicas sobre como formar o conteúdo da apresentação, mais especificamente, um conteúdo que te ajude a construir uma história em sua apresentação.</p>
+<p>Já na <a href="#sec-pratica">Seção&nbsp;5</a>, nós pegamos as dicas que discutimos até então no artigo, e tentamos aplicar elas sobre o slide mostrado em <a href="#fig-divisao2">Figura&nbsp;3</a>, com o objetivo de demonstrar como essas dicas podem melhorar sua apresentação.</p>
+<p>Por último, na <a href="#sec-historias-tem-estrutura">Seção&nbsp;6</a>, nós discutimos bastante sobre estrutura. Mais especificamente, eu discuto dois exemplos de estruturas que podem servir como um guia, ao fornecer uma base simples que você pode utilizar para construir a sua história.</p>
+<p>Enfim, vamos prosseguir…</p>
+</section>
+<section id="sec-como-era-antes" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Como era esse relatório antes ?</h1>
+<p>Na época, estávamos construindo um relatório mensal contendo vários indicadores e gráficos que mostravam o estado atual e a evolução recente dos serviços e produtos dos bancos ofertados dentro do canal do WhatsApp.</p>
+<p>Contudo, o formato dessa apresentação era problemático. Nós trazíamos uma <strong>quantidade monumental</strong> de informações para o banco. A apresentação usualmente trazia em torno de 40 slides diferentes, com aproximadamente 36 gráficos e 70 indicadores diferentes. Para mais, nós tentávamos apresentar todo esse volume de informações em uma reunião de apenas 1 hora.</p>
+<p>O resultado final disso tudo era uma apresentação que trazia um volume monumental de informações, porém, que também trazia um <strong>volume muito pequeno de insights e novas ideias de negócio para os gestores</strong>.</p>
+<p>Em <a href="#fig-print-report1">Figura&nbsp;1</a> temos uma representação de um dos vários slides dessa apresentação<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. Imagine que essa apresentação trazia em torno de 40 slides semelhantes a esse:</p>
+<div id="fig-print-report1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="./../print-report1.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figura&nbsp;1: Representação de um slide da versão antiga do relatório</figcaption>
+</figure>
+</div>
+<p>Perceba que esse slide se parece mais com uma página de um dashboard, do que de um relatório apresentando as últimas tendências do mercado ou do negócio do banco.</p>
+<p><strong>Isso é muito importante!</strong> Se a sua apresentação traz vários indicadores diferentes espalhados pela página, sem contextualizá-los, sem relacioná-los uns com os outros, sem trazer o que eles significam em conjunto, essa apresentação vai muito provavelmente se parecer com os dashboards que você já produz para o seu cliente.</p>
+<p>Tendo isso em mente, qual é o incentivo/motivo/razão que o seu cliente tem para assistir à sua apresentação? Em outras palavras, se a sua apresentação mostra os mesmos gráficos/indicadores que os seus dashboards apresentam, o seu cliente não tem incentivo/motivo nenhum para assistir à sua apresentação. Pois <strong>não há nada na sua apresentação que seja novo</strong>, ou nenhuma informação da qual o seu cliente não tenha já acesso diretamente.</p>
+</section>
+<section id="sec-como-melhorar" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Como podemos melhorar ?</h1>
+<p>Agora que você possui uma noção do tamanho do problema que as versões anteriores desses relatórios representavam, nas próximas seções deste artigo, vou discutir algumas dicas essenciais que demonstram como nós podemos melhorar o modelo de apresentação mostrado em <a href="#fig-print-report1">Figura&nbsp;1</a>.</p>
+<p>No meu entendimento, boa parte do sucesso em <strong>data storytelling</strong> pode ser resumido em duas ações, ou dois objetivos principais:</p>
+<ol type="1">
+<li>Evitar itens que dispersam a atenção dos nossos espectadores;</li>
+<li>Construir uma história cativante para a nossa apresentação;</li>
+</ol>
+<p>O primeiro item acima está mais relacionado à <strong>clareza e simplicidade</strong> da apresentação, enquanto o segundo item está mais relacionado ao <strong>conteúdo e estrutura</strong> da apresentação.</p>
+<p>Vamos começar pelo primeiro item…</p>
+<section id="sec-guerra-atencao" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="sec-guerra-atencao"><span class="header-section-number">4.1</span> Uma guerra constante pela atenção</h2>
+<p>Quando estamos apresentando algo, estamos constantemente batalhando pela atenção dos nossos espectadores. Essa é uma batalha difícil, não apenas porque nós podemos (sem querer) atrair a atenção para os lugares errados, mas também porque existem muitas fontes de distração no mundo moderno (e.g.&nbsp;celulares, emails, etc.)!</p>
+<p>Um bom <strong>data storytelling</strong> depende de você contar uma história cativante, que consiga capturar a atenção de seus espectadores. Por isso, as próximas seções vão focar bastante em dicas que contribuam para essa captura, ou que te ajudam a não dissipar, reduzir ou atrapalhar a atenção desses espectadores.</p>
+<section id="sec-texto-longo" class="level3" data-number="4.1.1">
+<h3 data-number="4.1.1" class="anchored" data-anchor-id="sec-texto-longo"><span class="header-section-number">4.1.1</span> Por que evitar textos longos em seus slides?</h3>
+<p>Tente ser parsimonioso nos seus slides! Isto é, tente incluir o mínimo possível de informação dentro dele. Se você precisa repassar várias informações em um slide, tente incorporar o máximo possível desse conteúdo em sua fala, e o mínino possível dele em forma escrita neste slide. Em geral, evite ao máximo incluir textos muito longos em seus slides.</p>
+<p>É estranho pensar nisso, mas geralmente, os gestores vão participar e assistir à sua apresentação porque eles estão interessados no que <strong>você</strong> tem a dizer sobre o negócio deles. Portanto, os seus slides são apenas um material de suporte, eles devem ser secundários, um coadjuvante de sua apresentação. Pois a peça principal da apresentação deve ser sempre a sua fala e a história que você quer contar através dela.</p>
+<p>Veja o slide em <a href="#fig-texto-longo">Figura&nbsp;2</a> como exemplo. O problema principal desse slide, é que ele <strong>divide muito a atenção de seu espectador</strong>.</p>
+<div id="fig-texto-longo" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="./../texto-longo.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figura&nbsp;2: Slide com um parágrafo longo</figcaption>
+</figure>
+</div>
+<p>Ao apresentar um slide, os seus espectadores tem que prestar atenção na sua fala. Isto é, no que você está comunicando verbalmente durante a apresentação. E ao mesmo tempo, eles também precisam prestar atenção no conteúdo do slide. Contudo, esse longo parágrafo no canto esquerdo do slide mostrado em <a href="#fig-texto-longo">Figura&nbsp;2</a> é problemático. <strong>Pois ele chama atenção demais!</strong></p>
+<p>Esse elemento desperta tanto a nossa curiosidade, que ao ver esse slide, você (leitor deste artigo) provavelmente tentou ler esse texto longo antes mesmo de ler o que estou descrevendo agora neste parágrafo. O mesmo vai acontecer com os espectadores de sua apresentação. Ou seja, os seus espectadores vão imediatamente tentar ler esse parágrafo longo.</p>
+<p>Contudo, ler e interpretar um texto longo, exige certo esforço e muita atenção. Como resultado, enquanto os seus espectadores leêm esse texto, eles não vão conseguir prestar atenção em outros elementos de sua apresentação. Por exemplo, na sua fala.</p>
+<p>Isso pode ser crucial, pois talvez você traga uma informação a mais, ou uma conexão extremamente importante na sua fala, e eles podem acabar perdendo isso enquanto estão tentando ler esse texto. Portanto, evite ao máximo incluir textos muito longos em seus slides.</p>
+</section>
+<section id="entregue-sua-história-aos-poucos" class="level3" data-number="4.1.2">
+<h3 data-number="4.1.2" class="anchored" data-anchor-id="entregue-sua-história-aos-poucos"><span class="header-section-number">4.1.2</span> Entregue sua história aos poucos</h3>
+<p>O cérebro humano consegue processar uma quantidade limitada de informações de uma vez só. Como resultado, se você tentar explicar várias informações para os seus espectadores, em um único slide, eles vão acabar atingindo esse limite 🤯, e simplesmente não vão conseguir raciocinar, compreender ou assimilar o que você está explicando.</p>
+<p>Portanto, <strong>entregue a sua história aos poucos</strong>. Evite condensar várias informações em um único slide! Divida o conteúdo em partes, e explique uma parte de cada vez!</p>
+<p>Isso ajuda a tornar o conteúdo mais simples, e, como resultado, isso ajuda os seus espectadores a entenderem melhor sobre o que você está falando.</p>
+<p>Pense um pouco sobre isso. Quando você busca aprender sobre um assunto complexo (e.g.&nbsp;regressão linear), você provavelmente divide o conteúdo em várias partes pequenas, e, vai aprendendo uma parte de cada vez. Não é assim que você faz? Então traga essa experiência também para as suas apresentações.</p>
+</section>
+</section>
+<section id="sec-historia-conteudo" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="sec-historia-conteudo"><span class="header-section-number">4.2</span> Discutindo histórias e conteúdo</h2>
+<p>Agora que vimos duas regras básicas sobre a atenção de seus espectadores (i.e.&nbsp;evite textos longos e entregue sua história aos poucos), vamos discutir algumas dicas sobre o conteúdo de sua apresentação, e, sobre como construir histórias com dados.</p>
+<section id="data-storytelling-não-é-sobre-escolher-o-melhor-gráfico" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="data-storytelling-não-é-sobre-escolher-o-melhor-gráfico"><span class="header-section-number">4.2.1</span> <em>Data Storytelling</em> não é sobre escolher “o melhor gráfico”</h3>
+<p>Alguns poucos analistas entendem “<em>data storytelling</em>” como um problema de visualização, ou, como a ciência de “escolher os melhores gráficos” para sua apresentação, ou como projetar gráficos inovadores, bonitos e complexos.</p>
+<p>Contudo, <em>data storytelling</em> é sobre <strong>contar histórias com dados</strong>. Não sobre como construir visualizações. Escolher a visualização certa para apresentar os seus dados, torná-la melhor, mais bonita e mais limpa, é apenas uma parte do processo. Uma parte muito importante, pois isso vai te ajudar a contar sua história de uma maneira mais clara e eficaz, e, com isso, atingir um público maior.</p>
+</section>
+<section id="sec-relacoes" class="level3" data-number="4.2.2">
+<h3 data-number="4.2.2" class="anchored" data-anchor-id="sec-relacoes"><span class="header-section-number">4.2.2</span> Trace relações entre os indicadores</h3>
+<p>Agora, vamos analisar o slide mostrado em <a href="#fig-divisao2">Figura&nbsp;3</a>. Perceba que esse slide, novamente, lembra muito uma página de um dashboard. O slide não parece tão cativante à primeira vista, pois ele só mostra os indicadores, ele não constrói uma relação, ou <strong>uma história</strong> entre eles.</p>
+<div id="fig-divisao2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="./../divisao2.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figura&nbsp;3: Falta de relação entre os indicadores</figcaption>
+</figure>
+</div>
+<p>Se prestarmos atenção nesses indicadores, podemos identificar alguns efeitos que estão acontecendo ao longo deles. E se refletirmos um pouco mais sobre esses efeitos, vamos perceber que esses efeitos são relacionáveis! E que em conjunto, eles podem contar uma história.</p>
+<p>Por exemplo, perceba que há um aumento significativo nas vendas. Tanto no número de propostas vendidas quanto no valor total em si que essas propostas geraram. Porém, perceba que esse crescimento nas vendas não ocorreu no produto “Empréstimo Consignado”, e sim, no produto “Empréstimo com garantia de veículos”. Ou seja, o produto “Empréstimo Consignado” teve uma queda de vendas nesse mês, porém, o produto “Empréstimo com garantia de veículos” obteve um super resultado que conseguiu cobrir e muito essa queda, e no fim, conseguiu aumentar as vendas como um todo do banco.</p>
+<p>Além disso, outros efeitos que podemos perceber são os aumentos na taxa de conversão e na taxa de sucesso de API. Esses também são fatores que contribuíram para o aumento nas vendas. Pois um aumento na taxa de conversão significa que uma parcela maior dos nossos clientes está adquirindo os nossos produtos. Já um aumento na taxa de sucesso na API, significa que temos menos erros nos registros das vendas na plataforma, e isso é obviamente positivo, pois nós temos uma perda de vendas menor por causa de travamentos e erros nesse sistema de registro.</p>
+<p>Perceba que todas essas relações nos ajudam a <strong>construir uma história</strong> sobre como as vendas aumentaram nesse mês, e é justamente isso que queremos atingir. Portanto, tente sempre construir relações entre os seus indicadores, de modo a formar uma história sobre um resultado principal.</p>
+</section>
+<section id="sec-mensagem-principal" class="level3" data-number="4.2.3">
+<h3 data-number="4.2.3" class="anchored" data-anchor-id="sec-mensagem-principal"><span class="header-section-number">4.2.3</span> Construa sua história em torno de uma mensagem principal</h3>
+<p>Apenas para deixar claro essa ideia, ao identificar os vários efeitos que descrevemos em <a href="#sec-relacoes">Seção&nbsp;4.2.2</a>, sobre o slide mostrado em <a href="#fig-divisao2">Figura&nbsp;3</a>, é interessante nos questionarmos: qual desses vários efeitos é o principal resultado? Em outras palavras, qual desses efeitos é o que mais interessa os gerentes do banco que estão assistindo à sua apresentação?</p>
+<p>Certamente o aumento sobre as vendas é o <strong>efeito principal</strong>. É o efeito que mais interessa os gerentes que estão assistindo à sua apresentação. Portanto, tente construir a sua história em torno desse resultado, ou dessa mensagem principal. Use os outros indicadores para explicar como esse resultado principal aconteceu.</p>
+<p>Isso também é muito importante! Todo gerente gosta muito de ouvir a palavra “aumento nas vendas”. Porém, ele também está sempre interessado em saber o <strong>“como esse aumento foi gerado?”</strong>. Ou seja, ele precisa saber quais foram as ações realizadas que geraram esse impacto positivo.</p>
+<p>Pois ao identificar essas ações, esse gerente tem a capacidade de aplicar essas ações em outras partes de seu negócio, e, com certa esperança, ele pode acabar disseminando esse efeito positivo que você descreveu para outras áreas, e, como resultado, ele pode acabar aumentando ainda mais as vendas da empresa.</p>
+</section>
+</section>
+</section>
+<section id="sec-pratica" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Colocando algumas dicas em prática</h1>
+<p>Até aqui, nós discutimos as seguintes dicas:</p>
+<ol type="1">
+<li>Evite textos longos em seus slides;</li>
+<li>Trace relações entre os indicadores;</li>
+<li>Construa sua história em torno de uma mensagem principal;</li>
+<li>Entregue sua história aos poucos;</li>
+</ol>
+<p>Vamos botar essas dicas em prática, e reformular o slide mostrado em <a href="#fig-divisao2">Figura&nbsp;3</a>. Você lembra das relações que descrevemos em <a href="#sec-relacoes">Seção&nbsp;4.2.2</a>? Lembra que essas relações traçam uma história sobre o aumento de vendas? Vamos aproveitar essa história para aplicarmos as dicas acima.</p>
+<p>Primeiro, estabelecemos que nossa história deve sempre ser construída em torno de uma mensagem principal. Portanto, vamos começar a nossa apresentação nos concentrando em um único slide que mostra essa mensagem principal de forma clara.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./../mensagem-principal.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">A mensagem principal da apresentação</figcaption>
+</figure>
+</div>
+<p>Agora que sabemos qual é o assunto principal da apresentação, podemos começar a cavar mais fundo, e descrever esse assunto em mais detalhes. Como um próximo passo, podemos responder à pergunta “onde esse aumento de vendas ocorreu?”.</p>
+<p>Essa pergunta pode ser bastante relevante para sua apresentação, especialmente se: 1) você está apresentando para vários gerentes de diferentes áreas ao mesmo tempo; 2) ou também, se você estiver apresentando para um gerente mais alto na hierarquia, que supervisiona várias áreas/produtos ao mesmo tempo. Pois nestes casos, esses gerentes vão logicamente se perguntar onde esse aumento de vendas ocorreu. Será que foi no produto x? Ou foi no produto y? Etc.</p>
+<p>Enfim, vamos responder essa pergunta em um novo slide. Com esse slide, deixamos claro para os espectadores, que um novo produto do banco (empréstimo com garantia sobre veículos) foi a grande estrela do mês, ao gerar R$ 12 Mil em vendas logo no primeiro mês, superando inclusive o valor de vendas do produto já consolidado (empréstimo consignado).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./../onde-vendemos.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Onde vendemos mais?</figcaption>
+</figure>
+</div>
+<p>A próxima pergunta que precisamos responder é “como?”. Como esse super resultado nas vendas foi gerado? Nós discutimos isso na <a href="#sec-mensagem-principal">Seção&nbsp;4.2.3</a>, que após descobrirem um resultado tão importante, os gerentes vão certamente estar interessados em entender como esse resultado foi gerado, para que eles possam difundir esse efeito positivo para outras áreas do negócio.</p>
+<p>Lembre-se que temos dois efeitos principais discutidos em <a href="#sec-relacoes">Seção&nbsp;4.2.2</a> que explicam como essa melhoria nas vendas ocorreu. Vamos listá-los de maneira clara e curta em um novo slide:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./../porque-vendemos.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Por que vendemos mais?</figcaption>
+</figure>
+</div>
+<p>Deixe os detalhes mais específicos dos dois efeitos acima (“qual era o problema na API, e como superamos ele?”, “como isso é uma melhoria?”, “o que é uma taxa de conversão? E como isso afeta o processo de venda?”) para a sua fala. Lembre-se, tente evitar ao máximo colocar textos longos em suas apresentações, e tente dar mais detalhes ou responder às perguntas dos seus espectadores através da fala.</p>
+<p>Portanto, com esses três slides nós temos uma estrutura e um conteúdo muito mais interessantes para a nossa apresentação, pois estamos contando uma história sobre como vendemos mais em um determinado mês.</p>
+<p>Perceba que a estrutura da apresentação (1: mensagem principal, 2: onde? , 3: como?) nos ajuda a criar o conteúdo e essa história de forma coesa. Nas próximas seções deste artigo, vou discutir duas outras estruturas que podem te ajudar a estruturar e a contar sua histórias de maneira coesa.</p>
+</section>
+<section id="sec-historias-tem-estrutura" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Histórias tem estrutura, use essas estruturas ao seu favor</h1>
+<p>Nas próximas seções, vou mostrar dois exemplos de estruturas bastante comuns em histórias. Essas estruturas servem como um guia durante a construção de sua história. Elas te ajudam muito a organizar as suas ideias em um formato claro e efetivo.</p>
+<section id="o-modelo-dos-quatro-cs" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="o-modelo-dos-quatro-cs"><span class="header-section-number">6.1</span> O modelo dos quatro C’s</h2>
+<p>O modelo dos quatro C’s se refere a estas quatro palavras:</p>
+<blockquote class="blockquote">
+<p>Contexto, Conflito, Consequência, Conselho.</p>
+</blockquote>
+<p>Estas quatro palavras, te ajudam a trazer uma estrutura consistente para a sua história. Além disso, essas palavras também te ajudam a mexer um pouco com as emoções de seus espectadores, e, com isso, capturar mais a atenção deles.</p>
+<p>Ao seguir esse modelo, sua história vai sempre se dividir em quatro partes: contexto, conflito, consequência e conselho. Precisamente nesta ordem. Esse estrutura gira em torno de um problema, ou um conflito principal que você identificou no negócio de seu cliente.</p>
+<p>O interessante dessa estrutura, é que você pode estacar vários problemas em sequência. Como resultado, você tem um bloco de 4 C’s (contexto, conflito, consequência e conselho), seguido de um outro bloco com mais 4 C’s (contexto, conflito, consequência e conselho). Ou também, você pode começar a apresentação por um contexto, e, em seguida, dois blocos de 3 C’s (conflito, consequência e conselho) em sequência.</p>
+<p>Enfim, chega de papo, e vamos descrever em mais detalhes cada uma das partes dessa estrutura.</p>
+<section id="começe-por-um-contexto-geral" class="level3" data-number="6.1.1">
+<h3 data-number="6.1.1" class="anchored" data-anchor-id="começe-por-um-contexto-geral"><span class="header-section-number">6.1.1</span> Começe por um contexto geral</h3>
+<p>Portanto, ao seguir esse modelo, a sua história vai sempre se iniciar por um contexto geral. Algo apenas para contextualizar o espectador sobre qual é o estado atual do negócio.</p>
+<p>Lembre-se que, o modelo dos 4 C’s é construído em torno de um conflito, ou de um problema central. Tendo isso em mente, se, por exemplo, o conflito que você for discutir na sua história, for um problema que afeta o serviço de venda de maquininhas de cartão, é importante que você foque nessa parte do contexto, em dar um <em>overview</em> sobre o produto “maquininhas de cartão”.</p>
+<p>Em outras palavras, evite trazer contextos nesta parte que não estão relacionados ao problema/conflito que você vai apresentar na seção seguinte. Pois esse conflito é a parte central de sua história.</p>
+</section>
+<section id="apresente-um-conflitoproblemadesafio-a-ser-superado" class="level3" data-number="6.1.2">
+<h3 data-number="6.1.2" class="anchored" data-anchor-id="apresente-um-conflitoproblemadesafio-a-ser-superado"><span class="header-section-number">6.1.2</span> Apresente um conflito/problema/desafio a ser superado</h3>
+<p>Em seguida, você deve apresentar um conflito. Isto é, um problema, um desafio ou uma barreira que você tenha identificado no produto/serviço que você está analisando. É aqui que vamos mexer um pouco com a emoção do espectador, e usar isso ao nosso favor para capturar a sua atenção.</p>
+<p>Vamos refletir um pouco sobre isso. Ao colocarmos palavras como “problema”, “cuidado”, “desafio”, “alerta”, especialmente em letras garrafais, além de incluir emojis que transmitem esse intuito, como ⚠️ e ⛔. Isso rapidamente chama a atenção de qualquer pessoa, pois te dá uma sensação de perigo, e você entra em um estado de alerta.</p>
+<p>Se você refletir mais um pouco sobre isso, você provavelmente vai perceber que você tem esse mesmo instinto quando você está assistindo a um filme, ou a uma série, e o herói dessa história de repente entra em uma situação de perigo. Você rapidamente presta mais atenção no que está acontecendo, pois você quer ver como o herói vai sair dessa enrascada, ou você está torcendo muito para que ele sobreviva e supere esse problema.</p>
+<p>Ao apresentarmos um problema sobre o produto/serviço que você está analisando, estamos querendo causar esse mesmo efeito em nossos espectadores. Ao dizermos que temos um desafio/problema que está afetando as vendas da empresa, os gerentes rapidamente começam a prestar mais atenção no que você está dizendo, pois eles querem saber como eles podem sair dessa enrascada!</p>
+</section>
+<section id="esconder-os-problemas-é-uma-péssima-ideia" class="level3" data-number="6.1.3">
+<h3 data-number="6.1.3" class="anchored" data-anchor-id="esconder-os-problemas-é-uma-péssima-ideia"><span class="header-section-number">6.1.3</span> Esconder os problemas é uma péssima ideia</h3>
+<p>Isso é muito importante! Alguns analistas tem medo ou receio de jogar luz sobre os problemas existentes, e, por isso, acabam escodendo eles ou omitindo de suas apresentações. Porém, você não está entregando valor nenhum para o seu cliente dessa forma! Você não está ajudando o seu cliente a resolver os problemas e a crescer o negócio dele!</p>
+<p>E se os problemas não são solucionados, se eles continuam existindo, eles vão crescer, e crescer, até que eles explodirem, gerando assim um caos generalizado. Em vista disso, quanto mais cedo você identificar esse problema, avisar os gerentes sobre ele, e apresentar possíveis soluções para ele, melhor para os gerentes, que já saem com um plano de ação para resolver esse problema, e é melhor para você também, pois estamos entregando valor e soluções para o cliente.</p>
+<p>Portanto, uma boa apresentação, ou um bom relatório de dados, é aquele que entrega valor para o seu cliente! Ao mostrar novas oportunidades de negócio (e.g.&nbsp;atingir uma nova parcela do público com um produto), e também, apresentar soluções para problemas atuais que estão limitando ou impedindo o crescimento do negócio.</p>
+<p>Porém, uma apresentação que apenas comenta pontos positivos, que fala que está tudo bem… não traz valor nenhum para os gerentes. Os gerentes não te contrataram para falar que está tudo bem. Eles te contrataram para que você ajude eles a descobrir e solucionar problemas no negócio deles, através da análise de dados.</p>
+</section>
+<section id="apresente-as-consequências-do-conflitoproblemadesafio-que-você-identificou" class="level3" data-number="6.1.4">
+<h3 data-number="6.1.4" class="anchored" data-anchor-id="apresente-as-consequências-do-conflitoproblemadesafio-que-você-identificou"><span class="header-section-number">6.1.4</span> Apresente as consequências do conflito/problema/desafio que você identificou</h3>
+<p>Portanto, após apresentar um conflito/problema/desafio que está afetando o negócio para o seu espectador, é importante que você apresente logo em seguida a consequência desse problema. Isso ajuda os gerentes a terem uma dimensão do tamanho que esse problema representa para o negócio deles.</p>
+<p>Tudo bem se você não conseguir mensurar em números o tamanho do impacto que esse conflito gerou no negócio. Tente medir esse impacto da melhor forma que você puder. Um valor aproximado do impacto já pode trazer bastante clareza sobre o tamanho do perigo que esse conflito representa para o negócio de seus espectadores.</p>
+<p>Você também pode fornecer um <em>range</em>, ou um intervalo possível do impacto se você puder (e.g.&nbsp;o impacto estimado está entre R$ 20 mil e R$ 340 mil). Essa também é uma forma válida de expor o tamanho do problema.</p>
+<p>Caso for realmente impossível de mensurar esse impacto em números, então, explique nesta parte, quais são os pontos do processo de venda do produto/serviço que são afetados por esse problema. Em outras palavras, apresente quais são os lugares do negócio que estão sendo, em teoria, afetados por esse conflito.</p>
+</section>
+<section id="aconselhe-o-seu-cliente-apresente-possíveis-soluções-para-o-problema" class="level3" data-number="6.1.5">
+<h3 data-number="6.1.5" class="anchored" data-anchor-id="aconselhe-o-seu-cliente-apresente-possíveis-soluções-para-o-problema"><span class="header-section-number">6.1.5</span> Aconselhe o seu cliente, apresente possíveis soluções para o problema</h3>
+<p>Ok, apresentamos um problema, ou um conflito para os nossos espectadores. Também discutimos os impactos desse conflito sobre o negócio de nosso cliente. Agora, precisamos apresentar possíveis soluções para esse problema.</p>
+<p>Portanto, entenda o problema/conflito que você está apresentando, e tente listar quais seriam as principais soluções para esse problema, e inclua essas soluções nesta parte de sua apresentação. Vale a pena explicar e discutir esse problema com outros colegas de trabalho também, pois eles também podem sugerir soluções interessantes que estavam fora de seu radar.</p>
+<p>É interessante também incluir uma relação dos <em>trade-offs</em> de cada solução, principalmente em questão de complexidade e esforço de cada solução. Gerentes estão constantemente interessados nessa relação, e querem sempre escolher a solução que seja mais simples e mais rápida de ser implementada.</p>
+</section>
+</section>
+<section id="evolução-do-personagem-como-uma-outra-alternativa" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="evolução-do-personagem-como-uma-outra-alternativa"><span class="header-section-number">6.2</span> Evolução do personagem como uma outra alternativa</h2>
+<p>A evolução do personagem (ou a “jornada do herói”) é uma estrutura de história bem popular. Você começa por um personagem, ou, um herói para a história, que no nosso caso aqui, pode ser o negócio do nosso cliente, ou um produto específico dele.</p>
+<p>Nossa missão é mostrar como esse personagem/herói evoluiu nos últimos meses. Por isso, essa estrutura de evolução é bastante apropriada para relatórios no final do ano. Pois esses relatórios são interessantes para mostrarmos a evolução do negócio (ou a evolução do personagem) no último ano.</p>
+<section id="o-início-e-o-fim-da-jornada" class="level3" data-number="6.2.1">
+<h3 data-number="6.2.1" class="anchored" data-anchor-id="o-início-e-o-fim-da-jornada"><span class="header-section-number">6.2.1</span> O início e o fim da jornada</h3>
+<p>Se você preferir, você pode começar a sua apresentação apresentando como o seu personagem estava no início da jornada, e, terminar essa apresentação mostrando como esse personagem terminou essa jornada.</p>
+<p>Essa é uma opção, porém, eu prefiro começar a apresentação mostrando o início e o fim ao mesmo tempo. Desse modo, os espectadores já começam a apresentação tendo uma noção do quanto o negócio evoluiu durante o ano. Portanto, eu começo apresentando como o personagem (ou o negócio/produto) começou o ano, e, logo em seguida, como ele terminou o ano.</p>
+</section>
+<section id="apresentando-os-desafios-e-percalços" class="level3" data-number="6.2.2">
+<h3 data-number="6.2.2" class="anchored" data-anchor-id="apresentando-os-desafios-e-percalços"><span class="header-section-number">6.2.2</span> Apresentando os desafios e percalços</h3>
+<p>Em todo negócio/produto, qualquer que ele seja, nós sempre enfrentamos grandes desafios que podem ameaçar o sucesso, ou, limitar a evolução deste negócio/produto.</p>
+<p>Portanto, ao longo de qualquer jornada, nós sempre enfrentamos desafios e percalços, e aplicamos ações para tentar superar esses desafios. Ao superar esses desafios, nós podemos com certa esperança gerar a evolução e melhoria desse negócio/produto. Isto é, chegar ao final dessa jornada com um negócio/produto melhor, mais robusto e mais rentável.</p>
+<p>Tudo isso significa que o “como percorremos o meio da jornada” pode ser muito mais importante/interessante que o início ou o final dessa jornada. Sendo assim, reserve uma parte de sua apresentação para apresentar os principais desafios que enfrentamos durante essa travessia, e como superamos eles.</p>
+</section>
+<section id="se-possível-aproveite-para-valorizar-o-trabalho-de-sua-equipe" class="level3" data-number="6.2.3">
+<h3 data-number="6.2.3" class="anchored" data-anchor-id="se-possível-aproveite-para-valorizar-o-trabalho-de-sua-equipe"><span class="header-section-number">6.2.3</span> Se possível, aproveite para valorizar o trabalho de sua equipe</h3>
+<p>Nesse ponto específico da apresentação, você geralmente tem uma oportunidade muito interessante! Pois você pode, entregar valor ao seu cliente, e, ao mesmo tempo, também valorizar o trabalho de sua equipe, especialmente se foi essa a equipe que descobriu os desafios, e, aplicou as ações que superaram esses desafios que você está descrevendo.</p>
+<p>Isso é uma oportunidade de ouro! Portanto, se você tiver essa oportunidade em suas mãos, aproveite ela! Lembre-se que você não trabalha sozinho. Você quase sempre está trabalhando dentro de uma equipe de pessoas, e é sempre importante saber como valorizar o trabalho de seus colegas.</p>
+<p>Contudo, essa oportunidade nem sempre vai aparecer para você. Talvez os desafios que você está apresentando, foram superados de outra forma, por uma outra equipe que você não conhece, ou que não possui conexão direta.</p>
+</section>
+<section id="reforce-os-resultados-alcançados" class="level3" data-number="6.2.4">
+<h3 data-number="6.2.4" class="anchored" data-anchor-id="reforce-os-resultados-alcançados"><span class="header-section-number">6.2.4</span> Reforce os resultados alcançados</h3>
+<p>Também é útil terminar a sua apresentação, mostrando um resumo dos resultados alcançados ao longo do ano. Isto pode ser um <em>bulletpoint</em> simples, resumindo os principais resultados. Isso ajuda a refrescar a memória de seus espectadores, mostrando a eles não apenas sobre como terminamos a jornada do ano passado, mas também, sobre como nós começamos a jornada do próximo ano 😉.</p>
+</section>
+<section id="um-resumo-da-estrutura" class="level3" data-number="6.2.5">
+<h3 data-number="6.2.5" class="anchored" data-anchor-id="um-resumo-da-estrutura"><span class="header-section-number">6.2.5</span> Um resumo da estrutura</h3>
+<p>Portanto, nas seções anteriores discutimos uma ideia de estrutura que seria similar à uma “evolução do personagem”. No final, temos uma história que segue a seguinte sequência:</p>
+<ul>
+<li>apresente rapidamente como começamos e como terminamos a jornada;</li>
+<li>apresente os principais desafios que enfrentamos durante o ano;</li>
+<li>quais foram as soluções que aplicamos para solucionar os problemas;</li>
+<li>reforce a evolução do personagem, ao mostrar novamente os resultados atingidos com as soluções acima;</li>
+</ul>
+
+
+</section>
+</section>
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>Vale relembrar que os números e gráficos apresentados nessa imagem são meramente ilustrativos, e, foram definidos de forma completamente aleatória.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

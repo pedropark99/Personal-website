@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Pedro Duarte Faria">
+<meta name="dcterms.date" content="2023-09-01">
+<meta name="description" content="This article describes a real world situation where me and my team used data to convince our client to do a better decision.">
+
+<title>home |&gt; dplyr::glimpse() - A small example on how to make better decisions with data</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../">
+<script src="../../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-7E6XG4WKHE"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
+</script>
+
+
+<link rel="stylesheet" href="../../../../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../../../index.html">
+    <span class="navbar-title">home |&gt; dplyr::glimpse()</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../about.html" rel="" target="">
+ <span class="menu-text">About Me</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Posts</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-posts">    
+        <li>
+    <a class="dropdown-item" href="../../../../posts/index.html" rel="" target="">
+ <span class="dropdown-text">All posts</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../posts/en.html" rel="" target="">
+ <span class="dropdown-text">Posts in english</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../posts/pt.html" rel="" target="">
+ <span class="dropdown-text">Posts em português</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-publications" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Publications</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-publications">    
+        <li>
+    <a class="dropdown-item" href="../../../../publications/index.html" rel="" target="">
+ <span class="dropdown-text">All publications</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../publications/en.html" rel="" target="">
+ <span class="dropdown-text">Publications in English</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../publications/pt.html" rel="" target="">
+ <span class="dropdown-text">Publicações em Português</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../donate.html" rel="" target="">
+ <span class="menu-text">Donate or Sponsor Me</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-cv" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">CV</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-cv">    
+        <li>
+    <a class="dropdown-item" href="../../../../files/cv/cv-english.pdf" rel="" target="">
+ <span class="dropdown-text">CV in English</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../files/cv/cv-portuguese.pdf" rel="" target="">
+ <span class="dropdown-text">CV em Português</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item compact">
+    <a class="nav-link" href="mailto:pedropark99@gmail.com" rel="" target=""><i class="bi bi-envelope-fill" role="img" aria-label="Email for contact">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/pedropark99" rel="" target=""><i class="bi bi-github" role="img" aria-label="Github profile">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://fosstodon.org/web/@pedropark99" rel="" target=""><i class="bi bi-mastodon" role="img" aria-label="Mastodon profile">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://medium.com/@pedropark99" rel="" target=""><i class="bi bi-medium" role="img" aria-label="Medium profile">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/PedroPark9" rel="" target=""><i class="bi bi-twitter" role="img" aria-label="Twitter profile">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/pedro-faria-a68140209/" rel="" target=""><i class="bi bi-linkedin" role="img" aria-label="Linkedin profile">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://pedro-faria.netlify.app/index.xml" rel="" target=""><i class="bi bi-rss" role="img" aria-label="RSS feed for Pedro's blog">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">A small example on how to make better decisions with data</h1>
+                  <div>
+        <div class="description">
+          This article describes a real world situation where me and my team used data to convince our client to do a better decision.
+        </div>
+      </div>
+                </div>
+  </div>
+    
+  <div class="quarto-title-meta-author">
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-heading">Affiliation</div>
+    
+      <div class="quarto-title-meta-contents">
+      <p class="author">Pedro Duarte Faria </p>
+    </div>
+      <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              Blip
+            </p>
+        </div>
+      </div>
+
+  <div class="quarto-title-meta">
+
+        
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">September 1, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="introduction" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
+<p>This article describes a real-world situation where me and my team used data to convince our client (which is one of the biggest companines in the brazilian financial market) at the time to make a better decision. Special thanks to <a href="https://www.linkedin.com/in/guilhermeggarcia/">Guilherme Goes</a> and <a href="https://www.linkedin.com/in/paulo-gon-oli/">Paulo Gonçalves</a>. They both help me to present these ideas and insights to our client.</p>
+<p>In essence, <strong>making decisions is hard</strong>. But you always make a better decision when you have data to guide you into a safer and better outcome. When you do not have data to back you up, you are basically in the dark. That is, you make the decision, but you do not know upfront what are the possible outcomes of that decision. You just hope for the best, and this is always a hard position to be in.</p>
+<section id="a-data-analyst-should-focus-on-understanding-the-business" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="a-data-analyst-should-focus-on-understanding-the-business"><span class="header-section-number">1.1</span> A Data Analyst should focus on understanding the business</h2>
+<p>You will probably notice that a big part of this article is dedicated to give you context and explain the business behind this example.</p>
+<p>This is intentional! Because, one of the real values of this article is to show that we come up with a good proposal to our client, because we understood his business, and we raised some good hypothesis about this business, and by analyzing these hypothesis we come up with a good new strategy.</p>
+<p>If you do not understand the business you are analyzing, is less likely that you will come up with a good strategy, or, a good data analysis. In other words, by having a good understanding of the business, you will likely have much better ideas on “how” to analyze the data you have.</p>
+</section>
+</section>
+<section id="context" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Context</h1>
+<p>In essence, our client was a big brazilian bank, one of the largest in the market. The bank was using our digital plataform to sell different products and services through <a href="https://www.whatsapp.com/">WhatsApp</a>. Our job was to analyze the data generated by the platform to understand how the bank could increase their sales inside this channel.</p>
+<section id="the-secured-loan-product" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="the-secured-loan-product"><span class="header-section-number">2.1</span> The secured loan product</h2>
+<p>A secured loan was one of several products offered by the bank on WhatsApp. To acquire this product, the user needed to answer several questions, and also, fit into some criterias.</p>
+<p>Depending on the type of industry you work in, you might call this as the <em>sales flow</em>, or, the <em>sales path</em>, which is the path (or the steps) that the user needs to follow to acquire the product you are selling.</p>
+<p>Most companies want to make this path as short as possible so that the user gets to the product faster. However, we are talking about a loan, so the bank certainly needs a lot of personal and financial information about the user before it gives the loan.</p>
+<p>So in this example, the user needed to answer a considerable amount of questions through WhatsApp to get to the final step of the sales path, that is, to acquire the loan.</p>
+<p>Most of these questions were asking for some personal information, to check whether this particular user fitted or not into some important criterias. Most of these criterias were very standard for any type of loan, like… the person should not have any legal debts with the government. Some other criterias were purelly financial and assets related, and were also a very commom practice among banks, like… the person needs to be fully employed, he/she needs to have a car which is fully paid, and, this car needs to be a personal property of the person, i.e.&nbsp;it cannot be a borrowed car from another person.</p>
+</section>
+<section id="the-weird-criteria" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="the-weird-criteria"><span class="header-section-number">2.2</span> The weird criteria</h2>
+<p>But one of the many criterias was a bit strange for us. Identify the exact criteria is not important for the content of this article. Let’s just say that, to be elegible for this loan, <strong>the user needed to be elegible to three different modalities</strong>.</p>
+<p>Each modality corresponded to a different type of loan. If the user was not elegible to all of these three modalities (or types of loan), then, we would automatically rejected the user’s request for the loan.</p>
+<p>In essence, we had a flow that worked a bit like this:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./../flow-extended.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">A small representation of the sales path</figcaption>
+</figure>
+</div>
+<p>Every time a user entered our flow, we collected the social ID of this user. Because with this social ID we can use the API to check multiple informations about this person. One of the many things we checked, was whether or not this user was elegible or not to these three modalities of loan.</p>
+</section>
+<section id="why-this-was-weird" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="why-this-was-weird"><span class="header-section-number">2.3</span> Why this was weird?</h2>
+<p>This was a weird criteria, because… if a user called “Ana” is elegible to modality A, then, why not offer a loan of modality A to “Ana” ? As another example, if a user “Mike” is elegible to both modalities A and B, then, why not offer both of these modalities (A and B) to him? Let the user get whatever type of loan he is elegible to, right?</p>
+<p>Why only users that are elegible to all three modalities (A, B and C) get to decide which loan they want to get? In our head, this criteria did not made much sense, because if an user is elegible to one modality of loan, he should be able to get a loan on this modality he is elegible to.</p>
+</section>
+<section id="why-this-criteria-existed" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="why-this-criteria-existed"><span class="header-section-number">2.4</span> Why this criteria existed?</h2>
+<p>But let’s face it. Despite this being a weird criteria, there certainly is a reason for it. Nothing exists without a reason. We thought this weird criteria probably existed either because:</p>
+<ol type="1">
+<li>a MVP strategy.</li>
+<li>or a “risk trade-off” strategy.</li>
+</ol>
+<p>The MVP strategy means that the bank included this weird criteria because it greatly simplified the development of the sales path. By simplifying the development, the bank could deliver a MVP (minimal viable product) as fast as possible, and, as a consequence, he could make a profit out of it faster.</p>
+<p>On the other side, the “risk trade-off” means that the bank included this weird criteria, because it probably estimated that the risk is considerably higher for people that are not elegible to all three modalities. If the estimated risk is higher, then, the bank have a good reason to not offer this loan to people that are elegible to only one or two modalities.</p>
+<p>Banks are constantly facing a trade-off between risk and profit. In other words, a secured loan like this is always a good profit opportunity. However, this profit opportunity always come at a cost, mostly in the form of risk.</p>
+<p>That is why banks are usually very good at analysing and estimating risks. When a person looks to acquire a loan, the bank starts to analyze several factors in order to estimate how much risky is to give a loan to this person.</p>
+</section>
+</section>
+<section id="what-we-discovered" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> What we discovered</h1>
+<p>Regardless of which of the above strategies was the exact bank’s strategy, we had the hypothesis that this business rule (about the three modalities) was severely affecting the sales result.</p>
+<p>In other words, we suspected that this strategy of rejecting users that did not had all three modalities was not worth it, despite of what decisions the bank actually made to include this criteria into the sales path. But we needed to confirm this hypothesis.</p>
+<p>Since we had the data returned from the API, we could potentially identify which users did have the three modalities, and which did not have. So I setted up a simple R script to collect the data of each user that visited our sales path in the last month from the API, and putted this script to run through the night.</p>
+<p>In the next day, I had all of the data, and we started to analyze it, investigating the metadata of each user, and potentially measuring the size of the hole that this business rule was creating.</p>
+<p>As a result, we discovered that the bank was constantly <strong>losing a huge opportunity</strong> because of this weird criteria, or, this specific business rule. Doing some basic math, we identified that <strong>67% of the users that visited our channel were not elegible to all three modalities</strong>. This means that 67% of the users that entered our channel were automatically rejected. We were constantly losing a huge chunk of potential leads because they did not fitted into this criteria.</p>
+<p>So, for example, if 13,000 users entered our channel, only (1 - 0.67) x 13,000 = 4,290 of these users could potentially finish the path and acquire the loan. The remaining 8,710 users were automatically lost. They were just rejected because they did not had these three modalities.</p>
+<p>This discovery generated some important possibilities for us:</p>
+<ul>
+<li>Are we reaching the right audience?</li>
+<li>Maybe we should focus in attract only people that do have the three modalities to our channel?</li>
+<li>Is this criteria or business-rule worth it?</li>
+</ul>
+<section id="using-data-to-get-a-better-outcome" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="using-data-to-get-a-better-outcome"><span class="header-section-number">3.1</span> Using data to get a better outcome</h2>
+<p>Our job was to use the data we collected, to show the bank that the potential gains of selling different types of loans to these users that did not had the three modalities, were much higher than the potential risk they offered, or than the effort to develop some improvements over the sales path to use the new strategy.</p>
+<p>By using data, we can show the bank (in numbers) the size of the opportunity they were losing. And that is exactly what we did. Our argument was basically divided into two separate parts:</p>
+<ol type="1">
+<li>The size of the lost;</li>
+<li>The size of the potential gain;</li>
+</ol>
+<p>The first part of our presentation focused on the 67% number. We shown the bank that 67% of the users (which is a huge number) were constantly rejected in the flow. But this number alone does not have much flavor. As long as they are maximizing their profit, the bank does not care if he is saying “no” to 60%, 70%, 80% of the users or whatever.</p>
+<p>That is why in the second part, we did some more basic math to estimate the potential gains they were losing by not selling to this 67% of users.</p>
+</section>
+</section>
+<section id="the-new-strategy" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> The new strategy</h1>
+<p>A quick recap. Each individual user that entered inside our sales path, wants to get a loan. But, this user needed to be elegible to three different types of loan to actually acquire the loan he wanted through our channel.</p>
+<p>But, what if we change the sales path, so that:</p>
+<ul>
+<li>An user does not need to be elegible to all three modalities to acquire a loan;</li>
+<li>If an user is elegible to one modality, then, we should offer a loan of this modality he is elegible to;</li>
+<li>If an user is elegible to more than one modality, then, we should offer multiple options of loans for the user, one for each modality he is elegible to;</li>
+</ul>
+<p>We estimated that, if we changed the sales path so that it would fit the descriptions above, then, we would increase the users coverage to 96.8%! This means that we could sell a loan to 96.8% of the users that entered our sales path, instead of only 33%.</p>
+<p>Now, if you are thinking that 33% + 67% should be equal to 100% instead, you are forgetting that the user needs to fit into some other criterias that I did not mentioned here. In other words, 96.8 - 100 = 3.2% of users would still be rejected because they did not fit into other necessary criterias.</p>
+</section>
+<section id="the-end-result" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> The end result</h1>
+<p>The time and effort necessary to develop this new strategy into the sales path was relatively low, and the potential gains of it were quite high! By increasing the users coverage from 33% to 96.8%, we estimated that the sales could have a potential 193% increase. Spoiler! This estimate was way low compared to the end result we got. But that is what estimates are right? They are just estimates.</p>
+<p>So the bank was very happy with the proposal. The managers quickly accepted the idea. A low effort for a potentail high gain. If your reflect a bit on this article, you will see that the new strategy was very simple, but our proposal was very clear and effective (it was just 3 slides basically).</p>
+<p>However, the end result was enormous. On the first month after we implemented this new strategy on production, the sales increased approximately 142%, and on the second month, 400%. The sales of this specific loan have a strong seasonal component to it, that is why you have such a big variation from 142% to 400%. But nevertheless, this demonstrates the positive impact of our strategy. This end result of <strong>400% sales increase</strong> because of our proposal was humongous.</p>
+</section>
+<section id="conclusion" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Conclusion</h1>
+<p>We identified a weird criteria that our cliente included on the sales path. We raised some simple hypothesis about this weird criteria, and we used data to confirm or test this hypothesis.</p>
+<p>By analysing this data, we identified a huge opportunity for our client. We then builded a simple presentation with a proposal to our client, with the numbers that we calculated from the data analysis that did.</p>
+<p>At the end, this proposal was a huge success for our team, and for our client too that got a huge sales increase after we implemented the improvements that we proposed.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
