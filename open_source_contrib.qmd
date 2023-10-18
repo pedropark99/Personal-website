@@ -2,6 +2,7 @@
 title: "Open source contributions"
 subtitle: "This is a list of my contributions to various open source projects."
 title-block-banner: true
+number-sections: true
 ---
 
 

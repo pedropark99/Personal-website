@@ -241,22 +241,22 @@
     "objectID": "open_source_contrib.html#knitr",
     "href": "open_source_contrib.html#knitr",
     "title": "Open source contributions",
-    "section": "knitr",
-    "text": "knitr\nThe knitr project is a general-purpose literate programming engine, and a big open source project from the R language community.\n\nPR 2140\nPR 2180\nPR 2294"
+    "section": "3.1 knitr",
+    "text": "3.1 knitr\nThe knitr project is a general-purpose literate programming engine, and a big open source project from the R language community.\n\nPR 2140\nPR 2180\nPR 2294"
   },
   {
     "objectID": "open_source_contrib.html#dev_guide",
     "href": "open_source_contrib.html#dev_guide",
     "title": "Open source contributions",
-    "section": "dev_guide",
-    "text": "dev_guide\ndev_guide is the project for “rOpenSci Packages: Development, Maintenance, and Peer Review”, which is an open source community-driven book that describes the best practices for development of R packages. These contributions are related to the Multilingual Publishing project of ROpenSci.\n\nPR 691\nPR 690\nPR 687\nPR 686\nPR 685\nPR 684\nPR 682\nPR 681\nPR 679\nPR 676\nPR 675\nPR 674"
+    "section": "3.2 dev_guide",
+    "text": "3.2 dev_guide\ndev_guide is the project for “rOpenSci Packages: Development, Maintenance, and Peer Review”, which is an open source community-driven book that describes the best practices for development of R packages. These contributions are related to the Multilingual Publishing project of ROpenSci.\n\nPR 691\nPR 690\nPR 687\nPR 686\nPR 685\nPR 684\nPR 682\nPR 681\nPR 679\nPR 676\nPR 675\nPR 674"
   },
   {
     "objectID": "open_source_contrib.html#dt",
     "href": "open_source_contrib.html#dt",
     "title": "Open source contributions",
-    "section": "DT",
-    "text": "DT\nDT is an R package that provides an R Interface to the jQuery Plug-in DataTables.\n\nPR 1089"
+    "section": "3.3 DT",
+    "text": "3.3 DT\nDT is an R package that provides an R Interface to the jQuery Plug-in DataTables.\n\nPR 1089"
   },
   {
     "objectID": "donate.html",
