@@ -22,7 +22,7 @@ page just to track down all of my contributions to various open source projects.
 - [Introdução à Linguagem R: seus fundamentos e sua prática](https://github.com/pedropark99/Introducao_R): Fourth edition. An open source and introductory book (in
 portuguese) about the R programming language.
 
-# Contributions to others open source projects
+# Contributions to other open source projects
 
 ## `knitr`
 
