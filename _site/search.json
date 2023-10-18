@@ -231,32 +231,39 @@
     "text": "Introduction\nOuter joins are a simple topic of understanding for most students. However, this article proposes a second approach on the subject. This approach was built during a recent reformulation of the chapter “Introdução a base de dados relacionais”, from the book Introdução à Linguagem R: seus fundamentos e sua prática. The point of view presented here seeks to be strict, and uses this rigidity as a mechanism that facilitates the student`s memorization of the behaviors in each type of outer join.\n\n\nJoins have direction\nA join operation is nothing more than a union between two tables. But, instead of an union of two tables, we have another option for interpreting the result of this operation. So that to produce a table that represents the union between two tables, we could simply extract all the columns from one of the tables, and insert them into the other table.\nFor example, suppose you have a table A, which contains two columns, called x and y; and a table B, which in turn holds 4 different columns, named x, z, r, and t. Note that one of the columns in table B corresponds to the same column x that we found in table A.\n\nlibrary(tibble)\n\nA &lt;- tibble(\n  x = 1:5,\n  y = round(rnorm(5, 2, 1), 2)\n)\n\nB &lt;- tibble(\n  x = 1:5,\n  z = letters[1:5],\n  r = c(3.5, 2.1, 1, 5.6, 7.2),\n  t = \"tzu\"\n)\n\nIf you want to join tables A and B, you basically want to create a new table, which contains all five columns of these two tables (x, y, z, r and t). Therefore, we could imagine a join process, as if we were extracting all the columns from table B, and inserting all of these columns in table A. Hence, we have the table below as a result:\n\nfull_join(A, B, by = \"x\")\n\n# A tibble: 5 × 5\n      x     y z         r t    \n  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;\n1     1  2.14 a       3.5 tzu  \n2     2  2.61 b       2.1 tzu  \n3     3  2.3  c       1   tzu  \n4     4  4.12 d       5.6 tzu  \n5     5  1.98 e       7.2 tzu  \n\n\nWith this, we are creating the idea that a join always has a direction. In other words, we first extract the columns from table B, and then we add those columns to table A. Note that we are always starting from table B towards table A.\n\n\n\n\n\n\n\nRecipient table and source table\nFrom this perspective, we can interpret that, in a join, we are bringing all the columns of a secondary table into our main table (or our table of interest). We have the option to call these tables :source table (secondary table) and recipient table (main table). With this, a join always starts at source table and go towards the recipient table.\nThis perspective makes sense with the practice of joins. Because in any analysis, we commonly work with a “main” table, or a table that contains the key data we’re analyzing. And when we use some join, we’re usually bringing columns from other tables into this “main” table (or “recipient” table, according to that perspective). So keep in mind that a join always part from the source table toward the recipient table.\n\n\nTypes of outer join\nA natural join (inner join) usually generates a loss of observations from both tables involved in the process. In contrast, a join of type outer (that is, an outer join), seeks to delimit which of the two tables will be preserved in the result. That is, an outer join seeks to keep in the join result, the rows of at least one of the tables involved.\nWe have three main types of outer joins, which are left join, right join and full join. A full join is the simplest to understand, as it seeks to keep all rows of both tables employed. Therefore, even if there is some observation not found in one of the tables, it will be preserved in the final product of the operation.\nHowever, left join and right join seek to keep rows from only one of the tables used in join. At this point, many teachers would say something like: “if we want to apply a join between tables A and B, a left join will keep the rows of table A, and a right join will keep the rows of table B”. Other teachers would still try to say, “left join will keep the table rows on the left, while a right join will keep the table rows to the right”.\nHowever, some confusion can be easily applied in both alternatives. I mean, a student can easily face the following question: “🤔 Uhmm… I don’t remember very well. Does a left join keep the rows in table A? Or are the rows in table B?”; or else, “🤔 Wait! But which of the two tables is on the right side?”\n\n\nConclusion\nWith this, according to the perspective adopted in this article, we can understand that a left join and a right join seek to keep the rows of the recipient table and the source table, respectively. Thus, when using a right join or a left join, you should ask yourself the following: “Do I want to keep the rows in my main table (recipient table)? Or the secondary table (source table), where I am extracting the new columns from?” So if you want to keep, for example, the rows in your main table (recipient table), which is what occurs most of the time, you now know that you need to use a left join.\nIn a visual representation, we can reproduce below the initial image of this article, which marks the lines maintained by each of these two types of join."
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Hi there 🖐️!",
+    "objectID": "open_source_contrib.html",
+    "href": "open_source_contrib.html",
+    "title": "Open source contributions",
     "section": "",
-    "text": "In this page, you can quickly scan through my latest published books 📚 and blog posts 📌. But, if you prefer, you can read a quick resume of me and my work in the About Me section too. Be free to contact me via email if you have an interesting proposal 😉. If you want to support me monetarily, you can send me a Pix (more info in the Donate or Sponsor Me section)."
+    "text": "I love open source. So once upon a time I try to contribute to it. But I do not have a good memory in general, so I decided to create this page just to track down all of my contributions to various open source projects."
   },
   {
-    "objectID": "index.html#my-books",
-    "href": "index.html#my-books",
-    "title": "Hi there 🖐️!",
-    "section": "My books",
-    "text": "My books\n\n\n\n\n\n\n\n\n\n\nIntroduction to pyspark\n\n\nThis book offers a introduction on how to build Spark applications using the pyspark python package\n\n\n\nPedro Duarte Faria\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nIntrodução à Linguagem R: seus fundamentos e sua prática\n\n\nEste livro oferece uma descrição profunda sobre os fundamentos da linguagem R, e como eles se aplicam no contexto da análise de dados.\n\n\n\nPedro Duarte Faria\n\n\nDec 1, 2022\n\n\n\n\n\n\n\n\nNo matching items"
+    "objectID": "open_source_contrib.html#knitr",
+    "href": "open_source_contrib.html#knitr",
+    "title": "Open source contributions",
+    "section": "knitr",
+    "text": "knitr\nThe knitr project is a general-purpose literate programming engine, and a big open source project from the R language community.\n\nPR 2140\nPR 2180\nPR 2294"
   },
   {
-    "objectID": "index.html#most-recent-posts-in-english",
-    "href": "index.html#most-recent-posts-in-english",
-    "title": "Hi there 🖐️!",
-    "section": "Most recent Posts in English",
-    "text": "Most recent Posts in English\n\n\n\n\n\n\n\n\n\n\nImproving decision making with Git and why you should care\n\n\nThis article uses a real world situation that me and my team encountered to show how you can improve decision making in your team by tracking the decisions you make with Git\n\n\n\nPedro Duarte Faria\n\n\nJul 31, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nA case study about Data Storytelling at some of the largest brazilian banks\n\n\nThis article discuss my experience on how I improved the Data Storytelling of my presentations and reports to two of the largest banks on the financial brazilian market\n\n\n\nPedro Duarte Faria\n\n\nMay 22, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nIntroducing the {ggfunnel} R package\n\n\nIn this post, I want to introduce an experimental R package 📦 which you can use to build Power BI like funnel charts in R.\n\n\n\nPedro Duarte Faria\n\n\nFeb 11, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWhat I learned from developing my first Python package\n\n\nIn this post, I want to share some of the challenges, and what I learned from developing my first Python package 📦 published at PyPI\n\n\n\nPedro Duarte Faria\n\n\nFeb 6, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nIntroducing the {spark_map} Python package\n\n\nWith this package, you can easily apply a function over multiple columns of a Spark DataFrame\n\n\n\nPedro Duarte Faria\n\n\nDec 21, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nIntroducing the {figma} R package\n\n\nWith this package, you can access the Figma API to bring your design files to R 🎨!\n\n\n\nPedro Duarte Faria\n\n\nNov 6, 2022\n\n\n\n\n\n\n\n\nNo matching items"
+    "objectID": "open_source_contrib.html#dev_guide",
+    "href": "open_source_contrib.html#dev_guide",
+    "title": "Open source contributions",
+    "section": "dev_guide",
+    "text": "dev_guide\ndev_guide is the project for “rOpenSci Packages: Development, Maintenance, and Peer Review”, which is an open source community-driven book that describes the best practices for development of R packages. These contributions are related to the Multilingual Publishing project of ROpenSci.\n\nPR 691\nPR 690\nPR 687\nPR 686\nPR 685\nPR 684\nPR 682\nPR 681\nPR 679\nPR 676\nPR 675\nPR 674"
   },
   {
-    "objectID": "index.html#posts-mais-recentes-em-português",
-    "href": "index.html#posts-mais-recentes-em-português",
-    "title": "Hi there 🖐️!",
-    "section": "Posts mais recentes em Português",
-    "text": "Posts mais recentes em Português\n\n\n\n\n\n\n\n\n\n\nMelhorando a tomada de decisão com Git e porquê você deveria se importar\n\n\nEsse artigo usa um caso real que eu e meu time enfrentamos para mostrar como você pode melhorar a tomada de decisão de seu time, ao rastrear as suas decisões com Git\n\n\n\nPedro Duarte Faria\n\n\nJul 31, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nUm estudo de caso sobre Data Storytelling em alguns dos maiores bancos brasileiros\n\n\nNeste artigo discuto a minha experiência sobre como eu construi e melhorei o Data Storytelling de minhas apresentações para dois dos maiores bancos do mercado brasileiro.\n\n\n\nPedro Duarte Faria\n\n\nMar 6, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nJOINs são importantes fontes de duplicações em seus dados\n\n\nSe os seus dados crescerem de forma repentina, sem explicação aparente, verifique se os seus JOINs são a fonte desse problema\n\n\n\nPedro Duarte Faria\n\n\nJan 10, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNovidades da 4° edição de Introdução à Linguagem R: seus fundamentos e sua prática\n\n\nEsta quarta edição traz algumas melhorias que buscam manter um dos principais objetivos deste livro, que é ser uma referência moderna, introdutória e técnica sobre a…\n\n\n\nPedro Duarte Faria\n\n\nDec 26, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nErro de memória no Power BI Online? Hora de repensar o seu dashboard\n\n\nNeste post explico como um erro de memória no Power BI Online pode ser um forte sinal de que você está errando no design de seu dashboard\n\n\n\nPedro Duarte Faria\n\n\nDec 14, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNovidades da 3° edição de Introdução à Linguagem R: seus fundamentos e sua prática\n\n\nUma grande reforma sobre a obra foi feita para esta nova edição. Como resultado, temos seis novos capítulos para você!\n\n\n\nPedro Duarte Faria\n\n\nApr 6, 2022\n\n\n\n\n\n\n\n\nNo matching items"
+    "objectID": "open_source_contrib.html#dt",
+    "href": "open_source_contrib.html#dt",
+    "title": "Open source contributions",
+    "section": "DT",
+    "text": "DT\nDT is an R package that provides an R Interface to the jQuery Plug-in DataTables.\n\nPR 1089"
+  },
+  {
+    "objectID": "donate.html",
+    "href": "donate.html",
+    "title": "Donate or Sponsor Me",
+    "section": "",
+    "text": "Currently, I only support direct transfers made via Pix. Which is a brazilian payment method available in most banks operating in the Brazilian market.\n\n\n\nTo get my Pix key, you can click in the button below to copy the key to your clipboard:\n\nCopy Pix Key\n\n\nOr, if you prefer, you can also get my Pix key by scanning the QR Code below:"
   },
   {
     "objectID": "about.html",
@@ -294,11 +301,32 @@
     "text": "Education\nFederal University of Ouro Preto - UFOP, Brazil\nEconomics, B.S., March 2017 - February 2022."
   },
   {
-    "objectID": "donate.html",
-    "href": "donate.html",
-    "title": "Donate or Sponsor Me",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Hi there 🖐️!",
     "section": "",
-    "text": "Currently, I only support direct transfers made via Pix. Which is a brazilian payment method available in most banks operating in the Brazilian market.\n\n\n\nTo get my Pix key, you can click in the button below to copy the key to your clipboard:\n\nCopy Pix Key\n\n\nOr, if you prefer, you can also get my Pix key by scanning the QR Code below:"
+    "text": "In this page, you can quickly scan through my latest published books 📚 and blog posts 📌. But, if you prefer, you can read a quick resume of me and my work in the About Me section too. Be free to contact me via email if you have an interesting proposal 😉. If you want to support me monetarily, you can send me a Pix (more info in the Donate or Sponsor Me section)."
+  },
+  {
+    "objectID": "index.html#my-books",
+    "href": "index.html#my-books",
+    "title": "Hi there 🖐️!",
+    "section": "My books",
+    "text": "My books\n\n\n\n\n\n\n\n\n\n\nIntroduction to pyspark\n\n\nThis book offers a introduction on how to build Spark applications using the pyspark python package\n\n\n\nPedro Duarte Faria\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nIntrodução à Linguagem R: seus fundamentos e sua prática\n\n\nEste livro oferece uma descrição profunda sobre os fundamentos da linguagem R, e como eles se aplicam no contexto da análise de dados.\n\n\n\nPedro Duarte Faria\n\n\nDec 1, 2022\n\n\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "index.html#most-recent-posts-in-english",
+    "href": "index.html#most-recent-posts-in-english",
+    "title": "Hi there 🖐️!",
+    "section": "Most recent Posts in English",
+    "text": "Most recent Posts in English\n\n\n\n\n\n\n\n\n\n\nImproving decision making with Git and why you should care\n\n\nThis article uses a real world situation that me and my team encountered to show how you can improve decision making in your team by tracking the decisions you make with Git\n\n\n\nPedro Duarte Faria\n\n\nJul 31, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nA case study about Data Storytelling at some of the largest brazilian banks\n\n\nThis article discuss my experience on how I improved the Data Storytelling of my presentations and reports to two of the largest banks on the financial brazilian market\n\n\n\nPedro Duarte Faria\n\n\nMay 22, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nIntroducing the {ggfunnel} R package\n\n\nIn this post, I want to introduce an experimental R package 📦 which you can use to build Power BI like funnel charts in R.\n\n\n\nPedro Duarte Faria\n\n\nFeb 11, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWhat I learned from developing my first Python package\n\n\nIn this post, I want to share some of the challenges, and what I learned from developing my first Python package 📦 published at PyPI\n\n\n\nPedro Duarte Faria\n\n\nFeb 6, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nIntroducing the {spark_map} Python package\n\n\nWith this package, you can easily apply a function over multiple columns of a Spark DataFrame\n\n\n\nPedro Duarte Faria\n\n\nDec 21, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nIntroducing the {figma} R package\n\n\nWith this package, you can access the Figma API to bring your design files to R 🎨!\n\n\n\nPedro Duarte Faria\n\n\nNov 6, 2022\n\n\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "index.html#posts-mais-recentes-em-português",
+    "href": "index.html#posts-mais-recentes-em-português",
+    "title": "Hi there 🖐️!",
+    "section": "Posts mais recentes em Português",
+    "text": "Posts mais recentes em Português\n\n\n\n\n\n\n\n\n\n\nMelhorando a tomada de decisão com Git e porquê você deveria se importar\n\n\nEsse artigo usa um caso real que eu e meu time enfrentamos para mostrar como você pode melhorar a tomada de decisão de seu time, ao rastrear as suas decisões com Git\n\n\n\nPedro Duarte Faria\n\n\nJul 31, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nUm estudo de caso sobre Data Storytelling em alguns dos maiores bancos brasileiros\n\n\nNeste artigo discuto a minha experiência sobre como eu construi e melhorei o Data Storytelling de minhas apresentações para dois dos maiores bancos do mercado brasileiro.\n\n\n\nPedro Duarte Faria\n\n\nMar 6, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nJOINs são importantes fontes de duplicações em seus dados\n\n\nSe os seus dados crescerem de forma repentina, sem explicação aparente, verifique se os seus JOINs são a fonte desse problema\n\n\n\nPedro Duarte Faria\n\n\nJan 10, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNovidades da 4° edição de Introdução à Linguagem R: seus fundamentos e sua prática\n\n\nEsta quarta edição traz algumas melhorias que buscam manter um dos principais objetivos deste livro, que é ser uma referência moderna, introdutória e técnica sobre a…\n\n\n\nPedro Duarte Faria\n\n\nDec 26, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nErro de memória no Power BI Online? Hora de repensar o seu dashboard\n\n\nNeste post explico como um erro de memória no Power BI Online pode ser um forte sinal de que você está errando no design de seu dashboard\n\n\n\nPedro Duarte Faria\n\n\nDec 14, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNovidades da 3° edição de Introdução à Linguagem R: seus fundamentos e sua prática\n\n\nUma grande reforma sobre a obra foi feita para esta nova edição. Como resultado, temos seis novos capítulos para você!\n\n\n\nPedro Duarte Faria\n\n\nApr 6, 2022\n\n\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/2020/2020-10-17-formulario-pesquisa/pt/index.html",

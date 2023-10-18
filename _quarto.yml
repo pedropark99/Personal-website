@@ -27,6 +27,7 @@ website:
             href: publications/en.qmd
           - text: Publicações em Português
             href: publications/pt.qmd
+      - open_source_contrib.qmd
       - donate.qmd
       - text: CV
         menu:
