@@ -1,0 +1,13 @@
+---
+title: "Tips about a good structure for data pipelines"
+description: "This article uses a real world situation that me and my team encountered to show how you can improve decision making in your team by tracking the decisions you make with Git"
+date: "2023-10-26"
+---
+
+# Introduction
+
+- instead of using a very modular design, use a big pipeline that runs multiple
+data pipelines that are related to each other.
+- avoid third party effects.
+- describe the dependencies correctly.
+- 
