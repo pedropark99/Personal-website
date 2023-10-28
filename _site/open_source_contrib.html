@@ -6,11 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Pedro Duarte Faria">
-<meta name="dcterms.date" content="2022-12-26">
-<meta name="description" content="Esta quarta edição traz algumas melhorias que buscam manter um dos principais objetivos deste livro, que é ser uma referência moderna, introdutória e técnica sobre a Linguagem R.">
 
-<title>home |&gt; dplyr::glimpse() - Novidades da 4° edição de Introdução à Linguagem R: seus fundamentos e sua prática</title>
+<title>home |&gt; dplyr::glimpse() - Open source contributions</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -26,22 +23,22 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../../../../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../../../../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../../../../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../../../../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../../../../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../../../../">
-<script src="../../../../site_libs/quarto-html/quarto.js"></script>
-<script src="../../../../site_libs/quarto-html/popper.min.js"></script>
-<script src="../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../../../../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../../../../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -73,7 +70,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 </script>
 
 
-<link rel="stylesheet" href="../../../../styles.css">
+<link rel="stylesheet" href="styles.css">
 </head>
 
 <body class="nav-fixed fullcontent">
@@ -83,7 +80,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
-    <a class="navbar-brand" href="../../../../index.html">
+    <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">home |&gt; dplyr::glimpse()</span>
     </a>
   </div>
@@ -94,7 +91,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../../../about.html" rel="" target="">
+    <a class="nav-link" href="./about.html" rel="" target="">
  <span class="menu-text">About Me</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -103,15 +100,15 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-posts">    
         <li>
-    <a class="dropdown-item" href="../../../../posts/index.html" rel="" target="">
+    <a class="dropdown-item" href="./posts/index.html" rel="" target="">
  <span class="dropdown-text">All posts</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../../../posts/en.html" rel="" target="">
+    <a class="dropdown-item" href="./posts/en.html" rel="" target="">
  <span class="dropdown-text">Posts in english</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../../../posts/pt.html" rel="" target="">
+    <a class="dropdown-item" href="./posts/pt.html" rel="" target="">
  <span class="dropdown-text">Posts em português</span></a>
   </li>  
     </ul>
@@ -122,25 +119,25 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-publications">    
         <li>
-    <a class="dropdown-item" href="../../../../publications/index.html" rel="" target="">
+    <a class="dropdown-item" href="./publications/index.html" rel="" target="">
  <span class="dropdown-text">All publications</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../../../publications/en.html" rel="" target="">
+    <a class="dropdown-item" href="./publications/en.html" rel="" target="">
  <span class="dropdown-text">Publications in English</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../../../publications/pt.html" rel="" target="">
+    <a class="dropdown-item" href="./publications/pt.html" rel="" target="">
  <span class="dropdown-text">Publicações em Português</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../../../open_source_contrib.html" rel="" target="">
+    <a class="nav-link active" href="./open_source_contrib.html" rel="" target="" aria-current="page">
  <span class="menu-text">Open source contributions</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../../donate.html" rel="" target="">
+    <a class="nav-link" href="./donate.html" rel="" target="">
  <span class="menu-text">Donate or Sponsor Me</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -149,11 +146,11 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-cv">    
         <li>
-    <a class="dropdown-item" href="../../../../files/cv/cv-english.pdf" rel="" target="">
+    <a class="dropdown-item" href="./files/cv/cv-english.pdf" rel="" target="">
  <span class="dropdown-text">CV in English</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../../../files/cv/cv-portuguese.pdf" rel="" target="">
+    <a class="dropdown-item" href="./files/cv/cv-portuguese.pdf" rel="" target="">
  <span class="dropdown-text">CV em Português</span></a>
   </li>  
     </ul>
@@ -204,42 +201,15 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Novidades da 4° edição de Introdução à Linguagem R: seus fundamentos e sua prática</h1>
-                  <div>
-        <div class="description">
-          Esta quarta edição traz algumas melhorias que buscam manter um dos principais objetivos deste livro, que é ser uma referência moderna, introdutória e técnica sobre a Linguagem R.
-        </div>
-      </div>
-                          <div class="quarto-categories">
-                <div class="quarto-category">Book</div>
-                <div class="quarto-category">R Language</div>
-              </div>
-                  </div>
+      <h1 class="title">Open source contributions</h1>
+            <p class="subtitle lead">This is a list of my contributions to various open source projects.</p>
+                      </div>
   </div>
     
-  <div class="quarto-title-meta-author">
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-heading">Affiliation</div>
-    
-      <div class="quarto-title-meta-contents">
-      <p class="author">Pedro Duarte Faria </p>
-    </div>
-      <div class="quarto-title-meta-contents">
-          <p class="affiliation">
-              Blip
-            </p>
-        </div>
-      </div>
-
+  
   <div class="quarto-title-meta">
 
-        
-      <div>
-      <div class="quarto-title-meta-heading">Published</div>
-      <div class="quarto-title-meta-contents">
-        <p class="date">December 26, 2022</p>
-      </div>
-    </div>
+      
     
       
     </div>
@@ -255,28 +225,58 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 
 
 
-<section id="introdução" class="level1">
-<h1>Introdução</h1>
-<p>É com muito prazer que venho compartilhar com você as novidades que estou trazendo para essa nova edição do livro <a href="https://pedro-faria.netlify.app/publications/book/introducao_linguagem_r/pt/">Introdução à Linguagem R: seus fundamentos e sua prática</a>. Esta quarta edição busca principalmente fazer algumas correções e adições que buscam manter o livro como um <strong>referência moderna, introdutória e técnica</strong> sobre a linguagem R.</p>
-<p><a href="https://www.amazon.com.br/dp/B0BNW4K232"> <button type="button" class="btn btn-primary">Compre uma versão do livro</button></a> <a href="https://pedro-faria.netlify.app/publications/book/introducao_linguagem_r/pt/"> <button type="button" class="btn btn-primary">Página de publicação</button></a> <a href="https://pedropark99.github.io/Introducao_R/"> <button type="button" class="btn btn-primary">Leia online</button></a></p>
+<section id="about-this-page" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> About this page</h1>
+<p>I love open source. So once upon a time I try to contribute to it. But I do not have a good memory in general, so I decided to create this page just to track down all of my contributions to various open source projects.</p>
 </section>
-<section id="o-que-temos-de-novo" class="level1">
-<h1>O que temos de novo?</h1>
-<p>Primeiro, a seção do capítulo 4 que citava o pacote <code>SAScii</code> foi removida. Pois durante o desenvolvimento desta quarta edição, foi identificado que este pacote não estava funcionando corretamente em versões mais recentes do R.</p>
-<p>Segundo, uma nova seção foi adicionada ao capítulo 5, para introduzir o novo operador <em>pipe</em> do R (<code>|&gt;</code>) - que está disponível desde a versão 4.1 da linguagem, além de explicar as diferenças deste novo operador com o operador <em>pipe</em> do pacote <code>magrittr.</code></p>
-<p>Terceiro, várias melhorias e pequenas correções foram aplicadas sobre o capítulo 8, com o objetivo de melhorar a clareza do conhecimento exposto e da organização do capítulo.</p>
-<p>Quarto, a seção <a href="https://pedropark99.github.io/Introducao_R/configurando-componentes-est%C3%A9ticos-do-gr%C3%A1fico-no-ggplot2.html#alterando-as-fontes-do-seu-gr%C3%A1fico">Alterando as fontes do seu gráfico</a> no capítulo 9 foi reformulada, com o objetivo de substituir o pacote <code>extrafont</code> (o qual era a solução descrita em edições passadas desta obra) pelo pacote <code>ragg</code>, o qual se tornou uma solução mais moderna e robusta para o uso de fontes em gráficos do R.</p>
-<p>Quinto, tivemos algumas melhorias sobre o capítulo 4, especialmente sobre a descrição de endereços absolutos e relativos, assim como a seção <a href="https://pedropark99.github.io/Introducao_R/importando-e-exportando-dados-com-readr-readxl-e-haven.html?q=guess#sec:readr_guess_encoding">A função <code>guess_encoding()</code> como um possível guia</a> que foi atualizada com o objetivo de acompanhar as mudanças recentes sobre a função <code>readr::guess_encoding()</code>.</p>
+<section id="my-own-open-source-projects" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> My own open source projects</h1>
+<ul>
+<li><p><a href="https://github.com/pedropark99/figma"><code>figma</code></a>: an R package that provides a R client to the Figma API.</p></li>
+<li><p><a href="https://github.com/pedropark99/spark_map"><code>spark_map</code></a>: a Python package to easily apply a function over multiple columns of a Spark DataFrame.</p></li>
+<li><p><a href="https://github.com/pedropark99/ggfunnel"><code>ggfunnel</code></a>: an R package to easily produce Power BI like funnel charts in R.</p></li>
+<li><p><a href="https://github.com/pedropark99/Introd-pyspark">Introduction to pyspark</a>: First edition. An open source and introductory book about the Python package <code>pyspark</code>.</p></li>
+<li><p><a href="https://github.com/pedropark99/Introducao_R">Introdução à Linguagem R: seus fundamentos e sua prática</a>: Fourth edition. An open source and introductory book (in portuguese) about the R programming language.</p></li>
+</ul>
 </section>
-<section id="sobre-onde-encontrar-o-livro" class="level1">
-<h1>Sobre onde encontrar o livro</h1>
-<p>Você pode ler toda a obra de maneira gratuita e aberta através de seu <a href="https://pedropark99.github.io/Introducao_R/">website</a> 📖. Caso você queira contribuir para o projeto desse livro, você pode adquirir uma <a href="https://www.amazon.com.br/dp/B0BNW4K232">versão física ou em EBook do livro através da loja da Amazon</a>. Ao comprar essas versões, você estará me ajudando a continuar contribuindo com a nossa comunidade ❤️. Além disso, você também pode doar um Pix para o autor (veja a página <a href="https://pedro-faria.netlify.app/donate.html">Donate or Sponsor Me</a>).</p>
+<section id="contributions-to-other-open-source-projects" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Contributions to other open source projects</h1>
+<section id="knitr" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="knitr"><span class="header-section-number">3.1</span> <code>knitr</code></h2>
+<p>The <code>knitr</code> project is a general-purpose literate programming engine, and a big open source project from the R language community.</p>
+<ul>
+<li><a href="https://github.com/yihui/knitr/pull/2140">PR 2140</a></li>
+<li><a href="https://github.com/yihui/knitr/pull/2180">PR 2180</a></li>
+<li><a href="https://github.com/yihui/knitr/pull/2294">PR 2294</a></li>
+</ul>
 </section>
-<section id="contribua-para-a-obra-ou-faça-sugestões" class="level1">
-<h1>Contribua para a obra ou faça sugestões!</h1>
-<p>Caso seja de seu interesse, você pode contribuir diretamente para a obra, ao postar <em>pull requests</em> dentro de seu <a href="https://github.com/pedropark99/Introducao_R">repositório oficial</a>. Para mais, você também pode fazer sugestões ou comentários, ao postar <em>issues</em> neste mesmo repositório.</p>
+<section id="dev_guide" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="dev_guide"><span class="header-section-number">3.2</span> <code>dev_guide</code></h2>
+<p><code>dev_guide</code> is the project for “rOpenSci Packages: Development, Maintenance, and Peer Review”, which is an open source community-driven book that describes the best practices for development of R packages. These contributions are related to the <a href="https://ropensci.org/multilingual-publishing/">Multilingual Publishing project of ROpenSci</a>.</p>
+<ul>
+<li><a href="https://github.com/ropensci/dev_guide/pull/691">PR 691</a></li>
+<li><a href="https://github.com/ropensci/dev_guide/pull/690">PR 690</a></li>
+<li><a href="https://github.com/ropensci/dev_guide/pull/687">PR 687</a></li>
+<li><a href="https://github.com/ropensci/dev_guide/pull/686">PR 686</a></li>
+<li><a href="https://github.com/ropensci/dev_guide/pull/685">PR 685</a></li>
+<li><a href="https://github.com/ropensci/dev_guide/pull/684">PR 684</a></li>
+<li><a href="https://github.com/ropensci/dev_guide/pull/682">PR 682</a></li>
+<li><a href="https://github.com/ropensci/dev_guide/pull/681">PR 681</a></li>
+<li><a href="https://github.com/ropensci/dev_guide/pull/679">PR 679</a></li>
+<li><a href="https://github.com/ropensci/dev_guide/pull/676">PR 676</a></li>
+<li><a href="https://github.com/ropensci/dev_guide/pull/675">PR 675</a></li>
+<li><a href="https://github.com/ropensci/dev_guide/pull/674">PR 674</a></li>
+</ul>
+</section>
+<section id="dt" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="dt"><span class="header-section-number">3.3</span> <code>DT</code></h2>
+<p><code>DT</code> is an R package that provides an R Interface to the jQuery Plug-in DataTables.</p>
+<ul>
+<li><a href="https://github.com/rstudio/DT/pull/1089">PR 1089</a></li>
+</ul>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
