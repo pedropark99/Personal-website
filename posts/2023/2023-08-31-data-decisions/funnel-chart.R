@@ -19,7 +19,7 @@ dados <- tibble(rotulos=rotulos, n_users=n_users)
 plot <- funnel(dados, values=n_users, levels=rotulos, text_specs = list(colour = "white", size = 11/.pt))
 plot <- plot +  labs(
     title = "Number of unique users that reached each step of the sales path",
-    subtitle = "The biggest loss of users is at the \"Validate criterias\" step, where\nwe check if the user meet all the criterias.",
+    subtitle = "The biggest loss of users is at the \"Validate criterias\" step, where\nwe check if the user meet all the criterias through the API.",
     y = NULL
   ) +
   theme(
@@ -51,7 +51,7 @@ dados_br <- tibble(rotulos=rotulos_br, n_users=n_users)
 plot <- funnel(dados_br, values=n_users, levels=rotulos, text_specs = list(colour = "white", size = 10/.pt))
 plot <- plot +  labs(
     title = "Número de usuários únicos em cada ponto do fluxo de vendas",
-    subtitle = "A maior perda de usuários ocorre no ponto \"Validar todos os critérios\" que é o ponto\nonde checamos se o usuário se encaixa em todos os critérios.",
+    subtitle = "A maior perda de usuários ocorre no ponto \"Validar todos os critérios\" que é o ponto\nonde checamos se o usuário se encaixa em todos os critérios através da API.",
     y = NULL
   ) +
   theme(
