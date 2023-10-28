@@ -143,7 +143,7 @@
 
 <section id="introdução" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Introdução</h1>
-<p>Este artigo descreve um exemplo real em que eu e meu time usamos dados para convencer o nosso cliente na época (que era um dos maiores bancos do mercado brasileiro) a tomar uma melhor decisão. Agradecimentos especiais ao <a href="https://www.linkedin.com/in/guilhermeggarcia/">Guilherme Goes</a> e ao <a href="https://www.linkedin.com/in/paulo-gon-oli/">Paulo Gonçalves</a>. Ambos me ajudaram a montar e apresentar essas ideias e <em>insigths</em> para o nosso cliente.</p>
+<p>Este artigo descreve um exemplo real em que eu e meu time usamos dados para convencer o nosso cliente na época (que é um dos maiores bancos do mercado brasileiro) a tomar uma melhor decisão. Agradecimentos especiais ao <a href="https://www.linkedin.com/in/guilhermeggarcia/">Guilherme Goes</a> e ao <a href="https://www.linkedin.com/in/paulo-gon-oli/">Paulo Gonçalves</a>. Ambos me ajudaram a montar e apresentar essas ideias e <em>insigths</em> para o nosso cliente.</p>
 <p>Em resumo, <strong>tomar decisões é difícil</strong>. Mas você sempre toma uma decisão melhor quando você tem dados para guiá-lo em direção a um resultado melhor e mais seguro. Quando você não tem dados para te defender, você está basicamente no escuro. Ou seja, você toma a decisão, mas não sabe antecipadamente quais são os possíveis resultados dessa decisão. Você apenas espera o melhor, e esta é sempre uma posição difícil de se estar.</p>
 </section>
 <section id="um-analista-de-dados-deveria-focar-em-entender-o-negócio" class="level1" data-number="2">
@@ -165,7 +165,7 @@
 </section>
 <section id="um-critério-estranho" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="um-critério-estranho"><span class="header-section-number">3.2</span> Um critério estranho</h2>
-<p>Porém um dos vários critérios era um pouco estranho para nós. Identificar exatamente qual critério era esse não é importante para o conteúdo deste artigo. Portanto, vamos dizer apenas que, para que um usuário consiga adquirir esse empréstimo, ele precisava necessariamente ser elegível para três modalidades diferentes.</p>
+<p>Porém um dos vários critérios era um pouco estranho para nós. Identificar exatamente qual critério era esse não é importante para o conteúdo deste artigo. Portanto, vamos dizer apenas que, para que um usuário consiga adquirir esse empréstimo, <strong>ele precisava necessariamente ser elegível para três modalidades diferentes</strong>.</p>
 <p>Cada modalidade correspondia a um tipo diferente de empréstimo. Se o usuário não fosse elegível a todas essas três modalidades (ou tipos de empréstimo), nós automaticamente rejeitamos a solicitação de empréstimo desse usuário.</p>
 <p>Em essência, tínhamos um fluxo que funcionava mais ou menos assim:</p>
 <div class="quarto-figure quarto-figure-center">
@@ -200,7 +200,7 @@
 <p>Em outras palavras, nós suspeitamos que essa estratégia de rejeitar usuários que não possuíam as três modalidades não valia a pena, independente de quais decisões o banco tenha realmente tomado para incluir esse critério no fluxo de vendas. Mas precisávamos confirmar esta hipótese.</p>
 <p>Nós tínhamos acesso aos dados retornados pela API (a que usamos para puxar várias informações do usuário), e com esses dados, nós poderíamos potencialmente identificar quais usuários possuíam as três modalidades e quais não possuíam. Então eu montei um script de R simples para coletar através da API os dados de cada usuário que visitou o nosso fluxo de vendas no último mês, e coloquei esse script para rodar durante a noite.</p>
 <p>No dia seguinte, eu tinha todos os dados localmente na minha máquina, e começamos a analisá-los, investigando os metadados de cada usuário e potencialmente medindo o tamanho do buraco que essa regra de negócio estava criando.</p>
-<p>Como resultado, descobrimos que o banco estava constantemente perdendo uma grande oportunidade por causa desse critério estranho, ou, dessa regra de negócio específica. Fazendo algumas contas básicas, identificamos que 67% dos usuários que visitaram nosso canal não eram elegíveis às três modalidades. Isso significa que 67% dos usuários que entravam em nosso canal eram automaticamente rejeitados. Estávamos constantemente perdendo uma grande quantidade de potenciais <em>leads</em> porque eles não se enquadravam nesse critério.</p>
+<p>Como resultado, descobrimos que o banco estava constantemente <strong>perdendo uma grande oportunidade</strong> por causa desse critério estranho, ou, dessa regra de negócio específica. Fazendo algumas contas básicas, identificamos que <strong>67% dos usuários que visitaram nosso canal não eram elegíveis às três modalidades</strong>. Isso significa que 67% dos usuários que entravam em nosso canal eram automaticamente rejeitados. Estávamos constantemente perdendo uma grande quantidade de potenciais <em>leads</em> porque eles não se enquadravam nesse critério.</p>
 <p>Tendo isso em mente, por exemplo, se 13.000 usuários entrassem em nosso canal, apenas (1 - 0,67) x 13.000 = 4.290 desses usuários poderiam potencialmente terminar o fluxo e adquirir o empréstimo. Os 8.710 usuários restantes eram automaticamente perdidos. Eles eram rejeitados porque não tinham essas três modalidades.</p>
 <p>Essa descoberta gerou algumas possibilidades importantes para nós:</p>
 <ul>
@@ -237,7 +237,7 @@
 <p>O tempo e o esforço necessários para desenvolver esta nova estratégia no fluxo de vendas eram relativamente baixos e os ganhos potenciais dela eram bastante elevados! Ao aumentar a cobertura de usuários de 33% para 96,8%, estimamos que as vendas poderiam ter um aumento potencial de 193%. Spoiler! Essa estimativa foi muito baixa em comparação com o resultado final que obtivemos. Mas é assim que estimativas funcionam, não é mesmo? São apenas estimativas.</p>
 <p>Então os gerentes do banco ficaram muito felizes com a proposta. Os gestores rapidamente aceitaram a ideia. Um baixo esforço para um ganho potencial alto.</p>
 <p>Se você pensar sobre, essa nova estratégia que criamos era muito simples. Ela apenas incluía mais opções para os usuários que não se enquadravam no cenário ideal do banco. Mas apesar dessa estratégia ser simples, nós escrevemos uma proposta bem curta, clara e eficaz (eram basicamente apenas 4 slides). Nós mostramos o tamanho do buraco ao banco e também mostramos o tamanho da oportunidade que poderíamos obter se implementássemos essa nossa nova estratégia, e também mostrámos que esta nova estratégia era relativamente fácil e rápida de ser implementada no fluxo.</p>
-<p>No entanto, o resultado final foi enorme. No primeiro mês após implementarmos esta nova estratégia no ambiente de produção, as vendas aumentaram aproximadamente 142%, já no segundo mês, o aumento chegou a 400%. As vendas deste empréstimo específico têm uma forte componente sazonal, por isso temos uma variação tão grande de 142% a 400%. Mas de qualquer modo, isto demonstra o impacto positivo que a nossa nova estratégia obteve. O resultado final de 400% de aumento de vendas com a nossa proposta foi enorme.</p>
+<p>No entanto, o resultado final foi enorme. No primeiro mês após implementarmos esta nova estratégia no ambiente de produção, as vendas aumentaram aproximadamente 142%, já no segundo mês, o aumento chegou a 400%. As vendas deste empréstimo específico têm uma forte componente sazonal, por isso temos uma variação tão grande de 142% a 400%. Mas de qualquer modo, isto demonstra o impacto positivo que a nossa nova estratégia obteve. O resultado final de <strong>400% de aumento de vendas</strong> com a nossa proposta foi enorme.</p>
 </section>
 <section id="conclusão" class="level1" data-number="8">
 <h1 data-number="8"><span class="header-section-number">8</span> Conclusão</h1>
@@ -4094,7 +4094,7 @@ Damji, Jules, Brooke Wenig, Tathagata Das, and Denny Lee. 2020. <em>Learning Spa
   <category>Apache Spark</category>
   <category>Book</category>
   <guid>https://pedro-faria.netlify.app/publications/book/introd-pyspark/en/index.html</guid>
-  <pubDate>Sat, 28 Oct 2023 20:41:12 GMT</pubDate>
+  <pubDate>Sat, 28 Oct 2023 21:07:00 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/publications/book/introd-pyspark/featured.png" medium="image" type="image/png" height="215" width="144"/>
 </item>
 </channel>
