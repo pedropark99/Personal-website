@@ -14,6 +14,8 @@
   {
     "listing": "/posts/index.html",
     "items": [
+      "/posts/2023/2023-08-31-data-decisions/en/index.html",
+      "/posts/2023/2023-08-31-data-decisions/pt/index.html",
       "/posts/2023/2023-07-31-git-mark-decisions/en/index.html",
       "/posts/2023/2023-07-31-git-mark-decisions/pt/index.html",
       "/posts/2023/2023-03-06-storytelling/en/index.html",
@@ -35,6 +37,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/2023/2023-08-31-data-decisions/en/index.html",
       "/posts/2023/2023-07-31-git-mark-decisions/en/index.html",
       "/posts/2023/2023-03-06-storytelling/en/index.html",
       "/posts/2023/2023-02-11-funnel-pkg-v010/en/index.html",
@@ -42,6 +45,7 @@
       "/posts/2022/2022-12-21-spark-map-v0.2.3/en/index.html",
       "/posts/2022/2022-11-06-figma-pkgv0.1.0/en/index.html",
       "/posts/2021/2021-01-02-tabela-destinataria-fonte/en/index.html",
+      "/posts/2023/2023-08-31-data-decisions/pt/index.html",
       "/posts/2023/2023-07-31-git-mark-decisions/pt/index.html",
       "/posts/2023/2023-03-06-storytelling/pt/index.html",
       "/posts/2023/2023-01-10-join-duplicates/pt/index.html",
@@ -58,6 +62,7 @@
   {
     "listing": "/posts/en.html",
     "items": [
+      "/posts/2023/2023-08-31-data-decisions/en/index.html",
       "/posts/2023/2023-07-31-git-mark-decisions/en/index.html",
       "/posts/2023/2023-03-06-storytelling/en/index.html",
       "/posts/2023/2023-02-11-funnel-pkg-v010/en/index.html",
@@ -70,6 +75,7 @@
   {
     "listing": "/posts/pt.html",
     "items": [
+      "/posts/2023/2023-08-31-data-decisions/pt/index.html",
       "/posts/2023/2023-07-31-git-mark-decisions/pt/index.html",
       "/posts/2023/2023-03-06-storytelling/pt/index.html",
       "/posts/2023/2023-01-10-join-duplicates/pt/index.html",

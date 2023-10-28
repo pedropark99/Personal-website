@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Pedro Duarte Faria">
-<meta name="dcterms.date" content="2023-07-31">
-<meta name="description" content="This article uses a real world situation that me and my team encountered to show how you can improve decision making in your team by tracking the decisions you make with Git">
+<meta name="dcterms.date" content="2023-10-28">
+<meta name="description" content="Este artigo descreve um exemplo real em que eu e meu time usamos dados para convencer o nosso cliente na época a tomar uma melhor decisão.">
 
-<title>home |&gt; dplyr::glimpse() - Improving decision making with Git and why you should care</title>
+<title>home |&gt; dplyr::glimpse() - Um pequeno exemplo sobre como utilizar dados para tomar melhores decisões</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -204,18 +204,13 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Improving decision making with Git and why you should care</h1>
+      <h1 class="title">Um pequeno exemplo sobre como utilizar dados para tomar melhores decisões</h1>
                   <div>
         <div class="description">
-          This article uses a real world situation that me and my team encountered to show how you can improve decision making in your team by tracking the decisions you make with Git
+          Este artigo descreve um exemplo real em que eu e meu time usamos dados para convencer o nosso cliente na época a tomar uma melhor decisão.
         </div>
       </div>
-                          <div class="quarto-categories">
-                <div class="quarto-category">Git</div>
-                <div class="quarto-category">Decisions</div>
-                <div class="quarto-category">Documentation</div>
-              </div>
-                  </div>
+                </div>
   </div>
     
   <div class="quarto-title-meta-author">
@@ -238,7 +233,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">July 31, 2023</p>
+        <p class="date">October 28, 2023</p>
       </div>
     </div>
     
@@ -256,135 +251,114 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 
 
 
-<section id="introduction" class="level1">
-<h1>Introduction</h1>
-<p>Last week, me and my team encountered a situation where we need to find out why and how a certain problem occurred. We needed to understand which decisions led to this problem, and why they were made. Pretty normal stuff right?</p>
-<p>But understanding what happened was only possible for us because we track every change and every decision that we make with Git, by signing commits and writing Pull Requests (or PRs for short). This article uses this real world situation that we faced to showcase how Git and formal processes to register changes in the codebase (like PRs) are a critical part for improving decision making and understanding how your past decisions are affecting you in the present.</p>
-<p>I begin the article describing what problem occurred, and in sequence, I explain what mistakes were made, and how Git helped us to identify those mistakes.</p>
+<section id="introdução" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introdução</h1>
+<p>Este artigo descreve um exemplo real em que eu e meu time usamos dados para convencer o nosso cliente na época (que é um dos maiores bancos do mercado brasileiro) a tomar uma melhor decisão. Agradecimentos especiais ao <a href="https://www.linkedin.com/in/guilhermeggarcia/">Guilherme Goes</a> e ao <a href="https://www.linkedin.com/in/paulo-gon-oli/">Paulo Gonçalves</a>. Ambos me ajudaram a montar e apresentar essas ideias e <em>insigths</em> para o nosso cliente.</p>
+<p>Em resumo, <strong>tomar decisões é difícil</strong>. Mas você sempre toma uma decisão melhor quando você tem dados para guiá-lo em direção a um resultado melhor e mais seguro. Quando você não tem dados para te defender, você está basicamente no escuro. Ou seja, você toma a decisão, mas não sabe antecipadamente quais são os possíveis resultados dessa decisão. Você apenas espera o melhor, e esta é sempre uma posição difícil de se estar.</p>
 </section>
-<section id="what-is-the-argument-in-this-article" class="level1">
-<h1>What is the argument in this article?</h1>
-<p>To improve your decision making process, you need to actually remember what decisions you made in the first place. Sometimes, that remembering is actually hard.</p>
-<p>Different people use different strategies to keep track of the decisions they made. Some people keep various notes about each decision, others, like to document their decisions inside the cards created in the kanban board. But regardless of what strategy you choose, it will always involve some kind (or level) of tracking and documenting the decisions you make along the way.</p>
-<p>In this article, I show an real world example where Git and formal Pull Request played this role. In other words, this article seeks to show how Git and Pull Requests can help you to keep track of the decisions that are being made in your team. Who and why they made these decisions? When these decisions took place? etc.</p>
+<section id="um-analista-de-dados-deveria-focar-em-entender-o-negócio" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Um analista de dados deveria focar em entender o negócio</h1>
+<p>Você provavelmente vai notar que grande parte deste artigo é dedicado a contextualizar e explicar o negócio por trás deste exemplo.</p>
+<p>Isso é intencional! Porque, um dos reais valores deste artigo é mostrar que chegamos a uma boa proposta para o nosso cliente, porque nós entendemos o negócio desse cliente, e levantamos algumas hipóteses boas sobre esse negócio, e ao analisarmos essas hipóteses nós conseguimos chegar a uma boa nova estratégia.</p>
+<p>Se você não entende o negócio que está analisando, é menos provável que você encontre uma boa estratégia ou uma boa análise de dados. Em outras palavras, ao ter um bom entendimento do negócio, você provavelmente terá ideias muito melhores sobre “como” analisar os dados que possui.</p>
 </section>
-<section id="the-data-pipeline-where-the-problem-occurred" class="level1">
-<h1>The data pipeline where the problem occurred</h1>
-<p>The problem occurred in one of the many data pipelines<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> that we manage and support. This specific data pipeline was a “aggregate the data and send the results to client” type of pipeline. In more technical details, this pipeline was a JSON file that cointained all metadata that described what this pipeline was, what steps it performed, what were the dependencies and settings for each task, which specific time of the day these tasks should be performed, etc.</p>
-<p>The main step (or task) performed in this pipeline was triggering the execution of a Python notebook. This notebook was perfoming the following steps:</p>
-<ol type="1">
-<li>aggregates the raw data to get the total sales made per channel.</li>
-<li>saves the result in a CSV or Excel file.</li>
-<li>send this CSV or Excel file by email to the client.</li>
-</ol>
-<p>The following diagram show these steps in a visual manner:</p>
+<section id="contexto" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Contexto</h1>
+<p>Em resumo, o nosso cliente era um grande banco brasileiro, um dos maiores do mercado. O banco estava utilizando nossa plataforma digital para vender diversos produtos e serviços pelo <a href="https://www.whatsapp.com/">WhatsApp</a>. Nosso trabalho foi analisar os dados gerados pela plataforma para entender como o banco poderia aumentar suas vendas dentro deste canal.</p>
+<section id="o-produto-de-empréstimo-com-garantia" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="o-produto-de-empréstimo-com-garantia"><span class="header-section-number">3.1</span> O produto de empréstimo com garantia</h2>
+<p>O empréstimo com garantia era um dos diversos produtos oferecidos pelo banco no WhatsApp. Para adquirir este produto, o usuário precisava responder diversas perguntas, e também, se enquadrar em alguns critérios.</p>
+<p>Dependendo do tipo de setor em que você atua, você pode chamar isso de “fluxo de vendas”, ou “caminho de vendas”, que nada mais é do que o caminho (ou as etapas) que o usuário precisa seguir para adquirir o produto que você está vendendo.</p>
+<p>A maioria das empresas deseja tornar esse caminho o mais curto possível para que o usuário chegue ao produto com mais rapidez. Porém, estamos falando de um empréstimo, então o banco certamente precisa de muitas informações pessoais e financeiras do usuário antes de conceder o empréstimo.</p>
+<p>Ou seja, neste exemplo, o usuário precisava responder uma quantidade considerável de perguntas pelo WhatsApp para chegar à etapa final do caminho de vendas para adquirir o empréstimo.</p>
+<p>A maioria dessas perguntas solicitava algumas informações pessoais, para verificar se esse usuário específico se enquadrava ou não em alguns critérios importantes. A maioria desses critérios eram bastante comuns (ou o <em>standard</em>) para qualquer tipo de empréstimo. Por exemplo, a pessoa não deveria ter nenhuma dívida legal com o governo. Alguns outros critérios eram puramente financeiros e patrimoniais, e também eram uma prática muito comum entre os bancos, como… a pessoa precisa estar totalmente empregada, precisa ter um carro totalmente pago, e, esse carro precisa ser uma propriedade pessoal da pessoa, ou seja, não poderia ser um carro emprestado de outra pessoa.</p>
+</section>
+<section id="um-critério-estranho" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="um-critério-estranho"><span class="header-section-number">3.2</span> Um critério estranho</h2>
+<p>Porém um dos vários critérios era um pouco estranho para nós. Identificar exatamente qual critério era esse não é importante para o conteúdo deste artigo. Portanto, vamos dizer apenas que, para que um usuário consiga adquirir esse empréstimo, <strong>ele precisava necessariamente ser elegível para três modalidades diferentes</strong>.</p>
+<p>Cada modalidade correspondia a um tipo diferente de empréstimo. Se o usuário não fosse elegível a todas essas três modalidades (ou tipos de empréstimo), nós automaticamente rejeitamos a solicitação de empréstimo desse usuário.</p>
+<p>Em essência, tínhamos um fluxo que funcionava mais ou menos assim:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="./../diagrams-en.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">A diagram that summarises the data pipeline were the problem occurred</figcaption>
+<p><img src="./../flow-pt.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Uma pequena representação do fluxo de vendas</figcaption>
 </figure>
 </div>
+<p>Cada vez que um usuário entrava em nosso fluxo, nós coletamos o CPF desse usuário. Pois com esse CPF podemos usar a API para verificar múltiplas informações sobre essa pessoa de uma vez só. Uma das muitas coisas que nós verificávamos nessa chamada de API, era se esse usuário se encaixava no critério estranho que descrevemos. Isto é, nós conferíamos se esse usuário era elegível ou não às três modalidades de empréstimo.</p>
 </section>
-<section id="what-problem-occurred" class="level1">
-<h1>What problem occurred ?</h1>
-<p>Our client notified us saying that they were not receiving the CSV files for about a week. So we started to search for this data pipeline, to look at it’s execution logs. But we did not find anything! Both the Python notebook and the JSON file that described the data pipeline itself disappeared! Is like they never existed.</p>
-<p>Not having the Python notebook, is the same as not having any pipeline at all. Both Python and JSON files had simply disapeared from our repository. But the client did received some files a few weeks ago, so, we were positive that this pipeline did existed at some point in the past. But where did it go? Why it disappeared?</p>
+<section id="por-que-esse-critério-era-estranho" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="por-que-esse-critério-era-estranho"><span class="header-section-number">3.3</span> Por que esse critério era estranho?</h2>
+<p>Na nossa cabeça, este era um critério muito estranho, porque… se uma usuária chamada “Ana” por exemplo for elegível para a modalidade A, então, por que não oferecer um empréstimo da modalidade A para a “Ana”? Como um outro exemplo, se um o usuário “Mike” é elegível para ambas as modalidades A e B, então por que não oferecer ambas as modalidades (A e B) para ele? Ou seja, por que não oferecer ao usuário qualquer tipo de empréstimo ao qual ele é elegível?</p>
+<p>Por que apenas usuários que são elegíveis para todas as três modalidades (A, B e C) podem adquirir o empréstimo? Na nossa cabeça esse critério não fazia muito sentido, pois se um usuário for elegível a uma modalidade de empréstimo, ele deveria ser capaz de obter um empréstimo nesta modalidade ao qual ele tem direito.</p>
 </section>
-<section id="investigating-the-commmits" class="level1">
-<h1>Investigating the commmits</h1>
-<p>We use Git to store and track any changes in all of our data pipelines. In other words, all changes that we make to the JSON files that describes each one of our data pipelines are tracked by Git. As you well know, a file do not simply disappear from a Git repository. When a file is removed from a Git repository, is because someone intentionally deleted the file and committed the change to the repository.</p>
-<p>Since we knew that this data pipeline existed at some point in the time, I started to investigate, and follow the history of commits. Took around 30 minutes to find the exact commit that deleted the data pipeline, and, oops! The commit was created by me! I deleted the data pipeline from our repository. Ok… now Why? Why did I deleted this data pipeline?</p>
-<p>At this point, Git already helped me to answer two very important questions which were: 1. Who deleted the pipeline? 2. When it was deleted? Because every commit you create in Git have a timestamp associated with it, and the name of the author of that commit, we knew at that point that it was me that deleted the pipeline, a few weeks ago.</p>
-</section>
-<section id="why-i-made-this-decision" class="level1">
-<h1>Why I made this decision?</h1>
-<p>But that alone does not answers another part of the problem. We still need to know why I made that decision. Why did I intentionally deleted this pipeline? This is the point where Pull Requests<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> can help us.</p>
-<p>Every time we want to publish some changes that we made to a data pipeline, we need to document these changes in a PR. We describe what changes we made, and why we made them. I found the associated PR that contained the commit I made, and in the description of that PR I found the reason why I deleted the pipeline.</p>
-<p>The pipeline was constantly failing with a “notebook not found” error. In other words, the pipeline was trying to trigger the execution of the Python notebook that I mentioned before. But the notebook itself was not found, and because of that, it was throwing this error. This means that the pipeline was basically useless, it was creating execution costs without delivering any value. It also means, that the Python notebook disappeared before the pipeline was deleted.</p>
-<p>So I deleted the pipeline. This way we were not spending our resources trying to execute something that we know is going to throw an error, and will not give any value.</p>
-</section>
-<section id="another-part-of-the-problem" class="level1">
-<h1>Another part of the problem</h1>
-<p>Ok, now we know why I deleted the pipeline. But that in itself raises some new questions for us. Why did the Python notebook disappeared? The reality is that… we didn’t know why. Unfortunately, our Python notebooks were not hosted inside a Git repository. This means that we did not traced any changes that were made to the notebook.</p>
-<p>To be fair, our Python notebooks are hosted inside a Databricks instance, and, if you are familiar with Databricks, you know that actually the Databricks platform do track (to some extent) every change that is made to the notebook, with the <a href="https://docs.databricks.com/pt/notebooks/notebooks-code.html#version-control">Revisions pannel</a>.</p>
-<p>So yes, we do have some level of monitoring over the changes made to these notebooks. But not enough to actually understand why that particular notebook was missing. In other words, this “Revision” pannel of Databricks is not capable of tracking removal actions over notebooks.</p>
-<p>We were only able to figure it out what was happening in the week after, when we discover that other Python notebooks were also missing. Was a set of three notebooks, called <code>Job_ClientX_Opened_Sessions</code>, <code>Job_ClientX_Sales_per_Channel</code> and <code>Job_ClientX_Opened_Tickets</code>. These three notebooks were located at the folder <code>ClientX</code>. So we had a file structure like this:</p>
-<pre><code>├───📁 ClientX
-│    ├───Job_ClientX_Opened_Sessions.py
-│    ├───Job_ClientX_Sales_per_Channel.py
-│    └───Job_ClientX_Opened_Tickets.py
-│ 
-├───📁 ClientY
-├───📁 ClientW
-└───📁 ClientZ
-...</code></pre>
-<p>At that specific day, we found in the execution logs that , close to 08:00 AM, this set of notebooks was avaialable, in other words, they did existed in our Databricks environment close to 08:00 AM. But on that same day, when we searched again at 11:00 AM for these same notebooks in the Databricks environment, we did not found them anymore.</p>
-<p>We knew at that point, that these notebooks disappeared within the last 3 hours. It was very recent. But a detail called our attention. The folder <code>ClientX</code>, where these notebooks were supposed to be, was filled with other notebooks with similar names, like this:</p>
-<pre><code>├───📁 ClientX
-│    ├───[ClientX] Opened sessions.py
-│    ├───[ClientX] Sales per Channel.py
-│    └───[ClientX] Opened Tickets.py
-│ 
-├───📁 ClientY
-├───📁 ClientW
-└───📁 ClientZ
-...</code></pre>
-<p>That looks weird, because it go against our naming conventions. Me and my team do not name files like this. Than, we raised the question: “wait! I think someone is renaming these notebooks”. Later that day, our suspicions were confirmed. A colleague outside of our team was intentionally renaming the Python notebooks that were published in the production environment. That is why we were not finding the notebooks, because their names were modified.</p>
-<p>The immediate consequence of this renaming action was that the link between the Python notebooks and the data pipelines was lost. That is, the data pipelines were trying to execute these notebooks, but they did not find these notebooks, because their original names were lost.</p>
-<p>If we did used Git to track every change made to these python notebooks, we would have discovered this problem much earlier, and could acted to fix it. But the damage was already made. As next steps, we had to:</p>
+<section id="por-que-esse-critério-existia" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="por-que-esse-critério-existia"><span class="header-section-number">3.4</span> Por que esse critério existia?</h2>
+<p>Mas vamos encara um fato. Apesar de este ser um critério estranho, certamente existe uma razão para ele existir. Nada existe sem uma razão. Nós imaginamos que esse critério estranho existia provavelmente por causa de:</p>
 <ol type="1">
-<li>rename the notebooks back to their original names;</li>
-<li>remove some of the privileges of our colleague in the Databricks environment;</li>
-<li>advise this colleague about what happened, and how his actions caused harm.</li>
+<li>uma estratégia MVP.</li>
+<li>ou de uma estratégia de risco, em outras palavras, por causa de um <em>trade-off</em>.</li>
 </ol>
+<p>Uma estratégia MVP significa que o banco decidiu incluir esse critério estranho porque incluí-lo reduziria muito a complexidade do desenvolvimento do fluxo de vendas, e, portanto, ao simplificar o desenvolvimento, o banco poderia entregar um MVP (<em>minimal viable product</em>, ou, produto mínimo viável) o mais rápido possível e, como consequência, ele poderia começar a lucrar com esse produto mais rapidamente.</p>
+<p>Por outro lado, uma estratégia de risco significa que o banco decidiu incluir este critério estranho, porque ele provavelmente estimou que o risco é consideravelmente maior para pessoas que não são elegíveis para as três modalidades. Se o risco estimado for muito alto, então o banco tem um bom motivo para não oferecer esse empréstimo a pessoas que são elegíveis a apenas uma ou duas modalidades diferentes.</p>
+<p>Os bancos enfrentam constantemente uma escolha (ou uma balança) entre risco e lucro. Ou seja, um empréstimo de qualquer tipo é sempre uma boa oportunidade de lucro para o banco. No entanto, esta oportunidade de lucro tem sempre um custo atrelado a ela. Esse custo aparece principalmente na forma de risco para o banco.</p>
+<p>É por isso que os bancos são normalmente muito bons em analisar e estimar riscos. Quando uma pessoa busca adquirir um empréstimo, o banco passa a analisar diversos fatores para estimar o quanto arriscado é conceder um empréstimo a essa pessoa.</p>
 </section>
-<section id="what-mistakes-were-made" class="level1">
-<h1>What mistakes were made?</h1>
-<p>Below we have the timeline of important events we described:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="./../timeline.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">The timeline of events</figcaption>
-</figure>
-</div>
-<p>In my head, there was at least three mistakes that were made across this timeline:</p>
-<ol type="1">
-<li>I did not communicated the removal of the pipeline properly;</li>
-<li>Our colleague renamed a notebook in a production environment;</li>
-<li>Not using Git to track changes in the notebooks at production environment.</li>
-</ol>
-<p>Deleting the pipeline was not a mistake. But my mistake was to not <strong>communicate my action</strong> properly. I mean, I did communicated the removal of the pipeline to my peers, but I did not communicate it to my colleague outside of my team that was also involved with this specific client, the same colleague that started to rename multiple notebooks.</p>
-<p>In other words, if I had communicated to him that I deleted the pipeline, we would probably have a dialog similar to this:</p>
+</section>
+<section id="o-que-nós-descobrimos" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> O que nós descobrimos</h1>
+<p>Independentemente de qual das opções acima tenha sido realmente a estratégia exata adotada pelo banco, nós tínhamos a hipótese de que esta regra de negócio (ou este “critério estranho”) estava afetando severamente o resultado das vendas.</p>
+<p>Em outras palavras, nós suspeitamos que essa estratégia de rejeitar usuários que não possuíam as três modalidades não valia a pena, independente de quais decisões o banco tenha realmente tomado para incluir esse critério no fluxo de vendas. Mas precisávamos confirmar esta hipótese.</p>
+<p>Nós tínhamos acesso aos dados retornados pela API (a que usamos para puxar várias informações do usuário), e com esses dados, nós poderíamos potencialmente identificar quais usuários possuíam as três modalidades e quais não possuíam. Então eu montei um script de R simples para coletar através da API os dados de cada usuário que visitou o nosso fluxo de vendas no último mês, e coloquei esse script para rodar durante a noite.</p>
+<p>No dia seguinte, eu tinha todos os dados localmente na minha máquina, e começamos a analisá-los, investigando os metadados de cada usuário e potencialmente medindo o tamanho do buraco que essa regra de negócio estava criando.</p>
+<p>Como resultado, descobrimos que o banco estava constantemente <strong>perdendo uma grande oportunidade</strong> por causa desse critério estranho, ou, dessa regra de negócio específica. Fazendo algumas contas básicas, identificamos que <strong>67% dos usuários que visitaram nosso canal não eram elegíveis às três modalidades</strong>. Isso significa que 67% dos usuários que entravam em nosso canal eram automaticamente rejeitados. Estávamos constantemente perdendo uma grande quantidade de potenciais <em>leads</em> porque eles não se enquadravam nesse critério.</p>
+<p>Tendo isso em mente, por exemplo, se 13.000 usuários entrassem em nosso canal, apenas (1 - 0,67) x 13.000 = 4.290 desses usuários poderiam potencialmente terminar o fluxo e adquirir o empréstimo. Os 8.710 usuários restantes eram automaticamente perdidos. Eles eram rejeitados porque não tinham essas três modalidades.</p>
+<p>Essa descoberta gerou algumas possibilidades importantes para nós:</p>
 <ul>
-<li><p>Colleague: “wait! Our client is still using this data pipeline, why did you removed it?”</p></li>
-<li><p>Me: “because the pipeline was not finding the notebook”</p></li>
-<li><p>Colleague: “but why is it not finding the notebook?”</p></li>
-<li><p>Me: “well, the pipeline is looking for a notebook called ‘X’, but this notebook disappeared. It does not exist in our environment.”</p></li>
-<li><p>Colleague: “wait! I remember of this notebook! I think I just renamed it a few days ago”</p></li>
-<li><p>Me: “wait! You renamed a notebook in production?”</p></li>
-<li><p>Colleague: “yes, I think so”</p></li>
+<li>Estamos alcançando o público certo?</li>
+<li>Talvez devêssemos focar em atrair apenas pessoas que possuem as três modalidades para o nosso canal?</li>
+<li>Este critério ou regra de negócio vale a pena?</li>
 </ul>
-<p>With this dialog we could probably solved the puzzle much quicker, and we could fix the mistakes before any more harm could be created. So if I did communicated to this colleague that I deleted the pipeline, we would probably reach the core of the problem more quickly.</p>
-<p>Everything started when our colleague decided to rename a notebook directly in the production environment without us knowing. This was certainly a mistake, but who does not mistakes sometimes right? As we described in the article, the “Revision system” of Databricks is limited, and did not tracked this very important change, and because of that, we initially had no idea what have happened with the notebook.</p>
-<p>We took one week to actually figure it out what was causing the “disappearance” of the notebooks. If we did use Git to track all changes made to the notebooks published in the production environment, we would spot the “renaming action” made much, much, much quicker. So not using Git over these notebooks was a mistake too.</p>
 </section>
-<section id="how-git-helped-us-to-solve-the-issue" class="level1">
-<h1>How Git helped us to solve the issue</h1>
-<p>Git is an extremely powerful tool, and by having a centrallized server that register all changes you make to the project, you can look at the past, understand what changes you made. You can actually see the evolution or the timeline of your project, and perceive how much features, or, how much improvements you made to the project. You can also spot the decisions you made in the past. This gives you the ability to re-think your decision making process.</p>
-<p>One fact we knew from the beggining: a data pipeline and a Python notebook simply disappeared from our environment. With Git we manage to track down and understand how, when and why did the data pipeline disappeared, and we were able to locate the data pipeline again, and restore it to it’s previous state, and re-send the files. If we did used Git on the notebooks, we could also track down the renaming operations made to these notebooks as well.</p>
-<p>Not only did we fixed the issue, but also, by understanding what happened, and what decisions were made that led to the dissapeareance of the data pipeline, we could identify the flaws in our decision making process. And by identifying these issues, we can now address them, so we do not make these mistakes again.</p>
-
-
-</section>
-
-
-<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
-
-<ol>
-<li id="fn1"><p>What is a pipeline? A pipeline is just a sequence of steps (or tasks) to be performed at a specific time of the day (or a specific day of the week or of the month, etc.). And a data pipeline is a pipeline that contains tasks that load, transform, send, or ingest data in some form.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>In essence, a Pull Request (or PR) is a <strong>proposal</strong> to perform a <code>git merge</code> operation. In other words, you create a PR when you want to merge the changes you made in a branch into another branch (most of the times the main branch). The “proposal” aspect of a PR means that it needs be approved to be effectively performed. A PR is not a feature from Git. It is actually a standard feature from most Git service providers. So you create a PR inside a Git services platform such as GitHub, GitLab and Azure DevOps, and not inside Git itself. If you are not familiar with PRs, the <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests">GitHub documentation has an excellent article about it</a><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<section id="usando-dados-para-atingir-um-resultado-melhor" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Usando dados para atingir um resultado melhor</h1>
+<p>Nosso trabalho foi usar os dados que coletamos da API para mostrar ao banco que, os ganhos potenciais de vendermos diferentes tipos de empréstimos para esses usuários que não tinham as três modalidades eram muito maiores do que o risco que esses usuários ofereciam, ou muito maiores que o esforço necessário para desenvolver essa nova estratégia de vendas no fluxo.</p>
+<p>Ou seja, usando dados, nós podiamos mostrar ao banco (em números) o tamanho da oportunidade que ele estava perdendo. E foi exatamente isso que fizemos. Nosso argumento foi basicamente dividido em duas partes distintas:</p>
+<ol type="1">
+<li>o tamanho do buraco, ou da perda que estávamos tendo;</li>
+<li>o tamanho do ganho potencial que poderíamos ter.</li>
 </ol>
-</section></div></main> <!-- /main -->
+<p>A primeira parte da nossa apresentação estava focada nos 67%. Nós mostramos ao banco que 67% dos usuários (que é um número enorme) eram constantemente rejeitados no fluxo. Mas este número por si só não tem muito significado. Desde que o banco esteja maximizando o seu lucro, ele não se importa se ele está recusando 60%, 70%, ou 80% dos usuários.</p>
+<p>É por isso que na segunda parte da apresentação fizemos algumas contas básicas para estimar os ganhos potenciais que eles estavam perdendo por não venderem para esses 67% de usuários.</p>
+</section>
+<section id="a-nova-estratégia-de-vendas" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> A nova estratégia de vendas</h1>
+<p>Uma rápida recapitulação. Cada usuário que entrava no nosso fluxo de vendas desejava obter um empréstimo. Porém, esse usuário precisava ser elegível a três tipos diferentes de empréstimo para realmente ser capaz de adquirir o empréstimo que desejava por meio do nosso canal.</p>
+<p>Mas, e se mudarmos esse fluxo de vendas, para que:</p>
+<ul>
+<li>O usuário não precise ser elegível às três modalidades para adquirir um empréstimo;</li>
+<li>Se um usuário for elegível a uma modalidade específica, então devemos oferecer um empréstimo dessa modalidade a que ele é elegível;</li>
+<li>Caso um usuário seja elegível a mais de uma modalidade, então, devemos oferecer múltiplas opções de empréstimos para ele, uma para cada modalidade a que ele é elegível;</li>
+</ul>
+<p>Usando os mesmos dados da API que usamos para chegar aos 67%, nós também estimamos que, se alterássemos o fluxo de vendas para que ele se ajustasse às condições acima, aumentaríamos a cobertura de usuários para 96,8%! Isto significa que poderíamos vender um empréstimo a 96,8% dos usuários que entrassem no nosso fluxo de vendas, em vez de apenas 33%.</p>
+<p>Caso você esteja pensando que 33% + 67% deveria ser igual a 100%, você está se esquecendo de que o usuário precisa se enquadrar em alguns outros critérios que não mencionei aqui. Ou seja, 96,8 - 100 = 3,2% dos usuários ainda seriam rejeitados por não se enquadrarem em outros critérios necessários.</p>
+</section>
+<section id="o-resultado-final" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> O resultado final</h1>
+<p>O tempo e o esforço necessários para desenvolver esta nova estratégia no fluxo de vendas eram relativamente baixos e os ganhos potenciais dela eram bastante elevados! Ao aumentar a cobertura de usuários de 33% para 96,8%, estimamos que as vendas poderiam ter um aumento potencial de 193%. Spoiler! Essa estimativa foi muito baixa em comparação com o resultado final que obtivemos. Mas é assim que estimativas funcionam, não é mesmo? São apenas estimativas.</p>
+<p>Então os gerentes do banco ficaram muito felizes com a proposta. Os gestores rapidamente aceitaram a ideia. Um baixo esforço para um ganho potencial alto.</p>
+<p>Se você pensar sobre, essa nova estratégia que criamos era muito simples. Ela apenas incluía mais opções para os usuários que não se enquadravam no cenário ideal do banco. Mas apesar dessa estratégia ser simples, nós escrevemos uma proposta bem curta, clara e eficaz (eram basicamente apenas 4 slides). Nós mostramos o tamanho do buraco ao banco e também mostramos o tamanho da oportunidade que poderíamos obter se implementássemos essa nossa nova estratégia, e também mostrámos que esta nova estratégia era relativamente fácil e rápida de ser implementada no fluxo.</p>
+<p>No entanto, o resultado final foi enorme. No primeiro mês após implementarmos esta nova estratégia no ambiente de produção, as vendas aumentaram aproximadamente 142%, já no segundo mês, o aumento chegou a 400%. As vendas deste empréstimo específico têm uma forte componente sazonal, por isso temos uma variação tão grande de 142% a 400%. Mas de qualquer modo, isto demonstra o impacto positivo que a nossa nova estratégia obteve. O resultado final de <strong>400% de aumento de vendas</strong> com a nossa proposta foi enorme.</p>
+</section>
+<section id="conclusão" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> Conclusão</h1>
+<p>Identificamos um critério estranho que nosso cliente incluiu no fluxo de vendas. Levantamos algumas hipóteses simples sobre esse critério estranho e usamos dados para confirmar ou testar essa hipótese.</p>
+<p>Ao analisar esses dados, identificamos uma grande oportunidade para o nosso cliente. Construímos então uma apresentação simples com uma proposta ao nosso cliente, com os números que calculamos a partir da análise dos dados que fizemos.</p>
+<p>No final, esta proposta foi um grande sucesso para a nossa equipe, e também para o nosso cliente que obteve um grande aumento de vendas após implementarmos as melhorias que propusemos.</p>
+
+
+</section>
+
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

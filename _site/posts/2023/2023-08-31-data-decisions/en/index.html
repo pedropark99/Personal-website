@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Pedro Duarte Faria">
-<meta name="dcterms.date" content="2023-07-31">
-<meta name="description" content="This article uses a real world situation that me and my team encountered to show how you can improve decision making in your team by tracking the decisions you make with Git">
+<meta name="dcterms.date" content="2023-10-28">
+<meta name="description" content="This article describes a real world situation where me and my team used data to convince our client to do a better decision.">
 
-<title>home |&gt; dplyr::glimpse() - Improving decision making with Git and why you should care</title>
+<title>home |&gt; dplyr::glimpse() - A small example on how to make better decisions with data</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -204,18 +204,13 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Improving decision making with Git and why you should care</h1>
+      <h1 class="title">A small example on how to make better decisions with data</h1>
                   <div>
         <div class="description">
-          This article uses a real world situation that me and my team encountered to show how you can improve decision making in your team by tracking the decisions you make with Git
+          This article describes a real world situation where me and my team used data to convince our client to do a better decision.
         </div>
       </div>
-                          <div class="quarto-categories">
-                <div class="quarto-category">Git</div>
-                <div class="quarto-category">Decisions</div>
-                <div class="quarto-category">Documentation</div>
-              </div>
-                  </div>
+                </div>
   </div>
     
   <div class="quarto-title-meta-author">
@@ -238,7 +233,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">July 31, 2023</p>
+        <p class="date">October 28, 2023</p>
       </div>
     </div>
     
@@ -256,135 +251,114 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 
 
 
-<section id="introduction" class="level1">
-<h1>Introduction</h1>
-<p>Last week, me and my team encountered a situation where we need to find out why and how a certain problem occurred. We needed to understand which decisions led to this problem, and why they were made. Pretty normal stuff right?</p>
-<p>But understanding what happened was only possible for us because we track every change and every decision that we make with Git, by signing commits and writing Pull Requests (or PRs for short). This article uses this real world situation that we faced to showcase how Git and formal processes to register changes in the codebase (like PRs) are a critical part for improving decision making and understanding how your past decisions are affecting you in the present.</p>
-<p>I begin the article describing what problem occurred, and in sequence, I explain what mistakes were made, and how Git helped us to identify those mistakes.</p>
+<section id="introduction" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
+<p>This article describes a real-world situation where me and my team used data to convince our client (which is one of the biggest companies in the brazilian financial market) at the time to make a better decision. Special thanks to <a href="https://www.linkedin.com/in/guilhermeggarcia/">Guilherme Goes</a> and <a href="https://www.linkedin.com/in/paulo-gon-oli/">Paulo Gonçalves</a>. They both help me to present these ideas and insights to our client.</p>
+<p>In essence, <strong>making decisions is hard</strong>. But you always make a better decision when you have data to guide you into a safer and better outcome. When you do not have data to back you up, you are basically in the dark. That is, you make the decision, but you do not know upfront what are the possible outcomes of that decision. You just hope for the best, and this is always a hard position to be in.</p>
 </section>
-<section id="what-is-the-argument-in-this-article" class="level1">
-<h1>What is the argument in this article?</h1>
-<p>To improve your decision making process, you need to actually remember what decisions you made in the first place. Sometimes, that remembering is actually hard.</p>
-<p>Different people use different strategies to keep track of the decisions they made. Some people keep various notes about each decision, others, like to document their decisions inside the cards created in the kanban board. But regardless of what strategy you choose, it will always involve some kind (or level) of tracking and documenting the decisions you make along the way.</p>
-<p>In this article, I show an real world example where Git and formal Pull Request played this role. In other words, this article seeks to show how Git and Pull Requests can help you to keep track of the decisions that are being made in your team. Who and why they made these decisions? When these decisions took place? etc.</p>
+<section id="a-data-analyst-should-focus-on-understanding-the-business" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> A Data Analyst should focus on understanding the business</h1>
+<p>You will probably notice that a big part of this article is dedicated to give you context and explain the business behind this example.</p>
+<p>This is intentional! Because, one of the real values of this article is to show that we come up with a good proposal to our client, because we understood his business, and we raised some good hypothesis about this business, and by analyzing these hypothesis we come up with a good new strategy.</p>
+<p>If you do not understand the business you are analyzing, is less likely that you will come up with a good strategy, or, a good data analysis. In other words, by having a good understanding of the business, you will likely have much better ideas on “how” to analyze the data you have.</p>
 </section>
-<section id="the-data-pipeline-where-the-problem-occurred" class="level1">
-<h1>The data pipeline where the problem occurred</h1>
-<p>The problem occurred in one of the many data pipelines<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> that we manage and support. This specific data pipeline was a “aggregate the data and send the results to client” type of pipeline. In more technical details, this pipeline was a JSON file that cointained all metadata that described what this pipeline was, what steps it performed, what were the dependencies and settings for each task, which specific time of the day these tasks should be performed, etc.</p>
-<p>The main step (or task) performed in this pipeline was triggering the execution of a Python notebook. This notebook was perfoming the following steps:</p>
-<ol type="1">
-<li>aggregates the raw data to get the total sales made per channel.</li>
-<li>saves the result in a CSV or Excel file.</li>
-<li>send this CSV or Excel file by email to the client.</li>
-</ol>
-<p>The following diagram show these steps in a visual manner:</p>
+<section id="context" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Context</h1>
+<p>In essence, our client was a big brazilian bank, one of the largest in the market. The bank was using our digital plataform to sell different products and services through <a href="https://www.whatsapp.com/">WhatsApp</a>. Our job was to analyze the data generated by the platform to understand how the bank could increase their sales inside this channel.</p>
+<section id="the-secured-loan-product" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="the-secured-loan-product"><span class="header-section-number">3.1</span> The secured loan product</h2>
+<p>A secured loan was one of several products offered by the bank on WhatsApp. To acquire this product, the user needed to answer several questions, and also, fit into some criterias.</p>
+<p>Depending on the type of industry you work in, you might call this as the <em>sales flow</em>, or, the <em>sales path</em>, which is the path (or the steps) that the user needs to follow to acquire the product you are selling.</p>
+<p>Most companies want to make this path as short as possible so that the user gets to the product faster. However, we are talking about a loan, so the bank certainly needs a lot of personal and financial information about the user before it gives the loan.</p>
+<p>So in this example, the user needed to answer a considerable amount of questions through WhatsApp to get to the final step of the sales path, that is, to acquire the loan.</p>
+<p>Most of these questions were asking for some personal information, to check whether this particular user fitted or not into some important criterias. Most of these criterias were very standard for any type of loan, like… the person should not have any legal debts with the government. Some other criterias were purelly financial and assets related, and were also a very commom practice among banks, like… the person needs to be fully employed, he/she needs to have a car which is fully paid, and, this car needs to be a personal property of the person, i.e.&nbsp;it cannot be a borrowed car from another person.</p>
+</section>
+<section id="the-weird-criteria" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="the-weird-criteria"><span class="header-section-number">3.2</span> The weird criteria</h2>
+<p>But one of the many criterias was a bit strange for us. Identify the exact criteria is not important for the content of this article. Let’s just say that, to be elegible for this loan, <strong>the user needed to be elegible to three different modalities</strong>.</p>
+<p>Each modality corresponded to a different type of loan. If the user was not elegible to all of these three modalities (or types of loan), then, we would automatically rejected the user’s request for the loan.</p>
+<p>In essence, we had a flow that worked a bit like this:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="./../diagrams-en.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">A diagram that summarises the data pipeline were the problem occurred</figcaption>
+<p><img src="./../flow-extended.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">A small representation of the sales path</figcaption>
 </figure>
 </div>
+<p>Every time a user entered our flow, we collected the social ID of this user. Because with this social ID we can use the API to check multiple informations about this person. One of the many things we checked, was whether or not this user was elegible or not to these three modalities of loan.</p>
 </section>
-<section id="what-problem-occurred" class="level1">
-<h1>What problem occurred ?</h1>
-<p>Our client notified us saying that they were not receiving the CSV files for about a week. So we started to search for this data pipeline, to look at it’s execution logs. But we did not find anything! Both the Python notebook and the JSON file that described the data pipeline itself disappeared! Is like they never existed.</p>
-<p>Not having the Python notebook, is the same as not having any pipeline at all. Both Python and JSON files had simply disapeared from our repository. But the client did received some files a few weeks ago, so, we were positive that this pipeline did existed at some point in the past. But where did it go? Why it disappeared?</p>
+<section id="why-this-was-weird" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="why-this-was-weird"><span class="header-section-number">3.3</span> Why this was weird?</h2>
+<p>This was a weird criteria, because… if an user called “Ana” is elegible to modality A, then, why not offer a loan of modality A to “Ana” ? As another example, if an user “Mike” is elegible to both modalities A and B, then, why not offer both of these modalities (A and B) to him? Let the user get whatever type of loan he is elegible to, right?</p>
+<p>Why only users that are elegible to all three modalities (A, B and C) get to decide which loan they want to get? In our head, this criteria did not made much sense, because if an user is elegible to one modality of loan, he should be able to get a loan on this modality he is elegible to.</p>
 </section>
-<section id="investigating-the-commmits" class="level1">
-<h1>Investigating the commmits</h1>
-<p>We use Git to store and track any changes in all of our data pipelines. In other words, all changes that we make to the JSON files that describes each one of our data pipelines are tracked by Git. As you well know, a file do not simply disappear from a Git repository. When a file is removed from a Git repository, is because someone intentionally deleted the file and committed the change to the repository.</p>
-<p>Since we knew that this data pipeline existed at some point in the time, I started to investigate, and follow the history of commits. Took around 30 minutes to find the exact commit that deleted the data pipeline, and, oops! The commit was created by me! I deleted the data pipeline from our repository. Ok… now Why? Why did I deleted this data pipeline?</p>
-<p>At this point, Git already helped me to answer two very important questions which were: 1. Who deleted the pipeline? 2. When it was deleted? Because every commit you create in Git have a timestamp associated with it, and the name of the author of that commit, we knew at that point that it was me that deleted the pipeline, a few weeks ago.</p>
-</section>
-<section id="why-i-made-this-decision" class="level1">
-<h1>Why I made this decision?</h1>
-<p>But that alone does not answers another part of the problem. We still need to know why I made that decision. Why did I intentionally deleted this pipeline? This is the point where Pull Requests<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> can help us.</p>
-<p>Every time we want to publish some changes that we made to a data pipeline, we need to document these changes in a PR. We describe what changes we made, and why we made them. I found the associated PR that contained the commit I made, and in the description of that PR I found the reason why I deleted the pipeline.</p>
-<p>The pipeline was constantly failing with a “notebook not found” error. In other words, the pipeline was trying to trigger the execution of the Python notebook that I mentioned before. But the notebook itself was not found, and because of that, it was throwing this error. This means that the pipeline was basically useless, it was creating execution costs without delivering any value. It also means, that the Python notebook disappeared before the pipeline was deleted.</p>
-<p>So I deleted the pipeline. This way we were not spending our resources trying to execute something that we know is going to throw an error, and will not give any value.</p>
-</section>
-<section id="another-part-of-the-problem" class="level1">
-<h1>Another part of the problem</h1>
-<p>Ok, now we know why I deleted the pipeline. But that in itself raises some new questions for us. Why did the Python notebook disappeared? The reality is that… we didn’t know why. Unfortunately, our Python notebooks were not hosted inside a Git repository. This means that we did not traced any changes that were made to the notebook.</p>
-<p>To be fair, our Python notebooks are hosted inside a Databricks instance, and, if you are familiar with Databricks, you know that actually the Databricks platform do track (to some extent) every change that is made to the notebook, with the <a href="https://docs.databricks.com/pt/notebooks/notebooks-code.html#version-control">Revisions pannel</a>.</p>
-<p>So yes, we do have some level of monitoring over the changes made to these notebooks. But not enough to actually understand why that particular notebook was missing. In other words, this “Revision” pannel of Databricks is not capable of tracking removal actions over notebooks.</p>
-<p>We were only able to figure it out what was happening in the week after, when we discover that other Python notebooks were also missing. Was a set of three notebooks, called <code>Job_ClientX_Opened_Sessions</code>, <code>Job_ClientX_Sales_per_Channel</code> and <code>Job_ClientX_Opened_Tickets</code>. These three notebooks were located at the folder <code>ClientX</code>. So we had a file structure like this:</p>
-<pre><code>├───📁 ClientX
-│    ├───Job_ClientX_Opened_Sessions.py
-│    ├───Job_ClientX_Sales_per_Channel.py
-│    └───Job_ClientX_Opened_Tickets.py
-│ 
-├───📁 ClientY
-├───📁 ClientW
-└───📁 ClientZ
-...</code></pre>
-<p>At that specific day, we found in the execution logs that , close to 08:00 AM, this set of notebooks was avaialable, in other words, they did existed in our Databricks environment close to 08:00 AM. But on that same day, when we searched again at 11:00 AM for these same notebooks in the Databricks environment, we did not found them anymore.</p>
-<p>We knew at that point, that these notebooks disappeared within the last 3 hours. It was very recent. But a detail called our attention. The folder <code>ClientX</code>, where these notebooks were supposed to be, was filled with other notebooks with similar names, like this:</p>
-<pre><code>├───📁 ClientX
-│    ├───[ClientX] Opened sessions.py
-│    ├───[ClientX] Sales per Channel.py
-│    └───[ClientX] Opened Tickets.py
-│ 
-├───📁 ClientY
-├───📁 ClientW
-└───📁 ClientZ
-...</code></pre>
-<p>That looks weird, because it go against our naming conventions. Me and my team do not name files like this. Than, we raised the question: “wait! I think someone is renaming these notebooks”. Later that day, our suspicions were confirmed. A colleague outside of our team was intentionally renaming the Python notebooks that were published in the production environment. That is why we were not finding the notebooks, because their names were modified.</p>
-<p>The immediate consequence of this renaming action was that the link between the Python notebooks and the data pipelines was lost. That is, the data pipelines were trying to execute these notebooks, but they did not find these notebooks, because their original names were lost.</p>
-<p>If we did used Git to track every change made to these python notebooks, we would have discovered this problem much earlier, and could acted to fix it. But the damage was already made. As next steps, we had to:</p>
+<section id="why-this-criteria-existed" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="why-this-criteria-existed"><span class="header-section-number">3.4</span> Why this criteria existed?</h2>
+<p>But let’s face it. Despite this being a weird criteria, there certainly is a reason for it. Nothing exists without a reason. We thought this weird criteria probably existed either because:</p>
 <ol type="1">
-<li>rename the notebooks back to their original names;</li>
-<li>remove some of the privileges of our colleague in the Databricks environment;</li>
-<li>advise this colleague about what happened, and how his actions caused harm.</li>
+<li>a MVP strategy.</li>
+<li>or a “risk trade-off” strategy.</li>
 </ol>
+<p>The MVP strategy means that the bank included this weird criteria because it greatly simplified the development of the sales path. By simplifying the development, the bank could deliver a MVP (minimal viable product) as fast as possible, and, as a consequence, he could make a profit out of it faster.</p>
+<p>On the other side, the “risk trade-off” means that the bank included this weird criteria, because it probably estimated that the risk is considerably higher for people that are not elegible to all three modalities. If the estimated risk is higher, then, the bank have a good reason to not offer this loan to people that are elegible to only one or two modalities.</p>
+<p>Banks are constantly facing a trade-off between risk and profit. In other words, a secured loan like this is always a good profit opportunity. However, this profit opportunity always come at a cost, mostly in the form of risk.</p>
+<p>That is why banks are usually very good at analysing and estimating risks. When a person looks to acquire a loan, the bank starts to analyze several factors in order to estimate how much risky is to give a loan to this person.</p>
 </section>
-<section id="what-mistakes-were-made" class="level1">
-<h1>What mistakes were made?</h1>
-<p>Below we have the timeline of important events we described:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="./../timeline.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">The timeline of events</figcaption>
-</figure>
-</div>
-<p>In my head, there was at least three mistakes that were made across this timeline:</p>
-<ol type="1">
-<li>I did not communicated the removal of the pipeline properly;</li>
-<li>Our colleague renamed a notebook in a production environment;</li>
-<li>Not using Git to track changes in the notebooks at production environment.</li>
-</ol>
-<p>Deleting the pipeline was not a mistake. But my mistake was to not <strong>communicate my action</strong> properly. I mean, I did communicated the removal of the pipeline to my peers, but I did not communicate it to my colleague outside of my team that was also involved with this specific client, the same colleague that started to rename multiple notebooks.</p>
-<p>In other words, if I had communicated to him that I deleted the pipeline, we would probably have a dialog similar to this:</p>
+</section>
+<section id="what-we-discovered" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> What we discovered</h1>
+<p>Regardless of which of the above options was the exact bank’s strategy, we had the hypothesis that this business rule (or this “weird criteria”) was severely affecting the sales result.</p>
+<p>In other words, we suspected that this strategy of rejecting users that did not had all three modalities was not worth it, despite of what decisions the bank actually made to include this criteria into the sales path. But we needed to confirm this hypothesis.</p>
+<p>Since we had the data returned from the API, we could potentially identify which users did have the three modalities, and which did not have. So I setted up a simple R script to collect the data of each user that visited our sales path in the last month from the API, and I putted this script to run through the night.</p>
+<p>In the next day, I had all of the data locally, and we started to analyze it, investigating the metadata of each user, and potentially measuring the size of the hole that this business rule was creating.</p>
+<p>As a result, we discovered that the bank was constantly <strong>losing a huge opportunity</strong> because of this weird criteria, or, this specific business rule. Doing some basic math, we identified that <strong>67% of the users that visited our channel were not elegible to all three modalities</strong>. This means that 67% of the users that entered our channel were automatically rejected. We were constantly losing a huge chunk of potential leads because they did not fitted into this criteria.</p>
+<p>So, for example, if 13,000 users entered our channel, only (1 - 0.67) x 13,000 = 4,290 of these users could potentially finish the path and acquire the loan. The remaining 8,710 users were automatically lost. They were just rejected because they did not had these three modalities.</p>
+<p>This discovery generated some important possibilities for us:</p>
 <ul>
-<li><p>Colleague: “wait! Our client is still using this data pipeline, why did you removed it?”</p></li>
-<li><p>Me: “because the pipeline was not finding the notebook”</p></li>
-<li><p>Colleague: “but why is it not finding the notebook?”</p></li>
-<li><p>Me: “well, the pipeline is looking for a notebook called ‘X’, but this notebook disappeared. It does not exist in our environment.”</p></li>
-<li><p>Colleague: “wait! I remember of this notebook! I think I just renamed it a few days ago”</p></li>
-<li><p>Me: “wait! You renamed a notebook in production?”</p></li>
-<li><p>Colleague: “yes, I think so”</p></li>
+<li>Are we reaching the right audience?</li>
+<li>Maybe we should focus in attract only people that do have the three modalities to our channel?</li>
+<li>Is this criteria or business-rule worth it?</li>
 </ul>
-<p>With this dialog we could probably solved the puzzle much quicker, and we could fix the mistakes before any more harm could be created. So if I did communicated to this colleague that I deleted the pipeline, we would probably reach the core of the problem more quickly.</p>
-<p>Everything started when our colleague decided to rename a notebook directly in the production environment without us knowing. This was certainly a mistake, but who does not mistakes sometimes right? As we described in the article, the “Revision system” of Databricks is limited, and did not tracked this very important change, and because of that, we initially had no idea what have happened with the notebook.</p>
-<p>We took one week to actually figure it out what was causing the “disappearance” of the notebooks. If we did use Git to track all changes made to the notebooks published in the production environment, we would spot the “renaming action” made much, much, much quicker. So not using Git over these notebooks was a mistake too.</p>
 </section>
-<section id="how-git-helped-us-to-solve-the-issue" class="level1">
-<h1>How Git helped us to solve the issue</h1>
-<p>Git is an extremely powerful tool, and by having a centrallized server that register all changes you make to the project, you can look at the past, understand what changes you made. You can actually see the evolution or the timeline of your project, and perceive how much features, or, how much improvements you made to the project. You can also spot the decisions you made in the past. This gives you the ability to re-think your decision making process.</p>
-<p>One fact we knew from the beggining: a data pipeline and a Python notebook simply disappeared from our environment. With Git we manage to track down and understand how, when and why did the data pipeline disappeared, and we were able to locate the data pipeline again, and restore it to it’s previous state, and re-send the files. If we did used Git on the notebooks, we could also track down the renaming operations made to these notebooks as well.</p>
-<p>Not only did we fixed the issue, but also, by understanding what happened, and what decisions were made that led to the dissapeareance of the data pipeline, we could identify the flaws in our decision making process. And by identifying these issues, we can now address them, so we do not make these mistakes again.</p>
-
-
-</section>
-
-
-<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
-
-<ol>
-<li id="fn1"><p>What is a pipeline? A pipeline is just a sequence of steps (or tasks) to be performed at a specific time of the day (or a specific day of the week or of the month, etc.). And a data pipeline is a pipeline that contains tasks that load, transform, send, or ingest data in some form.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>In essence, a Pull Request (or PR) is a <strong>proposal</strong> to perform a <code>git merge</code> operation. In other words, you create a PR when you want to merge the changes you made in a branch into another branch (most of the times the main branch). The “proposal” aspect of a PR means that it needs be approved to be effectively performed. A PR is not a feature from Git. It is actually a standard feature from most Git service providers. So you create a PR inside a Git services platform such as GitHub, GitLab and Azure DevOps, and not inside Git itself. If you are not familiar with PRs, the <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests">GitHub documentation has an excellent article about it</a><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<section id="using-data-to-get-a-better-outcome" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Using data to get a better outcome</h1>
+<p>Our job was to use the data we collected, to show the bank that the potential gains of selling different types of loans to these users that did not had the three modalities, were much higher than the potential risk they offered, or than the effort to develop some improvements over the sales path to use the new strategy.</p>
+<p>By using data, we can show the bank (in numbers) the size of the opportunity they were losing. And that is exactly what we did. Our argument was basically divided into two separate parts:</p>
+<ol type="1">
+<li>The size of the lost;</li>
+<li>The size of the potential gain;</li>
 </ol>
-</section></div></main> <!-- /main -->
+<p>The first part of our presentation focused on the 67% number. We shown the bank that 67% of the users (which is a huge number) were constantly rejected in the flow. But this number alone does not have much flavor. As long as they are maximizing their profit, the bank does not care if he is saying “no” to 60%, 70%, 80% of the users or whatever.</p>
+<p>That is why in the second part, we did some more basic math to estimate the potential gains they were losing by not selling to this 67% of users.</p>
+</section>
+<section id="the-new-strategy" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> The new strategy</h1>
+<p>A quick recap. Each individual user that entered inside our sales path, wants to get a loan. But, this user needed to be elegible to three different types of loan to actually acquire the loan he wanted through our channel.</p>
+<p>But, what if we change the sales path, so that:</p>
+<ul>
+<li>An user does not need to be elegible to all three modalities to acquire a loan;</li>
+<li>If an user is elegible to one modality, then, we should offer a loan of this modality he is elegible to;</li>
+<li>If an user is elegible to more than one modality, then, we should offer multiple options of loans for the user, one for each modality he is elegible to;</li>
+</ul>
+<p>Using the same API data that we used to get to the 67% number, we estimated that, if we changed the sales path so that it would fit the descriptions above, then, we would increase the users coverage to 96.8%! This means that we could sell a loan to 96.8% of the users that entered our sales path, instead of only 33%.</p>
+<p>Now, if you are thinking that 33% + 67% should be equal to 100% instead, you are forgetting that the user needs to fit into some other criterias that I did not mentioned here. In other words, 96.8 - 100 = 3.2% of users would still be rejected because they did not fit into other necessary criterias.</p>
+</section>
+<section id="the-end-result" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> The end result</h1>
+<p>The time and effort necessary to develop this new strategy into the sales path was relatively low, and the potential gains of it were quite high! By increasing the users coverage from 33% to 96.8%, we estimated that the sales could have a potential 193% increase. Spoiler! This estimate was way low compared to the end result we got. But that is what estimates are right? They are just estimates.</p>
+<p>So the bank was very happy with the proposal. The managers quickly accepted the idea. A low effort for a potentail high gain.</p>
+<p>If you think about it, this new strategy we come up with was very simple. It just provided more options to the users that did not fitted into the ideal scenario for the bank. But despite it being simple, we wroted a very short, clear and effective proposal (it was just 4 slides basically). We showed the size of the hole to the bank, and we showed the size of the opportunity we could get if we implemented our new strategy, and we also showed that this new strategy was relatively easy and quick to implement.</p>
+<p>However, the end result was enormous. On the first month after we implemented this new strategy on production, the sales increased approximately 142%, and on the second month, 400%. The sales of this specific loan have a strong seasonal component to it, that is why you have such a big variation from 142% to 400%. But nevertheless, this demonstrates the positive impact of our new strategy. This end result of <strong>400% sales increase</strong> from our proposal was humongous.</p>
+</section>
+<section id="conclusion" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> Conclusion</h1>
+<p>We identified a weird criteria that our client included on the sales path. We raised some simple hypothesis about this weird criteria, and we used data to confirm or test this hypothesis.</p>
+<p>By analysing this data, we identified a huge opportunity for our client. We then builded a simple presentation with a proposal to our client, with the numbers that we calculated from the data analysis that did.</p>
+<p>At the end, this proposal was a huge success for our team, and for our client too that got a huge sales increase after we implemented the improvements that we proposed.</p>
+
+
+</section>
+
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
