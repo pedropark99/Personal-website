@@ -9,7 +9,7 @@ date: "2023-10-28"
 # Introduction
 
 This article describes a real-world situation where me and my team used data
-to convince our client (which is one of the biggest companines in the brazilian
+to convince our client (which is one of the biggest companies in the brazilian
 financial market) at the time to make a better decision. Special thanks to
 [Guilherme Goes](https://www.linkedin.com/in/guilhermeggarcia/) and [Paulo Gonçalves](https://www.linkedin.com/in/paulo-gon-oli/). They both help me to present these ideas and insights to our client.
 
