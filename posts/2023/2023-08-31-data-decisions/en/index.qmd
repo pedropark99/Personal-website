@@ -3,7 +3,7 @@ title: "A small example on how to make better decisions with data"
 description: "This article describes a real world situation where me and my team used data to convince our client to do a better decision."
 number-sections: true
 image: "./../decision.avif"
-date: "2023-09-01"
+date: "2023-10-28"
 ---
 
 # Introduction
@@ -212,7 +212,8 @@ But, what if we change the sales path, so that:
 - If an user is elegible to one modality, then, we should offer a loan of this modality he is elegible to;
 - If an user is elegible to more than one modality, then, we should offer multiple options of loans for the user, one for each modality he is elegible to;
 
-We estimated that, if we changed the sales path so that it would fit the descriptions above,
+Using the same API data that we used to get to the 67% number, we estimated that,
+if we changed the sales path so that it would fit the descriptions above,
 then, we would increase the users coverage to 96.8%! This means that we could sell a loan to
 96.8% of the users that entered our sales path, instead of only 33%.
 
@@ -246,12 +247,12 @@ the sales increased approximately 142%, and on the second month, 400%.
 The sales of this specific loan have a strong seasonal component to it, that is why you
 have such a big variation from 142% to 400%. But nevertheless, this
 demonstrates the positive impact of our new strategy.
-This end result of **400% sales increase** because of our proposal was humongous.
+This end result of **400% sales increase** from our proposal was humongous.
 
 
 # Conclusion
 
-We identified a weird criteria that our cliente included on the sales path.
+We identified a weird criteria that our client included on the sales path.
 We raised some simple hypothesis about this weird criteria,
 and we used data to confirm or test this hypothesis.
 
