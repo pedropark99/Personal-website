@@ -142,6 +142,17 @@ Regardless of which of the above options was the exact bank's strategy,
 we had the hypothesis that this business rule (or this "weird criteria")
 was severely affecting the sales result.
 
+We created this hypothesis, because we notice a big loss of
+users at the step in the sales path where we do all the multiple
+validations through the API, checking wether the user fitted or not
+all the criterias and business rules.
+
+![](./../funnel-chart.png)
+
+We did not know which specific criteria of the many was the real source of this
+loss. But we suspected that the "elegible to all 3 modalities" was this problematic
+criteria.
+
 In other words, we suspected
 that this strategy of rejecting users that did not had all three modalities was
 not worth it, despite of what decisions the bank actually made to include
@@ -152,9 +163,38 @@ which users did have the three modalities, and which did not have. So I setted u
 R script to collect the data of each user that visited our sales path
 in the last month from the API, and I putted this script to run through the night.
 
-In the next day, I had all of the data locally, and we started to analyze it,
+In the next day, I had all of the data locally, which looked a bit like this:
+
+```json
+[
+   {
+      "username":"Ana",
+      "socialid":"12212212212",
+      "loan_analysis":{
+         "loan_modalities_elegible_to":["A","B"]
+      }
+   },
+   {
+      "username":"Mike",
+      "socialid":"13313313313",
+      "loan_analysis":{
+         "loan_modalities_elegible_to":[]
+      }
+   },
+   {
+      "username":"Arthur",
+      "socialid":"14414414414",
+      "loan_analysis":{
+         "loan_modalities_elegible_to":["A","B","C"]
+      }
+   }
+]
+```
+
+We then started to analyze this data,
 investigating the metadata of each user, and potentially measuring the size of the hole
 that this business rule was creating.
+
 
 As a result, we discovered that the bank was constantly **losing a huge opportunity** because of this
 weird criteria, or, this specific business rule.

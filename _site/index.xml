@@ -76,9 +76,160 @@
 <section id="what-we-discovered" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> What we discovered</h1>
 <p>Regardless of which of the above options was the exact bank’s strategy, we had the hypothesis that this business rule (or this “weird criteria”) was severely affecting the sales result.</p>
+<p>We created this hypothesis, because we notice a big loss of users at the step in the sales path where we do all the multiple validations through the API, checking wether the user fitted or not all the criterias and business rules.</p>
+<p><img src="https://pedro-faria.netlify.app/posts/2023/2023-08-31-data-decisions/funnel-chart.png" class="img-fluid"></p>
+<p>We did not know which specific criteria of the many was the real source of this loss. But we suspected that the “elegible to all 3 modalities” was this problematic criteria.</p>
 <p>In other words, we suspected that this strategy of rejecting users that did not had all three modalities was not worth it, despite of what decisions the bank actually made to include this criteria into the sales path. But we needed to confirm this hypothesis.</p>
 <p>Since we had the data returned from the API, we could potentially identify which users did have the three modalities, and which did not have. So I setted up a simple R script to collect the data of each user that visited our sales path in the last month from the API, and I putted this script to run through the night.</p>
-<p>In the next day, I had all of the data locally, and we started to analyze it, investigating the metadata of each user, and potentially measuring the size of the hole that this business rule was creating.</p>
+<p>In the next day, I had all of the data locally, which looked a bit like this:</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb1-1"><span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">[</span></span>
+<span id="cb1-2">   <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span id="cb1-3">      <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"username"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Ana"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb1-4">      <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"socialid"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"12212212212"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb1-5">      <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"loan_analysis"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:{</span></span>
+<span id="cb1-6">         <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"loan_modalities_elegible_to"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span><span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">[</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"A"</span><span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">,</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"B"</span><span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">]</span></span>
+<span id="cb1-7">      <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span id="cb1-8">   <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">}</span><span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb1-9">   <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span id="cb1-10">      <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"username"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Mike"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb1-11">      <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"socialid"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"13313313313"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb1-12">      <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"loan_analysis"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:{</span></span>
+<span id="cb1-13">         <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"loan_modalities_elegible_to"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span><span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">[]</span></span>
+<span id="cb1-14">      <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span id="cb1-15">   <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">}</span><span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb1-16">   <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span id="cb1-17">      <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"username"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Arthur"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb1-18">      <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"socialid"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"14414414414"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb1-19">      <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"loan_analysis"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:{</span></span>
+<span id="cb1-20">         <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"loan_modalities_elegible_to"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span><span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">[</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"A"</span><span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">,</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"B"</span><span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">,</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"C"</span><span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">]</span></span>
+<span id="cb1-21">      <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span id="cb1-22">   <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span id="cb1-23"><span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">]</span></span></code></pre></div>
+<p>We then started to analyze this data, investigating the metadata of each user, and potentially measuring the size of the hole that this business rule was creating.</p>
 <p>As a result, we discovered that the bank was constantly <strong>losing a huge opportunity</strong> because of this weird criteria, or, this specific business rule. Doing some basic math, we identified that <strong>67% of the users that visited our channel were not elegible to all three modalities</strong>. This means that 67% of the users that entered our channel were automatically rejected. We were constantly losing a huge chunk of potential leads because they did not fitted into this criteria.</p>
 <p>So, for example, if 13,000 users entered our channel, only (1 - 0.67) x 13,000 = 4,290 of these users could potentially finish the path and acquire the loan. The remaining 8,710 users were automatically lost. They were just rejected because they did not had these three modalities.</p>
 <p>This discovery generated some important possibilities for us:</p>
@@ -197,9 +348,160 @@
 <section id="o-que-nós-descobrimos" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> O que nós descobrimos</h1>
 <p>Independentemente de qual das opções acima tenha sido realmente a estratégia exata adotada pelo banco, nós tínhamos a hipótese de que esta regra de negócio (ou este “critério estranho”) estava afetando severamente o resultado das vendas.</p>
+<p>Criamos essa hipótese, pois nós percebemos uma grande perda de usuários na etapa do fluxo de vendas onde fazemos todas as múltiplas validações através da API, verificando se o usuário se enquadrava ou não em todos os critérios e regras de negócio.</p>
+<p><img src="https://pedro-faria.netlify.app/posts/2023/2023-08-31-data-decisions/funnel-chart-pt.png" class="img-fluid"></p>
+<p>Nós não sabíamos qual dos muitos critérios específicos era a verdadeira fonte desta perda. Mas nós tínhamos a suspeita de que o critério “elegível para todas as 3 modalidades” era o critério problemático que gerava essa enorme perda.</p>
 <p>Em outras palavras, nós suspeitamos que essa estratégia de rejeitar usuários que não possuíam as três modalidades não valia a pena, independente de quais decisões o banco tenha realmente tomado para incluir esse critério no fluxo de vendas. Mas precisávamos confirmar esta hipótese.</p>
 <p>Nós tínhamos acesso aos dados retornados pela API (a que usamos para puxar várias informações do usuário), e com esses dados, nós poderíamos potencialmente identificar quais usuários possuíam as três modalidades e quais não possuíam. Então eu montei um script de R simples para coletar através da API os dados de cada usuário que visitou o nosso fluxo de vendas no último mês, e coloquei esse script para rodar durante a noite.</p>
-<p>No dia seguinte, eu tinha todos os dados localmente na minha máquina, e começamos a analisá-los, investigando os metadados de cada usuário e potencialmente medindo o tamanho do buraco que essa regra de negócio estava criando.</p>
+<p>No dia seguinte, eu tinha todos os dados localmente na minha máquina, que tinham um formato parecido com esse:</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb1-1"><span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">[</span></span>
+<span id="cb1-2">   <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span id="cb1-3">      <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"username"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Ana"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb1-4">      <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"cpf"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"12212212212"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb1-5">      <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"loan_analysis"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:{</span></span>
+<span id="cb1-6">         <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"loan_modalities_elegible_to"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span><span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">[</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"A"</span><span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">,</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"B"</span><span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">]</span></span>
+<span id="cb1-7">      <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span id="cb1-8">   <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">}</span><span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb1-9">   <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span id="cb1-10">      <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"username"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Mike"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb1-11">      <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"cpf"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"13313313313"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb1-12">      <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"loan_analysis"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:{</span></span>
+<span id="cb1-13">         <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"loan_modalities_elegible_to"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span><span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">[]</span></span>
+<span id="cb1-14">      <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span id="cb1-15">   <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">}</span><span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb1-16">   <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span id="cb1-17">      <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"username"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Arthur"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb1-18">      <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"cpf"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"14414414414"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb1-19">      <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"loan_analysis"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:{</span></span>
+<span id="cb1-20">         <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"loan_modalities_elegible_to"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span><span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">[</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"A"</span><span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">,</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"B"</span><span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">,</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"C"</span><span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">]</span></span>
+<span id="cb1-21">      <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span id="cb1-22">   <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span id="cb1-23"><span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">]</span></span></code></pre></div>
+<p>Começamos então a analisar esses dados, investigando os metadados de cada usuário e potencialmente medindo o tamanho do buraco que essa regra de negócio estava criando.</p>
 <p>Como resultado, descobrimos que o banco estava constantemente <strong>perdendo uma grande oportunidade</strong> por causa desse critério estranho, ou, dessa regra de negócio específica. Fazendo algumas contas básicas, identificamos que <strong>67% dos usuários que visitaram nosso canal não eram elegíveis às três modalidades</strong>. Isso significa que 67% dos usuários que entravam em nosso canal eram automaticamente rejeitados. Estávamos constantemente perdendo uma grande quantidade de potenciais <em>leads</em> porque eles não se enquadravam nesse critério.</p>
 <p>Tendo isso em mente, por exemplo, se 13.000 usuários entrassem em nosso canal, apenas (1 - 0,67) x 13.000 = 4.290 desses usuários poderiam potencialmente terminar o fluxo e adquirir o empréstimo. Os 8.710 usuários restantes eram automaticamente perdidos. Eles eram rejeitados porque não tinham essas três modalidades.</p>
 <p>Essa descoberta gerou algumas possibilidades importantes para nós:</p>
@@ -4094,7 +4396,7 @@ Damji, Jules, Brooke Wenig, Tathagata Das, and Denny Lee. 2020. <em>Learning Spa
   <category>Apache Spark</category>
   <category>Book</category>
   <guid>https://pedro-faria.netlify.app/publications/book/introd-pyspark/en/index.html</guid>
-  <pubDate>Sat, 28 Oct 2023 21:08:47 GMT</pubDate>
+  <pubDate>Sat, 28 Oct 2023 23:15:34 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/publications/book/introd-pyspark/featured.png" medium="image" type="image/png" height="215" width="144"/>
 </item>
 </channel>

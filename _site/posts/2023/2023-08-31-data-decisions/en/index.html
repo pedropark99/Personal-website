@@ -23,6 +23,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -307,9 +341,36 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <section id="what-we-discovered" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> What we discovered</h1>
 <p>Regardless of which of the above options was the exact bank’s strategy, we had the hypothesis that this business rule (or this “weird criteria”) was severely affecting the sales result.</p>
+<p>We created this hypothesis, because we notice a big loss of users at the step in the sales path where we do all the multiple validations through the API, checking wether the user fitted or not all the criterias and business rules.</p>
+<p><img src="./../funnel-chart.png" class="img-fluid"></p>
+<p>We did not know which specific criteria of the many was the real source of this loss. But we suspected that the “elegible to all 3 modalities” was this problematic criteria.</p>
 <p>In other words, we suspected that this strategy of rejecting users that did not had all three modalities was not worth it, despite of what decisions the bank actually made to include this criteria into the sales path. But we needed to confirm this hypothesis.</p>
 <p>Since we had the data returned from the API, we could potentially identify which users did have the three modalities, and which did not have. So I setted up a simple R script to collect the data of each user that visited our sales path in the last month from the API, and I putted this script to run through the night.</p>
-<p>In the next day, I had all of the data locally, and we started to analyze it, investigating the metadata of each user, and potentially measuring the size of the hole that this business rule was creating.</p>
+<p>In the next day, I had all of the data locally, which looked a bit like this:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ot">[</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">{</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"username"</span><span class="fu">:</span><span class="st">"Ana"</span><span class="fu">,</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"socialid"</span><span class="fu">:</span><span class="st">"12212212212"</span><span class="fu">,</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"loan_analysis"</span><span class="fu">:{</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>         <span class="dt">"loan_modalities_elegible_to"</span><span class="fu">:</span><span class="ot">[</span><span class="st">"A"</span><span class="ot">,</span><span class="st">"B"</span><span class="ot">]</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">}</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>   <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>   <span class="fu">{</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"username"</span><span class="fu">:</span><span class="st">"Mike"</span><span class="fu">,</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"socialid"</span><span class="fu">:</span><span class="st">"13313313313"</span><span class="fu">,</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"loan_analysis"</span><span class="fu">:{</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>         <span class="dt">"loan_modalities_elegible_to"</span><span class="fu">:</span><span class="ot">[]</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">}</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>   <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>   <span class="fu">{</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"username"</span><span class="fu">:</span><span class="st">"Arthur"</span><span class="fu">,</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"socialid"</span><span class="fu">:</span><span class="st">"14414414414"</span><span class="fu">,</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"loan_analysis"</span><span class="fu">:{</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>         <span class="dt">"loan_modalities_elegible_to"</span><span class="fu">:</span><span class="ot">[</span><span class="st">"A"</span><span class="ot">,</span><span class="st">"B"</span><span class="ot">,</span><span class="st">"C"</span><span class="ot">]</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>      <span class="fu">}</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>   <span class="fu">}</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="ot">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We then started to analyze this data, investigating the metadata of each user, and potentially measuring the size of the hole that this business rule was creating.</p>
 <p>As a result, we discovered that the bank was constantly <strong>losing a huge opportunity</strong> because of this weird criteria, or, this specific business rule. Doing some basic math, we identified that <strong>67% of the users that visited our channel were not elegible to all three modalities</strong>. This means that 67% of the users that entered our channel were automatically rejected. We were constantly losing a huge chunk of potential leads because they did not fitted into this criteria.</p>
 <p>So, for example, if 13,000 users entered our channel, only (1 - 0.67) x 13,000 = 4,290 of these users could potentially finish the path and acquire the loan. The remaining 8,710 users were automatically lost. They were just rejected because they did not had these three modalities.</p>
 <p>This discovery generated some important possibilities for us:</p>

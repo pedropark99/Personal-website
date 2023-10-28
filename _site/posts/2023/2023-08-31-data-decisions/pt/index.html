@@ -23,6 +23,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -307,9 +341,36 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <section id="o-que-nós-descobrimos" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> O que nós descobrimos</h1>
 <p>Independentemente de qual das opções acima tenha sido realmente a estratégia exata adotada pelo banco, nós tínhamos a hipótese de que esta regra de negócio (ou este “critério estranho”) estava afetando severamente o resultado das vendas.</p>
+<p>Criamos essa hipótese, pois nós percebemos uma grande perda de usuários na etapa do fluxo de vendas onde fazemos todas as múltiplas validações através da API, verificando se o usuário se enquadrava ou não em todos os critérios e regras de negócio.</p>
+<p><img src="./../funnel-chart-pt.png" class="img-fluid"></p>
+<p>Nós não sabíamos qual dos muitos critérios específicos era a verdadeira fonte desta perda. Mas nós tínhamos a suspeita de que o critério “elegível para todas as 3 modalidades” era o critério problemático que gerava essa enorme perda.</p>
 <p>Em outras palavras, nós suspeitamos que essa estratégia de rejeitar usuários que não possuíam as três modalidades não valia a pena, independente de quais decisões o banco tenha realmente tomado para incluir esse critério no fluxo de vendas. Mas precisávamos confirmar esta hipótese.</p>
 <p>Nós tínhamos acesso aos dados retornados pela API (a que usamos para puxar várias informações do usuário), e com esses dados, nós poderíamos potencialmente identificar quais usuários possuíam as três modalidades e quais não possuíam. Então eu montei um script de R simples para coletar através da API os dados de cada usuário que visitou o nosso fluxo de vendas no último mês, e coloquei esse script para rodar durante a noite.</p>
-<p>No dia seguinte, eu tinha todos os dados localmente na minha máquina, e começamos a analisá-los, investigando os metadados de cada usuário e potencialmente medindo o tamanho do buraco que essa regra de negócio estava criando.</p>
+<p>No dia seguinte, eu tinha todos os dados localmente na minha máquina, que tinham um formato parecido com esse:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ot">[</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">{</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"username"</span><span class="fu">:</span><span class="st">"Ana"</span><span class="fu">,</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"cpf"</span><span class="fu">:</span><span class="st">"12212212212"</span><span class="fu">,</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"loan_analysis"</span><span class="fu">:{</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>         <span class="dt">"loan_modalities_elegible_to"</span><span class="fu">:</span><span class="ot">[</span><span class="st">"A"</span><span class="ot">,</span><span class="st">"B"</span><span class="ot">]</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">}</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>   <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>   <span class="fu">{</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"username"</span><span class="fu">:</span><span class="st">"Mike"</span><span class="fu">,</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"cpf"</span><span class="fu">:</span><span class="st">"13313313313"</span><span class="fu">,</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"loan_analysis"</span><span class="fu">:{</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>         <span class="dt">"loan_modalities_elegible_to"</span><span class="fu">:</span><span class="ot">[]</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">}</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>   <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>   <span class="fu">{</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"username"</span><span class="fu">:</span><span class="st">"Arthur"</span><span class="fu">,</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"cpf"</span><span class="fu">:</span><span class="st">"14414414414"</span><span class="fu">,</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"loan_analysis"</span><span class="fu">:{</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>         <span class="dt">"loan_modalities_elegible_to"</span><span class="fu">:</span><span class="ot">[</span><span class="st">"A"</span><span class="ot">,</span><span class="st">"B"</span><span class="ot">,</span><span class="st">"C"</span><span class="ot">]</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>      <span class="fu">}</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>   <span class="fu">}</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="ot">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Começamos então a analisar esses dados, investigando os metadados de cada usuário e potencialmente medindo o tamanho do buraco que essa regra de negócio estava criando.</p>
 <p>Como resultado, descobrimos que o banco estava constantemente <strong>perdendo uma grande oportunidade</strong> por causa desse critério estranho, ou, dessa regra de negócio específica. Fazendo algumas contas básicas, identificamos que <strong>67% dos usuários que visitaram nosso canal não eram elegíveis às três modalidades</strong>. Isso significa que 67% dos usuários que entravam em nosso canal eram automaticamente rejeitados. Estávamos constantemente perdendo uma grande quantidade de potenciais <em>leads</em> porque eles não se enquadravam nesse critério.</p>
 <p>Tendo isso em mente, por exemplo, se 13.000 usuários entrassem em nosso canal, apenas (1 - 0,67) x 13.000 = 4.290 desses usuários poderiam potencialmente terminar o fluxo e adquirir o empréstimo. Os 8.710 usuários restantes eram automaticamente perdidos. Eles eram rejeitados porque não tinham essas três modalidades.</p>
 <p>Essa descoberta gerou algumas possibilidades importantes para nós:</p>

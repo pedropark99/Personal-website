@@ -140,6 +140,18 @@ Independentemente de qual das opções acima tenha sido realmente a estratégia 
 nós tínhamos a hipótese de que esta regra de negócio (ou este "critério estranho")
 estava afetando severamente o resultado das vendas.
 
+Criamos essa hipótese, pois nós percebemos uma grande perda de usuários na etapa do
+fluxo de vendas onde fazemos todas as múltiplas validações através da API,
+verificando se o usuário se enquadrava ou não em todos os critérios e regras
+de negócio.
+
+![](./../funnel-chart-pt.png)
+
+Nós não sabíamos qual dos muitos critérios específicos era a verdadeira fonte desta perda.
+Mas nós tínhamos a suspeita de que o critério "elegível para todas as 3 modalidades"
+era o critério problemático que gerava essa enorme perda.
+
+
 Em outras palavras, nós suspeitamos
 que essa estratégia de rejeitar usuários que não possuíam as três modalidades
 não valia a pena, independente de quais decisões o banco tenha realmente tomado para incluir
@@ -151,7 +163,35 @@ poderíamos potencialmente identificar quais usuários possuíam as três modali
 Então eu montei um script de R simples para coletar através da API os dados de cada usuário que visitou o nosso fluxo
 de vendas no último mês, e coloquei esse script para rodar durante a noite.
 
-No dia seguinte, eu tinha todos os dados localmente na minha máquina, e começamos a analisá-los, investigando
+No dia seguinte, eu tinha todos os dados localmente na minha máquina, que tinham um formato parecido com esse:
+
+```json
+[
+   {
+      "username":"Ana",
+      "cpf":"12212212212",
+      "loan_analysis":{
+         "loan_modalities_elegible_to":["A","B"]
+      }
+   },
+   {
+      "username":"Mike",
+      "cpf":"13313313313",
+      "loan_analysis":{
+         "loan_modalities_elegible_to":[]
+      }
+   },
+   {
+      "username":"Arthur",
+      "cpf":"14414414414",
+      "loan_analysis":{
+         "loan_modalities_elegible_to":["A","B","C"]
+      }
+   }
+]
+```
+
+Começamos então a analisar esses dados, investigando
 os metadados de cada usuário e potencialmente medindo o tamanho do buraco que essa regra de negócio estava criando.
 
 Como resultado, descobrimos que o banco estava constantemente **perdendo uma grande oportunidade** por
