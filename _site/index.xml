@@ -24,6 +24,19 @@
 <h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
 <p>This article describes a real-world situation where me and my team used data to convince our client (which is one of the biggest companies in the brazilian financial market) at the time to make a better decision. Special thanks to <a href="https://www.linkedin.com/in/guilhermeggarcia/">Guilherme Goes</a> and <a href="https://www.linkedin.com/in/paulo-gon-oli/">Paulo Gonçalves</a>. They both help me to present these ideas and insights to our client.</p>
 <p>In essence, <strong>making decisions is hard</strong>. But you always make a better decision when you have data to guide you into a safer and better outcome. When you do not have data to back you up, you are basically in the dark. That is, you make the decision, but you do not know upfront what are the possible outcomes of that decision. You just hope for the best, and this is always a hard position to be in.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>All data, graphs and images indicated in this article are for illustrative purposes only. Therefore, they do not represent the real data of Blip or the bank involved in any shape or form!</p>
+</div>
+</div>
 </section>
 <section id="a-data-analyst-should-focus-on-understanding-the-business" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> A Data Analyst should focus on understanding the business</h1>
@@ -296,6 +309,19 @@ font-style: inherit;">]</span></span></code></pre></div>
 <h1 data-number="1"><span class="header-section-number">1</span> Introdução</h1>
 <p>Este artigo descreve um exemplo real em que eu e meu time usamos dados para convencer o nosso cliente na época (que é um dos maiores bancos do mercado brasileiro) a tomar uma melhor decisão. Agradecimentos especiais ao <a href="https://www.linkedin.com/in/guilhermeggarcia/">Guilherme Goes</a> e ao <a href="https://www.linkedin.com/in/paulo-gon-oli/">Paulo Gonçalves</a>. Ambos me ajudaram a montar e apresentar essas ideias e <em>insigths</em> para o nosso cliente.</p>
 <p>Em resumo, <strong>tomar decisões é difícil</strong>. Mas você sempre toma uma decisão melhor quando você tem dados para guiá-lo em direção a um resultado melhor e mais seguro. Quando você não tem dados para te defender, você está basicamente no escuro. Ou seja, você toma a decisão, mas não sabe antecipadamente quais são os possíveis resultados dessa decisão. Você apenas espera o melhor, e esta é sempre uma posição difícil de se estar.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Todos os dados, gráficos e imagens mostrados neste artigo são meramente ilustrativos. Portanto, eles não representam os dados reais de Blip ou do banco envolvido de nenhuma forma ou dimensão!</p>
+</div>
+</div>
 </section>
 <section id="um-analista-de-dados-deveria-focar-em-entender-o-negócio" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Um analista de dados deveria focar em entender o negócio</h1>
@@ -4396,7 +4422,7 @@ Damji, Jules, Brooke Wenig, Tathagata Das, and Denny Lee. 2020. <em>Learning Spa
   <category>Apache Spark</category>
   <category>Book</category>
   <guid>https://pedro-faria.netlify.app/publications/book/introd-pyspark/en/index.html</guid>
-  <pubDate>Sat, 28 Oct 2023 23:17:52 GMT</pubDate>
+  <pubDate>Sat, 28 Oct 2023 23:25:54 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/publications/book/introd-pyspark/featured.png" medium="image" type="image/png" height="215" width="144"/>
 </item>
 </channel>

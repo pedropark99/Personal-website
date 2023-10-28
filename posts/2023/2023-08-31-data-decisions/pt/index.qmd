@@ -21,6 +21,11 @@ você está basicamente no escuro. Ou seja, você toma a decisão, mas não sabe
 antecipadamente quais são os possíveis resultados dessa decisão. Você apenas espera o melhor,
 e esta é sempre uma posição difícil de se estar.
 
+::: {.callout-important}
+Todos os dados, gráficos e imagens mostrados neste artigo são meramente ilustrativos.
+Portanto, eles não representam os dados reais de Blip ou do banco envolvido de nenhuma forma ou dimensão!
+:::
+
 # Um analista de dados deveria focar em entender o negócio
 
 Você provavelmente vai notar que grande parte deste artigo é dedicado
