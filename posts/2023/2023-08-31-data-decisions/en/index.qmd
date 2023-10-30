@@ -173,29 +173,3 @@ gains they were losing by not selling to this 67% of users.
 ## Estimates are better than you think
 
 A data analyst should not realy solely on hard numbers to defend they hypothesis.
-
-<!--
-# Collecting the users metadata with R
-
-To identify which users did and did not had the
-black credit card, we needed the data returned by the API.
-But we had to effectively collect this data. In other words,
-this data was not readily and easily available to us.
-
-We had to ask to the API for the metadata of each individual user.
-So in essence, we just collected the data returned by the API for each
-individual user, then, we organized this data into a concise and structured
-form, then, we store it, and then, we analyze it.
-
-To do that, we first collected the social IDs of all the users that
-entered in our flow over the last month, and we stored inside a CSV file.
-Then, we just imported this CSV file to R, like this:
-
-```{r}
-#| eval: false
-library(readr)
-social_ids <- read_csv("social-ids.csv")
-```
-
-After that, we just created 
--->

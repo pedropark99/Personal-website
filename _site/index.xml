@@ -9,7 +9,7 @@
 <link>https://pedro-faria.netlify.app/index.html</link>
 <atom:link href="https://pedro-faria.netlify.app/index.xml" rel="self" type="application/rss+xml"/>
 <description>A blog about programming and data analysis, specially with R and Python</description>
-<generator>quarto-1.3.353</generator>
+<generator>quarto-1.3.450</generator>
 <lastBuildDate>Fri, 01 Sep 2023 03:00:00 GMT</lastBuildDate>
 <item>
   <title>A small example on how to make better decisions with data</title>
@@ -83,41 +83,12 @@
 <li>The size of the lost;</li>
 <li>The size of the potential gain;</li>
 </ol>
-<p>The first part of the presentation, we focused on the 67% number. We shown the bank that 67% of the users (which is a huge number) were constantly rejected in the flow. But this number alone does not have much flavor. The bank does not care if they say “no” to 60%, 80% or 90% of the users. They do care if they are maximizing their profit, or not.</p>
+<p>The first part of our presentation focused on the 67% number. We shown the bank that 67% of the users (which is a huge number) were constantly rejected in the flow. But this number alone does not have much flavor. As long as they are maximizing their profit, the bank does not care if they say “no” to 60%, 80% of the users or whatever.</p>
 <p>That is why in the second part, we did some more basic math to estimate the potential gains they were losing by not selling to this 67% of users.</p>
 </section>
 <section id="estimates-are-better-than-you-think" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="estimates-are-better-than-you-think"><span class="header-section-number">3.2</span> Estimates are better than you think</h2>
 <p>A data analyst should not realy solely on hard numbers to defend they hypothesis.</p>
-<!--
-# Collecting the users metadata with R
-
-To identify which users did and did not had the
-black credit card, we needed the data returned by the API.
-But we had to effectively collect this data. In other words,
-this data was not readily and easily available to us.
-
-We had to ask to the API for the metadata of each individual user.
-So in essence, we just collected the data returned by the API for each
-individual user, then, we organized this data into a concise and structured
-form, then, we store it, and then, we analyze it.
-
-To do that, we first collected the social IDs of all the users that
-entered in our flow over the last month, and we stored inside a CSV file.
-Then, we just imported this CSV file to R, like this:
-
-
-::: {.cell}
-
-```{.r .cell-code}
-library(readr)
-social_ids <- read_csv("social-ids.csv")
-```
-:::
-
-
-After that, we just created 
--->
 
 
 </section>
@@ -3963,7 +3934,7 @@ Damji, Jules, Brooke Wenig, Tathagata Das, and Denny Lee. 2020. <em>Learning Spa
   <category>Apache Spark</category>
   <category>Book</category>
   <guid>https://pedro-faria.netlify.app/publications/book/introd-pyspark/en/index.html</guid>
-  <pubDate>Wed, 27 Sep 2023 16:58:39 GMT</pubDate>
+  <pubDate>Wed, 27 Sep 2023 22:00:11 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/publications/book/introd-pyspark/featured.png" medium="image" type="image/png" height="215" width="144"/>
 </item>
 </channel>

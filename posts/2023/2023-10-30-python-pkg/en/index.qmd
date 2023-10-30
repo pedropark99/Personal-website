@@ -1,0 +1,14 @@
+---
+title: "Some more tips about developing Python packages"
+description: "Yet again here I am talking about developing Python packages. In this article, I want to give you some more tips about developing Python packages."
+number-sections: true
+image: "./../decision.avif"
+date: "2023-09-01"
+---
+
+# Introduction
+
+Building normal programs in Python is actually easy. But
+developing packages (i.e. reproducible pieces of code that can be easily shared)
+in Python is actually hard.
+
