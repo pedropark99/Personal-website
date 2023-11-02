@@ -10,5 +10,6 @@ date: "2023-09-01"
 
 Building normal programs in Python is actually easy. But
 developing packages (i.e. reproducible pieces of code that can be easily shared)
-in Python is actually hard.
+in Python is actually hard. Maybe is harder than it was supposed to be, but let's
+leave this opinion aside and focus on the matter here.
 
