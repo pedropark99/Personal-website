@@ -1,15 +1,143 @@
 ---
-title: "Some more tips about developing Python packages"
-description: "Yet again here I am talking about developing Python packages. In this article, I want to give you some more tips about developing Python packages."
+title: "Everything about import statements in Python"
+description: "Import statements are actually weird in Python. In this article I want to explain everything you need to know about import statements. What are they, how they live, and how they can destroy your hopes in humanity."
 number-sections: true
-image: "./../decision.avif"
-date: "2023-09-01"
+image: "./../import-path-py.svg"
+categories: ['Python', 'Import statements', 'Package']
+date: "2023-11-04"
 ---
 
 # Introduction
 
-Building normal programs in Python is actually easy. But
-developing packages (i.e. reproducible pieces of code that can be easily shared)
-in Python is actually hard. Maybe is harder than it was supposed to be, but let's
-leave this opinion aside and focus on the matter here.
+The import system of Python is a little weird, and can cause so much
+headaches and problems. In this article I want to describe
+how the import system in Python works, and also, what are
+*import paths* in Python, and how they create so much stress and
+confusion in some situations.
+
+[^py-docs-import]: <https://docs.python.org/3/reference/import.html>.
+
+First of all, the official Python documentation does actually have a pretty detailed
+page about the import system in Python [^py-docs-import]. But my objective here
+is to summarize all you need to know about import paths.
+
+
+# Python module vs Python package
+
+Before we continue, is good to know a few concepts about Python, like packages
+and modules. In essence, a Python module is a single Python script, or single
+`.py` file. In contrast, a Python package is basically a bundle (or a collection) of Python modules that can be
+easily distributed to other peoples.
+
+So if you have a folder called `scripts`, and, inside of it, you have a Python script
+called `date_ranges.py`, then, you have inside this folder a single Python module called `date_ranges.py`. This description represents the following file structure:
+
+```
+└── scripts 📁
+    └── date_ranges.py 📄
+```
+
+Now, let's consider another example, like the following file structure:
+
+```
+└── tea_party 📁
+    └── water.py 📄
+    └── sugar.py 📄
+    └── cup.py 📄
+```
+
+Looking at the above structure, we identify a folder called `tea_party`, and 3 different Python scripts inside of it.
+In other words, you just have a folder called `tea_party` that contains 3 different Python modules. Wait! A Python package is not supposed to be a collection of Python modules?
+So, that means that the folder `tea_party` is a Python package, right?
+
+Unfortunately, that is wrong. The `tea_party` folder is not a Python package.
+At least, not yet. If you consult the official Python documentation, you will
+see this quote [^py-pkg]:
+
+> A regular package is typically implemented as a directory containing an `__init__.py` file.
+
+[^py-pkg]: https://docs.python.org/3/reference/import.html#regular-packages
+
+So a Python package is a directory (or a folder) that stores a collection
+of Python modules, but a `__init__.py` file is always part (or a component) of this collection.
+Having this in mind, to make `tea_party` an actual Python package, all we need to do is to add a `__init__.py` file inside the folder.
+
+```
+└── tea_party 📁
+    └── __init__.py 📄
+    └── water.py 📄
+    └── sugar.py 📄
+    └── cup.py 📄
+```
+
+Now, the directory `tea_party` is an actual Python package, that contains 3 different
+Python modules (`sugar.py`, `water.py` and `cup.py`)
+, apart from the `__init__.py` file, which is mandatory for a Python package.
+
+
+# What is a parent package
+
+Any Python package can contain multiple subpackages inside of it. Every subpackage
+is a small package that have a know parent package. For example, take a look at the following
+file structure:
+
+```
+└── tea_party 📁
+    └── __init__.py 📄
+    └── water.py 📄
+    └── sugar.py 📄
+    └── cup.py 📄
+    └── tea 📁
+        └── __init__.py 📄
+        └── black.py 📄
+        └── camomile.py 📄
+```
+
+In this structure, both `tea_party` and `tea` directories are regular Python packages.
+But only `tea` is a subpackage, because only `tea` has a know parent package, which is
+`tea_party`. In other words, the package `tea_party` is the parent package of `tea`.
+So a parent package is a package that contain one or multiple subpackages inside of it.
+
+# Import statements in Python
+
+Import statements in Python are statements that contains the `import` keyword.
+There are two styles (or two formats) of import statements in Python, which are:
+
+- `import x`
+- `from x import y`
+
+In the examples above, `x` is a Python package, or a Python module, while `y` might be
+, for example, a subpackage, or a function declared inside of `x`.
+
+The first format is always an absolute import, while the second format might be
+an absolute import or a relative import. But in the first format, you are basically
+importing a entire Python package or a entire Python module into your Python
+session. In contrast, at the second format, you are importing just a part (or pieces)
+of an existing Python package or Python module.
+
+Just as an simple example, if I need to see which date is today,
+I can use an import statement to import the `date` class
+from the built-in `datetime` package, and use the `date.today()` method to get
+the answer I need.
+
+```{python}
+from datetime import date
+print(date.today())
+```
+
+This example uses the second format of import statement, because we are importing
+just the `date` class. Instead of import the entire `datetime` package, we are
+importing just a piece of it (which is the `date` class) to our session.
+
+
+## Absolute imports
+
+**For now, let's focus on absolute imports**, and forget that relative imports exists.
+An absolute import means that you are importing something using the `sys.path` variable
+of your session.
+
+
+## Relative imports
+
+The notion of "relative imports" in Python was introduced at [PEP 328](https://peps.python.org/pep-0328/), and are explained in [Package Relative Imports](https://docs.python.org/3/reference/import.html#package-relative-imports) section of the documentation.
 

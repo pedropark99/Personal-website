@@ -3,6 +3,7 @@ title: "A small example on how to make better decisions with data"
 description: "This article describes a real world situation where me and my team used data to convince our client to do a better decision."
 number-sections: true
 image: "./../decision.avif"
+categories: ['Data Science', 'Storytelling']
 date: "2023-09-01"
 ---
 
