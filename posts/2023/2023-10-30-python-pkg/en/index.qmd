@@ -136,6 +136,8 @@ For example, if you have inside your Python module an statement like `import pan
 
 In more details, everytime you install a new package in your system, using `pip install`, this new package is installed in a specific folder inside your system. This is the folder where Python will search for `pandas` if he does not find it inside of the directory where the Python module from which you are importing lives.
 
+### Be sure that the package is installed in your system
+
 Python will always import the first version it finds of the package/module you requested. However, if Python does not find a package/module called `pandas` in any of the two places I mentioned, then, Python will most likely raise a `ModuleNotFoundError` error, like this:
 
 ```python
@@ -154,6 +156,7 @@ Everytime you see an import statement in the format `import x` you know it is an
 
 This is true because relative imports are not allowed in the format `import x`. That is, relative imports can only be written in the format `from x import y`.
 
+### Using absolute imports inside a Python package
 
 
 ## Relative imports
