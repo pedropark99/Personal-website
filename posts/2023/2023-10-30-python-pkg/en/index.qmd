@@ -1,6 +1,6 @@
 ---
 title: "Everything about import statements in Python"
-description: "Import statements are actually weird in Python. In this article I want to explain everything you need to know about import statements. What are they, how they live, and how they can destroy your hopes in humanity."
+description: "Import statements in Python are weird. In this article I want to explain everything you need to know about them. What are they and how they can destroy your hopes in humanity."
 number-sections: true
 image: "./../import-path-py.svg"
 categories: ['Python', 'Import statements', 'Package']
@@ -25,9 +25,8 @@ is to summarize all you need to know about import paths.
 # Python module vs Python package
 
 Before we continue, is good to know a few concepts about Python, like packages
-and modules. In essence, a Python module is a single Python script, or single
-`.py` file. In contrast, a Python package is basically a bundle (or a collection) of Python modules that can be
-easily distributed to other peoples.
+and modules. In essence, a Python module is a single Python script, or a single
+`.py` file. In contrast, a Python package is basically a bundle (or a collection) of Python modules that can be easily distributed to other peoples.
 
 So if you have a folder called `scripts`, and, inside of it, you have a Python script
 called `date_ranges.py`, then, you have inside this folder a single Python module called `date_ranges.py`. This description represents the following file structure:
@@ -46,9 +45,8 @@ Now, let's consider another example, like the following file structure:
     └── cup.py 📄
 ```
 
-Looking at the above structure, we identify a folder called `tea_party`, and 3 different Python scripts inside of it.
-In other words, you just have a folder called `tea_party` that contains 3 different Python modules. Wait! A Python package is not supposed to be a collection of Python modules?
-So, that means that the folder `tea_party` is a Python package, right?
+Looking at the above structure, we identify a folder called `tea_party`, and 3 different Python modules inside of it. Wait! A Python package is supposed to be a collection of Python modules,
+so, that means that the folder `tea_party` is a Python package, right?
 
 Unfortunately, that is wrong. The `tea_party` folder is not a Python package.
 At least, not yet. If you consult the official Python documentation, you will
@@ -60,7 +58,7 @@ see this quote [^py-pkg]:
 
 So a Python package is a directory (or a folder) that stores a collection
 of Python modules, but a `__init__.py` file is always part (or a component) of this collection.
-Having this in mind, to make `tea_party` an actual Python package, all we need to do is to add a `__init__.py` file inside the folder.
+If we add a `__init__.py` file to `tea_party`, then we make it into an actual Python package.
 
 ```
 └── tea_party 📁
@@ -70,7 +68,7 @@ Having this in mind, to make `tea_party` an actual Python package, all we need t
     └── cup.py 📄
 ```
 
-Now, the directory `tea_party` is an actual Python package, that contains 3 different
+Now, the directory `tea_party` is a Python package, that contains 3 different
 Python modules (`sugar.py`, `water.py` and `cup.py`)
 , apart from the `__init__.py` file, which is mandatory for a Python package.
 
@@ -78,7 +76,7 @@ Python modules (`sugar.py`, `water.py` and `cup.py`)
 # What is a parent package
 
 Any Python package can contain multiple subpackages inside of it. Every subpackage
-is a small package that have a know parent package. For example, take a look at the following
+is a single Python package that have a know parent package. For example, take a look at the following
 file structure:
 
 ```
@@ -100,44 +98,65 @@ So a parent package is a package that contain one or multiple subpackages inside
 
 # Import statements in Python
 
-Import statements in Python are statements that contains the `import` keyword.
-There are two styles (or two formats) of import statements in Python, which are:
+Import statements in Python are statements used to import functionality from other Python packages or modules, and make them available for you to use in your Python session. In other words, you use import statements to get acess to  functions, classes or variables that are declared in other places, outside of your current Python module.
+
+
+An import statement always contains the `import` keyword, and they come in two styles (or two formats), which are:
 
 - `import x`
 - `from x import y`
 
 In the examples above, `x` is a Python package, or a Python module, while `y` might be
-, for example, a subpackage, or a function declared inside of `x`.
+, for example, a subpackage, or a function, or a class declared inside of `x`.
 
-The first format is always an absolute import, while the second format might be
-an absolute import or a relative import. But in the first format, you are basically
-importing a entire Python package or a entire Python module into your Python
-session. In contrast, at the second format, you are importing just a part (or pieces)
-of an existing Python package or Python module.
+In the first format, you are basically importing an entire thing. That is, you are importing an entire Python package or a entire Python module to your Python session. In contrast, in the second format, you are importing just a part (or a small piece) of an existing Python package or Python module to your Python session.
 
-Just as an simple example, if I need to see which date is today,
-I can use an import statement to import the `date` class
-from the built-in `datetime` package, and use the `date.today()` method to get
-the answer I need.
+Just as a simple example, if I need to see which date is today, I can use an import statement to import the `date` class from the built-in `datetime` Python package, and use the `date.today()` method to get the answer I need.
 
 ```{python}
 from datetime import date
 print(date.today())
 ```
 
-This example uses the second format of import statement, because we are importing
-just the `date` class. Instead of import the entire `datetime` package, we are
-importing just a piece of it (which is the `date` class) to our session.
+In this example, I'm using the second format of import statement, because we are importing just the `date` class. In other words, instead of importing the entire `datetime` package, we are importing just a piece of it (which is the `date` class) to our session.
 
+In essence, we have:
+
+- `import x` = imports the entire package/module (`x`) into your Python session.
+- `from x import y` = imports just a small piece (`y`) of the package/module (`x`) into your Python session.
 
 ## Absolute imports
 
-**For now, let's focus on absolute imports**, and forget that relative imports exists.
-An absolute import means that you are importing something using the `sys.path` variable
-of your session.
+**For now, let's focus on absolute imports**, and forget that relative imports exists. First of all, what is an absolute import? An absolute import means that Python will search the thing you trying to import in two places, which are:
+
+- the directory that contains the Python module from which you are importing.
+- the installed packages/modules in your system.
+
+For example, if you have inside your Python module an statement like `import pandas`, then, Python will search for the `pandas` package/module first, inside of the directory where this Python module from which you are importing lives. If Python does not find any package/module named as `pandas` in this directory, then, he will search for `pandas` inside of the folder in your system where all of the packages that are currently installed in your system lives.
+
+In more details, everytime you install a new package in your system, using `pip install`, this new package is installed in a specific folder inside your system. This is the folder where Python will search for `pandas` if he does not find it inside of the directory where the Python module from which you are importing lives.
+
+Python will always import the first version it finds of the package/module you requested. However, if Python does not find a package/module called `pandas` in any of the two places I mentioned, then, Python will most likely raise a `ModuleNotFoundError` error, like this:
+
+```python
+ModuleNotFoundError: No module named 'pandas'
+```
+
+Most of the times, this error message means that you are trying to import a package that was supposed to be installed in your system, but unfortunately, it is not installed yet. Because of that, you usually fix this error by effectively installing the package in your system, with a `pip install` command:
+
+```bash
+pip install pandas
+```
+
+### `import x` is always an absolute import
+
+Everytime you see an import statement in the format `import x` you know it is an absolute import. When you write an import statement using this format Python will always perform an absolute import.
+
+This is true because relative imports are not allowed in the format `import x`. That is, relative imports can only be written in the format `from x import y`.
+
 
 
 ## Relative imports
 
-The notion of "relative imports" in Python was introduced at [PEP 328](https://peps.python.org/pep-0328/), and are explained in [Package Relative Imports](https://docs.python.org/3/reference/import.html#package-relative-imports) section of the documentation.
+The notion of "relative imports" in Python was introduced at [PEP 328](https://peps.python.org/pep-0328/), and are explained in the [Package Relative Imports](https://docs.python.org/3/reference/import.html#package-relative-imports) section of the documentation.
 

@@ -8,7 +8,7 @@
 
 <meta name="author" content="Pedro Duarte Faria">
 <meta name="dcterms.date" content="2023-11-04">
-<meta name="description" content="Import statements are actually weird in Python. In this article I want to explain everything you need to know about import statements. What are they, how they live, and how they can destroy your hopes in humanity.">
+<meta name="description" content="Import statements in Python are weird. In this article I want to explain everything you need to know about them. What are they and how they can destroy your hopes in humanity.">
 
 <title>home |&gt; dplyr::glimpse() - Everything about import statements in Python</title>
 <style>
@@ -236,7 +236,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
       <h1 class="title">Everything about import statements in Python</h1>
                   <div>
         <div class="description">
-          Import statements are actually weird in Python. In this article I want to explain everything you need to know about import statements. What are they, how they live, and how they can destroy your hopes in humanity.
+          Import statements in Python are weird. In this article I want to explain everything you need to know about them. What are they and how they can destroy your hopes in humanity.
         </div>
       </div>
                           <div class="quarto-categories">
@@ -292,7 +292,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 </section>
 <section id="python-module-vs-python-package" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Python module vs Python package</h1>
-<p>Before we continue, is good to know a few concepts about Python, like packages and modules. In essence, a Python module is a single Python script, or single <code>.py</code> file. In contrast, a Python package is basically a bundle (or a collection) of Python modules that can be easily distributed to other peoples.</p>
+<p>Before we continue, is good to know a few concepts about Python, like packages and modules. In essence, a Python module is a single Python script, or a single <code>.py</code> file. In contrast, a Python package is basically a bundle (or a collection) of Python modules that can be easily distributed to other peoples.</p>
 <p>So if you have a folder called <code>scripts</code>, and, inside of it, you have a Python script called <code>date_ranges.py</code>, then, you have inside this folder a single Python module called <code>date_ranges.py</code>. This description represents the following file structure:</p>
 <pre><code>└── scripts 📁
     └── date_ranges.py 📄</code></pre>
@@ -301,22 +301,22 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
     └── water.py 📄
     └── sugar.py 📄
     └── cup.py 📄</code></pre>
-<p>Looking at the above structure, we identify a folder called <code>tea_party</code>, and 3 different Python scripts inside of it. In other words, you just have a folder called <code>tea_party</code> that contains 3 different Python modules. Wait! A Python package is not supposed to be a collection of Python modules? So, that means that the folder <code>tea_party</code> is a Python package, right?</p>
+<p>Looking at the above structure, we identify a folder called <code>tea_party</code>, and 3 different Python modules inside of it. Wait! A Python package is supposed to be a collection of Python modules, so, that means that the folder <code>tea_party</code> is a Python package, right?</p>
 <p>Unfortunately, that is wrong. The <code>tea_party</code> folder is not a Python package. At least, not yet. If you consult the official Python documentation, you will see this quote <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>:</p>
 <blockquote class="blockquote">
 <p>A regular package is typically implemented as a directory containing an <code>__init__.py</code> file.</p>
 </blockquote>
-<p>So a Python package is a directory (or a folder) that stores a collection of Python modules, but a <code>__init__.py</code> file is always part (or a component) of this collection. Having this in mind, to make <code>tea_party</code> an actual Python package, all we need to do is to add a <code>__init__.py</code> file inside the folder.</p>
+<p>So a Python package is a directory (or a folder) that stores a collection of Python modules, but a <code>__init__.py</code> file is always part (or a component) of this collection. If we add a <code>__init__.py</code> file to <code>tea_party</code>, then we make it into an actual Python package.</p>
 <pre><code>└── tea_party 📁
     └── __init__.py 📄
     └── water.py 📄
     └── sugar.py 📄
     └── cup.py 📄</code></pre>
-<p>Now, the directory <code>tea_party</code> is an actual Python package, that contains 3 different Python modules (<code>sugar.py</code>, <code>water.py</code> and <code>cup.py</code>) , apart from the <code>__init__.py</code> file, which is mandatory for a Python package.</p>
+<p>Now, the directory <code>tea_party</code> is a Python package, that contains 3 different Python modules (<code>sugar.py</code>, <code>water.py</code> and <code>cup.py</code>) , apart from the <code>__init__.py</code> file, which is mandatory for a Python package.</p>
 </section>
 <section id="what-is-a-parent-package" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> What is a parent package</h1>
-<p>Any Python package can contain multiple subpackages inside of it. Every subpackage is a small package that have a know parent package. For example, take a look at the following file structure:</p>
+<p>Any Python package can contain multiple subpackages inside of it. Every subpackage is a single Python package that have a know parent package. For example, take a look at the following file structure:</p>
 <pre><code>└── tea_party 📁
     └── __init__.py 📄
     └── water.py 📄
@@ -330,29 +330,50 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 </section>
 <section id="import-statements-in-python" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> Import statements in Python</h1>
-<p>Import statements in Python are statements that contains the <code>import</code> keyword. There are two styles (or two formats) of import statements in Python, which are:</p>
+<p>Import statements in Python are statements used to import functionality from other Python packages or modules, and make them available for you to use in your Python session. In other words, you use import statements to get acess to functions, classes or variables that are declared in other places, outside of your current Python module.</p>
+<p>An import statement always contains the <code>import</code> keyword, and they come in two styles (or two formats), which are:</p>
 <ul>
 <li><code>import x</code></li>
 <li><code>from x import y</code></li>
 </ul>
-<p>In the examples above, <code>x</code> is a Python package, or a Python module, while <code>y</code> might be , for example, a subpackage, or a function declared inside of <code>x</code>.</p>
-<p>The first format is always an absolute import, while the second format might be an absolute import or a relative import. But in the first format, you are basically importing a entire Python package or a entire Python module into your Python session. In contrast, at the second format, you are importing just a part (or pieces) of an existing Python package or Python module.</p>
-<p>Just as an simple example, if I need to see which date is today, I can use an import statement to import the <code>date</code> class from the built-in <code>datetime</code> package, and use the <code>date.today()</code> method to get the answer I need.</p>
+<p>In the examples above, <code>x</code> is a Python package, or a Python module, while <code>y</code> might be , for example, a subpackage, or a function, or a class declared inside of <code>x</code>.</p>
+<p>In the first format, you are basically importing an entire thing. That is, you are importing an entire Python package or a entire Python module to your Python session. In contrast, in the second format, you are importing just a part (or a small piece) of an existing Python package or Python module to your Python session.</p>
+<p>Just as a simple example, if I need to see which date is today, I can use an import statement to import the <code>date</code> class from the built-in <code>datetime</code> Python package, and use the <code>date.today()</code> method to get the answer I need.</p>
 <div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datetime <span class="im">import</span> date</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(date.today())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>2023-11-03</code></pre>
+<pre><code>2023-11-07</code></pre>
 </div>
 </div>
-<p>This example uses the second format of import statement, because we are importing just the <code>date</code> class. Instead of import the entire <code>datetime</code> package, we are importing just a piece of it (which is the <code>date</code> class) to our session.</p>
+<p>In this example, I’m using the second format of import statement, because we are importing just the <code>date</code> class. In other words, instead of importing the entire <code>datetime</code> package, we are importing just a piece of it (which is the <code>date</code> class) to our session.</p>
+<p>In essence, we have:</p>
+<ul>
+<li><code>import x</code> = imports the entire package/module (<code>x</code>) into your Python session.</li>
+<li><code>from x import y</code> = imports just a small piece (<code>y</code>) of the package/module (<code>x</code>) into your Python session.</li>
+</ul>
 <section id="absolute-imports" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="absolute-imports"><span class="header-section-number">4.1</span> Absolute imports</h2>
-<p><strong>For now, let’s focus on absolute imports</strong>, and forget that relative imports exists. An absolute import means that you are importing something using the <code>sys.path</code> variable of your session.</p>
+<p><strong>For now, let’s focus on absolute imports</strong>, and forget that relative imports exists. First of all, what is an absolute import? An absolute import means that Python will search the thing you trying to import in two places, which are:</p>
+<ul>
+<li>the directory that contains the Python module from which you are importing.</li>
+<li>the installed packages/modules in your system.</li>
+</ul>
+<p>For example, if you have inside your Python module an statement like <code>import pandas</code>, then, Python will search for the <code>pandas</code> package/module first, inside of the directory where this Python module from which you are importing lives. If Python does not find any package/module named as <code>pandas</code> in this directory, then, he will search for <code>pandas</code> inside of the folder in your system where all of the packages that are currently installed in your system lives.</p>
+<p>In more details, everytime you install a new package in your system, using <code>pip install</code>, this new package is installed in a specific folder inside your system. This is the folder where Python will search for <code>pandas</code> if he does not find it inside of the directory where the Python module from which you are importing lives.</p>
+<p>Python will always import the first version it finds of the package/module you requested. However, if Python does not find a package/module called <code>pandas</code> in any of the two places I mentioned, then, Python will most likely raise a <code>ModuleNotFoundError</code> error, like this:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="pp">ModuleNotFoundError</span>: No module named <span class="st">'pandas'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Most of the times, this error message means that you are trying to import a package that was supposed to be installed in your system, but unfortunately, it is not installed yet. Because of that, you usually fix this error by effectively installing the package in your system, with a <code>pip install</code> command:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install pandas</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="import-x-is-always-an-absolute-import" class="level3" data-number="4.1.1">
+<h3 data-number="4.1.1" class="anchored" data-anchor-id="import-x-is-always-an-absolute-import"><span class="header-section-number">4.1.1</span> <code>import x</code> is always an absolute import</h3>
+<p>Everytime you see an import statement in the format <code>import x</code> you know it is an absolute import. When you write an import statement using this format Python will always perform an absolute import.</p>
+<p>This is true because relative imports are not allowed in the format <code>import x</code>. That is, relative imports can only be written in the format <code>from x import y</code>.</p>
+</section>
 </section>
 <section id="relative-imports" class="level2" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="relative-imports"><span class="header-section-number">4.2</span> Relative imports</h2>
-<p>The notion of “relative imports” in Python was introduced at <a href="https://peps.python.org/pep-0328/">PEP 328</a>, and are explained in <a href="https://docs.python.org/3/reference/import.html#package-relative-imports">Package Relative Imports</a> section of the documentation.</p>
+<p>The notion of “relative imports” in Python was introduced at <a href="https://peps.python.org/pep-0328/">PEP 328</a>, and are explained in the <a href="https://docs.python.org/3/reference/import.html#package-relative-imports">Package Relative Imports</a> section of the documentation.</p>
 
 
 </section>
