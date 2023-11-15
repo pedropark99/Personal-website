@@ -164,11 +164,6 @@ When you import a package in Python, the Python interpreter starts a search proc
 
 When you use an absolute reference, the Python interpreter will look for the packages you imported inside a set of pre-defined locations of your computer. This pre-defined list is stored inside the `sys.path` variable. This `sys.path` variable represents the Python search path. So, when you import a package, Python looks for this package inside each one of the directories listed at `sys.path` variable. 
 
-```{python}
-import sys
-print(sys.path)
-```
-
 As you can imagine, the Python interpreter look into these directories in a sequential manner. That is, Python looks for the package at the first folder. If it does not find the package you called, then, it looks at the second folder. If it does not find the package again, it looks at the third folder. And goes on and on, until it hits the last folder on the list.
 
 If does not find the package you called at this last folder, Python will automatically raise a `ModuleNotFoundError` error. As you expect, this error means that Python could not find the package you called at any of the directories listed at `sys.path`.
