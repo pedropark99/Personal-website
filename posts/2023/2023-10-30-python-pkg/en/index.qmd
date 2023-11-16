@@ -9,17 +9,16 @@ date: "2023-11-04"
 
 # Introduction
 
-The import system of Python is a little weird, and can cause so much
-headaches and problems. In this article I want to describe
-how the import system in Python works, and also, what are
-*import paths* in Python, and how they create so much stress and
-confusion in some situations.
+In this article I want to summarize everything you need to know
+about the import system in Python. How import statements works, what are the types of
+references you can use, and how they affect the way Python searches for things.
 
 [^py-docs-import]: <https://docs.python.org/3/reference/import.html>.
 
 First of all, the official Python documentation does actually have a pretty detailed
-page about the import system in Python [^py-docs-import]. But my objective here
-is to summarize all you need to know about import paths.
+page about the import system [^py-docs-import]. But my objective here
+is to summarize all you need to know, so you do not need to read
+a very long page about the subject.
 
 
 # Python module vs Python package
@@ -156,8 +155,10 @@ Everytime you see an import statement in the format `import x` you know it is an
 
 This is true because relative imports are not allowed in the format `import x`. That is, relative imports can only be written in the format `from x import y`.
 
-### Using absolute imports inside a Python package
+### Using absolute imports inside a Python module
 
+
+### Using absolute imports inside a Python package
 
 ## Relative imports
 
