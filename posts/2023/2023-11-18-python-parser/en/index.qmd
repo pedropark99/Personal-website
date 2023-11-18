@@ -3,12 +3,53 @@ title: "Developing a parser for Python with Python"
 description: "Me and my team we are currently working in a massive migration. This article describes how we used"
 number-sections: true
 date: "2023-11-18"
+format:
+    html:
+        css: "./../style.css"
 ---
 
 # Introduction
 
-Me and my team we are currently working in a massive migration (similar to a cloud migration). This migration involves many process, but one of them is to redirect every table reference that we find in more than 130 thousand lines of Python code.
+Me and my team we are currently working in a massive migration (similar to a cloud migration). This migration involves many process, but one of them is to redirect every table reference that we find in more than **130 thousand lines of Python code**.
 
 Most of these lines of Python code are [`pyspark`](https://spark.apache.org/docs/latest/api/python/index.html) code to extract, transform and load data using the `Apache Spark` engine. Yes! We do have a massive amount of ETL workflows, and now, we need to change all of these workflows at once to use the new infrastructure that we are creating.
 
-Let's use an example. If for example, we find in a line 
+For example, let's consider the following snippet of Python code:
+
+```{#lst-table .python lst-cap="Example of pyspark code that we might find in our codebase"}
+# This is just an example of Python code. It is not real
+# lines of Python code that exists inside Blip's codebase.
+from pyspark.sql import SparkSession
+spark = SparkSession.builder.getOrCreate()
+
+df = (
+    spark.table("blip.events")
+        .groupby("OwnerId", "StorageDate")
+        .count()
+)
+
+df.show()
+```
+
+You can see at @lst-table that we have a `spark.table()` call to acess the table `blip.events`. This table is stored inside our distributed SQL database. In our current (or "old") infrastructure, every SQL table that we have is concentrated into a single data catalog. 
+
+Because of that, there is no need to specify which data catalog we want to acess inside `spark.table()`, because all tables are inside the same data catalog. So `spark.table()` just uses the default data catalog of our environment, and it magically finds the table we asked for.
+
+## About data catalogs
+
+We use Databricks as our data science platform to process, explore and share our data. One of the many functionalities that Databricks have is to organize SQL tables into data catalogs.
+
+In essence, data catalogs are catalogs (or a collection) of SQL databases. In the example below, we are looking at the table `orders` inside the `default` database, which is stored inside the `main` data catalog.
+
+![An example of data catalog in Databricks](./../catalogs.png)
+
+You can read more about data catalogs in Databricks [at this link](https://docs.databricks.com/en/data-governance/unity-catalog/create-catalogs.html).
+
+
+## What we need to change in our Python codebase? {#sec-what-change}
+
+Now, in the our new infrastructure, SQL tables are organized into multiple data catalogs.
+
+# The size of the challenge
+
+As we described at @sec-what-change, we need to change every table reference that we find through all 130 thousand lines in our Python codebase. We need to do it at scale using scripts, because manually changing 130 thousand lines of code is not possible.

@@ -9,8 +9,78 @@
 <link>https://pedro-faria.netlify.app/index.html</link>
 <atom:link href="https://pedro-faria.netlify.app/index.xml" rel="self" type="application/rss+xml"/>
 <description>A blog about programming and data analysis, specially with R and Python</description>
-<generator>quarto-1.3.433</generator>
-<lastBuildDate>Sat, 28 Oct 2023 03:00:00 GMT</lastBuildDate>
+<generator>quarto-1.3.353</generator>
+<lastBuildDate>Sat, 18 Nov 2023 03:00:00 GMT</lastBuildDate>
+<item>
+  <title>Developing a parser for Python with Python</title>
+  <dc:creator>Pedro Duarte Faria</dc:creator>
+  <link>https://pedro-faria.netlify.app/posts/2023/2023-11-18-python-parser/en/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="introduction" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
+<p>Me and my team we are currently working in a massive migration (similar to a cloud migration). This migration involves many process, but one of them is to redirect every table reference that we find in more than <strong>130 thousand lines of Python code</strong>.</p>
+<p>Most of these lines of Python code are <a href="https://spark.apache.org/docs/latest/api/python/index.html"><code>pyspark</code></a> code to extract, transform and load data using the <code>Apache Spark</code> engine. Yes! We do have a massive amount of ETL workflows, and now, we need to change all of these workflows at once to use the new infrastructure that we are creating.</p>
+<p>For example, let’s consider the following snippet of Python code:</p>
+<div id="lst-table" class="listing">
+<p>Listing&nbsp;1: Example of pyspark code that we might find in our codebase</p>
+<div class="sourceCode" id="lst-table" data-lst-cap="Example of pyspark code that we might find in our codebase" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="lst-table-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># This is just an example of Python code. It is not real</span></span>
+<span id="lst-table-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># lines of Python code that exists inside Blip's codebase.</span></span>
+<span id="lst-table-3"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> pyspark.sql <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> SparkSession</span>
+<span id="lst-table-4">spark <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> SparkSession.builder.getOrCreate()</span>
+<span id="lst-table-5"></span>
+<span id="lst-table-6">df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (</span>
+<span id="lst-table-7">    spark.table(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"blip.events"</span>)</span>
+<span id="lst-table-8">        .groupby(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"OwnerId"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"StorageDate"</span>)</span>
+<span id="lst-table-9">        .count()</span>
+<span id="lst-table-10">)</span>
+<span id="lst-table-11"></span>
+<span id="lst-table-12">df.show()</span></code></pre></div>
+</div>
+<p>You can see at Listing&nbsp;1 that we have a <code>spark.table()</code> call to acess the table <code>blip.events</code>. This table is stored inside our distributed SQL database. In our current (or “old”) infrastructure, every SQL table that we have is concentrated into a single data catalog.</p>
+<p>Because of that, there is no need to specify which data catalog we want to acess inside <code>spark.table()</code>, because all tables are inside the same data catalog. So <code>spark.table()</code> just uses the default data catalog of our environment, and it magically finds the table we asked for.</p>
+<section id="about-data-catalogs" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="about-data-catalogs"><span class="header-section-number">1.1</span> About data catalogs</h2>
+<p>We use Databricks as our data science platform to process, explore and share our data. One of the many functionalities that Databricks have is to organize SQL tables into data catalogs.</p>
+<p>In essence, data catalogs are catalogs (or a collection) of SQL databases. In the example below, we are looking at the table <code>orders</code> inside the <code>default</code> database, which is stored inside the <code>main</code> data catalog.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://pedro-faria.netlify.app/posts/2023/2023-11-18-python-parser/catalogs.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">An example of data catalog in Databricks</figcaption>
+</figure>
+</div>
+<p>You can read more about it <a href="https://docs.databricks.com/en/data-governance/unity-catalog/create-catalogs.html">at this link</a>.</p>
+<p>Now, in the our new infrastructure, SQL tables are organized into multiple data catalogs.</p>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <guid>https://pedro-faria.netlify.app/posts/2023/2023-11-18-python-parser/en/index.html</guid>
+  <pubDate>Sat, 18 Nov 2023 03:00:00 GMT</pubDate>
+</item>
 <item>
   <title>A small example on how to make better decisions with data</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
@@ -4380,50 +4450,6 @@ font-style: inherit;">$</span>color</span>
   <guid>https://pedro-faria.netlify.app/posts/2020/2020-10-17-formulario-pesquisa/pt/index.html</guid>
   <pubDate>Sat, 17 Oct 2020 03:00:00 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/posts/2020/2020-10-17-formulario-pesquisa/featured.jpg" medium="image" type="image/jpeg"/>
-</item>
-<item>
-  <title>Introduction to pyspark</title>
-  <dc:creator>Pedro Duarte Faria</dc:creator>
-  <link>https://pedro-faria.netlify.app/publications/book/introd-pyspark/en/index.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<section id="still-under-construction" class="level1">
-<h1>Still under construction 🛠️⚠️!</h1>
-<p>This book is still under active construction and development! This means that not all chapters are ready yet, and the current contents might change in the close future. However, you can already read some of its parts by <a href="https://pedropark99.github.io/Introd-pyspark/">visiting its website</a>.</p>
-</section>
-<section id="about-the-book" class="level1">
-<h1>About the book</h1>
-<p><a href="https://github.com/pedropark99/Introd-pyspark"> <button type="button" class="btn btn-primary">Official repository</button></a> <a href="https://pedropark99.github.io/Introd-pyspark/"> <button type="button" class="btn btn-primary">Read online</button></a></p>
-<p>In summary, this book aims to give a solid introduction (for python and not python users) to the <code>pyspark</code> package, and on how to use it to build Spark applications for data pipelines and interactive data analysis.</p>
-<p>Although we have a good range of materials about Apache Spark in general, such as <span class="citation" data-cites="damji2020">Damji et al. (2020)</span> and <span class="citation" data-cites="chambers2018">Chambers and Zaharia (2018)</span>, we do not have much abundance of materials about the APIs of Spark in “foreign” languages, like the Python (<code>pyspark</code>) and R (<code>SparkR</code>) APIs.</p>
-<p>The reason for this is simple: the Spark API have a consistent structure across all languages. As consequence, a general book about Spark can fairly cover all languages at once. In other words, Spark code in Scala can be easily translated into python code with <code>pyspark</code>. Because the structure of the code is very similar between all languages.</p>
-<p>So why this book? First, python is a more popular and friendly language than Scala or Java. If the reader is not interested in learning Java or Scala, why show Java/Scala code to him? Is very important to focus solely on what interest the reader, specially if it is in a language that he is familiar with. Second, I had some time to spent, and a lot of practical experience with <code>pyspark</code> on production to share (so… why not write a book about it?).</p>
-</section>
-<section id="cover" class="level1">
-<h1>Cover</h1>
-<p><img src="https://pedro-faria.netlify.app/publications/book/introd-pyspark/featured.png" class="img-fluid" style="width:100.0%"></p>
-
-
-
-</section>
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
-<div id="ref-chambers2018" class="csl-entry">
-Chambers, Bill, and Matei Zaharia. 2018. <em>Spark: The Definitive Guide: Big Data Processing Made Simple</em>. Sebastopol, CA: O’Reilly Media.
-</div>
-<div id="ref-damji2020" class="csl-entry">
-Damji, Jules, Brooke Wenig, Tathagata Das, and Denny Lee. 2020. <em>Learning Spark: Lightning-Fast Data Analytics</em>. Sebastopol, CA: O’Reilly Media.
-</div>
-</div></section></div> ]]></description>
-  <category>Python</category>
-  <category>Apache Spark</category>
-  <category>Book</category>
-  <guid>https://pedro-faria.netlify.app/publications/book/introd-pyspark/en/index.html</guid>
-  <pubDate>Sat, 28 Oct 2023 23:25:54 GMT</pubDate>
-  <media:content url="https://pedro-faria.netlify.app/publications/book/introd-pyspark/featured.png" medium="image" type="image/png" height="215" width="144"/>
 </item>
 </channel>
 </rss>
