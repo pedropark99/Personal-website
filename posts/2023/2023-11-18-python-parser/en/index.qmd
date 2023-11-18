@@ -1,6 +1,6 @@
 ---
 title: "Developing a parser for Python with Python"
-description: "Me and my team we are currently working in a massive migration. This article describes how we used"
+description: "I had to develop a parser for Python expressions with Python. This article describes my experience developing this parser and use it to introduce this subject to beginners."
 number-sections: true
 date: "2023-11-18"
 format:
@@ -10,8 +10,37 @@ format:
 
 # Introduction
 
-Me and my team we are currently working in a massive migration (similar to a cloud migration). This migration involves many process, but one of them is to redirect every table reference that we find in more than **130 thousand lines of Python code**.
+Me and my team are currently working in a massive migration (similar to a cloud migration). This migration involves many process, but one of them is to redirect every table reference that we find in more than **130 thousand lines of Python code**.
 
+However, this task proved to be so complex that I had to develop a small parser for Python expressions. This article use this experiment to introduce beginners to the subject of parsing expressions.
+
+# Context about what we have to do
+
+Most of these 130 thousand lines of Python code are [`pyspark`](https://spark.apache.org/docs/latest/api/python/index.html) code to extract, transform and load data using the `Apache Spark` engine. Yes! We do have a massive amount of ETL workflows, and now, we need to change all of these workflows at once to use a new infrastructure that we are creating.
+
+Let's consider the following example:
+
+```{#lst-table .python lst-cap="Example of pyspark code that we might find in our codebase"}
+# This is just an example of Python code. It is not real
+# lines of Python code that exists inside Blip's codebase.
+from pyspark.sql import SparkSession
+spark = SparkSession.builder.getOrCreate()
+
+df = spark.table("blip.events")
+df.show()
+```
+
+You can see at @lst-table that we have a `spark.table()` call to acess the SQL table `blip.events`. However, in the new infrastructure, the correct reference to this table becomes `platform.blipraw.events`. This means that we should alter this snippet of code to be:
+
+```{#lst-table .python lst-cap="Example with the new reference"}d
+from pyspark.sql import SparkSession
+spark = SparkSession.builder.getOrCreate()
+
+df = spark.table("platform.blipraw.events")
+df.show()
+```
+
+<!--
 Most of these lines of Python code are [`pyspark`](https://spark.apache.org/docs/latest/api/python/index.html) code to extract, transform and load data using the `Apache Spark` engine. Yes! We do have a massive amount of ETL workflows, and now, we need to change all of these workflows at once to use the new infrastructure that we are creating.
 
 For example, let's consider the following snippet of Python code:
@@ -53,3 +82,4 @@ Now, in the our new infrastructure, SQL tables are organized into multiple data 
 # The size of the challenge
 
 As we described at @sec-what-change, we need to change every table reference that we find through all 130 thousand lines in our Python codebase. We need to do it at scale using scripts, because manually changing 130 thousand lines of code is not possible.
+-->
