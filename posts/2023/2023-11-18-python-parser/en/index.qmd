@@ -31,7 +31,7 @@ df = (
 df.show()
 ```
 
-You can see at @lst-table that we have a `spark.table()` call to acess the table `blip.events`. This table is stored inside our distributed SQL database. In our current (or "old") infrastructure, every SQL table that we have is concentrated into a single data catalog. 
+You can see at @lst-table that we have a `spark.table()` call to acess the SQL table `blip.events`. This table is stored inside our distributed SQL database. In our current (or "old") infrastructure, every SQL table that we have is concentrated into a single data catalog. 
 
 Because of that, there is no need to specify which data catalog we want to acess inside `spark.table()`, because all tables are inside the same data catalog. So `spark.table()` just uses the default data catalog of our environment, and it magically finds the table we asked for.
 

@@ -305,7 +305,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <span id="lst-table-11"><a href="#lst-table-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="lst-table-12"><a href="#lst-table-12" aria-hidden="true" tabindex="-1"></a>df.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>You can see at <a href="#lst-table">Listing&nbsp;1</a> that we have a <code>spark.table()</code> call to acess the table <code>blip.events</code>. This table is stored inside our distributed SQL database. In our current (or “old”) infrastructure, every SQL table that we have is concentrated into a single data catalog.</p>
+<p>You can see at <a href="#lst-table">Listing&nbsp;1</a> that we have a <code>spark.table()</code> call to acess the SQL table <code>blip.events</code>. This table is stored inside our distributed SQL database. In our current (or “old”) infrastructure, every SQL table that we have is concentrated into a single data catalog.</p>
 <p>Because of that, there is no need to specify which data catalog we want to acess inside <code>spark.table()</code>, because all tables are inside the same data catalog. So <code>spark.table()</code> just uses the default data catalog of our environment, and it magically finds the table we asked for.</p>
 <section id="about-data-catalogs" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="about-data-catalogs"><span class="header-section-number">1.1</span> About data catalogs</h2>
@@ -317,11 +317,18 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <figcaption class="figure-caption">An example of data catalog in Databricks</figcaption>
 </figure>
 </div>
-<p>You can read more about it <a href="https://docs.databricks.com/en/data-governance/unity-catalog/create-catalogs.html">at this link</a>.</p>
-<p>Now, in the our new infrastructure, SQL tables are organized into multiple data catalogs.</p>
-
-
+<p>You can read more about data catalogs in Databricks <a href="https://docs.databricks.com/en/data-governance/unity-catalog/create-catalogs.html">at this link</a>.</p>
 </section>
+<section id="sec-what-change" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="sec-what-change"><span class="header-section-number">1.2</span> What we need to change in our Python codebase?</h2>
+<p>Now, in the our new infrastructure, SQL tables are organized into multiple data catalogs.</p>
+</section>
+</section>
+<section id="the-size-of-the-challenge" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> The size of the challenge</h1>
+<p>As we described at <a href="#sec-what-change">Section&nbsp;1.2</a>, we need to change every table reference that we find through all 130 thousand lines in our Python codebase. We need to do it at scale using scripts, because manually changing 130 thousand lines of code is not possible.</p>
+
+
 </section>
 
 </main> <!-- /main -->
