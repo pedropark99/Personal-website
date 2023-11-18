@@ -1,0 +1,14 @@
+---
+title: "Developing a parser for Python with Python"
+description: "Me and my team we are currently working in a massive migration. This article describes how we used"
+number-sections: true
+date: "2023-11-18"
+---
+
+# Introduction
+
+Me and my team we are currently working in a massive migration (similar to a cloud migration). This migration involves many process, but one of them is to redirect every table reference that we find in more than 130 thousand lines of Python code.
+
+Most of these lines of Python code are [`pyspark`](https://spark.apache.org/docs/latest/api/python/index.html) code to extract, transform and load data using the `Apache Spark` engine. Yes! We do have a massive amount of ETL workflows, and now, we need to change all of these workflows at once to use the new infrastructure that we are creating.
+
+Let's use an example. If for example, we find in a line 
