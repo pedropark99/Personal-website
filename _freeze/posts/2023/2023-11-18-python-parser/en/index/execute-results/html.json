@@ -1,0 +1,11 @@
+{
+  "hash": "55e99b8a2652274ed17ce5823af32295",
+  "result": {
+    "markdown": "---\ntitle: \"Developing a parser for Python with Python\"\ndescription: \"Me and my team we are currently working in a massive migration. This article describes how we used\"\nnumber-sections: true\ndate: \"2023-11-18\"\n---\n\n# Introduction\n\nMe and my team we are currently working in a massive migration (similar to a cloud migration). This migration involves many process, but one of them is to redirect every table reference that we find in more than **130 thousand lines of Python code**.\n\nMost of these lines of Python code are [`pyspark`](https://spark.apache.org/docs/latest/api/python/index.html) code to extract, transform and load data using the `Apache Spark` engine. Yes! We do have a massive amount of ETL workflows, and now, we need to change all of these workflows at once to use the new infrastructure that we are creating.\n\n\n```{css}\n#listing {\n    margin: auto;\n}\n```\n\n\nFor example, let's consider the following snippet of Python code:\n\n```{#lst-table .python lst-cap=\"Snippet of pyspark code that we have in our codebase\"}\n# This is just an example of Python code. It is not real\n# lines of Python code that exists inside Blip's codebase.\nfrom pyspark.sql import SparkSession\nspark = SparkSession.builder.getOrCreate()\n\ndf = (\n    spark.table(\"blip.events\")\n        .groupby(\"OwnerId\", \"StorageDate\")\n        .count()\n)\n\ndf.show()\n```\n\nAt @lst-table we have a `spark.table()` call to acess the SQL table `blip.events`.\nPreviously\n\nNow, in the our new infrastructure, SQL tables are organized into multiple data catalogs.\n\n",
+    "supporting": [
+      "index_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}
