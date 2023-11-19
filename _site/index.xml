@@ -9,7 +9,7 @@
 <link>https://pedro-faria.netlify.app/index.html</link>
 <atom:link href="https://pedro-faria.netlify.app/index.xml" rel="self" type="application/rss+xml"/>
 <description>A blog about programming and data analysis, specially with R and Python</description>
-<generator>quarto-1.3.353</generator>
+<generator>quarto-1.3.450</generator>
 <lastBuildDate>Sat, 18 Nov 2023 03:00:00 GMT</lastBuildDate>
 <item>
   <title>Developing a parser for Python with Python</title>
@@ -31,29 +31,23 @@
 <p>Let’s consider the following example:</p>
 <div id="lst-table" class="listing">
 <p>Listing&nbsp;1: Example of pyspark code that we might find in our codebase</p>
-<div class="sourceCode" id="lst-table" data-lst-cap="Example of pyspark code that we might find in our codebase" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="lst-table-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># This is just an random example of pyspark code. It is not real</span></span>
-<span id="lst-table-2"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># lines of Python code that exists inside our codebase.</span></span>
-<span id="lst-table-3"><span class="im" style="color: #00769E;
+<div class="sourceCode" id="lst-table" data-lst-cap="Example of pyspark code that we might find in our codebase" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="lst-table-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">from</span> pyspark.sql <span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> SparkSession</span>
-<span id="lst-table-4">spark <span class="op" style="color: #5E5E5E;
+<span id="lst-table-2">spark <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> SparkSession.builder.getOrCreate()</span>
-<span id="lst-table-5"></span>
-<span id="lst-table-6">df <span class="op" style="color: #5E5E5E;
+<span id="lst-table-3"></span>
+<span id="lst-table-4">df <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> spark.table(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"blip.events"</span>)</span>
-<span id="lst-table-7">df.show()</span></code></pre></div>
+<span id="lst-table-5">df.show()</span></code></pre></div>
 </div>
-<p>You can see at Listing&nbsp;1 that we have a <code>spark.table()</code> call to acess the SQL table <code>blip.events</code>. However, in the new infrastructure, all table references will change. That is why, me and my team need to rewrite every table reference that we find across our codebase.</p>
+<p>You can see at Listing&nbsp;1 that we have a <code>spark.table()</code> call to acess the SQL table <code>blip.events</code>. However, in the new infrastructure, all table references will change. As a result, me and my team need to rewrite every table reference that we find across our codebase.</p>
 <p>For example, let’s suppose that the new table reference is <code>platform.blipraw.events</code>. This means that I need to alter the above snippet of code to:</p>
 <div id="lst-table2" class="listing">
 <p>Listing&nbsp;2: Example with the new reference</p>
@@ -134,10 +128,9 @@ df.show()
 </div>
 </div>
 </section>
-</section>
-<section id="the-size-of-the-challenge" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> The size of the challenge</h1>
-<p>It would be great if it was that simple, but unfortunately, it is not. The problem is that the table reference used in <code>spark.table()</code> appears in too many different formats across the 130 thousand lines in our Python codebase. For example, we might use a <em>formatted string</em> to actually compute the table reference:</p>
+<section id="sec-challenge" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="sec-challenge"><span class="header-section-number">2.2</span> The size of the challenge</h2>
+<p>It would be great if it was that simple, but unfortunately, it is not. What makes this problem so challenging is that the table reference used in <code>spark.table()</code> appears in too many different formats across the 130 thousand lines in our codebase. For example, we might use a <em>formatted string</em> to actually compute the table reference:</p>
 <div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1">database <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="st" style="color: #20794D;
@@ -178,24 +171,299 @@ font-style: inherit;">+</span> table_name</span>
 <span id="cb4-2">df <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> spark.table(table_ref)</span></code></pre></div>
-<p>These two examples demonstrates that there is too much variation exists in the use of a table reference. So much that using multiple REGEX’s to solve this problem would be impractical, and probably too much complex.</p>
+<p>These two examples demonstrates that too much variation exists in the use of a table reference. So much variation, that using multiple REGEX’s to solve this problem would be impractical, and probably too much complex.</p>
 <p>Here is where the parser comes into place.</p>
 </section>
-<section id="how-a-parser-works" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> How a parser works?</h1>
-<p>A parser is a core component of every existing compiler, like <code>gcc</code> or the Python compiler. In essence, a parser is a piece of software that analyzes expressions following the rules of a grammar. A parser is the core piece of compilers responsible for analyzing and comprehend the structure of your source code.</p>
-<p>The process of parsing is usually made in two steps, which are: 1) breaking (or “splitting”) the input expression into smaller pieces, building a list of tokens, or a list of small components; 2) analyzing this sequence of tokens to build a tree that is equivalent to the input expression. The first step is usually made by a component called <em>lexer</em> or <em>tokenizer</em> (both names are commom to find), and the second step is made by the parser itself. Both are components of the compiler.</p>
-<p>Basically, the process of parsing takes a string (which contains the expression, or the source code your want to parse) as input. Then, the lexer (or tokenizer) breaks the input string into smaller pieces, which are usually called <em>tokens</em>. Then, the parser receives this stream of tokens produced by the tokenizer as input, and starts to analyze this sequence of tokens, to understand the structure of the input expression (or source code). As output, the parser produces a tree that is equivalent to the input expression, which is usually called <em>abstract syntax tree</em> (or AST for short). Figure&nbsp;1 exposes this process.</p>
+</section>
+<section id="introducing-the-parser" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Introducing the parser</h1>
+<section id="what-is-a-parser" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="what-is-a-parser"><span class="header-section-number">3.1</span> What is a parser?</h2>
+<p>Parsers (or the process of parsing expressions) are core components of every existing compiler, like <code>gcc</code> or <code>rustc</code>, as well as the R and Python compilers. In essence, a parser is a piece of software that analyzes expressions following the rules of a grammar. A parser is the main part of compilers responsible for analyzing and comprehend the structure of your source code.</p>
+<p>The process of parsing is usually made in two steps, which are: 1) breaking (or “splitting”) the input expression into smaller pieces, building a list of tokens, or a list of small components; 2) analyzing this sequence of tokens to build a tree that is equivalent to the input expression. The first step above is usually made by a component called <em>lexer</em> or <em>tokenizer</em> (both names are commom to find), and the second step is made by the parser itself.</p>
+<p>Basically, the process of parsing takes a string (which contains the expression, or the source code your want to parse) as input. Then, the lexer (or tokenizer) breaks the input string into smaller pieces, which are usually called <em>tokens</em>. Then, the parser receives this stream of tokens produced by the tokenizer as input, and starts to analyze this sequence of tokens, to understand the structure of the input expression (or source code). As output, the parser produces a tree that is equivalent to the input expression, which is usually called <em>abstract syntax tree</em> (or AST for short). Figure&nbsp;1 below exposes this process.</p>
 <div id="fig-parser-pic" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="https://pedro-faria.netlify.app/posts/2023/2023-11-18-python-parser/parser-pic.png" class="img-fluid figure-img"></p>
 <figcaption class="figure-caption">Figure&nbsp;1: The process of parsing</figcaption>
 </figure>
 </div>
-<p>In other words, the process of parsing takes an expression as input, and builds a tree that is equivalent to that expression as output. This process of parsing is always one of the first tasks that a compiler does. Because trees are a much more suitable and efficient data structure for the different tasks a compiler performs such as: type and syntax checking, evaluating the result of expressions and assignments, or compiling the input tree into machine code to be executed.</p>
+<p>So the process of parsing takes an expression as input, and builds a tree that is equivalent to that expression as output. This process of parsing is always one of the first operations that a compiler performs. Because trees are a much more suitable and efficient data structure for the different tasks a compiler performs such as: type and syntax checking, evaluating the result of expressions and assignments, or compiling the input tree into machine code to be executed.</p>
 <p>Probably, trees and stacks are the most important data structures for every compiler.</p>
+</section>
+<section id="sec-kind" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="sec-kind"><span class="header-section-number">3.2</span> What kind of expressions we want to parse?</h2>
+<p>Just to be clear, we neither need or want to develop a complete parser capable of parsing every expression in the Python language. That would be a much larger task, that would involve a great amount of effort. We just want to build a small parser capable of parsing a very small subset of Python expressions.</p>
+<p>We are particularly interested in the expressions that are related to the table references that we find in our codebase. We already showed examples of these expressions at Section&nbsp;2 and Section&nbsp;2.2.</p>
+<p>But just to state clearly, we want to build a parser capable of parsing:</p>
+<ol type="1">
+<li>expressions that involves only string constants (other types of constants like lists, integers, booleans are not important for us, so let’s ignore them). Example: <code>"platform.blipraw.events"</code>.</li>
+<li>expressions that concatenate strings with the plus operator. Example: <code>"blip" + "." + "events"</code>.</li>
+<li>expressions that contains identifiers (that is, variable names). Example: <code>database + "." + table_name</code>.</li>
+<li>formatted strings which contain expressions that fit the above cases. Example: <code>f"{database}.{table_name}"</code>.</li>
+</ol>
+<p>Lets store these examples of expressions inside a list that we can easily access:</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1">EXPRESSION_EXAMPLES <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [</span>
+<span id="cb5-2">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"'platform.blipraw.events'"</span>,</span>
+<span id="cb5-3">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'"blip" + "." + "events"'</span>,</span>
+<span id="cb5-4">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"database + </span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\"</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">.</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\"</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> + table_name"</span>,</span>
+<span id="cb5-5">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{database}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">.</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{table_name}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"'</span></span>
+<span id="cb5-6">]</span></code></pre></div>
+</div>
+</section>
+<section id="building-the-lexer-or-tokenizer" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="building-the-lexer-or-tokenizer"><span class="header-section-number">3.3</span> Building the Lexer (or Tokenizer)</h2>
+<p>Lets begin by building a lexer (or tokenizer) for our parser. From now on, I will use the term tokenizer, instead of lexer. Just be aware of this.</p>
+<p>But how can we split our input string into small pieces? There are different approaches to do this. However, one particular approach that fit’s perfectly our example here is to iterate through the characters of our input string, and look for single characters that represent “elegible break points”, or points where we can split the string.</p>
+<p>This approach is probably the easiest of all to implement, and it fit’s perfectly our example here because we are interested in parsing just a very small subset of simple Python expressions. If we wanted to parse more complex expressions, then, it would probably be better to change our approach.</p>
+<p>So, the tokenizer will iterate through each character in the input string, and will mark any place that contains a single character the we interpret as an elegible place to break the string. Considering the type of expressions we stated at Section&nbsp;3.2, the characters <code>"</code>, <code>'</code>, <code>+</code>, <code>{</code>, <code>}</code> are good candidates for “elegible break points”. Also, the character <code>f</code> is important for identifying formatted strings, as a consequence, he is also a good candidate.</p>
+<p>Let’s consider the following tokenizer:</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="annotated-cell-5" style="background: #f1f3f5;"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-5-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> typing <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> List</span>
+<span id="annotated-cell-5-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> re</span>
+<span id="annotated-cell-5-3"></span>
+<span id="annotated-cell-5-4">is_not_blank <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">lambda</span> x: x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">!=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">""</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">and</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">not</span> re.search(<span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;">r"^ +$"</span>, x)</span>
+<span id="annotated-cell-5-5"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">def</span> tokenizer(input_string: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-&gt;</span> List[<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>]:</span>
+<span id="annotated-cell-5-6">    candidates <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"'"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'"'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'+'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'{'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'}'</span>]</span>
+<span id="annotated-cell-5-7">    break_points <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">list</span>()</span>
+<span id="annotated-cell-5-8">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(input_string)):</span>
+<span id="annotated-cell-5-9">        current_char <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> input_string[i]</span>
+<span id="annotated-cell-5-10">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">if</span> current_char <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">in</span> candidates:</span>
+<span id="annotated-cell-5-11">            break_points.append(i)</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-5-12" class="code-annotation-target">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">if</span> current_char <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"f"</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">and</span> (i <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(input_string):</span>
+<span id="annotated-cell-5-13">            next_char <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> input_string[i <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]</span>
+<span id="annotated-cell-5-14">            <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">if</span> next_char <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">in</span> [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'"'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"'"</span>]:</span>
+<span id="annotated-cell-5-15">                break_points.append(i)</span>
+<span id="annotated-cell-5-16"></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-5-17" class="code-annotation-target">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">if</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(break_points) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>:</span>
+<span id="annotated-cell-5-18">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">return</span> [input_string]</span>
+<span id="annotated-cell-5-19"></span>
+<span id="annotated-cell-5-20">    tokens <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">list</span>()</span>
+<span id="annotated-cell-5-21">    last_index <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span></span>
+<span id="annotated-cell-5-22">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">for</span> index <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">in</span> break_points:</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-5-23" class="code-annotation-target">        tokens.append(input_string[last_index:index])</span>
+<span id="annotated-cell-5-24">        tokens.append(input_string[index:(index<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)])</span>
+<span id="annotated-cell-5-25">        last_index <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> index <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span></span>
+<span id="annotated-cell-5-26"></span>
+<span id="annotated-cell-5-27">    tokens.append(input_string[last_index:])</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="4" onclick="event.preventDefault();">4</a><span id="annotated-cell-5-28" class="code-annotation-target">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">return</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">list</span>(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">filter</span>(is_not_blank, tokens))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-5" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-lines="12" data-code-cell="annotated-cell-5" data-code-annotation="1">If current character is <code>f</code> check if the next character is the beginning of a string (characters <code>"</code> and <code>'</code>), if it is the beginning of a string, then, it is a formatted string and should be included in the “break points”. If the next character is not the beginning of a string, then, we should not consider it as an elegible breakpoint, because it probably is just a letter “f” inside a variable name, such as <code>platform_database</code>.</span>
+</dd>
+<dt data-target-cell="annotated-cell-5" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-lines="17" data-code-cell="annotated-cell-5" data-code-annotation="2">If no break point position was found, then, the input expression is likely an expression with a single component. For example, a single string constant (e.g.&nbsp;<code>"blip.events"</code>) or a single variable name (<code>events_table</code>). In this case, the tokenizer should return this single component itself as the only token present in the input string.</span>
+</dd>
+<dt data-target-cell="annotated-cell-5" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-lines="23" data-code-cell="annotated-cell-5" data-code-annotation="3">Every iteration of the loop generates two different tokens, which are: 1) a token with the part of the string from the previous break point index until the current elegible break point index; 2) and another token containing the single character that identifies the current elegible breakpoint. For example, the text <code>database"</code> will generate the break point index <code>8</code>, so, in the first iteration of the loop, the tokens <code>'database'</code> and <code>'"'</code> will be generated.</span>
+</dd>
+<dt data-target-cell="annotated-cell-5" data-target-annotation="4">4</dt>
+<dd>
+<span data-code-lines="28" data-code-cell="annotated-cell-5" data-code-annotation="4">Empty tokens (i.e.&nbsp;tokens that are empty strings, or, that contains only spaces) can be generated during the process. So we use <code>filter()</code> with a <code>lambda</code> function to eliminate them from the output.</span>
+</dd>
+</dl>
+</div>
+</div>
+<p>This <code>tokenizer()</code> function generates a list of tokens to be analyzed by the parser:</p>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">for</span> example <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">in</span> EXPRESSION_EXAMPLES:</span>
+<span id="cb6-2">    tokens <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tokenizer(example)</span>
+<span id="cb6-3">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"===================================="</span>)</span>
+<span id="cb6-4">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"  * Input expression: "</span>, example)</span>
+<span id="cb6-5">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"  * Tokens produced: "</span>, tokens)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>====================================
+  * Input expression:  'platform.blipraw.events'
+  * Tokens produced:  ["'", 'platform.blipraw.events', "'"]
+====================================
+  * Input expression:  "blip" + "." + "events"
+  * Tokens produced:  ['"', 'blip', '"', '+', '"', '.', '"', '+', '"', 'events', '"']
+====================================
+  * Input expression:  database + "." + table_name
+  * Tokens produced:  ['database ', '+', '"', '.', '"', '+', ' table_name']
+====================================
+  * Input expression:  f"{database}.{table_name}"
+  * Tokens produced:  ['f', '"', '{', 'database', '}', '.', '{', 'table_name', '}', '"']</code></pre>
+</div>
+</div>
 
 
+</section>
 </section>
 
  ]]></description>
