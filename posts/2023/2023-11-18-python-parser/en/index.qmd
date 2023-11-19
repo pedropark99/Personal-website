@@ -1,6 +1,7 @@
 ---
 title: "Developing a parser for Python with Python"
 description: "I had to develop a parser for Python expressions with Python. This article describes my experience developing this parser and use it to introduce this subject to beginners."
+image: "./../image-pic.png"
 number-sections: true
 date: "2023-11-18"
 format:
@@ -91,9 +92,11 @@ Here is where the parser comes into place.
 
 A parser is a core component of every existing compiler, like `gcc` or the Python compiler. In essence, a parser is a piece of software that analyzes expressions following the rules of a grammar. A parser is the core piece of compilers responsible for analyzing and comprehend the structure of your source code.
 
-The process of parsing is usually made in two steps, which are: 1) breaking (or "splitting") the input expression into smaller pieces, building a list of tokens, or a list of small components; 2) analyzing this sequence of tokens to build a tree that is equivalent to the input expression. The first step is usually made by a component called *tokenizer*, and the second step is made by the parser itself. Both are components of the compiler.
+The process of parsing is usually made in two steps, which are: 1) breaking (or "splitting") the input expression into smaller pieces, building a list of tokens, or a list of small components; 2) analyzing this sequence of tokens to build a tree that is equivalent to the input expression. The first step is usually made by a component called *lexer* or *tokenizer* (both names are commom to find), and the second step is made by the parser itself. Both are components of the compiler.
 
-Basically, the process of parsing takes a string (which contains the expression, or the source code your want to parse) as input. Then, the tokenizer breaks the input string into smaller pieces, which are usually called *tokens*. Then, the parser receives this stream of tokens produced by the tokenizer as input, and starts to analyze this sequence of tokens, to understand the structure of the input expression (or source code). As output, the parser produces a tree that is equivalent to the input expression, which is usually called *abstract syntax tree* (or AST for short).
+Basically, the process of parsing takes a string (which contains the expression, or the source code your want to parse) as input. Then, the lexer (or tokenizer) breaks the input string into smaller pieces, which are usually called *tokens*. Then, the parser receives this stream of tokens produced by the tokenizer as input, and starts to analyze this sequence of tokens, to understand the structure of the input expression (or source code). As output, the parser produces a tree that is equivalent to the input expression, which is usually called *abstract syntax tree* (or AST for short). @fig-parser-pic exposes this process.
+
+![The process of parsing](./../parser-pic.png){#fig-parser-pic}
 
 In other words, the process of parsing takes an expression as input, and builds a tree that is equivalent to that expression as output. This process of parsing is always one of the first tasks that a compiler does. Because trees are a much more suitable and efficient data structure for the different tasks a compiler performs such as: type and syntax checking, evaluating the result of expressions and assignments, or compiling the input tree into machine code to be executed.
 

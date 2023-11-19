@@ -9,7 +9,7 @@
 <link>https://pedro-faria.netlify.app/index.html</link>
 <atom:link href="https://pedro-faria.netlify.app/index.xml" rel="self" type="application/rss+xml"/>
 <description>A blog about programming and data analysis, specially with R and Python</description>
-<generator>quarto-1.3.433</generator>
+<generator>quarto-1.3.353</generator>
 <lastBuildDate>Sat, 18 Nov 2023 03:00:00 GMT</lastBuildDate>
 <item>
   <title>Developing a parser for Python with Python</title>
@@ -184,8 +184,14 @@ font-style: inherit;">=</span> spark.table(table_ref)</span></code></pre></div>
 <section id="how-a-parser-works" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> How a parser works?</h1>
 <p>A parser is a core component of every existing compiler, like <code>gcc</code> or the Python compiler. In essence, a parser is a piece of software that analyzes expressions following the rules of a grammar. A parser is the core piece of compilers responsible for analyzing and comprehend the structure of your source code.</p>
-<p>The process of parsing is usually made in two steps, which are: 1) breaking (or “splitting”) the input expression into smaller pieces, building a list of tokens, or a list of small components; 2) analyzing this sequence of tokens to build a tree that is equivalent to the input expression. The first step is usually made by a component called <em>tokenizer</em>, and the second step is made by the parser itself. Both are components of the compiler.</p>
-<p>Basically, the process of parsing takes a string (which contains the expression, or the source code your want to parse) as input. Then, the tokenizer breaks the input string into smaller pieces, which are usually called <em>tokens</em>. Then, the parser receives this stream of tokens produced by the tokenizer as input, and starts to analyze this sequence of tokens, to understand the structure of the input expression (or source code). As output, the parser produces a tree that is equivalent to the input expression, which is usually called <em>abstract syntax tree</em> (or AST for short).</p>
+<p>The process of parsing is usually made in two steps, which are: 1) breaking (or “splitting”) the input expression into smaller pieces, building a list of tokens, or a list of small components; 2) analyzing this sequence of tokens to build a tree that is equivalent to the input expression. The first step is usually made by a component called <em>lexer</em> or <em>tokenizer</em> (both names are commom to find), and the second step is made by the parser itself. Both are components of the compiler.</p>
+<p>Basically, the process of parsing takes a string (which contains the expression, or the source code your want to parse) as input. Then, the lexer (or tokenizer) breaks the input string into smaller pieces, which are usually called <em>tokens</em>. Then, the parser receives this stream of tokens produced by the tokenizer as input, and starts to analyze this sequence of tokens, to understand the structure of the input expression (or source code). As output, the parser produces a tree that is equivalent to the input expression, which is usually called <em>abstract syntax tree</em> (or AST for short). Figure&nbsp;1 exposes this process.</p>
+<div id="fig-parser-pic" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="https://pedro-faria.netlify.app/posts/2023/2023-11-18-python-parser/parser-pic.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1: The process of parsing</figcaption>
+</figure>
+</div>
 <p>In other words, the process of parsing takes an expression as input, and builds a tree that is equivalent to that expression as output. This process of parsing is always one of the first tasks that a compiler does. Because trees are a much more suitable and efficient data structure for the different tasks a compiler performs such as: type and syntax checking, evaluating the result of expressions and assignments, or compiling the input tree into machine code to be executed.</p>
 <p>Probably, trees and stacks are the most important data structures for every compiler.</p>
 
@@ -195,6 +201,7 @@ font-style: inherit;">=</span> spark.table(table_ref)</span></code></pre></div>
  ]]></description>
   <guid>https://pedro-faria.netlify.app/posts/2023/2023-11-18-python-parser/en/index.html</guid>
   <pubDate>Sat, 18 Nov 2023 03:00:00 GMT</pubDate>
+  <media:content url="https://pedro-faria.netlify.app/posts/2023/2023-11-18-python-parser/image-pic.png" medium="image" type="image/png" height="51" width="144"/>
 </item>
 <item>
   <title>A small example on how to make better decisions with data</title>
