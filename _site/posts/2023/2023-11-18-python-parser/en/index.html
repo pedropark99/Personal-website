@@ -305,7 +305,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <span id="lst-table-6"><a href="#lst-table-6" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> spark.table(<span class="st">"blip.events"</span>)</span>
 <span id="lst-table-7"><a href="#lst-table-7" aria-hidden="true" tabindex="-1"></a>df.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>You can see at <a href="#lst-table">Listing&nbsp;1</a> that we have a <code>spark.table()</code> call to acess the SQL table <code>blip.events</code>. What I have to do, is to rewrite this table reference. In other words, all table references in the new infrastructure will change, and because of that, we need to change all of our Python code to use these new references.</p>
+<p>You can see at <a href="#lst-table">Listing&nbsp;1</a> that we have a <code>spark.table()</code> call to acess the SQL table <code>blip.events</code>. However, in the new infrastructure, all table references will change. That is why, me and my team need to rewrite every table reference that we find across our codebase.</p>
 <p>For example, let’s suppose that the new table reference is <code>platform.blipraw.events</code>. This means that I need to alter the above snippet of code to:</p>
 <div id="lst-table2" class="listing">
 <p>Listing&nbsp;2: Example with the new reference</p>
@@ -317,8 +317,8 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 </div>
 <section id="the-quick-and-dirty-approach" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="the-quick-and-dirty-approach"><span class="header-section-number">2.1</span> The quick and dirty approach</h2>
-<p>This does not look so bad, right? I mean, considering the above example, I could jsut use a simple REGEX (<em>regular expression</em>) to find the places where I have an <code>spark.table()</code> call, capture the reference given as input, alter it to the new reference, and replace the text with the new reference.</p>
-<p>The code would be similar to this:</p>
+<p>This does not look so bad, right? I mean, considering the above example, I could just use a simple REGEX (<em>regular expression</em>) to find the places where I have an <code>spark.table()</code> call, capture the reference given as input, alter it to the new reference, and replace the text with the new reference.</p>
+<p>A quick example of this code would be similar to this:</p>
 <div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>spark_table_regex <span class="op">=</span> <span class="vs">r'spark[.]table[(][a-zA-Z0-9.\'\"]+[)]'</span></span>
@@ -352,7 +352,8 @@ df.show()
 <p>Or maybe, we call a variable that contains the computed reference:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>table_ref <span class="op">=</span> database <span class="op">+</span> <span class="st">'.'</span> <span class="op">+</span> table_name</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> spark.table(table_ref)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>These two examples shows that there is too much variation in the use of a table reference. Me and my team need to alter all of these table references, no matter which form they are used in the code. Here is where the parser comes into place.</p>
+<p>These two examples demonstrates that there is too much variation exists in the use of a table reference. So much that using multiple REGEX’s to solve this problem would be impractical, and probably too much complex.</p>
+<p>Here is where the parser comes into place.</p>
 </section>
 <section id="how-a-parser-works" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> How a parser works?</h1>

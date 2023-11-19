@@ -53,7 +53,7 @@ background-color: null;
 font-style: inherit;">"blip.events"</span>)</span>
 <span id="lst-table-7">df.show()</span></code></pre></div>
 </div>
-<p>You can see at Listing&nbsp;1 that we have a <code>spark.table()</code> call to acess the SQL table <code>blip.events</code>. What I have to do, is to rewrite this table reference. In other words, all table references in the new infrastructure will change, and because of that, we need to change all of our Python code to use these new references.</p>
+<p>You can see at Listing&nbsp;1 that we have a <code>spark.table()</code> call to acess the SQL table <code>blip.events</code>. However, in the new infrastructure, all table references will change. That is why, me and my team need to rewrite every table reference that we find across our codebase.</p>
 <p>For example, let’s suppose that the new table reference is <code>platform.blipraw.events</code>. This means that I need to alter the above snippet of code to:</p>
 <div id="lst-table2" class="listing">
 <p>Listing&nbsp;2: Example with the new reference</p>
@@ -75,8 +75,8 @@ font-style: inherit;">"platform.blipraw.events"</span>)</span>
 </div>
 <section id="the-quick-and-dirty-approach" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="the-quick-and-dirty-approach"><span class="header-section-number">2.1</span> The quick and dirty approach</h2>
-<p>This does not look so bad, right? I mean, considering the above example, I could jsut use a simple REGEX (<em>regular expression</em>) to find the places where I have an <code>spark.table()</code> call, capture the reference given as input, alter it to the new reference, and replace the text with the new reference.</p>
-<p>The code would be similar to this:</p>
+<p>This does not look so bad, right? I mean, considering the above example, I could just use a simple REGEX (<em>regular expression</em>) to find the places where I have an <code>spark.table()</code> call, capture the reference given as input, alter it to the new reference, and replace the text with the new reference.</p>
+<p>A quick example of this code would be similar to this:</p>
 <div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
 background-color: null;
@@ -178,7 +178,8 @@ font-style: inherit;">+</span> table_name</span>
 <span id="cb4-2">df <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> spark.table(table_ref)</span></code></pre></div>
-<p>These two examples shows that there is too much variation in the use of a table reference. Me and my team need to alter all of these table references, no matter which form they are used in the code. Here is where the parser comes into place.</p>
+<p>These two examples demonstrates that there is too much variation exists in the use of a table reference. So much that using multiple REGEX’s to solve this problem would be impractical, and probably too much complex.</p>
+<p>Here is where the parser comes into place.</p>
 </section>
 <section id="how-a-parser-works" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> How a parser works?</h1>

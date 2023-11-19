@@ -31,7 +31,7 @@ df = spark.table("blip.events")
 df.show()
 ```
 
-You can see at @lst-table that we have a `spark.table()` call to acess the SQL table `blip.events`. What I have to do, is to rewrite this table reference. In other words, all table references in the new infrastructure will change, and because of that, we need to change all of our Python code to use these new references.
+You can see at @lst-table that we have a `spark.table()` call to acess the SQL table `blip.events`. However, in the new infrastructure, all table references will change. That is why, me and my team need to rewrite every table reference that we find across our codebase.
 
 For example, let's suppose that the new table reference is `platform.blipraw.events`. This means that I need to alter the above snippet of code to:
 
@@ -45,9 +45,9 @@ df.show()
 
 ## The quick and dirty approach
 
-This does not look so bad, right? I mean, considering the above example, I could jsut use a simple REGEX (*regular expression*) to find the places where I have an `spark.table()` call, capture the reference given as input, alter it to the new reference, and replace the text with the new reference.
+This does not look so bad, right? I mean, considering the above example, I could just use a simple REGEX (*regular expression*) to find the places where I have an `spark.table()` call, capture the reference given as input, alter it to the new reference, and replace the text with the new reference.
 
-The code would be similar to this:
+A quick example of this code would be similar to this:
 
 ```{python}
 import re
@@ -82,7 +82,9 @@ table_ref = database + '.' + table_name
 df = spark.table(table_ref)
 ```
 
-These two examples shows that there is too much variation in the use of a table reference. Me and my team need to alter all of these table references, no matter which form they are used in the code. Here is where the parser comes into place.
+These two examples demonstrates that there is too much variation exists in the use of a table reference. So much that using multiple REGEX's to solve this problem would be impractical, and probably too much complex.
+
+Here is where the parser comes into place.
 
 
 # How a parser works?
