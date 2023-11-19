@@ -25,18 +25,18 @@
 <p>Me and my team are currently working in a massive migration (similar to a cloud migration). This migration involves many process, but one of them is to redirect every table reference that we find in more than <strong>130 thousand lines of Python code</strong>.</p>
 <p>However, this task proved to be so complex that I had to develop a small parser for Python expressions. This article use this experiment to introduce beginners to the subject of parsing expressions.</p>
 </section>
-<section id="context-about-what-we-have-to-do" class="level1" data-number="2">
+<section id="sec-context" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Context about what we have to do</h1>
-<p>Most of these 130 thousand lines of Python code are <a href="https://spark.apache.org/docs/latest/api/python/index.html"><code>pyspark</code></a> code to extract, transform and load data using the <code>Apache Spark</code> engine. Yes! We do have a massive amount of ETL workflows, and now, we need to change all of these workflows at once to use a new infrastructure that we are creating.</p>
+<p>Most of these 130 thousand lines of Python code are <a href="https://spark.apache.org/docs/latest/api/python/index.html"><code>pyspark</code></a> code to extract, transform and load data using the <code>Apache Spark</code> engine.</p>
 <p>Let’s consider the following example:</p>
 <div id="lst-table" class="listing">
 <p>Listing&nbsp;1: Example of pyspark code that we might find in our codebase</p>
 <div class="sourceCode" id="lst-table" data-lst-cap="Example of pyspark code that we might find in our codebase" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="lst-table-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;"># This is just an example of Python code. It is not real</span></span>
+font-style: inherit;"># This is just an random example of pyspark code. It is not real</span></span>
 <span id="lst-table-2"><span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;"># lines of Python code that exists inside Blip's codebase.</span></span>
+font-style: inherit;"># lines of Python code that exists inside our codebase.</span></span>
 <span id="lst-table-3"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">from</span> pyspark.sql <span class="im" style="color: #00769E;
@@ -53,50 +53,140 @@ background-color: null;
 font-style: inherit;">"blip.events"</span>)</span>
 <span id="lst-table-7">df.show()</span></code></pre></div>
 </div>
-<p>You can see at Listing&nbsp;1 that we have a <code>spark.table()</code> call to acess the SQL table <code>blip.events</code>. However, in the new infrastructure, the correct reference to this table becomes <code>platform.blipraw.events</code>. This means that we should alter this snippet of code to be:</p>
-<p>```{#lst-table .python lst-cap=“Example with the new reference”}d from pyspark.sql import SparkSession spark = SparkSession.builder.getOrCreate()</p>
-<p>df = spark.table(“platform.blipraw.events”) df.show()</p>
-<pre><code>
-&lt;!--
-Most of these lines of Python code are [`pyspark`](https://spark.apache.org/docs/latest/api/python/index.html) code to extract, transform and load data using the `Apache Spark` engine. Yes! We do have a massive amount of ETL workflows, and now, we need to change all of these workflows at once to use the new infrastructure that we are creating.
-
-For example, let's consider the following snippet of Python code:
-
-```{#lst-table .python lst-cap="Example of pyspark code that we might find in our codebase"}
-# This is just an example of Python code. It is not real
-# lines of Python code that exists inside Blip's codebase.
-from pyspark.sql import SparkSession
+<p>You can see at Listing&nbsp;1 that we have a <code>spark.table()</code> call to acess the SQL table <code>blip.events</code>. What I have to do, is to rewrite this table reference. In other words, all table references in the new infrastructure will change, and because of that, we need to change all of our Python code to use these new references.</p>
+<p>For example, let’s suppose that the new table reference is <code>platform.blipraw.events</code>. This means that I need to alter the above snippet of code to:</p>
+<div id="lst-table2" class="listing">
+<p>Listing&nbsp;2: Example with the new reference</p>
+<div class="sourceCode" id="lst-table2" data-lst-cap="Example with the new reference" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="lst-table2-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> pyspark.sql <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> SparkSession</span>
+<span id="lst-table2-2">spark <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> SparkSession.builder.getOrCreate()</span>
+<span id="lst-table2-3"></span>
+<span id="lst-table2-4">df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> spark.table(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"platform.blipraw.events"</span>)</span>
+<span id="lst-table2-5">df.show()</span></code></pre></div>
+</div>
+<section id="the-quick-and-dirty-approach" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="the-quick-and-dirty-approach"><span class="header-section-number">2.1</span> The quick and dirty approach</h2>
+<p>This does not look so bad, right? I mean, considering the above example, I could jsut use a simple REGEX (<em>regular expression</em>) to find the places where I have an <code>spark.table()</code> call, capture the reference given as input, alter it to the new reference, and replace the text with the new reference.</p>
+<p>The code would be similar to this:</p>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> re</span>
+<span id="cb1-2">spark_table_regex <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;">r'spark[.]table[(][a-zA-Z0-9.\'\"]+[)]'</span></span>
+<span id="cb1-3">notebook_content <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'''from pyspark.sql import SparkSession</span></span>
+<span id="cb1-4"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">spark = SparkSession.builder.getOrCreate()</span></span>
+<span id="cb1-5"></span>
+<span id="cb1-6"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">df = spark.table("blip.events")</span></span>
+<span id="cb1-7"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">df.show()</span></span>
+<span id="cb1-8"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'''</span></span>
+<span id="cb1-9"></span>
+<span id="cb1-10">new_table_call <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"spark.table(</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\"</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">platform.blipraw.events</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\"</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">)"</span></span>
+<span id="cb1-11">new_notebook_content <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> re.sub(spark_table_regex, new_table_call, notebook_content)</span>
+<span id="cb1-12"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(new_notebook_content)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>from pyspark.sql import SparkSession
 spark = SparkSession.builder.getOrCreate()
 
-df = (
-    spark.table("blip.events")
-        .groupby("OwnerId", "StorageDate")
-        .count()
-)
-
-df.show()</code></pre>
-<p>You can see at Listing&nbsp;1 that we have a <code>spark.table()</code> call to acess the SQL table <code>blip.events</code>. This table is stored inside our distributed SQL database. In our current (or “old”) infrastructure, every SQL table that we have is concentrated into a single data catalog.</p>
-<p>Because of that, there is no need to specify which data catalog we want to acess inside <code>spark.table()</code>, because all tables are inside the same data catalog. So <code>spark.table()</code> just uses the default data catalog of our environment, and it magically finds the table we asked for.</p>
-<section id="about-data-catalogs" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="about-data-catalogs"><span class="header-section-number">2.1</span> About data catalogs</h2>
-<p>We use Databricks as our data science platform to process, explore and share our data. One of the many functionalities that Databricks have is to organize SQL tables into data catalogs.</p>
-<p>In essence, data catalogs are catalogs (or a collection) of SQL databases. In the example below, we are looking at the table <code>orders</code> inside the <code>default</code> database, which is stored inside the <code>main</code> data catalog.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://pedro-faria.netlify.app/posts/2023/2023-11-18-python-parser/catalogs.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">An example of data catalog in Databricks</figcaption>
-</figure>
+df = spark.table("platform.blipraw.events")
+df.show()
+</code></pre>
 </div>
-<p>You can read more about data catalogs in Databricks <a href="https://docs.databricks.com/en/data-governance/unity-catalog/create-catalogs.html">at this link</a>.</p>
-</section>
-<section id="sec-what-change" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="sec-what-change"><span class="header-section-number">2.2</span> What we need to change in our Python codebase?</h2>
-<p>Now, in the our new infrastructure, SQL tables are organized into multiple data catalogs.</p>
+</div>
 </section>
 </section>
 <section id="the-size-of-the-challenge" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> The size of the challenge</h1>
-<p>As we described at Section&nbsp;2.2, we need to change every table reference that we find through all 130 thousand lines in our Python codebase. We need to do it at scale using scripts, because manually changing 130 thousand lines of code is not possible. –&gt;</p>
+<p>It would be great if it was that simple, but unfortunately, it is not. The problem is that the table reference used in <code>spark.table()</code> appears in too many different formats across the 130 thousand lines in our Python codebase. For example, we might use a <em>formatted string</em> to actually compute the table reference:</p>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1">database <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"blip"</span></span>
+<span id="cb3-2">table_name <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"events"</span></span>
+<span id="cb3-3">df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> spark.table(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>database<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">.</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>table_name<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span></code></pre></div>
+<p>Or maybe, we call a variable that contains the computed reference:</p>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1">table_ref <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> database <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'.'</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> table_name</span>
+<span id="cb4-2">df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> spark.table(table_ref)</span></code></pre></div>
+<p>These two examples shows that there is too much variation in the use of a table reference. Me and my team need to alter all of these table references, no matter which form they are used in the code. Here is where the parser comes into place.</p>
+</section>
+<section id="how-a-parser-works" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> How a parser works?</h1>
+<p>A parser is a core component of every existing compiler, like <code>gcc</code> or the Python compiler. In essence, a parser is a piece of software that analyzes expressions following the rules of a grammar. A parser is the core piece of compilers responsible for analyzing and comprehend the structure of your source code.</p>
+<p>The process of parsing is usually made in two steps, which are: 1) breaking (or “splitting”) the input expression into smaller pieces, building a list of tokens, or a list of small components; 2) analyzing this sequence of tokens to build a tree that is equivalent to the input expression. The first step is usually made by a component called <em>tokenizer</em>, and the second step is made by the parser itself. Both are components of the compiler.</p>
+<p>Basically, the process of parsing takes a string (which contains the expression, or the source code your want to parse) as input. Then, the tokenizer breaks the input string into smaller pieces, which are usually called <em>tokens</em>. Then, the parser receives this stream of tokens produced by the tokenizer as input, and starts to analyze this sequence of tokens, to understand the structure of the input expression (or source code). As output, the parser produces a tree that is equivalent to the input expression, which is usually called <em>abstract syntax tree</em> (or AST for short).</p>
+<p>In other words, the process of parsing takes an expression as input, and builds a tree that is equivalent to that expression as output. This process of parsing is always one of the first tasks that a compiler does. Because trees are a much more suitable and efficient data structure for the different tasks a compiler performs such as: type and syntax checking, evaluating the result of expressions and assignments, or compiling the input tree into machine code to be executed.</p>
+<p>Probably, trees and stacks are the most important data structures for every compiler.</p>
 
 
 </section>

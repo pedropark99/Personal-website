@@ -14,15 +14,16 @@ Me and my team are currently working in a massive migration (similar to a cloud 
 
 However, this task proved to be so complex that I had to develop a small parser for Python expressions. This article use this experiment to introduce beginners to the subject of parsing expressions.
 
-# Context about what we have to do
 
-Most of these 130 thousand lines of Python code are [`pyspark`](https://spark.apache.org/docs/latest/api/python/index.html) code to extract, transform and load data using the `Apache Spark` engine. Yes! We do have a massive amount of ETL workflows, and now, we need to change all of these workflows at once to use a new infrastructure that we are creating.
+# Context about what we have to do {#sec-context}
+
+Most of these 130 thousand lines of Python code are [`pyspark`](https://spark.apache.org/docs/latest/api/python/index.html) code to extract, transform and load data using the `Apache Spark` engine.
 
 Let's consider the following example:
 
 ```{#lst-table .python lst-cap="Example of pyspark code that we might find in our codebase"}
-# This is just an example of Python code. It is not real
-# lines of Python code that exists inside Blip's codebase.
+# This is just an random example of pyspark code. It is not real
+# lines of Python code that exists inside our codebase.
 from pyspark.sql import SparkSession
 spark = SparkSession.builder.getOrCreate()
 
@@ -30,9 +31,11 @@ df = spark.table("blip.events")
 df.show()
 ```
 
-You can see at @lst-table that we have a `spark.table()` call to acess the SQL table `blip.events`. However, in the new infrastructure, the correct reference to this table becomes `platform.blipraw.events`. This means that we should alter this snippet of code to be:
+You can see at @lst-table that we have a `spark.table()` call to acess the SQL table `blip.events`. What I have to do, is to rewrite this table reference. In other words, all table references in the new infrastructure will change, and because of that, we need to change all of our Python code to use these new references.
 
-```{#lst-table .python lst-cap="Example with the new reference"}d
+For example, let's suppose that the new table reference is `platform.blipraw.events`. This means that I need to alter the above snippet of code to:
+
+```{#lst-table2 .python lst-cap="Example with the new reference"}
 from pyspark.sql import SparkSession
 spark = SparkSession.builder.getOrCreate()
 
@@ -40,46 +43,57 @@ df = spark.table("platform.blipraw.events")
 df.show()
 ```
 
-<!--
-Most of these lines of Python code are [`pyspark`](https://spark.apache.org/docs/latest/api/python/index.html) code to extract, transform and load data using the `Apache Spark` engine. Yes! We do have a massive amount of ETL workflows, and now, we need to change all of these workflows at once to use the new infrastructure that we are creating.
+## The quick and dirty approach
 
-For example, let's consider the following snippet of Python code:
+This does not look so bad, right? I mean, considering the above example, I could jsut use a simple REGEX (*regular expression*) to find the places where I have an `spark.table()` call, capture the reference given as input, alter it to the new reference, and replace the text with the new reference.
 
-```{#lst-table .python lst-cap="Example of pyspark code that we might find in our codebase"}
-# This is just an example of Python code. It is not real
-# lines of Python code that exists inside Blip's codebase.
-from pyspark.sql import SparkSession
+The code would be similar to this:
+
+```{python}
+import re
+spark_table_regex = r'spark[.]table[(][a-zA-Z0-9.\'\"]+[)]'
+notebook_content = '''from pyspark.sql import SparkSession
 spark = SparkSession.builder.getOrCreate()
 
-df = (
-    spark.table("blip.events")
-        .groupby("OwnerId", "StorageDate")
-        .count()
-)
-
+df = spark.table("blip.events")
 df.show()
+'''
+
+new_table_call = "spark.table(\"platform.blipraw.events\")"
+new_notebook_content = re.sub(spark_table_regex, new_table_call, notebook_content)
+print(new_notebook_content)
 ```
 
-You can see at @lst-table that we have a `spark.table()` call to acess the SQL table `blip.events`. This table is stored inside our distributed SQL database. In our current (or "old") infrastructure, every SQL table that we have is concentrated into a single data catalog. 
-
-Because of that, there is no need to specify which data catalog we want to acess inside `spark.table()`, because all tables are inside the same data catalog. So `spark.table()` just uses the default data catalog of our environment, and it magically finds the table we asked for.
-
-## About data catalogs
-
-We use Databricks as our data science platform to process, explore and share our data. One of the many functionalities that Databricks have is to organize SQL tables into data catalogs.
-
-In essence, data catalogs are catalogs (or a collection) of SQL databases. In the example below, we are looking at the table `orders` inside the `default` database, which is stored inside the `main` data catalog.
-
-![An example of data catalog in Databricks](./../catalogs.png)
-
-You can read more about data catalogs in Databricks [at this link](https://docs.databricks.com/en/data-governance/unity-catalog/create-catalogs.html).
-
-
-## What we need to change in our Python codebase? {#sec-what-change}
-
-Now, in the our new infrastructure, SQL tables are organized into multiple data catalogs.
 
 # The size of the challenge
 
-As we described at @sec-what-change, we need to change every table reference that we find through all 130 thousand lines in our Python codebase. We need to do it at scale using scripts, because manually changing 130 thousand lines of code is not possible.
--->
+It would be great if it was that simple, but unfortunately, it is not. The problem is that the table reference used in `spark.table()` appears in too many different formats across the 130 thousand lines in our Python codebase. For example, we might use a *formatted string* to actually compute the table reference:
+
+```python
+database = "blip"
+table_name = "events"
+df = spark.table(f"{database}.{table_name}")
+```
+
+Or maybe, we call a variable that contains the computed reference:
+
+```python
+table_ref = database + '.' + table_name
+df = spark.table(table_ref)
+```
+
+These two examples shows that there is too much variation in the use of a table reference. Me and my team need to alter all of these table references, no matter which form they are used in the code. Here is where the parser comes into place.
+
+
+# How a parser works?
+
+A parser is a core component of every existing compiler, like `gcc` or the Python compiler. In essence, a parser is a piece of software that analyzes expressions following the rules of a grammar. A parser is the core piece of compilers responsible for analyzing and comprehend the structure of your source code.
+
+The process of parsing is usually made in two steps, which are: 1) breaking (or "splitting") the input expression into smaller pieces, building a list of tokens, or a list of small components; 2) analyzing this sequence of tokens to build a tree that is equivalent to the input expression. The first step is usually made by a component called *tokenizer*, and the second step is made by the parser itself. Both are components of the compiler.
+
+Basically, the process of parsing takes a string (which contains the expression, or the source code your want to parse) as input. Then, the tokenizer breaks the input string into smaller pieces, which are usually called *tokens*. Then, the parser receives this stream of tokens produced by the tokenizer as input, and starts to analyze this sequence of tokens, to understand the structure of the input expression (or source code). As output, the parser produces a tree that is equivalent to the input expression, which is usually called *abstract syntax tree* (or AST for short).
+
+In other words, the process of parsing takes an expression as input, and builds a tree that is equivalent to that expression as output. This process of parsing is always one of the first tasks that a compiler does. Because trees are a much more suitable and efficient data structure for the different tasks a compiler performs such as: type and syntax checking, evaluating the result of expressions and assignments, or compiling the input tree into machine code to be executed.
+
+Probably, trees and stacks are the most important data structures for every compiler.
+

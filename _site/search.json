@@ -656,5 +656,12 @@
     "title": "All Publications",
     "section": "",
     "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\n\n\nIntroduction to pyspark\n\n\n\nPython\n\n\nApache Spark\n\n\nBook\n\n\n\nThis book offers a introduction on how to build Spark applications using the pyspark python package\n\n\n\nPedro Duarte Faria\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nIntrodução à Linguagem R: seus fundamentos e sua prática\n\n\n\nR Language\n\n\nBook\n\n\nBrazil\n\n\n\nEste livro oferece uma descrição profunda sobre os fundamentos da linguagem R, e como eles se aplicam no contexto da análise de dados.\n\n\n\nPedro Duarte Faria\n\n\nDec 1, 2022\n\n\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/2023/2023-11-18-python-parser/en/index.html#the-quick-and-dirty-approach",
+    "href": "posts/2023/2023-11-18-python-parser/en/index.html#the-quick-and-dirty-approach",
+    "title": "Developing a parser for Python with Python",
+    "section": "2.1 The quick and dirty approach",
+    "text": "2.1 The quick and dirty approach\nThis does not look so bad, right? I mean, considering the above example, I could jsut use a simple REGEX (regular expression) to find the places where I have an spark.table() call, capture the reference given as input, alter it to the new reference, and replace the text with the new reference.\nThe code would be similar to this:\n\nimport re\nspark_table_regex = r'spark[.]table[(][a-zA-Z0-9.\\'\\\"]+[)]'\nnotebook_content = '''from pyspark.sql import SparkSession\nspark = SparkSession.builder.getOrCreate()\n\ndf = spark.table(\"blip.events\")\ndf.show()\n'''\n\nnew_table_call = \"spark.table(\\\"platform.blipraw.events\\\")\"\nnew_notebook_content = re.sub(spark_table_regex, new_table_call, notebook_content)\nprint(new_notebook_content)\n\nfrom pyspark.sql import SparkSession\nspark = SparkSession.builder.getOrCreate()\n\ndf = spark.table(\"platform.blipraw.events\")\ndf.show()"
   }
 ]
