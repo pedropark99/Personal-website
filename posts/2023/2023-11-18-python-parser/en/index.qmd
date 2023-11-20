@@ -307,7 +307,11 @@ That is why we care only about these components. That is why, **for this specifi
 
 ### Parsing identifiers
 
+Lets begin by discussing what the `_parse_identifier()` function should do. Because parsing an identifier component is by far the simplest of all three components. I mean... how would you parse an identifier? To answer this question, is probably best to think what an identifier is.
 
+Well, an identifier is just a name to a variable, right? So, the value of an identifier object should be the identifier itself! In other words, the name of the variable is the identifier itself. So why not just simply add to the AST an object of type `IDENTIFIER` and the value of that object being the current token which is the identifier (or the variable name) itself? Right? That should be sufficient.
+
+So we have the following body for `_parse_identifier()`:
 
 ```{python}
 def _parse_identifier(parser_cache: ParserCache) -> ParserCache:
@@ -321,7 +325,17 @@ def _parse_identifier(parser_cache: ParserCache) -> ParserCache:
 
 ### Parsing addition operations
 
+Now, things get a little bit more complicated when we find a plus sign in the middle of the sequence of tokens. Because if we do find a plus sign, that means that this plus sign should be surrounded by operands. In other words, this plus sign connects the left operand to the right operand, and they both are the arguments to this addition operation.
 
+If we think about it, that means that the moment that we find a plus sign in the sequence of tokens, that means that the previous token is the left operand to the addition operation. But how can we get this previous token? I mean, the `ParserCache` class has only methods for current and next token, not a method for the previous token.
+
+Well, we do not need a method to get the previous token, because the previous token is obviously at the top of the AST. In other words, the last element in the AST is the previous token already parsed, and we can easily access this last element by calling `parser_cache.ast[-1]`.
+
+Perfect, afeter we saved a copy of the left operand inside a `left_operand` variable, we can delete him from the AST in the parser cache, with `del parser_cache.ast[-1]`. If we do not delete him now, then, he would become duplicated in the AST at the moment that we add our object for the addition operation to the AST, which contains both left and right operand.
+
+After we deleted the last element in the AST (which contained the left operand), we can now look for the right operand, which is the next token in the sequence. That is why we call the `next_token()` method, to advance the parser.
+
+After that, all we need to do, is to add to the AST an object that represents this addition operation.
 
 ```{python}
 def _parse_addition(parser_cache: ParserCache) -> ParserCache:
@@ -340,17 +354,28 @@ def _parse_addition(parser_cache: ParserCache) -> ParserCache:
 
 ### Parsing strings
 
+Now, things get worse when it is time to parse strings. Not because strings are complicated, but because we need to account for *formatted strings*. In other words, the string that we analyzing might contain expressions inside of it. And if it does have them, we need to parse these expressions separately.
+
+However, if you come back and look at the body of `_parse_input()` you will see that we call `_parse_string()` right after we encounter a `"` or `'` character. But we do not need to parse this single character exactly. We just know that these characters delimit the beginning of a string, so everything that goes after it should be tokens that together composes the actual content of the string.
+
+That is why, we start `_parse_string()` by calling the `next_token()` method, to skip this `"` or `'` character that we are not particularly interested in. Now, after that, all we need to do, is to accumulate all tokens that are inside of the string, until we hit the next token that contains the `"` or `'` character, because these tokens will represent the end of the string.
+
+Why we do this? Because at the moment that we find the the `"` or `'` character, and we understand that we hitted the end of the string, and we break the loop, then, all elements contained inside the `stack` will be the tokens that together composes the content of the current string. And having all of these elements together at one place makes life easier for us. Because we can simply append to the AST a new object of type `STRING` containing this stack with all of the components of this string element.
+
+Now... if we do find a opening bracket (`{`) inside the string, that likely means that the current string that we are analyzing now is a formatted string, and whatever sequence of tokens that is right after this opening bracket, they are a new expression to be parsed. That is why we call the `_parse_formatted_string()` in case we do find an opening bracket inside the string.
+
 ```{python}
 def _parse_string(parser_cache: ParserCache) -> ParserCache:
+    char_that_opens_the_string = parser_cache.current_token()
     parser_cache.next_token()
-
     stack = list()
     while parser_cache.current_index < parser_cache.len() - 1:
-        if parser_cache.current_token() in ['"', "'"]:
+        if parser_cache.current_token() == char_that_opens_the_string:
             break
         if parser_cache.current_token() == '{':
             parser_cache.next_token()
-            parser_cache = _parse_formatted_string(parser_cache)
+            parsed_formatted_string = _parse_formatted_string(parser_cache)
+            stack.append(parsed_formatted_string.ast)
             continue
 
         stack.append(current_token)

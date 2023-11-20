@@ -404,19 +404,19 @@ font-style: inherit;">filter</span>(is_not_blank, tokens))</span><div class="cod
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-5" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="12" data-code-annotation="1" data-code-cell="annotated-cell-5">If current character is <code>f</code> check if the next character is the beginning of a string (characters <code>"</code> and <code>'</code>), if it is the beginning of a string, then, it is a formatted string and should be included in the “break points”. If the next character is not the beginning of a string, then, we should not consider it as an elegible breakpoint, because it probably is just a letter “f” inside a variable name, such as <code>platform_database</code>.</span>
+<span data-code-annotation="1" data-code-cell="annotated-cell-5" data-code-lines="12">If current character is <code>f</code> check if the next character is the beginning of a string (characters <code>"</code> and <code>'</code>), if it is the beginning of a string, then, it is a formatted string and should be included in the “break points”. If the next character is not the beginning of a string, then, we should not consider it as an elegible breakpoint, because it probably is just a letter “f” inside a variable name, such as <code>platform_database</code>.</span>
 </dd>
 <dt data-target-cell="annotated-cell-5" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-lines="17" data-code-annotation="2" data-code-cell="annotated-cell-5">If no break point position was found, then, the input expression is likely an expression with a single component. For example, a single string constant (e.g.&nbsp;<code>"blip.events"</code>) or a single variable name (<code>events_table</code>). In this case, the tokenizer should return this single component itself as the only token present in the input string.</span>
+<span data-code-annotation="2" data-code-cell="annotated-cell-5" data-code-lines="17">If no break point position was found, then, the input expression is likely an expression with a single component. For example, a single string constant (e.g.&nbsp;<code>"blip.events"</code>) or a single variable name (<code>events_table</code>). In this case, the tokenizer should return this single component itself as the only token present in the input string.</span>
 </dd>
 <dt data-target-cell="annotated-cell-5" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-lines="23" data-code-annotation="3" data-code-cell="annotated-cell-5">Every iteration of the loop generates two different tokens, which are: 1) a token with the part of the string from the previous break point index until the current elegible break point index; 2) and another token containing the single character that identifies the current elegible breakpoint. For example, the text <code>database"</code> will generate the break point index <code>8</code>, so, in the first iteration of the loop, the tokens <code>'database'</code> and <code>'"'</code> will be generated.</span>
+<span data-code-annotation="3" data-code-cell="annotated-cell-5" data-code-lines="23">Every iteration of the loop generates two different tokens, which are: 1) a token with the part of the string from the previous break point index until the current elegible break point index; 2) and another token containing the single character that identifies the current elegible breakpoint. For example, the text <code>database"</code> will generate the break point index <code>8</code>, so, in the first iteration of the loop, the tokens <code>'database'</code> and <code>'"'</code> will be generated.</span>
 </dd>
 <dt data-target-cell="annotated-cell-5" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-lines="28" data-code-annotation="4" data-code-cell="annotated-cell-5">Empty tokens (i.e.&nbsp;tokens that are empty strings, or, that contains only spaces) can be generated during the process. So we use <code>filter()</code> with a <code>lambda</code> function to eliminate them from the output.</span>
+<span data-code-annotation="4" data-code-cell="annotated-cell-5" data-code-lines="28">Empty tokens (i.e.&nbsp;tokens that are empty strings, or, that contains only spaces) can be generated during the process. So we use <code>filter()</code> with a <code>lambda</code> function to eliminate them from the output.</span>
 </dd>
 </dl>
 </div>
@@ -743,7 +743,7 @@ font-style: inherit;">return</span> parser_cache</span><div class="code-annotati
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-9" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="2" data-code-annotation="1" data-code-cell="annotated-cell-9">If the sequence of tokens is empty, then, we have no tokens to analyze, and the function should simply return right away.</span>
+<span data-code-annotation="1" data-code-cell="annotated-cell-9" data-code-lines="2">If the sequence of tokens is empty, then, we have no tokens to analyze, and the function should simply return right away.</span>
 </dd>
 </dl>
 </div>
@@ -754,6 +754,9 @@ font-style: inherit;">return</span> parser_cache</span><div class="code-annotati
 </section>
 <section id="parsing-identifiers" class="level3" data-number="3.4.6">
 <h3 data-number="3.4.6" class="anchored" data-anchor-id="parsing-identifiers"><span class="header-section-number">3.4.6</span> Parsing identifiers</h3>
+<p>Lets begin by discussing what the <code>_parse_identifier()</code> function should do. Because parsing an identifier component is by far the simplest of all three components. I mean… how would you parse an identifier? To answer this question, is probably best to think what an identifier is.</p>
+<p>Well, an identifier is just a name to a variable, right? So, the value of an identifier object should be the identifier itself! In other words, the name of the variable is the identifier itself. So why not just simply add to the AST an object of type <code>IDENTIFIER</code> and the value of that object being the current token which is the identifier (or the variable name) itself? Right? That should be sufficient.</p>
+<p>So we have the following body for <code>_parse_identifier()</code>:</p>
 <div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><span class="kw" style="color: #003B4F;
 background-color: null;
@@ -779,6 +782,12 @@ font-style: inherit;">return</span> parser_cache</span></code></pre></div>
 </section>
 <section id="parsing-addition-operations" class="level3" data-number="3.4.7">
 <h3 data-number="3.4.7" class="anchored" data-anchor-id="parsing-addition-operations"><span class="header-section-number">3.4.7</span> Parsing addition operations</h3>
+<p>Now, things get a little bit more complicated when we find a plus sign in the middle of the sequence of tokens. Because if we do find a plus sign, that means that this plus sign should be surrounded by operands. In other words, this plus sign connects the left operand to the right operand, and they both are the arguments to this addition operation.</p>
+<p>If we think about it, that means that the moment that we find a plus sign in the sequence of tokens, that means that the previous token is the left operand to the addition operation. But how can we get this previous token? I mean, the <code>ParserCache</code> class has only methods for current and next token, not a method for the previous token.</p>
+<p>Well, we do not need a method to get the previous token, because the previous token is obviously at the top of the AST. In other words, the last element in the AST is the previous token already parsed, and we can easily access this last element by calling <code>parser_cache.ast[-1]</code>.</p>
+<p>Perfect, afeter we saved a copy of the left operand inside a <code>left_operand</code> variable, we can delete him from the AST in the parser cache, with <code>del parser_cache.ast[-1]</code>. If we do not delete him now, then, he would become duplicated in the AST at the moment that we add our object for the addition operation to the AST, which contains both left and right operand.</p>
+<p>After we deleted the last element in the AST (which contained the left operand), we can now look for the right operand, which is the next token in the sequence. That is why we call the <code>next_token()</code> method, to advance the parser.</p>
+<p>After that, all we need to do, is to add to the AST an object that represents this addition operation.</p>
 <div class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><span class="kw" style="color: #003B4F;
 background-color: null;
@@ -823,14 +832,21 @@ font-style: inherit;">return</span> parser_cache</span></code></pre></div>
 </section>
 <section id="parsing-strings" class="level3" data-number="3.4.8">
 <h3 data-number="3.4.8" class="anchored" data-anchor-id="parsing-strings"><span class="header-section-number">3.4.8</span> Parsing strings</h3>
+<p>Now, things get much worse when it is time to parse strings. Not because strings are complicated, but because we need to account for <em>formatted strings</em>. In other words, the string that we analyzing might contain expressions inside of it. And if it does have them, we need to parse these expressions separately.</p>
+<p>If you look at the body of <code>_parse_input()</code> you will see that we call <code>_parse_string()</code> right after we encounter a <code>"</code> or <code>'</code> character. But we do not need to parse this single character exatly. We just know that these characters delimit the beginning of a string, so everything that goes after it should be tokens that together composes the actual content of the string.</p>
+<p>That is why, we start <code>_parse_string()</code> by calling the <code>next_token()</code> method, to skip this <code>"</code> or <code>'</code> character that we are not particularly interested in. Now, after that, all we need to do, is to accumulate all tokens that are inside of the string, until we hit the next token that contains the <code>"</code> or <code>'</code> character, because these tokens will represent the end of the string.</p>
+<p>Why we do this? Because at the moment that we find the the <code>"</code> or <code>'</code> character, and we understand that we hitted the end of the string, and we break the loop, then, all elements contained inside the <code>stack</code> will be the tokens that together composes the content of the current string. And having all of these elements together at one place makes life easier for us. Because we can simply append to the AST a new object of type <code>STRING</code> containing this stack with all of the components of this string element.</p>
+<p>Now… if we do find a opening bracket (<code>{</code>) inside the string, that likely means that the current string that we are analyzing now is a formatted string, and whatever sequence of tokens that is right after this opening bracket, they are a new expression to be parsed. That is why we call the <code>_parse_formatted_string()</code> in case we do find an opening bracket inside the string.</p>
 <div class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">def</span> _parse_string(parser_cache: ParserCache) <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">-&gt;</span> ParserCache:</span>
-<span id="cb12-2">    parser_cache.next_token()</span>
-<span id="cb12-3"></span>
+<span id="cb12-2">    char_that_opens_the_string <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> parser_cache.current_token()</span>
+<span id="cb12-3">    parser_cache.next_token()</span>
 <span id="cb12-4">    stack <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="bu" style="color: null;
@@ -849,13 +865,9 @@ background-color: null;
 font-style: inherit;">1</span>:</span>
 <span id="cb12-6">        <span class="cf" style="color: #003B4F;
 background-color: null;
-font-style: inherit;">if</span> parser_cache.current_token() <span class="kw" style="color: #003B4F;
+font-style: inherit;">if</span> parser_cache.current_token() <span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">in</span> [<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'"'</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"'"</span>]:</span>
+font-style: inherit;">==</span> char_that_opens_the_string:</span>
 <span id="cb12-7">            <span class="cf" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">break</span></span>
@@ -867,28 +879,29 @@ font-style: inherit;">==</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'{'</span>:</span>
 <span id="cb12-9">            parser_cache.next_token()</span>
-<span id="cb12-10">            parser_cache <span class="op" style="color: #5E5E5E;
+<span id="cb12-10">            parsed_formatted_string <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> _parse_formatted_string(parser_cache)</span>
-<span id="cb12-11">            <span class="cf" style="color: #003B4F;
+<span id="cb12-11">            stack.append(parsed_formatted_string.ast)</span>
+<span id="cb12-12">            <span class="cf" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">continue</span></span>
-<span id="cb12-12"></span>
-<span id="cb12-13">        stack.append(current_token)</span>
-<span id="cb12-14">        parser_cache.next_token()</span>
-<span id="cb12-15">    </span>
-<span id="cb12-16">    parser_cache.ast.append({</span>
-<span id="cb12-17">        <span class="st" style="color: #20794D;
+<span id="cb12-13"></span>
+<span id="cb12-14">        stack.append(current_token)</span>
+<span id="cb12-15">        parser_cache.next_token()</span>
+<span id="cb12-16">    </span>
+<span id="cb12-17">    parser_cache.ast.append({</span>
+<span id="cb12-18">        <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'type'</span>: <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'STRING'</span>,</span>
-<span id="cb12-18">        <span class="st" style="color: #20794D;
+<span id="cb12-19">        <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'value'</span>: stack</span>
-<span id="cb12-19">    })</span>
-<span id="cb12-20"></span>
-<span id="cb12-21">    <span class="cf" style="color: #003B4F;
+<span id="cb12-20">    })</span>
+<span id="cb12-21"></span>
+<span id="cb12-22">    <span class="cf" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">return</span> parser_cache</span></code></pre></div>
 </div>
