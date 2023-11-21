@@ -40,26 +40,30 @@ def tokenizer(input_string: str) -> List[str]:
 class ParserCache:
     '''Class that represents a cache to store the current state of the parser.'''
     def __init__(self, tokens: List[str]) -> None:
-        self.tokens = tokens
-        self.current_index = 0
         self.ast = list()
+        self.tokens = tokens
+        self.index = 0
         if len(tokens) > 0:
-            self.current_token = tokens[self.current_index]
+            self.token = tokens[self.index]
         else:
-            self.current_token = None
+            self.token = None
         return
 
     def len(self) -> int:
         return len(self.tokens)
 
     def current_token(self) -> str:
-        return self.current_token
+        return self.token
+    
+    def current_index(self) -> int:
+        return self.index
 
     def next_token(self) -> None:
-        self.current_index += 1
-        if self.current_index < len(self.tokens):
-            self.current_token = self.tokens[self.current_index]
+        self.index += 1
+        if self.index < len(self.tokens):
+            self.token = self.tokens[self.index]
         return
+
 
 
 def parse(input_string: str) -> List[Dict[str, Any]]:
@@ -81,7 +85,7 @@ def _parse_input(parser_cache: ParserCache) -> ParserCache:
         parser_cache = _parse_identifier(parser_cache)
 
     parser_cache.next_token()
-    if parser_cache.current_index <= parser_cache.len() - 1:
+    if parser_cache.current_index() <= parser_cache.len() - 1:
         parser_cache = _parse_input(parser_cache)
 
     return parser_cache
@@ -110,42 +114,50 @@ def _parse_addition(parser_cache: ParserCache) -> ParserCache:
 
 
 def _parse_string(parser_cache: ParserCache) -> ParserCache:
+    char_that_opens_the_string = parser_cache.current_token()
     parser_cache.next_token()
+    # Add a placeholder in the top of the AST
+    parser_cache.ast.append({
+        'type': 'STRING',
+        'value': list()
+    })
 
-    stack = list()
-    while parser_cache.current_index < parser_cache.len() - 1:
+    while parser_cache.current_index() < parser_cache.len() - 1:
         if parser_cache.current_token() in ['"', "'"]:
             break
         if parser_cache.current_token() == '{':
             parser_cache.next_token()
             parser_cache = _parse_formatted_string(parser_cache)
             continue
-
-        stack.append(current_token)
+        
+        elem_ref = parser_cache.ast[-1]
+        elem_ref['value'].append(parser_cache.current_token())
         parser_cache.next_token()
     
-    parser_cache.ast.append({
-        'type': 'STRING',
-        'value': stack
-    })
-
     return parser_cache
 
 
 def _parse_formatted_string(parser_cache: ParserCache) -> ParserCache:
     stack = list()
-    while parser_cache.current_index < parser_cache.len() - 1:
+    while parser_cache.current_index() < parser_cache.len() - 1:
         if parser_cache.current_token() == '}':
             parser_cache.next_token()
             break
         stack.append(parser_cache.current_token())
         parser_cache.next_token()
 
-    parsing_subexpression = ParserCache(stack)
-    parsing_subexpression = _parse_input(parsing_subexpression)
-    parser_cache.ast.append({
+    parsed_subexpression = ParserCache(stack)
+    parsed_subexpression = _parse_input(parsed_subexpression)
+    elem_ref = parser_cache.ast[-1]
+    elem_ref['value'].append({
         'type': 'EXPR',
-        'value': parsing_subexpression.ast
+        'value': parsed_subexpression.ast
     })
-
     return parser_cache
+
+
+for example in EXPRESSION_EXAMPLES:
+    parsed_expr = parse(example)
+    print("====================================")
+    print("  * Input expression: ", example)
+    print("  * Parsed AST: ", parsed_expr)

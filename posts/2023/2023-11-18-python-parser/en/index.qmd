@@ -224,25 +224,28 @@ You can see below at the `__init__` method that to initialize a new object of cl
 class ParserCache:
     '''Class that represents a cache to store the current state of the parser.'''
     def __init__(self, tokens: List[str]) -> None:
-        self.tokens = tokens
-        self.current_index = 0
         self.ast = list()
+        self.tokens = tokens
+        self.index = 0
         if len(tokens) > 0:
-            self.current_token = tokens[self.current_index]
+            self.token = tokens[self.index]
         else:
-            self.current_token = None
+            self.token = None
         return
 
     def len(self) -> int:
         return len(self.tokens)
 
     def current_token(self) -> str:
-        return self.current_token
+        return self.token
 
+    def current_index(self) -> int:
+        return self.index
+        
     def next_token(self) -> None:
-        self.current_index += 1
-        if self.current_index < len(self.tokens):
-            self.current_token = self.tokens[self.current_index]
+        self.index += 1
+        if self.index < len(self.tokens):
+            self.token = self.tokens[self.index]
         return
 ```
 
@@ -290,7 +293,7 @@ def _parse_input(parser_cache: ParserCache) -> ParserCache:
         parser_cache = _parse_identifier(parser_cache)
 
     parser_cache.next_token()
-    if parser_cache.current_index <= parser_cache.len() - 1:
+    if parser_cache.current_index() <= parser_cache.len() - 1:
         parser_cache = _parse_input(parser_cache)
 
     return parser_cache
@@ -366,50 +369,70 @@ Now... if we do find a opening bracket (`{`) inside the string, that likely mean
 
 ```{python}
 def _parse_string(parser_cache: ParserCache) -> ParserCache:
-    char_that_opens_the_string = parser_cache.current_token()
+    char_that_opens_the_string = parser_cache.current_token() #<1>
     parser_cache.next_token()
-    stack = list()
-    while parser_cache.current_index < parser_cache.len() - 1:
-        if parser_cache.current_token() == char_that_opens_the_string:
+    # Add a placeholder in the top of the AST
+    parser_cache.ast.append({ #<2>
+        'type': 'STRING',
+        'value': list()
+    })
+
+    while parser_cache.current_index() < parser_cache.len() - 1:
+        if parser_cache.current_token() in ['"', "'"]:
             break
         if parser_cache.current_token() == '{':
             parser_cache.next_token()
-            parsed_formatted_string = _parse_formatted_string(parser_cache)
-            stack.append(parsed_formatted_string.ast)
+            parser_cache = _parse_formatted_string(parser_cache)
             continue
-
-        stack.append(current_token)
+        
+        elem_ref = parser_cache.ast[-1]
+        elem_ref['value'].append(parser_cache.current_token())
         parser_cache.next_token()
     
-    parser_cache.ast.append({
-        'type': 'STRING',
-        'value': stack
-    })
-
     return parser_cache
 ```
 
+1. We copy the character (`'` or `"`) that openned the string that we are analyzing now, because then, we can search for a new occurence of this same character in the tokens sequence to detect the end of the string.
+
+2. We add a placeholder at the top level of the AST. At each iteration of the `while` loop we update the `value` field of this placeholder by adding the current token to it. By doing this, at the end of the `while` loop we will have a string object at the top of the AST, and its `value` field will contain the full/complete list of contents of that string.
 
 ### Parsing expressions inside *formatted strings*
+
+We call `_parse_formatted_string()` if we find a `{` character inside sequence of tokens that are inside a string. Inside the pair of brackets (`{}`) we will always have an expression. And because this is a new expression, we need to parse it too, in a separate process.
+
+To do that, we create a new `ParserCache` object with the sequence of tokens that represents this expression, or, in other words, with all of the tokens that are between the openning and closing brackets. Then, we just call the `_parse_input()` over this expression to effectively parse this expression.
+
+After that, we return from `_parse_formatted_string()` with a new expression object (`EXPR`) that contains the parsed expression inside of it.
 
 ```{python}
 def _parse_formatted_string(parser_cache: ParserCache) -> ParserCache:
     stack = list()
-    while parser_cache.current_index < parser_cache.len() - 1:
+    while parser_cache.current_index() < parser_cache.len() - 1:
         if parser_cache.current_token() == '}':
             parser_cache.next_token()
             break
         stack.append(parser_cache.current_token())
         parser_cache.next_token()
 
-    parsing_subexpression = ParserCache(stack)
-    parsing_subexpression = _parse_input(parsing_subexpression)
-    parser_cache.ast.append({
+    parsed_subexpression = ParserCache(stack)
+    parsed_subexpression = _parse_input(parsed_subexpression)
+    elem_ref = parser_cache.ast[-1]
+    elem_ref['value'].append({
         'type': 'EXPR',
-        'value': parsing_subexpression.ast
+        'value': parsed_subexpression.ast
     })
-
     return parser_cache
+```
+
+
+## Testing our parser
+
+```{python}
+for example in EXPRESSION_EXAMPLES:
+    parsed_expr = parse(example)
+    print("====================================")
+    print("  * Input expression: ", example)
+    print("  * Parsed AST: ", parsed_expr)
 ```
 
 ## The full source code
