@@ -241,7 +241,7 @@ class ParserCache:
 
     def current_index(self) -> int:
         return self.index
-        
+
     def next_token(self) -> None:
         self.index += 1
         if self.index < len(self.tokens):
@@ -272,9 +272,9 @@ def parse(input_string: str) -> List[Dict[str, Any]]:
 
 The true magic starts with the private function `_parse_input()`. Basically, `_parse_input()` starts by looking at the current of token in the sequence that is being analyzed.
 
-If this current token represents the beginning of a string (characters `"` and `'`), `_parse_string()` is called to effectively parse the next tokens in the sequence, which (very likely) are the contents of that string. But if this token is a plus sign, then, he will call `_parse_addition()` to parse the previous and the next tokens, which are involved in this addition operation. But if the current token is neither the beginning of a string or a plus sign, then, `_parse_input()` will assume that this current token is an identifier, and he will call `_parse_identifier()` to parse it.
+If this current token represents the beginning of a string (characters `"` and `'`), `_parse_string()` is called to effectively parse the next tokens in the sequence, which (very likely) are the contents of that string. But if this token is a plus sign, then, he will call `_parse_add_operator()` to parse the previous and the next tokens, which are involved in this addition operation. But if the current token is neither the beginning of a string or a plus sign, then, `_parse_input()` will assume that this current token is an identifier, and he will call `_parse_identifier()` to parse it.
 
-Notice that all of these three parsing functions (`_parse_string()`, `_parse_addition()` and `_parse_identifier()`) returns the `ParserCache` object back as output. These functions receives the parser cache as input, they use it to parse the current token, and they add new elements (or replace the existing ones) to the AST, which is stored inside this cache object. Once they finished their businesses, they simply return this cache back as their output.
+Notice that all of these three parsing functions (`_parse_string()`, `_parse_add_operator()` and `_parse_identifier()`) returns the `ParserCache` object back as output. These functions receives the parser cache as input, they use it to parse the current token, and they add new elements (or replace the existing ones) to the AST, which is stored inside this cache object. Once they finished their businesses, they simply return this cache back as their output.
 
 After we know that we parsed the current token, then, we ask the parser to advance to the next token, with `next_token()` method. Then, we check if there is really a next token in the sequence to parse/analyze, by checking if the current index is greater than the number of tokens in the sequence.
 
@@ -288,7 +288,7 @@ def _parse_input(parser_cache: ParserCache) -> ParserCache:
     if parser_cache.current_token() in ['"', "'"]:
         parser_cache = _parse_string(parser_cache)
     elif parser_cache.current_token() == '+':
-        parser_cache = _parse_addition(parser_cache)
+        parser_cache = _parse_add_operator(parser_cache)
     else:
         parser_cache = _parse_identifier(parser_cache)
 
@@ -328,7 +328,19 @@ def _parse_identifier(parser_cache: ParserCache) -> ParserCache:
 
 ### Parsing addition operations
 
-Now, things get a little bit more complicated when we find a plus sign in the middle of the sequence of tokens. Because if we do find a plus sign, that means that this plus sign should be surrounded by operands. In other words, this plus sign connects the left operand to the right operand, and they both are the arguments to this addition operation.
+Now, things get a little bit more complicated when we find a plus sign in the middle of the sequence of tokens. Because if we do find a plus sign, that means that this plus sign should be surrounded by operands. In other words, this plus sign connects the left operand to the right operand of this addition operation.
+
+In theory, the previous token in the sequence is in fact the left operand of this addition. The previous token in the sequence is the already parsed token that is present at the top level of the AST, in the parser cache object. That means, that we can get the left operand by executing `parser_cache.ast[-1]`.
+
+But, the big problem here is with the right operand. Because, in theory, the next token in the sequence is the right operand. But that is not really true, or, it would be too easy to be true. If we collect the next token, we get only one single token, and that is the real problem. Because if you think about it, you will probably find examples where the right operand could be composed of a sequence of multiple tokens, and not just a single one token.
+
+The expression `database + '.events'` is an example. Take a look at the tokenizer's output over this expression. The left operand is the first token (`database`), but the right operand, is actually the three last tokens in the sequence (`['"', '.events', '"']`). This means that these three tokens together are the right operand.
+
+```{python}
+print(tokenizer('database + ".events"'))
+```
+
+As a result, if we advanced the parser with `next_token()`, and run `current_token()` we would get only the token `"`, so the right operand would be incomplete.
 
 If we think about it, that means that the moment that we find a plus sign in the sequence of tokens, that means that the previous token is the left operand to the addition operation. But how can we get this previous token? I mean, the `ParserCache` class has only methods for current and next token, not a method for the previous token.
 
@@ -341,7 +353,7 @@ After we deleted the last element in the AST (which contained the left operand),
 After that, all we need to do, is to add to the AST an object that represents this addition operation.
 
 ```{python}
-def _parse_addition(parser_cache: ParserCache) -> ParserCache:
+def _parse_add_operator(parser_cache: ParserCache) -> ParserCache:
     left_operand = parser_cache.ast[-1]
     del parser_cache.ast[-1]
     parser_cache.next_token()
