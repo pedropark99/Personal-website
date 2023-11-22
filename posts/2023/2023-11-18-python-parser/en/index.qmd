@@ -14,7 +14,7 @@ format:
 
 Me and my team are currently working in a massive migration (similar to a cloud migration). This migration involves many process, but one of them is to redirect every table reference that we find in more than **130 thousand lines of Python code**.
 
-However, this task proved to be so complex that I had to develop a small parser for Python expressions. This article use this experiment to introduce beginners to the subject of parsing expressions.
+However, this task proved to be so complex that I had to develop a small parser for Python expressions. In this article, I want to use this experience to introduce the subject of parsing expressions to beginners.
 
 
 # Context about what we have to do {#sec-context}
@@ -47,7 +47,7 @@ df.show()
 
 This does not look so bad, right? I mean, considering the above example, I could just use a simple REGEX (*regular expression*) to find the places where I have an `spark.table()` call, capture the reference given as input, alter it to the new reference, and replace the text with the new reference.
 
-A quick example of this code would be similar to this:
+This approach would involve some code similar to this:
 
 ```{python}
 import re
@@ -98,19 +98,21 @@ Basically, the process of parsing takes a string (which contains the expression,
 
 ![The process of parsing](./../parser-pic.png){#fig-parser-pic}
 
-So the process of parsing takes an expression as input, and builds a tree that is equivalent to that expression as output. This process of parsing is always one of the first operations that a compiler performs. Because trees are a much more suitable and efficient data structure for the different tasks a compiler performs such as: type and syntax checking, evaluating the result of expressions and assignments, or compiling the input tree into machine code to be executed.
+So the process of parsing takes an expression as input, and builds a tree that is equivalent to that expression as output. This process of parsing is always one of the first operations that a compiler performs.
 
-Probably, trees and stacks are the most important data structures for every compiler.
+Because trees are a much more suitable and efficient data structure for the different tasks a compiler performs such as: type and syntax checking, evaluating the result of expressions and assignments, or compiling the input tree into machine code to be executed.
+
+Probably, the most important data structures for every compiler are trees and stacks.
 
 ## What kind of expressions we want to parse? {#sec-kind}
 
-Just to be clear, we neither need or want to develop a complete parser capable of parsing every expression in the Python language. That would be a much larger task, that would involve a great amount of effort. We just want to build a small parser capable of parsing a very small subset of Python expressions.
+Just to be clear, we neither need (or want) to develop a complete parser capable of parsing every expression in the Python language. That would be a much larger task, that would involve a great amount of effort. We just want to build a small parser capable of parsing a very small and specific subset of Python expressions.
 
 We are particularly interested in the expressions that are related to the table references that we find in our codebase. We already showed examples of these expressions at @sec-context and @sec-challenge.
 
 But just to state clearly, we want to build a parser capable of parsing:
 
-1. expressions that involves only string constants (other types of constants like lists, integers, booleans are not important for us, so let's ignore them). Example: `"platform.blipraw.events"`.
+1. expressions that involves only string constants (other types of constants or structures such as lists, integers, booleans are not important for us, so let's ignore them). Example: `"platform.blipraw.events"`.
 2. expressions that concatenate strings with the plus operator. Example: `"blip" + "." + "events"`.
 3. expressions that contains identifiers (that is, variable names). Example: `database + "." + table_name`.
 4. formatted strings which contain expressions that fit the above cases. Example: `f"{database}.{table_name}"`.
@@ -129,17 +131,49 @@ EXPRESSION_EXAMPLES = [
 
 ## Building the Lexer (or Tokenizer)
 
-Lets begin by building a lexer (or tokenizer) for our parser. From now on, I will use the term tokenizer, instead of lexer. Just be aware of this.
+Lets begin by building a lexer (or tokenizer) for our parser. Just be aware that, from now on, I will use the term tokenizer instead of lexer (this is just a personal preference).
 
-But how can we split our input string into small pieces? There are different approaches to do this. However, one particular approach that fit's perfectly our example here is to iterate through the characters of our input string, and look for single characters that represent "elegible break points", or points where we can split the string.
+But how can we split our input string into small pieces? Well, there are different approaches to do this. However, one particular approach that fit's perfectly our example here is to iterate through the characters of our input string, and look for single characters that represent "elegible break points", or points where we can split the string.
 
-This approach is probably the easiest of all to implement, and it fit's perfectly our example here because we are interested in parsing just a very small subset of simple Python expressions. If we wanted to parse more complex expressions, then, it would probably be better to change our approach.
+This approach is probably the easiest of all to implement, and it fit's perfectly our example here because we are interested in parsing just a very small subset of simple Python expressions. If we wanted to parse more complex expressions, then, it would probably be better to use another approach to break the input string.
 
 So, the tokenizer will iterate through each character in the input string, and will mark any place that contains a single character the we interpret as an elegible place to break the string. Considering the type of expressions we stated at @sec-kind, the characters `"`, `'`, `+`, `{`, `}` are good candidates for "elegible break points". Also, the character `f` is important for identifying formatted strings, as a consequence, he is also a good candidate.
 
 Let's consider the following tokenizer:
 
+```{#lst-tokenizer .python lst-cap="The function that represents our tokenizer"}
+from typing import List
+import re
+
+is_not_blank = lambda x: x != "" and not re.search(r"^ +$", x)
+def tokenizer(input_string: str) -> List[str]:
+    candidates = ["'", '"', '+', '{', '}']
+    break_points = list()
+    for i in range(len(input_string)):
+        current_char = input_string[i]
+        if current_char in candidates:
+            break_points.append(i)
+        if current_char == "f" and (i + 1) < len(input_string): #<1>
+            next_char = input_string[i + 1]
+            if next_char in ['"', "'"]:
+                break_points.append(i)
+
+    if len(break_points) == 0: #<2>
+        return [input_string]
+
+    tokens = list()
+    last_index = 0
+    for index in break_points:
+        tokens.append(input_string[last_index:index]) #<3>
+        tokens.append(input_string[index:(index+1)])
+        last_index = index + 1
+
+    tokens.append(input_string[last_index:])
+    return list(filter(is_not_blank, tokens)) #<4>
+```
+
 ```{python}
+#| echo: false
 from typing import List
 import re
 
@@ -183,7 +217,7 @@ This `tokenizer()` function generates a list of tokens to be analyzed by the par
 ```{python}
 for example in EXPRESSION_EXAMPLES:
     tokens = tokenizer(example)
-    print("====================================")
+    print("================================================================")
     print("  * Input expression: ", example)
     print("  * Tokens produced: ", tokens)
 ```
@@ -191,19 +225,20 @@ for example in EXPRESSION_EXAMPLES:
 
 ## Building the actual parser
 
-Building the actual parser is definitely the hard part. Because a parser usually involves: 1) having a variable to store the current state of the parser, or, the current state of AST; 2) and also some level of recursion to traverse the AST, or to decide which move or production rule should be applied. Making these two components working well together can be difficult depending on how you implement it.
+Building the actual parser is definitely the hard part. Because a parser usually involves: 1) having a variable to store the current state of the parser, or, the current state of the AST; 2) and also some level of recursion to traverse the AST, or to decide which move or production rule should be applied. Making these two components working well together can be difficult depending on how you implement it.
 
 ### The different types of strategies
 
-Remember, the end goal of a parser, is to build an abstract syntax tree (AST) by analizing a sequence of tokens. There are different strategies to build this tree. These strategies are usually divided into two categories, which are: 1) *top-down*, which are the strategies that builds the tree from the root, and work they way to the bottom of the tree, which contains the "leaves of the tree"; 2) *bottom-up*, that starts to build the tree from the leaves, and work they way up until it hits the root of the tree.
+Remember, the end goal of a parser, is to build an abstract syntax tree (AST) by analizing a sequence of tokens. There are different strategies to build this tree. These strategies are usually divided into two categories, which are: 1) *top-down*, which are the strategies that builds the tree from the root, and work they way to the bottom of the tree, which contains the "leaves of the tree"; 2) *bottom-up*, (the inverse) which are strategies that starts to build the tree from the leaves, and work they way up until it hits the root of the tree.
 
-In the subject of parsing, *top-down* strategies are the most popular (notice that this does not mean that *bottom-up* strategies are bad). The most popular strategy of all is the *Recursive Descent*, which is a *top-down* strategy. Anyway, just be aware that different strategies exists.
+In the subject of parsing, *top-down* strategies are the most popular (notice that this does not mean that *bottom-up* strategies are bad or not commom). The most popular strategy of all is the *Recursive Descent*, which is a *top-down* strategy. But I will not describe these strategy here, specially to avoid all the technical jargon that they bring with them. Anyway, just be aware that different strategies exists.
+
 
 ### The smaller components of a parser
 
-Every parser usually involves two smaller components: 1) a cache that holds the current state of the parser. This cache stores variables that are essential to the parsing process, such as the AST builded by the parser; 2) a control (or "decision-making") mechanism, which is usually a collection of methods or functions that decides which move the parser should make considering the current state of it (@gries2008).
+Every parser usually involves two smaller components: 1) a cache that holds the current state of the parser. This cache stores variables that are essential to the parsing process, such as the current state of the AST builded by the parser; 2) and a control (or "decision-making") mechanism, which is usually a collection of methods or functions that decides which move the parser should make considering it's current state (@gries2008).
 
-Some degree of recursion is found very frequently on some of these methods or functions that decides which move the parser should make (although this recursion is not something mandatory).
+Some degree of recursion is found very frequently on some of these methods or functions that decides which move the parser should make. Although this recursion is not something mandatory, because there are some available strategies to build the AST that do not involves any recursion at all.
 
 ### The cache to store the current parser's state
 
@@ -272,13 +307,13 @@ def parse(input_string: str) -> List[Dict[str, Any]]:
 
 The true magic starts with the private function `_parse_input()`. Basically, `_parse_input()` starts by looking at the current of token in the sequence that is being analyzed.
 
-If this current token represents the beginning of a string (characters `"` and `'`), `_parse_string()` is called to effectively parse the next tokens in the sequence, which (very likely) are the contents of that string. But if this token is a plus sign, then, he will call `_parse_add_operator()` to parse the previous and the next tokens, which are involved in this addition operation. But if the current token is neither the beginning of a string or a plus sign, then, `_parse_input()` will assume that this current token is an identifier, and he will call `_parse_identifier()` to parse it.
+If this current token represents the beginning of a string (characters `"` and `'`), `_parse_string()` is called to effectively parse the next tokens in the sequence, which (very likely) are the contents of that string. But if this token is a plus sign, then, he will call `_parse_add_operator()` to parse this token. If the current token is neither the beginning of a string or a plus sign, then, `_parse_input()` will assume that this current token is an identifier, and he will call `_parse_identifier()` to parse it.
 
-Notice that all of these three parsing functions (`_parse_string()`, `_parse_add_operator()` and `_parse_identifier()`) returns the `ParserCache` object back as output. These functions receives the parser cache as input, they use it to parse the current token, and they add new elements (or replace the existing ones) to the AST, which is stored inside this cache object. Once they finished their businesses, they simply return this cache back as their output.
+Notice that all of these three parsing functions (`_parse_string()`, `_parse_add_operator()` and `_parse_identifier()`) returns the `ParserCache` object back as output. In other words, these functions receives the parser cache as input, they use this cache to parse the current token, and they add new elements (or replace the existing ones) to the AST, which is stored inside this cache object. Once they finished their businesses, they simply return this cache back as their output.
 
 After we know that we parsed the current token, then, we ask the parser to advance to the next token, with `next_token()` method. Then, we check if there is really a next token in the sequence to parse/analyze, by checking if the current index is greater than the number of tokens in the sequence.
 
-If there are still some remaining tokens in the sequence to analyze, then, `_parse_input()` will call itself recursively to parse the remaining tokens in the sequence. However, if there is not elements to analyze anymore, then, the function finally returns the parser cache (which contains the complete AST inside of the `ast` variable) as output.
+If there are still some remaining tokens in the sequence to analyze, then, `_parse_input()` will call itself recursively to parse the remaining tokens in the sequence. However, if there is not remaining tokens to analyze anymore, then, the function finally returns the parser cache (which contains the complete AST inside of the `ast` variable) as output.
 
 ```{python}
 def _parse_input(parser_cache: ParserCache) -> ParserCache:
@@ -328,21 +363,30 @@ def _parse_identifier(parser_cache: ParserCache) -> ParserCache:
 
 ### Parsing addition operations
 
-Now, things get a little bit more complicated when we find a plus sign in the middle of the sequence of tokens. Because if we do find a plus sign, that means that this plus sign should be surrounded by operands. In other words, this plus sign connects the left operand to the right operand of this addition operation.
+Now, things get a little bit more complicated when we find a plus sign in the middle of the sequence of tokens. Because if we do find a plus sign, that means that this plus sign is surrounded by operands in the original expression. In other words, this plus sign connects the left operand to the right operand of this addition operation.
 
-In theory, the previous token in the sequence is in fact the left operand of this addition. The previous token in the sequence is the already parsed token that is present at the top level of the AST, in the parser cache object. That means, that we can get the left operand by executing `parser_cache.ast[-1]`.
+In theory, the previous token in the sequence is the left operand of this addition, and the next token in the sequence is the right operand. That means that, just in theory, at the moment we find a plus sign in the sequence of tokens, we can collect the left operand of the addition operation by looking at the previous token, and, we could also collect the right operand by advancing the parser with `next_token()` and using `current_token()` to get the next token in the sequence.
 
-But, the big problem here is with the right operand. Because, in theory, the next token in the sequence is the right operand. But that is not really true, or, it would be too easy to be true. If we collect the next token, we get only one single token, and that is the real problem. Because if you think about it, you will probably find examples where the right operand could be composed of a sequence of multiple tokens, and not just a single one token.
 
-The expression `database + '.events'` is an example. Take a look at the tokenizer's output over this expression. The left operand is the first token (`database`), but the right operand, is actually the three last tokens in the sequence (`['"', '.events', '"']`). This means that these three tokens together are the right operand.
+#### The challenge
+
+However, this is not really true, or, it would be too easy to be true. The real problem, is that the left and right operands could be splitten by the tokenizer into multiple tokens. In other words, there are very commom cases where single calls to `current_token()` would be insufficient to actually get the right or left operands.
+
+That means that the tokenizer step might make the part of identifying where the left and right operands are in the sequence of tokens a difficult task. If you think about how the tokenizer works (see @lst-tokenizer), you will probably find examples where the left or right operands could be composed of multiple tokens, and not just a single token.
+
+Take the expression `database + '.events'` as an example. Take a look at the tokenizer's output over this expression. The left operand is the first token (`database`), but the right operand, is actually the three last tokens in the sequence (`['"', '.events', '"']`). This means that these three tokens together compose the right operand.
 
 ```{python}
 print(tokenizer('database + ".events"'))
 ```
 
-As a result, if we advanced the parser with `next_token()`, and run `current_token()` we would get only the token `"`, so the right operand would be incomplete.
+As a result, at the moment where the parser is at the plus sign, if we advance the parser with `next_token()`, and run `current_token()` we would get only the token `"`, so the right operand would be incomplete. How do we know that we need to accumulate the next three tokens instead of looking to just one token in the sequence?
 
-If we think about it, that means that the moment that we find a plus sign in the sequence of tokens, that means that the previous token is the left operand to the addition operation. But how can we get this previous token? I mean, the `ParserCache` class has only methods for current and next token, not a method for the previous token.
+#### Solving the issue for the left operand
+
+For now, lets ignore the right operand and think about the left operand. The left operand is certainly the things that are before the plus sign. But, as we saw in the previous section, in some cases, we might need to look 3, 4 or 5 tokens behind to actually get the full left operand, instead of looking at just 1 token behind.
+
+
 
 Well, we do not need a method to get the previous token, because the previous token is obviously at the top of the AST. In other words, the last element in the AST is the previous token already parsed, and we can easily access this last element by calling `parser_cache.ast[-1]`.
 

@@ -103,15 +103,35 @@ def _parse_addition(parser_cache: ParserCache) -> ParserCache:
     left_operand = parser_cache.ast[-1]
     del parser_cache.ast[-1]
     parser_cache.next_token()
-    right_operand = parser_cache.current_token()
+    right_operand = _parse_right_operand(parser_cache)
     parser_cache.ast.append({
         'type': 'ADDITION',
-        'left': left_operand,
-        'right': right_operand
+        'left_operand': left_operand,
+        'right_operand': right_operand
     })
     return parser_cache
 
+def _parse_right_operand(parser_cache: ParserCache) -> ParserCache:
+    stack = list()
+    while parser_cache.current_index() < parser_cache.len() - 1:
+        if parser_cache.current_token() == "+":
+            parser_cache.next_token()
+            temp_parse_cache = ParserCache(stack)
+            parsed_left_operand = _parse_input(temp_parse_cache)
+            right_operand = _parse_right_operand(parser_cache)
+            return {
+                'type': 'ADDITION',
+                'left_operand': parsed_left_operand.ast,
+                'right_operand': right_operand
+            }
 
+        stack.append(parser_cache.current_token())
+        parser_cache.next_token()
+    
+    temp_parse_cache = ParserCache(stack)
+    parsed_right_operand = _parse_input(temp_parse_cache)
+    return parsed_right_operand.ast
+    
 
 def _parse_string(parser_cache: ParserCache) -> ParserCache:
     char_that_opens_the_string = parser_cache.current_token()
