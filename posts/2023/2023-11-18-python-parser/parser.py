@@ -94,7 +94,7 @@ def _parse_input(parser_cache: ParserCache) -> ParserCache:
 def _parse_identifier(parser_cache: ParserCache) -> ParserCache:
     parser_cache.ast.append({
         'type': 'IDENTIFIER',
-        'value': str(parser_cache.current_token())
+        'value': str(parser_cache.current_token()).strip()
     })
     return parser_cache
 
@@ -113,7 +113,7 @@ def _parse_addition(parser_cache: ParserCache) -> ParserCache:
 
 def _parse_right_operand(parser_cache: ParserCache) -> ParserCache:
     stack = list()
-    while parser_cache.current_index() < parser_cache.len() - 1:
+    while parser_cache.current_index() <= parser_cache.len() - 1:
         if parser_cache.current_token() == "+":
             parser_cache.next_token()
             temp_parse_cache = ParserCache(stack)
@@ -121,7 +121,7 @@ def _parse_right_operand(parser_cache: ParserCache) -> ParserCache:
             right_operand = _parse_right_operand(parser_cache)
             return {
                 'type': 'ADDITION',
-                'left_operand': parsed_left_operand.ast,
+                'left_operand': parsed_left_operand.ast[0],
                 'right_operand': right_operand
             }
 
@@ -130,7 +130,7 @@ def _parse_right_operand(parser_cache: ParserCache) -> ParserCache:
     
     temp_parse_cache = ParserCache(stack)
     parsed_right_operand = _parse_input(temp_parse_cache)
-    return parsed_right_operand.ast
+    return parsed_right_operand.ast[0]
     
 
 def _parse_string(parser_cache: ParserCache) -> ParserCache:
