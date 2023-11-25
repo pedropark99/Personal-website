@@ -451,19 +451,19 @@ df.show()
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="lst-tokenizer" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="lst-tokenizer" data-code-annotation="1" data-code-lines="12">If current character is <code>f</code> check if the next character is the beginning of a string (characters <code>"</code> and <code>'</code>), if it is the beginning of a string, then, it is a formatted string and should be included in the “break points”. If the next character is not the beginning of a string, then, we should not consider it as an elegible breakpoint, because it probably is just a letter “f” inside a variable name, such as <code>platform_database</code>.</span>
+<span data-code-annotation="1" data-code-cell="lst-tokenizer" data-code-lines="12">If current character is <code>f</code> check if the next character is the beginning of a string (characters <code>"</code> and <code>'</code>), if it is the beginning of a string, then, it is a formatted string and should be included in the “break points”. If the next character is not the beginning of a string, then, we should not consider it as an elegible breakpoint, because it probably is just a letter “f” inside a variable name, such as <code>platform_database</code>.</span>
 </dd>
 <dt data-target-cell="lst-tokenizer" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="lst-tokenizer" data-code-annotation="2" data-code-lines="17">If no break point position was found, then, the input expression is likely an expression with a single component. For example, a single string constant (e.g.&nbsp;<code>"blip.events"</code>) or a single variable name (<code>events_table</code>). In this case, the tokenizer should return this single component itself as the only token present in the input string.</span>
+<span data-code-annotation="2" data-code-cell="lst-tokenizer" data-code-lines="17">If no break point position was found, then, the input expression is likely an expression with a single component. For example, a single string constant (e.g.&nbsp;<code>"blip.events"</code>) or a single variable name (<code>events_table</code>). In this case, the tokenizer should return this single component itself as the only token present in the input string.</span>
 </dd>
 <dt data-target-cell="lst-tokenizer" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-cell="lst-tokenizer" data-code-annotation="3" data-code-lines="23">Every iteration of the loop generates two different tokens, which are: 1) a token with the part of the string from the previous break point index until the current elegible break point index; 2) and another token containing the single character that identifies the current elegible breakpoint. For example, the text <code>database"</code> will generate the break point index <code>8</code>, so, in the first iteration of the loop, the tokens <code>'database'</code> and <code>'"'</code> will be generated.</span>
+<span data-code-annotation="3" data-code-cell="lst-tokenizer" data-code-lines="23">Every iteration of the loop generates two different tokens, which are: 1) a token with the part of the string from the previous break point index until the current elegible break point index; 2) and another token containing the single character that identifies the current elegible breakpoint. For example, the text <code>database"</code> will generate the break point index <code>8</code>, so, in the first iteration of the loop, the tokens <code>'database'</code> and <code>'"'</code> will be generated.</span>
 </dd>
 <dt data-target-cell="lst-tokenizer" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-cell="lst-tokenizer" data-code-annotation="4" data-code-lines="28">Empty tokens (i.e.&nbsp;tokens that are empty strings, or, that contains only spaces) can be generated during the process. So we use <code>filter()</code> with a <code>lambda</code> function to eliminate them from the output.</span>
+<span data-code-annotation="4" data-code-cell="lst-tokenizer" data-code-lines="28">Empty tokens (i.e.&nbsp;tokens that are empty strings, or, that contains only spaces) can be generated during the process. So we use <code>filter()</code> with a <code>lambda</code> function to eliminate them from the output.</span>
 </dd>
 </dl>
 <p>This <code>tokenizer()</code> function generates a list of tokens to be analyzed by the parser:</p>
@@ -588,7 +588,7 @@ df.show()
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-8" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-8" data-code-annotation="1" data-code-lines="2">If the sequence of tokens is empty, then, we have no tokens to analyze, and the function should simply return right away.</span>
+<span data-code-annotation="1" data-code-cell="annotated-cell-8" data-code-lines="2">If the sequence of tokens is empty, then, we have no tokens to analyze, and the function should simply return right away.</span>
 </dd>
 </dl>
 </div>
@@ -646,7 +646,7 @@ df.show()
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-10" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-10" data-code-annotation="1" data-code-lines="2">We copy the character (<code>'</code> or <code>"</code>) that openned the string that we are analyzing now, because then, we can search for a new occurence of this same character in the tokens sequence to detect the end of the string.</span>
+<span data-code-annotation="1" data-code-cell="annotated-cell-10" data-code-lines="2">We copy the character (<code>'</code> or <code>"</code>) that openned the string that we are analyzing now, because then, we can search for a new occurence of this same character in the tokens sequence to detect the end of the string.</span>
 </dd>
 </dl>
 </div>
@@ -679,7 +679,7 @@ df.show()
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-11" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-11" data-code-annotation="1" data-code-lines="4">We break the loop, at the moment that we find a closing bracket in the sequence of tokens, because this character represents the end of the pair of brackets that contains the subexpression that we are analyzing.</span>
+<span data-code-annotation="1" data-code-cell="annotated-cell-11" data-code-lines="4">We break the loop, at the moment that we find a closing bracket in the sequence of tokens, because this character represents the end of the pair of brackets that contains the subexpression that we are analyzing.</span>
 </dd>
 </dl>
 </div>
