@@ -14,6 +14,7 @@
   {
     "listing": "/posts/index.html",
     "items": [
+      "/posts/2023/2023-11-18-python-parser/en/index.html",
       "/posts/2023/2023-08-31-data-decisions/en/index.html",
       "/posts/2023/2023-08-31-data-decisions/pt/index.html",
       "/posts/2023/2023-07-31-git-mark-decisions/en/index.html",
@@ -37,6 +38,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/2023/2023-11-18-python-parser/en/index.html",
       "/posts/2023/2023-08-31-data-decisions/en/index.html",
       "/posts/2023/2023-07-31-git-mark-decisions/en/index.html",
       "/posts/2023/2023-03-06-storytelling/en/index.html",
@@ -62,6 +64,7 @@
   {
     "listing": "/posts/en.html",
     "items": [
+      "/posts/2023/2023-11-18-python-parser/en/index.html",
       "/posts/2023/2023-08-31-data-decisions/en/index.html",
       "/posts/2023/2023-07-31-git-mark-decisions/en/index.html",
       "/posts/2023/2023-03-06-storytelling/en/index.html",
