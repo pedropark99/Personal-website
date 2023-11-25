@@ -406,19 +406,19 @@ font-style: inherit;">filter</span>(is_not_blank, tokens))</span><div class="cod
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="lst-tokenizer" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-cell="lst-tokenizer" data-code-lines="12">If current character is <code>f</code> check if the next character is the beginning of a string (characters <code>"</code> and <code>'</code>), if it is the beginning of a string, then, it is a formatted string and should be included in the “break points”. If the next character is not the beginning of a string, then, we should not consider it as an elegible breakpoint, because it probably is just a letter “f” inside a variable name, such as <code>platform_database</code>.</span>
+<span data-code-lines="12" data-code-cell="lst-tokenizer" data-code-annotation="1">If current character is <code>f</code> check if the next character is the beginning of a string (characters <code>"</code> and <code>'</code>), if it is the beginning of a string, then, it is a formatted string and should be included in the “break points”. If the next character is not the beginning of a string, then, we should not consider it as an elegible breakpoint, because it probably is just a letter “f” inside a variable name, such as <code>platform_database</code>.</span>
 </dd>
 <dt data-target-cell="lst-tokenizer" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-annotation="2" data-code-cell="lst-tokenizer" data-code-lines="17">If no break point position was found, then, the input expression is likely an expression with a single component. For example, a single string constant (e.g.&nbsp;<code>"blip.events"</code>) or a single variable name (<code>events_table</code>). In this case, the tokenizer should return this single component itself as the only token present in the input string.</span>
+<span data-code-lines="17" data-code-cell="lst-tokenizer" data-code-annotation="2">If no break point position was found, then, the input expression is likely an expression with a single component. For example, a single string constant (e.g.&nbsp;<code>"blip.events"</code>) or a single variable name (<code>events_table</code>). In this case, the tokenizer should return this single component itself as the only token present in the input string.</span>
 </dd>
 <dt data-target-cell="lst-tokenizer" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-annotation="3" data-code-cell="lst-tokenizer" data-code-lines="23">Every iteration of the loop generates two different tokens, which are: 1) a token with the part of the string from the previous break point index until the current elegible break point index; 2) and another token containing the single character that identifies the current elegible breakpoint. For example, the text <code>database"</code> will generate the break point index <code>8</code>, so, in the first iteration of the loop, the tokens <code>'database'</code> and <code>'"'</code> will be generated.</span>
+<span data-code-lines="23" data-code-cell="lst-tokenizer" data-code-annotation="3">Every iteration of the loop generates two different tokens, which are: 1) a token with the part of the string from the previous break point index until the current elegible break point index; 2) and another token containing the single character that identifies the current elegible breakpoint. For example, the text <code>database"</code> will generate the break point index <code>8</code>, so, in the first iteration of the loop, the tokens <code>'database'</code> and <code>'"'</code> will be generated.</span>
 </dd>
 <dt data-target-cell="lst-tokenizer" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-annotation="4" data-code-cell="lst-tokenizer" data-code-lines="28">Empty tokens (i.e.&nbsp;tokens that are empty strings, or, that contains only spaces) can be generated during the process. So we use <code>filter()</code> with a <code>lambda</code> function to eliminate them from the output.</span>
+<span data-code-lines="28" data-code-cell="lst-tokenizer" data-code-annotation="4">Empty tokens (i.e.&nbsp;tokens that are empty strings, or, that contains only spaces) can be generated during the process. So we use <code>filter()</code> with a <code>lambda</code> function to eliminate them from the output.</span>
 </dd>
 </dl>
 <p>This <code>tokenizer()</code> function generates a list of tokens to be analyzed by the parser:</p>
@@ -769,7 +769,7 @@ font-style: inherit;">return</span> parser_cache</span><div class="code-annotati
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-8" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-cell="annotated-cell-8" data-code-lines="2">If the sequence of tokens is empty, then, we have no tokens to analyze, and the function should simply return right away.</span>
+<span data-code-lines="2" data-code-cell="annotated-cell-8" data-code-annotation="1">If the sequence of tokens is empty, then, we have no tokens to analyze, and the function should simply return right away.</span>
 </dd>
 </dl>
 </div>
@@ -893,7 +893,7 @@ font-style: inherit;">return</span> parser_cache</span><div class="code-annotati
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-10" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-cell="annotated-cell-10" data-code-lines="2">We copy the character (<code>'</code> or <code>"</code>) that openned the string that we are analyzing now, because then, we can search for a new occurence of this same character in the tokens sequence to detect the end of the string.</span>
+<span data-code-lines="2" data-code-cell="annotated-cell-10" data-code-annotation="1">We copy the character (<code>'</code> or <code>"</code>) that openned the string that we are analyzing now, because then, we can search for a new occurence of this same character in the tokens sequence to detect the end of the string.</span>
 </dd>
 </dl>
 </div>
@@ -972,7 +972,7 @@ font-style: inherit;">return</span> parser_cache</span><div class="code-annotati
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-11" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-cell="annotated-cell-11" data-code-lines="4">We break the loop, at the moment that we find a closing bracket in the sequence of tokens, because this character represents the end of the pair of brackets that contains the subexpression that we are analyzing.</span>
+<span data-code-lines="4" data-code-cell="annotated-cell-11" data-code-annotation="1">We break the loop, at the moment that we find a closing bracket in the sequence of tokens, because this character represents the end of the pair of brackets that contains the subexpression that we are analyzing.</span>
 </dd>
 </dl>
 </div>
@@ -1218,8 +1218,8 @@ font-style: inherit;">"  * Parsed AST: "</span>, parsed_expr)</span></code></pre
   * Parsed AST:  [{'type': 'STRING', 'value': [{'type': 'EXPR', 'value': [{'type': 'IDENTIFIER', 'value': 'database'}]}, '.', {'type': 'EXPR', 'value': [{'type': 'IDENTIFIER', 'value': 'table_name'}]}]}]</code></pre>
 </div>
 </div>
-<p>For simplicity, the produced AST is composed by a list of dict (or JSON) objects which describes the elements of the three. Now that we have this three, we might do a lot of different things with it. As I mentioned before, every compiler uses trees like this to do type checking, to identify dependencies of your source code, and also, to perform optimization processes.</p>
-<p>But these operations is out of scope of this article. Our objective here is complete, which was to show a basic example of a parser written in Python. If you want to take a closer look, you can see the full source code of the parser at <a href="./../parser.py"><code>parser.py</code></a>.</p>
+<p>You can see in the above output, that parser I presented here produces an AST which is composed by a list of dict (or JSON) objects which describes the elements of the three. Now that we have this three, we might do a lot of different things with it. As I mentioned before, every compiler uses trees like this to do type checking, to identify dependencies of your source code, and also, to perform optimization processes.</p>
+<p>But these operations are out of the scope of this article. Our objective here is complete, which was to show a basic example of a parser written in Python. If you want to take a closer look, you can see the full source code of the parser at <a href="./../parser.py"><code>parser.py</code></a>.</p>
 
 
 

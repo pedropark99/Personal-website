@@ -562,4 +562,4 @@ for example in EXPRESSION_EXAMPLES:
 
 You can see in the above output, that parser I presented here produces an AST which is composed by a list of dict (or JSON) objects which describes the elements of the three. Now that we have this three, we might do a lot of different things with it. As I mentioned before, every compiler uses trees like this to do type checking, to identify dependencies of your source code, and also, to perform optimization processes.
 
-But these operations is out of scope of this article. Our objective here is complete, which was to show a basic example of a parser written in Python. If you want to take a closer look, you can see the full source code of the parser at [`parser.py`](./../parser.py).
+But these operations are out of the scope of this article. Our objective here is complete, which was to show a basic example of a parser written in Python. If you want to take a closer look, you can see the full source code of the parser at [`parser.py`](./../parser.py).
