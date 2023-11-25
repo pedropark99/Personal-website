@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.3.433">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -312,7 +312,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 </section>
 <section id="sec-context" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Context about what we have to do</h1>
-<p>Most of these 130 thousand lines of Python code are <a href="https://spark.apache.org/docs/latest/api/python/index.html"><code>pyspark</code></a> code to extract, transform and load data using the <code>Apache Spark</code> engine.</p>
+<p>Most of these 130 thousand lines of Python code are <a href="https://spark.apache.org/docs/latest/api/python/index.html"><code>pyspark</code></a> code to extract, transform and load data using the <a href="https://spark.apache.org/">Apache Spark</a> engine.</p>
 <p>Let’s consider the following example:</p>
 <div id="lst-table" class="listing">
 <p>Listing&nbsp;1: Example of pyspark code that we might find in our codebase</p>
@@ -322,7 +322,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <span id="lst-table-4"><a href="#lst-table-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> spark.table(<span class="st">"blip.events"</span>)</span>
 <span id="lst-table-5"><a href="#lst-table-5" aria-hidden="true" tabindex="-1"></a>df.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>You can see at <a href="#lst-table">Listing&nbsp;1</a> that we have a <code>spark.table()</code> call to access the SQL table <code>blip.events</code>. However, in the new infrastructure, all table references will change. As a result, me and my team need to rewrite every table reference that we find across our codebase.</p>
+<p>You can see at <a href="#lst-table">Listing&nbsp;1</a> that we have a <code>spark.table()</code> call to access the SQL table <code>blip.events</code>. In other words, we are basically making a <code>SELECT * FROM</code> query over this table. However, in our new infrastructure, all table references will change. As a result, me and my team need to rewrite every table reference that we find across our codebase.</p>
 <p>For example, let’s suppose that the new table reference is <code>platform.blipraw.events</code>. This means that I need to alter the above snippet of code to:</p>
 <div id="lst-table2" class="listing">
 <p>Listing&nbsp;2: Example with the new reference</p>
@@ -338,14 +338,14 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <p>This approach would involve some code similar to this:</p>
 <div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>spark_table_regex <span class="op">=</span> <span class="vs">r'spark[.]table[(][a-zA-Z0-9.\'\"]+[)]'</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>notebook_content <span class="op">=</span> <span class="st">'''from pyspark.sql import SparkSession</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="st">spark = SparkSession.builder.getOrCreate()</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="st">df = spark.table("blip.events")</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="st">df.show()</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="st">'''</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>notebook_content <span class="op">=</span> <span class="st">'''from pyspark.sql import SparkSession</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="st">spark = SparkSession.builder.getOrCreate()</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="st">df = spark.table("blip.events")</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="st">df.show()</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="st">'''</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>spark_table_regex <span class="op">=</span> <span class="vs">r'spark[.]table[(][a-zA-Z0-9.\'\"]+[)]'</span></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>new_table_call <span class="op">=</span> <span class="st">"spark.table(</span><span class="ch">\"</span><span class="st">platform.blipraw.events</span><span class="ch">\"</span><span class="st">)"</span></span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>new_notebook_content <span class="op">=</span> re.sub(spark_table_regex, new_table_call, notebook_content)</span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(new_notebook_content)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -451,19 +451,19 @@ df.show()
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="lst-tokenizer" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-lines="12" data-code-cell="lst-tokenizer">If current character is <code>f</code> check if the next character is the beginning of a string (characters <code>"</code> and <code>'</code>), if it is the beginning of a string, then, it is a formatted string and should be included in the “break points”. If the next character is not the beginning of a string, then, we should not consider it as an elegible breakpoint, because it probably is just a letter “f” inside a variable name, such as <code>platform_database</code>.</span>
+<span data-code-cell="lst-tokenizer" data-code-annotation="1" data-code-lines="12">If current character is <code>f</code> check if the next character is the beginning of a string (characters <code>"</code> and <code>'</code>), if it is the beginning of a string, then, it is a formatted string and should be included in the “break points”. If the next character is not the beginning of a string, then, we should not consider it as an elegible breakpoint, because it probably is just a letter “f” inside a variable name, such as <code>platform_database</code>.</span>
 </dd>
 <dt data-target-cell="lst-tokenizer" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-annotation="2" data-code-lines="17" data-code-cell="lst-tokenizer">If no break point position was found, then, the input expression is likely an expression with a single component. For example, a single string constant (e.g.&nbsp;<code>"blip.events"</code>) or a single variable name (<code>events_table</code>). In this case, the tokenizer should return this single component itself as the only token present in the input string.</span>
+<span data-code-cell="lst-tokenizer" data-code-annotation="2" data-code-lines="17">If no break point position was found, then, the input expression is likely an expression with a single component. For example, a single string constant (e.g.&nbsp;<code>"blip.events"</code>) or a single variable name (<code>events_table</code>). In this case, the tokenizer should return this single component itself as the only token present in the input string.</span>
 </dd>
 <dt data-target-cell="lst-tokenizer" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-annotation="3" data-code-lines="23" data-code-cell="lst-tokenizer">Every iteration of the loop generates two different tokens, which are: 1) a token with the part of the string from the previous break point index until the current elegible break point index; 2) and another token containing the single character that identifies the current elegible breakpoint. For example, the text <code>database"</code> will generate the break point index <code>8</code>, so, in the first iteration of the loop, the tokens <code>'database'</code> and <code>'"'</code> will be generated.</span>
+<span data-code-cell="lst-tokenizer" data-code-annotation="3" data-code-lines="23">Every iteration of the loop generates two different tokens, which are: 1) a token with the part of the string from the previous break point index until the current elegible break point index; 2) and another token containing the single character that identifies the current elegible breakpoint. For example, the text <code>database"</code> will generate the break point index <code>8</code>, so, in the first iteration of the loop, the tokens <code>'database'</code> and <code>'"'</code> will be generated.</span>
 </dd>
 <dt data-target-cell="lst-tokenizer" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-annotation="4" data-code-lines="28" data-code-cell="lst-tokenizer">Empty tokens (i.e.&nbsp;tokens that are empty strings, or, that contains only spaces) can be generated during the process. So we use <code>filter()</code> with a <code>lambda</code> function to eliminate them from the output.</span>
+<span data-code-cell="lst-tokenizer" data-code-annotation="4" data-code-lines="28">Empty tokens (i.e.&nbsp;tokens that are empty strings, or, that contains only spaces) can be generated during the process. So we use <code>filter()</code> with a <code>lambda</code> function to eliminate them from the output.</span>
 </dd>
 </dl>
 <p>This <code>tokenizer()</code> function generates a list of tokens to be analyzed by the parser:</p>
@@ -494,8 +494,8 @@ df.show()
 <p>Building the actual parser is definitely the hard part. Because a parser usually involves: 1) having a variable to store the current state of the parser, or, the current state of the AST; 2) and also some level of recursion to traverse the AST, or to decide which move or production rule should be applied. Making these two components working well together can be difficult depending on how you implement it.</p>
 <section id="the-different-types-of-strategies" class="level3" data-number="3.4.1">
 <h3 data-number="3.4.1" class="anchored" data-anchor-id="the-different-types-of-strategies"><span class="header-section-number">3.4.1</span> The different types of strategies</h3>
-<p>Remember, the end goal of a parser, is to build an abstract syntax tree (AST) by analizing a sequence of tokens. There are different strategies to build this tree. These strategies are usually divided into two categories, which are: 1) <em>top-down</em>, which are the strategies that builds the tree from the root, and work they way to the bottom of the tree, which contains the “leaves of the tree”; 2) <em>bottom-up</em>, (the inverse) which are strategies that starts to build the tree from the leaves, and work they way up until it hits the root of the tree.</p>
-<p>In the subject of parsing, <em>top-down</em> strategies are the most popular (notice that this does not mean that <em>bottom-up</em> strategies are bad or not commom). The most popular strategy of all is the <em>Recursive Descent</em>, which is a <em>top-down</em> strategy. But I will not describe these strategy here, specially to avoid all the technical jargon that they bring with them. Anyway, just be aware that different strategies exists.</p>
+<p>Remember, the end goal of a parser, is to build an abstract syntax tree (AST) by analizing a sequence of tokens. There are different strategies to build this tree, and they are usually divided into two categories: 1) <em>top-down</em>. These are strategies that builds the tree from the root, and work they way to the bottom of the tree, which contains the “leaves of the tree”; 2) <em>bottom-up</em> (the inverse). These are strategies which starts to build the tree from the leaves, and work they way up until it hits the root of the tree.</p>
+<p>In the subject of parsing, <em>top-down</em> strategies are the most popular (notice that this does not mean that <em>bottom-up</em> strategies are bad or not commom). The most popular strategy of all is the <em>Recursive Descent</em>, which is a <em>top-down</em> strategy. But I will not describe these strategy here, specially to avoid all the technical jargon that they bring with them. Anyway, just be aware that there are different strategies out there, and that in this article I’m only presenting one of them.</p>
 </section>
 <section id="the-smaller-components-of-a-parser" class="level3" data-number="3.4.2">
 <h3 data-number="3.4.2" class="anchored" data-anchor-id="the-smaller-components-of-a-parser"><span class="header-section-number">3.4.2</span> The smaller components of a parser</h3>
@@ -508,12 +508,12 @@ df.show()
 <ul>
 <li><code>ast</code>: stores the current state of the AST.</li>
 <li><code>tokens</code>: stores the full sequence of tokens that the parser needs to analyze.</li>
-<li><code>current_index</code>: stores the index that parser is currently in on the sequence of tokens.</li>
-<li><code>current_token</code>: stores a copy of the current token that the parser is analyzing at the moment.</li>
+<li><code>index</code>: stores the index on the sequence of tokens that the parser is currently on.</li>
+<li><code>token</code>: stores a copy of the current token that the parser is analyzing at the moment.</li>
 </ul>
-<p>It is not really vital to have the <code>current_token</code> variable, because we could easily access the current token by using <code>tokens[current_index]</code>. But… having a variable called <code>current_token</code> makes most of the parser’s code more readable, so, it is woth it.</p>
-<p>So while the parser is analyzing the sequence of tokens stored at the <code>tokens</code> variable, he will slowly grow (or complete) the AST, by replacing and adding elements to the <code>ast</code> variable. At the end, when the parser finishs the parsing process, the <code>ast</code> variable will store the complete AST that is equivalent to the input expression.</p>
-<p>You can see below at the <code>__init__</code> method that to initialize a new object of class <code>ParserCache</code>, you need to give the sequence of tokens to analyze as input. After that, all variables of the class are initialized, and you can start to use the two methods of the class, which are <code>len()</code>, <code>current_token()</code> and <code>next_token()</code>. The <code>len()</code> method returns the length of the tokens sequence that the parser is analyzing, <code>current_token()</code> method returns the current token that the parser is analyzing at the moment, and the <code>next_token()</code> method will effectively advance the parser to the next token in the sequence.</p>
+<p>It is not really vital to have the <code>token</code> variable, because we could easily access the current token by using <code>tokens[index]</code>. But… having a variable called <code>token</code> is easier to type, and it makes most of the parser’s code more readable, so, it is woth it.</p>
+<p>While the parser is analyzing the sequence of tokens stored at the <code>tokens</code> variable, he will slowly grow (or complete) the AST, by replacing and adding elements to the <code>ast</code> variable. At the end, when the parser finishs the parsing process, the <code>ast</code> variable will store the complete AST that is equivalent to the input expression.</p>
+<p>You can see below at the <code>__init__()</code> method that to initialize a new object of class <code>ParserCache</code>, you need to give the sequence of tokens to analyze as input. After that, all variables of the class are initialized, and you can start to use the two methods of the class, which are <code>len()</code>, <code>current_token()</code> and <code>next_token()</code>. The <code>len()</code> method returns the length of the tokens sequence that the parser is analyzing, <code>current_token()</code> method returns the current token that the parser is analyzing at the moment, and the <code>next_token()</code> method will effectively advance the parser to the next token in the sequence.</p>
 <div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ParserCache:</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">'''Class that represents a cache to store the current state of the parser.'''</span></span>
@@ -560,8 +560,8 @@ df.show()
 <section id="building-the-main-logic-of-the-parser" class="level3" data-number="3.4.5">
 <h3 data-number="3.4.5" class="anchored" data-anchor-id="building-the-main-logic-of-the-parser"><span class="header-section-number">3.4.5</span> Building the main logic of the parser</h3>
 <p>The true magic starts with the private function <code>_parse_input()</code>. Basically, <code>_parse_input()</code> starts by looking at the current of token in the sequence that is being analyzed.</p>
-<p>If this current token represents the beginning of a string (characters <code>"</code> and <code>'</code>), <code>_parse_string()</code> is called to effectively parse the next tokens in the sequence, which (very likely) are the contents of that string. But if this token is a plus sign, then, he will call <code>_parse_add_operator()</code> to parse this token. If the current token is neither the beginning of a string or a plus sign, then, <code>_parse_input()</code> will assume that this current token is an identifier, and he will call <code>_parse_identifier()</code> to parse it.</p>
-<p>Notice that all of these three parsing functions (<code>_parse_string()</code>, <code>_parse_add_operator()</code> and <code>_parse_identifier()</code>) returns the <code>ParserCache</code> object back as output. In other words, these functions receives the parser cache as input, they use this cache to parse the current token, and they add new elements (or replace the existing ones) to the AST, which is stored inside this cache object. Once they finished their businesses, they simply return this cache back as their output.</p>
+<p>If this current token represents the beginning of a string (characters <code>"</code> and <code>'</code>), <code>_parse_string()</code> is called to effectively parse the next tokens in the sequence, which (very likely) are the contents of that string. If this current token is <code>f</code>, then, we have the beginning of a formatted string, so we just skip this <code>f</code> token with <code>parse_cache.next_token()</code>, and call <code>_parse_string()</code> to parse the formatted string. But if this token is a plus sign, then, he will call <code>_parse_addition()</code> to parse this token. If the current token is neither the beginning of a string or a plus sign, then, <code>_parse_input()</code> will assume that this current token is an identifier, and he will call <code>_parse_identifier()</code> to parse it.</p>
+<p>Notice that all of these three parsing functions (<code>_parse_string()</code>, <code>_parse_addition()</code> and <code>_parse_identifier()</code>) returns the <code>ParserCache</code> object back as output. In other words, these functions receives the parser cache as input, they use this cache to parse the current token, and they add new elements (or replace the existing ones) to the AST, which is stored inside this cache object. Once they finished their businesses, they simply return this cache back as their output.</p>
 <p>After we know that we parsed the current token, then, we ask the parser to advance to the next token, with <code>next_token()</code> method. Then, we check if there is really a next token in the sequence to parse/analyze, by checking if the current index is greater than the number of tokens in the sequence.</p>
 <p>If there are still some remaining tokens in the sequence to analyze, then, <code>_parse_input()</code> will call itself recursively to parse the remaining tokens in the sequence. However, if there is not remaining tokens to analyze anymore, then, the function finally returns the parser cache (which contains the complete AST inside of the <code>ast</code> variable) as output.</p>
 <div class="cell" data-execution_count="7">
@@ -571,21 +571,24 @@ df.show()
 <span id="annotated-cell-8-4"><a href="#annotated-cell-8-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="annotated-cell-8-5"><a href="#annotated-cell-8-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> parser_cache.current_token() <span class="kw">in</span> [<span class="st">'"'</span>, <span class="st">"'"</span>]:</span>
 <span id="annotated-cell-8-6"><a href="#annotated-cell-8-6" aria-hidden="true" tabindex="-1"></a>        parser_cache <span class="op">=</span> _parse_string(parser_cache)</span>
-<span id="annotated-cell-8-7"><a href="#annotated-cell-8-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> parser_cache.current_token() <span class="op">==</span> <span class="st">'+'</span>:</span>
-<span id="annotated-cell-8-8"><a href="#annotated-cell-8-8" aria-hidden="true" tabindex="-1"></a>        parser_cache <span class="op">=</span> _parse_add_operator(parser_cache)</span>
-<span id="annotated-cell-8-9"><a href="#annotated-cell-8-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="annotated-cell-8-10"><a href="#annotated-cell-8-10" aria-hidden="true" tabindex="-1"></a>        parser_cache <span class="op">=</span> _parse_identifier(parser_cache)</span>
-<span id="annotated-cell-8-11"><a href="#annotated-cell-8-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-8-12"><a href="#annotated-cell-8-12" aria-hidden="true" tabindex="-1"></a>    parser_cache.next_token()</span>
-<span id="annotated-cell-8-13"><a href="#annotated-cell-8-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> parser_cache.current_index() <span class="op">&lt;=</span> parser_cache.<span class="bu">len</span>() <span class="op">-</span> <span class="dv">1</span>:</span>
-<span id="annotated-cell-8-14"><a href="#annotated-cell-8-14" aria-hidden="true" tabindex="-1"></a>        parser_cache <span class="op">=</span> _parse_input(parser_cache)</span>
-<span id="annotated-cell-8-15"><a href="#annotated-cell-8-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-8-16"><a href="#annotated-cell-8-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> parser_cache</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="annotated-cell-8-7"><a href="#annotated-cell-8-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> parser_cache.current_token() <span class="op">==</span> <span class="st">'f'</span>:</span>
+<span id="annotated-cell-8-8"><a href="#annotated-cell-8-8" aria-hidden="true" tabindex="-1"></a>        parser_cache.next_token()</span>
+<span id="annotated-cell-8-9"><a href="#annotated-cell-8-9" aria-hidden="true" tabindex="-1"></a>        parser_cache <span class="op">=</span> _parse_string(parser_cache)</span>
+<span id="annotated-cell-8-10"><a href="#annotated-cell-8-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> parser_cache.current_token() <span class="op">==</span> <span class="st">'+'</span>:</span>
+<span id="annotated-cell-8-11"><a href="#annotated-cell-8-11" aria-hidden="true" tabindex="-1"></a>        parser_cache <span class="op">=</span> _parse_addition(parser_cache)</span>
+<span id="annotated-cell-8-12"><a href="#annotated-cell-8-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="annotated-cell-8-13"><a href="#annotated-cell-8-13" aria-hidden="true" tabindex="-1"></a>        parser_cache <span class="op">=</span> _parse_identifier(parser_cache)</span>
+<span id="annotated-cell-8-14"><a href="#annotated-cell-8-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-8-15"><a href="#annotated-cell-8-15" aria-hidden="true" tabindex="-1"></a>    parser_cache.next_token()</span>
+<span id="annotated-cell-8-16"><a href="#annotated-cell-8-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> parser_cache.current_index() <span class="op">&lt;=</span> parser_cache.<span class="bu">len</span>() <span class="op">-</span> <span class="dv">1</span>:</span>
+<span id="annotated-cell-8-17"><a href="#annotated-cell-8-17" aria-hidden="true" tabindex="-1"></a>        parser_cache <span class="op">=</span> _parse_input(parser_cache)</span>
+<span id="annotated-cell-8-18"><a href="#annotated-cell-8-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-8-19"><a href="#annotated-cell-8-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> parser_cache</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-8" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-lines="2" data-code-cell="annotated-cell-8">If the sequence of tokens is empty, then, we have no tokens to analyze, and the function should simply return right away.</span>
+<span data-code-cell="annotated-cell-8" data-code-annotation="1" data-code-lines="2">If the sequence of tokens is empty, then, we have no tokens to analyze, and the function should simply return right away.</span>
 </dd>
 </dl>
 </div>
@@ -608,16 +611,92 @@ df.show()
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> parser_cache</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="parsing-addition-operations" class="level3" data-number="3.4.7">
-<h3 data-number="3.4.7" class="anchored" data-anchor-id="parsing-addition-operations"><span class="header-section-number">3.4.7</span> Parsing addition operations</h3>
+<section id="parsing-strings" class="level3" data-number="3.4.7">
+<h3 data-number="3.4.7" class="anchored" data-anchor-id="parsing-strings"><span class="header-section-number">3.4.7</span> Parsing strings</h3>
+<p>Now, things get worse when it is time to parse strings. Not because strings are complicated, but because we need to account for <em>formatted strings</em>. In other words, the string that we analyzing might contain expressions inside of it. And if it does have them, we need to parse these expressions in a separate process.</p>
+<p>However, if you come back and look at the body of <code>_parse_input()</code> you will see that we call <code>_parse_string()</code> right after we encounter a <code>"</code> or <code>'</code> character. But we do not need to parse this single character exactly. We just know that these characters delimit the beginning of a string, so everything that goes after it should be tokens that together composes the actual content of the string. That is why, we start <code>_parse_string()</code> by calling the <code>next_token()</code> method, to skip this <code>"</code> or <code>'</code> character that we are not particularly interested in.</p>
+<p>Now, after that, the next tokens in the sequence will very likely represent the contents of this string that we are currently parsing. So all we need to do, is to use a loop to iterate trough these next tokens and stop (or break) the loop in the moment that we hit a token that contains the <code>"</code> or <code>'</code> character, because these tokens will represent the end of the string.</p>
+<p>We could use a stack to accumulate the tokens that represents the contents of the string while we are looping, and then, we analyze these tokens separately after we break the loop. Then, we could simply append to the AST a new object of type <code>STRING</code> containing this stack with all of the components of this string element. It would be a fair strategy. But it would also make the parsing of subexpressions inside of formatted strings harder.</p>
+<p>As a result, I decided to opt for a placeholder strategy. Before we start to loop through the sequence of tokens that represents the contents of the string, we add a placeholder at the top level of the AST. At each iteration of the <code>while</code> loop we update the <code>value</code> field of this placeholder by adding the current token to it. By doing this, at the end of the <code>while</code> loop we will have a string object at the top of the AST, and its <code>value</code> field will contain the full/complete list of contents of that string.</p>
+<p>Now… if we do find a opening bracket (<code>{</code>) inside the string, that likely means that the current string that we are analyzing now is a formatted string, and whatever sequence of tokens that is right after this opening bracket, they are a new expression to be parsed. That is why we call the <code>_parse_formatted_string()</code> in case we do find an opening bracket inside the string.</p>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="annotated-cell-10"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-10-1"><a href="#annotated-cell-10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _parse_string(parser_cache: ParserCache) <span class="op">-&gt;</span> ParserCache:</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-10-2" class="code-annotation-target"><a href="#annotated-cell-10-2" aria-hidden="true" tabindex="-1"></a>    char_that_opens_the_string <span class="op">=</span> parser_cache.current_token()</span>
+<span id="annotated-cell-10-3"><a href="#annotated-cell-10-3" aria-hidden="true" tabindex="-1"></a>    parser_cache.next_token()</span>
+<span id="annotated-cell-10-4"><a href="#annotated-cell-10-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add a placeholder in the top of the AST</span></span>
+<span id="annotated-cell-10-5"><a href="#annotated-cell-10-5" aria-hidden="true" tabindex="-1"></a>    parser_cache.ast.append({</span>
+<span id="annotated-cell-10-6"><a href="#annotated-cell-10-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">'type'</span>: <span class="st">'STRING'</span>,</span>
+<span id="annotated-cell-10-7"><a href="#annotated-cell-10-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">'value'</span>: <span class="bu">list</span>()</span>
+<span id="annotated-cell-10-8"><a href="#annotated-cell-10-8" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="annotated-cell-10-9"><a href="#annotated-cell-10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-10-10"><a href="#annotated-cell-10-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> parser_cache.current_index() <span class="op">&lt;</span> parser_cache.<span class="bu">len</span>() <span class="op">-</span> <span class="dv">1</span>:</span>
+<span id="annotated-cell-10-11"><a href="#annotated-cell-10-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> parser_cache.current_token() <span class="op">==</span> char_that_opens_the_string:</span>
+<span id="annotated-cell-10-12"><a href="#annotated-cell-10-12" aria-hidden="true" tabindex="-1"></a>            <span class="cf">break</span></span>
+<span id="annotated-cell-10-13"><a href="#annotated-cell-10-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> parser_cache.current_token() <span class="op">==</span> <span class="st">'{'</span>:</span>
+<span id="annotated-cell-10-14"><a href="#annotated-cell-10-14" aria-hidden="true" tabindex="-1"></a>            parser_cache.next_token()</span>
+<span id="annotated-cell-10-15"><a href="#annotated-cell-10-15" aria-hidden="true" tabindex="-1"></a>            parser_cache <span class="op">=</span> _parse_formatted_string(parser_cache)</span>
+<span id="annotated-cell-10-16"><a href="#annotated-cell-10-16" aria-hidden="true" tabindex="-1"></a>            <span class="cf">continue</span></span>
+<span id="annotated-cell-10-17"><a href="#annotated-cell-10-17" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="annotated-cell-10-18"><a href="#annotated-cell-10-18" aria-hidden="true" tabindex="-1"></a>        elem_ref <span class="op">=</span> parser_cache.ast[<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="annotated-cell-10-19"><a href="#annotated-cell-10-19" aria-hidden="true" tabindex="-1"></a>        elem_ref[<span class="st">'value'</span>].append(parser_cache.current_token())</span>
+<span id="annotated-cell-10-20"><a href="#annotated-cell-10-20" aria-hidden="true" tabindex="-1"></a>        parser_cache.next_token()</span>
+<span id="annotated-cell-10-21"><a href="#annotated-cell-10-21" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="annotated-cell-10-22"><a href="#annotated-cell-10-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> parser_cache</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-10" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-10" data-code-annotation="1" data-code-lines="2">We copy the character (<code>'</code> or <code>"</code>) that openned the string that we are analyzing now, because then, we can search for a new occurence of this same character in the tokens sequence to detect the end of the string.</span>
+</dd>
+</dl>
+</div>
+</div>
+<!-- 2. We add a placeholder at the top level of the AST. At each iteration of the `while` loop we update the `value` field of this placeholder by adding the current token to it. By doing this, at the end of the `while` loop we will have a string object at the top of the AST, and its `value` field will contain the full/complete list of contents of that string. -->
+</section>
+<section id="parsing-expressions-inside-formatted-strings" class="level3" data-number="3.4.8">
+<h3 data-number="3.4.8" class="anchored" data-anchor-id="parsing-expressions-inside-formatted-strings"><span class="header-section-number">3.4.8</span> Parsing expressions inside <em>formatted strings</em></h3>
+<p>We call <code>_parse_formatted_string()</code> if we find a <code>{</code> character inside sequence of tokens that are inside a string. Inside the pair of brackets (<code>{}</code>) we will always have an expression. And because this is a new expression, we need to parse it too, in a separate process.</p>
+<p>First, we use a loop and a stack object to accumulate all the tokens in the sequence that are inside of the pair of brackets (<code>{}</code>). This way, we have inside the stack object all the tokens that represents the subexpression that is inside of the brackets that we need to parse.</p>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="annotated-cell-11"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-11-1"><a href="#annotated-cell-11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _parse_formatted_string(parser_cache: ParserCache) <span class="op">-&gt;</span> ParserCache:</span>
+<span id="annotated-cell-11-2"><a href="#annotated-cell-11-2" aria-hidden="true" tabindex="-1"></a>    stack <span class="op">=</span> <span class="bu">list</span>()</span>
+<span id="annotated-cell-11-3"><a href="#annotated-cell-11-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> parser_cache.current_index() <span class="op">&lt;</span> parser_cache.<span class="bu">len</span>() <span class="op">-</span> <span class="dv">1</span>:</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-11" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-11-4" class="code-annotation-target"><a href="#annotated-cell-11-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> parser_cache.current_token() <span class="op">==</span> <span class="st">'}'</span>:</span>
+<span id="annotated-cell-11-5"><a href="#annotated-cell-11-5" aria-hidden="true" tabindex="-1"></a>            parser_cache.next_token()</span>
+<span id="annotated-cell-11-6"><a href="#annotated-cell-11-6" aria-hidden="true" tabindex="-1"></a>            <span class="cf">break</span></span>
+<span id="annotated-cell-11-7"><a href="#annotated-cell-11-7" aria-hidden="true" tabindex="-1"></a>        stack.append(parser_cache.current_token())</span>
+<span id="annotated-cell-11-8"><a href="#annotated-cell-11-8" aria-hidden="true" tabindex="-1"></a>        parser_cache.next_token()</span>
+<span id="annotated-cell-11-9"><a href="#annotated-cell-11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-11-10"><a href="#annotated-cell-11-10" aria-hidden="true" tabindex="-1"></a>    parsed_subexpression <span class="op">=</span> ParserCache(stack)</span>
+<span id="annotated-cell-11-11"><a href="#annotated-cell-11-11" aria-hidden="true" tabindex="-1"></a>    parsed_subexpression <span class="op">=</span> _parse_input(parsed_subexpression)</span>
+<span id="annotated-cell-11-12"><a href="#annotated-cell-11-12" aria-hidden="true" tabindex="-1"></a>    elem_ref <span class="op">=</span> parser_cache.ast[<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="annotated-cell-11-13"><a href="#annotated-cell-11-13" aria-hidden="true" tabindex="-1"></a>    elem_ref[<span class="st">'value'</span>].append({</span>
+<span id="annotated-cell-11-14"><a href="#annotated-cell-11-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">'type'</span>: <span class="st">'EXPR'</span>,</span>
+<span id="annotated-cell-11-15"><a href="#annotated-cell-11-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">'value'</span>: parsed_subexpression.ast</span>
+<span id="annotated-cell-11-16"><a href="#annotated-cell-11-16" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="annotated-cell-11-17"><a href="#annotated-cell-11-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> parser_cache</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-11" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-11" data-code-annotation="1" data-code-lines="4">We break the loop, at the moment that we find a closing bracket in the sequence of tokens, because this character represents the end of the pair of brackets that contains the subexpression that we are analyzing.</span>
+</dd>
+</dl>
+</div>
+</div>
+<p>After we accumulated the sequence of tokens that represents the subexpression that we are analyzing, we need to parse this subexpression separately. To do that, we create a new <code>ParserCache</code> object with this sequence of tokens that represents this subexpression, or, in other words, with all of the tokens that are between the openning and closing brackets. Then, we just call the <code>_parse_input()</code> over this expression to effectively parse this expression.</p>
+<p>After that, we add to the top of the AST a new expression object (<code>EXPR</code>) that contains the AST of parsed subexpression inside of it.</p>
+</section>
+<section id="parsing-addition-operations" class="level3" data-number="3.4.9">
+<h3 data-number="3.4.9" class="anchored" data-anchor-id="parsing-addition-operations"><span class="header-section-number">3.4.9</span> Parsing addition operations</h3>
 <p>Now, things get a little bit more complicated when we find a plus sign in the middle of the sequence of tokens. Because if we do find a plus sign, that means that this plus sign is surrounded by operands in the original expression. In other words, this plus sign connects the left operand to the right operand of this addition operation.</p>
 <p>In theory, the previous token in the sequence is the left operand of this addition, and the next token in the sequence is the right operand. That means that, just in theory, at the moment we find a plus sign in the sequence of tokens, we can collect the left operand of the addition operation by looking at the previous token, and, we could also collect the right operand by advancing the parser with <code>next_token()</code> and using <code>current_token()</code> to get the next token in the sequence.</p>
-<section id="the-challenge" class="level4" data-number="3.4.7.1">
-<h4 data-number="3.4.7.1" class="anchored" data-anchor-id="the-challenge"><span class="header-section-number">3.4.7.1</span> The challenge</h4>
-<p>However, this is not really true, or, it would be too easy to be true. The real problem, is that the left and right operands could be splitten by the tokenizer into multiple tokens. In other words, there are very commom cases where single calls to <code>current_token()</code> would be insufficient to actually get the right or left operands.</p>
-<p>That means that the tokenizer step might make the part of identifying where the left and right operands are in the sequence of tokens a difficult task. If you think about how the tokenizer works (see <a href="#lst-tokenizer">Listing&nbsp;3</a>), you will probably find examples where the left or right operands could be composed of multiple tokens, and not just a single token.</p>
+<section id="the-challenge" class="level4" data-number="3.4.9.1">
+<h4 data-number="3.4.9.1" class="anchored" data-anchor-id="the-challenge"><span class="header-section-number">3.4.9.1</span> The challenge</h4>
+<p>However, this is not really true, or, it would be too easy to be true. The real problem, is that the left and right operands could be splitten by the tokenizer into multiple tokens. In other words, there are very commom cases where single calls to <code>current_token()</code> would be insufficient to actually get the complete right or left operands.</p>
+<p>That means that the tokenizer step might make the part of identifying where the left and right operands are in the sequence of tokens a difficult task. If you think about how the tokenizer works (see <a href="#lst-tokenizer">Listing&nbsp;3</a>), you will probably be able to find examples where the left or right operands could be composed of multiple tokens, and not just a single token.</p>
 <p>Take the expression <code>database + '.events'</code> as an example. Take a look at the tokenizer’s output over this expression. The left operand is the first token (<code>database</code>), but the right operand, is actually the three last tokens in the sequence (<code>['"', '.events', '"']</code>). This means that these three tokens together compose the right operand.</p>
-<div class="cell" data-execution_count="9">
+<div class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tokenizer(<span class="st">'database + ".events"'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>['database ', '+', '"', '.events', '"']</code></pre>
@@ -625,125 +704,107 @@ df.show()
 </div>
 <p>As a result, at the moment where the parser is at the plus sign, if we advance the parser with <code>next_token()</code>, and run <code>current_token()</code> we would get only the token <code>"</code>, so the right operand would be incomplete. How do we know that we need to accumulate the next three tokens instead of looking to just one token in the sequence?</p>
 </section>
-<section id="solving-the-issue-for-the-left-operand" class="level4" data-number="3.4.7.2">
-<h4 data-number="3.4.7.2" class="anchored" data-anchor-id="solving-the-issue-for-the-left-operand"><span class="header-section-number">3.4.7.2</span> Solving the issue for the left operand</h4>
-<p>For now, lets ignore the right operand and think about the left operand. The left operand is certainly the things that are before the plus sign. But, as we saw in the previous section, in some cases, we might need to look 3, 4 or 5 tokens behind to actually get the full left operand, instead of looking at just 1 token behind.</p>
-<p>Well, we do not need a method to get the previous token, because the previous token is obviously at the top of the AST. In other words, the last element in the AST is the previous token already parsed, and we can easily access this last element by calling <code>parser_cache.ast[-1]</code>.</p>
-<p>Perfect, afeter we saved a copy of the left operand inside a <code>left_operand</code> variable, we can delete him from the AST in the parser cache, with <code>del parser_cache.ast[-1]</code>. If we do not delete him now, then, he would become duplicated in the AST at the moment that we add our object for the addition operation to the AST, which contains both left and right operand.</p>
-<p>After we deleted the last element in the AST (which contained the left operand), we can now look for the right operand, which is the next token in the sequence. That is why we call the <code>next_token()</code> method, to advance the parser.</p>
-<p>After that, all we need to do, is to add to the AST an object that represents this addition operation.</p>
-<div class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _parse_add_operator(parser_cache: ParserCache) <span class="op">-&gt;</span> ParserCache:</span>
+<section id="solving-the-issue-for-the-left-operand" class="level4" data-number="3.4.9.2">
+<h4 data-number="3.4.9.2" class="anchored" data-anchor-id="solving-the-issue-for-the-left-operand"><span class="header-section-number">3.4.9.2</span> Solving the issue for the left operand</h4>
+<p>For now, lets ignore the right operand and think about the left operand. The left operand is whatever sequence of tokens that are before the plus sign. But, as we saw in the previous section, in some cases, we might need to look 3, 4 or 5 tokens behind to actually get the full left operand, instead of looking at just 1 token behind.</p>
+<p>But instead of looking at the previous tokens in the sequence, we could get the left operand by looking at the top of the AST. In other words, the last element in the AST is the previous token already parsed, and we can easily access this last element by calling <code>parser_cache.ast[-1]</code>.</p>
+<p>Perfect, after we saved a copy of the left operand inside a <code>left_operand</code> variable, we can delete him from the AST in the parser cache, with <code>del parser_cache.ast[-1]</code>. If we do not delete him now, then, he would become duplicated in the AST at the moment that we add our object for the addition operation to the AST, which contains both left and right operands.</p>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _parse_addition(parser_cache: ParserCache) <span class="op">-&gt;</span> ParserCache:</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    left_operand <span class="op">=</span> parser_cache.ast[<span class="op">-</span><span class="dv">1</span>]</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">del</span> parser_cache.ast[<span class="op">-</span><span class="dv">1</span>]</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    parser_cache.next_token()</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    right_operand <span class="op">=</span> parser_cache.current_token()</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    parser_cache.ast.append({</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">'type'</span>: <span class="st">'ADDITION'</span>,</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">'left'</span>: left_operand,</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">'right'</span>: right_operand</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    })</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> parser_cache</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Now that we managed the left operando, we will deal</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># with the right operand in the next section</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> parser_cache</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-</section>
-<section id="parsing-strings" class="level3" data-number="3.4.8">
-<h3 data-number="3.4.8" class="anchored" data-anchor-id="parsing-strings"><span class="header-section-number">3.4.8</span> Parsing strings</h3>
-<p>Now, things get worse when it is time to parse strings. Not because strings are complicated, but because we need to account for <em>formatted strings</em>. In other words, the string that we analyzing might contain expressions inside of it. And if it does have them, we need to parse these expressions separately.</p>
-<p>However, if you come back and look at the body of <code>_parse_input()</code> you will see that we call <code>_parse_string()</code> right after we encounter a <code>"</code> or <code>'</code> character. But we do not need to parse this single character exactly. We just know that these characters delimit the beginning of a string, so everything that goes after it should be tokens that together composes the actual content of the string.</p>
-<p>That is why, we start <code>_parse_string()</code> by calling the <code>next_token()</code> method, to skip this <code>"</code> or <code>'</code> character that we are not particularly interested in. Now, after that, all we need to do, is to accumulate all tokens that are inside of the string, until we hit the next token that contains the <code>"</code> or <code>'</code> character, because these tokens will represent the end of the string.</p>
-<p>Why we do this? Because at the moment that we find the the <code>"</code> or <code>'</code> character, and we understand that we hitted the end of the string, and we break the loop, then, all elements contained inside the <code>stack</code> will be the tokens that together composes the content of the current string. And having all of these elements together at one place makes life easier for us. Because we can simply append to the AST a new object of type <code>STRING</code> containing this stack with all of the components of this string element.</p>
-<p>Now… if we do find a opening bracket (<code>{</code>) inside the string, that likely means that the current string that we are analyzing now is a formatted string, and whatever sequence of tokens that is right after this opening bracket, they are a new expression to be parsed. That is why we call the <code>_parse_formatted_string()</code> in case we do find an opening bracket inside the string.</p>
-<div class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="annotated-cell-12"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-12-1"><a href="#annotated-cell-12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _parse_string(parser_cache: ParserCache) <span class="op">-&gt;</span> ParserCache:</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-12" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-12-2" class="code-annotation-target"><a href="#annotated-cell-12-2" aria-hidden="true" tabindex="-1"></a>    char_that_opens_the_string <span class="op">=</span> parser_cache.current_token()</span>
-<span id="annotated-cell-12-3"><a href="#annotated-cell-12-3" aria-hidden="true" tabindex="-1"></a>    parser_cache.next_token()</span>
-<span id="annotated-cell-12-4"><a href="#annotated-cell-12-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add a placeholder in the top of the AST</span></span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-12" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-12-5" class="code-annotation-target"><a href="#annotated-cell-12-5" aria-hidden="true" tabindex="-1"></a>    parser_cache.ast.append({</span>
-<span id="annotated-cell-12-6"><a href="#annotated-cell-12-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">'type'</span>: <span class="st">'STRING'</span>,</span>
-<span id="annotated-cell-12-7"><a href="#annotated-cell-12-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">'value'</span>: <span class="bu">list</span>()</span>
-<span id="annotated-cell-12-8"><a href="#annotated-cell-12-8" aria-hidden="true" tabindex="-1"></a>    })</span>
-<span id="annotated-cell-12-9"><a href="#annotated-cell-12-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-12-10"><a href="#annotated-cell-12-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> parser_cache.current_index() <span class="op">&lt;</span> parser_cache.<span class="bu">len</span>() <span class="op">-</span> <span class="dv">1</span>:</span>
-<span id="annotated-cell-12-11"><a href="#annotated-cell-12-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> parser_cache.current_token() <span class="kw">in</span> [<span class="st">'"'</span>, <span class="st">"'"</span>]:</span>
-<span id="annotated-cell-12-12"><a href="#annotated-cell-12-12" aria-hidden="true" tabindex="-1"></a>            <span class="cf">break</span></span>
-<span id="annotated-cell-12-13"><a href="#annotated-cell-12-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> parser_cache.current_token() <span class="op">==</span> <span class="st">'{'</span>:</span>
-<span id="annotated-cell-12-14"><a href="#annotated-cell-12-14" aria-hidden="true" tabindex="-1"></a>            parser_cache.next_token()</span>
-<span id="annotated-cell-12-15"><a href="#annotated-cell-12-15" aria-hidden="true" tabindex="-1"></a>            parser_cache <span class="op">=</span> _parse_formatted_string(parser_cache)</span>
-<span id="annotated-cell-12-16"><a href="#annotated-cell-12-16" aria-hidden="true" tabindex="-1"></a>            <span class="cf">continue</span></span>
-<span id="annotated-cell-12-17"><a href="#annotated-cell-12-17" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="annotated-cell-12-18"><a href="#annotated-cell-12-18" aria-hidden="true" tabindex="-1"></a>        elem_ref <span class="op">=</span> parser_cache.ast[<span class="op">-</span><span class="dv">1</span>]</span>
-<span id="annotated-cell-12-19"><a href="#annotated-cell-12-19" aria-hidden="true" tabindex="-1"></a>        elem_ref[<span class="st">'value'</span>].append(parser_cache.current_token())</span>
-<span id="annotated-cell-12-20"><a href="#annotated-cell-12-20" aria-hidden="true" tabindex="-1"></a>        parser_cache.next_token()</span>
-<span id="annotated-cell-12-21"><a href="#annotated-cell-12-21" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="annotated-cell-12-22"><a href="#annotated-cell-12-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> parser_cache</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-annotation">
-<dl class="code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-12" data-target-annotation="1">1</dt>
-<dd>
-<span data-code-annotation="1" data-code-lines="2" data-code-cell="annotated-cell-12">We copy the character (<code>'</code> or <code>"</code>) that openned the string that we are analyzing now, because then, we can search for a new occurence of this same character in the tokens sequence to detect the end of the string.</span>
-</dd>
-<dt data-target-cell="annotated-cell-12" data-target-annotation="2">2</dt>
-<dd>
-<span data-code-annotation="2" data-code-lines="5" data-code-cell="annotated-cell-12">We add a placeholder at the top level of the AST. At each iteration of the <code>while</code> loop we update the <code>value</code> field of this placeholder by adding the current token to it. By doing this, at the end of the <code>while</code> loop we will have a string object at the top of the AST, and its <code>value</code> field will contain the full/complete list of contents of that string.</span>
-</dd>
-</dl>
-</div>
-</div>
-</section>
-<section id="parsing-expressions-inside-formatted-strings" class="level3" data-number="3.4.9">
-<h3 data-number="3.4.9" class="anchored" data-anchor-id="parsing-expressions-inside-formatted-strings"><span class="header-section-number">3.4.9</span> Parsing expressions inside <em>formatted strings</em></h3>
-<p>We call <code>_parse_formatted_string()</code> if we find a <code>{</code> character inside sequence of tokens that are inside a string. Inside the pair of brackets (<code>{}</code>) we will always have an expression. And because this is a new expression, we need to parse it too, in a separate process.</p>
-<p>To do that, we create a new <code>ParserCache</code> object with the sequence of tokens that represents this expression, or, in other words, with all of the tokens that are between the openning and closing brackets. Then, we just call the <code>_parse_input()</code> over this expression to effectively parse this expression.</p>
-<p>After that, we return from <code>_parse_formatted_string()</code> with a new expression object (<code>EXPR</code>) that contains the parsed expression inside of it.</p>
-<div class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _parse_formatted_string(parser_cache: ParserCache) <span class="op">-&gt;</span> ParserCache:</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    stack <span class="op">=</span> <span class="bu">list</span>()</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> parser_cache.current_index() <span class="op">&lt;</span> parser_cache.<span class="bu">len</span>() <span class="op">-</span> <span class="dv">1</span>:</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> parser_cache.current_token() <span class="op">==</span> <span class="st">'}'</span>:</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>            parser_cache.next_token()</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>            <span class="cf">break</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>        stack.append(parser_cache.current_token())</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>        parser_cache.next_token()</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    parsed_subexpression <span class="op">=</span> ParserCache(stack)</span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    parsed_subexpression <span class="op">=</span> _parse_input(parsed_subexpression)</span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    elem_ref <span class="op">=</span> parser_cache.ast[<span class="op">-</span><span class="dv">1</span>]</span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    elem_ref[<span class="st">'value'</span>].append({</span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">'type'</span>: <span class="st">'EXPR'</span>,</span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">'value'</span>: parsed_subexpression.ast</span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>    })</span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> parser_cache</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-</section>
-<section id="testing-our-parser" class="level2" data-number="3.5">
-<h2 data-number="3.5" class="anchored" data-anchor-id="testing-our-parser"><span class="header-section-number">3.5</span> Testing our parser</h2>
+<section id="solving-the-issue-for-the-right-operand" class="level4" data-number="3.4.9.3">
+<h4 data-number="3.4.9.3" class="anchored" data-anchor-id="solving-the-issue-for-the-right-operand"><span class="header-section-number">3.4.9.3</span> Solving the issue for the right operand</h4>
+<p>After we deleted the last element in the AST (which contained the left operand), we can now look for the right operand, which is whatever sequence of tokens that are after the plus sign.</p>
+<p>But getting the right operand is unfortunately more complicated. Because of that, let’s concentrate the main logic of getting the right operand into a new separate function called <code>_parse_right_operand()</code>. After we get the right operand, we just return from <code>_parse_addition()</code> with an <code>ADDITION</code> object which contains both left and right operands.</p>
 <div class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> example <span class="kw">in</span> EXPRESSION_EXAMPLES:</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    parsed_expr <span class="op">=</span> parse(example)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"===================================="</span>)</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"  * Input expression: "</span>, example)</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"  * Parsed AST: "</span>, parsed_expr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _parse_addition(parser_cache: ParserCache) <span class="op">-&gt;</span> ParserCache:</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    left_operand <span class="op">=</span> parser_cache.ast[<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">del</span> parser_cache.ast[<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    parser_cache.next_token()</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    right_operand <span class="op">=</span> _parse_right_operand(parser_cache)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    parser_cache.ast.append({</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">'type'</span>: <span class="st">'ADDITION'</span>,</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">'left_operand'</span>: left_operand,</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">'right_operand'</span>: right_operand</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> parser_cache</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now, what <code>_parse_right_operand()</code> should do? I think it should iterate through the sequence of tokens that is after the plus sign, parse this sequence of tokens and then, return the parsed AST of this sequence. That is basically what <code>_parse_right_operand()</code> is doing in the function definition below.</p>
+<p>We start with a <code>while</code> loop which will use a new stack object to accumulate all the tokens after the plus sign. This loop stops in two situations:</p>
+<ol type="1">
+<li>If it hits the end of the stream of tokens that the parser is analyzing.</li>
+<li>If it hits a new plus sign in the sequence of tokens, which basically means that, the loop found a new addition operation in the sequence of tokens.</li>
+</ol>
+<p>When the loop stops in situation 1, then, the stack object will contain all of the tokens that represents the right operand. Having that in mind, all we need to do is to create a new temporary <code>ParserCache</code> object with these tokens, and call <code>_parse_input()</code> over it to parse the right operand. Then, <code>_parse_right_operand()</code> will simply return the parsed AST from this operation.</p>
+<p>In the other side, if the loop stops in situation 2, that means that, the right operand that we are currently trying to parse, is in fact, the left hand to a new addition operation. In other words, the tokens that we accumulated in the stack object until this very moment, are in fact, the tokens that represents the left operand of this new addition operation that we found.</p>
+<p>At <a href="#fig-addition">Figure&nbsp;2</a> we can see this idea visually. Everything that is marked by the light red rectangle is the left operand of that particular addition operation, and everything that is marked by the dark blue rectangle is the right operand of that particular addition operation.</p>
+<div id="fig-addition" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="./../addition.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;2: Marking the right and left operands in each addition operation</figcaption>
+</figure>
+</div>
+<p>So, lets consider as an example, that the parser was parsing the expression <code>database + '.' + 'events'</code>. When <code>_parse_right_operand()</code> is parsing the right operand of the first addition (which is <code>'.'</code>), the function is looping through the sequence of tokens. The tokens <code>["'", '.', "'"]</code> are accumulated inside the stack object, until the loop hits the token <code>+</code>, which is second plus sign in the entire input expression. At this point the function understands that it hitted a new addition operation to be parsed.</p>
+<p>That is why <code>_parse_right_operand()</code>, in this situation, will call itself recursively to parse the remaining tokens in the sequence, which are the right operand of this new/second addition it founded. The tokens that are accumulated in the stack object, are the left operand of this new/second addition, and they are parsed by <code>_parse_input()</code>.</p>
+<p>So in this situation, to get the actual right operand of the first addition, <code>_parse_right_operand()</code> needs to parse this new/second addition operation that if founded. The right operand of the first addition, is the second addition in its entirety, or, you could also interpret that the right operand of the first addition is the second addition already parsed. That is why, in this situation, <code>_parse_right_operand()</code> will call both <code>_parse_input()</code> and itself recursively to parse the right and left operands of this new/second addition operation, and return the <code>ADDITION</code> object that represents this parsed new/second addition.</p>
+<p>Having all of these aspects in mind, here is the source code for <code>_parse_right_operand()</code>:</p>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _parse_right_operand(parser_cache: ParserCache) <span class="op">-&gt;</span> ParserCache:</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    stack <span class="op">=</span> <span class="bu">list</span>()</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> parser_cache.current_index() <span class="op">&lt;=</span> parser_cache.<span class="bu">len</span>() <span class="op">-</span> <span class="dv">1</span>:</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> parser_cache.current_token() <span class="op">==</span> <span class="st">"+"</span>:</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>            parser_cache.next_token()</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>            second_addition_right_operand <span class="op">=</span> _parse_right_operand(parser_cache)</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>            temp_parse_cache <span class="op">=</span> ParserCache(stack)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>            second_addition_left_operand <span class="op">=</span> _parse_input(temp_parse_cache)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> {</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>                <span class="st">'type'</span>: <span class="st">'ADDITION'</span>,</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>                <span class="st">'left_operand'</span>: second_addition_left_operand.ast[<span class="dv">0</span>],</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>                <span class="st">'right_operand'</span>: second_addition_right_operand</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>        stack.append(parser_cache.current_token())</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>        parser_cache.next_token()</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>    temp_parse_cache <span class="op">=</span> ParserCache(stack)</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>    parsed_right_operand <span class="op">=</span> _parse_input(temp_parse_cache)</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> parsed_right_operand.ast[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="finally-the-parser-is-complete" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="finally-the-parser-is-complete"><span class="header-section-number">3.5</span> Finally! The parser is complete!</h2>
+<p>Now our parser is finally complete! We can now test it, and see what AST’s are produced for each example of expressions we have:</p>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> example <span class="kw">in</span> EXPRESSION_EXAMPLES:</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    parsed_expr <span class="op">=</span> parse(example)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"===================================="</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"  * Input expression: "</span>, example)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"  * Parsed AST: "</span>, parsed_expr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>====================================
   * Input expression:  'platform.blipraw.events'
   * Parsed AST:  [{'type': 'STRING', 'value': ['platform.blipraw.events']}]
 ====================================
   * Input expression:  "blip" + "." + "events"
-  * Parsed AST:  [{'type': 'ADDITION', 'left': {'type': 'STRING', 'value': ['blip']}, 'right': '"'}, {'type': 'IDENTIFIER', 'value': '.'}, {'type': 'STRING', 'value': ['+']}, {'type': 'IDENTIFIER', 'value': 'events'}, {'type': 'STRING', 'value': []}]
+  * Parsed AST:  [{'type': 'ADDITION', 'left_operand': {'type': 'STRING', 'value': ['blip']}, 'right_operand': {'type': 'ADDITION', 'left_operand': {'type': 'STRING', 'value': ['.']}, 'right_operand': {'type': 'STRING', 'value': ['events']}}}]
 ====================================
   * Input expression:  database + "." + table_name
-  * Parsed AST:  [{'type': 'ADDITION', 'left': {'type': 'IDENTIFIER', 'value': 'database '}, 'right': '"'}, {'type': 'IDENTIFIER', 'value': '.'}, {'type': 'STRING', 'value': ['+']}]
+  * Parsed AST:  [{'type': 'ADDITION', 'left_operand': {'type': 'IDENTIFIER', 'value': 'database '}, 'right_operand': {'type': 'ADDITION', 'left_operand': {'type': 'STRING', 'value': ['.']}, 'right_operand': {'type': 'IDENTIFIER', 'value': ' table_name'}}}]
 ====================================
   * Input expression:  f"{database}.{table_name}"
-  * Parsed AST:  [{'type': 'IDENTIFIER', 'value': 'f'}, {'type': 'STRING', 'value': [{'type': 'EXPR', 'value': [{'type': 'IDENTIFIER', 'value': 'database'}]}, '.', {'type': 'EXPR', 'value': [{'type': 'IDENTIFIER', 'value': 'table_name'}]}]}]</code></pre>
+  * Parsed AST:  [{'type': 'STRING', 'value': [{'type': 'EXPR', 'value': [{'type': 'IDENTIFIER', 'value': 'database'}]}, '.', {'type': 'EXPR', 'value': [{'type': 'IDENTIFIER', 'value': 'table_name'}]}]}]</code></pre>
 </div>
 </div>
-</section>
-<section id="the-full-source-code" class="level2" data-number="3.6">
-<h2 data-number="3.6" class="anchored" data-anchor-id="the-full-source-code"><span class="header-section-number">3.6</span> The full source code</h2>
-<p>You can see the full source code of the parser at <a href="./../parser.py"><code>parser.py</code></a>.</p>
+<p>For simplicity, the produced AST is composed by a list of dict (or JSON) objects which describes the elements of the three. Now that we have this three, we might do a lot of different things with it. As I mentioned before, every compiler uses trees like this to do type checking, to identify dependencies of your source code, and also, to perform optimization processes.</p>
+<p>But these operations is out of scope of this article. Our objective here is complete, which was to show a basic example of a parser written in Python. If you want to take a closer look, you can see the full source code of the parser at <a href="./../parser.py"><code>parser.py</code></a>.</p>
 
 
 

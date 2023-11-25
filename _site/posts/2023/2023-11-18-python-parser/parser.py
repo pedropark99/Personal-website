@@ -79,6 +79,9 @@ def _parse_input(parser_cache: ParserCache) -> ParserCache:
 
     if parser_cache.current_token() in ['"', "'"]:
         parser_cache = _parse_string(parser_cache)
+    elif parser_cache.current_token() == 'f':
+        parser_cache.next_token()
+        parser_cache = _parse_string(parser_cache)
     elif parser_cache.current_token() == '+':
         parser_cache = _parse_addition(parser_cache)
     else:
@@ -91,10 +94,12 @@ def _parse_input(parser_cache: ParserCache) -> ParserCache:
     return parser_cache
 
 
+
+
 def _parse_identifier(parser_cache: ParserCache) -> ParserCache:
     parser_cache.ast.append({
         'type': 'IDENTIFIER',
-        'value': str(parser_cache.current_token())
+        'value': str(parser_cache.current_token()).strip()
     })
     return parser_cache
 
@@ -103,27 +108,39 @@ def _parse_addition(parser_cache: ParserCache) -> ParserCache:
     left_operand = parser_cache.ast[-1]
     del parser_cache.ast[-1]
     parser_cache.next_token()
-    parser_cache = _parse_right_operand(parser_cache)
+    right_operand = _parse_right_operand(parser_cache)
+    parser_cache.ast.append({
+        'type': 'ADDITION',
+        'left_operand': left_operand,
+        'right_operand': right_operand
+    })
     return parser_cache
 
 def _parse_right_operand(parser_cache: ParserCache) -> ParserCache:
     stack = list()
-    while parser_cache.current_index() < parser_cache.len() - 1:
+    while parser_cache.current_index() <= parser_cache.len() - 1:
         if parser_cache.current_token() == "+":
             parser_cache.next_token()
-            parser_cache = _parse_right_operand(parser_cache)
-            stack.append()
+            second_addition_right_operand = _parse_right_operand(parser_cache)
+            temp_parse_cache = ParserCache(stack)
+            second_addition_left_operand = _parse_input(temp_parse_cache)
+            return {
+                'type': 'ADDITION',
+                'left_operand': second_addition_left_operand.ast[0],
+                'right_operand': second_addition_right_operand
+            }
 
         stack.append(parser_cache.current_token())
         parser_cache.next_token()
     
-    parsed_right_operand = ParserCache(stack)
-    parsed_right_operand = _parse_input(parsed_right_operand)
-    return parsed_right_operand.ast
+    temp_parse_cache = ParserCache(stack)
+    parsed_right_operand = _parse_input(temp_parse_cache)
+    return parsed_right_operand.ast[0]
+    
     
 
 def _parse_string(parser_cache: ParserCache) -> ParserCache:
-    char_that_opens_the_string = parser_cache.current_token()
+    char_that_opens_the_string = parser_cache.current_token() #<1>
     parser_cache.next_token()
     # Add a placeholder in the top of the AST
     parser_cache.ast.append({
@@ -132,7 +149,7 @@ def _parse_string(parser_cache: ParserCache) -> ParserCache:
     })
 
     while parser_cache.current_index() < parser_cache.len() - 1:
-        if parser_cache.current_token() in ['"', "'"]:
+        if parser_cache.current_token() == char_that_opens_the_string:
             break
         if parser_cache.current_token() == '{':
             parser_cache.next_token()
@@ -144,6 +161,8 @@ def _parse_string(parser_cache: ParserCache) -> ParserCache:
         parser_cache.next_token()
     
     return parser_cache
+
+
 
 
 def _parse_formatted_string(parser_cache: ParserCache) -> ParserCache:
@@ -163,6 +182,7 @@ def _parse_formatted_string(parser_cache: ParserCache) -> ParserCache:
         'value': parsed_subexpression.ast
     })
     return parser_cache
+
 
 
 for example in EXPRESSION_EXAMPLES:
