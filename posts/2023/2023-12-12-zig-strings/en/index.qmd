@@ -181,3 +181,48 @@ Type of a pointer that points to the array object: *const [4]i32
 
 # Byte vs unicode points
 
+Is important to point out that each byte in the array is not necessarily a single character. This fact arises from the difference between a single byte and a single unicode point.
+
+The encoding UTF-8 works by assigning a number (which is called a *unicode point*) to each character in the string. For example, the character "H" is stored in UTF-8 as the decimal number 72. This means that the number 72 is the unicode point for the character "H". Each possible character that can appear in a UTF-8 encoded string have its own unicode point.
+
+For example, the Latin Capital Letter A With Stroke (Ⱥ) is represented by the number (or the unicode point) 570.
+However, this decimal number (570) is higher than the maximum number stored inside a single byte, which is 255.
+In other words, the maximum decimal number that can be represented with a single byte is 255. That is why, the
+unicode point 570 is actually stored inside the computer's memory as the bytes `C8 BA`.
+
+```{=html}
+<pre><code class="zig">const std = @import("std");
+
+pub fn main() !void {
+    const string_literal = "Ⱥ";
+    std.debug.print("Bytes that represents the string object: ", .{});
+    for (string_literal) |char| {
+        std.debug.print("{X} ", .{char});
+    }
+    std.debug.print("\n", .{});
+}
+</code></pre>
+```
+
+```text
+Bytes that represents the string object: C8 BA
+```
+
+This means that to store the character Ⱥ in an UTF-8 encoded string, we need to use two bytes together to represent the number 570.
+That is why the relationship between bytes and unicode points is not always 1 to 1. Each unicode point is a single character in
+the string, but not always a single byte corresponds to a single unicode point.
+
+All of this means that if you loop trough the elements of a string in Zig,
+you will be looping through the bytes that represents that string,
+and not through the characters of that string. In the Ⱥ example above, the for
+loop needed two iterations (instead of a single iteration) to print the two bytes that represents this Ⱥ letter.
+
+
+Now, all english letters (or ASCII letters if you prefer) can be represented by a single byte in UTF-8.
+As a consequence, if your UTF-8 string contains only english letters (or ASCII letters), then, you are lucky.
+Because the number of bytes will be equal to the number of characters in that string. In other words, in
+this specific situation, the relationship between bytes and unicode points is 1 to 1.
+
+But on the other side, if your string contains other types of letters... for example, you might be working
+with text data that contains, chinese, japanese or latin letters, then, the number of bytes necessary to
+represent your UTF-8 string will likely be much higher than the number of characters in that string.
