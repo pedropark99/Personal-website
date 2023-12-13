@@ -2,6 +2,7 @@
 title: "How strings work in Zig?"
 description: "A quick introduction to string literals in Zig, and how strings in Zig differ from strings in other programming languages."
 date: "2023-12-12"
+image: "./../zig-image.png"
 ---
 
 # Introduction
