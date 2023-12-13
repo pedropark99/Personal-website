@@ -32,22 +32,21 @@ That is why I want to help, by using this article to discuss in more depth how s
 
 # What strings in Zig are?
 
-Because Zig is a low level language, strings might work very differently from other languages.
 In Zig, a string literal (or a string object if you prefer) is a pointer to a null-terminated array of bytes. Each byte in this
 array is represented by an `u8` value, which is an unsigned 8 bit integer.
 
-Zig always assumes that this sequence of bytes is UTF-8 encoded. This might not be true for every sequence of bytes you have it.
-If your string literal is not UTF-8 encoded then, you will probably have problems in Zig.
+Zig always assumes that this sequence of bytes is UTF-8 encoded. This might not be true for every sequence of bytes you have it,
+but is not really Zig's job to fix the encoding of your string (you can use `iconv` for that). Today, most of text data in our modern world should be UTF-8 encoded. 
+So if your string literal is not UTF-8 encoded, then, you will probably have problems in Zig.
 
-Let's take for example the word "Hello". In UTF-8, this sequence of characters is represented by the sequence of decimal numbers
+Let's take for example the word "Hello". In UTF-8, this sequence of characters (H, e, l, l, o) is represented by the sequence of decimal numbers
 72, 101, 108, 108, 111. In xecadecimal, this is the sequence `0x48`, `0x65`, `0x6C`, `0x6C`, `0x6F`. So if I take this sequence
 of hexadecimal values, and ask Zig to print this sequence of bytes as a sequence of characters (i.e. a string), then,
 the text "Hello" will be printed into the terminal:
 
 
 ```{=html}
-<pre><code class="zig">
-const std = @import("std");
+<pre><code class="zig">const std = @import("std");
 
 pub fn main() !void {
     const bytes = [_]u8{0x48, 0x65, 0x6C, 0x6C, 0x6F};
@@ -60,17 +59,44 @@ pub fn main() !void {
 Hello
 ```
 
+If you want to see the actual bytes that represents a string in Zig, you can use a for loop to loop trough each byte in the string,
+and ask Zig to print each byte as an hexadecimal value to the terminal, using a `print()` statement with the `X` formatting specifier.
+Like this:
 
+```{=html}
+<pre><code class="zig">const std = @import("std");
+
+pub fn main() !void {
+    const string_literal = "This is an example of string literal in Zig";
+    std.debug.print("Bytes that represents the string object: ", .{});
+    for (string_literal) |byte| {
+        std.debug.print("{X} ", .{byte});
+    }
+    std.debug.print("\n", .{});
+}
+</code></pre>
+```
+
+```text
+Bytes that represents the string object: 54 68 69 73 20 69 73 20 61 6E 20 65 78 61 6D 70 6C 65 20 6F 66 20 73 74 72 69 6E 67 20 6C 69 74 65 72 61 6C 20 69 6E 20 5A 69 67 
+```
 
 # Strings in C
 
-This is very similar to how C treats strings as well. But one key difference between a Zig string and a C string, is that Zig also stores the length of the array inside
+This is very similar to how C treats strings as well. That is, string values in C are also treated internally as an array of bytes, and this array is also null-terminated.
+
+But one key difference between a Zig string and a C string, is that Zig also stores the length of the array inside
 the string object. This small detail makes your code safer, because is much easier for the Zig compiler to check if you are trying to access
 an element out of bounds, or if your trying to access memory that does not belong to you.
 
-This same kind of safety is not automatic and much harder to do in C.
-As a result, in C, you need to loop through the array, and find the null element (`'\0'`) position to discover where exactly the
-array ends, or, in other words, to find how much elements the array of bytes contain. It would be something like this in C:
+To achieve this same kind of safety in C, you have to do a lot of work, that kind of seems pointless.
+So getting this kind of safety is not automatic and much harder to do in C. For example, if you want
+to track the length of your string troughout your program in C, then,
+you first need to loop through the array of bytes that represents this string,
+and find the null element (`'\0'`) position to discover where exactly the
+array ends, or, in other words, to find how much elements the array of bytes contain.
+
+To do that, you would need something like this in C. In this example, the C string is 25 bytes long:
 
 ```c
 #include <stdio.h>
@@ -95,8 +121,7 @@ But in Zig, you do not have to do this, because the object already contains a `l
 As an example, the `string_literal` object below is 43 bytes long:
 
 ```{=html}
-<pre><code class="zig">
-const std = @import("std");
+<pre><code class="zig">const std = @import("std");
 
 pub fn main() !void {
     const string_literal = "This is an example of string literal in Zig";
@@ -107,6 +132,9 @@ pub fn main() !void {
 ```text
 43
 ```
+
+
+
 
 # A better look at the object type
 
@@ -129,8 +157,7 @@ not simply an array of bytes.
 
 
 ```{=html}
-<pre><code class="zig">
-const std = @import("std");
+<pre><code class="zig">const std = @import("std");
 const print = std.debug.print;
 
 pub fn main() !void {
@@ -150,3 +177,7 @@ Type of array object: [4]i32
 Type of string object: *const [43:0]u8
 Type of a pointer that points to the array object: *const [4]i32
 ```
+
+
+# Byte vs unicode points
+
