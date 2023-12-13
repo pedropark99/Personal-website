@@ -7,15 +7,14 @@ image: "./../zig-image.png"
 
 # Introduction
 
-Zig is a new general-purpose and low level programming language that is being very promising. The language have very strong advantages. However,
-it still have a weakness which is it's documentation.
+Zig is a new general-purpose and low level programming language that is being very promising.
+The documentation of the language[^lang-ref] is very good in quality, but I missed some more specific details
+about strings in there.
 
-The language reference is very good in quality, but it lacks some very specific
-details that help us understand better the ground we are stepping in.
-Unforntunately, this is a symptom of being a very new language, that is still being developed, with a small community.
+[^lang-ref]: <https://ziglang.org/documentation/0.11.0/>.
 
-
-That is why I want to help, by using this article to discuss in more depth how strings work in Zig, and give you some more specific details about it.
+That is why, I decided to write this article, to discuss in more depth how strings work in Zig,
+and give you some more specific details about it.
 
 ```{=html}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
