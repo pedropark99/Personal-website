@@ -4,7 +4,7 @@ description: In this post, I want to introduce an experimental R package 📦 wh
 image: "./../background-ggfunnel.png"
 
 date: 2023-02-11
-categories: ['R Language', 'Package', 'Power BI', 'Funnel charts']
+categories: ['R', 'Package', 'Power BI', 'Funnel charts']
 toc: false
 ---
 

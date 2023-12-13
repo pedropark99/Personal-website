@@ -2,6 +2,7 @@
 title: "Developing a parser for Python with Python"
 description: "This past week I had to develop a parser for Python expressions with Python. In this article, I want to use this experience to introduce the subject of parsing to beginners."
 image: "./../image-pic.png"
+categories: ['Python', 'Parser']
 number-sections: true
 bibliography: "./../references.bib"
 date: "2023-11-18"

@@ -241,6 +241,9 @@ got codepoint E382AB</code></pre>
 <li id="fn1"><p><a href="https://ziglang.org/documentation/0.11.0/" class="uri">https://ziglang.org/documentation/0.11.0/</a>.↩︎</p></li>
 </ol>
 </section></div> ]]></description>
+  <category>Zig</category>
+  <category>Strings</category>
+  <category>Encoding</category>
   <guid>https://pedro-faria.netlify.app/posts/2023/2023-12-12-zig-strings/en/index.html</guid>
   <pubDate>Tue, 12 Dec 2023 03:00:00 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/posts/2023/2023-12-12-zig-strings/zig-image.png" medium="image" type="image/png" height="60" width="144"/>
@@ -640,19 +643,19 @@ font-style: inherit;">filter</span>(is_not_blank, tokens))</span><div class="cod
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="lst-tokenizer" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="12" data-code-cell="lst-tokenizer" data-code-annotation="1">If current character is <code>f</code> check if the next character is the beginning of a string (characters <code>"</code> and <code>'</code>), if it is the beginning of a string, then, it is a formatted string and should be included in the “break points”. If the next character is not the beginning of a string, then, we should not consider it as an elegible breakpoint, because it probably is just a letter “f” inside a variable name, such as <code>platform_database</code>.</span>
+<span data-code-annotation="1" data-code-lines="12" data-code-cell="lst-tokenizer">If current character is <code>f</code> check if the next character is the beginning of a string (characters <code>"</code> and <code>'</code>), if it is the beginning of a string, then, it is a formatted string and should be included in the “break points”. If the next character is not the beginning of a string, then, we should not consider it as an elegible breakpoint, because it probably is just a letter “f” inside a variable name, such as <code>platform_database</code>.</span>
 </dd>
 <dt data-target-cell="lst-tokenizer" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-lines="17" data-code-cell="lst-tokenizer" data-code-annotation="2">If no break point position was found, then, the input expression is likely an expression with a single component. For example, a single string constant (e.g.&nbsp;<code>"blip.events"</code>) or a single variable name (<code>events_table</code>). In this case, the tokenizer should return this single component itself as the only token present in the input string.</span>
+<span data-code-annotation="2" data-code-lines="17" data-code-cell="lst-tokenizer">If no break point position was found, then, the input expression is likely an expression with a single component. For example, a single string constant (e.g.&nbsp;<code>"blip.events"</code>) or a single variable name (<code>events_table</code>). In this case, the tokenizer should return this single component itself as the only token present in the input string.</span>
 </dd>
 <dt data-target-cell="lst-tokenizer" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-lines="23" data-code-cell="lst-tokenizer" data-code-annotation="3">Every iteration of the loop generates two different tokens, which are: 1) a token with the part of the string from the previous break point index until the current elegible break point index; 2) and another token containing the single character that identifies the current elegible breakpoint. For example, the text <code>database"</code> will generate the break point index <code>8</code>, so, in the first iteration of the loop, the tokens <code>'database'</code> and <code>'"'</code> will be generated.</span>
+<span data-code-annotation="3" data-code-lines="23" data-code-cell="lst-tokenizer">Every iteration of the loop generates two different tokens, which are: 1) a token with the part of the string from the previous break point index until the current elegible break point index; 2) and another token containing the single character that identifies the current elegible breakpoint. For example, the text <code>database"</code> will generate the break point index <code>8</code>, so, in the first iteration of the loop, the tokens <code>'database'</code> and <code>'"'</code> will be generated.</span>
 </dd>
 <dt data-target-cell="lst-tokenizer" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-lines="28" data-code-cell="lst-tokenizer" data-code-annotation="4">Empty tokens (i.e.&nbsp;tokens that are empty strings, or, that contains only spaces) can be generated during the process. So we use <code>filter()</code> with a <code>lambda</code> function to eliminate them from the output.</span>
+<span data-code-annotation="4" data-code-lines="28" data-code-cell="lst-tokenizer">Empty tokens (i.e.&nbsp;tokens that are empty strings, or, that contains only spaces) can be generated during the process. So we use <code>filter()</code> with a <code>lambda</code> function to eliminate them from the output.</span>
 </dd>
 </dl>
 <p>This <code>tokenizer()</code> function generates a list of tokens to be analyzed by the parser:</p>
@@ -1003,7 +1006,7 @@ font-style: inherit;">return</span> parser_cache</span><div class="code-annotati
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-8" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="2" data-code-cell="annotated-cell-8" data-code-annotation="1">If the sequence of tokens is empty, then, we have no tokens to analyze, and the function should simply return right away.</span>
+<span data-code-annotation="1" data-code-lines="2" data-code-cell="annotated-cell-8">If the sequence of tokens is empty, then, we have no tokens to analyze, and the function should simply return right away.</span>
 </dd>
 </dl>
 </div>
@@ -1127,7 +1130,7 @@ font-style: inherit;">return</span> parser_cache</span><div class="code-annotati
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-10" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="2" data-code-cell="annotated-cell-10" data-code-annotation="1">We copy the character (<code>'</code> or <code>"</code>) that openned the string that we are analyzing now, because then, we can search for a new occurence of this same character in the tokens sequence to detect the end of the string.</span>
+<span data-code-annotation="1" data-code-lines="2" data-code-cell="annotated-cell-10">We copy the character (<code>'</code> or <code>"</code>) that openned the string that we are analyzing now, because then, we can search for a new occurence of this same character in the tokens sequence to detect the end of the string.</span>
 </dd>
 </dl>
 </div>
@@ -1206,7 +1209,7 @@ font-style: inherit;">return</span> parser_cache</span><div class="code-annotati
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-11" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="4" data-code-cell="annotated-cell-11" data-code-annotation="1">We break the loop, at the moment that we find a closing bracket in the sequence of tokens, because this character represents the end of the pair of brackets that contains the subexpression that we are analyzing.</span>
+<span data-code-annotation="1" data-code-lines="4" data-code-cell="annotated-cell-11">We break the loop, at the moment that we find a closing bracket in the sequence of tokens, because this character represents the end of the pair of brackets that contains the subexpression that we are analyzing.</span>
 </dd>
 </dl>
 </div>
@@ -1465,6 +1468,8 @@ font-style: inherit;">"  * Parsed AST: "</span>, parsed_expr)</span></code></pre
 Gries, David, and Fred B. Schneider. 2008. <em>Parsing Techniques: A Practical Guide</em>. 2nd ed. Springer.
 </div>
 </div></section></div> ]]></description>
+  <category>Python</category>
+  <category>Parser</category>
   <guid>https://pedro-faria.netlify.app/posts/2023/2023-11-18-python-parser/en/index.html</guid>
   <pubDate>Sat, 18 Nov 2023 03:00:00 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/posts/2023/2023-11-18-python-parser/image-pic.png" medium="image" type="image/png" height="51" width="144"/>
@@ -1750,6 +1755,8 @@ font-style: inherit;">]</span></span></code></pre></div>
 </section>
 
  ]]></description>
+  <category>Data Storytelling</category>
+  <category>Data Science</category>
   <guid>https://pedro-faria.netlify.app/posts/2023/2023-08-31-data-decisions/en/index.html</guid>
   <pubDate>Sat, 28 Oct 2023 03:00:00 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/posts/2023/2023-08-31-data-decisions/decision.avif" medium="image" type="image/avif"/>
@@ -2035,6 +2042,8 @@ font-style: inherit;">]</span></span></code></pre></div>
 </section>
 
  ]]></description>
+  <category>Data Storytelling</category>
+  <category>Data Science</category>
   <guid>https://pedro-faria.netlify.app/posts/2023/2023-08-31-data-decisions/pt/index.html</guid>
   <pubDate>Sat, 28 Oct 2023 03:00:00 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/posts/2023/2023-08-31-data-decisions/decision.avif" medium="image" type="image/avif"/>
@@ -3202,7 +3211,7 @@ font-style: inherit;">"cm"</span>)</span>
 </section>
 
  ]]></description>
-  <category>R Language</category>
+  <category>R</category>
   <category>Package</category>
   <category>Power BI</category>
   <category>Funnel charts</category>
@@ -4010,7 +4019,7 @@ Faria, Pedro Duarte. 2022. <em>Introdução à Linguagem r: Seus Fundamentos e S
 
  ]]></description>
   <category>Book</category>
-  <category>R Language</category>
+  <category>R</category>
   <guid>https://pedro-faria.netlify.app/posts/2022/2022-12-26-4th-edition-rbook/pt/index.html</guid>
   <pubDate>Mon, 26 Dec 2022 03:00:00 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/posts/2022/2022-12-26-4th-edition-rbook/featured.png" medium="image" type="image/png" height="206" width="144"/>
@@ -4410,7 +4419,7 @@ font-style: inherit;">sum</span>)</span></code></pre></div>
 </section>
 
  ]]></description>
-  <category>R Language</category>
+  <category>R</category>
   <category>Book</category>
   <category>Brazil</category>
   <guid>https://pedro-faria.netlify.app/publications/book/introducao_linguagem_R/pt/index.html</guid>
@@ -4581,7 +4590,7 @@ font-style: inherit;">'characters'</span>)</span></code></pre></div>
 </section>
 
  ]]></description>
-  <category>R Language</category>
+  <category>R</category>
   <category>Package</category>
   <category>Figma</category>
   <category>API</category>
@@ -4628,7 +4637,7 @@ font-style: inherit;">'characters'</span>)</span></code></pre></div>
 
  ]]></description>
   <category>Book</category>
-  <category>R Language</category>
+  <category>R</category>
   <guid>https://pedro-faria.netlify.app/posts/2022/2022-04-06-3nd-edition-rbook/pt/index.html</guid>
   <pubDate>Wed, 06 Apr 2022 03:00:00 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/posts/2022/2022-04-06-3nd-edition-rbook/featured.png" medium="image" type="image/png" height="206" width="144"/>
@@ -4851,7 +4860,7 @@ font-style: inherit;">$</span>hour</span></code></pre></div>
 </ol>
 </section></div> ]]></description>
   <category>Book</category>
-  <category>R Language</category>
+  <category>R</category>
   <guid>https://pedro-faria.netlify.app/posts/2021/2021-05-26-2nd-edition-rbook/pt/index.html</guid>
   <pubDate>Wed, 26 May 2021 03:00:00 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/posts/2021/2021-05-26-2nd-edition-rbook/featured.png" medium="image" type="image/png" height="204" width="144"/>

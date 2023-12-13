@@ -4,7 +4,7 @@ description: 'Esta quarta edição traz algumas melhorias que buscam manter um d
 date: '2022-12-26'
 
 image: "./../featured.png"
-categories: ["Book", "R Language"]
+categories: ["Book", "R"]
 projects: ["R_curso"]
 links:
   - name: "Link to the Book"

@@ -5,7 +5,7 @@ authors: ["Pedro Duarte Faria"]
 date: "2022-12-01"
 isbn: "978-65-00-57872-0"
 number-sections: true
-categories: [R Language, Book, Brazil]
+categories: [R, Book, Brazil]
 image: "../featured.png"
 projects: [R_curso]
 

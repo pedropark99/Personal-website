@@ -4,7 +4,7 @@ description: 'Uma grande reforma sobre a obra foi feita para esta nova edição.
 date: '2022-04-06'
 
 image: "./../featured.png"
-categories: ["Book", "R Language"]
+categories: ["Book", "R"]
 projects: ["R_curso"]
 links:
   - name: "Link to the Book"

@@ -2,7 +2,7 @@
 title: "Resultados do Formulário de Pesquisa de Interesse - Curso Introdutório de R"
 description: "Uma rápida análise sobre o impacto e as sugestões fornecidas ao Curso Introdutório de R"
 date: 2020-10-17
-categories: ["R Language", "Teaching"]
+categories: ["R", "Teaching"]
 image: './../featured.jpg'
 
 aliases: 
