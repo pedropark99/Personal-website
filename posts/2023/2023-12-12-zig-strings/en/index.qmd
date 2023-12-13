@@ -36,6 +36,9 @@ Because Zig is a low level language, strings might work very differently from ot
 In Zig, a string literal (or a string object if you prefer) is a pointer to a null-terminated array of bytes. Each byte in this
 array is represented by an `u8` value, which is an unsigned 8 bit integer.
 
+Zig always assumes that this sequence of bytes is UTF-8 encoded. This might not be true for every sequence of bytes you have it.
+If your string literal is not UTF-8 encoded then, you will probably have problems in Zig.
+
 Let's take for example the word "Hello". In UTF-8, this sequence of characters is represented by the sequence of decimal numbers
 72, 101, 108, 108, 111. In xecadecimal, this is the sequence `0x48`, `0x65`, `0x6C`, `0x6C`, `0x6F`. So if I take this sequence
 of hexadecimal values, and ask Zig to print this sequence of bytes as a sequence of characters (i.e. a string), then,
@@ -107,18 +110,22 @@ pub fn main() !void {
 
 # A better look at the object type
 
-Now, we can check the type of both objects using the `@TypeOf()` function.
-    
-If we look at the type of the `simple_array` object, you will find that this object is a array of 4 elements.
+Now, we can inspect better the type of objects that Zig create. To check the type of any object in Zig,
+you can use the `@TypeOf()` function.
+
+If we look at the type of the `simple_array` object below, you will find that this object is a array of 4 elements.
 Each element is a signed integer of 32 bits (`i32`). That is what an object of type `[4]i32` is.
 
-But if we look closely at the type of the string object, you will find that this object is a constant pointer (`*const`) to an array
+But if we look closely at the type of the `string_literal` object below, you will find that this object is a constant pointer (`*const`) to an array
 of 43 elements (or 43 bytes). Each element is a single byte (more precisely, an unsigned 8 bit integer), that is why we have the `[43:0]u8` portion of the type below.
-In other words, the string stored inside the `string_literal` object is 43 bytes long.
+In other words, the string stored inside the `string_literal` object is 43 bytes long. That is why you have the type `*const [43:0]u8` below.
 
 Now, if we create an pointer to the array object, then, we get a constant pointer to an array of 4 elements (`*const [4]i32`),
-which is very similar to the type of the string object. This demonstrates that a string object (or a string literal) in Zig is already
-a pointer to an array. Just remember that a "pointer to an array" is different than an "array".
+which is very similar to the type of the `string_literal` object. This demonstrates that a string object (or a string literal) in Zig is already
+a pointer to an array.
+
+Just remember that a "pointer to an array" is different than an "array". So a string object in Zig is a pointer to an array of bytes, and
+not simply an array of bytes.
 
 
 ```{=html}
