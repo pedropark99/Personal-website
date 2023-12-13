@@ -226,3 +226,30 @@ this specific situation, the relationship between bytes and unicode points is 1 
 But on the other side, if your string contains other types of letters... for example, you might be working
 with text data that contains, chinese, japanese or latin letters, then, the number of bytes necessary to
 represent your UTF-8 string will likely be much higher than the number of characters in that string.
+
+If you need to iterate through the characters of a string, instead of its bytes, then, you can 
+use the `std.unicode.Utf8View` struct to create an iterator that iterates through the unicode
+points of your string.
+
+In the example below, we loop through the japanese characters "アメリカ". Each of the four characters
+in this string is represented by three bytes. But the for loop iterates four times, one iteration
+for each character/unicode point in this string:
+
+```{=html}
+<pre><code class="zig">const std = @import("std");
+
+pub fn main() !void {
+    var utf8 = (try std.unicode.Utf8View.init("アメリカ")).iterator();
+    while (utf8.nextCodepointSlice()) |codepoint| {
+        std.debug.print("got codepoint {}\n", .{std.fmt.fmtSliceHexUpper(codepoint)});
+    }
+}
+</code></pre>
+```
+
+```text
+got codepoint E382A2
+got codepoint E383A1
+got codepoint E383AA
+got codepoint E382AB
+```

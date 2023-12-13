@@ -1,10 +1,8 @@
 const std = @import("std");
 
 pub fn main() !void {
-    const string_literal = "Ⱥ";
-    std.debug.print("Bytes that represents the string object: ", .{});
-    for (string_literal) |char| {
-        std.debug.print("{X} ", .{char});
+    var utf8 = (try std.unicode.Utf8View.init("アメリカ")).iterator();
+    while (utf8.nextCodepointSlice()) |codepoint| {
+        std.debug.print("got codepoint {}\n", .{std.fmt.fmtSliceHexUpper(codepoint)});
     }
-    std.debug.print("\n", .{});
 }

@@ -399,6 +399,21 @@ pub fn main() !void {
 <p>All of this means that if you loop trough the elements of a string in Zig, you will be looping through the bytes that represents that string, and not through the characters of that string. In the Ⱥ example above, the for loop needed two iterations (instead of a single iteration) to print the two bytes that represents this Ⱥ letter.</p>
 <p>Now, all english letters (or ASCII letters if you prefer) can be represented by a single byte in UTF-8. As a consequence, if your UTF-8 string contains only english letters (or ASCII letters), then, you are lucky. Because the number of bytes will be equal to the number of characters in that string. In other words, in this specific situation, the relationship between bytes and unicode points is 1 to 1.</p>
 <p>But on the other side, if your string contains other types of letters… for example, you might be working with text data that contains, chinese, japanese or latin letters, then, the number of bytes necessary to represent your UTF-8 string will likely be much higher than the number of characters in that string.</p>
+<p>If you need to iterate through the characters of a string, instead of its bytes, then, you can use the <code>std.unicode.Utf8View</code> struct to create an iterator that iterates through the unicode points of your string.</p>
+<p>In the example below, we loop through the japanese characters “アメリカ”. Each of the four characters in this string is represented by three bytes. But the for loop iterates four times, one iteration for each character/unicode point in this string:</p>
+<pre><code class="zig">const std = @import("std");
+
+pub fn main() !void {
+    var utf8 = (try std.unicode.Utf8View.init("アメリカ")).iterator();
+    while (utf8.nextCodepointSlice()) |codepoint| {
+        std.debug.print("got codepoint {}\n", .{std.fmt.fmtSliceHexUpper(codepoint)});
+    }
+}
+</code></pre>
+<pre class="text"><code>got codepoint E382A2
+got codepoint E383A1
+got codepoint E383AA
+got codepoint E382AB</code></pre>
 
 
 </section>
