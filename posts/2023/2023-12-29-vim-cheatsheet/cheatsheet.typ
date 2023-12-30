@@ -138,6 +138,7 @@ found in the file. You can also press the `n` key over and over again to navigat
 
 - Search for a pattern over the next lines: #normal() `/{pattern}`
 - Search for a pattern over the previous lines: #normal() `?{pattern}`
+- If you dont have Telescope installed, and want to search for a pattern across all files in your current directory: #command() `:vim[grep] /{pattern}/ **/*`
 - Search and replace the first occurrence of a pattern over the current line: #command() `:s/{pattern}/{replacement}`
 - Search and replace the first occurrence of a pattern over all lines: #command() `:%s/{pattern}/{replacement}`
 - Search and replace all occurrences of a pattern over the current line: #command() `:%s/{pattern}/{replacement}/g`
