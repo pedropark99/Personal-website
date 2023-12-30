@@ -80,11 +80,11 @@
 
 All Vim commands or shortcuts exposed in this cheatsheet are written
 in monospaced font, like `/{pattern}` for searching for a pattern over the
-current file.
+current file. Also, each commands/shortcut is accompanied by a badge. This badge identifies the Vim mode
+you need to be in order to use that command/shortcut.
 
-All Vim commands or shortcuts are accompanied by the logo of the Vim mode
-you need to be in order to use that command/shortcut. For example, if you see the shortcut
-"#normal() `gj`", this means that to use this shortcut, you need first to enter into Vim normal mode,
+For example, if you see the shortcut
+"#normal() `gj`", it means that you need first to enter into Vim normal mode,
 and then, you press the keys "g" and "j" (one after another) on your keyboard.
 
 When you need to hold down a sequence of keys together, we will use the plus 
@@ -93,8 +93,7 @@ key, then, press the `f` key".
 
 When you need to provide some input to the command/shortcut, like a pattern to search for, or a number of lines
 to jump, then this input will be surrounded by curly brackets (`{` and `}`). So if you see `{pattern}`
-inside a shortcut/command, this means that you need to type a pattern in the place
-of this `{pattern}`.
+inside a shortcut/command, this means that you need to type the pattern you want to use.
 
 = Vim modes
 
@@ -153,6 +152,7 @@ found in the file. You can also press the `n` key over and over again to navigat
 - Copy (or _yank_) text: #normal() `y`
 - Paste copied text: #normal() `p`
 - Copy current line: #normal() `yy`
+- Copy current word: #normal() `byw`
 - Copy multiple lines at once: being in #normal() mode, press `v`, then, move the cursor in any possible way to enter #visual() mode. Then, if you do enter visual mode, start to move the cursor to mark the lines you want to copy. After you marked the lines you want, you can type `y` to copy them. 
 
 = Insert mode, start writing new code
@@ -211,7 +211,7 @@ you should have it installed in your NeoVim. It provides many useful shortcuts f
 and is the most effective way of installing NeoVim plugins.
 
 - Opens the Mason package manager: #command() `:Mason`
-- Search for a package/plugin: when you are inside Mason, just use the normal Vim search command `/{pattern}`.
+- Search for a package/plugin: just use the normal Vim search command `/{pattern}`.
 - Install a package: if the cursor is over the package, press `i` to install it.
 - Uninstall a package: if the cursor is over the package, press `X` to uninstall it.
 - Update a package: if the cursor is over the package, press `u` to update it.

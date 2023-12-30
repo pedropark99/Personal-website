@@ -1,0 +1,29 @@
+---
+title: NeoVim commands and shortcuts cheatsheet
+description: "I have been using NeoVim for the last year to write code. NeoVim is extremely useful and fast when you learn and master all of its shortcuts and commands. However, is hard to remember all of them, so I dedided to write a cheatsheet with all of the most useful and essential commands."
+date: "2023-12-30"
+---
+
+# Introduction
+
+Today is almost the last day of 2023, and now, I have the opportunity to reflect on this past year.
+One of my key objectives for 2023 that I was able to fulfill was to effectively learn and use NeoVim.
+
+NeoVim is a lightweight, highly extensible, and "keyboard-based", text editor. Many consider NeoVim as an evolution of the famous
+Vim text editor, with focus on extensibility.
+
+The Vim commands and keyboards shortcuts are what really makes NeoVim (and also Vim) an extremely powerful
+and fast text editor. But is hard to remember every single shortcut and command available, and,
+as a consequence, quick searchs at Google, ChatGPT and StackOverflow are very commom
+on day-to-day basis.
+
+# Access/Download the cheatsheet
+
+For speeding my process, I decided to write a quick cheatsheet that contains all of the Vim commands
+and keyboard shortcuts that I use the most on my dayly routine with Vim.
+
+Now, I have everything I need concentrated in one place that is quick to search,
+and I hope this cheatsheet might help you as well.
+
+The cheatsheet is available as a PDF document. You can access it freely and easily by clicking
+in the button below.
