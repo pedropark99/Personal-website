@@ -711,6 +711,6 @@
     "href": "posts/2023/2023-12-29-vim-cheatsheet/en/index.html",
     "title": "NeoVim commands and shortcuts cheatsheet",
     "section": "",
-    "text": "Introduction\nNeoVim is a highly extensible and “keyboard-based” text editor. Many consider NeoVim as an evolution of the famous Vim text editor, with focus on extensibility.\nWhat really makes NeoVim (and also Vim) an extremely powerful editor are the Vim commands and keyboards shortcuts. To make my life easier, I decided to write a quick cheatsheet that contains all of the Vim commands and keyboard shortcuts that I use the most.\n Access Cheatsheet PDF"
+    "text": "Introduction\n Access Cheatsheet PDF\nNeoVim is a highly extensible and “keyboard-based” text editor. Many consider NeoVim as an evolution of the famous Vim text editor, with focus on extensibility.\nWhat really makes NeoVim (and also Vim) an extremely powerful editor are the Vim commands and keyboards shortcuts. To make my life easier, I decided to write a quick cheatsheet that contains all of the Vim commands and keyboard shortcuts that I use the most."
   }
 ]
