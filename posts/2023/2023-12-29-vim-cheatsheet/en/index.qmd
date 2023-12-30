@@ -8,6 +8,8 @@ date: "2023-12-30"
 
 # Introduction
 
+<a href="./../cheatsheet.pdf"> <button type="button" class="btn btn-primary">Access Cheatsheet PDF</button></a>
+
 NeoVim is a highly extensible and "keyboard-based" text editor. Many consider NeoVim as an evolution of the famous
 Vim text editor, with focus on extensibility.
 
@@ -15,4 +17,3 @@ What really makes NeoVim (and also Vim) an extremely powerful editor are the Vim
 To make my life easier, I decided to write a quick cheatsheet that contains all of the Vim commands
 and keyboard shortcuts that I use the most.
 
-<a href="./../cheatsheet.pdf"> <button type="button" class="btn btn-primary">Access Cheatsheet PDF</button></a>
