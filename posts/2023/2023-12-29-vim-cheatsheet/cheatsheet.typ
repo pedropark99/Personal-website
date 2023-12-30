@@ -82,9 +82,9 @@ All Vim commands or shortcuts exposed in this cheatsheet are written
 in monospaced font, like `/{pattern}` for searching for a pattern over the
 current file.
 
-Also all Vim commands or shortcuts are accompanied by the logo of the Vim mode
+All Vim commands or shortcuts are accompanied by the logo of the Vim mode
 you need to be in order to use that command/shortcut. For example, if you see the shortcut
-"#normal() `gj`", this means that to use this shortcut, you need to enter into normal mode,
+"#normal() `gj`", this means that to use this shortcut, you need first to enter into Vim normal mode,
 and then, you press the keys "g" and "j" (one after another) on your keyboard.
 
 When you need to hold down a sequence of keys together, we will use the plus 
