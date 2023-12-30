@@ -10,23 +10,20 @@
       )
       #h(0.25cm)
       #text(
-        font: "Nunito Sans 10pt",
-        style: "normal",
+        font: "Source Sans Pro",
         weight: "black",
         size: 21pt,
         fill: rgb("#2887ed")
       )[Neo]#text(
-        font: "Nunito Sans 10pt",
-        style: "normal",
+        font: "Source Sans Pro",
         weight: "black",
         size: 21pt,
         fill: rgb("#3f9940")
       )[Vim] #text(
-        font: "Nunito Sans 10pt",
-        style: "normal",
+        font: "Source Sans Pro",
         weight: "black",
         size: 21pt
-      )[commands and shortcuts cheatsheet]
+      )[ commands and shortcuts cheatsheet]
   ]
 )
 
@@ -109,7 +106,7 @@ of this `{pattern}`.
 = Quit Neovim | Create, Save and Close files
 
 - Save the current file: #command() `:w`
-- Create a new text file: #command() `:e {name of the new file}`, then, use the save command #command() `:w` to save this new file into your system.
+- Create a new text file: #command() `:e {path to new file}`, then, use the save command #command() `:w` to save this new file into your system.
 - Close everything (all active windows), and then, Quit/Exit NeoVim: #command() `:qa`
 - Close the current window (this works for any kind of window in NeoVim, e.g. a plugin window, a tab or a splitted window). However, if you have only one window active, then, this command will actually Quit/Exit NeoVim: #command() `:q`
 
