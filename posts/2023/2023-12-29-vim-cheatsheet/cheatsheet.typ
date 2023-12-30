@@ -107,6 +107,7 @@ of this `{pattern}`.
 
 - Save the current file: #command() `:w`
 - Create a new text file: #command() `:e {path to new file}`, then, use the save command #command() `:w` to save this new file into your system.
+- Open the file explorer. In other words, browse/navigate through the files in the current directory: #command() `:e .`
 - Close everything (all active windows), and then, Quit/Exit NeoVim: #command() `:qa`
 - Close the current window (this works for any kind of window in NeoVim, e.g. a plugin window, a tab or a splitted window). However, if you have only one window active, then, this command will actually Quit/Exit NeoVim: #command() `:q`
 
