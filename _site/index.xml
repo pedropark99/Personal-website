@@ -9,8 +9,34 @@
 <link>https://pedro-faria.netlify.app/index.html</link>
 <atom:link href="https://pedro-faria.netlify.app/index.xml" rel="self" type="application/rss+xml"/>
 <description>A blog about programming and data analysis, specially with R and Python</description>
-<generator>quarto-1.3.433</generator>
-<lastBuildDate>Tue, 12 Dec 2023 03:00:00 GMT</lastBuildDate>
+<generator>quarto-1.3.450</generator>
+<lastBuildDate>Sat, 30 Dec 2023 03:00:00 GMT</lastBuildDate>
+<item>
+  <title>NeoVim commands and shortcuts cheatsheet</title>
+  <dc:creator>Pedro Duarte Faria</dc:creator>
+  <link>https://pedro-faria.netlify.app/posts/2023/2023-12-29-vim-cheatsheet/en/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>NeoVim is a highly extensible and “keyboard-based” text editor. Many consider NeoVim as an evolution of the famous Vim text editor, with focus on extensibility.</p>
+<p>What really makes NeoVim (and also Vim) an extremely powerful editor are the Vim commands and keyboards shortcuts. To make my life easier, I decided to write a quick cheatsheet that contains all of the Vim commands and keyboard shortcuts that I use the most.</p>
+<p><a href="./../cheatsheet.pdf"> <button type="button" class="btn btn-primary">Access Cheatsheet PDF</button></a></p>
+
+
+</section>
+
+ ]]></description>
+  <category>NeoVim</category>
+  <category>Vim</category>
+  <category>Cheatsheet</category>
+  <guid>https://pedro-faria.netlify.app/posts/2023/2023-12-29-vim-cheatsheet/en/index.html</guid>
+  <pubDate>Sat, 30 Dec 2023 03:00:00 GMT</pubDate>
+  <media:content url="https://pedro-faria.netlify.app/posts/2023/2023-12-29-vim-cheatsheet/post-image.png" medium="image" type="image/png" height="81" width="144"/>
+</item>
 <item>
   <title>How strings work in Zig?</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
@@ -5036,185 +5062,6 @@ font-style: inherit;">"x"</span>)</span></code></pre></div>
   <category>JOINs</category>
   <category>Teaching</category>
   <guid>https://pedro-faria.netlify.app/posts/2021/2021-01-02-tabela-destinataria-fonte/en/index.html</guid>
-  <pubDate>Sat, 02 Jan 2021 03:00:00 GMT</pubDate>
-  <media:content url="https://pedro-faria.netlify.app/posts/2021/2021-01-02-tabela-destinataria-fonte/featured.png" medium="image" type="image/png" height="81" width="144"/>
-</item>
-<item>
-  <title>Tabela destinatária e tabela fonte</title>
-  <dc:creator>Pedro Duarte Faria</dc:creator>
-  <link>https://pedro-faria.netlify.app/posts/2021/2021-01-02-tabela-destinataria-fonte/pt/index.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<div class="cell">
-<style type="text/css">
-.hljs{
-  font-family: 'Inconsolata', monospace;
-  font-size: 17px;
-}
-
-.hljs.shell{
-  font-size: 18px;
-}
-
-.hljs-comment{
-  font-style: normal;
-  color: #222222;
-}
-</style>
-</div>
-<section id="introdução" class="level1">
-<h1>Introdução</h1>
-<p><em>Outer joins</em> são um tópico de simples compreensão para a maioria dos alunos. Entretanto, esse artigo propõe uma segunda abordagem sobre o tema. Tal abordagem foi construída durante uma reformulação recente do capítulo “Introdução a base de dados relacionais” do livro <a href="https://pedro-faria.netlify.app/pt/publication/book/introducao_linguagem_r/">Introdução à Linguagem R: seus fundamentos e sua prática</a>. O ponto de vista apresentado aqui, busca ser estrito, e utiliza essa rigidez como um mecanismo que facilite a memorização do aluno sobre os comportamentos de cada tipo de <em>outer join</em>.</p>
-</section>
-<section id="joins-possuem-sentido-e-direção" class="level1">
-<h1>Joins possuem sentido e direção</h1>
-<p>Uma operação de <em>join</em> é nada mais do que uma união entre duas tabelas. Por outro lado, temos uma outra opção de interpretação do resultado dessa operação. De modo que, para produzirmos uma tabela que represente a união entre duas tabelas, poderíamos simplesmente extrair todas as colunas de uma das tabelas, e inserí-las na outra tabela.</p>
-<p>Por exemplo, suponha que você possua uma tabela <code>A</code>, que contém duas colunas, chamadas <code>x</code> e <code>y</code>; e uma tabela <code>B</code>, que por sua vez, guarda 4 colunas diferentes, denominadas <code>x</code>, <code>z</code>, <code>r</code>, e <code>t</code>. Perceba que uma das colunas na tabela <code>B</code>, corresponde a mesma coluna <code>x</code> que encontramos na tabela <code>A</code>.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">library</span>(tibble)</span>
-<span id="cb1-2"></span>
-<span id="cb1-3">A <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">tibble</span>(</span>
-<span id="cb1-4">  <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">x =</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">:</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">5</span>,</span>
-<span id="cb1-5">  <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">y =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">round</span>(<span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">rnorm</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">5</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>), <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>)</span>
-<span id="cb1-6">)</span>
-<span id="cb1-7"></span>
-<span id="cb1-8">B <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">tibble</span>(</span>
-<span id="cb1-9">  <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">x =</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">:</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">5</span>,</span>
-<span id="cb1-10">  <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">z =</span> letters[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">:</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">5</span>],</span>
-<span id="cb1-11">  <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">r =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">c</span>(<span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">3.5</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2.1</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">5.6</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">7.2</span>),</span>
-<span id="cb1-12">  <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">t =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"tzu"</span></span>
-<span id="cb1-13">)</span></code></pre></div>
-</div>
-<p>Se você deseja unir as tabelas <code>A</code> e <code>B</code>, você basicamente deseja criar uma nova tabela, que contém todas as cinco colunas dessas duas tabelas (<code>x</code>, <code>y</code>, <code>z</code>, <code>r</code> e <code>t</code>). Portanto, poderíamos imaginar um processo de <em>join</em>, como se estivéssemos transportando todas as colunas da tabela <code>B</code>, para dentro da tabela <code>A</code>. Dessa maneira, temos a tabela abaixo como resultado:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">library</span>(dplyr)</span></code></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">full_join</span>(A, B, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">by =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"x"</span>)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 5 × 5
-      x     y z         r t    
-  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;
-1     1  1.5  a       3.5 tzu  
-2     2  2.02 b       2.1 tzu  
-3     3  1.34 c       1   tzu  
-4     4  1.24 d       5.6 tzu  
-5     5  2.49 e       7.2 tzu  </code></pre>
-</div>
-</div>
-<p>Com isso, estamos criando a ideia de que <strong>um <em>join</em> possui sempre um sentido e uma direção</strong>. Em outras palavras, primeiro, extraímos as colunas da tabela <code>B</code>, e em seguida, acrescentamos essas colunas à tabela <code>A</code>. Repare que estamos sempre partindo da tabela <code>B</code> em direção a tabela <code>A</code>.</p>
-<div class="cell">
-<div class="cell-output-display">
-<p><img src="https://pedro-faria.netlify.app/posts/2021/2021-01-02-tabela-destinataria-fonte/direcao.png" class="img-fluid"></p>
-</div>
-</div>
-</section>
-<section id="tabela-destinatária-e-tabela-fonte" class="level1">
-<h1>Tabela destinatária e tabela fonte</h1>
-<p>Por essa perspectiva, podemos interpretar que, em um <em>join</em>, estamos trazendo todas as colunas de uma tabela secundária, para dentro de nossa tabela principal (ou a nossa tabela de interesse). Temos a opção de chamarmos essas tabelas de: <strong>tabela fonte</strong> (tabela secundária) e <strong>tabela destinatária</strong> (tabela principal). Com isso, temos que um <em>join</em> sempre parte da <strong>tabela fonte</strong> em direção à <strong>tabela destinatária</strong>.</p>
-<p>Essa perspectiva faz sentido com a prática de <em>joins</em>. Pois em qualquer análise, nós comumente trabalhamos com uma tabela “principal”, ou uma tabela que contém os principais dados que estamos analisando. E quando utilizamos algum <em>join</em>, estamos geralmente trazendo colunas de outras tabelas para dentro dessa tabela “principal” (ou tabela “destinatária”, segundo essa perspectiva). Por isso, tenha em mente que um <em>join</em> sempre parte da <strong>tabela fonte</strong> em direção à <strong>tabela destinatária</strong>.</p>
-</section>
-<section id="tipos-de-outer-join" class="level1">
-<h1>Tipos de <em>outer join</em></h1>
-<p>Um <em>join</em> natural (<em>inner join</em>) usualmente gera uma perda de observações de ambas as tabelas envolvidas no processo. Em contrapartida, um <em>join</em> do tipo <em>outer</em> (isto é, um <em>outer join</em>), busca delimitar qual das duas tabelas será preservada no resultado. Ou seja, um <em>outer join</em> busca manter as linhas de pelo menos uma das tabelas envolvidas, no resultado do <em>join</em>.</p>
-<p>Temos três tipos principais de <em>outer joins</em>, que são <em>left join</em>, <em>right join</em> e <em>full join</em>. O <em>full join</em> é o mais simples de se compreender, pois ele busca manter todas as linhas de ambas as tabelas empregadas. Logo, mesmo que haja alguma observação não encontrada em uma das tabelas, ela será preservada no produto final da operação.</p>
-<p>No entanto, <em>left join</em> e <em>right join</em> buscam conservar as linhas de apenas uma das tabelas utilizadas no <em>join</em>. Nesse ponto, muitos professores diriam algo como: “se temos desejamos aplicar um <em>join</em> entre as tabelas <code>A</code> e <code>B</code>, um <em>left join</em> irá manter as linhas da tabela <code>A</code> e um <em>right join</em> vai manter as linhas da tabela <code>B</code>”. Outros professores ainda tentariam dizer: “<em>left join</em> irá manter as linhas da tabela à esquerda, enquanto um <em>right join</em> vai manter as linhas da tabela à direita”.</p>
-<p>Porém, certa confusão pode ser facilmente aplicada em ambas alternativas. Digo, um aluno pode facilmente enfrentar a seguinte questão: “🤔 Uhmm… Eu não me lembro muito bem. Um <em>left join</em> mantém as linhas da tabela <code>A</code>? Ou são as linhas da tabela <code>B</code>?”; ou então, “🤔 Pera! Mas qual das duas tabelas está a direita?”.</p>
-</section>
-<section id="conclusão" class="level1">
-<h1>Conclusão</h1>
-<p>Com isso, segundo a perspectiva adotada nesse artigo, podemos entender que, um <em>left join</em> e um <em>right join</em> buscam manter as linhas da <strong>tabela destinatária</strong> e da <strong>tabela fonte</strong>, respectivamente. Dessa forma, ao utilizar um <em>right join</em> ou um <em>left join</em>, você deve se questionar o seguinte: “Eu quero manter as linhas de minha tabela principal (tabela destinatária)? Ou da tabela secundária (tabela fonte), de onde estou extraindo as novas colunas?”. Logo, se você deseja manter, por exemplo, as linhas de sua tabela principal (tabela destinatária), que é o que ocorre na maioria das vezes, você sabe agora que você precisa utilizar um <em>left join</em>.</p>
-<p>Em uma representação visual, podemos reproduzir abaixo a imagem inicial desse artigo, que marca as linhas mantidas por cada um desses dois tipos de <em>join</em>.</p>
-<div class="cell">
-<div class="cell-output-display">
-<p><img src="https://pedro-faria.netlify.app/posts/2021/2021-01-02-tabela-destinataria-fonte/featured.png" class="img-fluid"></p>
-</div>
-</div>
-
-
-</section>
-
- ]]></description>
-  <category>JOINs</category>
-  <category>Teaching</category>
-  <guid>https://pedro-faria.netlify.app/posts/2021/2021-01-02-tabela-destinataria-fonte/pt/index.html</guid>
   <pubDate>Sat, 02 Jan 2021 03:00:00 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/posts/2021/2021-01-02-tabela-destinataria-fonte/featured.png" medium="image" type="image/png" height="81" width="144"/>
 </item>
