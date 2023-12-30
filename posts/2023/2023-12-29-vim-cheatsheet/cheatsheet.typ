@@ -29,6 +29,8 @@
       )[commands and shortcuts cheatsheet]
   ]
 )
+
+#set par(justify: true)
 #set text(
   font: "Hanken Grotesk",
   size: 10pt
@@ -144,7 +146,7 @@ found in the file. You can also press the `n` key over and over again to navigat
 
 = Comment lines
 
-- Comment current line: #normal() `gcc` or `gbc`
+- Comment the current line: #normal() `gcc` or `gbc`
 - Comment multiple lines at once: being in #normal() mode, press `v`, then, move the cursor in any possible way to enter #visual() mode. Then, if you do enter visual mode, start to move the cursor to mark the lines you want to comment. After you marked the lines you want, you can type `gc` or `gb` to comment them. 
 
 = Copy and paste text
@@ -157,20 +159,11 @@ found in the file. You can also press the `n` key over and over again to navigat
 = Insert mode, start writing new code
 
 - Enter insert mode before the cursor: #normal() `i`
-- Enter insert mode at the beginning of the current line: #normal() `I`
 - Enter insert mode after the cursor (append): #normal() `a`
+- Create a new line below the current line, then, move the cursor to this new line, then, enter insert mode: #normal() `o`
+- Create a new line above the current line, then, move the cursor to this new line, then, enter insert mode: #normal() `O`
+- Enter insert mode at the beginning of the current line: #normal() `I`
 - Enter insert mode at the end of the current line (append): #normal() `A`
-- Create a new line below the current line, move the cursor to this new line, and then, enter insert mode: #normal() `o`
-- Create a new line above the current line, move the cursor to this new line, and then, enter insert mode: #normal() `O`
-
-
-= Indentation and code style
-
-- Reindent the entire file: #normal() `gg=G`
-- Reformat the entire file using the code style of by the LSP #footnote[This command will use the current LSP to reformat your source code, so it conforms with the code style recommended by this LSP. For example, if you are editing a C source file, you are likely using the `clang` LSP. Then, this `:Format` command would apply the code style recommended by the `clang` LSP over the current file]: #command() `:Format`
-
-- Add more indentation (i.e. move right) to the current line #insert() `<Ctrl> + t`
-- Subtract indentation (i.e. move left) of the current line #insert() `<Ctrl> + d`
 
 
 = Delete content
@@ -182,6 +175,15 @@ found in the file. You can also press the `n` key over and over again to navigat
 - Mark multiple lines and delete them at once: being in #normal() mode, press `v`, then, move the cursor in any possible way to enter #visual() mode. Then, if you do enter visual mode, start to move the cursor to mark the lines you want to delete. After you marked the lines you want, just press `d` to delete them.
 
 
+= Indentation and code style
+
+- Reindent the entire file: #normal() `gg=G`
+- Reformat the entire file using the code style of by the LSP #footnote[This command will use the current LSP to reformat your source code, so it conforms with the code style recommended by this LSP. For example, if you are editing a C source file, you are likely using the `clang` LSP. Then, this `:Format` command would apply the code style recommended by the `clang` LSP over the current file]: #command() `:Format`
+
+- Add more indentation (i.e. move right) to the current line #insert() `<Ctrl> + t`
+- Subtract indentation (i.e. move left) of the current line #insert() `<Ctrl> + d`
+
+
 = Opening multiple files across different tabs
 
 You can have multiple files open at the same time in NeoVim.
@@ -190,7 +192,7 @@ You just have to open these files in different tabs.
 - Open the file in a new tab: #command() `:tabnew {path to file}`
 - Go to next tab: #command() `:tabn`
 - Go to previous tab: #command() `:tabp`
-- Close the current tab: #command() `:tabc` or `:tabclose`
+- Close the current tab: #command() `:tabc`
 
 
 = Useful commands from the Telescope plugin
@@ -210,8 +212,10 @@ you should have it installed in your NeoVim. It provides many useful shortcuts f
 and is the most effective way of installing NeoVim plugins.
 
 - Opens the Mason package manager: #command() `:Mason`
-- Search for a specific package/plugin: inside Mason use the normal Vim search command `/{pattern}`.
-- Install a specific package/plugin: if the cursor is over the package, press `i` to install it.
+- Search for a package/plugin: when you are inside Mason, just use the normal Vim search command `/{pattern}`.
+- Install a package: if the cursor is over the package, press `i` to install it.
+- Uninstall a package: if the cursor is over the package, press `X` to uninstall it.
+- Update a package: if the cursor is over the package, press `u` to update it.
 
 /*
 Example "#normal() `/token`" -> #raw("void ")
