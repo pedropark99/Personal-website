@@ -1,0 +1,169 @@
+---
+title: My experience with `Typst`, the potential sucessor of `LaTex`
+date: "2023-12-31"
+categories: ["Typst", "Typesetting system", "Documents"]
+description: "Let me quickly describe my recent experience with Typst, which is a new markup-based typesetting system for composing documents and articles for science, and also, the most promissing sucessor of the famous LaTex typeset system."
+
+number-sections: true
+---
+
+# Introduction
+
+Typst is a new markup-based typesetting system for the sciences written in Rust. The Typst works similarly to other typesetting systems.
+In resume, you write a Typst source file which describes the document you want to create, and then, you invoke the Typst compiler
+to build the document you described in the source file.
+
+![Producing documents with Typst](./../typst-process.svg)
+
+Typst is open-source and is freely available at GitHub, just
+[download the release file according to your operational system](https://github.com/typst/typst/releases/)
+and install the tool into your system.
+
+
+# What I like about Typst
+
+Let me describe the features about Typst that I like the most.
+
+## Have good documentation!
+
+[Typst have a very good documentation](https://typst.app/docs/), and this makes all the difference in the world! Because learning
+how to use the tool becomes so much easier when you have a good support material to rely on.
+
+## Have fast compilation time!
+
+LaTex have a known weakness of being slow to compile the input file and producing the output PDF.
+Typst does not suffer from this problem, because it has a much faster compilation time.
+
+Compiling a very small Typst document takes about 0.05s in my machine, while compiling essentially
+the same document in LaTex take 0,26s:
+
+```bash
+$ time typst compile example.typ
+0,05s user 0,06s system 88% cpu 0,121 total
+```
+
+```bash
+$ time xelatex example.tex
+0,26s user 0,16s system 80% cpu 0,522 total
+```
+
+This is an important advantage of Typst, because it delivers a much faster feedback loop into your workflow.
+In other words, if you reduce the compilation time, you will spend less time waiting to see if your code works!
+By spending less time trying to see the output of your work,
+you can spend more time in what really matters! Like writing more content or refining your work.
+
+
+## Understandable error messages
+
+For me personally, one of the great weaknesses of LaTex is it's error messages, which are very obscure, and honestly,
+useless in the majority of cases. And I mean this.
+
+In contrast, Typst have much more understandable error messages. Messages that are easy to understand, and that
+are easy to relate back to your source code. Take this error messages from Typst as an example:
+
+```typst
+error: the character `#` is not valid in code
+  ┌─ posts/2023/2023-12-31-introducing-typst/example.typ:2:3
+  │
+2 │    #set text(font: "Inconsolata")
+  │    ^
+```
+
+Or maybe this other error message:
+
+```typst
+error: expected function, found content
+  ┌─ posts/2023/2023-12-31-introducing-typst/example.typ:1:19
+  │  
+1 │   #show raw: code => {
+  │ ╭────────────────────^
+2 │ │    set text(font: "Inconsolata")
+3 │ │ }[#code]
+  │ ╰─^
+
+help: error occurred while applying show rule to this raw
+  ┌─ posts/2023/2023-12-31-introducing-typst/example.typ:7:16
+  │
+7 │ Testing if this `raw code element` uses the show rule.
+  │                 ^^^^^^^^^^^^^^^^^^
+
+```
+
+
+
+
+## Very good quality output
+
+LaTex is known for producing very-high quality documents, and Typst leaves nothing to be desired in this aspect.
+Specially because the Typst development team ported some
+of the core algorithms behind LaTex into Typst.
+
+So Typst also produces very-high quality documents because it learned from the
+great powers of LaTex.
+
+## Preview and Incremental compilation
+
+Typst have a preview mode which is very good and powerful. There is a [great video in Typst's website](https://typst.app/assets/videos/mockup.webm) that demonstrates
+it.
+
+When you use this preview mode, Typst create a new window
+that shows the preview of the output document of your source code, and any changes that you make to your
+source code are instantly reflected (pratically in real time) into the previewed document.
+
+This preview in real time of the output document is very good when you are trying to refine the aesthetics of your
+document, but you are not very sure yet on how to do it properly, and you want to test different options.
+Reflecting your changes into the output document in the preview window is only possible because of the incremental compilation engine
+that the Typst compiler have.
+
+## Show rules are awesome!
+
+Show rules with the `#show` directive are an amazing way of customizing specific elements of
+your document. But the true power of `#show` directives is that you can write more clear and organized code with them.
+
+When you want some parts of your document to have, for example, font Inconsolata with size 14pt,
+and other parts of the same document to have completely different settings, like font Times New Roman size 12pt,
+and coloured red, you usually end up redefining these settings over and over again.
+
+You might for example set a "default setting" to be applied over the entire document. Then, you overrule this default setting
+by setting specific settings every time that a specific element appears across the document.
+So you end up with a lot of duplicated code, that redefines the same settings over and over again,
+across the entire source file.
+
+Show rules with the `#show` directive eliminates this necessitty by allowing you to specify a set of settings to be applied
+to every element of type `x` that appears in your document. As an example, if I want to use font Inconsolata size 14pt in
+any raw code that is exposed inside my document, I can set a show rule to be applied over any element of type `raw`, like this:
+
+```typst
+#show raw: code => {
+   set text(font: "Inconsolata", size : 14pt)
+   code
+}
+
+Testing if this `raw code element` uses the show rule.
+```
+
+
+With the show rule that I created above, any raw code that I create across my Typst document
+will be rendered in the PDF output using font Inconsolata size 14pt. To some extent,
+show rules in Typst are almost like CSS code that uses CSS selectors to apply certain rules to specific HTML elements.
+
+
+## Reusing code is much easier
+
+Reusing code or settings across different parts in your document in Typst is much more straightforward than it is in LaTex. Because is very easy to create
+functions in Typst, or show rules that can spread a piece of code over multiple locations of your document.
+
+In other words, Typst looks like a real programming language. You can easily create functions in Typst to reuse the same piece of code.
+In contrast, in LaTex, there is no notion of functions per se. In fact, in LaTex you create new commands (with the `\newcommand` macro), which are macros more precisely.
+This makes LaTex code harder to read and to comprehend.
+
+## CSL is now available in Typst!
+
+Typst is very young still, and very recently, the use of different citation styles was limited. But on the most recent version of
+Typst, a CSL (Citation Style Language) processor was added! And as consequence, we can use now any possible citation style in Typst documents by providing a
+CSL file to the [`style` argument of the `bibliography()` function](https://typst.app/docs/reference/model/bibliography/) to be processed in conjunction with the Typst source file.
+
+For example, in Brazil, academia have very rigorous rules about how citation should be written in a scientific article,
+and these rules are specified by the norms produced by the ABNT (*Brazilian Agency of Technical Norms*) agency.
+Now, with the new additions to Typst, we can write citations using the brazilian ABNT citation style, by providing a CSL file
+like the [CSL styles produced by IBICT - *Brazilian Institute for Science and Technology Information*](https://insumo.ibict.br/produtos/csl-ibict/).
