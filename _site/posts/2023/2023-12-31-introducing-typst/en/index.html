@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Pedro Duarte Faria">
+<meta name="dcterms.date" content="2023-12-31">
+<meta name="description" content="Let me quickly describe my recent experience with Typst, which is a new markup-based typesetting system for composing documents and articles for science, and also, the most promissing sucessor of the famous LaTex typeset system.">
+
+<title>home |&gt; dplyr::glimpse() - My experience with Typst, the potential sucessor of LaTex</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../">
+<script src="../../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-7E6XG4WKHE"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
+</script>
+
+
+<link rel="stylesheet" href="../../../../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../../../index.html">
+    <span class="navbar-title">home |&gt; dplyr::glimpse()</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../about.html" rel="" target="">
+ <span class="menu-text">About Me</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Posts</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-posts">    
+        <li>
+    <a class="dropdown-item" href="../../../../posts/index.html" rel="" target="">
+ <span class="dropdown-text">All posts</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../posts/en.html" rel="" target="">
+ <span class="dropdown-text">Posts in english</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../posts/pt.html" rel="" target="">
+ <span class="dropdown-text">Posts em português</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-publications" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Publications</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-publications">    
+        <li>
+    <a class="dropdown-item" href="../../../../publications/index.html" rel="" target="">
+ <span class="dropdown-text">All publications</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../publications/en.html" rel="" target="">
+ <span class="dropdown-text">Publications in English</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../publications/pt.html" rel="" target="">
+ <span class="dropdown-text">Publicações em Português</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../open_source_contrib.html" rel="" target="">
+ <span class="menu-text">Open source contributions</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../donate.html" rel="" target="">
+ <span class="menu-text">Donate or Sponsor Me</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-cv" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">CV</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-cv">    
+        <li>
+    <a class="dropdown-item" href="../../../../files/cv/cv-english.pdf" rel="" target="">
+ <span class="dropdown-text">CV in English</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../files/cv/cv-portuguese.pdf" rel="" target="">
+ <span class="dropdown-text">CV em Português</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item compact">
+    <a class="nav-link" href="mailto:pedropark99@gmail.com" rel="" target=""><i class="bi bi-envelope-fill" role="img" aria-label="Email for contact">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/pedropark99" rel="" target=""><i class="bi bi-github" role="img" aria-label="Github profile">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://fosstodon.org/web/@pedropark99" rel="" target=""><i class="bi bi-mastodon" role="img" aria-label="Mastodon profile">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://medium.com/@pedropark99" rel="" target=""><i class="bi bi-medium" role="img" aria-label="Medium profile">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/PedroPark9" rel="" target=""><i class="bi bi-twitter" role="img" aria-label="Twitter profile">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/pedro-faria-a68140209/" rel="" target=""><i class="bi bi-linkedin" role="img" aria-label="Linkedin profile">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://pedro-faria.netlify.app/index.xml" rel="" target=""><i class="bi bi-rss" role="img" aria-label="RSS feed for Pedro's blog">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">My experience with <code>Typst</code>, the potential sucessor of <code>LaTex</code></h1>
+                  <div>
+        <div class="description">
+          Let me quickly describe my recent experience with Typst, which is a new markup-based typesetting system for composing documents and articles for science, and also, the most promissing sucessor of the famous LaTex typeset system.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Typst</div>
+                <div class="quarto-category">Typesetting system</div>
+                <div class="quarto-category">Documents</div>
+              </div>
+                  </div>
+  </div>
+    
+  <div class="quarto-title-meta-author">
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-heading">Affiliation</div>
+    
+      <div class="quarto-title-meta-contents">
+      <p class="author">Pedro Duarte Faria </p>
+    </div>
+      <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              Blip
+            </p>
+        </div>
+      </div>
+
+  <div class="quarto-title-meta">
+
+        
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">December 31, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="introduction" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
+<p>Typst is a new markup-based typesetting system for the sciences written in Rust. The Typst works similarly to other typesetting systems. In resume, you write a Typst source file which describes the document you want to create, and then, you invoke the Typst compiler to build the document you described in the source file.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./../typst-process.svg" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Producing documents with Typst</figcaption>
+</figure>
+</div>
+<p>Typst is open-source and is freely available at GitHub, just <a href="https://github.com/typst/typst/releases/">download the release file according to your operational system</a> and install the tool into your system.</p>
+</section>
+<section id="what-i-like-about-typst" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> What I like about Typst</h1>
+<p>First of all, Typst is an amazing tool! So let me describe the features about it that I like the most.</p>
+<section id="have-good-documentation" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="have-good-documentation"><span class="header-section-number">2.1</span> Have good documentation!</h2>
+<p><a href="https://typst.app/docs/">Typst have a very good documentation</a>, and this makes all the difference in the world! Because learning how to use the tool becomes so much easier when you have a good support material to rely on.</p>
+</section>
+<section id="have-fast-compilation-time" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="have-fast-compilation-time"><span class="header-section-number">2.2</span> Have fast compilation time!</h2>
+<p>LaTex have a known weakness of being slow to compile the input file and producing the output PDF. Typst does not suffer from this problem, because it has a much faster compilation time.</p>
+<p>Compiling a very small Typst document takes about 0.05s in my machine, while compiling essentially the same document in LaTex take 0,26s:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> time typst compile example.typ</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">0,05s</span> user 0,06s system 88% cpu 0,121 total</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> time xelatex example.tex</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">0,26s</span> user 0,16s system 80% cpu 0,522 total</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This is an important advantage of Typst, because it delivers a much faster feedback loop into your workflow. In other words, if you reduce the compilation time, you will spend less time waiting to see if your code works! By spending less time trying to see the output of your work, you can spend more time in what really matters! Like writing more content or refining your work.</p>
+</section>
+<section id="understandable-error-messages" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="understandable-error-messages"><span class="header-section-number">2.3</span> Understandable error messages</h2>
+<p>For me personally, one of the great weaknesses of LaTex is it’s error messages, which are very obscure, and honestly, useless in the majority of cases. And I mean this.</p>
+<p>In contrast, Typst have much more understandable error messages. Messages that are easy to understand, and that are easy to relate back to your source code. Take this error messages from Typst as an example:</p>
+<pre class="typst"><code>error: the character `#` is not valid in code
+  ┌─ posts/2023/2023-12-31-introducing-typst/example.typ:2:3
+  │
+2 │    #set text(font: "Inconsolata")
+  │    ^</code></pre>
+<p>Or maybe this other error message:</p>
+<pre class="typst"><code>error: expected function, found content
+  ┌─ posts/2023/2023-12-31-introducing-typst/example.typ:1:19
+  │  
+1 │   #show raw: code =&gt; {
+  │ ╭────────────────────^
+2 │ │    set text(font: "Inconsolata")
+3 │ │ }[#code]
+  │ ╰─^
+
+help: error occurred while applying show rule to this raw
+  ┌─ posts/2023/2023-12-31-introducing-typst/example.typ:7:16
+  │
+7 │ Testing if this `raw code element` uses the show rule.
+  │                 ^^^^^^^^^^^^^^^^^^
+</code></pre>
+</section>
+<section id="very-good-quality-output" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="very-good-quality-output"><span class="header-section-number">2.4</span> Very good quality output</h2>
+<p>LaTex is known for producing very-high quality documents, and Typst leaves nothing to be desired in this aspect. Specially because the Typst development team ported some of the core algorithms behind LaTex into Typst.</p>
+<p>So Typst also produces very-high quality documents because it learned from the great powers of LaTex.</p>
+</section>
+<section id="preview-and-incremental-compilation" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="preview-and-incremental-compilation"><span class="header-section-number">2.5</span> Preview and Incremental compilation</h2>
+<p>Typst have a preview mode which is very good and powerful. There is a <a href="https://typst.app/assets/videos/mockup.webm">great video in Typst’s website</a> that demonstrates it.</p>
+<p>When you use this preview mode, Typst create a new window that shows the preview of the output document of your source code, and any changes that you make to your source code are instantly reflected (pratically in real time) into the previewed document.</p>
+<p>This preview in real time of the output document is very good when you are trying to refine the aesthetics of your document, but you are not very sure yet on how to do it properly, and you want to test different options.</p>
+<p>This power from the preview mode is only possible, because Typst has an incremental compilation engine inside Typst compiler, which is capable of compiling just the section of your code your changed, instead of recompiling the entire source file, and regenerate the entire PDF output again.</p>
+</section>
+<section id="show-rules-are-awesome" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="show-rules-are-awesome"><span class="header-section-number">2.6</span> Show rules are awesome!</h2>
+<p>Show rules with the <code>#show</code> directive are an amazing way of customizing specific elements of your document. But the true power of <code>#show</code> directives is that you can write more clear and organized code with them.</p>
+<p>When you want some parts of your document to have, for example, font Inconsolata with size 14pt, and other parts of the same document to have completely different settings, like font Times New Roman size 12pt, and coloured red, you usually end up redefining these settings over and over again.</p>
+<p>You might for example set a “default setting” to be applied over the entire document. Then, you overrule this default setting by setting specific settings every time that a specific element appears across the document. So you end up with a lot of duplicated code, that redefines the same settings over and over again, across the entire source file.</p>
+<p>Show rules with the <code>#show</code> directive eliminates this necessitty by allowing you to specify a set of settings to be applied to every element of type <code>x</code> that appears in your document. As an example, if I want to use font Inconsolata size 14pt in any raw code that is exposed inside my document, I can set a show rule to be applied over any element of type <code>raw</code>, like this:</p>
+<pre class="typst"><code>#show raw: code =&gt; {
+   set text(font: "Inconsolata", size : 14pt)
+   code
+}
+
+Testing if this `raw code element` uses the show rule.</code></pre>
+<p>With the show rule that I created above, any raw code that I create across my Typst document will be rendered in the PDF output using font Inconsolata size 14pt. To some extent, show rules in Typst are almost like CSS code that uses CSS selectors to apply certain rules to specific HTML elements.</p>
+</section>
+<section id="reusing-code-is-much-easier" class="level2" data-number="2.7">
+<h2 data-number="2.7" class="anchored" data-anchor-id="reusing-code-is-much-easier"><span class="header-section-number">2.7</span> Reusing code is much easier</h2>
+<p>Reusing code or settings across different parts in your document in Typst is much more straightforward than it is in LaTex. Because is very easy to create functions in Typst, or show rules that can spread a piece of code over multiple locations of your document.</p>
+<p>In other words, Typst looks like a real programming language. You can easily create functions in Typst to reuse the same piece of code. In contrast, in LaTex, there is no notion of functions per se, you have macros instead. When you want to reuse a piece of code , you normally you create new commands (with the <code>\newcommand</code> macro). This makes LaTex code harder to read and to comprehend in my opinion.</p>
+</section>
+<section id="csl-is-now-available-in-typst" class="level2" data-number="2.8">
+<h2 data-number="2.8" class="anchored" data-anchor-id="csl-is-now-available-in-typst"><span class="header-section-number">2.8</span> CSL is now available in Typst!</h2>
+<p>Typst is very young, and until very recently, the use of different citation styles was very limited. But on the most recent version of Typst, a CSL (Citation Style Language) processor was added! And as consequence, we can use now any possible citation style in Typst documents by providing a CSL file to the <a href="https://typst.app/docs/reference/model/bibliography/"><code>style</code> argument of the <code>bibliography()</code> function</a> to be processed in conjunction with the Typst source file.</p>
+<p>For example, in Brazil, academia have very rigorous rules about how citation should be written in a scientific article, and these rules are specified by the norms produced by the ABNT (<em>Brazilian Agency of Technical Norms</em>) agency. Now, with the new additions to Typst, we can easily write citations using the brazilian ABNT citation style, by providing a CSL file like the <a href="https://insumo.ibict.br/produtos/csl-ibict/">CSL styles produced by IBICT - <em>Brazilian Institute for Science and Technology Information</em></a>.</p>
+</section>
+<section id="syntax-similar-to-markdown" class="level2" data-number="2.9">
+<h2 data-number="2.9" class="anchored" data-anchor-id="syntax-similar-to-markdown"><span class="header-section-number">2.9</span> Syntax similar to Markdown</h2>
+<p>Typst have a markup language whose syntax is similar to Markdown. And this is a great thing. Because the markup language in LaTex is…., well, it is not awfull to write, but it produces an awfull visual mess in the text you write.</p>
+<p>For example, if your write some text in LaTex that have a lot of emphasized words, you need to add a lot of <code>\textbf{}</code> or <code>\emph{}</code> macros in it, and, as a result, your text looks very messy. In typst, you just surround each word by stars (<code>*</code>), and, as consequence, you leave much less visual noise in your text. In other words, your text looks cleaner (or clearer) in Typst.</p>
+</section>
+</section>
+<section id="conclusion" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Conclusion</h1>
+<p>Typst is now a really great alternative to LaTex to compose scientific articles, or just any type of good PDF document. I did not find anything about Typst that I don’t like yet. So, my fisrt impressions on the system are only positive, and I think Typst has a great future ahead of it.</p>
+<p>If you use LaTex a lot, and are not familiar yet with Typst, I highly recommend you to at least try it, and see what you think. Peace✌️ !</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
