@@ -177,10 +177,9 @@ found in the file. You can also press the `n` key over and over again to navigat
 = Indentation and code style
 
 - Reindent the entire file: #normal() `gg=G`
-- Reformat the entire file using the code style of by the LSP #footnote[This command will use the current LSP to reformat your source code, so it conforms with the code style recommended by this LSP. For example, if you are editing a C source file, you are likely using the `clang` LSP. Then, this `:Format` command would apply the code style recommended by the `clang` LSP over the current file]: #command() `:Format`
-
-- Add more indentation (i.e. move right) to the current line #insert() `<Ctrl> + t`
-- Subtract indentation (i.e. move left) of the current line #insert() `<Ctrl> + d`
+- Add more indentation (i.e. move right) to the current line: #normal() `>>` or #insert() `<Ctrl> + t` 
+- Subtract indentation (i.e. move left) of the current line: #normal() `>>` or #insert() `<Ctrl> + d`
+- Format the entire file using the code style recommended by the LSP: #command() `:Format`
 
 
 = Opening multiple files across different tabs
