@@ -303,7 +303,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 </section>
 <section id="what-i-like-about-typst" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> What I like about Typst</h1>
-<p>Let me describe the features about Typst that I like the most.</p>
+<p>First of all, Typst is an amazing tool! So let me describe the features about it that I like the most.</p>
 <section id="have-good-documentation" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="have-good-documentation"><span class="header-section-number">2.1</span> Have good documentation!</h2>
 <p><a href="https://typst.app/docs/">Typst have a very good documentation</a>, and this makes all the difference in the world! Because learning how to use the tool becomes so much easier when you have a good support material to rely on.</p>
@@ -353,7 +353,8 @@ help: error occurred while applying show rule to this raw
 <h2 data-number="2.5" class="anchored" data-anchor-id="preview-and-incremental-compilation"><span class="header-section-number">2.5</span> Preview and Incremental compilation</h2>
 <p>Typst have a preview mode which is very good and powerful. There is a <a href="https://typst.app/assets/videos/mockup.webm">great video in Typst’s website</a> that demonstrates it.</p>
 <p>When you use this preview mode, Typst create a new window that shows the preview of the output document of your source code, and any changes that you make to your source code are instantly reflected (pratically in real time) into the previewed document.</p>
-<p>This preview in real time of the output document is very good when you are trying to refine the aesthetics of your document, but you are not very sure yet on how to do it properly, and you want to test different options. Reflecting your changes into the output document in the preview window is only possible because of the incremental compilation engine that the Typst compiler have.</p>
+<p>This preview in real time of the output document is very good when you are trying to refine the aesthetics of your document, but you are not very sure yet on how to do it properly, and you want to test different options.</p>
+<p>This power from the preview mode is only possible, because Typst has an incremental compilation engine inside Typst compiler, which is capable of compiling just the section of your code your changed, instead of recompiling the entire source file, and regenerate the entire PDF output again.</p>
 </section>
 <section id="show-rules-are-awesome" class="level2" data-number="2.6">
 <h2 data-number="2.6" class="anchored" data-anchor-id="show-rules-are-awesome"><span class="header-section-number">2.6</span> Show rules are awesome!</h2>
@@ -372,15 +373,25 @@ Testing if this `raw code element` uses the show rule.</code></pre>
 <section id="reusing-code-is-much-easier" class="level2" data-number="2.7">
 <h2 data-number="2.7" class="anchored" data-anchor-id="reusing-code-is-much-easier"><span class="header-section-number">2.7</span> Reusing code is much easier</h2>
 <p>Reusing code or settings across different parts in your document in Typst is much more straightforward than it is in LaTex. Because is very easy to create functions in Typst, or show rules that can spread a piece of code over multiple locations of your document.</p>
-<p>In other words, Typst looks like a real programming language. You can easily create functions in Typst to reuse the same piece of code. In contrast, in LaTex, there is no notion of functions per se. In fact, in LaTex you create new commands (with the <code>\newcommand</code> macro), which are macros more precisely. This makes LaTex code harder to read and to comprehend.</p>
+<p>In other words, Typst looks like a real programming language. You can easily create functions in Typst to reuse the same piece of code. In contrast, in LaTex, there is no notion of functions per se, you have macros instead. When you want to reuse a piece of code , you normally you create new commands (with the <code>\newcommand</code> macro). This makes LaTex code harder to read and to comprehend in my opinion.</p>
 </section>
 <section id="csl-is-now-available-in-typst" class="level2" data-number="2.8">
 <h2 data-number="2.8" class="anchored" data-anchor-id="csl-is-now-available-in-typst"><span class="header-section-number">2.8</span> CSL is now available in Typst!</h2>
-<p>Typst is very young still, and very recently, the use of different citation styles was limited. But on the most recent version of Typst, a CSL (Citation Style Language) processor was added! And as consequence, we can use now any possible citation style in Typst documents by providing a CSL file to the <a href="https://typst.app/docs/reference/model/bibliography/"><code>style</code> argument of the <code>bibliography()</code> function</a> to be processed in conjunction with the Typst source file.</p>
-<p>For example, in Brazil, academia have very rigorous rules about how citation should be written in a scientific article, and these rules are specified by the norms produced by the ABNT (<em>Brazilian Agency of Technical Norms</em>) agency. Now, with the new additions to Typst, we can write citations using the brazilian ABNT citation style, by providing a CSL file like the <a href="https://insumo.ibict.br/produtos/csl-ibict/">CSL styles produced by IBICT - <em>Brazilian Institute for Science and Technology Information</em></a>.</p>
-
-
+<p>Typst is very young, and until very recently, the use of different citation styles was very limited. But on the most recent version of Typst, a CSL (Citation Style Language) processor was added! And as consequence, we can use now any possible citation style in Typst documents by providing a CSL file to the <a href="https://typst.app/docs/reference/model/bibliography/"><code>style</code> argument of the <code>bibliography()</code> function</a> to be processed in conjunction with the Typst source file.</p>
+<p>For example, in Brazil, academia have very rigorous rules about how citation should be written in a scientific article, and these rules are specified by the norms produced by the ABNT (<em>Brazilian Agency of Technical Norms</em>) agency. Now, with the new additions to Typst, we can easily write citations using the brazilian ABNT citation style, by providing a CSL file like the <a href="https://insumo.ibict.br/produtos/csl-ibict/">CSL styles produced by IBICT - <em>Brazilian Institute for Science and Technology Information</em></a>.</p>
 </section>
+<section id="syntax-similar-to-markdown" class="level2" data-number="2.9">
+<h2 data-number="2.9" class="anchored" data-anchor-id="syntax-similar-to-markdown"><span class="header-section-number">2.9</span> Syntax similar to Markdown</h2>
+<p>Typst have a markup language whose syntax is similar to Markdown. And this is a great thing. Because the markup language in LaTex is…., well, it is not awfull to write, but it produces an awfull visual mess in the text you write.</p>
+<p>For example, if your write some text in LaTex that have a lot of emphasized words, you need to add a lot of <code>\textbf{}</code> or <code>\emph{}</code> macros in it, and, as a result, your text looks very messy. In typst, you just surround each word by stars (<code>*</code>), and, as consequence, you leave much less visual noise in your text. In other words, your text looks cleaner (or clearer) in Typst.</p>
+</section>
+</section>
+<section id="conclusion" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Conclusion</h1>
+<p>Typst is now a really great alternative to LaTex to compose scientific articles, or just any type of good PDF document. I did not find anything about Typst that I don’t like yet. So, my fisrt impressions on the system are only positive, and I think Typst has a great future ahead of it.</p>
+<p>If you use LaTex a lot, and are not familiar yet with Typst, I highly recommend you to at least try it, and see what you think. Peace✌️ !</p>
+
+
 </section>
 
 </main> <!-- /main -->

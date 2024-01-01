@@ -4,6 +4,7 @@ date: "2023-12-31"
 categories: ["Typst", "Typesetting system", "Documents"]
 description: "Let me quickly describe my recent experience with Typst, which is a new markup-based typesetting system for composing documents and articles for science, and also, the most promissing sucessor of the famous LaTex typeset system."
 
+image: "./../post-back.svg"
 number-sections: true
 ---
 
@@ -22,7 +23,7 @@ and install the tool into your system.
 
 # What I like about Typst
 
-Let me describe the features about Typst that I like the most.
+First of all, Typst is an amazing tool! So let me describe the features about it that I like the most.
 
 ## Have good documentation!
 
@@ -112,8 +113,10 @@ source code are instantly reflected (pratically in real time) into the previewed
 
 This preview in real time of the output document is very good when you are trying to refine the aesthetics of your
 document, but you are not very sure yet on how to do it properly, and you want to test different options.
-Reflecting your changes into the output document in the preview window is only possible because of the incremental compilation engine
-that the Typst compiler have.
+
+This power from the preview mode is only possible, because Typst has an incremental compilation engine
+inside Typst compiler, which is capable of compiling just the section of your code your changed, instead
+of recompiling the entire source file, and regenerate the entire PDF output again.
 
 ## Show rules are awesome!
 
@@ -154,16 +157,38 @@ Reusing code or settings across different parts in your document in Typst is muc
 functions in Typst, or show rules that can spread a piece of code over multiple locations of your document.
 
 In other words, Typst looks like a real programming language. You can easily create functions in Typst to reuse the same piece of code.
-In contrast, in LaTex, there is no notion of functions per se. In fact, in LaTex you create new commands (with the `\newcommand` macro), which are macros more precisely.
-This makes LaTex code harder to read and to comprehend.
+In contrast, in LaTex, there is no notion of functions per se, you have macros instead. When you want to reuse a piece of code
+, you normally you create new commands (with the `\newcommand` macro). 
+This makes LaTex code harder to read and to comprehend in my opinion.
 
 ## CSL is now available in Typst!
 
-Typst is very young still, and very recently, the use of different citation styles was limited. But on the most recent version of
+Typst is very young, and until very recently, the use of different citation styles was very limited. But on the most recent version of
 Typst, a CSL (Citation Style Language) processor was added! And as consequence, we can use now any possible citation style in Typst documents by providing a
 CSL file to the [`style` argument of the `bibliography()` function](https://typst.app/docs/reference/model/bibliography/) to be processed in conjunction with the Typst source file.
 
 For example, in Brazil, academia have very rigorous rules about how citation should be written in a scientific article,
 and these rules are specified by the norms produced by the ABNT (*Brazilian Agency of Technical Norms*) agency.
-Now, with the new additions to Typst, we can write citations using the brazilian ABNT citation style, by providing a CSL file
+Now, with the new additions to Typst, we can easily write citations using the brazilian ABNT citation style, by providing a CSL file
 like the [CSL styles produced by IBICT - *Brazilian Institute for Science and Technology Information*](https://insumo.ibict.br/produtos/csl-ibict/).
+
+## Syntax similar to Markdown
+
+Typst have a markup language whose syntax is similar to Markdown. And this is a great thing.
+Because the markup language in LaTex is...., well, it is not awfull to write, but it produces an awfull visual mess in the
+text you write.
+
+For example, if your write some text in LaTex that have a lot of emphasized words, you need to add a lot of `\textbf{}`
+or `\emph{}` macros in it, and, as a result, your text looks very messy. In typst, you just surround each word by stars
+(`*`), and, as consequence, you leave much less visual noise in your text. In other words, your text looks cleaner (or clearer)
+in Typst.
+
+
+# Conclusion
+
+Typst is now a really great alternative to LaTex to compose scientific articles, or just any type of good PDF document.
+I did not find anything about Typst that I don't like yet. So, my fisrt impressions on the system are only positive,
+and I think Typst has a great future ahead of it.
+
+If you use LaTex a lot, and are not familiar yet with Typst, I highly recommend you to at least try it, and see what you think.
+Peace✌️ !
