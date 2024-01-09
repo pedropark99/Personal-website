@@ -9,10 +9,6 @@ categories: ['Python', 'Apache Spark', 'Book']
 image: "../featured.png"
 ---
 
-# Still under construction 🛠️⚠️!
-
-This book is still under active construction and development! This means that not all chapters are ready yet, and the current contents might change in the close future. However, you can already read some of its parts by [visiting its website](https://pedropark99.github.io/Introd-pyspark/).
-
 # About the book
 
 {{< include ../buttons-en.html >}}
@@ -23,7 +19,7 @@ Although we have a good range of materials about Apache Spark in general, such a
 
 The reason for this is simple: the Spark API have a consistent structure across all languages. As consequence, a general book about Spark can fairly cover all languages at once. In other words, Spark code in Scala can be easily translated into python code with `pyspark`. Because the structure of the code is very similar between all languages.
 
-So why this book? First, python is a more popular and friendly language than Scala or Java. If the reader is not interested in learning Java or Scala, why show Java/Scala code to him? Is very important to focus solely on what interest the reader, specially if it is in a language that he is familiar with. Second, I had some time to spent, and a lot of practical experience with `pyspark` on production to share (so... why not write a book about it?).
+So why this book? First, Python is a more popular and friendly language than Scala or Java. If the reader is not interested in learning Java or Scala, why show Java/Scala code to him? Is very important to focus solely on what interest the reader, specially if it is in a language that he is familiar with. Second, I had some time to spent, and a lot of practical experience with `pyspark` on production to share (so... why not write a book about it?).
 
 # Cover
 

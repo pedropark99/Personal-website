@@ -6,15 +6,15 @@
       version="2.0">
 <channel>
 <title>home |&gt; dplyr::glimpse()</title>
-<link>https://pedro-faria.netlify.app/index.html</link>
+<link>https://pedro-faria.netlify.app/</link>
 <atom:link href="https://pedro-faria.netlify.app/index.xml" rel="self" type="application/rss+xml"/>
 <description>A blog about programming and data analysis, specially with R and Python</description>
-<generator>quarto-1.3.450</generator>
+<generator>quarto-1.4.532</generator>
 <lastBuildDate>Sun, 31 Dec 2023 03:00:00 GMT</lastBuildDate>
 <item>
   <title>My experience with Typst, the potential sucessor of LaTex</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
-  <link>https://pedro-faria.netlify.app/posts/2023/2023-12-31-introducing-typst/en/index.html</link>
+  <link>https://pedro-faria.netlify.app/posts/2023/2023-12-31-introducing-typst/en/</link>
   <description><![CDATA[ 
 
 
@@ -136,14 +136,14 @@ Testing if this `raw code element` uses the show rule.</code></pre>
   <category>Typst</category>
   <category>Typesetting system</category>
   <category>Documents</category>
-  <guid>https://pedro-faria.netlify.app/posts/2023/2023-12-31-introducing-typst/en/index.html</guid>
+  <guid>https://pedro-faria.netlify.app/posts/2023/2023-12-31-introducing-typst/en/</guid>
   <pubDate>Sun, 31 Dec 2023 03:00:00 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/posts/2023/2023-12-31-introducing-typst/post-back.svg" medium="image" type="image/svg+xml"/>
 </item>
 <item>
   <title>NeoVim commands and shortcuts cheatsheet</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
-  <link>https://pedro-faria.netlify.app/posts/2023/2023-12-29-vim-cheatsheet/en/index.html</link>
+  <link>https://pedro-faria.netlify.app/posts/2023/2023-12-29-vim-cheatsheet/en/</link>
   <description><![CDATA[ 
 
 
@@ -162,14 +162,14 @@ Testing if this `raw code element` uses the show rule.</code></pre>
   <category>NeoVim</category>
   <category>Vim</category>
   <category>Cheatsheet</category>
-  <guid>https://pedro-faria.netlify.app/posts/2023/2023-12-29-vim-cheatsheet/en/index.html</guid>
+  <guid>https://pedro-faria.netlify.app/posts/2023/2023-12-29-vim-cheatsheet/en/</guid>
   <pubDate>Sat, 30 Dec 2023 03:00:00 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/posts/2023/2023-12-29-vim-cheatsheet/post-image.png" medium="image" type="image/png" height="81" width="144"/>
 </item>
 <item>
   <title>How strings work in Zig?</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
-  <link>https://pedro-faria.netlify.app/posts/2023/2023-12-12-zig-strings/en/index.html</link>
+  <link>https://pedro-faria.netlify.app/posts/2023/2023-12-12-zig-strings/en/</link>
   <description><![CDATA[ 
 
 
@@ -399,14 +399,14 @@ got codepoint E382AB</code></pre>
   <category>Zig</category>
   <category>Strings</category>
   <category>Encoding</category>
-  <guid>https://pedro-faria.netlify.app/posts/2023/2023-12-12-zig-strings/en/index.html</guid>
+  <guid>https://pedro-faria.netlify.app/posts/2023/2023-12-12-zig-strings/en/</guid>
   <pubDate>Tue, 12 Dec 2023 03:00:00 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/posts/2023/2023-12-12-zig-strings/zig-image.png" medium="image" type="image/png" height="60" width="144"/>
 </item>
 <item>
   <title>Developing a parser for Python with Python</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
-  <link>https://pedro-faria.netlify.app/posts/2023/2023-11-18-python-parser/en/index.html</link>
+  <link>https://pedro-faria.netlify.app/posts/2023/2023-11-18-python-parser/en/</link>
   <description><![CDATA[ 
 
 
@@ -1625,14 +1625,14 @@ Gries, David, and Fred B. Schneider. 2008. <em>Parsing Techniques: A Practical G
 </div></section></div> ]]></description>
   <category>Python</category>
   <category>Parser</category>
-  <guid>https://pedro-faria.netlify.app/posts/2023/2023-11-18-python-parser/en/index.html</guid>
+  <guid>https://pedro-faria.netlify.app/posts/2023/2023-11-18-python-parser/en/</guid>
   <pubDate>Sat, 18 Nov 2023 03:00:00 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/posts/2023/2023-11-18-python-parser/image-pic.png" medium="image" type="image/png" height="51" width="144"/>
 </item>
 <item>
   <title>A small example on how to make better decisions with data</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
-  <link>https://pedro-faria.netlify.app/posts/2023/2023-08-31-data-decisions/en/index.html</link>
+  <link>https://pedro-faria.netlify.app/posts/2023/2023-08-31-data-decisions/en/</link>
   <description><![CDATA[ 
 
 
@@ -1912,14 +1912,14 @@ font-style: inherit;">]</span></span></code></pre></div>
  ]]></description>
   <category>Data Storytelling</category>
   <category>Data Science</category>
-  <guid>https://pedro-faria.netlify.app/posts/2023/2023-08-31-data-decisions/en/index.html</guid>
+  <guid>https://pedro-faria.netlify.app/posts/2023/2023-08-31-data-decisions/en/</guid>
   <pubDate>Sat, 28 Oct 2023 03:00:00 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/posts/2023/2023-08-31-data-decisions/decision.avif" medium="image" type="image/avif"/>
 </item>
 <item>
   <title>Um pequeno exemplo sobre como utilizar dados para tomar melhores decisões</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
-  <link>https://pedro-faria.netlify.app/posts/2023/2023-08-31-data-decisions/pt/index.html</link>
+  <link>https://pedro-faria.netlify.app/posts/2023/2023-08-31-data-decisions/pt/</link>
   <description><![CDATA[ 
 
 
@@ -2199,14 +2199,14 @@ font-style: inherit;">]</span></span></code></pre></div>
  ]]></description>
   <category>Data Storytelling</category>
   <category>Data Science</category>
-  <guid>https://pedro-faria.netlify.app/posts/2023/2023-08-31-data-decisions/pt/index.html</guid>
+  <guid>https://pedro-faria.netlify.app/posts/2023/2023-08-31-data-decisions/pt/</guid>
   <pubDate>Sat, 28 Oct 2023 03:00:00 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/posts/2023/2023-08-31-data-decisions/decision.avif" medium="image" type="image/avif"/>
 </item>
 <item>
   <title>Improving decision making with Git and why you should care</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
-  <link>https://pedro-faria.netlify.app/posts/2023/2023-07-31-git-mark-decisions/en/index.html</link>
+  <link>https://pedro-faria.netlify.app/posts/2023/2023-07-31-git-mark-decisions/en/</link>
   <description><![CDATA[ 
 
 
@@ -2344,14 +2344,14 @@ font-style: inherit;">]</span></span></code></pre></div>
   <category>Git</category>
   <category>Decisions</category>
   <category>Documentation</category>
-  <guid>https://pedro-faria.netlify.app/posts/2023/2023-07-31-git-mark-decisions/en/index.html</guid>
+  <guid>https://pedro-faria.netlify.app/posts/2023/2023-07-31-git-mark-decisions/en/</guid>
   <pubDate>Mon, 31 Jul 2023 03:00:00 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/posts/2023/2023-07-31-git-mark-decisions/git-logo.png" medium="image" type="image/png" height="70" width="144"/>
 </item>
 <item>
   <title>Melhorando a tomada de decisão com Git e porquê você deveria se importar</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
-  <link>https://pedro-faria.netlify.app/posts/2023/2023-07-31-git-mark-decisions/pt/index.html</link>
+  <link>https://pedro-faria.netlify.app/posts/2023/2023-07-31-git-mark-decisions/pt/</link>
   <description><![CDATA[ 
 
 
@@ -2489,14 +2489,14 @@ font-style: inherit;">]</span></span></code></pre></div>
   <category>Git</category>
   <category>Decisions</category>
   <category>Documentation</category>
-  <guid>https://pedro-faria.netlify.app/posts/2023/2023-07-31-git-mark-decisions/pt/index.html</guid>
+  <guid>https://pedro-faria.netlify.app/posts/2023/2023-07-31-git-mark-decisions/pt/</guid>
   <pubDate>Mon, 31 Jul 2023 03:00:00 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/posts/2023/2023-07-31-git-mark-decisions/git-logo.png" medium="image" type="image/png" height="70" width="144"/>
 </item>
 <item>
   <title>A case study about Data Storytelling at some of the largest brazilian banks</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
-  <link>https://pedro-faria.netlify.app/posts/2023/2023-03-06-storytelling/en/index.html</link>
+  <link>https://pedro-faria.netlify.app/posts/2023/2023-03-06-storytelling/en/</link>
   <description><![CDATA[ 
 
 
@@ -2764,14 +2764,14 @@ Important
   <category>Storytelling</category>
   <category>Data Storytelling</category>
   <category>Data Science</category>
-  <guid>https://pedro-faria.netlify.app/posts/2023/2023-03-06-storytelling/en/index.html</guid>
+  <guid>https://pedro-faria.netlify.app/posts/2023/2023-03-06-storytelling/en/</guid>
   <pubDate>Mon, 22 May 2023 03:00:00 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/posts/2023/2023-03-06-storytelling/mapa-featured.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
   <title>Um estudo de caso sobre Data Storytelling em alguns dos maiores bancos brasileiros</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
-  <link>https://pedro-faria.netlify.app/posts/2023/2023-03-06-storytelling/pt/index.html</link>
+  <link>https://pedro-faria.netlify.app/posts/2023/2023-03-06-storytelling/pt/</link>
   <description><![CDATA[ 
 
 
@@ -3039,14 +3039,14 @@ Important
   <category>Storytelling</category>
   <category>Data Storytelling</category>
   <category>Data Science</category>
-  <guid>https://pedro-faria.netlify.app/posts/2023/2023-03-06-storytelling/pt/index.html</guid>
+  <guid>https://pedro-faria.netlify.app/posts/2023/2023-03-06-storytelling/pt/</guid>
   <pubDate>Mon, 06 Mar 2023 03:00:00 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/posts/2023/2023-03-06-storytelling/mapa-featured.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
   <title>Introducing the {ggfunnel} R package</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
-  <link>https://pedro-faria.netlify.app/posts/2023/2023-02-11-funnel-pkg-v010/en/index.html</link>
+  <link>https://pedro-faria.netlify.app/posts/2023/2023-02-11-funnel-pkg-v010/en/</link>
   <description><![CDATA[ 
 
 
@@ -3370,14 +3370,14 @@ font-style: inherit;">"cm"</span>)</span>
   <category>Package</category>
   <category>Power BI</category>
   <category>Funnel charts</category>
-  <guid>https://pedro-faria.netlify.app/posts/2023/2023-02-11-funnel-pkg-v010/en/index.html</guid>
+  <guid>https://pedro-faria.netlify.app/posts/2023/2023-02-11-funnel-pkg-v010/en/</guid>
   <pubDate>Sat, 11 Feb 2023 03:00:00 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/posts/2023/2023-02-11-funnel-pkg-v010/background-ggfunnel.png" medium="image" type="image/png" height="84" width="144"/>
 </item>
 <item>
   <title>What I learned from developing my first Python package</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
-  <link>https://pedro-faria.netlify.app/posts/2023/2023-02-06-python-pckg/en/index.html</link>
+  <link>https://pedro-faria.netlify.app/posts/2023/2023-02-06-python-pckg/en/</link>
   <description><![CDATA[ 
 
 
@@ -3880,14 +3880,14 @@ Ganssle, Paul. 2021. <span>“Why You Shouldn’t Invoke Setup.py Directly.”</
   <category>Python</category>
   <category>Package</category>
   <category>Development workflow</category>
-  <guid>https://pedro-faria.netlify.app/posts/2023/2023-02-06-python-pckg/en/index.html</guid>
+  <guid>https://pedro-faria.netlify.app/posts/2023/2023-02-06-python-pckg/en/</guid>
   <pubDate>Mon, 06 Feb 2023 03:00:00 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/posts/2023/2023-02-06-python-pckg/package.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
   <title>JOINs são importantes fontes de duplicações em seus dados</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
-  <link>https://pedro-faria.netlify.app/posts/2023/2023-01-10-join-duplicates/pt/index.html</link>
+  <link>https://pedro-faria.netlify.app/posts/2023/2023-01-10-join-duplicates/pt/</link>
   <description><![CDATA[ 
 
 
@@ -4135,14 +4135,14 @@ Faria, Pedro Duarte. 2022. <em>Introdução à Linguagem r: Seus Fundamentos e S
 </div>
 </div></section></div> ]]></description>
   <category>JOINs</category>
-  <guid>https://pedro-faria.netlify.app/posts/2023/2023-01-10-join-duplicates/pt/index.html</guid>
+  <guid>https://pedro-faria.netlify.app/posts/2023/2023-01-10-join-duplicates/pt/</guid>
   <pubDate>Tue, 10 Jan 2023 03:00:00 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/posts/2023/2023-01-10-join-duplicates/expansao.png" medium="image" type="image/png" height="81" width="144"/>
 </item>
 <item>
   <title>Novidades da 4° edição de Introdução à Linguagem R: seus fundamentos e sua prática</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
-  <link>https://pedro-faria.netlify.app/posts/2022/2022-12-26-4th-edition-rbook/pt/index.html</link>
+  <link>https://pedro-faria.netlify.app/posts/2022/2022-12-26-4th-edition-rbook/pt/</link>
   <description><![CDATA[ 
 
 
@@ -4175,14 +4175,14 @@ Faria, Pedro Duarte. 2022. <em>Introdução à Linguagem r: Seus Fundamentos e S
  ]]></description>
   <category>Book</category>
   <category>R</category>
-  <guid>https://pedro-faria.netlify.app/posts/2022/2022-12-26-4th-edition-rbook/pt/index.html</guid>
+  <guid>https://pedro-faria.netlify.app/posts/2022/2022-12-26-4th-edition-rbook/pt/</guid>
   <pubDate>Mon, 26 Dec 2022 03:00:00 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/posts/2022/2022-12-26-4th-edition-rbook/featured.png" medium="image" type="image/png" height="206" width="144"/>
 </item>
 <item>
   <title>Introducing the {spark_map} Python package</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
-  <link>https://pedro-faria.netlify.app/posts/2022/2022-12-21-spark-map-v0.2.3/en/index.html</link>
+  <link>https://pedro-faria.netlify.app/posts/2022/2022-12-21-spark-map-v0.2.3/en/</link>
   <description><![CDATA[ 
 
 
@@ -4331,14 +4331,14 @@ font-style: inherit;">sum</span>)</span></code></pre></div>
   <category>Package</category>
   <category>pyspark</category>
   <category>Apache Spark</category>
-  <guid>https://pedro-faria.netlify.app/posts/2022/2022-12-21-spark-map-v0.2.3/en/index.html</guid>
+  <guid>https://pedro-faria.netlify.app/posts/2022/2022-12-21-spark-map-v0.2.3/en/</guid>
   <pubDate>Wed, 21 Dec 2022 03:00:00 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/posts/2022/2022-12-21-spark-map-v0.2.3/spark-map-logo.png" medium="image" type="image/png" height="76" width="144"/>
 </item>
 <item>
   <title>Erro de memória no Power BI Online? Hora de repensar o seu dashboard</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
-  <link>https://pedro-faria.netlify.app/posts/2022/2022-12-14-power-bi-memory-error/pt/index.html</link>
+  <link>https://pedro-faria.netlify.app/posts/2022/2022-12-14-power-bi-memory-error/pt/</link>
   <description><![CDATA[ 
 
 
@@ -4501,14 +4501,14 @@ font-style: inherit;">sum</span>)</span></code></pre></div>
 </section></div> ]]></description>
   <category>Power BI</category>
   <category>Power BI Online</category>
-  <guid>https://pedro-faria.netlify.app/posts/2022/2022-12-14-power-bi-memory-error/pt/index.html</guid>
+  <guid>https://pedro-faria.netlify.app/posts/2022/2022-12-14-power-bi-memory-error/pt/</guid>
   <pubDate>Wed, 14 Dec 2022 03:00:00 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/posts/2022/2022-12-14-power-bi-memory-error/featured.png" medium="image" type="image/png" height="52" width="144"/>
 </item>
 <item>
   <title>Introdução à Linguagem R: seus fundamentos e sua prática</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
-  <link>https://pedro-faria.netlify.app/publications/book/introducao_linguagem_R/pt/index.html</link>
+  <link>https://pedro-faria.netlify.app/publications/book/introducao_linguagem_R/pt/</link>
   <description><![CDATA[ 
 
 
@@ -4577,14 +4577,14 @@ font-style: inherit;">sum</span>)</span></code></pre></div>
   <category>R</category>
   <category>Book</category>
   <category>Brazil</category>
-  <guid>https://pedro-faria.netlify.app/publications/book/introducao_linguagem_R/pt/index.html</guid>
+  <guid>https://pedro-faria.netlify.app/publications/book/introducao_linguagem_R/pt/</guid>
   <pubDate>Thu, 01 Dec 2022 03:00:00 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/publications/book/introducao_linguagem_R/featured.png" medium="image" type="image/png" height="203" width="144"/>
 </item>
 <item>
   <title>Introducing the {figma} R package</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
-  <link>https://pedro-faria.netlify.app/posts/2022/2022-11-06-figma-pkgv0.1.0/en/index.html</link>
+  <link>https://pedro-faria.netlify.app/posts/2022/2022-11-06-figma-pkgv0.1.0/en/</link>
   <description><![CDATA[ 
 
 
@@ -4749,14 +4749,14 @@ font-style: inherit;">'characters'</span>)</span></code></pre></div>
   <category>Package</category>
   <category>Figma</category>
   <category>API</category>
-  <guid>https://pedro-faria.netlify.app/posts/2022/2022-11-06-figma-pkgv0.1.0/en/index.html</guid>
+  <guid>https://pedro-faria.netlify.app/posts/2022/2022-11-06-figma-pkgv0.1.0/en/</guid>
   <pubDate>Sun, 06 Nov 2022 03:00:00 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/posts/2022/2022-11-06-figma-pkgv0.1.0/featured.png" medium="image" type="image/png" height="79" width="144"/>
 </item>
 <item>
   <title>Novidades da 3° edição de Introdução à Linguagem R: seus fundamentos e sua prática</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
-  <link>https://pedro-faria.netlify.app/posts/2022/2022-04-06-3nd-edition-rbook/pt/index.html</link>
+  <link>https://pedro-faria.netlify.app/posts/2022/2022-04-06-3nd-edition-rbook/pt/</link>
   <description><![CDATA[ 
 
 
@@ -4793,14 +4793,14 @@ font-style: inherit;">'characters'</span>)</span></code></pre></div>
  ]]></description>
   <category>Book</category>
   <category>R</category>
-  <guid>https://pedro-faria.netlify.app/posts/2022/2022-04-06-3nd-edition-rbook/pt/index.html</guid>
+  <guid>https://pedro-faria.netlify.app/posts/2022/2022-04-06-3nd-edition-rbook/pt/</guid>
   <pubDate>Wed, 06 Apr 2022 03:00:00 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/posts/2022/2022-04-06-3nd-edition-rbook/featured.png" medium="image" type="image/png" height="206" width="144"/>
 </item>
 <item>
   <title>Novidades da 2° edição de Introdução à Linguagem R: seus fundamentos e sua prática</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
-  <link>https://pedro-faria.netlify.app/posts/2021/2021-05-26-2nd-edition-rbook/pt/index.html</link>
+  <link>https://pedro-faria.netlify.app/posts/2021/2021-05-26-2nd-edition-rbook/pt/</link>
   <description><![CDATA[ 
 
 
@@ -5016,7 +5016,7 @@ font-style: inherit;">$</span>hour</span></code></pre></div>
 </section></div> ]]></description>
   <category>Book</category>
   <category>R</category>
-  <guid>https://pedro-faria.netlify.app/posts/2021/2021-05-26-2nd-edition-rbook/pt/index.html</guid>
+  <guid>https://pedro-faria.netlify.app/posts/2021/2021-05-26-2nd-edition-rbook/pt/</guid>
   <pubDate>Wed, 26 May 2021 03:00:00 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/posts/2021/2021-05-26-2nd-edition-rbook/featured.png" medium="image" type="image/png" height="204" width="144"/>
 </item>
