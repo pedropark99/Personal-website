@@ -52,6 +52,7 @@ for development of R packages. These contributions are related to the
 - [PR 676](https://github.com/ropensci/dev_guide/pull/676)
 - [PR 675](https://github.com/ropensci/dev_guide/pull/675)
 - [PR 674](https://github.com/ropensci/dev_guide/pull/674)
+- and many others in this project...
 
 ## `DT`
 

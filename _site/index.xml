@@ -9,13 +9,71 @@
 <link>https://pedro-faria.netlify.app/</link>
 <atom:link href="https://pedro-faria.netlify.app/index.xml" rel="self" type="application/rss+xml"/>
 <description>A blog about programming and data analysis, specially with R and Python</description>
-<generator>quarto-1.4.532</generator>
-<lastBuildDate>Sun, 31 Dec 2023 03:00:00 GMT</lastBuildDate>
+<generator>quarto-1.4.538</generator>
+<lastBuildDate>Tue, 09 Jan 2024 03:00:00 GMT</lastBuildDate>
+<item>
+  <title>Introduction to pyspark</title>
+  <dc:creator>Pedro Duarte Faria</dc:creator>
+  <link>https://pedro-faria.netlify.app/publications/book/introd-pyspark/en/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="about-the-book" class="level1">
+<h1>About the book</h1>
+<p>This book is for anyone who wants to learn quickly how to use <code>pyspark</code> to effectively load, process, and transform large volumes of data using Python.</p>
+<p><a href="https://www.amazon.com/dp/B0CRYMVWDN"> <button type="button" class="btn btn-primary">Buy a copy of the book!</button></a> <a href="https://pedropark99.github.io/Introd-pyspark/"> <button type="button" class="btn btn-primary">Read online</button></a> <a href="https://github.com/pedropark99/Introd-pyspark"> <button type="button" class="btn btn-primary">Official repository</button></a></p>
+<p>In more detail, this is a quick and introductory book about <code>pyspark</code>, which is the Python API for Apache Spark. Apache Spark is the de facto standard engine for big-data analytics. It is largely used to build data processing, data ingestion, and machine learning applications that process very large volumes of data.</p>
+<p>One of the many reasons why Apache Spark became popular is because of its APIs. You can build Spark applications using different programming languages, such as Python, R, and Scala. But this book focuses solely on the Python API.</p>
+<p>In this book, you will learn about:</p>
+<ul>
+<li>How an Apache Spark application works?</li>
+<li>What are Spark DataFrames?</li>
+<li>How to build, transform and model your Spark DataFrame.</li>
+<li>How to import data into (or export data out of) Apache Spark.</li>
+<li>How to work with SQL inside pyspark.</li>
+<li>Tools for manipulating specific data types (e.g.&nbsp;strings, dates and datetimes).</li>
+<li>How to use window functions.</li>
+</ul>
+</section>
+<section id="motivation-for-the-book" class="level1">
+<h1>Motivation for the book</h1>
+<p>In summary, this book aims to give a solid introduction (for python and not python users) to the <code>pyspark</code> package, and on how to use it to build Spark applications for data pipelines and interactive data analysis.</p>
+<p>Although we have a good range of materials about Apache Spark in general, such as <span class="citation" data-cites="damji2020">Damji et al. (2020)</span> and <span class="citation" data-cites="chambers2018">Chambers and Zaharia (2018)</span>, we do not have much abundance of materials about the APIs of Spark in “foreign” languages, like the Python (<code>pyspark</code>) and R (<code>SparkR</code>) APIs.</p>
+<p>The reason for this is simple: the Spark API have a consistent structure across all languages. As consequence, a general book about Spark can fairly cover all languages at once. In other words, Spark code in Scala can be easily translated into python code with <code>pyspark</code>. Because the structure of the code is very similar between all languages.</p>
+<p>So why this book? First, Python is a more popular and friendly language than Scala or Java. If the reader is not interested in learning Java or Scala, why show Java/Scala code to him? Is very important to focus solely on what interest the reader, specially if it is in a language that he is familiar with. Second, I had some time to spent, and a lot of practical experience with <code>pyspark</code> on production to share (so… why not write a book about it?).</p>
+</section>
+<section id="cover" class="level1">
+<h1>Cover</h1>
+<p><img src="https://pedro-faria.netlify.app/publications/book/introd-pyspark/featured.png" class="img-fluid" style="width:100.0%"></p>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0">
+<div id="ref-chambers2018" class="csl-entry">
+Chambers, Bill, and Matei Zaharia. 2018. <em>Spark: The Definitive Guide: Big Data Processing Made Simple</em>. Sebastopol, CA: O’Reilly Media.
+</div>
+<div id="ref-damji2020" class="csl-entry">
+Damji, Jules, Brooke Wenig, Tathagata Das, and Denny Lee. 2020. <em>Learning Spark: Lightning-Fast Data Analytics</em>. Sebastopol, CA: O’Reilly Media.
+</div>
+</div></section></div> ]]></description>
+  <category>Python</category>
+  <category>Apache Spark</category>
+  <category>Book</category>
+  <guid>https://pedro-faria.netlify.app/publications/book/introd-pyspark/en/</guid>
+  <pubDate>Tue, 09 Jan 2024 03:00:00 GMT</pubDate>
+  <media:content url="https://pedro-faria.netlify.app/publications/book/introd-pyspark/featured.png" medium="image" type="image/png" height="215" width="144"/>
+</item>
 <item>
   <title>My experience with Typst, the potential sucessor of LaTex</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
   <link>https://pedro-faria.netlify.app/posts/2023/2023-12-31-introducing-typst/en/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -26,7 +84,7 @@
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://pedro-faria.netlify.app/posts/2023/2023-12-31-introducing-typst/typst-process.svg" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Producing documents with Typst</figcaption>
+<figcaption>Producing documents with Typst</figcaption>
 </figure>
 </div>
 <p>Typst is open-source and is freely available at GitHub, just <a href="https://github.com/typst/typst/releases/">download the release file according to your operational system</a> and install the tool into your system.</p>
@@ -149,6 +207,7 @@ Testing if this `raw code element` uses the show rule.</code></pre>
 
 
 
+
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
 <p><a href="./../cheatsheet.pdf"> <button type="button" class="btn btn-primary">Access Cheatsheet PDF</button></a></p>
@@ -171,6 +230,7 @@ Testing if this `raw code element` uses the show rule.</code></pre>
   <dc:creator>Pedro Duarte Faria</dc:creator>
   <link>https://pedro-faria.netlify.app/posts/2023/2023-12-12-zig-strings/en/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -412,6 +472,7 @@ got codepoint E382AB</code></pre>
 
 
 
+
 <section id="introduction" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
 <p>Me and my team are currently working in a massive migration (similar to a cloud migration). This migration involves many process, but one of them is to redirect every table reference that we find in more than <strong>130 thousand lines of Python code</strong>.</p>
@@ -421,9 +482,13 @@ got codepoint E382AB</code></pre>
 <h1 data-number="2"><span class="header-section-number">2</span> Context about what we have to do</h1>
 <p>Most of these 130 thousand lines of Python code are <a href="https://spark.apache.org/docs/latest/api/python/index.html"><code>pyspark</code></a> code to extract, transform and load data using the <a href="https://spark.apache.org/">Apache Spark</a> engine.</p>
 <p>Let’s consider the following example:</p>
-<div id="lst-table" class="listing">
-<p>Listing&nbsp;1: Example of pyspark code that we might find in our codebase</p>
-<div class="sourceCode" id="lst-table" data-lst-cap="Example of pyspark code that we might find in our codebase" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="lst-table-1"><span class="im" style="color: #00769E;
+<div id="lst-table" class="python listing quarto-float">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-table-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Listing&nbsp;1: Example of pyspark code that we might find in our codebase
+</figcaption>
+<div aria-describedby="lst-table-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="lst-table" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="lst-table-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">from</span> pyspark.sql <span class="im" style="color: #00769E;
 background-color: null;
@@ -439,11 +504,17 @@ background-color: null;
 font-style: inherit;">"blip.events"</span>)</span>
 <span id="lst-table-5">df.show()</span></code></pre></div>
 </div>
+</figure>
+</div>
 <p>You can see at Listing&nbsp;1 that we have a <code>spark.table()</code> call to access the SQL table <code>blip.events</code>. In other words, we are basically making a <code>SELECT * FROM</code> query over this table. However, in our new infrastructure, all table references will change. As a result, me and my team need to rewrite every table reference that we find across our codebase.</p>
 <p>For example, let’s suppose that the new table reference is <code>platform.blipraw.events</code>. This means that I need to alter the above snippet of code to:</p>
-<div id="lst-table2" class="listing">
-<p>Listing&nbsp;2: Example with the new reference</p>
-<div class="sourceCode" id="lst-table2" data-lst-cap="Example with the new reference" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="lst-table2-1"><span class="im" style="color: #00769E;
+<div id="lst-table2" class="python listing quarto-float">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-table2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Listing&nbsp;2: Example with the new reference
+</figcaption>
+<div aria-describedby="lst-table2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="lst-table2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="lst-table2-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">from</span> pyspark.sql <span class="im" style="color: #00769E;
 background-color: null;
@@ -458,6 +529,8 @@ font-style: inherit;">=</span> spark.table(<span class="st" style="color: #20794
 background-color: null;
 font-style: inherit;">"platform.blipraw.events"</span>)</span>
 <span id="lst-table2-5">df.show()</span></code></pre></div>
+</div>
+</figure>
 </div>
 <section id="the-quick-and-dirty-approach" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="the-quick-and-dirty-approach"><span class="header-section-number">2.1</span> The quick and dirty approach</h2>
@@ -574,10 +647,14 @@ font-style: inherit;">=</span> spark.table(table_ref)</span></code></pre></div>
 <p>Parsers (or the process of parsing expressions) are core components of every existing compiler, like <code>gcc</code> or <code>rustc</code>, as well as the R and Python compilers. In essence, a parser is a piece of software that analyzes expressions following the rules of a grammar. A parser is the main part of compilers responsible for analyzing and comprehend the structure of your source code.</p>
 <p>The process of parsing is usually made in two steps, which are: 1) breaking (or “splitting”) the input expression into smaller pieces, building a list of tokens, or a list of small components; 2) analyzing this sequence of tokens to build a tree that is equivalent to the input expression. The first step above is usually made by a component called <em>lexer</em> or <em>tokenizer</em> (both names are commom to find), and the second step is made by the parser itself.</p>
 <p>Basically, the process of parsing takes a string (which contains the expression, or the source code your want to parse) as input. Then, the lexer (or tokenizer) breaks the input string into smaller pieces, which are usually called <em>tokens</em>. Then, the parser receives this stream of tokens produced by the tokenizer as input, and starts to analyze this sequence of tokens, to understand the structure of the input expression (or source code). As output, the parser produces a tree that is equivalent to the input expression, which is usually called <em>abstract syntax tree</em> (or AST for short). Figure&nbsp;1 below exposes this process.</p>
-<div id="fig-parser-pic" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="https://pedro-faria.netlify.app/posts/2023/2023-11-18-python-parser/parser-pic.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;1: The process of parsing</figcaption>
+<div id="fig-parser-pic" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-parser-pic-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://pedro-faria.netlify.app/posts/2023/2023-11-18-python-parser/parser-pic.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-parser-pic-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: The process of parsing
+</figcaption>
 </figure>
 </div>
 <p>So the process of parsing takes an expression as input, and builds a tree that is equivalent to that expression as output. This process of parsing is always one of the first operations that a compiler performs.</p>
@@ -638,9 +715,13 @@ font-style: inherit;">"'</span></span>
 <p>This approach is probably the easiest of all to implement, and it fit’s perfectly our example here because we are interested in parsing just a very small subset of simple Python expressions. If we wanted to parse more complex expressions, then, it would probably be better to use another approach to break the input string.</p>
 <p>So, the tokenizer will iterate through each character in the input string, and will mark any place that contains a single character the we interpret as an elegible place to break the string. Considering the type of expressions we stated at Section&nbsp;3.2, the characters <code>"</code>, <code>'</code>, <code>+</code>, <code>{</code>, <code>}</code> are good candidates for “elegible break points”. Also, the character <code>f</code> is important for identifying formatted strings, as a consequence, he is also a good candidate.</p>
 <p>Let’s consider the following tokenizer:</p>
-<div id="lst-tokenizer" class="listing">
-<p>Listing&nbsp;3: The function that represents our tokenizer</p>
-<div class="sourceCode" id="lst-tokenizer" data-lst-cap="The function that represents our tokenizer" style="background: #f1f3f5;"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="lst-tokenizer-1"><span class="im" style="color: #00769E;
+<div id="lst-tokenizer" class="python listing quarto-float">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-tokenizer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Listing&nbsp;3: The function that represents our tokenizer
+</figcaption>
+<div aria-describedby="lst-tokenizer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="lst-tokenizer" style="background: #f1f3f5;"><pre class="sourceCode code-annotation-code python code-with-copy"><code class="sourceCode python"><span id="lst-tokenizer-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">from</span> typing <span class="im" style="color: #00769E;
 background-color: null;
@@ -709,7 +790,7 @@ font-style: inherit;">if</span> current_char <span class="kw" style="color: #003
 background-color: null;
 font-style: inherit;">in</span> candidates:</span>
 <span id="lst-tokenizer-11">            break_points.append(i)</span>
-<a class="code-annotation-anchor" data-target-cell="lst-tokenizer" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="lst-tokenizer-12" class="code-annotation-target">        <span class="cf" style="color: #003B4F;
+<span id="lst-tokenizer-12">        <span class="cf" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">if</span> current_char <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -744,7 +825,7 @@ background-color: null;
 font-style: inherit;">"'"</span>]:</span>
 <span id="lst-tokenizer-15">                break_points.append(i)</span>
 <span id="lst-tokenizer-16"></span>
-<a class="code-annotation-anchor" data-target-cell="lst-tokenizer" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="lst-tokenizer-17" class="code-annotation-target">    <span class="cf" style="color: #003B4F;
+<span id="lst-tokenizer-17">    <span class="cf" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">if</span> <span class="bu" style="color: null;
 background-color: null;
@@ -772,7 +853,7 @@ background-color: null;
 font-style: inherit;">for</span> index <span class="kw" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">in</span> break_points:</span>
-<a class="code-annotation-anchor" data-target-cell="lst-tokenizer" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="lst-tokenizer-23" class="code-annotation-target">        tokens.append(input_string[last_index:index])</span>
+<span id="lst-tokenizer-23">        tokens.append(input_string[last_index:index])</span>
 <span id="lst-tokenizer-24">        tokens.append(input_string[index:(index<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">+</span><span class="dv" style="color: #AD0000;
@@ -787,32 +868,22 @@ background-color: null;
 font-style: inherit;">1</span></span>
 <span id="lst-tokenizer-26"></span>
 <span id="lst-tokenizer-27">    tokens.append(input_string[last_index:])</span>
-<a class="code-annotation-anchor" data-target-cell="lst-tokenizer" data-target-annotation="4" onclick="event.preventDefault();">4</a><span id="lst-tokenizer-28" class="code-annotation-target">    <span class="cf" style="color: #003B4F;
+<span id="lst-tokenizer-28">    <span class="cf" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">return</span> <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">list</span>(<span class="bu" style="color: null;
 background-color: null;
-font-style: inherit;">filter</span>(is_not_blank, tokens))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div>
+font-style: inherit;">filter</span>(is_not_blank, tokens))</span></code></pre></div>
 </div>
-<dl class="code-annotation-container-grid">
-<dt data-target-cell="lst-tokenizer" data-target-annotation="1">1</dt>
-<dd>
-<span data-code-cell="lst-tokenizer" data-code-annotation="1" data-code-lines="12">If current character is <code>f</code> check if the next character is the beginning of a string (characters <code>"</code> and <code>'</code>), if it is the beginning of a string, then, it is a formatted string and should be included in the “break points”. If the next character is not the beginning of a string, then, we should not consider it as an elegible breakpoint, because it probably is just a letter “f” inside a variable name, such as <code>platform_database</code>.</span>
-</dd>
-<dt data-target-cell="lst-tokenizer" data-target-annotation="2">2</dt>
-<dd>
-<span data-code-cell="lst-tokenizer" data-code-annotation="2" data-code-lines="17">If no break point position was found, then, the input expression is likely an expression with a single component. For example, a single string constant (e.g.&nbsp;<code>"blip.events"</code>) or a single variable name (<code>events_table</code>). In this case, the tokenizer should return this single component itself as the only token present in the input string.</span>
-</dd>
-<dt data-target-cell="lst-tokenizer" data-target-annotation="3">3</dt>
-<dd>
-<span data-code-cell="lst-tokenizer" data-code-annotation="3" data-code-lines="23">Every iteration of the loop generates two different tokens, which are: 1) a token with the part of the string from the previous break point index until the current elegible break point index; 2) and another token containing the single character that identifies the current elegible breakpoint. For example, the text <code>database"</code> will generate the break point index <code>8</code>, so, in the first iteration of the loop, the tokens <code>'database'</code> and <code>'"'</code> will be generated.</span>
-</dd>
-<dt data-target-cell="lst-tokenizer" data-target-annotation="4">4</dt>
-<dd>
-<span data-code-cell="lst-tokenizer" data-code-annotation="4" data-code-lines="28">Empty tokens (i.e.&nbsp;tokens that are empty strings, or, that contains only spaces) can be generated during the process. So we use <code>filter()</code> with a <code>lambda</code> function to eliminate them from the output.</span>
-</dd>
-</dl>
+</figure>
+</div>
+<ol type="1">
+<li><p>If current character is <code>f</code> check if the next character is the beginning of a string (characters <code>"</code> and <code>'</code>), if it is the beginning of a string, then, it is a formatted string and should be included in the “break points”. If the next character is not the beginning of a string, then, we should not consider it as an elegible breakpoint, because it probably is just a letter “f” inside a variable name, such as <code>platform_database</code>.</p></li>
+<li><p>If no break point position was found, then, the input expression is likely an expression with a single component. For example, a single string constant (e.g.&nbsp;<code>"blip.events"</code>) or a single variable name (<code>events_table</code>). In this case, the tokenizer should return this single component itself as the only token present in the input string.</p></li>
+<li><p>Every iteration of the loop generates two different tokens, which are: 1) a token with the part of the string from the previous break point index until the current elegible break point index; 2) and another token containing the single character that identifies the current elegible breakpoint. For example, the text <code>database"</code> will generate the break point index <code>8</code>, so, in the first iteration of the loop, the tokens <code>'database'</code> and <code>'"'</code> will be generated.</p></li>
+<li><p>Empty tokens (i.e.&nbsp;tokens that are empty strings, or, that contains only spaces) can be generated during the process. So we use <code>filter()</code> with a <code>lambda</code> function to eliminate them from the output.</p></li>
+</ol>
 <p>This <code>tokenizer()</code> function generates a list of tokens to be analyzed by the parser:</p>
 <div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><span class="cf" style="color: #003B4F;
@@ -1161,7 +1232,7 @@ font-style: inherit;">return</span> parser_cache</span><div class="code-annotati
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-8" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-8" data-code-annotation="1" data-code-lines="2">If the sequence of tokens is empty, then, we have no tokens to analyze, and the function should simply return right away.</span>
+<span data-code-cell="annotated-cell-8" data-code-lines="2" data-code-annotation="1">If the sequence of tokens is empty, then, we have no tokens to analyze, and the function should simply return right away.</span>
 </dd>
 </dl>
 </div>
@@ -1285,7 +1356,7 @@ font-style: inherit;">return</span> parser_cache</span><div class="code-annotati
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-10" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-10" data-code-annotation="1" data-code-lines="2">We copy the character (<code>'</code> or <code>"</code>) that openned the string that we are analyzing now, because then, we can search for a new occurence of this same character in the tokens sequence to detect the end of the string.</span>
+<span data-code-cell="annotated-cell-10" data-code-lines="2" data-code-annotation="1">We copy the character (<code>'</code> or <code>"</code>) that openned the string that we are analyzing now, because then, we can search for a new occurence of this same character in the tokens sequence to detect the end of the string.</span>
 </dd>
 </dl>
 </div>
@@ -1364,7 +1435,7 @@ font-style: inherit;">return</span> parser_cache</span><div class="code-annotati
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-11" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-11" data-code-annotation="1" data-code-lines="4">We break the loop, at the moment that we find a closing bracket in the sequence of tokens, because this character represents the end of the pair of brackets that contains the subexpression that we are analyzing.</span>
+<span data-code-cell="annotated-cell-11" data-code-lines="4" data-code-annotation="1">We break the loop, at the moment that we find a closing bracket in the sequence of tokens, because this character represents the end of the pair of brackets that contains the subexpression that we are analyzing.</span>
 </dd>
 </dl>
 </div>
@@ -1483,10 +1554,14 @@ font-style: inherit;">return</span> parser_cache</span></code></pre></div>
 <p>When the loop stops in situation 1, then, the stack object will contain all of the tokens that represents the right operand. Having that in mind, all we need to do is to create a new temporary <code>ParserCache</code> object with these tokens, and call <code>_parse_input()</code> over it to parse the right operand. Then, <code>_parse_right_operand()</code> will simply return the parsed AST from this operation.</p>
 <p>In the other side, if the loop stops in situation 2, that means that, the right operand that we are currently trying to parse, is in fact, the left hand to a new addition operation. In other words, the tokens that we accumulated in the stack object until this very moment, are in fact, the tokens that represents the left operand of this new addition operation that we found.</p>
 <p>At Figure&nbsp;2 we can see this idea visually. Everything that is marked by the light red rectangle is the left operand of that particular addition operation, and everything that is marked by the dark blue rectangle is the right operand of that particular addition operation.</p>
-<div id="fig-addition" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="https://pedro-faria.netlify.app/posts/2023/2023-11-18-python-parser/addition.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;2: Marking the right and left operands in each addition operation</figcaption>
+<div id="fig-addition" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-addition-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://pedro-faria.netlify.app/posts/2023/2023-11-18-python-parser/addition.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-addition-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Marking the right and left operands in each addition operation
+</figcaption>
 </figure>
 </div>
 <p>So, lets consider as an example, that the parser was parsing the expression <code>database + '.' + 'events'</code>. When <code>_parse_right_operand()</code> is parsing the right operand of the first addition (which is <code>'.'</code>), the function is looping through the sequence of tokens. The tokens <code>["'", '.', "'"]</code> are accumulated inside the stack object, until the loop hits the token <code>+</code>, which is second plus sign in the entire input expression. At this point the function understands that it hitted a new addition operation to be parsed.</p>
@@ -1618,7 +1693,7 @@ font-style: inherit;">"  * Parsed AST: "</span>, parsed_expr)</span></code></pre
 </section>
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0">
 <div id="ref-gries2008" class="csl-entry">
 Gries, David, and Fred B. Schneider. 2008. <em>Parsing Techniques: A Practical Guide</em>. 2nd ed. Springer.
 </div>
@@ -1634,6 +1709,7 @@ Gries, David, and Fred B. Schneider. 2008. <em>Parsing Techniques: A Practical G
   <dc:creator>Pedro Duarte Faria</dc:creator>
   <link>https://pedro-faria.netlify.app/posts/2023/2023-08-31-data-decisions/en/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -1681,7 +1757,7 @@ Important
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://pedro-faria.netlify.app/posts/2023/2023-08-31-data-decisions/flow-extended.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">A small representation of the sales path</figcaption>
+<figcaption>A small representation of the sales path</figcaption>
 </figure>
 </div>
 <p>Every time a user entered our flow, we collected the social ID of this user. Because with this social ID we can use the API to check multiple informations about this person. One of the many things we checked, was whether or not this user was elegible or not to these three modalities of loan.</p>
@@ -1925,6 +2001,7 @@ font-style: inherit;">]</span></span></code></pre></div>
 
 
 
+
 <section id="introdução" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Introdução</h1>
 <p>Este artigo descreve um exemplo real em que eu e meu time usamos dados para convencer o nosso cliente na época (que é um dos maiores bancos do mercado brasileiro) a tomar uma melhor decisão. Agradecimentos especiais ao <a href="https://www.linkedin.com/in/guilhermeggarcia/">Guilherme Goes</a> e ao <a href="https://www.linkedin.com/in/paulo-gon-oli/">Paulo Gonçalves</a>. Ambos me ajudaram a montar e apresentar essas ideias e <em>insigths</em> para o nosso cliente.</p>
@@ -1968,7 +2045,7 @@ Important
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://pedro-faria.netlify.app/posts/2023/2023-08-31-data-decisions/flow-pt.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Uma pequena representação do fluxo de vendas</figcaption>
+<figcaption>Uma pequena representação do fluxo de vendas</figcaption>
 </figure>
 </div>
 <p>Cada vez que um usuário entrava em nosso fluxo, nós coletamos o CPF desse usuário. Pois com esse CPF podemos usar a API para verificar múltiplas informações sobre essa pessoa de uma vez só. Uma das muitas coisas que nós verificávamos nessa chamada de API, era se esse usuário se encaixava no critério estranho que descrevemos. Isto é, nós conferíamos se esse usuário era elegível ou não às três modalidades de empréstimo.</p>
@@ -2212,6 +2289,7 @@ font-style: inherit;">]</span></span></code></pre></div>
 
 
 
+
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
 <p>Last week, me and my team encountered a situation where we need to find out why and how a certain problem occurred. We needed to understand which decisions led to this problem, and why they were made. Pretty normal stuff right?</p>
@@ -2237,7 +2315,7 @@ font-style: inherit;">]</span></span></code></pre></div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://pedro-faria.netlify.app/posts/2023/2023-07-31-git-mark-decisions/diagrams-en.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">A diagram that summarises the data pipeline were the problem occurred</figcaption>
+<figcaption>A diagram that summarises the data pipeline were the problem occurred</figcaption>
 </figure>
 </div>
 </section>
@@ -2300,7 +2378,7 @@ font-style: inherit;">]</span></span></code></pre></div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://pedro-faria.netlify.app/posts/2023/2023-07-31-git-mark-decisions/timeline.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">The timeline of events</figcaption>
+<figcaption>The timeline of events</figcaption>
 </figure>
 </div>
 <p>In my head, there was at least three mistakes that were made across this timeline:</p>
@@ -2357,6 +2435,7 @@ font-style: inherit;">]</span></span></code></pre></div>
 
 
 
+
 <section id="introdução" class="level1">
 <h1>Introdução</h1>
 <p>Na semana passada, eu e minha equipe nos deparamos com uma situação em que precisávamos descobrir por que e como ocorreu um determinado problema. Precisávamos entender quais decisões levaram a esse problema. Algo bem normal, não é?</p>
@@ -2382,7 +2461,7 @@ font-style: inherit;">]</span></span></code></pre></div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://pedro-faria.netlify.app/posts/2023/2023-07-31-git-mark-decisions/diagrams-pt.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Um diagrama que resume o pipeline de dados onde o problema ocorreu</figcaption>
+<figcaption>Um diagrama que resume o pipeline de dados onde o problema ocorreu</figcaption>
 </figure>
 </div>
 </section>
@@ -2445,7 +2524,7 @@ font-style: inherit;">]</span></span></code></pre></div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://pedro-faria.netlify.app/posts/2023/2023-07-31-git-mark-decisions/timeline-pt.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Uma timeline dos eventos</figcaption>
+<figcaption>Uma timeline dos eventos</figcaption>
 </figure>
 </div>
 <p>Na minha cabeça, existem pelo menos três erros que foram cometidos ao longo desta linha do tempo:</p>
@@ -2502,6 +2581,7 @@ font-style: inherit;">]</span></span></code></pre></div>
 
 
 
+
 <section id="introduction" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
 <p>This article discusses how I improved my <em>Data Storytelling</em> process within my presentations and reports delivered to two of the largest commercial banks in the Brazilian market. I try to share what I learned in this process, and I give some tips that will possibly help you to build more intuitive, captivating, clear and effective data reports.</p>
@@ -2550,10 +2630,14 @@ Important
 <p>However, the format of this presentation was problematic. We brought a <strong>monumental amount</strong> of information to the bank. The presentation usually had around 40 different slides, with approximately 36 charts and 70 different indicators. Furthermore, we tried to present all this volume of information in a meeting of just 1 hour.</p>
 <p>The end result was a presentation that brought a monumental volume of information, however, which also brought a <strong>very small volume of insights and new business ideas for managers</strong>.</p>
 <p>In Figure&nbsp;1 we have a representation of one of the several slides of this presentation<sup>1</sup>. Imagine that this presentation had around 40 slides similar to this one:</p>
-<div id="fig-print-report1" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="https://pedro-faria.netlify.app/posts/2023/2023-03-06-storytelling/print-report1-en.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;1: A single slide from the old version of the report</figcaption>
+<div id="fig-print-report1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-print-report1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://pedro-faria.netlify.app/posts/2023/2023-03-06-storytelling/print-report1-en.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-print-report1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: A single slide from the old version of the report
+</figcaption>
 </figure>
 </div>
 <p>Note that this slide looks more like a dashboard page than a report showing the latest trends in the products and services of the bank, or, on the financial market as a whole.</p>
@@ -2579,10 +2663,14 @@ Important
 <p>Try to be parsimonious in your slides! That is, try to include as little information as possible within it. If you need to convey a lot of information on a single slide, then try to incorporate most of this content into your speech, and as little of it as possible in written form on this slide. In general, avoid including very long texts in your slides as much as possible.</p>
 <p>It’s weird to think about, but generally, managers will jump in and watch your presentation because they’re interested in what <strong>you</strong> have to say about their business. Therefore, your slides are only support material, they must be secondary, a supporting element of your presentation. Because the main piece of the presentation should always be your speech and the story you want to tell through it.</p>
 <p>See the slide at Figure&nbsp;2 as an example. The main problem with this slide is that it <strong>divides the viewer’s attention a lot</strong>.</p>
-<div id="fig-texto-longo" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="https://pedro-faria.netlify.app/posts/2023/2023-03-06-storytelling/texto-longo-en.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;2: Slide with a long paragraph</figcaption>
+<div id="fig-texto-longo" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-texto-longo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://pedro-faria.netlify.app/posts/2023/2023-03-06-storytelling/texto-longo-en.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-texto-longo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Slide with a long paragraph
+</figcaption>
 </figure>
 </div>
 <p>When presenting a slide, your viewers have to pay attention to your speech. That is, what you are verbally communicating during the presentation. And at the same time, they also need to pay attention to the slide content. However, that long paragraph in the left corner of the slide shown in Figure&nbsp;2 is problematic. <strong>Because he draws too much attention!</strong></p>
@@ -2609,10 +2697,14 @@ Important
 <section id="sec-relacoes" class="level3" data-number="4.2.2">
 <h3 data-number="4.2.2" class="anchored" data-anchor-id="sec-relacoes"><span class="header-section-number">4.2.2</span> Trace relationships between indicators</h3>
 <p>Now, let’s analyze the slide shown in Figure&nbsp;3. Notice that this slide, again, is very reminiscent of a dashboard page. The slide doesn’t look so captivating at first glance, as it only shows the indicators, it doesn’t build a relationship, or <strong>a story</strong>, between them.</p>
-<div id="fig-divisao2" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="https://pedro-faria.netlify.app/posts/2023/2023-03-06-storytelling/divisao2-en.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;3: Lack of relationship between indicators</figcaption>
+<div id="fig-divisao2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-divisao2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://pedro-faria.netlify.app/posts/2023/2023-03-06-storytelling/divisao2-en.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-divisao2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Lack of relationship between indicators
+</figcaption>
 </figure>
 </div>
 <p>If we pay attention to these indicators, we can identify some effects that are happening along them. And if we think about these effects a little more, we will realize that these effects are relatable! And that together, they can tell a story.</p>
@@ -2643,7 +2735,7 @@ Important
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://pedro-faria.netlify.app/posts/2023/2023-03-06-storytelling/mensagem-principal-en.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">The main message of the presentation</figcaption>
+<figcaption>The main message of the presentation</figcaption>
 </figure>
 </div>
 <p>Now that we know what the main subject of the presentation is, we can start to dig deeper, and describe that subject in more detail. As a next step, we can answer the question “where did this increase in sales came from?”.</p>
@@ -2652,7 +2744,7 @@ Important
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://pedro-faria.netlify.app/posts/2023/2023-03-06-storytelling/onde-vendemos-en.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Where did we sell more?</figcaption>
+<figcaption>Where did we sell more?</figcaption>
 </figure>
 </div>
 <p>The next question we need to answer is “how?”. How was this super result in sales generated? We discussed this in Section&nbsp;4.2.3 that after discovering such an important result, managers will certainly be interested in understanding how this result was generated, so that they can spread this positive effect to other areas of the business.</p>
@@ -2660,7 +2752,7 @@ Important
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://pedro-faria.netlify.app/posts/2023/2023-03-06-storytelling/porque-vendemos-en.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Why did we sell more?</figcaption>
+<figcaption>Why did we sell more?</figcaption>
 </figure>
 </div>
 <p>Please, try to use your speech to elaborate the two effects above (“What was the problem with the API, and how did we overcome it?”, “How is this an improvement?”, “What is a conversion rate? And how does it affect the process of sale?”). Remember, try to avoid putting long texts in your presentations as much as possible, and try to give more details or answer your viewers questions through speech.</p>
@@ -2777,6 +2869,7 @@ Important
 
 
 
+
 <section id="introdução" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Introdução</h1>
 <p>Este artigo discute como eu melhorei o meu processo de <em>Data Storytelling</em> dentro das minhas apresentações e relatórios entregues para dois dos maiores bancos comerciais do mercado brasileiro. Busco compartilhar o que aprendi nesse processo, e dou algumas dicas que possivelmente vão ajudá-lo a construir relatórios de dados mais intuitivos, cativantes, claros e efetivos.</p>
@@ -2825,10 +2918,14 @@ Important
 <p>Contudo, o formato dessa apresentação era problemático. Nós trazíamos uma <strong>quantidade monumental</strong> de informações para o banco. A apresentação usualmente trazia em torno de 40 slides diferentes, com aproximadamente 36 gráficos e 70 indicadores diferentes. Para mais, nós tentávamos apresentar todo esse volume de informações em uma reunião de apenas 1 hora.</p>
 <p>O resultado final disso tudo era uma apresentação que trazia um volume monumental de informações, porém, que também trazia um <strong>volume muito pequeno de insights e novas ideias de negócio para os gestores</strong>.</p>
 <p>Em Figura&nbsp;1 temos uma representação de um dos vários slides dessa apresentação<sup>1</sup>. Imagine que essa apresentação trazia em torno de 40 slides semelhantes a esse:</p>
-<div id="fig-print-report1" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="https://pedro-faria.netlify.app/posts/2023/2023-03-06-storytelling/print-report1.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figura&nbsp;1: Representação de um slide da versão antiga do relatório</figcaption>
+<div id="fig-print-report1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-print-report1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://pedro-faria.netlify.app/posts/2023/2023-03-06-storytelling/print-report1.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-print-report1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1: Representação de um slide da versão antiga do relatório
+</figcaption>
 </figure>
 </div>
 <p>Perceba que esse slide se parece mais com uma página de um dashboard, do que de um relatório apresentando as últimas tendências do mercado ou do negócio do banco.</p>
@@ -2854,10 +2951,14 @@ Important
 <p>Tente ser parsimonioso nos seus slides! Isto é, tente incluir o mínimo possível de informação dentro dele. Se você precisa repassar várias informações em um slide, tente incorporar o máximo possível desse conteúdo em sua fala, e o mínino possível dele em forma escrita neste slide. Em geral, evite ao máximo incluir textos muito longos em seus slides.</p>
 <p>É estranho pensar nisso, mas geralmente, os gestores vão participar e assistir à sua apresentação porque eles estão interessados no que <strong>você</strong> tem a dizer sobre o negócio deles. Portanto, os seus slides são apenas um material de suporte, eles devem ser secundários, um coadjuvante de sua apresentação. Pois a peça principal da apresentação deve ser sempre a sua fala e a história que você quer contar através dela.</p>
 <p>Veja o slide em Figura&nbsp;2 como exemplo. O problema principal desse slide, é que ele <strong>divide muito a atenção de seu espectador</strong>.</p>
-<div id="fig-texto-longo" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="https://pedro-faria.netlify.app/posts/2023/2023-03-06-storytelling/texto-longo.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figura&nbsp;2: Slide com um parágrafo longo</figcaption>
+<div id="fig-texto-longo" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-texto-longo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://pedro-faria.netlify.app/posts/2023/2023-03-06-storytelling/texto-longo.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-texto-longo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2: Slide com um parágrafo longo
+</figcaption>
 </figure>
 </div>
 <p>Ao apresentar um slide, os seus espectadores tem que prestar atenção na sua fala. Isto é, no que você está comunicando verbalmente durante a apresentação. E ao mesmo tempo, eles também precisam prestar atenção no conteúdo do slide. Contudo, esse longo parágrafo no canto esquerdo do slide mostrado em Figura&nbsp;2 é problemático. <strong>Pois ele chama atenção demais!</strong></p>
@@ -2884,10 +2985,14 @@ Important
 <section id="sec-relacoes" class="level3" data-number="4.2.2">
 <h3 data-number="4.2.2" class="anchored" data-anchor-id="sec-relacoes"><span class="header-section-number">4.2.2</span> Trace relações entre os indicadores</h3>
 <p>Agora, vamos analisar o slide mostrado em Figura&nbsp;3. Perceba que esse slide, novamente, lembra muito uma página de um dashboard. O slide não parece tão cativante à primeira vista, pois ele só mostra os indicadores, ele não constrói uma relação, ou <strong>uma história</strong> entre eles.</p>
-<div id="fig-divisao2" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="https://pedro-faria.netlify.app/posts/2023/2023-03-06-storytelling/divisao2.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figura&nbsp;3: Falta de relação entre os indicadores</figcaption>
+<div id="fig-divisao2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-divisao2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://pedro-faria.netlify.app/posts/2023/2023-03-06-storytelling/divisao2.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-divisao2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3: Falta de relação entre os indicadores
+</figcaption>
 </figure>
 </div>
 <p>Se prestarmos atenção nesses indicadores, podemos identificar alguns efeitos que estão acontecendo ao longo deles. E se refletirmos um pouco mais sobre esses efeitos, vamos perceber que esses efeitos são relacionáveis! E que em conjunto, eles podem contar uma história.</p>
@@ -2918,7 +3023,7 @@ Important
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://pedro-faria.netlify.app/posts/2023/2023-03-06-storytelling/mensagem-principal.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">A mensagem principal da apresentação</figcaption>
+<figcaption>A mensagem principal da apresentação</figcaption>
 </figure>
 </div>
 <p>Agora que sabemos qual é o assunto principal da apresentação, podemos começar a cavar mais fundo, e descrever esse assunto em mais detalhes. Como um próximo passo, podemos responder à pergunta “onde esse aumento de vendas ocorreu?”.</p>
@@ -2927,7 +3032,7 @@ Important
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://pedro-faria.netlify.app/posts/2023/2023-03-06-storytelling/onde-vendemos.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Onde vendemos mais?</figcaption>
+<figcaption>Onde vendemos mais?</figcaption>
 </figure>
 </div>
 <p>A próxima pergunta que precisamos responder é “como?”. Como esse super resultado nas vendas foi gerado? Nós discutimos isso na Seção&nbsp;4.2.3, que após descobrirem um resultado tão importante, os gerentes vão certamente estar interessados em entender como esse resultado foi gerado, para que eles possam difundir esse efeito positivo para outras áreas do negócio.</p>
@@ -2935,7 +3040,7 @@ Important
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://pedro-faria.netlify.app/posts/2023/2023-03-06-storytelling/porque-vendemos.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Por que vendemos mais?</figcaption>
+<figcaption>Por que vendemos mais?</figcaption>
 </figure>
 </div>
 <p>Deixe os detalhes mais específicos dos dois efeitos acima (“qual era o problema na API, e como superamos ele?”, “como isso é uma melhoria?”, “o que é uma taxa de conversão? E como isso afeta o processo de venda?”) para a sua fala. Lembre-se, tente evitar ao máximo colocar textos longos em suas apresentações, e tente dar mais detalhes ou responder às perguntas dos seus espectadores através da fala.</p>
@@ -3052,6 +3157,7 @@ Important
 
 
 
+
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
 <p>At my work, I use a lot of funnel charts. Because they are a very effective visualization to see losses trough a sequence of steps in a sales process (or a “sales path”). I usually build these funnel charts in a very popular Microsoft tool called Power BI.</p>
@@ -3059,7 +3165,7 @@ Important
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://pedro-faria.netlify.app/posts/2023/2023-02-11-funnel-pkg-v010/power-bi.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">A funnel chart at Power BI</figcaption>
+<figcaption>A funnel chart at Power BI</figcaption>
 </figure>
 </div>
 <p>But after working a lot with these charts in Power BI, I tought to myself: “could I make a funnel chart in R?”. The answer is obviously yes! You could definitely drawn a funnel chart with frameworks such as the <code>ggplot2</code> package. However, there was no packages in the community that could build such visualization out of the box.</p>
@@ -3130,7 +3236,11 @@ font-style: inherit;">levels =</span> Step</span>
 background-color: null;
 font-style: inherit;">print</span>(plot)</span></code></pre></div>
 <div class="cell-output-display">
-<p><img src="https://pedro-faria.netlify.app/posts/2023/2023-02-11-funnel-pkg-v010/en/index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="https://pedro-faria.netlify.app/posts/2023/2023-02-11-funnel-pkg-v010/en/index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>The above plot is very simple. However, since the output of <code>ggfunnel::funnel()</code> is a native <code>ggplot</code> object, you can customize and extend the plot greatly with the <code>{ggplot2}</code> package. I give examples and details on how you can customize this output at the main vignette (<code>vignette("funnel")</code>) of the package, which you can <a href="https://pedropark99.github.io/ggfunnel/articles/funnel.html">read at the website of the package</a>.</p>
@@ -3351,7 +3461,11 @@ font-style: inherit;">"cm"</span>)</span>
 <span id="cb5-31">    )</span>
 <span id="cb5-32">  )</span></code></pre></div>
 <div class="cell-output-display">
-<p><img src="https://pedro-faria.netlify.app/posts/2023/2023-02-11-funnel-pkg-v010/en/index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="https://pedro-faria.netlify.app/posts/2023/2023-02-11-funnel-pkg-v010/en/index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -3379,6 +3493,7 @@ font-style: inherit;">"cm"</span>)</span>
   <dc:creator>Pedro Duarte Faria</dc:creator>
   <link>https://pedro-faria.netlify.app/posts/2023/2023-02-06-python-pckg/en/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -3498,11 +3613,7 @@ font-style: inherit;">'./../weird-unknow-folder'</span>)</span></code></pre></di
 <p>This <code>build-system</code> table is the part of <code>pyproject.toml</code> file where you can specify options and configurations for the build system. As an example, to use the <code>setuptools</code> build system, you would add these lines to <code>pyproject.toml</code>:</p>
 <div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode toml code-with-copy"><code class="sourceCode toml"><span id="cb6-1"><span class="kw" style="color: #003B4F;
 background-color: null;
-font-style: inherit;">[</span><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">build-system</span><span class="kw" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">]</span></span>
+font-style: inherit;">[build-system]</span></span>
 <span id="cb6-2"><span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">requires</span> <span class="op" style="color: #5E5E5E;
@@ -3524,11 +3635,7 @@ font-style: inherit;">"setuptools.build_meta"</span></span></code></pre></div>
 <p>In the other hand, if you want to use the <code>hatchling</code> build system instead, you would change the above lines to:</p>
 <div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode toml code-with-copy"><code class="sourceCode toml"><span id="cb7-1"><span class="kw" style="color: #003B4F;
 background-color: null;
-font-style: inherit;">[</span><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">build-system</span><span class="kw" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">]</span></span>
+font-style: inherit;">[build-system]</span></span>
 <span id="cb7-2"><span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">requires</span> <span class="op" style="color: #5E5E5E;
@@ -3550,11 +3657,7 @@ font-style: inherit;">"hatchling.build"</span></span></code></pre></div>
 <p>Or, maybe you prefer <code>flit</code>:</p>
 <div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode toml code-with-copy"><code class="sourceCode toml"><span id="cb8-1"><span class="kw" style="color: #003B4F;
 background-color: null;
-font-style: inherit;">[</span><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">build-system</span><span class="kw" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">]</span></span>
+font-style: inherit;">[build-system]</span></span>
 <span id="cb8-2"><span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">requires</span> <span class="op" style="color: #5E5E5E;
@@ -3576,11 +3679,7 @@ font-style: inherit;">"flit_core.buildapi"</span></span></code></pre></div>
 <p>Anyway, you get it. You use the options <code>requires</code> and <code>build-backend</code> under the <code>build-system</code> table to specificy which system you want to use in the building process of your package. All of these different systems will use <code>pyproject.toml</code> to collect other very important metadata about your package, like these metadata below:</p>
 <div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode toml code-with-copy"><code class="sourceCode toml"><span id="cb9-1"><span class="kw" style="color: #003B4F;
 background-color: null;
-font-style: inherit;">[</span><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">project</span><span class="kw" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">]</span></span>
+font-style: inherit;">[project]</span></span>
 <span id="cb9-2"><span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">name</span> <span class="op" style="color: #5E5E5E;
@@ -3854,7 +3953,7 @@ font-style: inherit;">python3</span> setup.py sdist</span></code></pre></div>
 </section>
 
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0">
 <div id="ref-setuptools" class="csl-entry">
 Authority, Python Packaging. 2023. <span>“Setuptools Documentation.”</span> <a href="https://setuptools.pypa.io/en/latest/index.html">https://setuptools.pypa.io/en/latest/index.html</a>.
 </div>
@@ -3889,6 +3988,7 @@ Ganssle, Paul. 2021. <span>“Why You Shouldn’t Invoke Setup.py Directly.”</
   <dc:creator>Pedro Duarte Faria</dc:creator>
   <link>https://pedro-faria.netlify.app/posts/2023/2023-01-10-join-duplicates/pt/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -4072,10 +4172,14 @@ font-style: inherit;">TRUE</span>)</span>
 <h2 class="anchored" data-anchor-id="entenda-o-processo-de-pareamento-de-um-join">Entenda o processo de pareamento de um JOIN</h2>
 <p>A única linha de ID 105 na tabela <code>cores_de_pele</code> se transformou em 3 linhas devido ao processo de pareamento dos dados realizado pelo JOIN. Todo JOIN, independe do tipo que ele seja (<em>left, inner, right, full</em>), vai sempre realizar um processo de pareamento entre os dados das duas tabelas, utilizando as colunas que representam as “chaves” do JOIN <span class="citation" data-cites="pedro2022">(Faria 2022)</span>.</p>
 <p>Podemos visualizar esse processo de pareamento dos dados em Figure&nbsp;1. Perceba que, tanto no exemplo dessa imagem, quanto no exemplo desse post, as chaves do JOIN são representadas pela coluna <code>ID</code>. Logo, o JOIN vai puxar os dados de uma tabela para a outra, utilizando os valores dessa coluna como guia.</p>
-<div id="fig-pareamento" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="https://pedro-faria.netlify.app/posts/2023/2023-01-10-join-duplicates/pareamento1.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;1: Processo de pareamento realizado em um JOIN</figcaption>
+<div id="fig-pareamento" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pareamento-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://pedro-faria.netlify.app/posts/2023/2023-01-10-join-duplicates/pareamento1.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pareamento-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Processo de pareamento realizado em um JOIN
+</figcaption>
 </figure>
 </div>
 <p>No exemplo de Figure&nbsp;1, ambas as tabelas que estão sendo unidas possuem uma linha para cada <code>ID</code>. Ou seja, não existe IDs duplicados em nenhuma das duas tabelas, formando assim, uma relação de “um para um” entre as chaves do JOIN.</p>
@@ -4086,10 +4190,14 @@ font-style: inherit;">TRUE</span>)</span>
 <li><p>Para reequilibrar essa balança, o JOIN vai executar um produto cartesiano entre as linhas dessas duas tabelas.</p></li>
 </ol>
 <p>A Figure&nbsp;2 apresenta de forma visual essa conexão:</p>
-<div id="fig-desenho-expansao" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="https://pedro-faria.netlify.app/posts/2023/2023-01-10-join-duplicates/expansao.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;2: Uma representação visual do efeito expansivo sobre o ID 105</figcaption>
+<div id="fig-desenho-expansao" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-desenho-expansao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://pedro-faria.netlify.app/posts/2023/2023-01-10-join-duplicates/expansao.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-desenho-expansao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Uma representação visual do efeito expansivo sobre o ID 105
+</figcaption>
 </figure>
 </div>
 <p>Ou seja, o JOIN vai retornar como resultado, <strong>todas as combinações possíveis</strong> entre a linha única de <code>cores_de_pele</code> e as 3 linhas de <code>alturas</code>. Ou seja, a linha única de <code>cores_de_pele</code> é combinada com cada uma das 3 linhas de <code>alturas</code>. Como resultado, temos as 3 linhas de ID 105 na tabela <code>dados</code>:</p>
@@ -4113,10 +4221,14 @@ font-style: inherit;">TRUE</span>)</span>
 <h1>Conclusão</h1>
 <p>Portanto, o produto cartesiano executado pelo JOIN gerou linhas duplicadas para o ID 105, e essa introdução de dados duplicados acabou distorcendo o valor dos indicadores. <strong>O efeito expansivo está no produto cartesiano gerado pelo JOIN</strong>, e você deve ficar atento em todas as situações em que esse produto pode ocorrer.</p>
 <p>Mas então… em que momentos especificamente esse produto cartesiano é gerado? A resposta é: sempre que existir uma relação de “um para muitos” ou de “muitos para muitos” entre as chaves do JOIN. As “chaves” (ou <em>keys</em>) de todo JOIN podem formar três tipos de relação: 1) um para um; 2) um para muitos; e 3) muitos para muitos <span class="citation" data-cites="pedro2022">(Faria 2022)</span>. Em Figure&nbsp;3 apresentamos de forma visual essas relações, e os produtos cartesianos que elas geram, onde a coluna <code>key</code> representa a “chave” do JOIN.</p>
-<div id="fig-relacoes" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="https://pedro-faria.netlify.app/posts/2023/2023-01-10-join-duplicates/relacoes_keys.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;3: Resumo das relações possíveis entre <em>keys</em> e seus respectivos produtos cartesianos</figcaption>
+<div id="fig-relacoes" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-relacoes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://pedro-faria.netlify.app/posts/2023/2023-01-10-join-duplicates/relacoes_keys.png" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-relacoes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Resumo das relações possíveis entre <em>keys</em> e seus respectivos produtos cartesianos
+</figcaption>
 </figure>
 </div>
 <p>Perceba que, para o caso de relação um para um, o número de linhas na tabela resultado permanece inalterado. Porém, as relações que realmente nos interessam nesse post são as relações de “um para muitos” e de “muitos para muitos”. Perceba que um produto cartesiano ocorre nesses dois tipos de relação, e, como resultado, algum nível de “duplicação” de informações é gerado na tabela resultado do JOIN.</p>
@@ -4129,7 +4241,7 @@ font-style: inherit;">TRUE</span>)</span>
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0">
 <div id="ref-pedro2022" class="csl-entry">
 Faria, Pedro Duarte. 2022. <em>Introdução à Linguagem r: Seus Fundamentos e Sua Prática</em>. 4th ed. Belo Horizonte.
 </div>
@@ -4144,6 +4256,7 @@ Faria, Pedro Duarte. 2022. <em>Introdução à Linguagem r: Seus Fundamentos e S
   <dc:creator>Pedro Duarte Faria</dc:creator>
   <link>https://pedro-faria.netlify.app/posts/2022/2022-12-26-4th-edition-rbook/pt/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -4184,6 +4297,7 @@ Faria, Pedro Duarte. 2022. <em>Introdução à Linguagem r: Seus Fundamentos e S
   <dc:creator>Pedro Duarte Faria</dc:creator>
   <link>https://pedro-faria.netlify.app/posts/2022/2022-12-21-spark-map-v0.2.3/en/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -4344,6 +4458,7 @@ font-style: inherit;">sum</span>)</span></code></pre></div>
 
 
 
+
 <section id="introdução" class="level1">
 <h1>Introdução</h1>
 <p>Em um dia recente, eu descobri que um dos dashboards que estavam publicados em nosso ambiente de produção do Power BI Online havia sofrido um erro de atualização. Logo, eu prontamente parei o que estava fazendo e comecei a investigar o motivo do erro, até porque: 1) o nosso cliente depende dos dados desse dashboard ; e 2) erros em produção não são legais!</p>
@@ -4357,7 +4472,7 @@ font-style: inherit;">sum</span>)</span></code></pre></div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://pedro-faria.netlify.app/posts/2022/2022-12-14-power-bi-memory-error/image.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<figcaption class="figure-caption">Mensagem de erro da atualização no Power BI Online</figcaption>
+<figcaption>Mensagem de erro da atualização no Power BI Online</figcaption>
 </figure>
 </div>
 </div>
@@ -4372,7 +4487,7 @@ font-style: inherit;">sum</span>)</span></code></pre></div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://pedro-faria.netlify.app/posts/2022/2022-12-14-power-bi-memory-error/tabelas.png" class="img-fluid figure-img" style="width:50.0%"></p>
-<figcaption class="figure-caption">Tabelas associadas ao arquivo <code>.pbix</code></figcaption>
+<figcaption>Tabelas associadas ao arquivo <code>.pbix</code></figcaption>
 </figure>
 </div>
 </div>
@@ -4387,7 +4502,11 @@ font-style: inherit;">sum</span>)</span></code></pre></div>
 <p>Isso significa que, todos os dias, o Power BI estava coletando todas as <strong>80 milhões de linhas</strong> dessa tabela <code>input</code>. Devido a este volume monumental de dados, o serviço do Power BI decidiu interromper a atualização.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="https://pedro-faria.netlify.app/posts/2022/2022-12-14-power-bi-memory-error/conversa.png" class="img-fluid" style="width:80.0%"></p>
+<div>
+<figure class="figure">
+<p><img src="https://pedro-faria.netlify.app/posts/2022/2022-12-14-power-bi-memory-error/conversa.png" class="img-fluid figure-img" style="width:80.0%"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -4514,6 +4633,7 @@ font-style: inherit;">sum</span>)</span></code></pre></div>
 
 
 
+
 <section id="sobre-o-livro" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Sobre o livro</h1>
 <p> <button type="button" class="btn btn-primary">Compre uma versão do livro</button> <a href="https://pedropark99.github.io/Introducao_R/"> <button type="button" class="btn btn-primary">Leia online</button></a> <a href="./../exec_complete.pdf"> <button type="button" class="btn btn-primary">Exercícios de cada capítulo</button></a> <a href="./../respostas_complete.pdf"> <button type="button" class="btn btn-primary">Respostas dos exercícios</button></a></p>
@@ -4586,6 +4706,7 @@ font-style: inherit;">sum</span>)</span></code></pre></div>
   <dc:creator>Pedro Duarte Faria</dc:creator>
   <link>https://pedro-faria.netlify.app/posts/2022/2022-11-06-figma-pkgv0.1.0/en/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -4762,6 +4883,7 @@ font-style: inherit;">'characters'</span>)</span></code></pre></div>
 
 
 
+
 <section id="introdução" class="level1">
 <h1>Introdução</h1>
 <p>É com muito prazer que venho compartilhar com você as novidades que estou trazendo para essa nova edição do livro <a href="https://pedro-faria.netlify.app/pt/publication/book/introducao_linguagem_r/">Introdução à Linguagem R: seus fundamentos e sua prática</a>. O lançamento desta nova edição deve ocorrer ainda no meio de Abril de 2022 📆, portanto, fique atento 😉.</p>
@@ -4796,229 +4918,6 @@ font-style: inherit;">'characters'</span>)</span></code></pre></div>
   <guid>https://pedro-faria.netlify.app/posts/2022/2022-04-06-3nd-edition-rbook/pt/</guid>
   <pubDate>Wed, 06 Apr 2022 03:00:00 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/posts/2022/2022-04-06-3nd-edition-rbook/featured.png" medium="image" type="image/png" height="206" width="144"/>
-</item>
-<item>
-  <title>Novidades da 2° edição de Introdução à Linguagem R: seus fundamentos e sua prática</title>
-  <dc:creator>Pedro Duarte Faria</dc:creator>
-  <link>https://pedro-faria.netlify.app/posts/2021/2021-05-26-2nd-edition-rbook/pt/</link>
-  <description><![CDATA[ 
-
-
-
-
-<div class="cell">
-<style type="text/css">
-.hljs{
-  font-family: 'Inconsolata', monospace;
-  font-size: 17px;
-}
-
-.hljs.shell{
-  font-size: 18px;
-}
-
-.hljs-comment{
-  font-style: normal;
-  color: #222222;
-}
-</style>
-</div>
-<section id="introdução" class="level1">
-<h1>Introdução</h1>
-<p>A medida em que eu e meu colega <a href="https://twitter.com/joaoparga">João Parga</a> começamos a ensinar sobre a Linguagem R, nós rapidamente percebemos a presença de vários materiais curtos, de qualidade e úteis<sup>1</sup>. Entretanto, também percebemos uma inquietante falta de materiais (em português) sobre a Linguagem R, que fossem mais técnicos ou que buscassem descrever a linguagem em mais detalhes.</p>
-<p>Por esse motivo, nós construímos o livro <a href="https://pedro-faria.netlify.app/pt/publication/book/introducao_linguagem_r/">Introdução à Linguagem R: seus fundamentos e sua prática</a>, que representa a nossa tentativa de preencher tal lacuna. A primeira edição do livro foi muito bem recebida, em especial, por ser uma obra aberta e gratuita para qualquer brasileiro.</p>
-<p>Tendo isso em mente, 📣 é com muito prazer que anuncio oficialmente que a produção da segunda edição do livro está quase pronta!!! 🥳🎉🎊✨, que está para ser lançada agora no mês de Junho. Esse <em>post</em> busca descrever as novidades que estamos entregando para essa nova edição.</p>
-</section>
-<section id="resumo-das-novidades-para-a-nova-edição" class="level1">
-<h1>Resumo das novidades para a nova edição</h1>
-<p>Em resumo, há três novidades principais para essa nova edição, que incluem a adição de dois novos capítulos, além da adição de exercícios em cada capítulo (com respostas ao final do livro).</p>
-<ul>
-<li>Fatores (<code>factor</code>’s), <em>status</em>: capítulo finalizado ✅.</li>
-<li>Variáveis de tempo (<code>date</code>, <code>POSIXct</code>, <code>POSIXlt</code>), <em>status</em>: capítulo finalizado ✅.</li>
-<li>Introdução de exercícios em cada capítulo, <em>status</em>: ainda em processo de escrita 🚧.</li>
-</ul>
-</section>
-<section id="sobre-o-lançamento" class="level1">
-<h1>Sobre o lançamento</h1>
-<p>Se tudo ocorrer conforme planejado:</p>
-<ul>
-<li><p>📣 O lançamento ocorrerá no <strong>dia 26/06</strong> 📌.</p></li>
-<li><p>Nesse dia, o PDF da obra será disponibilizada em ambas as páginas do <a href="https://www.researchgate.net/publication/345985082_Introducao_a_Linguagem_R_seus_fundamentos_e_sua_pratica">ResearchGate</a> e no <a href="https://www.academia.edu/44520051/Introdu%C3%A7%C3%A3o_%C3%A0_Linguagem_R_seus_fundamentos_e_sua_pr%C3%A1tica">Academia</a>, que são os dois locais onde o livro está atualmente hospedado.</p></li>
-</ul>
-<p>A produção dessa nova edição se encontra avançada, mas pode enfrentar atrasos no próximo mês, pois recentemente assumi um novo emprego em uma grande empresa de tecnologia (<a href="https://www.take.net/">Take Blip</a>) e, portanto, posso ter que atrasar a produção em detrimento de demandas urgentes. Estou ansioso e torcendo muito para que nada de errado ocorra 😅, e que eu possa cumprir este compromisso com a nossa comunidade brasileira de R.</p>
-</section>
-<section id="sobre-cada-novidade" class="level1">
-<h1>Sobre cada novidade:</h1>
-<section id="adição-de-exercícios-em-cada-capítulo" class="level2">
-<h2 class="anchored" data-anchor-id="adição-de-exercícios-em-cada-capítulo">Adição de exercícios em cada capítulo</h2>
-<p>Desde o início, o livro se propôs a ser uma referência introdutória e, principalmente, <strong>técnica</strong>, sobre a linguagem. Isto significa que, o livro não tenta atingir o público que procura por algo sucinto e eficiente, mas sim, o público iniciante que busca se aprofundar (ou ter uma base mais sólida) em conceitos, métodos e outras partes importantes da linguagem.</p>
-<p>Apesar desse propósito, o livro inicialmente não oferece exercícios, os quais são uma característica essencial de qualquer obra técnica. Por esse motivo, a introdução de exercícios em cada capítulo dessa segunda edição, busca ajudar o livro a caminhar para esse propósito, se tornando uma obra mais consolidada.</p>
-<p>Atualmente, a construção dos exercícios para cada capítulo é a única parte (dessa nova edição) que ainda está em construção. A partir do momento em que essa etapa for finalizada, a segunda edição será lançada para todo o público brasileiro.</p>
-</section>
-<section id="fatores-factors" class="level2">
-<h2 class="anchored" data-anchor-id="fatores-factors">Fatores (<code>factor</code>’s)</h2>
-<p>No capítulo 2 do livro, são abordados os quatro tipos de dados básicos da linguagem R. Sendo eles: <code>integer</code>; <code>double</code>; <code>character</code>; e <code>logical</code>. Porém, há dois outros tipos de dados, que são “mais complexos”, e que também são muito importantes hoje em dia. São eles os fatores (ou <code>factor</code>’s) e os tipos voltados para variáveis de tempo (<code>date</code>, <code>POSIXct</code>, <code>POSIXlt</code>).</p>
-<p>Fatores são especialmente úteis para classificarmos variáveis categóricos. Isto é, definirmos a ordem de seus “níveis” (ou “grupos”). Dito de outra forma, várias características podem ser descritas através de uma variável categórica, mas nem sempre essas características seguem uma ordenação numérica, ou uma ordem alfabética. Por exemplo, ao dar a sua avaliação de um certo governo, você pode responder “Péssimo”, “Ruim”, “Bom” ou “Muito Bom”. Perceba pela demonstração abaixo, que caso eu empregue uma ordenação alfabética (crescente) sobre as minhas respostas, “Bom” aparece antes de “Ruim”, “Péssimo” e “Muito Bom”.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1">respostas <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Muito Bom"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Muito Bom"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Bom"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Ruim"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Péssimo"</span>,</span>
-<span id="cb1-2">               <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Bom"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Ruim"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Ruim"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Muito Bom"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Ruim"</span>)</span>
-<span id="cb1-3"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">sort</span>(respostas)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1] "Bom"       "Bom"       "Muito Bom" "Muito Bom" "Muito Bom" "Péssimo"  
- [7] "Ruim"      "Ruim"      "Ruim"      "Ruim"     </code></pre>
-</div>
-</div>
-<p>Com o uso de fatores, nós podemos definir qual a ordem correta desses diferentes níveis e corrigir esse problema de ordenação. Perceba abaixo que a ordenação dos valores foi corrigida.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">respostas <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">factor</span>(respostas)</span>
-<span id="cb3-2"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">levels</span>(respostas) <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Péssimo"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Ruim"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Bom"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Muito Bom"</span>)</span>
-<span id="cb3-3"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">sort</span>(respostas)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1] Péssimo   Péssimo   Ruim      Ruim      Ruim      Bom       Muito Bom
- [8] Muito Bom Muito Bom Muito Bom
-Levels: Péssimo Ruim Bom Muito Bom</code></pre>
-</div>
-</div>
-</section>
-<section id="variáveis-de-tempo" class="level2">
-<h2 class="anchored" data-anchor-id="variáveis-de-tempo">Variáveis de tempo</h2>
-<p>Firmas registram o horário em que vendas são realizadas, o horário em que cargas de insumos chegam a suas instalações, o tempo de trabalho de seus funcionários, além da evolução de vários de seus indicadores ao longo do tempo. Pois tempo é dinheiro, e, em uma economia capitalista o dinheiro é o que faz a diferença.</p>
-<p>Por essa razão, variáveis de tempo são fundamentais em diversas análises de dados e, é muito importante que você saiba como trabalhar com elas em qualquer linguagem de programação que você venha a trabalhar. Por isso, essa é uma lacuna atual muito importante do livro e, que está sendo preenchida nessa segunda edição.</p>
-<p>A linguagem R nos oferece três tipos principais de dados focados em variáveis de tempo, sendo eles: <code>Date</code>, <code>POSIXct</code>, <code>POSIXlt</code>. Além disso, temos ainda um quarto tipo de dado chamado <code>difftime</code>, que busca dar suporte às operações aritméticas entre os 3 tipos anteriores. Valores desses três tipos de dados, são criados a partir das funções <code>as.POSIXct()</code>, <code>as.POSIXlt()</code> e <code>as.Date()</code>.</p>
-<p>O tipo <code>Date</code> nos ajuda a armazenar datas no R. Poderíamos armazenar datas como simples <em>strings</em>, mas com isso, teríamos uma ordenação incorreta dos valores, além da falta de acesso a diversos métodos aritméticos e computacionais voltados para esse tipo de dado. Logo, tratar as suas datas por meio do tipo <code>Date</code> pode fazer a diferença em sua análise.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1">d <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">as.Date</span>(<span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"2020-08-10"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"2020-08-11"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"2020-08-12"</span>))</span>
-<span id="cb5-2">d</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "2020-08-10" "2020-08-11" "2020-08-12"</code></pre>
-</div>
-</div>
-<p>Já o tipo <code>POSIXct</code> é particularmente útil para interpretar datas acompanhadas de um horário (isto é, um dado do tipo <code>date-time</code>). Certas transações econômicas precisam ser registradas com um nível de precisão alto. Ou seja, os registros de muitas empresas não se contentam com datas, pois eles também necessitam saber o momento exato (ou o horário exato) dessa data em que um evento ocorre. O tipo <code>POSIXct</code> foi feito justamente para tratar e lidar com esse tipo de informação.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1">h <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">as.POSIXct</span>(<span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"2020-03-21 15:52:29"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"2020-03-22 10:30:02"</span>))</span>
-<span id="cb7-2">h</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "2020-03-21 15:52:29 -03" "2020-03-22 10:30:02 -03"</code></pre>
-</div>
-</div>
-<p>Por outro lado, o tipo <code>POSIXlt</code> pode ser especialmente útil quando desejamos extrair os componentes de uma variável de tempo específica. Por exemplo, podemos estar interessados apenas no dia do mês presente em cada valor, ou ainda, na hora do dia guardada em cada um desses valores. Tal ponto está demonstrado no exemplo abaixo:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1">hl <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">as.POSIXlt</span>(<span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"2020-03-21 15:52:29"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"2020-03-22 10:30:02"</span>))</span>
-<span id="cb9-2"></span>
-<span id="cb9-3"><span class="do" style="color: #5E5E5E;
-background-color: null;
-font-style: italic;">## O dia de cada data:</span></span>
-<span id="cb9-4">hl<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">$</span>mday</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 21 22</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><span class="do" style="color: #5E5E5E;
-background-color: null;
-font-style: italic;">## A hora do dia de cada data:</span></span>
-<span id="cb11-2">hl<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">$</span>hour</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 15 10</code></pre>
-</div>
-</div>
-
-
-</section>
-</section>
-
-
-<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
-
-<ol>
-<li id="fn1"><p>Como os materiais produzidos pelo <a href="https://curso-r.com/material/">Curso-R</a>, ou este <a href="https://materiais-estudo-r.netlify.app/">índice de materiais</a> construído por Beatriz Milz.↩︎</p></li>
-</ol>
-</section></div> ]]></description>
-  <category>Book</category>
-  <category>R</category>
-  <guid>https://pedro-faria.netlify.app/posts/2021/2021-05-26-2nd-edition-rbook/pt/</guid>
-  <pubDate>Wed, 26 May 2021 03:00:00 GMT</pubDate>
-  <media:content url="https://pedro-faria.netlify.app/posts/2021/2021-05-26-2nd-edition-rbook/featured.png" medium="image" type="image/png" height="204" width="144"/>
 </item>
 </channel>
 </rss>
