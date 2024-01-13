@@ -1,0 +1,50 @@
+---
+title: How to use the cache effectively on Apache Spark
+description: "Did you ever used the DataFrame method `.cache()` to cache your Spark DataFrame? In this post, I want to describe how you can use this method to get better performance."
+date: 2024-01-13
+categories: ['Apache Spark', 'Performance']
+---
+
+# Introduction
+
+I work a lot with Apache Spark on Databricks, and very recently,
+I encountered some cases of jobs failling because of cached DataFrames
+ocupying all the memory available, and, as consequence, raising `OutOfMemory` runtime errors in the job.
+
+In essence, the job was executing a Python notebook that contained some `pyspark` code.
+Many Spark DataFrames were being defined inside this notebook, and each one of
+them were being constantly cached by using the DataFrame method `cache()`.
+And this pattern was causing the memory to be crowed with caches and more caches,
+until it became full, and caused the job to crash.
+
+
+# About the cache
+
+In a Spark application, you can cache your Spark DataFrame (i.e. cache it's data) by calling the DataFrame method `cache()`, like that:
+
+```python
+from pyspark.sql import SparkSession
+spark = SparkSession.builder.getOrCreate()
+from datetime import date
+from pyspark.sql import Row
+
+data = [
+  Row(id = 1, value = 28.3, date = date(2021,1,1)),
+  Row(id = 2, value = 15.8, date = date(2021,1,1)),
+  Row(id = 3, value = 20.1, date = date(2021,1,2)),
+  Row(id = 4, value = 12.6, date = date(2021,1,3))
+]
+
+df = spark.createDataFrame(data)
+df.cache().show(2)
+```
+
+```
++---+-----+----------+
+| id|value|      date|
++---+-----+----------+
+|  1| 28.3|2021-01-01|
+|  2| 15.8|2021-01-01|
++---+-----+----------+
+only showing top 2 rows
+```

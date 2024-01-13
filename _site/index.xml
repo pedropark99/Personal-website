@@ -9,64 +9,143 @@
 <link>https://pedro-faria.netlify.app/</link>
 <atom:link href="https://pedro-faria.netlify.app/index.xml" rel="self" type="application/rss+xml"/>
 <description>A blog about programming and data analysis, specially with R and Python</description>
-<generator>quarto-1.4.538</generator>
-<lastBuildDate>Tue, 09 Jan 2024 03:00:00 GMT</lastBuildDate>
+<generator>quarto-1.4.532</generator>
+<lastBuildDate>Sat, 13 Jan 2024 03:00:00 GMT</lastBuildDate>
 <item>
-  <title>Introduction to pyspark</title>
+  <title>How to use the cache effectively on Apache Spark</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
-  <link>https://pedro-faria.netlify.app/publications/book/introd-pyspark/en/</link>
+  <link>https://pedro-faria.netlify.app/posts/2024/2024-01-13-spark-cache/en/</link>
   <description><![CDATA[ 
 
 
 
 
 
-<section id="about-the-book" class="level1">
-<h1>About the book</h1>
-<p>This book is for anyone who wants to learn quickly how to use <code>pyspark</code> to effectively load, process, and transform large volumes of data using Python.</p>
-<p><a href="https://www.amazon.com/dp/B0CRYMVWDN"> <button type="button" class="btn btn-primary">Buy a copy of the book!</button></a> <a href="https://pedropark99.github.io/Introd-pyspark/"> <button type="button" class="btn btn-primary">Read online</button></a> <a href="https://github.com/pedropark99/Introd-pyspark"> <button type="button" class="btn btn-primary">Official repository</button></a></p>
-<p>In more detail, this is a quick and introductory book about <code>pyspark</code>, which is the Python API for Apache Spark. Apache Spark is the de facto standard engine for big-data analytics. It is largely used to build data processing, data ingestion, and machine learning applications that process very large volumes of data.</p>
-<p>One of the many reasons why Apache Spark became popular is because of its APIs. You can build Spark applications using different programming languages, such as Python, R, and Scala. But this book focuses solely on the Python API.</p>
-<p>In this book, you will learn about:</p>
-<ul>
-<li>How an Apache Spark application works?</li>
-<li>What are Spark DataFrames?</li>
-<li>How to build, transform and model your Spark DataFrame.</li>
-<li>How to import data into (or export data out of) Apache Spark.</li>
-<li>How to work with SQL inside pyspark.</li>
-<li>Tools for manipulating specific data types (e.g.&nbsp;strings, dates and datetimes).</li>
-<li>How to use window functions.</li>
-</ul>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>In a Spark application, you can cache your Spark DataFrame by calling it’s method <code>.cache()</code>, like that:</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> pyspark.sql <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> SparkSession</span>
+<span id="cb1-2">spark <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> SparkSession.builder.getOrCreate()</span>
+<span id="cb1-3"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> datetime <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> date</span>
+<span id="cb1-4"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> pyspark.sql <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> Row</span>
+<span id="cb1-5"></span>
+<span id="cb1-6">data <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [</span>
+<span id="cb1-7">  Row(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">id</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, value <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">28.3</span>, date <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> date(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2021</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)),</span>
+<span id="cb1-8">  Row(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">id</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, value <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">15.8</span>, date <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> date(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2021</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)),</span>
+<span id="cb1-9">  Row(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">id</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, value <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20.1</span>, date <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> date(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2021</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)),</span>
+<span id="cb1-10">  Row(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">id</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, value <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12.6</span>, date <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> date(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2021</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>))</span>
+<span id="cb1-11">]</span>
+<span id="cb1-12"></span>
+<span id="cb1-13">df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> spark.createDataFrame(data)</span>
+<span id="cb1-14">df.cache().show(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span></code></pre></div>
+<pre><code>+---+-----+----------+
+| id|value|      date|
++---+-----+----------+
+|  1| 28.3|2021-01-01|
+|  2| 15.8|2021-01-01|
++---+-----+----------+
+only showing top 2 rows</code></pre>
+
+
 </section>
-<section id="motivation-for-the-book" class="level1">
-<h1>Motivation for the book</h1>
-<p>In summary, this book aims to give a solid introduction (for python and not python users) to the <code>pyspark</code> package, and on how to use it to build Spark applications for data pipelines and interactive data analysis.</p>
-<p>Although we have a good range of materials about Apache Spark in general, such as <span class="citation" data-cites="damji2020">Damji et al. (2020)</span> and <span class="citation" data-cites="chambers2018">Chambers and Zaharia (2018)</span>, we do not have much abundance of materials about the APIs of Spark in “foreign” languages, like the Python (<code>pyspark</code>) and R (<code>SparkR</code>) APIs.</p>
-<p>The reason for this is simple: the Spark API have a consistent structure across all languages. As consequence, a general book about Spark can fairly cover all languages at once. In other words, Spark code in Scala can be easily translated into python code with <code>pyspark</code>. Because the structure of the code is very similar between all languages.</p>
-<p>So why this book? First, Python is a more popular and friendly language than Scala or Java. If the reader is not interested in learning Java or Scala, why show Java/Scala code to him? Is very important to focus solely on what interest the reader, specially if it is in a language that he is familiar with. Second, I had some time to spent, and a lot of practical experience with <code>pyspark</code> on production to share (so… why not write a book about it?).</p>
-</section>
-<section id="cover" class="level1">
-<h1>Cover</h1>
-<p><img src="https://pedro-faria.netlify.app/publications/book/introd-pyspark/featured.png" class="img-fluid" style="width:100.0%"></p>
 
-
-
-</section>
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0">
-<div id="ref-chambers2018" class="csl-entry">
-Chambers, Bill, and Matei Zaharia. 2018. <em>Spark: The Definitive Guide: Big Data Processing Made Simple</em>. Sebastopol, CA: O’Reilly Media.
-</div>
-<div id="ref-damji2020" class="csl-entry">
-Damji, Jules, Brooke Wenig, Tathagata Das, and Denny Lee. 2020. <em>Learning Spark: Lightning-Fast Data Analytics</em>. Sebastopol, CA: O’Reilly Media.
-</div>
-</div></section></div> ]]></description>
-  <category>Python</category>
+ ]]></description>
   <category>Apache Spark</category>
-  <category>Book</category>
-  <guid>https://pedro-faria.netlify.app/publications/book/introd-pyspark/en/</guid>
-  <pubDate>Tue, 09 Jan 2024 03:00:00 GMT</pubDate>
-  <media:content url="https://pedro-faria.netlify.app/publications/book/introd-pyspark/featured.png" medium="image" type="image/png" height="215" width="144"/>
+  <category>Performance</category>
+  <guid>https://pedro-faria.netlify.app/posts/2024/2024-01-13-spark-cache/en/</guid>
+  <pubDate>Sat, 13 Jan 2024 03:00:00 GMT</pubDate>
 </item>
 <item>
   <title>My experience with Typst, the potential sucessor of LaTex</title>
