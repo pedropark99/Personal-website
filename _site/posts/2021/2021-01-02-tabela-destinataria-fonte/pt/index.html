@@ -117,7 +117,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <link rel="stylesheet" href="../../../../styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top quarto-banner">
@@ -290,7 +290,19 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introdução" id="toc-introdução" class="nav-link active" data-scroll-target="#introdução">Introdução</a></li>
+  <li><a href="#joins-possuem-sentido-e-direção" id="toc-joins-possuem-sentido-e-direção" class="nav-link" data-scroll-target="#joins-possuem-sentido-e-direção">Joins possuem sentido e direção</a></li>
+  <li><a href="#tabela-destinatária-e-tabela-fonte" id="toc-tabela-destinatária-e-tabela-fonte" class="nav-link" data-scroll-target="#tabela-destinatária-e-tabela-fonte">Tabela destinatária e tabela fonte</a></li>
+  <li><a href="#tipos-de-outer-join" id="toc-tipos-de-outer-join" class="nav-link" data-scroll-target="#tipos-de-outer-join">Tipos de <em>outer join</em></a></li>
+  <li><a href="#conclusão" id="toc-conclusão" class="nav-link" data-scroll-target="#conclusão">Conclusão</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
 
@@ -348,11 +360,11 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <pre><code># A tibble: 5 × 5
       x     y z         r t    
   &lt;int&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;
-1     1  1.5  a       3.5 tzu  
-2     2  2.02 b       2.1 tzu  
-3     3  1.34 c       1   tzu  
-4     4  1.24 d       5.6 tzu  
-5     5  2.49 e       7.2 tzu  </code></pre>
+1     1  2.45 a       3.5 tzu  
+2     2  1.78 b       2.1 tzu  
+3     3  2.23 c       1   tzu  
+4     4  2.06 d       5.6 tzu  
+5     5  1.58 e       7.2 tzu  </code></pre>
 </div>
 </div>
 <p>Com isso, estamos criando a ideia de que <strong>um <em>join</em> possui sempre um sentido e uma direção</strong>. Em outras palavras, primeiro, extraímos as colunas da tabela <code>B</code>, e em seguida, acrescentamos essas colunas à tabela <code>A</code>. Repare que estamos sempre partindo da tabela <code>B</code> em direção a tabela <code>A</code>.</p>
@@ -360,7 +372,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="./../direcao.png" class="img-fluid figure-img"></p>
+<p><img src="./../direcao.png" class="img-fluid figure-img" width="2200"></p>
 </figure>
 </div>
 </div>
@@ -386,7 +398,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="./../featured.png" class="img-fluid figure-img"></p>
+<p><img src="./../featured.png" class="img-fluid figure-img" width="2200"></p>
 </figure>
 </div>
 </div>

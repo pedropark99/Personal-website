@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.532">
+<meta name="generator" content="quarto-1.4.538">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -57,7 +57,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -117,7 +137,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <link rel="stylesheet" href="../../../../styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top quarto-banner">
@@ -289,7 +309,17 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#what-is-this-cache-method" id="toc-what-is-this-cache-method" class="nav-link" data-scroll-target="#what-is-this-cache-method">What is this <code>cache()</code> method?</a></li>
+  <li><a href="#how-to-use-cache-effectively" id="toc-how-to-use-cache-effectively" class="nav-link" data-scroll-target="#how-to-use-cache-effectively">How to use cache effectively</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
 
@@ -299,7 +329,16 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
-<p>In a Spark application, you can cache your Spark DataFrame by calling it’s method <code>.cache()</code>, like that:</p>
+<p>I work a lot with Apache Spark on Databricks, and very recently, I encountered some cases of jobs failling because of cached DataFrames ocupying all the memory available, and, as consequence, raising <code>OutOfMemory</code> runtime errors.</p>
+<p>In essence, the job was executing a Python notebook that contained some <code>pyspark</code> code. Many Spark DataFrames were being constantly cached by using the DataFrame method <code>cache()</code>. And this pattern was causing the memory to be crowed with more and more caches, until it became full, and caused the job to crash.</p>
+<p>In this article, I want to describe how you should use <code>cache()</code> effectively on Apache Spark, and also, explain how this <code>OutOfMemory</code> error happenned.</p>
+</section>
+<section id="what-is-this-cache-method" class="level1">
+<h1>What is this <code>cache()</code> method?</h1>
+<p>In Apache Spark we work with Spark DataFrames. They are the core (or the essence) of any Spark application. We model, transform, load and export these objects to get the data we want.</p>
+<p>However, in some cases, generating a specific Spark DataFrame can take a long time. Maybe the query that defines this DataFrame is a heavy query, that involves many and many layers of calculations, or maybe, a huge amount of data needs to be read to calculate/generate this DataFrame.</p>
+<p>For these specific cases, we can cache this specific Spark DataFrame. By caching it, we avoid the need to calculate/generate from scratch this DataFrame, over and over again. We calculate it once, and then, we reuse this same data in posterior cases.</p>
+<p>We do this, by calling the <code>cache()</code> DataFrame method, to mark that specific DataFrame as a “cached DataFrame”. As an example, in the code below, I’m creating a Spark DataFrame called <code>df</code>:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql <span class="im">import</span> SparkSession</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>spark <span class="op">=</span> SparkSession.builder.getOrCreate()</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datetime <span class="im">import</span> date</span>
@@ -312,20 +351,50 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  Row(<span class="bu">id</span> <span class="op">=</span> <span class="dv">4</span>, value <span class="op">=</span> <span class="fl">12.6</span>, date <span class="op">=</span> date(<span class="dv">2021</span>,<span class="dv">1</span>,<span class="dv">3</span>))</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>]</span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> spark.createDataFrame(data)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>df.cache().show(<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<pre><code>+---+-----+----------+
-| id|value|      date|
-+---+-----+----------+
-|  1| 28.3|2021-01-01|
-|  2| 15.8|2021-01-01|
-+---+-----+----------+
-only showing top 2 rows</code></pre>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> spark.createDataFrame(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If I want to cache this DataFrame, all I need to do is to call the <code>cache()</code> method with this <code>df</code> object, like this:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df.cache()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now, the <code>df</code> DataFrame is marked as a “DataFrame to be cached” by Spark, and if we use this <code>df</code> DataFrame over the next lines of our notebook, instead of Spark recalculating the entire DataFrame each time, it will reuse the data of this DataFrame that was cached. This can make our Spark application much faster, because Spark will not spend more time recalculating the DataFrame.</p>
+<p>But is important to note, that in Apache Spark, cache operations are lazy operations. I quickly described this lazy aspect of Spark at <a href="https://pedropark99.github.io/Introd-pyspark/Chapters/04-dataframes.html#sec-viewing-a-dataframe">Section 3.5 of my <code>pyspark</code> book</a>.</p>
+<blockquote class="blockquote">
+<p>A key aspect of Spark is its laziness. In other words, for most operations, Spark will only check if your code is correct and if it makes sense. Spark will not actually run or execute the operations you are describing in your code, unless you explicit ask for it with a trigger operation, which is called an “action” (this kind of operation is described in Section 5.2). <span class="citation" data-cites="pedro2024">Faria (<a href="#ref-pedro2024" role="doc-biblioref">2024</a>)</span></p>
+</blockquote>
+<p>Therefore, the cache operation of the DataFrame will only happen if you call an action over the next lines of your notebook. I listed what operations are considered as actions in Spark at <a href="https://pedropark99.github.io/Introd-pyspark/Chapters/05-transforming.html#sec-dataframe-actions">Section 5.2 of my <code>pyspark</code> book</a>. But essentially, the Spark DataFrame methods below are all examples of actions in Spark:</p>
+<ul>
+<li><code>show()</code></li>
+<li><code>collect()</code></li>
+<li><code>count()</code></li>
+<li><code>write.csv()</code></li>
+<li><code>read.csv()</code></li>
+</ul>
+<p>So, if you call any of the Spark DataFrame methods above, after you called <code>cache()</code> over the same Spark DataFrame, then, Spark will effectively cache your DataFrame.</p>
+</section>
+<section id="how-to-use-cache-effectively" class="level1">
+<h1>How to use cache effectively</h1>
+<p>There are two commom situations where cache can be very effective, which are:</p>
+<ul>
+<li><p><strong>Constantly use the same DataFrame over the notebook</strong>.</p></li>
+<li><p><strong>Frequently access a subset of a DataFrame</strong>.</p></li>
+</ul>
+<p>Every time you call an action on a Spark DataFrame in your notebook, Spark needs to read and load the DataFrame’s data from storage (this storage can be many things, like a data lake in the cloud, or a local static file, etc.). So if you repeateadly use the same Spark DataFrame, then, you are repeateadly reading the same data over and over again.</p>
+<p>When you constantly use the same Spark DataFrame over and over again across your notebook. It might be a good idea to cache this Spark DataFrame. For example, if you use a DataFrame called <code>students</code> in 15 locations in your notebook, then, by default, Spark will recalculate this <code>students</code> DataFrame, from scratch, 15 times. But if you cache this DataFrame, then, Spark will calculate the DataFrame on the first time, and reuse the cached data in the remaining 14 times.</p>
+<p>So caching is …</p>
+<blockquote class="blockquote">
+<p>optimal when you need to perform multiple operations on the same dataset to avoid reading from storage repeatedly. <span class="citation" data-cites="patidar2023">Patidar (<a href="#ref-patidar2023" role="doc-biblioref">2023</a>)</span>.</p>
+</blockquote>
+
 
 
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-pedro2024" class="csl-entry" role="listitem">
+Faria, Pedro Duarte. 2024. <em>Introduction to Pyspark</em>. 1st ed. Belo Horizonte. <a href="https://pedropark99.github.io/Introd-pyspark/">https://pedropark99.github.io/Introd-pyspark/</a>.
+</div>
+<div id="ref-patidar2023" class="csl-entry" role="listitem">
+Patidar, Charchit. 2023. <span>“How Cache Works in Apache Spark.”</span> <a href="https://medium.com/@charchitpatidar/how-cache-works-in-apache-spark-aea6eeb3fd03">https://medium.com/@charchitpatidar/how-cache-works-in-apache-spark-aea6eeb3fd03</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

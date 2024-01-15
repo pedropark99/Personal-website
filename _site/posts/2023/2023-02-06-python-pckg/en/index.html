@@ -330,7 +330,11 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
   <li><a href="#avoid-setup.py-and-use-pyproject.toml-instead" id="toc-avoid-setup.py-and-use-pyproject.toml-instead" class="nav-link" data-scroll-target="#avoid-setup.py-and-use-pyproject.toml-instead"><span class="header-section-number">3.5.3</span> Avoid <code>setup.py</code> and use <code>pyproject.toml</code> instead</a></li>
   </ul></li>
   </ul></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">4</span> Conclusion</a></li>
+  <li><a href="#one-of-the-hardest-bugs-i-ever-faced-in-my-life" id="toc-one-of-the-hardest-bugs-i-ever-faced-in-my-life" class="nav-link" data-scroll-target="#one-of-the-hardest-bugs-i-ever-faced-in-my-life"><span class="header-section-number">4</span> One of the hardest bugs I ever faced in my life</a>
+  <ul class="collapse">
+  <li><a href="#sec-weird-problem" id="toc-sec-weird-problem" class="nav-link" data-scroll-target="#sec-weird-problem"><span class="header-section-number">4.1</span> How did this problem occur</a></li>
+  <li><a href="#how-to-identify-this-problem" id="toc-how-to-identify-this-problem" class="nav-link" data-scroll-target="#how-to-identify-this-problem"><span class="header-section-number">4.2</span> How to identify this problem</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -345,6 +349,14 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
 <p>In 2022, I developed my first Python package called <a href="https://github.com/pedropark99/spark_map"><code>spark_map</code></a>, and published it at PyPI. If you want to know more about this package 😉, you can check <a href="https://pedro-faria.netlify.app/posts/2022/2022-12-21-spark-map-v0.2.3/en/">a previous post here</a>, where I introduced the package, and described it’s main features, and showed a small use case.</p>
 <p>Now, although <code>spark_map</code> is a small Python package, I had a hard time developing it. More specifically, the Python code was not hard at all to develop. But packaging it into a proper package 📦 was hard. In this post, I want to share a few things that I learned about Python package development in this process.</p>
+<p>I hope these tips help you in some way 😉. In summary, the main tips discussed here are:</p>
+<ul>
+<li><p>Do not change the <code>sys.path</code> or <code>PYTHONPATH</code> variable inside your package ⚠️;</p></li>
+<li><p>Differences between a package and a module;</p></li>
+<li><p>Nailing the structure 🏛️ of your package can be one the hardest parts;</p></li>
+<li><p>If you use <code>setuptools</code> to build your package, avoid <code>setup.py</code> and use <code>pyproject.toml</code> instead;</p></li>
+<li><p>Check if your Python modules are included on the built versions of your package;</p></li>
+</ul>
 </section>
 <section id="before-i-say-anything-some-references" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Before I say anything, some references</h1>
@@ -358,16 +370,16 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <section id="the-search-path-of-python" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="the-search-path-of-python"><span class="header-section-number">3.1</span> The search path of Python</h2>
 <p>We usually import a package in Python, by including a <code>import</code> statement at the beginning of our script. For example, to import the <code>pandas</code> package to my Python session, I could do this:</p>
-<div class="cell" data-execution_count="1">
+<div id="d0fa166d" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>When you import a package in Python, the Python interpreter starts a search process 🔍 through your computer, to find the specific package you called in your script. Every Python package you use must be installed in your machine. Otherwise, Python will never find it, and, as a consequence, you can not use it.</p>
 <p>The Python interpreter will always look for the packages you import, inside a set of pre-defined locations of your computer. This pre-defined list is stored inside the <code>sys.path</code> variable <span class="citation" data-cites="pymodule">(<a href="#ref-pymodule" role="doc-biblioref">Foundation 2023c</a>)</span>. In other words, when you import a package, Python looks for this package inside each one of the directories listed at <code>sys.path</code> variable.</p>
-<div class="cell" data-execution_count="2">
+<div id="5ad459e3" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sys.path)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>['/home/pedro/Documentos/Projetos/Personal-website/posts/2023/2023-02-06-python-pckg/en', '/usr/lib/python310.zip', '/usr/lib/python3.10', '/usr/lib/python3.10/lib-dynload', '', '/home/pedro/.local/lib/python3.10/site-packages', '/usr/local/lib/python3.10/dist-packages', '/usr/lib/python3/dist-packages']</code></pre>
+<pre><code>['C:\\Users\\pedro.duarte\\Documents\\Personal-website\\posts\\2023\\2023-02-06-python-pckg\\en', 'C:\\Users\\pedro.duarte\\AppData\\Local\\Programs\\Python\\Python311\\python311.zip', 'C:\\Users\\pedro.duarte\\AppData\\Local\\Programs\\Python\\Python311\\DLLs', 'C:\\Users\\pedro.duarte\\AppData\\Local\\Programs\\Python\\Python311\\Lib', 'C:\\Users\\pedro.duarte\\AppData\\Local\\Programs\\Python\\Python311', '', 'C:\\Users\\pedro.duarte\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages', 'C:\\Users\\pedro.duarte\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\win32', 'C:\\Users\\pedro.duarte\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\win32\\lib', 'C:\\Users\\pedro.duarte\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\Pythonwin']</code></pre>
 </div>
 </div>
 <p>You might also find contents about the <code>PYTHONPATH</code> variable when searching for this subject on the internet. In essence, <code>PYTHONPATH</code> is a environment variable that can contain a complementary list of directories to be added to <code>sys.path</code> <span class="citation" data-cites="pypathvar">(<a href="#ref-pypathvar" role="doc-biblioref">Foundation 2023a</a>)</span>.</p>
@@ -379,7 +391,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <p>The <code>sys.path</code> variable is a standard Python list, and, as any other list, can be altered to include other directories that are not currently there. The same goes for the <code>PYTHONPATH</code> variable, which is an environment variable, and can be altered too.</p>
 <p>As an example, when you try to import your package, which is stored at folder <code>A</code>, and, you face a <code>ModuleNotFoundError</code> error, you might be tempted to alter <code>PYTHONPATH</code> or <code>sys.path</code>, to add the folder <code>A</code> to this search path of Python. DO NOT DO IT! YOU SHOULD NEVER alter <code>PYTHONPATH</code> or <code>sys.path</code> ⚠️ ! I mean, at least not inside a Python package.</p>
 <p>In other words, if at some point inside the source code of your Python package, you execute a code like this:</p>
-<div class="cell" data-execution_count="3">
+<div id="e5e3ac37" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="st">'./../weird-unknow-folder'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -486,7 +498,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <p>The traditional <code>setuptools</code> way of packaging Python modules uses a <code>setup()</code> function within the <code>setup.py</code> script. <span class="citation" data-cites="setuptools">(<a href="#ref-setuptools" role="doc-biblioref">Authority 2023</a>)</span></p>
 </blockquote>
 <p>In summary, you can replace <code>pyproject.toml</code> with the <code>setup.py</code> file. Just as an example, I could replace the <code>pyproject.toml</code> file for <code>spark_map</code> with a <code>setup.py</code> file similar to the file below. The whole <code>setup.py</code> file is usually composed of just a single call to the <code>setuptools.setup()</code> function, and nothing more. All of the various metadata about the package stored at <code>pyproject.toml</code> are translated to named arguments to this <code>setup()</code> function.</p>
-<div class="cell" data-execution_count="4">
+<div id="184fbb55" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># setup.py placed at root directory</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> setuptools <span class="im">import</span> setup</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>setup(</span>
@@ -530,19 +542,40 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 </section>
 </section>
 </section>
-<section id="conclusion" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Conclusion</h1>
-<p>In this article, I intended to share what I learned trough my journey of building my first Python package. In summary, the main subjects discussed here were:</p>
-<ul>
-<li><p>Do not change the <code>sys.path</code> or <code>PYTHONPATH</code> variable inside your package ⚠️;</p></li>
-<li><p>Differences between a package and a module;</p></li>
-<li><p>Nailing the structure 🏛️ of your package can be one the hardest parts;</p></li>
-<li><p>If you use <code>setuptools</code> to build your package, avoid <code>setup.py</code> and use <code>pyproject.toml</code> instead;</p></li>
-</ul>
-<p>I hope this content help you to develop your projects. See you later 😉 !</p>
+<section id="one-of-the-hardest-bugs-i-ever-faced-in-my-life" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> One of the hardest bugs I ever faced in my life</h1>
+<p>While developing <code>spark_map</code> I encoutered one of the hardest and weirdest bugs I ever faced in my life. Since it was really hard to find this bug, I want to reveal it here to you, and describe how it happens.</p>
+<p>First, a little bit of context. This bug was present at the version 0.2.7 of the package, and, you can look at the exact source of this version, by searching for the <a href="https://github.com/pedropark99/spark_map/tree/v0.2.7">git tag <code>v0.2.7</code> at the source code history</a>. At this point, the package was ready to be shipped to PyPI.</p>
+<p>I had no problems at building the package. When I executed the command <code>python -m build</code>, the package was built successfully, without any error or warning messages. The source and wheel distributions of the package were there.</p>
+<p>I had no problemas at importing the package. I could start a new Python session, and use a <code>import</code> statement to import the package, and that statement would execute flawlessly.</p>
+<p>I had no problems at the unit tests of the package. When I executed the command <code>pytest</code> to initiate the unit tests runs, I was passing in all tests. Again, I had no error or warning messages appearing.</p>
+<p>Everything seemed to work perfectly. As a consequence, I was ready to publish the package at PyPI, and that is what I did. I published at PyPI. Than, I started to test the package at PyPI.</p>
+<p>First, I tried to install the package with <code>pip install spark_map</code>, and everything worked fine at the installation process. The package version was right, and, after the installation process, when I executed the <code>pip list</code> command, I could clearly see <code>spark_map</code> on the list of installed packages.</p>
+<p>However, I SIMPLY COULD NOT IMPORT THE PACKAGE! The package was installed succesfully, and with that in mind, I expected to import it succesfully in any Python module, at any location of my computer. However, when I started a new Python session at a random location of my computer, and tried to import the package, the Python interpreter always raised a <code>ModuleNotFoundError</code> error.</p>
+<section id="sec-weird-problem" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="sec-weird-problem"><span class="header-section-number">4.1</span> How did this problem occur</h2>
+<p>There was no error or warning messages at the building stage of the package, neither in the installation process as well. But something was definitely wrong with the package.</p>
+<p>In essence, the source of this weird and confusing problem was at the building stage of the package. Basically, the build system (in that case, the <code>setuptools</code>) was not able to automatically find all source files (i.e.&nbsp;the <code>.py</code> files) of the package. As a result, the build system was building the package, but, not including the source files inside this built version of the package. Very weird! Isn’t it?</p>
+<p>I mean, if the build system did not find any source files… it should definitely raise a warning or error during the build process. Because this is definitely an error in the process. How or why can you share a Python package, which have no Python source code? If the package does not contain any Python code in it, it is probably not a Python package. Right?</p>
+<p>That is why I could not import the package after I installed it on my machine, trough <code>pip</code>. Because the version of the package that was being installed on my machine, was a version of the package that had no Python source code that could be imported. That is why the <code>ModuleNotFoundError</code> error was being raised by the Python interpreter when I tried to import the package.</p>
+</section>
+<section id="how-to-identify-this-problem" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="how-to-identify-this-problem"><span class="header-section-number">4.2</span> How to identify this problem</h2>
+<p>First, when you build your package, usually two main files are created, which are: 1) the <em>wheel</em> distribution of your package; 2) the <em>source</em> distribution of your package. These are just two different formats in which you can ship and share your package with another human.</p>
+<p>The source distribution is a TAR file (with <code>.tar</code> or <code>.tar.gz</code> extension). Is just a compressed file (like ZIP files) with all of the essential files that compose your package (i.e.&nbsp;the metadata of the package, the source files - <code>.py</code> files, README and LICENSE files, etc.).</p>
+<p>On the other hand, the wheel distribution (files with <code>.whl</code> extension), is “pre-compiled” version of your package. This means that a wheel version of your package comes in a ready-to-install format, and, as a consequence, is much faster to install this version of your package, in comparison to source distributions, which must be compiled before being installed on your system.</p>
+<p>To identify if the problem I described at <a href="#sec-weird-problem" class="quarto-xref">Section&nbsp;4.1</a> is happening inside your package project, I recommend you to focus your attention on the source distribution of your package (i.e.&nbsp;the TAR file - <code>.tar</code> or <code>.tar.gz</code>). Because you can easily open this kind of file with decompressing tools, like <code>WinRar</code> or <code>7-zip</code>, and it is much more easy to analyze than the wheel distribution.</p>
+<p>In resume, if you open the TAR file, and, you do not find any Python modules (i.e.&nbsp;<code>.py</code> files) in it, this means that the problem I described at <a href="#sec-weird-problem" class="quarto-xref">Section&nbsp;4.1</a> is unfortunately happening inside your package. In contrast, if you do find all Python modules of your package inside this TAR file, than, you are safe and good to go forward.</p>
+<p>To fix this problem inside my package project, I had to add the lines below to my <code>pyproject.toml</code> file. These lines tell <code>setuptools</code> which are the packages available inside the project, and, which is the folder inside the project where all the source code of the package was stored.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode toml code-with-copy"><code class="sourceCode toml"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[tool.setuptools]</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="dt">packages</span> <span class="op">=</span> <span class="op">[</span><span class="st">"spark_map"</span><span class="op">]</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="dt">package-dir</span> <span class="op">=</span> <span class="op">{</span><span class="dt">""</span><span class="op"> =</span> <span class="st">"src"</span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>It was so hard to find this bug, yet, it was quite simple and straightforward to fix it 😑 (poker face). With these options, <code>setuptools</code> could finally find all the Python modules of my package, and, as a consequence, include them in the built versions of the package (in the source and in the wheel distributions).</p>
+<p>Therefore, if you face a <code>ModuleNotFoundError</code> error when you try to import your package, after you installed it in your computer with <code>pip</code>, I recommend you to check if your Python modules are being included on the built versions of your package.</p>
 
 
 
+</section>
 </section>
 
 

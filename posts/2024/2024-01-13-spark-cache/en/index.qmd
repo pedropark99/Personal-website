@@ -3,24 +3,41 @@ title: How to use the cache effectively on Apache Spark
 description: "Did you ever used the DataFrame method `.cache()` to cache your Spark DataFrame? In this post, I want to describe how you can use this method to get better performance."
 date: 2024-01-13
 categories: ['Apache Spark', 'Performance']
+bibliography: "./../refs.bib"
 ---
 
 # Introduction
 
 I work a lot with Apache Spark on Databricks, and very recently,
 I encountered some cases of jobs failling because of cached DataFrames
-ocupying all the memory available, and, as consequence, raising `OutOfMemory` runtime errors in the job.
+ocupying all the memory available, and, as consequence, raising `OutOfMemory` runtime errors.
 
 In essence, the job was executing a Python notebook that contained some `pyspark` code.
-Many Spark DataFrames were being defined inside this notebook, and each one of
-them were being constantly cached by using the DataFrame method `cache()`.
-And this pattern was causing the memory to be crowed with caches and more caches,
+Many Spark DataFrames were being constantly cached by using the DataFrame method `cache()`.
+And this pattern was causing the memory to be crowed with more and more caches,
 until it became full, and caused the job to crash.
 
+In this article, I want to describe how you should use `cache()` effectively on Apache Spark,
+and also, explain how this `OutOfMemory` error happenned.
 
-# About the cache
+# What is this `cache()` method?
 
-In a Spark application, you can cache your Spark DataFrame (i.e. cache it's data) by calling the DataFrame method `cache()`, like that:
+In Apache Spark we work with Spark DataFrames. They are the core (or the essence) of any
+Spark application. We model, transform, load and export these objects to get the data we
+want.
+
+However, in some cases, generating a specific Spark DataFrame can take a long time.
+Maybe the query that defines this DataFrame is a heavy query, that involves many and many
+layers of calculations, or maybe, a huge amount of
+data needs to be read to calculate/generate this DataFrame.
+
+For these specific cases, we can cache this specific Spark DataFrame. By caching it, we
+avoid the need to calculate/generate from scratch this DataFrame, over and over again.
+We calculate it once, and then, we reuse this same data in posterior cases.
+
+We do this, by calling the `cache()` DataFrame method, to mark that specific DataFrame as
+a "cached DataFrame". As an example, in the code below, I'm creating a Spark DataFrame
+called `df`:
 
 ```python
 from pyspark.sql import SparkSession
@@ -36,15 +53,50 @@ data = [
 ]
 
 df = spark.createDataFrame(data)
-df.cache().show(2)
 ```
 
+If I want to cache this DataFrame, all I need to do is to call the `cache()` method with this `df` object, like this:
+
+```python
+df.cache()
 ```
-+---+-----+----------+
-| id|value|      date|
-+---+-----+----------+
-|  1| 28.3|2021-01-01|
-|  2| 15.8|2021-01-01|
-+---+-----+----------+
-only showing top 2 rows
-```
+
+Now, the `df` DataFrame is marked as a "DataFrame to be cached" by Spark, and if we use this `df` DataFrame over
+the next lines of our notebook, instead of Spark recalculating the entire DataFrame each time,
+it will reuse the data of this DataFrame that was cached. This can make our Spark application
+much faster, because Spark will not spend more time recalculating the DataFrame.
+
+But is important to note, that in Apache Spark, cache operations are lazy operations. I quickly described this
+lazy aspect of Spark at [Section 3.5 of my `pyspark` book](https://pedropark99.github.io/Introd-pyspark/Chapters/04-dataframes.html#sec-viewing-a-dataframe).
+
+> A key aspect of Spark is its laziness. In other words, for most operations, Spark will only check if your code is correct and if it makes sense. Spark will not actually run or execute the operations you are describing in your code, unless you explicit ask for it with a trigger operation, which is called an "action" (this kind of operation is described in Section 5.2). @pedro2024
+
+Therefore, the cache operation of the DataFrame will only happen
+if you call an action over the next lines of your notebook.
+I listed what operations are considered as actions in Spark at [Section 5.2 of my `pyspark` book](https://pedropark99.github.io/Introd-pyspark/Chapters/05-transforming.html#sec-dataframe-actions).
+But essentially, the Spark DataFrame methods below are all examples of actions in Spark:
+
+- `show()`
+- `collect()`
+- `count()`
+- `write.csv()`
+- `read.csv()`
+
+So, if you call any of the Spark DataFrame methods above, after you called `cache()` over the same Spark DataFrame,
+then, Spark will effectively cache your DataFrame.
+
+# How to use cache effectively
+
+There are two commom situations where cache can be very effective, which are:
+
+- **Constantly use the same DataFrame over the notebook**. 
+
+- **Frequently access a subset of a DataFrame**.
+
+Every time you call an action on a Spark DataFrame in your notebook, Spark needs to read and load the DataFrame's data from storage (this storage can be many things, like a data lake in the cloud, or a local static file, etc.). So if you repeateadly use the same Spark DataFrame, then, you are repeateadly reading the same data over and over again.
+
+When you constantly use the same Spark DataFrame over and over again across your notebook. It might be a good idea to cache this Spark DataFrame. For example, if you use a DataFrame called `students` in 15 locations in your notebook, then, by default, Spark will recalculate this `students` DataFrame, from scratch, 15 times. But if you cache this DataFrame, then, Spark will calculate the DataFrame on the first time, and reuse the cached data in the remaining 14 times.
+
+So ...
+
+> caching is optimal when you need to perform multiple operations on the same dataset to avoid reading from storage repeatedly. @patidar2023.
