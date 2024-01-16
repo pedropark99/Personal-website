@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Pedro Duarte Faria">
-<meta name="dcterms.date" content="2022-12-26">
-<meta name="description" content="Esta quarta edição traz algumas melhorias que buscam manter um dos principais objetivos deste livro, que é ser uma referência moderna, introdutória e técnica sobre a Linguagem R.">
+<meta name="dcterms.date" content="2024-01-13">
+<meta name="description" content="Did you ever used the DataFrame method cache() to cache your Spark DataFrame? In this post, I want to describe how you can use this method to get better performance.">
 
-<title>home |&gt; dplyr::glimpse() - Novidades da 4° edição de Introdução à Linguagem R: seus fundamentos e sua prática</title>
+<title>home |&gt; dplyr::glimpse() - How to use the cache effectively on Apache Spark</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,7 +23,61 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -211,15 +265,15 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Novidades da 4° edição de Introdução à Linguagem R: seus fundamentos e sua prática</h1>
+      <h1 class="title">How to use the cache effectively on Apache Spark</h1>
                   <div>
         <div class="description">
-          Esta quarta edição traz algumas melhorias que buscam manter um dos principais objetivos deste livro, que é ser uma referência moderna, introdutória e técnica sobre a Linguagem R.
+          Did you ever used the DataFrame method <code>cache()</code> to cache your Spark DataFrame? In this post, I want to describe how you can use this method to get better performance.
         </div>
       </div>
                           <div class="quarto-categories">
-                <div class="quarto-category">Book</div>
-                <div class="quarto-category">R</div>
+                <div class="quarto-category">Apache Spark</div>
+                <div class="quarto-category">Performance</div>
               </div>
                   </div>
   </div>
@@ -244,7 +298,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">December 26, 2022</p>
+        <p class="date">January 13, 2024</p>
       </div>
     </div>
     
@@ -260,10 +314,12 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introdução" id="toc-introdução" class="nav-link active" data-scroll-target="#introdução">Introdução</a></li>
-  <li><a href="#o-que-temos-de-novo" id="toc-o-que-temos-de-novo" class="nav-link" data-scroll-target="#o-que-temos-de-novo">O que temos de novo?</a></li>
-  <li><a href="#sobre-onde-encontrar-o-livro" id="toc-sobre-onde-encontrar-o-livro" class="nav-link" data-scroll-target="#sobre-onde-encontrar-o-livro">Sobre onde encontrar o livro</a></li>
-  <li><a href="#contribua-para-a-obra-ou-faça-sugestões" id="toc-contribua-para-a-obra-ou-faça-sugestões" class="nav-link" data-scroll-target="#contribua-para-a-obra-ou-faça-sugestões">Contribua para a obra ou faça sugestões!</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#what-is-this-cache-method" id="toc-what-is-this-cache-method" class="nav-link" data-scroll-target="#what-is-this-cache-method">What is this <code>cache()</code> method?</a></li>
+  <li><a href="#how-to-use-cache-effectively" id="toc-how-to-use-cache-effectively" class="nav-link" data-scroll-target="#how-to-use-cache-effectively">How to use cache effectively</a></li>
+  <li><a href="#how-to-not-use-cache-effectively" id="toc-how-to-not-use-cache-effectively" class="nav-link" data-scroll-target="#how-to-not-use-cache-effectively">How to NOT use cache effectively</a></li>
+  <li><a href="#what-happened-with-the-cases-ive-seen" id="toc-what-happened-with-the-cases-ive-seen" class="nav-link" data-scroll-target="#what-happened-with-the-cases-ive-seen">What happened with the cases I’ve seen</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   </ul>
 </nav>
     </div>
@@ -274,31 +330,144 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 
 
 
-<section id="introdução" class="level1">
-<h1>Introdução</h1>
-<p>É com muito prazer que venho compartilhar com você as novidades que estou trazendo para essa nova edição do livro <a href="https://pedro-faria.netlify.app/publications/book/introducao_linguagem_r/pt/">Introdução à Linguagem R: seus fundamentos e sua prática</a>. Esta quarta edição busca principalmente fazer algumas correções e adições que buscam manter o livro como um <strong>referência moderna, introdutória e técnica</strong> sobre a linguagem R.</p>
-<p><a href="https://www.amazon.com.br/dp/B0BNW4K232"> <button type="button" class="btn btn-primary">Compre uma versão do livro</button></a> <a href="https://pedro-faria.netlify.app/publications/book/introducao_linguagem_r/pt/"> <button type="button" class="btn btn-primary">Página de publicação</button></a> <a href="https://pedropark99.github.io/Introducao_R/"> <button type="button" class="btn btn-primary">Leia online</button></a></p>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>I work a lot with Apache Spark on Databricks, and very recently, I encountered some cases of jobs failling because of cached DataFrames ocupying all the memory available, and, as consequence, raising <code>OutOfMemory</code> runtime errors.</p>
+<p>In essence, the job was executing a Python notebook that contained some <code>pyspark</code> code. Many Spark DataFrames were being constantly cached by using the DataFrame method <code>cache()</code>. And this pattern was causing the memory to be crowed with more and more caches, until it became full, and caused the job to crash.</p>
+<p>In this article, I want to describe how you should use <code>cache()</code> effectively on Apache Spark, and also, explain how this <code>OutOfMemory</code> error happenned.</p>
 </section>
-<section id="o-que-temos-de-novo" class="level1">
-<h1>O que temos de novo?</h1>
-<p>Primeiro, a seção do capítulo 4 que citava o pacote <code>SAScii</code> foi removida. Pois durante o desenvolvimento desta quarta edição, foi identificado que este pacote não estava funcionando corretamente em versões mais recentes do R.</p>
-<p>Segundo, uma nova seção foi adicionada ao capítulo 5, para introduzir o novo operador <em>pipe</em> do R (<code>|&gt;</code>) - que está disponível desde a versão 4.1 da linguagem, além de explicar as diferenças deste novo operador com o operador <em>pipe</em> do pacote <code>magrittr.</code></p>
-<p>Terceiro, várias melhorias e pequenas correções foram aplicadas sobre o capítulo 8, com o objetivo de melhorar a clareza do conhecimento exposto e da organização do capítulo.</p>
-<p>Quarto, a seção <a href="https://pedropark99.github.io/Introducao_R/configurando-componentes-est%C3%A9ticos-do-gr%C3%A1fico-no-ggplot2.html#alterando-as-fontes-do-seu-gr%C3%A1fico">Alterando as fontes do seu gráfico</a> no capítulo 9 foi reformulada, com o objetivo de substituir o pacote <code>extrafont</code> (o qual era a solução descrita em edições passadas desta obra) pelo pacote <code>ragg</code>, o qual se tornou uma solução mais moderna e robusta para o uso de fontes em gráficos do R.</p>
-<p>Quinto, tivemos algumas melhorias sobre o capítulo 4, especialmente sobre a descrição de endereços absolutos e relativos, assim como a seção <a href="https://pedropark99.github.io/Introducao_R/importando-e-exportando-dados-com-readr-readxl-e-haven.html?q=guess#sec:readr_guess_encoding">A função <code>guess_encoding()</code> como um possível guia</a> que foi atualizada com o objetivo de acompanhar as mudanças recentes sobre a função <code>readr::guess_encoding()</code>.</p>
+<section id="what-is-this-cache-method" class="level1">
+<h1>What is this <code>cache()</code> method?</h1>
+<p>In Apache Spark we work with Spark DataFrames. They are the core (or the essence) of any Spark application. We model, transform, load and export these objects to get the result we want.</p>
+<p>However, in some cases, generating a specific Spark DataFrame can take a long time. Maybe this DataFrame is defined by a heavy query, that involves many and many layers of calculations, or maybe, a huge amount of data needs to be read to calculate/generate this DataFrame.</p>
+<p>For these specific cases, we can cache this specific Spark DataFrame. By caching it, we avoid the need to calculate/generate from scratch this DataFrame, over and over again. We calculate it once, and then, we reuse this same data in posterior cases.</p>
+<p>We do this, by calling the <code>cache()</code> DataFrame method, to mark that specific DataFrame as a “cached DataFrame”. As an example, in the code below, I’m creating a Spark DataFrame called <code>df</code>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql <span class="im">import</span> SparkSession</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>spark <span class="op">=</span> SparkSession.builder.getOrCreate()</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datetime <span class="im">import</span> date</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql <span class="im">import</span> Row</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> [</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  Row(<span class="bu">id</span> <span class="op">=</span> <span class="dv">1</span>, value <span class="op">=</span> <span class="fl">28.3</span>, date <span class="op">=</span> date(<span class="dv">2021</span>,<span class="dv">1</span>,<span class="dv">1</span>)),</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  Row(<span class="bu">id</span> <span class="op">=</span> <span class="dv">2</span>, value <span class="op">=</span> <span class="fl">15.8</span>, date <span class="op">=</span> date(<span class="dv">2021</span>,<span class="dv">1</span>,<span class="dv">1</span>)),</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  Row(<span class="bu">id</span> <span class="op">=</span> <span class="dv">3</span>, value <span class="op">=</span> <span class="fl">20.1</span>, date <span class="op">=</span> date(<span class="dv">2021</span>,<span class="dv">1</span>,<span class="dv">2</span>)),</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  Row(<span class="bu">id</span> <span class="op">=</span> <span class="dv">4</span>, value <span class="op">=</span> <span class="fl">12.6</span>, date <span class="op">=</span> date(<span class="dv">2021</span>,<span class="dv">1</span>,<span class="dv">3</span>))</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> spark.createDataFrame(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If I want to cache this DataFrame, all I need to do is to call the <code>cache()</code> method with this <code>df</code> object, like this:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df.cache()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now, the <code>df</code> DataFrame is marked as a “DataFrame to be cached” by Spark, and if we use this <code>df</code> DataFrame over the next lines of our notebook, instead of Spark recalculating the entire DataFrame each time, it will reuse the data of this DataFrame that was cached. This can make our Spark application much faster, because Spark will not spend more time recalculating the DataFrame.</p>
+<p>But is important to note, that in Apache Spark, cache operations are lazy operations. I quickly described this lazy aspect of Spark at <a href="https://pedropark99.github.io/Introd-pyspark/Chapters/04-dataframes.html#sec-viewing-a-dataframe">Section 3.5 of my <code>pyspark</code> book</a>.</p>
+<blockquote class="blockquote">
+<p>A key aspect of Spark is its laziness. In other words, for most operations, Spark will only check if your code is correct and if it makes sense. Spark will not actually run or execute the operations you are describing in your code, unless you explicit ask for it with a trigger operation, which is called an “action” (this kind of operation is described in Section 5.2). <span class="citation" data-cites="pedro2024">Faria (<a href="#ref-pedro2024" role="doc-biblioref">2024</a>)</span></p>
+</blockquote>
+<p>Therefore, the cache operation of the DataFrame will only happen if you call an action over the next lines of your notebook. I listed what operations are considered as actions in Spark at <a href="https://pedropark99.github.io/Introd-pyspark/Chapters/05-transforming.html#sec-dataframe-actions">Section 5.2 of my <code>pyspark</code> book</a>. But essentially, the Spark DataFrame methods below are all examples of actions in Spark:</p>
+<ul>
+<li><code>show()</code></li>
+<li><code>collect()</code></li>
+<li><code>count()</code></li>
+<li><code>write.csv()</code></li>
+<li><code>read.csv()</code></li>
+</ul>
+<p>So, if you call any of the Spark DataFrame methods above, after you called <code>cache()</code> over the same Spark DataFrame, then, Spark will effectively cache your DataFrame.</p>
 </section>
-<section id="sobre-onde-encontrar-o-livro" class="level1">
-<h1>Sobre onde encontrar o livro</h1>
-<p>Você pode ler toda a obra de maneira gratuita e aberta através de seu <a href="https://pedropark99.github.io/Introducao_R/">website</a> 📖. Caso você queira contribuir para o projeto desse livro, você pode adquirir uma <a href="https://www.amazon.com.br/dp/B0BNW4K232">versão física ou em EBook do livro através da loja da Amazon</a>. Ao comprar essas versões, você estará me ajudando a continuar contribuindo com a nossa comunidade ❤️. Além disso, você também pode doar um Pix para o autor (veja a página <a href="https://pedro-faria.netlify.app/donate.html">Donate or Sponsor Me</a>).</p>
+<section id="how-to-use-cache-effectively" class="level1">
+<h1>How to use cache effectively</h1>
+<p>There are two commom situations where cache can be very effective, which are:</p>
+<ul>
+<li><p><strong>Constantly use the same DataFrame over the notebook</strong>.</p></li>
+<li><p><strong>Frequently access a subset of a DataFrame</strong>.</p></li>
+</ul>
+<p>Every time you call an action on a Spark DataFrame in your notebook, Spark needs to read and load the DataFrame’s data from storage (this storage can be many things, like a data lake in the cloud, or a local static file, etc.). So if you repeateadly use the same Spark DataFrame, then, you are repeateadly reading from storage the same data over and over again.</p>
+<p>Having this in mind, when you constantly use the same Spark DataFrame over and over again across your notebook, it might be a good idea to cache this specific DataFrame. For example, if you use a DataFrame called <code>students</code> in 15 locations in your notebook, then, by default, Spark will recalculate this <code>students</code> DataFrame, from scratch, 15 times. But if you cache this DataFrame, then, Spark will calculate the DataFrame on the first time, and reuse the cached data in the remaining 14 times.</p>
+<p>So …</p>
+<blockquote class="blockquote">
+<p>caching is optimal when you need to perform multiple operations on the same dataset to avoid reading from storage repeatedly. <span class="citation" data-cites="patidar2023">Patidar (<a href="#ref-patidar2023" role="doc-biblioref">2023</a>)</span>.</p>
+</blockquote>
+<p>The same applies to when you are frequently using the same subset of a DataFrame. For example, you might have defined in your notebook a new object <code>under_10</code> which contains all rows from <code>students</code> DataFrame that describes students that have an age below 10.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> col</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>under_10 <span class="op">=</span> students.<span class="bu">filter</span>(col(<span class="st">'age'</span>) <span class="op">&lt;</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you use this subset of <code>students</code> DataFrame across multiple locations of your notebook, then, it might be also a good idea to cache this <code>under_10</code> DataFrame, like this:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> col</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>under_10 <span class="op">=</span> (</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  students</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(col(<span class="st">'age'</span>) <span class="op">&lt;</span> <span class="dv">10</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    .cache()</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="contribua-para-a-obra-ou-faça-sugestões" class="level1">
-<h1>Contribua para a obra ou faça sugestões!</h1>
-<p>Caso seja de seu interesse, você pode contribuir diretamente para a obra, ao postar <em>pull requests</em> dentro de seu <a href="https://github.com/pedropark99/Introducao_R">repositório oficial</a>. Para mais, você também pode fazer sugestões ou comentários, ao postar <em>issues</em> neste mesmo repositório.</p>
+<section id="how-to-not-use-cache-effectively" class="level1">
+<h1>How to NOT use cache effectively</h1>
+<p>If your notebook have a very sequential logic, then, caching is usually wasteful or a bad idea. Take for example, a notebook that perform the following steps:</p>
+<ol type="1">
+<li>take DataFrame A, filter it, summarise it, and then, save it.</li>
+<li>take DataFrame B, filter it, add new columns, group by and summarise it, and then, send it to the server.</li>
+<li>take DataFrame C, filter the essential information you want, save this data into a new CSV file, and then, send this CSV file to an Amazon S3 bucket.</li>
+</ol>
+<p>If you pay attention to these steps above, you will notice that they are independent from each other. These steps can be performed in any order, because the result from each step does not depend on the results from the other steps.</p>
+<p>In a notebook like this, caching any of the three cited DataFrames (A, B or C) is usually unnecessary (or a bad idea), because each of these DataFrames is used only once across the notebook, so there is no really need to cache it. By caching it, you will be wasting not only time, but also, memory space.</p>
+<p>Having this in mind, notebooks that have a more complex and interconnected logic are much more suitable candidates for caching. For example, if you have a notebook that produces two DataFrames (B and C) as output, and they both are produced from a JOIN operation with the same DataFrame A, then, it might be worth to cache DataFrame A, so that Spark calculates DataFrame A from scratch only once, instead of two.</p>
+<p>Now, another situation where caching might be a bad idea is when you do not have much memory available in your Spark cluster. As an example, let’s consider that you only had available a cluster with 2 nodes and 8 GB of RAM memory in your Spark environment.</p>
+<p>If your notebook is working with a Spark DataFrame whose physical size is 7 GB worth of data, then, it might be a very bad idea to cache this DataFrame, because if you do cache it, then, 7 GB (almost 90%) of your memory will be occupied with the cached data, and this leaves only 1 GB avaialable to perform all the transformations and remaining operations of your notebook.</p>
+<p>So caching can be more of a hindrance than a help (especially if you cache multiple DataFrames) when these caches occupy a too big chunk of memory. 1 GB might be (or might be not) enough to perform the remaining tasks in your notebook. But you should not take this risk. In general, when you have a low quantity of memory available, two things can happen:</p>
+<ol type="1">
+<li>most likely, your job (or your Spark application) will crash with an <code>OutOfMemory</code> error.</li>
+<li>the calculations and transformations become much, much, MUCH slower, because the memory does not have enough space available to perform these calculations in parallel. Your Spark application will succeed, and will produce the output you want… only many, many, MANY times slower.</li>
+</ol>
+</section>
+<section id="what-happened-with-the-cases-ive-seen" class="level1">
+<h1>What happened with the cases I’ve seen</h1>
+<p>I recently encountered some cases of jobs failing during runtime because of <code>OutOfMemory</code> errors, that were generated by multiple caching operations that polluted all memory available in the cluster.</p>
+<p>I want to use this practical example to demonstrate how caching was badly used in this example. So that you can learn from it.</p>
+<p>The notebook I encountered, was essentially responsible for update 3 different tables in our SQL databases, and to do that, this notebook was defining 5 different Spark DataFrames, and all of them were being cached with the <code>cache()</code> DataFrame method.</p>
+<p>If I execute this notebook in a more robust Spark cluster, with more worker nodes, with more RAM memory available, then, the notebook just executed fine.</p>
+<p>The complete execution of the notebook took around 55 minutes, which is a long time… But no runtime errors were raised. In essence, no <code>OutOfMemory</code> errors were raised because we were lucky. Because this more robust cluster had enough memory space to hold 5 DataFrames in cache. <a href="#fig-memory2" class="quarto-xref">Figure&nbsp;1</a> presents this process visually:</p>
+<div id="fig-memory2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-memory2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./../memory2.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-memory2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: DataFrames being cached in a more robust Spark cluster
+</figcaption>
+</figure>
+</div>
+<p>However, this same notebook was being executed every day by a scheduled job in Databricks (i.e.&nbsp;a Databricks Workflow). But every time this notebook was executed through the scheduled job, it failed with <code>OutOfMemory</code> errors. The scheduled job was being executed by a much smaller cluster, that had only two worder nodes and 8 GB of RAM memory available.</p>
+<p>The <code>OutOfMemory</code> errors were being raised right after we cached the third Spark DataFrame (let’s call this DataFrame of <code>df3</code>) defined in the notebook. So, in summary, what was happening is: Spark was caching each DataFrame defined in the notebook, but on the third DataFrame, the Spark process run out of memory. In other words, we did not had any more memory to do anything!</p>
+<p><a href="#fig-memory" class="quarto-xref">Figure&nbsp;2</a> summarizes this process visually:</p>
+<div id="fig-memory" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-memory-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./../memory.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-memory-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Multiple caches surpassing the limit of memory available in a less robust Spark cluster
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+<p>In essence, using the Spark DataFrame <code>cache()</code> method can improve the performance of your Spark application. But you should be careful when using this resource, because it can be of a hindrance than a help, depending on how you use it.</p>
+<p>As a good rule of thumb, you usually want to use caches in Spark when:</p>
+<ul>
+<li>Constantly use the same DataFrame over the notebook.</li>
+<li>Frequently access a subset of a DataFrame.</li>
+</ul>
+<p>In this article I also presented a situation where caches were responsible for crashing a Spark application, as a real example on how caches can be harmful.</p>
 
 
+
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-pedro2024" class="csl-entry" role="listitem">
+Faria, Pedro Duarte. 2024. <em>Introduction to Pyspark</em>. 1st ed. Belo Horizonte. <a href="https://pedropark99.github.io/Introd-pyspark/">https://pedropark99.github.io/Introd-pyspark/</a>.
+</div>
+<div id="ref-patidar2023" class="csl-entry" role="listitem">
+Patidar, Charchit. 2023. <span>“How Cache Works in Apache Spark.”</span> <a href="https://medium.com/@charchitpatidar/how-cache-works-in-apache-spark-aea6eeb3fd03">https://medium.com/@charchitpatidar/how-cache-works-in-apache-spark-aea6eeb3fd03</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

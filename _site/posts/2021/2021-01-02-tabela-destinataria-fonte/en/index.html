@@ -117,7 +117,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <link rel="stylesheet" href="../../../../styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top quarto-banner">
@@ -290,7 +290,19 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#joins-have-direction" id="toc-joins-have-direction" class="nav-link" data-scroll-target="#joins-have-direction">Joins have direction</a></li>
+  <li><a href="#recipient-table-and-source-table" id="toc-recipient-table-and-source-table" class="nav-link" data-scroll-target="#recipient-table-and-source-table">Recipient table and source table</a></li>
+  <li><a href="#types-of-outer-join" id="toc-types-of-outer-join" class="nav-link" data-scroll-target="#types-of-outer-join">Types of <em>outer join</em></a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
 
@@ -345,11 +357,11 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <pre><code># A tibble: 5 × 5
       x     y z         r t    
   &lt;int&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;
-1     1  2.14 a       3.5 tzu  
-2     2  2.61 b       2.1 tzu  
-3     3  2.3  c       1   tzu  
-4     4  4.12 d       5.6 tzu  
-5     5  1.98 e       7.2 tzu  </code></pre>
+1     1  2.93 a       3.5 tzu  
+2     2  2.84 b       2.1 tzu  
+3     3  1.56 c       1   tzu  
+4     4  2.77 d       5.6 tzu  
+5     5  3.05 e       7.2 tzu  </code></pre>
 </div>
 </div>
 <p>With this, we are creating the idea that <strong>a <em>join</em> always has a direction</strong>. In other words, we first extract the columns from table <code>B</code>, and then we add those columns to table <code>A</code>. Note that we are always starting from table <code>B</code> towards table <code>A</code>.</p>
@@ -357,7 +369,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="./../direcao.png" class="img-fluid figure-img"></p>
+<p><img src="./../direcao.png" class="img-fluid figure-img" width="2200"></p>
 </figure>
 </div>
 </div>
@@ -383,7 +395,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="./../featured.png" class="img-fluid figure-img"></p>
+<p><img src="./../featured.png" class="img-fluid figure-img" width="2200"></p>
 </figure>
 </div>
 </div>

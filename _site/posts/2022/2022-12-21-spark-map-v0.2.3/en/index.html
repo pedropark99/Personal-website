@@ -325,7 +325,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <section id="what-problem-spark_map-solves" class="level2">
 <h2 class="anchored" data-anchor-id="what-problem-spark_map-solves">What problem <code>spark_map</code> solves?</h2>
 <p>I work a lot with data pipelines using Apache Spark and <code>pyspark</code> at <a href="https://www.take.net/">Take Blip</a>. Some day, I got myself writing a very long <code>agg()</code> statement to aggregate multiple columns of my Spark DataFrame with the same function, like this one below:</p>
-<div class="cell" data-execution_count="1">
+<div id="1e8f6acb" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> <span class="bu">sum</span>, column</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>aggregates <span class="op">=</span> (</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    spark.table(<span class="st">'cards.detailed_sales_per_user'</span>)</span>
@@ -342,7 +342,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 </div>
 <p>Looking at this code, I had the following thought: “this is not elegant, and is error-prone, because it involves copy and paste, and very subtle changes in each line”. Following the golden rule of DRY (<em>do not repeat yourself</em>), I had to find a better way to write this code.</p>
 <p>I just wanted to apply the <code>sum()</code> function over multiple columns of <code>cards.detailed_sales_per_user</code> grouped by <code>day</code>. Because of that, I decided to develop the <code>spark_map</code> package, which allows you to declare this operation in a much better, elegant and concise way, by using the <code>spark_map()</code> function.</p>
-<div class="cell" data-execution_count="2">
+<div id="f3c355d6" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> spark_map.functions <span class="im">import</span> spark_map</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> spark_map.mapping <span class="im">import</span> starts_with</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>grouped_by_day <span class="op">=</span> spark.table(<span class="st">'cards.detailed_sales_per_user'</span>)<span class="op">\</span></span>

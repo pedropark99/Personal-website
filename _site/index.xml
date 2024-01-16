@@ -10,7 +10,279 @@
 <atom:link href="https://pedro-faria.netlify.app/index.xml" rel="self" type="application/rss+xml"/>
 <description>A blog about programming and data analysis, specially with R and Python</description>
 <generator>quarto-1.4.538</generator>
-<lastBuildDate>Tue, 09 Jan 2024 03:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sat, 13 Jan 2024 03:00:00 GMT</lastBuildDate>
+<item>
+  <title>How to use the cache effectively on Apache Spark</title>
+  <dc:creator>Pedro Duarte Faria</dc:creator>
+  <link>https://pedro-faria.netlify.app/posts/2024/2024-01-13-spark-cache/en/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>I work a lot with Apache Spark on Databricks, and very recently, I encountered some cases of jobs failling because of cached DataFrames ocupying all the memory available, and, as consequence, raising <code>OutOfMemory</code> runtime errors.</p>
+<p>In essence, the job was executing a Python notebook that contained some <code>pyspark</code> code. Many Spark DataFrames were being constantly cached by using the DataFrame method <code>cache()</code>. And this pattern was causing the memory to be crowed with more and more caches, until it became full, and caused the job to crash.</p>
+<p>In this article, I want to describe how you should use <code>cache()</code> effectively on Apache Spark, and also, explain how this <code>OutOfMemory</code> error happenned.</p>
+</section>
+<section id="what-is-this-cache-method" class="level1">
+<h1>What is this <code>cache()</code> method?</h1>
+<p>In Apache Spark we work with Spark DataFrames. They are the core (or the essence) of any Spark application. We model, transform, load and export these objects to get the result we want.</p>
+<p>However, in some cases, generating a specific Spark DataFrame can take a long time. Maybe this DataFrame is defined by a heavy query, that involves many and many layers of calculations, or maybe, a huge amount of data needs to be read to calculate/generate this DataFrame.</p>
+<p>For these specific cases, we can cache this specific Spark DataFrame. By caching it, we avoid the need to calculate/generate from scratch this DataFrame, over and over again. We calculate it once, and then, we reuse this same data in posterior cases.</p>
+<p>We do this, by calling the <code>cache()</code> DataFrame method, to mark that specific DataFrame as a “cached DataFrame”. As an example, in the code below, I’m creating a Spark DataFrame called <code>df</code>:</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> pyspark.sql <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> SparkSession</span>
+<span id="cb1-2">spark <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> SparkSession.builder.getOrCreate()</span>
+<span id="cb1-3"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> datetime <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> date</span>
+<span id="cb1-4"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> pyspark.sql <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> Row</span>
+<span id="cb1-5"></span>
+<span id="cb1-6">data <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [</span>
+<span id="cb1-7">  Row(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">id</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, value <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">28.3</span>, date <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> date(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2021</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)),</span>
+<span id="cb1-8">  Row(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">id</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, value <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">15.8</span>, date <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> date(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2021</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)),</span>
+<span id="cb1-9">  Row(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">id</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, value <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20.1</span>, date <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> date(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2021</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)),</span>
+<span id="cb1-10">  Row(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">id</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, value <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12.6</span>, date <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> date(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2021</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>))</span>
+<span id="cb1-11">]</span>
+<span id="cb1-12"></span>
+<span id="cb1-13">df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> spark.createDataFrame(data)</span></code></pre></div>
+<p>If I want to cache this DataFrame, all I need to do is to call the <code>cache()</code> method with this <code>df</code> object, like this:</p>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">df.cache()</span></code></pre></div>
+<p>Now, the <code>df</code> DataFrame is marked as a “DataFrame to be cached” by Spark, and if we use this <code>df</code> DataFrame over the next lines of our notebook, instead of Spark recalculating the entire DataFrame each time, it will reuse the data of this DataFrame that was cached. This can make our Spark application much faster, because Spark will not spend more time recalculating the DataFrame.</p>
+<p>But is important to note, that in Apache Spark, cache operations are lazy operations. I quickly described this lazy aspect of Spark at <a href="https://pedropark99.github.io/Introd-pyspark/Chapters/04-dataframes.html#sec-viewing-a-dataframe">Section 3.5 of my <code>pyspark</code> book</a>.</p>
+<blockquote class="blockquote">
+<p>A key aspect of Spark is its laziness. In other words, for most operations, Spark will only check if your code is correct and if it makes sense. Spark will not actually run or execute the operations you are describing in your code, unless you explicit ask for it with a trigger operation, which is called an “action” (this kind of operation is described in Section 5.2). <span class="citation" data-cites="pedro2024">Faria (2024)</span></p>
+</blockquote>
+<p>Therefore, the cache operation of the DataFrame will only happen if you call an action over the next lines of your notebook. I listed what operations are considered as actions in Spark at <a href="https://pedropark99.github.io/Introd-pyspark/Chapters/05-transforming.html#sec-dataframe-actions">Section 5.2 of my <code>pyspark</code> book</a>. But essentially, the Spark DataFrame methods below are all examples of actions in Spark:</p>
+<ul>
+<li><code>show()</code></li>
+<li><code>collect()</code></li>
+<li><code>count()</code></li>
+<li><code>write.csv()</code></li>
+<li><code>read.csv()</code></li>
+</ul>
+<p>So, if you call any of the Spark DataFrame methods above, after you called <code>cache()</code> over the same Spark DataFrame, then, Spark will effectively cache your DataFrame.</p>
+</section>
+<section id="how-to-use-cache-effectively" class="level1">
+<h1>How to use cache effectively</h1>
+<p>There are two commom situations where cache can be very effective, which are:</p>
+<ul>
+<li><p><strong>Constantly use the same DataFrame over the notebook</strong>.</p></li>
+<li><p><strong>Frequently access a subset of a DataFrame</strong>.</p></li>
+</ul>
+<p>Every time you call an action on a Spark DataFrame in your notebook, Spark needs to read and load the DataFrame’s data from storage (this storage can be many things, like a data lake in the cloud, or a local static file, etc.). So if you repeateadly use the same Spark DataFrame, then, you are repeateadly reading from storage the same data over and over again.</p>
+<p>Having this in mind, when you constantly use the same Spark DataFrame over and over again across your notebook, it might be a good idea to cache this specific DataFrame. For example, if you use a DataFrame called <code>students</code> in 15 locations in your notebook, then, by default, Spark will recalculate this <code>students</code> DataFrame, from scratch, 15 times. But if you cache this DataFrame, then, Spark will calculate the DataFrame on the first time, and reuse the cached data in the remaining 14 times.</p>
+<p>So …</p>
+<blockquote class="blockquote">
+<p>caching is optimal when you need to perform multiple operations on the same dataset to avoid reading from storage repeatedly. <span class="citation" data-cites="patidar2023">Patidar (2023)</span>.</p>
+</blockquote>
+<p>The same applies to when you are frequently using the same subset of a DataFrame. For example, you might have defined in your notebook a new object <code>under_10</code> which contains all rows from <code>students</code> DataFrame that describes students that have an age below 10.</p>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> pyspark.sql.functions <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> col</span>
+<span id="cb3-2">under_10 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> students.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">filter</span>(col(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'age'</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>)</span></code></pre></div>
+<p>If you use this subset of <code>students</code> DataFrame across multiple locations of your notebook, then, it might be also a good idea to cache this <code>under_10</code> DataFrame, like this:</p>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> pyspark.sql.functions <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> col</span>
+<span id="cb4-2">under_10 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (</span>
+<span id="cb4-3">  students</span>
+<span id="cb4-4">    .<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">filter</span>(col(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'age'</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>)</span>
+<span id="cb4-5">    .cache()</span>
+<span id="cb4-6">)</span></code></pre></div>
+</section>
+<section id="how-to-not-use-cache-effectively" class="level1">
+<h1>How to NOT use cache effectively</h1>
+<p>If your notebook have a very sequential logic, then, caching is usually wasteful or a bad idea. Take for example, a notebook that perform the following steps:</p>
+<ol type="1">
+<li>take DataFrame A, filter it, summarise it, and then, save it.</li>
+<li>take DataFrame B, filter it, add new columns, group by and summarise it, and then, send it to the server.</li>
+<li>take DataFrame C, filter the essential information you want, save this data into a new CSV file, and then, send this CSV file to an Amazon S3 bucket.</li>
+</ol>
+<p>If you pay attention to these steps above, you will notice that they are independent from each other. These steps can be performed in any order, because the result from each step does not depend on the results from the other steps.</p>
+<p>In a notebook like this, caching any of the three cited DataFrames (A, B or C) is usually unnecessary (or a bad idea), because each of these DataFrames is used only once across the notebook, so there is no really need to cache it. By caching it, you will be wasting not only time, but also, memory space.</p>
+<p>Having this in mind, notebooks that have a more complex and interconnected logic are much more suitable candidates for caching. For example, if you have a notebook that produces two DataFrames (B and C) as output, and they both are produced from a JOIN operation with the same DataFrame A, then, it might be worth to cache DataFrame A, so that Spark calculates DataFrame A from scratch only once, instead of two.</p>
+<p>Now, another situation where caching might be a bad idea is when you do not have much memory available in your Spark cluster. As an example, let’s consider that you only had available a cluster with 2 nodes and 8 GB of RAM memory in your Spark environment.</p>
+<p>If your notebook is working with a Spark DataFrame whose physical size is 7 GB worth of data, then, it might be a very bad idea to cache this DataFrame, because if you do cache it, then, 7 GB (almost 90%) of your memory will be occupied with the cached data, and this leaves only 1 GB avaialable to perform all the transformations and remaining operations of your notebook.</p>
+<p>So caching can be more of a hindrance than a help (especially if you cache multiple DataFrames) when these caches occupy a too big chunk of memory. 1 GB might be (or might be not) enough to perform the remaining tasks in your notebook. But you should not take this risk. In general, when you have a low quantity of memory available, two things can happen:</p>
+<ol type="1">
+<li>most likely, your job (or your Spark application) will crash with an <code>OutOfMemory</code> error.</li>
+<li>the calculations and transformations become much, much, MUCH slower, because the memory does not have enough space available to perform these calculations in parallel. Your Spark application will succeed, and will produce the output you want… only many, many, MANY times slower.</li>
+</ol>
+</section>
+<section id="what-happened-with-the-cases-ive-seen" class="level1">
+<h1>What happened with the cases I’ve seen</h1>
+<p>I recently encountered some cases of jobs failing during runtime because of <code>OutOfMemory</code> errors, that were generated by multiple caching operations that polluted all memory available in the cluster.</p>
+<p>I want to use this practical example to demonstrate how caching was badly used in this example. So that you can learn from it.</p>
+<p>The notebook I encountered, was essentially responsible for update 3 different tables in our SQL databases, and to do that, this notebook was defining 5 different Spark DataFrames, and all of them were being cached with the <code>cache()</code> DataFrame method.</p>
+<p>If I execute this notebook in a more robust Spark cluster, with more worker nodes, with more RAM memory available, then, the notebook just executed fine.</p>
+<p>The complete execution of the notebook took around 55 minutes, which is a long time… But no runtime errors were raised. In essence, no <code>OutOfMemory</code> errors were raised because we were lucky. Because this more robust cluster had enough memory space to hold 5 DataFrames in cache. Figure&nbsp;1 presents this process visually:</p>
+<div id="fig-memory2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-memory2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://pedro-faria.netlify.app/posts/2024/2024-01-13-spark-cache/memory2.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-memory2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: DataFrames being cached in a more robust Spark cluster
+</figcaption>
+</figure>
+</div>
+<p>However, this same notebook was being executed every day by a scheduled job in Databricks (i.e.&nbsp;a Databricks Workflow). But every time this notebook was executed through the scheduled job, it failed with <code>OutOfMemory</code> errors. The scheduled job was being executed by a much smaller cluster, that had only two worder nodes and 8 GB of RAM memory available.</p>
+<p>The <code>OutOfMemory</code> errors were being raised right after we cached the third Spark DataFrame (let’s call this DataFrame of <code>df3</code>) defined in the notebook. So, in summary, what was happening is: Spark was caching each DataFrame defined in the notebook, but on the third DataFrame, the Spark process run out of memory. In other words, we did not had any more memory to do anything!</p>
+<p>Figure&nbsp;2 summarizes this process visually:</p>
+<div id="fig-memory" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-memory-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://pedro-faria.netlify.app/posts/2024/2024-01-13-spark-cache/memory.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-memory-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Multiple caches surpassing the limit of memory available in a less robust Spark cluster
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+<p>In essence, using the Spark DataFrame <code>cache()</code> method can improve the performance of your Spark application. But you should be careful when using this resource, because it can be of a hindrance than a help, depending on how you use it.</p>
+<p>As a good rule of thumb, you usually want to use caches in Spark when:</p>
+<ul>
+<li>Constantly use the same DataFrame over the notebook.</li>
+<li>Frequently access a subset of a DataFrame.</li>
+</ul>
+<p>In this article I also presented a situation where caches were responsible for crashing a Spark application, as a real example on how caches can be harmful.</p>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0">
+<div id="ref-pedro2024" class="csl-entry">
+Faria, Pedro Duarte. 2024. <em>Introduction to Pyspark</em>. 1st ed. Belo Horizonte. <a href="https://pedropark99.github.io/Introd-pyspark/">https://pedropark99.github.io/Introd-pyspark/</a>.
+</div>
+<div id="ref-patidar2023" class="csl-entry">
+Patidar, Charchit. 2023. <span>“How Cache Works in Apache Spark.”</span> <a href="https://medium.com/@charchitpatidar/how-cache-works-in-apache-spark-aea6eeb3fd03">https://medium.com/@charchitpatidar/how-cache-works-in-apache-spark-aea6eeb3fd03</a>.
+</div>
+</div></section></div> ]]></description>
+  <category>Apache Spark</category>
+  <category>Performance</category>
+  <guid>https://pedro-faria.netlify.app/posts/2024/2024-01-13-spark-cache/en/</guid>
+  <pubDate>Sat, 13 Jan 2024 03:00:00 GMT</pubDate>
+  <media:content url="https://pedro-faria.netlify.app/posts/2024/2024-01-13-spark-cache/memory.svg" medium="image" type="image/svg+xml"/>
+</item>
 <item>
   <title>Introduction to pyspark</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
@@ -536,7 +808,7 @@ font-style: inherit;">"platform.blipraw.events"</span>)</span>
 <h2 data-number="2.1" class="anchored" data-anchor-id="the-quick-and-dirty-approach"><span class="header-section-number">2.1</span> The quick and dirty approach</h2>
 <p>This does not look so bad, right? I mean, considering the above example, I could just use a simple REGEX (<em>regular expression</em>) to find the places where I have an <code>spark.table()</code> call, capture the reference given as input, alter it to the new reference, and replace the text with the new reference.</p>
 <p>This approach would involve some code similar to this:</p>
-<div class="cell" data-execution_count="1">
+<div id="fcedb3f6" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> re</span>
@@ -673,7 +945,7 @@ Figure&nbsp;1: The process of parsing
 <li>formatted strings which contain expressions that fit the above cases. Example: <code>f"{database}.{table_name}"</code>.</li>
 </ol>
 <p>Lets store these examples of expressions inside a list that we can easily access:</p>
-<div class="cell" data-execution_count="2">
+<div id="b8e98d57" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1">EXPRESSION_EXAMPLES <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> [</span>
@@ -885,7 +1157,7 @@ font-style: inherit;">filter</span>(is_not_blank, tokens))</span></code></pre></
 <li><p>Empty tokens (i.e.&nbsp;tokens that are empty strings, or, that contains only spaces) can be generated during the process. So we use <code>filter()</code> with a <code>lambda</code> function to eliminate them from the output.</p></li>
 </ol>
 <p>This <code>tokenizer()</code> function generates a list of tokens to be analyzed by the parser:</p>
-<div class="cell" data-execution_count="4">
+<div id="e961d7e4" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><span class="cf" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">for</span> example <span class="kw" style="color: #003B4F;
@@ -950,7 +1222,7 @@ font-style: inherit;">"  * Tokens produced: "</span>, tokens)</span></code></pre
 <p>It is not really vital to have the <code>token</code> variable, because we could easily access the current token by using <code>tokens[index]</code>. But… having a variable called <code>token</code> is easier to type, and it makes most of the parser’s code more readable, so, it is woth it.</p>
 <p>While the parser is analyzing the sequence of tokens stored at the <code>tokens</code> variable, he will slowly grow (or complete) the AST, by replacing and adding elements to the <code>ast</code> variable. At the end, when the parser finishs the parsing process, the <code>ast</code> variable will store the complete AST that is equivalent to the input expression.</p>
 <p>You can see below at the <code>__init__()</code> method that to initialize a new object of class <code>ParserCache</code>, you need to give the sequence of tokens to analyze as input. After that, all variables of the class are initialized, and you can start to use the two methods of the class, which are <code>len()</code>, <code>current_token()</code> and <code>next_token()</code>. The <code>len()</code> method returns the length of the tokens sequence that the parser is analyzing, <code>current_token()</code> method returns the current token that the parser is analyzing at the moment, and the <code>next_token()</code> method will effectively advance the parser to the next token in the sequence.</p>
-<div class="cell" data-execution_count="5">
+<div id="2104512d" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">class</span> ParserCache:</span>
@@ -1114,7 +1386,7 @@ font-style: inherit;">return</span></span></code></pre></div>
 <p>We need a main function for the parser, and that is the <code>parse()</code> function. In other words, this is the public API or the main entrypoint of the parser. That is the function that we should use to effectively parse any input and get the resulting AST.</p>
 <p>You can see below that all of this function does is: get the input string; generate the tokens with <code>tokenizer()</code>; initialize the parser’s cache with these tokens; and then, it calls a private function called <code>_parse_input()</code> to initiate the parsing process.</p>
 <p>Once <code>_parse_input()</code> is done with the parsing process, <code>parse()</code> gets the parsing results and simply return the complete AST produced, which is stored in the <code>ast</code> variable of the parser’s cache.</p>
-<div class="cell" data-execution_count="6">
+<div id="d328d56c" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">from</span> typing <span class="im" style="color: #00769E;
@@ -1150,7 +1422,7 @@ font-style: inherit;">return</span> parsing_result.ast</span></code></pre></div>
 <p>Notice that all of these three parsing functions (<code>_parse_string()</code>, <code>_parse_addition()</code> and <code>_parse_identifier()</code>) returns the <code>ParserCache</code> object back as output. In other words, these functions receives the parser cache as input, they use this cache to parse the current token, and they add new elements (or replace the existing ones) to the AST, which is stored inside this cache object. Once they finished their businesses, they simply return this cache back as their output.</p>
 <p>After we know that we parsed the current token, then, we ask the parser to advance to the next token, with <code>next_token()</code> method. Then, we check if there is really a next token in the sequence to parse/analyze, by checking if the current index is greater than the number of tokens in the sequence.</p>
 <p>If there are still some remaining tokens in the sequence to analyze, then, <code>_parse_input()</code> will call itself recursively to parse the remaining tokens in the sequence. However, if there is not remaining tokens to analyze anymore, then, the function finally returns the parser cache (which contains the complete AST inside of the <code>ast</code> variable) as output.</p>
-<div class="cell" data-execution_count="7">
+<div id="475ae086" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="annotated-cell-8" style="background: #f1f3f5;"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-8-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">def</span> _parse_input(parser_cache: ParserCache) <span class="op" style="color: #5E5E5E;
@@ -1246,7 +1518,7 @@ font-style: inherit;">return</span> parser_cache</span><div class="code-annotati
 <p>Lets begin by discussing what the <code>_parse_identifier()</code> function should do. Because parsing an identifier component is by far the simplest of all three components. I mean… how would you parse an identifier? To answer this question, is probably best to think what an identifier is.</p>
 <p>Well, an identifier is just a name to a variable, right? So, the value of an identifier object should be the identifier itself! In other words, the name of the variable is the identifier itself. So why not just simply add to the AST an object of type <code>IDENTIFIER</code> and the value of that object being the current token which is the identifier (or the variable name) itself? Right? That should be sufficient.</p>
 <p>So we have the following body for <code>_parse_identifier()</code>:</p>
-<div class="cell" data-execution_count="8">
+<div id="05a8ba9e" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">def</span> _parse_identifier(parser_cache: ParserCache) <span class="op" style="color: #5E5E5E;
@@ -1277,7 +1549,7 @@ font-style: inherit;">return</span> parser_cache</span></code></pre></div>
 <p>We could use a stack to accumulate the tokens that represents the contents of the string while we are looping, and then, we analyze these tokens separately after we break the loop. Then, we could simply append to the AST a new object of type <code>STRING</code> containing this stack with all of the components of this string element. It would be a fair strategy. But it would also make the parsing of subexpressions inside of formatted strings harder.</p>
 <p>As a result, I decided to opt for a placeholder strategy. Before we start to loop through the sequence of tokens that represents the contents of the string, we add a placeholder at the top level of the AST. At each iteration of the <code>while</code> loop we update the <code>value</code> field of this placeholder by adding the current token to it. By doing this, at the end of the <code>while</code> loop we will have a string object at the top of the AST, and its <code>value</code> field will contain the full/complete list of contents of that string.</p>
 <p>Now… if we do find a opening bracket (<code>{</code>) inside the string, that likely means that the current string that we are analyzing now is a formatted string, and whatever sequence of tokens that is right after this opening bracket, they are a new expression to be parsed. That is why we call the <code>_parse_formatted_string()</code> in case we do find an opening bracket inside the string.</p>
-<div class="cell" data-execution_count="9">
+<div id="af034e2a" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="annotated-cell-10" style="background: #f1f3f5;"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-10-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">def</span> _parse_string(parser_cache: ParserCache) <span class="op" style="color: #5E5E5E;
@@ -1367,7 +1639,7 @@ font-style: inherit;">return</span> parser_cache</span><div class="code-annotati
 <h3 data-number="3.4.8" class="anchored" data-anchor-id="parsing-expressions-inside-formatted-strings"><span class="header-section-number">3.4.8</span> Parsing expressions inside <em>formatted strings</em></h3>
 <p>We call <code>_parse_formatted_string()</code> if we find a <code>{</code> character inside sequence of tokens that are inside a string. Inside the pair of brackets (<code>{}</code>) we will always have an expression. And because this is a new expression, we need to parse it too, in a separate process.</p>
 <p>First, we use a loop and a stack object to accumulate all the tokens in the sequence that are inside of the pair of brackets (<code>{}</code>). This way, we have inside the stack object all the tokens that represents the subexpression that is inside of the brackets that we need to parse.</p>
-<div class="cell" data-execution_count="10">
+<div id="0a3c1dca" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="annotated-cell-11" style="background: #f1f3f5;"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-11-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">def</span> _parse_formatted_string(parser_cache: ParserCache) <span class="op" style="color: #5E5E5E;
@@ -1452,7 +1724,7 @@ font-style: inherit;">return</span> parser_cache</span><div class="code-annotati
 <p>However, this is not really true, or, it would be too easy to be true. The real problem, is that the left and right operands could be splitten by the tokenizer into multiple tokens. In other words, there are very commom cases where single calls to <code>current_token()</code> would be insufficient to actually get the complete right or left operands.</p>
 <p>That means that the tokenizer step might make the part of identifying where the left and right operands are in the sequence of tokens a difficult task. If you think about how the tokenizer works (see Listing&nbsp;3), you will probably be able to find examples where the left or right operands could be composed of multiple tokens, and not just a single token.</p>
 <p>Take the expression <code>database + '.events'</code> as an example. Take a look at the tokenizer’s output over this expression. The left operand is the first token (<code>database</code>), but the right operand, is actually the three last tokens in the sequence (<code>['"', '.events', '"']</code>). This means that these three tokens together compose the right operand.</p>
-<div class="cell" data-execution_count="11">
+<div id="d59aeb22" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(tokenizer(<span class="st" style="color: #20794D;
@@ -1469,7 +1741,7 @@ font-style: inherit;">'database + ".events"'</span>))</span></code></pre></div>
 <p>For now, lets ignore the right operand and think about the left operand. The left operand is whatever sequence of tokens that are before the plus sign. But, as we saw in the previous section, in some cases, we might need to look 3, 4 or 5 tokens behind to actually get the full left operand, instead of looking at just 1 token behind.</p>
 <p>But instead of looking at the previous tokens in the sequence, we could get the left operand by looking at the top of the AST. In other words, the last element in the AST is the previous token already parsed, and we can easily access this last element by calling <code>parser_cache.ast[-1]</code>.</p>
 <p>Perfect, after we saved a copy of the left operand inside a <code>left_operand</code> variable, we can delete him from the AST in the parser cache, with <code>del parser_cache.ast[-1]</code>. If we do not delete him now, then, he would become duplicated in the AST at the moment that we add our object for the addition operation to the AST, which contains both left and right operands.</p>
-<div class="cell" data-execution_count="12">
+<div id="0d869ee4" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">def</span> _parse_addition(parser_cache: ParserCache) <span class="op" style="color: #5E5E5E;
@@ -1504,7 +1776,7 @@ font-style: inherit;">return</span> parser_cache</span></code></pre></div>
 <h4 data-number="3.4.9.3" class="anchored" data-anchor-id="solving-the-issue-for-the-right-operand"><span class="header-section-number">3.4.9.3</span> Solving the issue for the right operand</h4>
 <p>After we deleted the last element in the AST (which contained the left operand), we can now look for the right operand, which is whatever sequence of tokens that are after the plus sign.</p>
 <p>But getting the right operand is unfortunately more complicated. Because of that, let’s concentrate the main logic of getting the right operand into a new separate function called <code>_parse_right_operand()</code>. After we get the right operand, we just return from <code>_parse_addition()</code> with an <code>ADDITION</code> object which contains both left and right operands.</p>
-<div class="cell" data-execution_count="13">
+<div id="33251a18" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">def</span> _parse_addition(parser_cache: ParserCache) <span class="op" style="color: #5E5E5E;
@@ -1568,7 +1840,7 @@ Figure&nbsp;2: Marking the right and left operands in each addition operation
 <p>That is why <code>_parse_right_operand()</code>, in this situation, will call itself recursively to parse the remaining tokens in the sequence, which are the right operand of this new/second addition it founded. The tokens that are accumulated in the stack object, are the left operand of this new/second addition, and they are parsed by <code>_parse_input()</code>.</p>
 <p>So in this situation, to get the actual right operand of the first addition, <code>_parse_right_operand()</code> needs to parse this new/second addition operation that if founded. The right operand of the first addition, is the second addition in its entirety, or, you could also interpret that the right operand of the first addition is the second addition already parsed. That is why, in this situation, <code>_parse_right_operand()</code> will call both <code>_parse_input()</code> and itself recursively to parse the right and left operands of this new/second addition operation, and return the <code>ADDITION</code> object that represents this parsed new/second addition.</p>
 <p>Having all of these aspects in mind, here is the source code for <code>_parse_right_operand()</code>:</p>
-<div class="cell" data-execution_count="14">
+<div id="fa72812f" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">def</span> _parse_right_operand(parser_cache: ParserCache) <span class="op" style="color: #5E5E5E;
@@ -1646,7 +1918,7 @@ font-style: inherit;">0</span>]</span></code></pre></div>
 <section id="finally-the-parser-is-complete" class="level2" data-number="3.5">
 <h2 data-number="3.5" class="anchored" data-anchor-id="finally-the-parser-is-complete"><span class="header-section-number">3.5</span> Finally! The parser is complete!</h2>
 <p>Now our parser is finally complete! We can now test it, and see what AST’s are produced for each example of expressions we have:</p>
-<div class="cell" data-execution_count="15">
+<div id="f0a934c3" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><span class="cf" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">for</span> example <span class="kw" style="color: #003B4F;
@@ -3502,6 +3774,14 @@ font-style: inherit;">"cm"</span>)</span>
 <h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
 <p>In 2022, I developed my first Python package called <a href="https://github.com/pedropark99/spark_map"><code>spark_map</code></a>, and published it at PyPI. If you want to know more about this package 😉, you can check <a href="https://pedro-faria.netlify.app/posts/2022/2022-12-21-spark-map-v0.2.3/en/">a previous post here</a>, where I introduced the package, and described it’s main features, and showed a small use case.</p>
 <p>Now, although <code>spark_map</code> is a small Python package, I had a hard time developing it. More specifically, the Python code was not hard at all to develop. But packaging it into a proper package 📦 was hard. In this post, I want to share a few things that I learned about Python package development in this process.</p>
+<p>I hope these tips help you in some way 😉. In summary, the main tips discussed here are:</p>
+<ul>
+<li><p>Do not change the <code>sys.path</code> or <code>PYTHONPATH</code> variable inside your package ⚠️;</p></li>
+<li><p>Differences between a package and a module;</p></li>
+<li><p>Nailing the structure 🏛️ of your package can be one the hardest parts;</p></li>
+<li><p>If you use <code>setuptools</code> to build your package, avoid <code>setup.py</code> and use <code>pyproject.toml</code> instead;</p></li>
+<li><p>Check if your Python modules are included on the built versions of your package;</p></li>
+</ul>
 </section>
 <section id="before-i-say-anything-some-references" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Before I say anything, some references</h1>
@@ -3515,14 +3795,14 @@ font-style: inherit;">"cm"</span>)</span>
 <section id="the-search-path-of-python" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="the-search-path-of-python"><span class="header-section-number">3.1</span> The search path of Python</h2>
 <p>We usually import a package in Python, by including a <code>import</code> statement at the beginning of our script. For example, to import the <code>pandas</code> package to my Python session, I could do this:</p>
-<div class="cell" data-execution_count="1">
+<div id="d0fa166d" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> pandas</span></code></pre></div>
 </div>
 <p>When you import a package in Python, the Python interpreter starts a search process 🔍 through your computer, to find the specific package you called in your script. Every Python package you use must be installed in your machine. Otherwise, Python will never find it, and, as a consequence, you can not use it.</p>
 <p>The Python interpreter will always look for the packages you import, inside a set of pre-defined locations of your computer. This pre-defined list is stored inside the <code>sys.path</code> variable <span class="citation" data-cites="pymodule">(Foundation 2023c)</span>. In other words, when you import a package, Python looks for this package inside each one of the directories listed at <code>sys.path</code> variable.</p>
-<div class="cell" data-execution_count="2">
+<div id="5ad459e3" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> sys</span>
@@ -3530,7 +3810,7 @@ font-style: inherit;">import</span> sys</span>
 background-color: null;
 font-style: inherit;">print</span>(sys.path)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>['/home/pedro/Documentos/Projetos/Personal-website/posts/2023/2023-02-06-python-pckg/en', '/usr/lib/python310.zip', '/usr/lib/python3.10', '/usr/lib/python3.10/lib-dynload', '', '/home/pedro/.local/lib/python3.10/site-packages', '/usr/local/lib/python3.10/dist-packages', '/usr/lib/python3/dist-packages']</code></pre>
+<pre><code>['C:\\Users\\pedro.duarte\\Documents\\Personal-website\\posts\\2023\\2023-02-06-python-pckg\\en', 'C:\\Users\\pedro.duarte\\AppData\\Local\\Programs\\Python\\Python311\\python311.zip', 'C:\\Users\\pedro.duarte\\AppData\\Local\\Programs\\Python\\Python311\\DLLs', 'C:\\Users\\pedro.duarte\\AppData\\Local\\Programs\\Python\\Python311\\Lib', 'C:\\Users\\pedro.duarte\\AppData\\Local\\Programs\\Python\\Python311', '', 'C:\\Users\\pedro.duarte\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages', 'C:\\Users\\pedro.duarte\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\win32', 'C:\\Users\\pedro.duarte\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\win32\\lib', 'C:\\Users\\pedro.duarte\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\Pythonwin']</code></pre>
 </div>
 </div>
 <p>You might also find contents about the <code>PYTHONPATH</code> variable when searching for this subject on the internet. In essence, <code>PYTHONPATH</code> is a environment variable that can contain a complementary list of directories to be added to <code>sys.path</code> <span class="citation" data-cites="pypathvar">(Foundation 2023a)</span>.</p>
@@ -3542,7 +3822,7 @@ font-style: inherit;">print</span>(sys.path)</span></code></pre></div>
 <p>The <code>sys.path</code> variable is a standard Python list, and, as any other list, can be altered to include other directories that are not currently there. The same goes for the <code>PYTHONPATH</code> variable, which is an environment variable, and can be altered too.</p>
 <p>As an example, when you try to import your package, which is stored at folder <code>A</code>, and, you face a <code>ModuleNotFoundError</code> error, you might be tempted to alter <code>PYTHONPATH</code> or <code>sys.path</code>, to add the folder <code>A</code> to this search path of Python. DO NOT DO IT! YOU SHOULD NEVER alter <code>PYTHONPATH</code> or <code>sys.path</code> ⚠️ ! I mean, at least not inside a Python package.</p>
 <p>In other words, if at some point inside the source code of your Python package, you execute a code like this:</p>
-<div class="cell" data-execution_count="3">
+<div id="e5e3ac37" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> sys</span>
@@ -3817,7 +4097,7 @@ font-style: inherit;">]</span></span></code></pre></div>
 <p>The traditional <code>setuptools</code> way of packaging Python modules uses a <code>setup()</code> function within the <code>setup.py</code> script. <span class="citation" data-cites="setuptools">(Authority 2023)</span></p>
 </blockquote>
 <p>In summary, you can replace <code>pyproject.toml</code> with the <code>setup.py</code> file. Just as an example, I could replace the <code>pyproject.toml</code> file for <code>spark_map</code> with a <code>setup.py</code> file similar to the file below. The whole <code>setup.py</code> file is usually composed of just a single call to the <code>setuptools.setup()</code> function, and nothing more. All of the various metadata about the package stored at <code>pyproject.toml</code> are translated to named arguments to this <code>setup()</code> function.</p>
-<div class="cell" data-execution_count="4">
+<div id="184fbb55" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># setup.py placed at root directory</span></span>
@@ -3937,19 +4217,66 @@ font-style: inherit;">python3</span> setup.py sdist</span></code></pre></div>
 </section>
 </section>
 </section>
-<section id="conclusion" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Conclusion</h1>
-<p>In this article, I intended to share what I learned trough my journey of building my first Python package. In summary, the main subjects discussed here were:</p>
-<ul>
-<li><p>Do not change the <code>sys.path</code> or <code>PYTHONPATH</code> variable inside your package ⚠️;</p></li>
-<li><p>Differences between a package and a module;</p></li>
-<li><p>Nailing the structure 🏛️ of your package can be one the hardest parts;</p></li>
-<li><p>If you use <code>setuptools</code> to build your package, avoid <code>setup.py</code> and use <code>pyproject.toml</code> instead;</p></li>
-</ul>
-<p>I hope this content help you to develop your projects. See you later 😉 !</p>
+<section id="one-of-the-hardest-bugs-i-ever-faced-in-my-life" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> One of the hardest bugs I ever faced in my life</h1>
+<p>While developing <code>spark_map</code> I encoutered one of the hardest and weirdest bugs I ever faced in my life. Since it was really hard to find this bug, I want to reveal it here to you, and describe how it happens.</p>
+<p>First, a little bit of context. This bug was present at the version 0.2.7 of the package, and, you can look at the exact source of this version, by searching for the <a href="https://github.com/pedropark99/spark_map/tree/v0.2.7">git tag <code>v0.2.7</code> at the source code history</a>. At this point, the package was ready to be shipped to PyPI.</p>
+<p>I had no problems at building the package. When I executed the command <code>python -m build</code>, the package was built successfully, without any error or warning messages. The source and wheel distributions of the package were there.</p>
+<p>I had no problemas at importing the package. I could start a new Python session, and use a <code>import</code> statement to import the package, and that statement would execute flawlessly.</p>
+<p>I had no problems at the unit tests of the package. When I executed the command <code>pytest</code> to initiate the unit tests runs, I was passing in all tests. Again, I had no error or warning messages appearing.</p>
+<p>Everything seemed to work perfectly. As a consequence, I was ready to publish the package at PyPI, and that is what I did. I published at PyPI. Than, I started to test the package at PyPI.</p>
+<p>First, I tried to install the package with <code>pip install spark_map</code>, and everything worked fine at the installation process. The package version was right, and, after the installation process, when I executed the <code>pip list</code> command, I could clearly see <code>spark_map</code> on the list of installed packages.</p>
+<p>However, I SIMPLY COULD NOT IMPORT THE PACKAGE! The package was installed succesfully, and with that in mind, I expected to import it succesfully in any Python module, at any location of my computer. However, when I started a new Python session at a random location of my computer, and tried to import the package, the Python interpreter always raised a <code>ModuleNotFoundError</code> error.</p>
+<section id="sec-weird-problem" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="sec-weird-problem"><span class="header-section-number">4.1</span> How did this problem occur</h2>
+<p>There was no error or warning messages at the building stage of the package, neither in the installation process as well. But something was definitely wrong with the package.</p>
+<p>In essence, the source of this weird and confusing problem was at the building stage of the package. Basically, the build system (in that case, the <code>setuptools</code>) was not able to automatically find all source files (i.e.&nbsp;the <code>.py</code> files) of the package. As a result, the build system was building the package, but, not including the source files inside this built version of the package. Very weird! Isn’t it?</p>
+<p>I mean, if the build system did not find any source files… it should definitely raise a warning or error during the build process. Because this is definitely an error in the process. How or why can you share a Python package, which have no Python source code? If the package does not contain any Python code in it, it is probably not a Python package. Right?</p>
+<p>That is why I could not import the package after I installed it on my machine, trough <code>pip</code>. Because the version of the package that was being installed on my machine, was a version of the package that had no Python source code that could be imported. That is why the <code>ModuleNotFoundError</code> error was being raised by the Python interpreter when I tried to import the package.</p>
+</section>
+<section id="how-to-identify-this-problem" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="how-to-identify-this-problem"><span class="header-section-number">4.2</span> How to identify this problem</h2>
+<p>First, when you build your package, usually two main files are created, which are: 1) the <em>wheel</em> distribution of your package; 2) the <em>source</em> distribution of your package. These are just two different formats in which you can ship and share your package with another human.</p>
+<p>The source distribution is a TAR file (with <code>.tar</code> or <code>.tar.gz</code> extension). Is just a compressed file (like ZIP files) with all of the essential files that compose your package (i.e.&nbsp;the metadata of the package, the source files - <code>.py</code> files, README and LICENSE files, etc.).</p>
+<p>On the other hand, the wheel distribution (files with <code>.whl</code> extension), is “pre-compiled” version of your package. This means that a wheel version of your package comes in a ready-to-install format, and, as a consequence, is much faster to install this version of your package, in comparison to source distributions, which must be compiled before being installed on your system.</p>
+<p>To identify if the problem I described at Section&nbsp;4.1 is happening inside your package project, I recommend you to focus your attention on the source distribution of your package (i.e.&nbsp;the TAR file - <code>.tar</code> or <code>.tar.gz</code>). Because you can easily open this kind of file with decompressing tools, like <code>WinRar</code> or <code>7-zip</code>, and it is much more easy to analyze than the wheel distribution.</p>
+<p>In resume, if you open the TAR file, and, you do not find any Python modules (i.e.&nbsp;<code>.py</code> files) in it, this means that the problem I described at Section&nbsp;4.1 is unfortunately happening inside your package. In contrast, if you do find all Python modules of your package inside this TAR file, than, you are safe and good to go forward.</p>
+<p>To fix this problem inside my package project, I had to add the lines below to my <code>pyproject.toml</code> file. These lines tell <code>setuptools</code> which are the packages available inside the project, and, which is the folder inside the project where all the source code of the package was stored.</p>
+<div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode toml code-with-copy"><code class="sourceCode toml"><span id="cb13-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">[tool.setuptools]</span></span>
+<span id="cb13-2"><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">packages</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"spark_map"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span></span>
+<span id="cb13-3"><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">package-dir</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">""</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"> =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"src"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span></code></pre></div>
+<p>It was so hard to find this bug, yet, it was quite simple and straightforward to fix it 😑 (poker face). With these options, <code>setuptools</code> could finally find all the Python modules of my package, and, as a consequence, include them in the built versions of the package (in the source and in the wheel distributions).</p>
+<p>Therefore, if you face a <code>ModuleNotFoundError</code> error when you try to import your package, after you installed it in your computer with <code>pip</code>, I recommend you to check if your Python modules are being included on the built versions of your package.</p>
 
 
 
+</section>
 </section>
 
 
@@ -4317,7 +4644,7 @@ font-style: inherit;">pip</span> install spark-map</span></code></pre></div>
 <section id="what-problem-spark_map-solves" class="level2">
 <h2 class="anchored" data-anchor-id="what-problem-spark_map-solves">What problem <code>spark_map</code> solves?</h2>
 <p>I work a lot with data pipelines using Apache Spark and <code>pyspark</code> at <a href="https://www.take.net/">Take Blip</a>. Some day, I got myself writing a very long <code>agg()</code> statement to aggregate multiple columns of my Spark DataFrame with the same function, like this one below:</p>
-<div class="cell" data-execution_count="1">
+<div id="1e8f6acb" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">from</span> pyspark.sql.functions <span class="im" style="color: #00769E;
@@ -4382,7 +4709,7 @@ font-style: inherit;">'cards_business'</span>)</span>
 </div>
 <p>Looking at this code, I had the following thought: “this is not elegant, and is error-prone, because it involves copy and paste, and very subtle changes in each line”. Following the golden rule of DRY (<em>do not repeat yourself</em>), I had to find a better way to write this code.</p>
 <p>I just wanted to apply the <code>sum()</code> function over multiple columns of <code>cards.detailed_sales_per_user</code> grouped by <code>day</code>. Because of that, I decided to develop the <code>spark_map</code> package, which allows you to declare this operation in a much better, elegant and concise way, by using the <code>spark_map()</code> function.</p>
-<div class="cell" data-execution_count="2">
+<div id="f3c355d6" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">from</span> spark_map.functions <span class="im" style="color: #00769E;
@@ -4873,51 +5200,6 @@ font-style: inherit;">'characters'</span>)</span></code></pre></div>
   <guid>https://pedro-faria.netlify.app/posts/2022/2022-11-06-figma-pkgv0.1.0/en/</guid>
   <pubDate>Sun, 06 Nov 2022 03:00:00 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/posts/2022/2022-11-06-figma-pkgv0.1.0/featured.png" medium="image" type="image/png" height="79" width="144"/>
-</item>
-<item>
-  <title>Novidades da 3° edição de Introdução à Linguagem R: seus fundamentos e sua prática</title>
-  <dc:creator>Pedro Duarte Faria</dc:creator>
-  <link>https://pedro-faria.netlify.app/posts/2022/2022-04-06-3nd-edition-rbook/pt/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<section id="introdução" class="level1">
-<h1>Introdução</h1>
-<p>É com muito prazer que venho compartilhar com você as novidades que estou trazendo para essa nova edição do livro <a href="https://pedro-faria.netlify.app/pt/publication/book/introducao_linguagem_r/">Introdução à Linguagem R: seus fundamentos e sua prática</a>. O lançamento desta nova edição deve ocorrer ainda no meio de Abril de 2022 📆, portanto, fique atento 😉.</p>
-</section>
-<section id="o-que-temos-de-novo" class="level1">
-<h1>O que temos de novo?</h1>
-<p>Temos seis novos capítulos 🤯, os quais compõe uma nova parte do livro e, trazem consigo, grandes avanços sobre o processo de desenvolvimento de programas no R. Além disso, várias melhorias foram feitas em seções específicas do livro, especialmente sobre o capítulo 2.</p>
-<p>Primeiro, houve uma reorganização significativa do livro. Os capítulos pré-existentes foram reorganizados em quatro partes diferentes. Já a quinta e nova parte (Funções e <em>Loops</em>: construindo os seus próprios programas e automatizando tarefas) é composta pelos seis novos capítulos introduzidos nesta edição.</p>
-<p>Segundo, o capítulo de Funções e <em>Loops</em> foi completamente reescrito, expandido, e, repartido em dois novos capítulos 🥳🎉🎉🎉. Mais especificamente, os capítulos 14 (Funções) e 15 (<em>Loops</em>) desta edição.</p>
-<p>Terceiro, o capítulo 16 desta edição traz uma das novidades programadas desde a segunda edição: um novo (e robusto) capítulo sobre <em>functional programming</em>. Com essa adição, esta obra se torna uma referência mais moderna e, se aproxima dos padrões adotados hoje pela comunidade internacional de R 😎.</p>
-<p>Quarto, <em>environments</em> e as regras de <em>scoping</em> da linguagem são dois tópicos relativamente avançados, e que costumam causar certa confusão em muitos iniciantes. Por isso, um novo capítulo foi produzido para descrever essas funcionalidades que sustentam partes essenciais da linguagem, assim como de alguns dos pacotes que introduzimos ao longo do livro (e.g.&nbsp;<code>dplyr</code> e <code>ggplot2</code>).</p>
-<p>Quinto, várias adições e melhorias foram feitas no capítulo 6 (Introdução a base de dados relacionais com <code>dplyr</code>) e, principalmente, no capítulo 2 (Fundamentos da Linguagem R). Dentre elas, temos: um novo estudo de caso (Importando os dados da PINTEC); novas seções sobre as funções <code>str()</code> e <code>is.*()</code>; melhorias significativas sobre as seções de Coerção no R e Valores especiais do R.</p>
-<p>Sexto, foi introduzido um novo capítulo que descreve os controles condicionais de fluxo (<code>if else</code> <em>statements</em> e <code>switch()</code>) que a linguagem R oferece.</p>
-<p>Sétimo, um novo e pequeno capítulo foi adicionado à segunda parte do livro, com o objetivo de introduzir o universo do <code>tidyverse</code> ao leitor de maneira mais clara e amigável 🥰.</p>
-<p>Oitavo, o apêndice contendo as respostas dos exercícios foi retirado, com o objetivo de reduzir o número de páginas do livro. Consequentemente, as respostas dos exercícios estão sendo disponibilizadas em um PDF separado, o qual pode ser baixado gratuitamente, a partir da página de <a href="https://pedro-faria.netlify.app/pt/publication/book/introducao_linguagem_r/">publicação do livro</a>.</p>
-</section>
-<section id="sobre-onde-encontrar-o-livro" class="level1">
-<h1>Sobre onde encontrar o livro</h1>
-<p>Assim como ocorreu nas edições anteriores, você poderá ler toda a obra de maneira gratuita e aberta através de seu <a href="https://pedropark99.github.io/Introducao_R/">website</a> 📖.</p>
-<p>Contudo, diferente das edições anteriores, a versão em PDF da obra não será aberta. Você poderá adquirir uma versão em PDF ou física do livro através da loja da Amazon. Ao comprar essas versões, você estará me ajudando a continuar contribuindo com a nossa comunidade ❤️.</p>
-</section>
-<section id="contribua-para-a-obra-ou-faça-sugestões" class="level1">
-<h1>Contribua para a obra ou faça sugestões!</h1>
-<p>Caso seja de seu interesse, você pode contribuir diretamente para a obra, ao postar <em>pull requests</em> dentro de seu <a href="https://github.com/pedropark99/Introducao_R">repositório oficial</a>. Para mais, você também pode fazer sugestões ou comentários, ao postar <em>issues</em> neste mesmo repositório.</p>
-
-
-</section>
-
- ]]></description>
-  <category>Book</category>
-  <category>R</category>
-  <guid>https://pedro-faria.netlify.app/posts/2022/2022-04-06-3nd-edition-rbook/pt/</guid>
-  <pubDate>Wed, 06 Apr 2022 03:00:00 GMT</pubDate>
-  <media:content url="https://pedro-faria.netlify.app/posts/2022/2022-04-06-3nd-edition-rbook/featured.png" medium="image" type="image/png" height="206" width="144"/>
 </item>
 </channel>
 </rss>

@@ -3,7 +3,8 @@
 # freeze computational output
 # (see https://quarto.org/docs/projects/code-execution.html#freeze)
 freeze: true
-
+# Include a table of contents
+toc: true
 # Enable banner style title blocks
 title-block-banner: true
 #title-block-style: default
