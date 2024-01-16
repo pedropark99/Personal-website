@@ -1,0 +1,558 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="350mm"
+   height="210mm"
+   viewBox="0 0 350 210"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   sodipodi:docname="memory.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="0.35055065"
+     inkscape:cx="-323.77633"
+     inkscape:cy="-223.93341"
+     inkscape:window-width="1920"
+     inkscape:window-height="1001"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1" />
+  <defs
+     id="defs1">
+    <marker
+       style="overflow:visible"
+       id="Triangle"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Triangle arrow"
+       markerWidth="1"
+       markerHeight="1"
+       viewBox="0 0 1 1"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.5)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path135" />
+    </marker>
+    <marker
+       markerWidth="0.52499998"
+       markerHeight="0.99999995"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       id="CapTriangle"
+       viewBox="0 0 0.525 1"
+       inkscape:stockid="Triangle cap"
+       style="overflow:visible"
+       preserveAspectRatio="xMidYMid"
+       inkscape:isstock="true"
+       inkscape:collect="always">
+      <path
+         style="fill:context-stroke;stroke-linecap:butt"
+         d="M 0,-1 1,0 0,1 -0.05,0 Z"
+         sodipodi:nodetypes="sssssscsss"
+         transform="scale(0.5)"
+         id="path61" />
+    </marker>
+    <rect
+       x="519.18318"
+       y="59.905752"
+       width="344.45807"
+       height="47.068804"
+       id="rect4" />
+    <rect
+       x="144.05907"
+       y="654.68429"
+       width="114.74434"
+       height="24.997205"
+       id="rect2" />
+    <rect
+       x="144.05907"
+       y="654.68427"
+       width="108.18866"
+       height="48.44636"
+       id="rect2-5" />
+    <rect
+       x="144.05907"
+       y="654.68427"
+       width="80.869063"
+       height="37.12099"
+       id="rect2-0" />
+    <rect
+       x="144.05907"
+       y="654.68427"
+       width="80.869064"
+       height="37.120991"
+       id="rect2-0-2" />
+    <rect
+       x="144.05907"
+       y="654.68427"
+       width="108.18866"
+       height="48.446362"
+       id="rect2-5-0" />
+    <rect
+       x="144.05907"
+       y="654.68427"
+       width="114.74434"
+       height="24.997206"
+       id="rect2-3" />
+    <rect
+       x="144.05907"
+       y="654.68427"
+       width="80.869064"
+       height="37.120991"
+       id="rect2-0-2-8" />
+    <rect
+       x="144.05907"
+       y="654.68427"
+       width="108.18866"
+       height="48.446362"
+       id="rect2-5-0-7" />
+    <rect
+       x="144.05907"
+       y="654.68427"
+       width="114.74434"
+       height="24.997206"
+       id="rect2-3-6" />
+    <rect
+       x="144.05907"
+       y="654.68427"
+       width="80.869064"
+       height="37.120991"
+       id="rect2-0-2-5" />
+    <rect
+       x="144.05907"
+       y="654.68427"
+       width="108.18866"
+       height="48.446362"
+       id="rect2-5-0-3" />
+    <rect
+       x="144.05907"
+       y="654.68427"
+       width="80.869064"
+       height="37.120991"
+       id="rect2-0-2-8-0" />
+    <rect
+       x="144.05907"
+       y="654.68427"
+       width="108.18866"
+       height="48.446362"
+       id="rect2-5-0-7-5" />
+    <rect
+       x="144.05907"
+       y="654.68427"
+       width="80.869064"
+       height="37.120991"
+       id="rect2-0-2-8-0-3" />
+    <rect
+       x="144.05907"
+       y="654.68427"
+       width="108.18866"
+       height="48.446362"
+       id="rect2-5-0-7-5-0" />
+    <rect
+       x="519.18317"
+       y="59.90575"
+       width="94.333749"
+       height="34.966016"
+       id="rect4-0" />
+    <rect
+       x="519.18317"
+       y="59.90575"
+       width="142.24062"
+       height="24.376074"
+       id="rect4-0-0" />
+    <rect
+       x="519.18317"
+       y="59.90575"
+       width="143.24919"
+       height="44.54739"
+       id="rect4-0-0-6" />
+  </defs>
+  <rect
+     style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.814001;stroke-dasharray:none;stroke-opacity:1"
+     id="rect28"
+     width="350"
+     height="210"
+     x="0.40700051"
+     y="0.40700051"
+     inkscape:label="background"
+     sodipodi:insensitive="true" />
+  <path
+     style="fill:#222222;fill-opacity:0.184314;stroke:#000000;stroke-width:0.5;stroke-dasharray:none;stroke-opacity:1"
+     d="M 28.681066,186.9449 H 319.26556"
+     id="path1" />
+  <text
+     xml:space="preserve"
+     transform="matrix(0.26458333,0,0,0.26458333,11.934721,16.387527)"
+     id="text1"
+     style="font-size:18.6667px;white-space:pre;shape-inside:url(#rect2);display:inline;fill:#ff2323;fill-opacity:0.184314;stroke:#fc0000;stroke-width:0;stroke-dasharray:none;stroke-opacity:1"><tspan
+       x="144.05859"
+       y="672.30263"
+       id="tspan27"><tspan
+         style="font-family:Inconsolata;-inkscape-font-specification:Inconsolata;fill:#000000;fill-opacity:1;stroke:#70adff"
+         id="tspan26">df1.cache()</tspan></tspan></text>
+  <text
+     xml:space="preserve"
+     transform="matrix(0.26458333,0,0,0.26458333,125.05765,16.387527)"
+     id="text1-1"
+     style="font-size:18.6667px;white-space:pre;shape-inside:url(#rect2-3);display:inline;fill:#ff2323;fill-opacity:0.184314;stroke:#fc0000;stroke-width:0;stroke-dasharray:none;stroke-opacity:1"><tspan
+       x="144.05859"
+       y="672.30263"
+       id="tspan29"><tspan
+         style="font-family:Inconsolata;-inkscape-font-specification:Inconsolata;fill:#000000;fill-opacity:1;stroke:#70adff"
+         id="tspan28">df2.cache()</tspan></tspan></text>
+  <text
+     xml:space="preserve"
+     transform="matrix(0.26458333,0,0,0.26458333,237.46597,16.596324)"
+     id="text1-1-5"
+     style="font-size:18.6667px;white-space:pre;shape-inside:url(#rect2-3-6);display:inline;fill:#ff2323;fill-opacity:0.184314;stroke:#fc0000;stroke-width:0;stroke-dasharray:none;stroke-opacity:1"><tspan
+       x="144.05859"
+       y="672.30263"
+       id="tspan31"><tspan
+         style="font-family:Inconsolata;-inkscape-font-specification:Inconsolata;fill:#000000;fill-opacity:1;stroke:#70adff"
+         id="tspan30">df3.cache()</tspan></tspan></text>
+  <g
+     id="g4"
+     inkscape:label="df1-cache"
+     transform="translate(0,20.637507)">
+    <rect
+       style="fill:#ffe144;fill-opacity:1;stroke-width:0.264583"
+       id="rect1"
+       width="38.493011"
+       height="35.473953"
+       x="43.776363"
+       y="120.00761" />
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,14.36994,-51.664777)"
+       id="text1-2"
+       style="font-size:26.6667px;white-space:pre;shape-inside:url(#rect2-0);display:inline;fill:#ff2323;fill-opacity:0.184314;stroke:#fc0000;stroke-width:0;stroke-dasharray:none;stroke-opacity:1"><tspan
+         x="144.05859"
+         y="679.85363"
+         id="tspan33"><tspan
+           style="font-weight:bold;font-family:Inconsolata;-inkscape-font-specification:'Inconsolata Bold';fill:#000000;fill-opacity:1"
+           id="tspan32">3.2 GB</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,12.891668,-38.489673)"
+       id="text1-0"
+       style="font-size:18.6667px;white-space:pre;shape-inside:url(#rect2-5);display:inline;fill:#ff2323;fill-opacity:0.184314;stroke:#fc0000;stroke-width:0;stroke-dasharray:none;stroke-opacity:1"><tspan
+         x="144.05859"
+         y="671.66796"
+         id="tspan35"><tspan
+           style="font-style:italic;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman,  Italic';fill:#000000;fill-opacity:1"
+           id="tspan34">Cached data </tspan></tspan><tspan
+         x="144.05859"
+         y="696.04665"
+         id="tspan38"><tspan
+           style="font-style:italic;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman,  Italic';fill:#000000;fill-opacity:1"
+           id="tspan36">for </tspan><tspan
+           style="font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+           id="tspan37">df1</tspan></tspan></text>
+  </g>
+  <g
+     id="g4-3"
+     inkscape:label="df1-cache2"
+     transform="translate(112.31727,20.629901)">
+    <rect
+       style="fill:#ffe144;fill-opacity:1;stroke-width:0.264583"
+       id="rect1-1"
+       width="38.493011"
+       height="35.473953"
+       x="43.776363"
+       y="120.00761" />
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,14.36994,-51.664777)"
+       id="text1-2-0"
+       style="font-size:26.6667px;white-space:pre;shape-inside:url(#rect2-0-2);display:inline;fill:#ff2323;fill-opacity:0.184314;stroke:#fc0000;stroke-width:0;stroke-dasharray:none;stroke-opacity:1"><tspan
+         x="144.05859"
+         y="679.85363"
+         id="tspan40"><tspan
+           style="font-weight:bold;font-family:Inconsolata;-inkscape-font-specification:'Inconsolata Bold';fill:#000000;fill-opacity:1"
+           id="tspan39">3.2 GB</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,12.891668,-38.489673)"
+       id="text1-0-8"
+       style="font-size:18.6667px;white-space:pre;shape-inside:url(#rect2-5-0);display:inline;fill:#ff2323;fill-opacity:0.184314;stroke:#fc0000;stroke-width:0;stroke-dasharray:none;stroke-opacity:1"><tspan
+         x="144.05859"
+         y="671.66796"
+         id="tspan42"><tspan
+           style="font-style:italic;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman,  Italic';fill:#000000;fill-opacity:1"
+           id="tspan41">Cached data </tspan></tspan><tspan
+         x="144.05859"
+         y="696.04665"
+         id="tspan45"><tspan
+           style="font-style:italic;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman,  Italic';fill:#000000;fill-opacity:1"
+           id="tspan43">for </tspan><tspan
+           style="font-family:Inconsolata;-inkscape-font-specification:Inconsolata;fill:#000000;fill-opacity:1"
+           id="tspan44">df1</tspan></tspan></text>
+  </g>
+  <g
+     id="g4-3-7"
+     inkscape:label="df2-cache2"
+     transform="translate(91.681599,-14.854188)">
+    <rect
+       style="fill:#507eff;fill-opacity:0.940701;stroke-width:0.326097"
+       id="rect1-1-1"
+       width="38.493011"
+       height="53.886581"
+       x="64.413879"
+       y="101.59498" />
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,35.007453,-69.410282)"
+       id="text1-2-0-8"
+       style="font-size:26.6667px;white-space:pre;shape-inside:url(#rect2-0-2-8);display:inline;fill:#ff2323;fill-opacity:0.184314;stroke:#fc0000;stroke-width:0;stroke-dasharray:none;stroke-opacity:1"><tspan
+         x="144.05859"
+         y="679.85363"
+         id="tspan47"><tspan
+           style="font-weight:bold;font-family:Inconsolata;-inkscape-font-specification:'Inconsolata Bold';fill:#000000;fill-opacity:1"
+           id="tspan46">4.8 GB</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,33.529181,-49.073013)"
+       id="text1-0-8-9"
+       style="font-size:18.6667px;white-space:pre;shape-inside:url(#rect2-5-0-7);display:inline;fill:#ff2323;fill-opacity:0.184314;stroke:#fc0000;stroke-width:0;stroke-dasharray:none;stroke-opacity:1"><tspan
+         x="144.05859"
+         y="671.66796"
+         id="tspan49"><tspan
+           style="font-style:italic;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman,  Italic';fill:#000000;fill-opacity:1"
+           id="tspan48">Cached data </tspan></tspan><tspan
+         x="144.05859"
+         y="696.04665"
+         id="tspan52"><tspan
+           style="font-style:italic;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman,  Italic';fill:#000000;fill-opacity:1"
+           id="tspan50">for </tspan><tspan
+           style="font-family:Inconsolata;-inkscape-font-specification:Inconsolata;fill:#000000;fill-opacity:1"
+           id="tspan51">df2</tspan></tspan></text>
+  </g>
+  <g
+     id="g4-3-1"
+     inkscape:label="df1-cache3"
+     transform="translate(224.72559,20.838697)">
+    <rect
+       style="fill:#ff2a2a;fill-opacity:1;stroke-width:0.264583"
+       id="rect1-1-4"
+       width="38.493011"
+       height="35.473953"
+       x="43.776363"
+       y="120.00761" />
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,14.36994,-51.664777)"
+       id="text1-2-0-1"
+       style="font-size:26.6667px;white-space:pre;shape-inside:url(#rect2-0-2-5);display:inline;fill:#ff2323;fill-opacity:0.184314;stroke:#fc0000;stroke-width:0;stroke-dasharray:none;stroke-opacity:1"><tspan
+         x="144.05859"
+         y="679.85363"
+         id="tspan54"><tspan
+           style="font-weight:bold;font-family:Inconsolata;-inkscape-font-specification:'Inconsolata Bold';fill:#000000;fill-opacity:1"
+           id="tspan53">3.2 GB</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,12.891668,-38.489673)"
+       id="text1-0-8-0"
+       style="font-size:18.6667px;white-space:pre;shape-inside:url(#rect2-5-0-3);display:inline;fill:#ff2323;fill-opacity:0.184314;stroke:#fc0000;stroke-width:0;stroke-dasharray:none;stroke-opacity:1"><tspan
+         x="144.05859"
+         y="671.66796"
+         id="tspan56"><tspan
+           style="font-style:italic;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman,  Italic';fill:#000000;fill-opacity:1"
+           id="tspan55">Cached data </tspan></tspan><tspan
+         x="144.05859"
+         y="696.04665"
+         id="tspan59"><tspan
+           style="font-style:italic;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman,  Italic';fill:#000000;fill-opacity:1"
+           id="tspan57">for </tspan><tspan
+           style="font-family:Inconsolata;-inkscape-font-specification:Inconsolata;fill:#000000;fill-opacity:1"
+           id="tspan58">df1</tspan></tspan></text>
+  </g>
+  <g
+     id="g4-3-7-1"
+     inkscape:label="df2-cache3"
+     transform="translate(204.08998,-14.645388)">
+    <rect
+       style="fill:#ff2a2a;fill-opacity:0.940701;stroke-width:0.326097"
+       id="rect1-1-1-0"
+       width="38.493011"
+       height="53.886581"
+       x="64.413879"
+       y="101.59498" />
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,35.007453,-69.410282)"
+       id="text1-2-0-8-3"
+       style="font-size:26.6667px;white-space:pre;shape-inside:url(#rect2-0-2-8-0);display:inline;fill:#ff2323;fill-opacity:0.184314;stroke:#fc0000;stroke-width:0;stroke-dasharray:none;stroke-opacity:1"><tspan
+         x="144.05859"
+         y="679.85363"
+         id="tspan61"><tspan
+           style="font-weight:bold;font-family:Inconsolata;-inkscape-font-specification:'Inconsolata Bold';fill:#000000;fill-opacity:1"
+           id="tspan60">4.8 GB</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,33.529181,-49.073013)"
+       id="text1-0-8-9-2"
+       style="font-size:18.6667px;white-space:pre;shape-inside:url(#rect2-5-0-7-5);display:inline;fill:#ff2323;fill-opacity:0.184314;stroke:#fc0000;stroke-width:0;stroke-dasharray:none;stroke-opacity:1"><tspan
+         x="144.05859"
+         y="671.66796"
+         id="tspan63"><tspan
+           style="font-style:italic;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman,  Italic';fill:#000000;fill-opacity:1"
+           id="tspan62">Cached data </tspan></tspan><tspan
+         x="144.05859"
+         y="696.04665"
+         id="tspan66"><tspan
+           style="font-style:italic;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman,  Italic';fill:#000000;fill-opacity:1"
+           id="tspan64">for </tspan><tspan
+           style="font-family:Inconsolata;-inkscape-font-specification:Inconsolata;fill:#000000;fill-opacity:1"
+           id="tspan65">df2</tspan></tspan></text>
+  </g>
+  <g
+     id="g4-3-7-1-7"
+     inkscape:label="df3-cache3"
+     transform="translate(204.0753,-68.62365)">
+    <rect
+       style="fill:#ff2a2a;fill-opacity:0.940701;stroke-width:0.275666"
+       id="rect1-1-1-0-1"
+       width="38.493011"
+       height="38.508247"
+       x="64.413879"
+       y="116.97331" />
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,35.007453,-56.579278)"
+       id="text1-2-0-8-3-7"
+       style="font-size:26.6667px;white-space:pre;shape-inside:url(#rect2-0-2-8-0-3);display:inline;fill:#ff2323;fill-opacity:0.184314;stroke:#fc0000;stroke-width:0;stroke-dasharray:none;stroke-opacity:1"><tspan
+         x="144.05859"
+         y="679.85363"
+         id="tspan68"><tspan
+           style="font-weight:bold;font-family:Inconsolata;-inkscape-font-specification:'Inconsolata Bold';fill:#000000;fill-opacity:1"
+           id="tspan67">3.5 GB</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,33.529181,-33.977715)"
+       id="text1-0-8-9-2-6"
+       style="font-size:18.6667px;white-space:pre;shape-inside:url(#rect2-5-0-7-5-0);display:inline;fill:#ff2323;fill-opacity:0.184314;stroke:#fc0000;stroke-width:0;stroke-dasharray:none;stroke-opacity:1"><tspan
+         x="144.05859"
+         y="671.66796"
+         id="tspan70"><tspan
+           style="font-style:italic;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman,  Italic';fill:#000000;fill-opacity:1"
+           id="tspan69">Cached data </tspan></tspan><tspan
+         x="144.05859"
+         y="696.04665"
+         id="tspan73"><tspan
+           style="font-style:italic;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman,  Italic';fill:#000000;fill-opacity:1"
+           id="tspan71">for </tspan><tspan
+           style="font-family:Inconsolata;-inkscape-font-specification:Inconsolata;fill:#000000;fill-opacity:1"
+           id="tspan72">df3</tspan></tspan></text>
+  </g>
+  <text
+     xml:space="preserve"
+     transform="matrix(0.26458333,0,0,0.26458333,36.983482,21.203581)"
+     id="text4"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:26.6667px;font-family:Inconsolata;-inkscape-font-specification:Inconsolata;white-space:pre;shape-inside:url(#rect4);display:inline;fill:#ff2a2a;fill-opacity:0.940701;stroke:#70adff;stroke-width:0;stroke-dasharray:none;stroke-opacity:1"><tspan
+       x="519.18359"
+       y="85.076285"
+       id="tspan75"><tspan
+         style="font-weight:bold;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';fill:#000000;fill-opacity:1"
+         id="tspan74">We ran out of memory !!!!</tspan></tspan></text>
+  <text
+     xml:space="preserve"
+     transform="matrix(0.26458333,0,0,0.26458333,-124.98163,-6.4603993)"
+     id="text4-5"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:26.6667px;font-family:Inconsolata;-inkscape-font-specification:Inconsolata;white-space:pre;shape-inside:url(#rect4-0);display:inline;fill:#ff2a2a;fill-opacity:0.940701;stroke:#70adff;stroke-width:0;stroke-dasharray:none;stroke-opacity:1"><tspan
+       x="519.18359"
+       y="85.076285"
+       id="tspan77"><tspan
+         style="font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';fill:#000000;stroke:#000000"
+         id="tspan76">Legend:</tspan></tspan></text>
+  <text
+     xml:space="preserve"
+     transform="matrix(0.26458333,0,0,0.26458333,-111.98061,4.3045206)"
+     id="text4-5-4"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Inconsolata;-inkscape-font-specification:Inconsolata;white-space:pre;shape-inside:url(#rect4-0-0);display:inline;fill:#ff2a2a;fill-opacity:0.940701;stroke:#70adff;stroke-width:0;stroke-dasharray:none;stroke-opacity:1"><tspan
+       x="519.18359"
+       y="75.008252"
+       id="tspan79"><tspan
+         style="font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';fill:#000000;stroke:#000000"
+         id="tspan78">Memory's limit</tspan></tspan></text>
+  <text
+     xml:space="preserve"
+     transform="matrix(0.26458333,0,0,0.26458333,-112.18916,13.457338)"
+     id="text4-5-4-0"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Inconsolata;-inkscape-font-specification:Inconsolata;white-space:pre;shape-inside:url(#rect4-0-0-6);display:inline;fill:#ff2a2a;fill-opacity:0.940701;stroke:#70adff;stroke-width:0;stroke-dasharray:none;stroke-opacity:1"><tspan
+       x="519.18359"
+       y="75.008252"
+       id="tspan81"><tspan
+         style="font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';fill:#000000;stroke:#000000"
+         id="tspan80">Memory space that is </tspan></tspan><tspan
+       x="519.18359"
+       y="95.908322"
+       id="tspan83"><tspan
+         style="font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';fill:#000000;stroke:#000000"
+         id="tspan82">currently free</tspan></tspan></text>
+  <rect
+     style="fill:#483e37;fill-opacity:0.940701;stroke:#70adff;stroke-width:0;stroke-dasharray:none;stroke-opacity:1"
+     id="rect25"
+     width="38.488758"
+     height="18.023346"
+     x="156.095"
+     y="68.63752" />
+  <rect
+     style="fill:#483e37;fill-opacity:0.940701;stroke:#70adff;stroke-width:0;stroke-dasharray:none;stroke-opacity:1"
+     id="rect25-8"
+     width="38.488758"
+     height="71.924286"
+     x="43.776001"
+     y="68.63752" />
+  <path
+     style="fill:#ff2323;fill-opacity:0.184314;stroke:#fc0000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
+     d="M 259.32668,69.137513 H 314.8019"
+     id="path1-4"
+     inkscape:label="linha-limite" />
+  <path
+     style="fill:#ff2323;fill-opacity:0.184314;stroke:#fc0000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
+     d="m 147.26002,69.137513 h 55.47522"
+     id="path1-4-7"
+     inkscape:label="linha-limite" />
+  <path
+     style="fill:#ff2323;fill-opacity:0.184314;stroke:#fc0000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
+     d="M 35.454113,69.137513 H 90.9293"
+     id="path1-4-7-8"
+     inkscape:label="linha-limite" />
+  <path
+     style="fill:#ff2323;fill-opacity:0.184314;stroke:#fc0000;stroke-width:0.814;stroke-dasharray:none;stroke-opacity:1"
+     d="m 13.239531,23.045099 h 9.505114"
+     id="path1-4-7-8-8"
+     inkscape:label="linha-limite" />
+  <path
+     style="fill:#ff2a2a;fill-opacity:1;stroke:#ff2a2a;stroke-width:0.96666;stroke-dasharray:none;stroke-opacity:1;marker-mid:url(#CapTriangle);marker-end:url(#Triangle)"
+     d="m 236.77631,45.471361 26.11844,16.25146"
+     id="path25" />
+  <rect
+     style="fill:#483e37;fill-opacity:1;stroke:#483e37;stroke-width:0.804828;stroke-dasharray:none;stroke-opacity:1"
+     id="rect27"
+     width="8.7151442"
+     height="3.3447948"
+     x="13.621426"
+     y="30.282852" />
+</svg>
