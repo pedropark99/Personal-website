@@ -167,7 +167,7 @@ So caching can be more of a hindrance than a help (especially if you cache multi
 when these caches occupy a too big chunk of memory.
 1 GB might be (or might be not) enough to perform the remaining tasks in your notebook.
 But you should not take this risk.
-In general, when you have a low quantity of memory available, two things can happen:
+In general, when you have a low quantity of memory available, and you cache multiple DataFrames, two things can happen:
 
 1. most likely, your job (or your Spark application) will crash with an `OutOfMemory` error.
 2. the calculations and transformations become much, much, MUCH slower, because the memory does
@@ -220,7 +220,7 @@ we did not had any more memory to do anything!
 
 In essence, using the Spark DataFrame `cache()` method can improve the performance
 of your Spark application. But you should be careful when using this resource,
-because it can be of a hindrance than a help, depending on how you use it.
+because it can be more of a hindrance than a help, depending on how you use it.
 
 As a good rule of thumb, you usually want to use caches in Spark when:
 

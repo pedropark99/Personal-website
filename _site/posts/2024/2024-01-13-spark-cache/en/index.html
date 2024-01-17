@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.538">
+<meta name="generator" content="quarto-1.4.532">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -409,7 +409,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <p>Having this in mind, notebooks that have a more complex and interconnected logic are much more suitable candidates for caching. For example, if you have a notebook that produces two DataFrames (B and C) as output, and they both are produced from a JOIN operation with the same DataFrame A, then, it might be worth to cache DataFrame A, so that Spark calculates DataFrame A from scratch only once, instead of two.</p>
 <p>Now, another situation where caching might be a bad idea is when you do not have much memory available in your Spark cluster. As an example, let’s consider that you only had available a cluster with 2 nodes and 8 GB of RAM memory in your Spark environment.</p>
 <p>If your notebook is working with a Spark DataFrame whose physical size is 7 GB worth of data, then, it might be a very bad idea to cache this DataFrame, because if you do cache it, then, 7 GB (almost 90%) of your memory will be occupied with the cached data, and this leaves only 1 GB avaialable to perform all the transformations and remaining operations of your notebook.</p>
-<p>So caching can be more of a hindrance than a help (especially if you cache multiple DataFrames) when these caches occupy a too big chunk of memory. 1 GB might be (or might be not) enough to perform the remaining tasks in your notebook. But you should not take this risk. In general, when you have a low quantity of memory available, two things can happen:</p>
+<p>So caching can be more of a hindrance than a help (especially if you cache multiple DataFrames) when these caches occupy a too big chunk of memory. 1 GB might be (or might be not) enough to perform the remaining tasks in your notebook. But you should not take this risk. In general, when you have a low quantity of memory available, and you cache multiple DataFrames, two things can happen:</p>
 <ol type="1">
 <li>most likely, your job (or your Spark application) will crash with an <code>OutOfMemory</code> error.</li>
 <li>the calculations and transformations become much, much, MUCH slower, because the memory does not have enough space available to perform these calculations in parallel. Your Spark application will succeed, and will produce the output you want… only many, many, MANY times slower.</li>
@@ -448,7 +448,7 @@ Figure&nbsp;2: Multiple caches surpassing the limit of memory available in a les
 </section>
 <section id="conclusion" class="level1">
 <h1>Conclusion</h1>
-<p>In essence, using the Spark DataFrame <code>cache()</code> method can improve the performance of your Spark application. But you should be careful when using this resource, because it can be of a hindrance than a help, depending on how you use it.</p>
+<p>In essence, using the Spark DataFrame <code>cache()</code> method can improve the performance of your Spark application. But you should be careful when using this resource, because it can be more of a hindrance than a help, depending on how you use it.</p>
 <p>As a good rule of thumb, you usually want to use caches in Spark when:</p>
 <ul>
 <li>Constantly use the same DataFrame over the notebook.</li>
