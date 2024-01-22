@@ -2,3 +2,34 @@
 title: Have you ever SSH before?
 ---
 
+# Find the IP Address of your Server
+
+If you are on Windows,
+and look for the IPv4 address in this window:
+
+![Looking the IP Address in Windows](./../windows-ip.png)
+
+If you are on Linux, then, you can open a terminal, and
+run the command `ifconfig`, then look for the IPv4 address
+that will appear after the `inet` word.
+
+```bash
+ifconfig
+```
+
+```bash
+ssh user@ip_address
+```
+
+```bash
+ssh-keygen
+```
+
+```bash
+ssh-copy-id -i ~/.ssh/id_rsa pedro@171.0.0.1
+```
+
+```bash
+
+```
+
