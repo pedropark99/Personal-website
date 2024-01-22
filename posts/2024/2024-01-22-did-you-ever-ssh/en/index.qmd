@@ -29,7 +29,4 @@ ssh-keygen
 ssh-copy-id -i ~/.ssh/id_rsa pedro@171.0.0.1
 ```
 
-```bash
-
-```
 
