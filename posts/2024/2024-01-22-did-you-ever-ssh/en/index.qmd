@@ -1,6 +1,13 @@
 ---
 title: Have you ever SSH before?
+description: "Do you know how SSH works? Have you ever SSH into a remote computer before? In this post I want to describe how SSH works and how can you use it to connect into a remote computer."
 ---
+
+# How SSH works?
+
+SSH stands for *Secure Socket Shell*, and it is probably the most used protocol today
+to establish a secure connection between two computers.
+
 
 # Find the IP Address of your Server
 
@@ -16,6 +23,14 @@ that will appear after the `inet` word.
 ```bash
 ifconfig
 ```
+
+# Find the users available in your server
+
+```bash
+cut -d: -f1 /etc/passwd
+```
+
+
 
 ```bash
 ssh user@ip_address
