@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.538">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Pedro Duarte Faria">
+<meta name="dcterms.date" content="2024-01-22">
+<meta name="description" content="Do you know how SSH works? Have you ever SSH into a remote computer before? In this post I want to describe how can you login into a remote computer using SSH.">
+
+<title>home |&gt; dplyr::glimpse() - Have you ever SSH before?</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../">
+<script src="../../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-7E6XG4WKHE"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
+</script>
+
+
+<link rel="stylesheet" href="../../../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../../index.html">
+    <span class="navbar-title">home |&gt; dplyr::glimpse()</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../about.html"> 
+<span class="menu-text">About Me</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Posts</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-posts">    
+        <li>
+    <a class="dropdown-item" href="../../../../posts/index.html">
+ <span class="dropdown-text">All posts</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../posts/en.html">
+ <span class="dropdown-text">Posts in english</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../posts/pt.html">
+ <span class="dropdown-text">Posts em português</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-publications" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Publications</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-publications">    
+        <li>
+    <a class="dropdown-item" href="../../../../publications/index.html">
+ <span class="dropdown-text">All publications</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../publications/en.html">
+ <span class="dropdown-text">Publications in English</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../publications/pt.html">
+ <span class="dropdown-text">Publicações em Português</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../open_source_contrib.html"> 
+<span class="menu-text">Open source contributions</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../donate.html"> 
+<span class="menu-text">Donate or Sponsor Me</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-cv" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">CV</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-cv">    
+        <li>
+    <a class="dropdown-item" href="../../../../files/cv/cv-english.pdf">
+ <span class="dropdown-text">CV in English</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../files/cv/cv-portuguese.pdf">
+ <span class="dropdown-text">CV em Português</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item compact">
+    <a class="nav-link" href="mailto:pedropark99@gmail.com"> <i class="bi bi-envelope-fill" role="img" aria-label="Email for contact">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/pedropark99"> <i class="bi bi-github" role="img" aria-label="Github profile">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://fosstodon.org/web/@pedropark99"> <i class="bi bi-mastodon" role="img" aria-label="Mastodon profile">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://medium.com/@pedropark99"> <i class="bi bi-medium" role="img" aria-label="Medium profile">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/PedroPark9"> <i class="bi bi-twitter" role="img" aria-label="Twitter profile">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/pedro-faria-a68140209/"> <i class="bi bi-linkedin" role="img" aria-label="Linkedin profile">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://pedro-faria.netlify.app/index.xml"> <i class="bi bi-rss" role="img" aria-label="RSS feed for Pedro's blog">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Have you ever SSH before?</h1>
+                  <div>
+        <div class="description">
+          Do you know how SSH works? Have you ever SSH into a remote computer before? In this post I want to describe how can you login into a remote computer using SSH.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">SSH</div>
+                <div class="quarto-category">Servers</div>
+                <div class="quarto-category">Network</div>
+              </div>
+                  </div>
+  </div>
+    
+  <div class="quarto-title-meta-author">
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-heading">Affiliation</div>
+    
+      <div class="quarto-title-meta-contents">
+      <p class="author">Pedro Duarte Faria </p>
+    </div>
+    <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              Blip
+            </p>
+        </div>
+    </div>
+
+  <div class="quarto-title-meta">
+
+        
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">January 22, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#ssh-client-vs-ssh-server" id="toc-ssh-client-vs-ssh-server" class="nav-link" data-scroll-target="#ssh-client-vs-ssh-server">SSH Client vs SSH Server</a></li>
+  <li><a href="#requirements" id="toc-requirements" class="nav-link" data-scroll-target="#requirements">Requirements</a></li>
+  <li><a href="#find-the-ip-address-of-your-server" id="toc-find-the-ip-address-of-your-server" class="nav-link" data-scroll-target="#find-the-ip-address-of-your-server">Find the IP Address of your Server</a>
+  <ul class="collapse">
+  <li><a href="#ipv4-vs-ipv6" id="toc-ipv4-vs-ipv6" class="nav-link" data-scroll-target="#ipv4-vs-ipv6">IPv4 vs IPv6</a></li>
+  <li><a href="#private-vs-public-ip-address" id="toc-private-vs-public-ip-address" class="nav-link" data-scroll-target="#private-vs-public-ip-address">Private vs public IP address</a></li>
+  <li><a href="#where-to-find-it" id="toc-where-to-find-it" class="nav-link" data-scroll-target="#where-to-find-it">Where to find it?</a></li>
+  <li><a href="#the-ip-address-of-my-ubuntu-ssh-server" id="toc-the-ip-address-of-my-ubuntu-ssh-server" class="nav-link" data-scroll-target="#the-ip-address-of-my-ubuntu-ssh-server">The IP address of my Ubuntu SSH Server</a></li>
+  </ul></li>
+  <li><a href="#find-the-users-available-in-your-server" id="toc-find-the-users-available-in-your-server" class="nav-link" data-scroll-target="#find-the-users-available-in-your-server">Find the users available in your server</a></li>
+  <li><a href="#check-if-the-ssh-server-is-running" id="toc-check-if-the-ssh-server-is-running" class="nav-link" data-scroll-target="#check-if-the-ssh-server-is-running">Check if the SSH Server is running!</a></li>
+  <li><a href="#making-the-ssh-connection" id="toc-making-the-ssh-connection" class="nav-link" data-scroll-target="#making-the-ssh-connection">Making the SSH connection</a></li>
+  <li><a href="#using-password-less-mode-in-the-ssh-connection" id="toc-using-password-less-mode-in-the-ssh-connection" class="nav-link" data-scroll-target="#using-password-less-mode-in-the-ssh-connection">Using password-less mode in the SSH connection</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>SSH stands for <em>Secure Socket Shell</em>, and it is probably the most used protocol today to establish a secure connection between two computers.</p>
+<p>In this article, I want to explain how can access a remote computer through a SSH connection.</p>
+</section>
+<section id="ssh-client-vs-ssh-server" class="level1">
+<h1>SSH Client vs SSH Server</h1>
+<p>Two computers are involved when you are trying to perform a SSH connection. One computer is your personal desktop/laptop, this is the computer you are using to perform the connection. This computer, is commonly reffered to as the SSH Client.</p>
+<p>The other computer, is the remote machine, and it is commonly reffered as the SSH Server. This SSH Server is the computer that you are trying to connect to, while the machine you are using to perform the connection, is the SSH Client.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./../ssh-client-server.png" class="img-fluid figure-img"></p>
+<figcaption>The SSH Client vs SSH Server relationship</figcaption>
+</figure>
+</div>
+<p>On this experiment that I’m sharing here, I used my Ubuntu (Linux) machine as the SSH Server, because most servers these days uses Linux distributions as their operational systems, such as Ubuntu, Debian and Alpine.</p>
+<p>In the other hand, my SSH Client here in this example is my Windows machine, or, to be more specific, I’m using my WSL (<em>Windows Subsystem for Linux</em>) with Ubuntu to perform the connection.</p>
+<p>So essentially, in this experiment, both sides of this relationship (the SSH Server and the SSH Client) are using Ubuntu distros as they operational system.</p>
+</section>
+<section id="requirements" class="level1">
+<h1>Requirements</h1>
+<p>What you must have to login into a remote computer using SSH? Well… you need the following things to establish a SSH connection between two computers:</p>
+<ul>
+<li>Both computers (SSH Client and Server) must be on and connected to the internet.</li>
+<li>The SSH Client needs to have “OpenSSH” installed.</li>
+<li>The SSH Server needs to have “OpenSSH Server” installed (which is also commonly reffered as the <code>sshd</code> program<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>).</li>
+<li>In order to connect into the SSH Server, this Server needs to have the <code>sshd</code> program working and running, so that it waits for incoming connections.</li>
+<li>You need to know the IP address (search specifically, for the public IPv4 address) of the SSH Server.</li>
+<li>You need to know which username you want to use when you login into the SSH Server, and also, which is the password of this username.</li>
+</ul>
+<p>One thing is optional:</p>
+<ul>
+<li>If you want to establish a password-less connection, then, you need to generate a SSH Key Pair, by using the <code>ssh-keygen</code> command <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</li>
+</ul>
+</section>
+<section id="find-the-ip-address-of-your-server" class="level1">
+<h1>Find the IP Address of your Server</h1>
+<p>The IP address of the remote computer (i.e.&nbsp;the SSH Server) you are trying to connect to is a crucial information, because SSH will use this information to find the actual computer. Without this information, SSH cannot locate where this computer is.</p>
+<section id="ipv4-vs-ipv6" class="level2">
+<h2 class="anchored" data-anchor-id="ipv4-vs-ipv6">IPv4 vs IPv6</h2>
+<p>There are two styles (or models) of IP addresses, IPv4 and IPv6. The IPv4 model is the one that you are looking for! So search for an IP address that have the IPv4 format, which are 4 numbers separated by dots. Examples: <code>127.0.0.1</code> (also known as the IP address for <em>localhost</em>) and <code>172.16.254.1</code>.</p>
+</section>
+<section id="private-vs-public-ip-address" class="level2">
+<h2 class="anchored" data-anchor-id="private-vs-public-ip-address">Private vs public IP address</h2>
+<p>There is also the distinction between <em>private</em> and <em>public</em> IP addresses that you need to be aware of. Some IP addresses are <em>private</em> in the meaning that they can only be acessed from a very specific location, which is your local network. That is, private IP addresses are visible only within the same WiFi/Ethernet you are connected in.</p>
+<p>In other words, if you are like in Italy for example, and you are trying to access a server that is in France, using the <em>private</em> IP address of that server, then, you will never succeed, it is impossible. Because a <em>private</em> IP address is only accesible if you were connected to the same WiFi/Ethernet that the server is. So you would need to be in the same phisical location of the server in France, and connected to the same network (WiFi/Ethernet) as the server to access it using it’s <em>private</em> IP address.</p>
+<p>All of this means that, if you are trying to connect to a remote computer that is far away from you, then you certainly need the <strong>public</strong> IP address of this computer, not the private one. So you should always look for the <strong>public</strong> IP address of the computer you are trying to login in.</p>
+</section>
+<section id="where-to-find-it" class="level2">
+<h2 class="anchored" data-anchor-id="where-to-find-it">Where to find it?</h2>
+<p>If, and only if, your SSH Server is actually a Windows machine (which is not commom for servers in general), then, you could open the Windows Settings Menu, and look for the section Network &amp; internet, and look for the “Properties” window of the WiFi/Ethernet that your server is connected to.</p>
+<p>In the print below, I used my Windows machine as an example, and I covered the sensible information with a red rectangle. But the IPv4 address can be found where I am pointing with the blue arrow (sorry, my Windows machine is in Portuguese):</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./../windows-ip.png" class="img-fluid figure-img"></p>
+<figcaption>Looking the IP Address in Windows</figcaption>
+</figure>
+</div>
+<p>But in contrast, if your server is a Linux machine, then, you can open a terminal, and run the command <code>ifconfig</code>, then look for the IPv4 address that will appear after the <code>inet</code> word.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ifconfig</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="the-ip-address-of-my-ubuntu-ssh-server" class="level2">
+<h2 class="anchored" data-anchor-id="the-ip-address-of-my-ubuntu-ssh-server">The IP address of my Ubuntu SSH Server</h2>
+<p>I cannot share the public IP address of Ubuntu machine, because if I did, then, I could suffer from remote attacks. If people know where my machine is, then, they can try to access it and break it.</p>
+<p>That is why, in this article, I’m going to use a fictituous IP address over the next examples. Let’s suppose I looked for the IPv4 of my Ubuntu computer, which is the SSH Server in this experiment, and I found the IP <code>171.0.0.1</code>. So every time you see this IP <code>171.0.0.1</code>, you know that this is the IP of my SSH Server.</p>
+</section>
+</section>
+<section id="find-the-users-available-in-your-server" class="level1">
+<h1>Find the users available in your server</h1>
+<p>Now, we need to know which username we want to use in the server’s login. If your SSH Server is a Linux machine, then, you can probably use the <code>root</code> username, which is the admin of the machine, it is the user with most privileges on the server. But using the <code>root</code> user is usually a bad practice.</p>
+<p>So I will choose to use the <code>pedro</code> user instead, which is my personal user, to login into my server. Now, if your SSH Server is a Linux machine, and you are unsure about which user to use, you can look at the available users in your server, so that you get a list of “available options”.</p>
+<p>To get this list of available users, run the following bash command in the terminal of your SSH Server:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cut</span> <span class="at">-d:</span> <span class="at">-f1</span> /etc/passwd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Simply choose whatever user you want from this list.</p>
+</section>
+<section id="check-if-the-ssh-server-is-running" class="level1">
+<h1>Check if the SSH Server is running!</h1>
+<p>The machine that is behaving as the SSH Server in this relationship, not only needs to be up and running, and connected to the internet. This machine also needs to have the <code>sshd</code> (SSH Server daemon process) program up and running as well.</p>
+<p>The <code>sshd</code> program, is the actual SSH Server process. In other words, that is the actual program that makes a computer behave as a SSH Server. This program will allocate (or take control over) a web socket in your computer, and will use this socket to wait and listen for incoming SSH connections, and it will handle/accept these connections as they come.</p>
+<p>Usually, SSH is a core functionality of any web server in the world. As a consequence, usually, the <code>sshd</code> program is already started right at the startup of the machine. So usually, you do not have the need to manually start the <code>sshd</code> program, it automatically starts for you.</p>
+<p>But you know… problems or bugs can happen, or maybe, you lack some specific configurations in your server. So how can you check if the <code>sshd</code> program is up and running in your server? If this server is a Linux machine, you can simply run the following bash command to check the current state of the <code>sshd</code> program:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">systemctl</span> status sshd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now, if for some reason, the above command shows that the <code>sshd</code> program is not in “active/running” state, you can manually start the <code>sshd</code> program by running the following command:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl start sshd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="making-the-ssh-connection" class="level1">
+<h1>Making the SSH connection</h1>
+<p>Now that we have all the information available, and we are sure that the SSH Server is up and running, we can effectively make the connection with SSH.</p>
+<p>Everything you need to do now, is to run the <code>ssh</code> command in the terminal of your SSH Client, which the username you want to use in the login, followed by a <code>@</code> and the IP Address of the SSH Server. So the command have the format of <code>ssh {user}@{ip_address}</code>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> pedro@171.0.0.1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>After you run the above command, you probably will be prompted with some questions, just answer “yes”, or whatever answer is most appropriate. After these questions, the SSH Server will ask you to provide the password of the user you choose. In the above example, I used the <code>pedro</code> user to login into the server, so I need to type the password of this user.</p>
+<p>If you provide the correct password, the login will succeed and SSH connection to the server will be complete! After that, the server will provide a new bash terminal for you. Through this terminal, you have a lot of control over the server, and you can send whatever bash command you want to be executed into the server.</p>
+<p>The output will probably look something like this. If you see the “Last login: …” message, then, your SSH connection was succesful and you currently are inside the bash terminal of the SSH Server. Now, you can send whatever bash command you want to be executed by the server.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Last</span> login: Wed Jan 24 20:27:17 2024</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pedro@pedro:~/$</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="using-password-less-mode-in-the-ssh-connection" class="level1">
+<h1>Using password-less mode in the SSH connection</h1>
+<p>Every time you connect to the server, you will need to provide the password of the user you are using to login. However, SSH offers a mode that does need a password, which is known as the “password-less mode of SSH”, and in fact, it is the recommended way of connecting to a server.</p>
+<p>In other words, using the “password-less mode of SSH” is the most secure way of building a SSH connection, and because of that, it is how you should connect to your server. This mode uses a key pair to autenthicate the user into the server. This key pair is composed by a public key and a private key, and when you use this mode in SSH, all of the communications made in the SSH connection (between the server and the client) are encrypted by using this pair of keys.</p>
+<p>This means that, in order to use this mode of SSH, you need first to generate a key pair, if you don’t have one already. You can generate this pair by running the <code>ssh-keygen</code> command in the terminal of your SSH Client.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh-keygen</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In theory, you can run this <code>ssh-keygen</code> command in whatever computer you want. You do not need to generate this key pair in the SSH Client necessarily. This computer does not even need to be involved in the SSH relationship here. You can generate this key pair in any place you can.</p>
+<p>However! What really essential here, is that <strong>the SSH Client needs to have both the public and the private key</strong>, stored inside of him. In contrast, the SSH Server needs to have only the public key.</p>
+<p>This is a very important/essential detail!</p>
+<p>As a result, is much easier if you run the <code>ssh-keygen</code> command inside the SSH Client. Because then, you need to do nothing, since both keys were generated inside the SSH Client, and as a consequence, they are already stored inside the SSH Client. All you have to do is to send the public key that was generated to the SSH Server.</p>
+<p>But if you generated this key pair in a different computer, like the notebook of your friend, then, you need to add both the public and private keys to the computer that you are using as the SSH Client in this relationship.</p>
+<p>However, is important to emphasize, <strong>you should avoid at all costs</strong> moving the private key around! In other words, the private key is an extremely sensitive information, and you should not send it to anyone. If anyone with bad intentions have access to this private key, he may try to get access to your server and make some very serious damage.</p>
+<p>That is why we usually generate this key pair inside the SSH Client. Because then we avoid the need to send/move this private key to somewhere else.</p>
+<p>Having that said, there is no problem to exchange the public key with other people. The public key of this key pair, is really public in the sense that there is no danger if someone else discover this key. In fact, you need to exchange this public key with the other side of the relationship. The SSH Server in this relationship needs to know which is your public key.</p>
+<p>One popular way of sending the public key to the SSH Server, is to use the <code>ssh-copy-id</code> command. You execute this command in the SSH Client. You provide the path to the public key you generated after the <code>-i</code> option, and after that, you provide the same information (username and IP address) you start the connection with the server before:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ssh-copy-id</span> <span class="at">-i</span> ~/.ssh/id_rsa.pub pedro@171.0.0.1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You probably will need to provide the password of your username one more time in this command. But if this command runs succesfully, then, over the next times you login into the server, you will not need a password anymore. Because the server will authenticate you automatically based on your key pair.</p>
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p><a href="https://www.ssh.com/academy/ssh/sshd" class="uri">https://www.ssh.com/academy/ssh/sshd</a><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p><a href="https://www.ssh.com/academy/ssh/keygen" class="uri">https://www.ssh.com/academy/ssh/keygen</a><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      return note.innerHTML;
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

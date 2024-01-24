@@ -14,6 +14,7 @@
   {
     "listing": "/posts/index.html",
     "items": [
+      "/posts/2024/2024-01-22-did-you-ever-ssh/en/index.html",
       "/posts/2024/2024-01-13-spark-cache/en/index.html",
       "/posts/2023/2023-12-31-introducing-typst/en/index.html",
       "/posts/2023/2023-12-29-vim-cheatsheet/en/index.html",
@@ -42,6 +43,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/2024/2024-01-22-did-you-ever-ssh/en/index.html",
       "/posts/2024/2024-01-13-spark-cache/en/index.html",
       "/posts/2023/2023-12-31-introducing-typst/en/index.html",
       "/posts/2023/2023-12-29-vim-cheatsheet/en/index.html",
@@ -72,6 +74,7 @@
   {
     "listing": "/posts/en.html",
     "items": [
+      "/posts/2024/2024-01-22-did-you-ever-ssh/en/index.html",
       "/posts/2024/2024-01-13-spark-cache/en/index.html",
       "/posts/2023/2023-12-31-introducing-typst/en/index.html",
       "/posts/2023/2023-12-29-vim-cheatsheet/en/index.html",

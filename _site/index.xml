@@ -9,8 +9,173 @@
 <link>https://pedro-faria.netlify.app/</link>
 <atom:link href="https://pedro-faria.netlify.app/index.xml" rel="self" type="application/rss+xml"/>
 <description>A blog about programming and data analysis, specially with R and Python</description>
-<generator>quarto-1.4.532</generator>
-<lastBuildDate>Sat, 13 Jan 2024 03:00:00 GMT</lastBuildDate>
+<generator>quarto-1.4.538</generator>
+<lastBuildDate>Mon, 22 Jan 2024 03:00:00 GMT</lastBuildDate>
+<item>
+  <title>Have you ever SSH before?</title>
+  <dc:creator>Pedro Duarte Faria</dc:creator>
+  <link>https://pedro-faria.netlify.app/posts/2024/2024-01-22-did-you-ever-ssh/en/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>SSH stands for <em>Secure Socket Shell</em>, and it is probably the most used protocol today to establish a secure connection between two computers.</p>
+<p>In this article, I want to explain how can access a remote computer through a SSH connection.</p>
+</section>
+<section id="ssh-client-vs-ssh-server" class="level1">
+<h1>SSH Client vs SSH Server</h1>
+<p>Two computers are involved when you are trying to perform a SSH connection. One computer is your personal desktop/laptop, this is the computer you are using to perform the connection. This computer, is commonly reffered to as the SSH Client.</p>
+<p>The other computer, is the remote machine, and it is commonly reffered as the SSH Server. This SSH Server is the computer that you are trying to connect to, while the machine you are using to perform the connection, is the SSH Client.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://pedro-faria.netlify.app/posts/2024/2024-01-22-did-you-ever-ssh/ssh-client-server.png" class="img-fluid figure-img"></p>
+<figcaption>The SSH Client vs SSH Server relationship</figcaption>
+</figure>
+</div>
+<p>On this experiment that I’m sharing here, I used my Ubuntu (Linux) machine as the SSH Server, because most servers these days uses Linux distributions as their operational systems, such as Ubuntu, Debian and Alpine.</p>
+<p>In the other hand, my SSH Client here in this example is my Windows machine, or, to be more specific, I’m using my WSL (<em>Windows Subsystem for Linux</em>) with Ubuntu to perform the connection.</p>
+<p>So essentially, in this experiment, both sides of this relationship (the SSH Server and the SSH Client) are using Ubuntu distros as they operational system.</p>
+</section>
+<section id="requirements" class="level1">
+<h1>Requirements</h1>
+<p>What you must have to login into a remote computer using SSH? Well… you need the following things to establish a SSH connection between two computers:</p>
+<ul>
+<li>Both computers (SSH Client and Server) must be on and connected to the internet.</li>
+<li>The SSH Client needs to have “OpenSSH” installed.</li>
+<li>The SSH Server needs to have “OpenSSH Server” installed (which is also commonly reffered as the <code>sshd</code> program<sup>1</sup>).</li>
+<li>In order to connect into the SSH Server, this Server needs to have the <code>sshd</code> program working and running, so that it waits for incoming connections.</li>
+<li>You need to know the IP address (search specifically, for the public IPv4 address) of the SSH Server.</li>
+<li>You need to know which username you want to use when you login into the SSH Server, and also, which is the password of this username.</li>
+</ul>
+<p>One thing is optional:</p>
+<ul>
+<li>If you want to establish a password-less connection, then, you need to generate a SSH Key Pair, by using the <code>ssh-keygen</code> command <sup>2</sup>.</li>
+</ul>
+</section>
+<section id="find-the-ip-address-of-your-server" class="level1">
+<h1>Find the IP Address of your Server</h1>
+<p>The IP address of the remote computer (i.e.&nbsp;the SSH Server) you are trying to connect to is a crucial information, because SSH will use this information to find the actual computer. Without this information, SSH cannot locate where this computer is.</p>
+<section id="ipv4-vs-ipv6" class="level2">
+<h2 class="anchored" data-anchor-id="ipv4-vs-ipv6">IPv4 vs IPv6</h2>
+<p>There are two styles (or models) of IP addresses, IPv4 and IPv6. The IPv4 model is the one that you are looking for! So search for an IP address that have the IPv4 format, which are 4 numbers separated by dots. Examples: <code>127.0.0.1</code> (also known as the IP address for <em>localhost</em>) and <code>172.16.254.1</code>.</p>
+</section>
+<section id="private-vs-public-ip-address" class="level2">
+<h2 class="anchored" data-anchor-id="private-vs-public-ip-address">Private vs public IP address</h2>
+<p>There is also the distinction between <em>private</em> and <em>public</em> IP addresses that you need to be aware of. Some IP addresses are <em>private</em> in the meaning that they can only be acessed from a very specific location, which is your local network. That is, private IP addresses are visible only within the same WiFi/Ethernet you are connected in.</p>
+<p>In other words, if you are like in Italy for example, and you are trying to access a server that is in France, using the <em>private</em> IP address of that server, then, you will never succeed, it is impossible. Because a <em>private</em> IP address is only accesible if you were connected to the same WiFi/Ethernet that the server is. So you would need to be in the same phisical location of the server in France, and connected to the same network (WiFi/Ethernet) as the server to access it using it’s <em>private</em> IP address.</p>
+<p>All of this means that, if you are trying to connect to a remote computer that is far away from you, then you certainly need the <strong>public</strong> IP address of this computer, not the private one. So you should always look for the <strong>public</strong> IP address of the computer you are trying to login in.</p>
+</section>
+<section id="where-to-find-it" class="level2">
+<h2 class="anchored" data-anchor-id="where-to-find-it">Where to find it?</h2>
+<p>If, and only if, your SSH Server is actually a Windows machine (which is not commom for servers in general), then, you could open the Windows Settings Menu, and look for the section Network &amp; internet, and look for the “Properties” window of the WiFi/Ethernet that your server is connected to.</p>
+<p>In the print below, I used my Windows machine as an example, and I covered the sensible information with a red rectangle. But the IPv4 address can be found where I am pointing with the blue arrow (sorry, my Windows machine is in Portuguese):</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://pedro-faria.netlify.app/posts/2024/2024-01-22-did-you-ever-ssh/windows-ip.png" class="img-fluid figure-img"></p>
+<figcaption>Looking the IP Address in Windows</figcaption>
+</figure>
+</div>
+<p>But in contrast, if your server is a Linux machine, then, you can open a terminal, and run the command <code>ifconfig</code>, then look for the IPv4 address that will appear after the <code>inet</code> word.</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">ifconfig</span></span></code></pre></div>
+</section>
+<section id="the-ip-address-of-my-ubuntu-ssh-server" class="level2">
+<h2 class="anchored" data-anchor-id="the-ip-address-of-my-ubuntu-ssh-server">The IP address of my Ubuntu SSH Server</h2>
+<p>I cannot share the public IP address of Ubuntu machine, because if I did, then, I could suffer from remote attacks. If people know where my machine is, then, they can try to access it and break it.</p>
+<p>That is why, in this article, I’m going to use a fictituous IP address over the next examples. Let’s suppose I looked for the IPv4 of my Ubuntu computer, which is the SSH Server in this experiment, and I found the IP <code>171.0.0.1</code>. So every time you see this IP <code>171.0.0.1</code>, you know that this is the IP of my SSH Server.</p>
+</section>
+</section>
+<section id="find-the-users-available-in-your-server" class="level1">
+<h1>Find the users available in your server</h1>
+<p>Now, we need to know which username we want to use in the server’s login. If your SSH Server is a Linux machine, then, you can probably use the <code>root</code> username, which is the admin of the machine, it is the user with most privileges on the server. But using the <code>root</code> user is usually a bad practice.</p>
+<p>So I will choose to use the <code>pedro</code> user instead, which is my personal user, to login into my server. Now, if your SSH Server is a Linux machine, and you are unsure about which user to use, you can look at the available users in your server, so that you get a list of “available options”.</p>
+<p>To get this list of available users, run the following bash command in the terminal of your SSH Server:</p>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cut</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-d:</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-f1</span> /etc/passwd</span></code></pre></div>
+<p>Simply choose whatever user you want from this list.</p>
+</section>
+<section id="check-if-the-ssh-server-is-running" class="level1">
+<h1>Check if the SSH Server is running!</h1>
+<p>The machine that is behaving as the SSH Server in this relationship, not only needs to be up and running, and connected to the internet. This machine also needs to have the <code>sshd</code> (SSH Server daemon process) program up and running as well.</p>
+<p>The <code>sshd</code> program, is the actual SSH Server process. In other words, that is the actual program that makes a computer behave as a SSH Server. This program will allocate (or take control over) a web socket in your computer, and will use this socket to wait and listen for incoming SSH connections, and it will handle/accept these connections as they come.</p>
+<p>Usually, SSH is a core functionality of any web server in the world. As a consequence, usually, the <code>sshd</code> program is already started right at the startup of the machine. So usually, you do not have the need to manually start the <code>sshd</code> program, it automatically starts for you.</p>
+<p>But you know… problems or bugs can happen, or maybe, you lack some specific configurations in your server. So how can you check if the <code>sshd</code> program is up and running in your server? If this server is a Linux machine, you can simply run the following bash command to check the current state of the <code>sshd</code> program:</p>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">systemctl</span> status sshd</span></code></pre></div>
+<p>Now, if for some reason, the above command shows that the <code>sshd</code> program is not in “active/running” state, you can manually start the <code>sshd</code> program by running the following command:</p>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sudo</span> systemctl start sshd</span></code></pre></div>
+</section>
+<section id="making-the-ssh-connection" class="level1">
+<h1>Making the SSH connection</h1>
+<p>Now that we have all the information available, and we are sure that the SSH Server is up and running, we can effectively make the connection with SSH.</p>
+<p>Everything you need to do now, is to run the <code>ssh</code> command in the terminal of your SSH Client, which the username you want to use in the login, followed by a <code>@</code> and the IP Address of the SSH Server. So the command have the format of <code>ssh {user}@{ip_address}</code>.</p>
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ssh</span> pedro@171.0.0.1</span></code></pre></div>
+<p>After you run the above command, you probably will be prompted with some questions, just answer “yes”, or whatever answer is most appropriate. After these questions, the SSH Server will ask you to provide the password of the user you choose. In the above example, I used the <code>pedro</code> user to login into the server, so I need to type the password of this user.</p>
+<p>If you provide the correct password, the login will succeed and SSH connection to the server will be complete! After that, the server will provide a new bash terminal for you. Through this terminal, you have a lot of control over the server, and you can send whatever bash command you want to be executed into the server.</p>
+<p>The output will probably look something like this. If you see the “Last login: …” message, then, your SSH connection was succesful and you currently are inside the bash terminal of the SSH Server. Now, you can send whatever bash command you want to be executed by the server.</p>
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">Last</span> login: Wed Jan 24 20:27:17 2024</span>
+<span id="cb6-2"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">pedro@pedro:~/$</span></span></code></pre></div>
+</section>
+<section id="using-password-less-mode-in-the-ssh-connection" class="level1">
+<h1>Using password-less mode in the SSH connection</h1>
+<p>Every time you connect to the server, you will need to provide the password of the user you are using to login. However, SSH offers a mode that does need a password, which is known as the “password-less mode of SSH”, and in fact, it is the recommended way of connecting to a server.</p>
+<p>In other words, using the “password-less mode of SSH” is the most secure way of building a SSH connection, and because of that, it is how you should connect to your server. This mode uses a key pair to autenthicate the user into the server. This key pair is composed by a public key and a private key, and when you use this mode in SSH, all of the communications made in the SSH connection (between the server and the client) are encrypted by using this pair of keys.</p>
+<p>This means that, in order to use this mode of SSH, you need first to generate a key pair, if you don’t have one already. You can generate this pair by running the <code>ssh-keygen</code> command in the terminal of your SSH Client.</p>
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ssh-keygen</span></span></code></pre></div>
+<p>In theory, you can run this <code>ssh-keygen</code> command in whatever computer you want. You do not need to generate this key pair in the SSH Client necessarily. This computer does not even need to be involved in the SSH relationship here. You can generate this key pair in any place you can.</p>
+<p>However! What really essential here, is that <strong>the SSH Client needs to have both the public and the private key</strong>, stored inside of him. In contrast, the SSH Server needs to have only the public key.</p>
+<p>This is a very important/essential detail!</p>
+<p>As a result, is much easier if you run the <code>ssh-keygen</code> command inside the SSH Client. Because then, you need to do nothing, since both keys were generated inside the SSH Client, and as a consequence, they are already stored inside the SSH Client. All you have to do is to send the public key that was generated to the SSH Server.</p>
+<p>But if you generated this key pair in a different computer, like the notebook of your friend, then, you need to add both the public and private keys to the computer that you are using as the SSH Client in this relationship.</p>
+<p>However, is important to emphasize, <strong>you should avoid at all costs</strong> moving the private key around! In other words, the private key is an extremely sensitive information, and you should not send it to anyone. If anyone with bad intentions have access to this private key, he may try to get access to your server and make some very serious damage.</p>
+<p>That is why we usually generate this key pair inside the SSH Client. Because then we avoid the need to send/move this private key to somewhere else.</p>
+<p>Having that said, there is no problem to exchange the public key with other people. The public key of this key pair, is really public in the sense that there is no danger if someone else discover this key. In fact, you need to exchange this public key with the other side of the relationship. The SSH Server in this relationship needs to know which is your public key.</p>
+<p>One popular way of sending the public key to the SSH Server, is to use the <code>ssh-copy-id</code> command. You execute this command in the SSH Client. You provide the path to the public key you generated after the <code>-i</code> option, and after that, you provide the same information (username and IP address) you start the connection with the server before:</p>
+<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">ssh-copy-id</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-i</span> ~/.ssh/id_rsa.pub pedro@171.0.0.1</span></code></pre></div>
+<p>You probably will need to provide the password of your username one more time in this command. But if this command runs succesfully, then, over the next times you login into the server, you will not need a password anymore. Because the server will authenticate you automatically based on your key pair.</p>
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p><a href="https://www.ssh.com/academy/ssh/sshd" class="uri">https://www.ssh.com/academy/ssh/sshd</a>↩︎</p></li>
+<li id="fn2"><p><a href="https://www.ssh.com/academy/ssh/keygen" class="uri">https://www.ssh.com/academy/ssh/keygen</a>↩︎</p></li>
+</ol>
+</section></div> ]]></description>
+  <category>SSH</category>
+  <category>Servers</category>
+  <category>Network</category>
+  <guid>https://pedro-faria.netlify.app/posts/2024/2024-01-22-did-you-ever-ssh/en/</guid>
+  <pubDate>Mon, 22 Jan 2024 03:00:00 GMT</pubDate>
+</item>
 <item>
   <title>How to use the cache effectively on Apache Spark</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
@@ -281,6 +446,64 @@ Patidar, Charchit. 2023. <span>“How Cache Works in Apache Spark.”</span> <a 
   <category>Performance</category>
   <guid>https://pedro-faria.netlify.app/posts/2024/2024-01-13-spark-cache/en/</guid>
   <pubDate>Sat, 13 Jan 2024 03:00:00 GMT</pubDate>
+  <media:content url="https://pedro-faria.netlify.app/posts/2024/2024-01-13-spark-cache/memory.svg" medium="image" type="image/svg+xml"/>
+</item>
+<item>
+  <title>Introduction to pyspark</title>
+  <dc:creator>Pedro Duarte Faria</dc:creator>
+  <link>https://pedro-faria.netlify.app/publications/book/introd-pyspark/en/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="about-the-book" class="level1">
+<h1>About the book</h1>
+<p>This book is for anyone who wants to learn quickly how to use <code>pyspark</code> to effectively load, process, and transform large volumes of data using Python.</p>
+<p><a href="https://www.amazon.com/dp/B0CRYMVWDN"> <button type="button" class="btn btn-primary">Buy a copy of the book!</button></a> <a href="https://pedropark99.github.io/Introd-pyspark/"> <button type="button" class="btn btn-primary">Read online</button></a> <a href="https://github.com/pedropark99/Introd-pyspark"> <button type="button" class="btn btn-primary">Official repository</button></a></p>
+<p>In more detail, this is a quick and introductory book about <code>pyspark</code>, which is the Python API for Apache Spark. Apache Spark is the de facto standard engine for big-data analytics. It is largely used to build data processing, data ingestion, and machine learning applications that process very large volumes of data.</p>
+<p>One of the many reasons why Apache Spark became popular is because of its APIs. You can build Spark applications using different programming languages, such as Python, R, and Scala. But this book focuses solely on the Python API.</p>
+<p>In this book, you will learn about:</p>
+<ul>
+<li>How an Apache Spark application works?</li>
+<li>What are Spark DataFrames?</li>
+<li>How to build, transform and model your Spark DataFrame.</li>
+<li>How to import data into (or export data out of) Apache Spark.</li>
+<li>How to work with SQL inside pyspark.</li>
+<li>Tools for manipulating specific data types (e.g.&nbsp;strings, dates and datetimes).</li>
+<li>How to use window functions.</li>
+</ul>
+</section>
+<section id="motivation-for-the-book" class="level1">
+<h1>Motivation for the book</h1>
+<p>In summary, this book aims to give a solid introduction (for python and not python users) to the <code>pyspark</code> package, and on how to use it to build Spark applications for data pipelines and interactive data analysis.</p>
+<p>Although we have a good range of materials about Apache Spark in general, such as <span class="citation" data-cites="damji2020">Damji et al. (2020)</span> and <span class="citation" data-cites="chambers2018">Chambers and Zaharia (2018)</span>, we do not have much abundance of materials about the APIs of Spark in “foreign” languages, like the Python (<code>pyspark</code>) and R (<code>SparkR</code>) APIs.</p>
+<p>The reason for this is simple: the Spark API have a consistent structure across all languages. As consequence, a general book about Spark can fairly cover all languages at once. In other words, Spark code in Scala can be easily translated into python code with <code>pyspark</code>. Because the structure of the code is very similar between all languages.</p>
+<p>So why this book? First, Python is a more popular and friendly language than Scala or Java. If the reader is not interested in learning Java or Scala, why show Java/Scala code to him? Is very important to focus solely on what interest the reader, specially if it is in a language that he is familiar with. Second, I had some time to spent, and a lot of practical experience with <code>pyspark</code> on production to share (so… why not write a book about it?).</p>
+</section>
+<section id="cover" class="level1">
+<h1>Cover</h1>
+<p><img src="https://pedro-faria.netlify.app/publications/book/introd-pyspark/featured.png" class="img-fluid" style="width:100.0%"></p>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0">
+<div id="ref-chambers2018" class="csl-entry">
+Chambers, Bill, and Matei Zaharia. 2018. <em>Spark: The Definitive Guide: Big Data Processing Made Simple</em>. Sebastopol, CA: O’Reilly Media.
+</div>
+<div id="ref-damji2020" class="csl-entry">
+Damji, Jules, Brooke Wenig, Tathagata Das, and Denny Lee. 2020. <em>Learning Spark: Lightning-Fast Data Analytics</em>. Sebastopol, CA: O’Reilly Media.
+</div>
+</div></section></div> ]]></description>
+  <category>Python</category>
+  <category>Apache Spark</category>
+  <category>Book</category>
+  <guid>https://pedro-faria.netlify.app/publications/book/introd-pyspark/en/</guid>
+  <pubDate>Tue, 09 Jan 2024 03:00:00 GMT</pubDate>
+  <media:content url="https://pedro-faria.netlify.app/publications/book/introd-pyspark/featured.png" medium="image" type="image/png" height="215" width="144"/>
 </item>
 <item>
   <title>My experience with Typst, the potential sucessor of LaTex</title>
@@ -4969,224 +5192,6 @@ font-style: inherit;">sum</span>)</span></code></pre></div>
   <guid>https://pedro-faria.netlify.app/publications/book/introducao_linguagem_R/pt/</guid>
   <pubDate>Thu, 01 Dec 2022 03:00:00 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/publications/book/introducao_linguagem_R/featured.png" medium="image" type="image/png" height="203" width="144"/>
-</item>
-<item>
-  <title>Introducing the {figma} R package</title>
-  <dc:creator>Pedro Duarte Faria</dc:creator>
-  <link>https://pedro-faria.netlify.app/posts/2022/2022-11-06-figma-pkgv0.1.0/en/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>I’m very happy to announce the realease of <code>figma</code> R package to CRAN! This package provides a R interface (or a web client/wrapper) to the <a href="https://www.figma.com/developers/api">Figma API</a>. Below we have all the important links about this package:</p>
-<p><a href="https://github.com/pedropark99/figma"> <button type="button" class="btn btn-primary">Official repository</button></a> <a href="https://pedropark99.github.io/figma/"> <button type="button" class="btn btn-primary">Package website</button></a> <a href="https://cran.r-project.org/package=figma"> <button type="button" class="btn btn-primary">Page on CRAN</button></a></p>
-<p>This is the first release (or the first version) of the package, and for now, it have all the necessary functionality to get all data from a Figma file, and bring it to your R session. But in the future, the package will include more functionalities and endpoints. Please, if you can, test this package and give feedbacks or report bugs by <a href="https://github.com/pedropark99/figma/issues">sending Issues on the official repository</a>.</p>
-</section>
-<section id="getting-started" class="level2">
-<h2 class="anchored" data-anchor-id="getting-started">Getting started</h2>
-<p>Fist of all, you need to install the package on your machine, and to do that, you can use this code:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">install.packages</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"figma"</span>)</span></code></pre></div>
-</div>
-<p>Or, to install the development version directly from GitHub:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1">devtools<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">install_github</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"pedropark99/figma"</span>)</span></code></pre></div>
-</div>
-<p>Now, to get the data of a Figma file through the Figma API, you have to collect two key variables about your file and your credentials. They are:</p>
-<ul>
-<li><code>file_key</code>: The ID (or the “key”) that identifies your Figma file;</li>
-<li><code>token</code>: Your personal access token from the Figma platform;</li>
-</ul>
-<p>To use specifically the <code>figma::get_figma_page()</code> function, you will need to collect a third information, which is the <code>node_id</code>, or the ID that identifies a canvas/page of your Figma file. I explain, in details, on how to collect these key variables on the <a href="https://pedropark99.github.io/figma/articles/figma.html">main vignette package</a>. For brevity reasons, lets assume in this blog post that you already have collected these variables.</p>
-</section>
-<section id="use-get_figma_file-to-get-your-figma-file" class="level2">
-<h2 class="anchored" data-anchor-id="use-get_figma_file-to-get-your-figma-file">Use <code>get_figma_file()</code> to get your Figma file</h2>
-<p>Now that you have the key (or ID) that identifies your Figma file, and your personal token that identifies yourself, you can use <code>figma::get_figma_file()</code> to get your Figma file:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">library</span>(figma)</span>
-<span id="cb3-2">file_key <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"hch8YlkIrYbU3raDzjPvCz"</span></span>
-<span id="cb3-3"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Insert your personal token:</span></span>
-<span id="cb3-4">token <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Your personal token ..."</span></span>
-<span id="cb3-5"></span>
-<span id="cb3-6"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Returns a `httr::response` object:</span></span>
-<span id="cb3-7">figma_file <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> figma<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">get_figma_file</span>(</span>
-<span id="cb3-8">  file_key, token</span>
-<span id="cb3-9">)</span></code></pre></div>
-</div>
-<p>The functions from <code>figma</code> package returns a <code>httr::response</code> object by default. But you can use the <code>.output_format</code> argument to fit the data into a more intuitive data strucuture. For example, a <code>tibble::tibble</code> object:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Returns a `tibble::tibble` object:</span></span>
-<span id="cb4-2">figma_file <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> figma<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">get_figma_file</span>(</span>
-<span id="cb4-3">  file_key, token,</span>
-<span id="cb4-4">  <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">.output_format =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"tibble"</span></span>
-<span id="cb4-5">)</span>
-<span id="cb4-6"></span>
-<span id="cb4-7"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">print</span>(figma_file)</span></code></pre></div>
-</div>
-<pre><code>#&gt; # A tibble: 5 × 7
-#&gt;   canvas_id canvas_name canvas_type object_id object_name   objec…¹ object_att…²
-#&gt;   &lt;chr&gt;     &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;     &lt;chr&gt;         &lt;chr&gt;   &lt;list&gt;      
-#&gt; 1 0:1       Page 1      CANVAS      1:2       Background    RECTAN… &lt;named list&gt;
-#&gt; 2 0:1       Page 1      CANVAS      5:2       Paragraph     TEXT    &lt;named list&gt;
-#&gt; 3 0:1       Page 1      CANVAS      5:3       Arrow         VECTOR  &lt;named list&gt;
-#&gt; 4 5:4       Page 2      CANVAS      5:5       BackgroundPa… RECTAN… &lt;named list&gt;
-#&gt; 5 5:4       Page 2      CANVAS      5:6       Texto da pág… TEXT    &lt;named list&gt;
-#&gt; # … with abbreviated variable names ¹​object_type, ²​object_attributes</code></pre>
-<p>Each row in the above <code>data.frame</code> is an object drawn in a canvas/page in your Figma file. Every object that you drawn in the canvas of your Figma file, can have a different type (like RECTANGLE, CIRCLE, TEXT, etc.). And objects of different types usually have different attributes.</p>
-<p>For example, TEXT objects have a <code>characters</code> attribute, which have the exact text that is written in the text box. In the other hand, RECTANGLE objects does not have such attribute.</p>
-<p>All the attributes of each object are in the <code>​object_attributes</code> column, which is a <code>&lt;list&gt;</code> column. Each row (or, if you prefer, each element) in this column is a list with all the attributes of the object described in the corresponding row. For example, to collect the <code>characters</code> attribute of the first TEXT object described in <code>figma_file</code> (which is in the 2nd row), you could do this:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1">figma_file<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">$</span>object_attributes[[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>]][[<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"characters"</span>]]</span></code></pre></div>
-</div>
-<pre><code>[1] "Um texto qualquer, que não sei se vai dar certo"</code></pre>
-<p>Or, you could the functions from <code>dplyr</code> and <code>purrr</code> packages to extract the <code>characters</code> attribute from all TEXT objects of your Figma file, like this:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1">text_objects <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> figma_file <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">|&gt;</span> </span>
-<span id="cb8-2">  dplyr<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">filter</span>(object_type <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'TEXT'</span>) </span>
-<span id="cb8-3"></span>
-<span id="cb8-4">text_objects[[<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'object_attributes'</span>]] <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">|&gt;</span> </span>
-<span id="cb8-5">  purrr<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">map_chr</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'characters'</span>)</span></code></pre></div>
-</div>
-<pre><code>[1] "Um texto qualquer, que não sei se vai dar certo" "Texto da página 2"</code></pre>
-</section>
-<section id="other-scopes-of-data" class="level1">
-<h1>Other scopes of data</h1>
-<p>The <code>figma::get_figma_file()</code> get the data of all objects drawn in all canvas/pages of a Figma file. But, maybe, you don’t need all data from your file. Maybe you just need the data from a section, or a specific part of your Figma file.</p>
-<p>For these occasions, the <code>figma</code> package offers the <code>figma::get_figma_page()</code> (get data of objects drawn in a specific canvas/page of your file) and <code>figma::get_document_info()</code> (get metadata about your Figma file) functions.</p>
-<p>These functions work basically the same way as <code>figma::get_figma_file()</code>, they have the same arguments (except <code>figma::get_figma_page()</code> which have a extra argument <code>node_id</code>). Check the <a href="https://pedropark99.github.io/figma/reference/index.html">documentation of these functions</a>, and the <a href="https://pedropark99.github.io/figma/articles/figma.html">main vignette of the package</a> to see examples.</p>
-
-
-</section>
-
- ]]></description>
-  <category>R</category>
-  <category>Package</category>
-  <category>Figma</category>
-  <category>API</category>
-  <guid>https://pedro-faria.netlify.app/posts/2022/2022-11-06-figma-pkgv0.1.0/en/</guid>
-  <pubDate>Sun, 06 Nov 2022 03:00:00 GMT</pubDate>
-  <media:content url="https://pedro-faria.netlify.app/posts/2022/2022-11-06-figma-pkgv0.1.0/featured.png" medium="image" type="image/png" height="79" width="144"/>
-</item>
-<item>
-  <title>Novidades da 3° edição de Introdução à Linguagem R: seus fundamentos e sua prática</title>
-  <dc:creator>Pedro Duarte Faria</dc:creator>
-  <link>https://pedro-faria.netlify.app/posts/2022/2022-04-06-3nd-edition-rbook/pt/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<section id="introdução" class="level1">
-<h1>Introdução</h1>
-<p>É com muito prazer que venho compartilhar com você as novidades que estou trazendo para essa nova edição do livro <a href="https://pedro-faria.netlify.app/pt/publication/book/introducao_linguagem_r/">Introdução à Linguagem R: seus fundamentos e sua prática</a>. O lançamento desta nova edição deve ocorrer ainda no meio de Abril de 2022 📆, portanto, fique atento 😉.</p>
-</section>
-<section id="o-que-temos-de-novo" class="level1">
-<h1>O que temos de novo?</h1>
-<p>Temos seis novos capítulos 🤯, os quais compõe uma nova parte do livro e, trazem consigo, grandes avanços sobre o processo de desenvolvimento de programas no R. Além disso, várias melhorias foram feitas em seções específicas do livro, especialmente sobre o capítulo 2.</p>
-<p>Primeiro, houve uma reorganização significativa do livro. Os capítulos pré-existentes foram reorganizados em quatro partes diferentes. Já a quinta e nova parte (Funções e <em>Loops</em>: construindo os seus próprios programas e automatizando tarefas) é composta pelos seis novos capítulos introduzidos nesta edição.</p>
-<p>Segundo, o capítulo de Funções e <em>Loops</em> foi completamente reescrito, expandido, e, repartido em dois novos capítulos 🥳🎉🎉🎉. Mais especificamente, os capítulos 14 (Funções) e 15 (<em>Loops</em>) desta edição.</p>
-<p>Terceiro, o capítulo 16 desta edição traz uma das novidades programadas desde a segunda edição: um novo (e robusto) capítulo sobre <em>functional programming</em>. Com essa adição, esta obra se torna uma referência mais moderna e, se aproxima dos padrões adotados hoje pela comunidade internacional de R 😎.</p>
-<p>Quarto, <em>environments</em> e as regras de <em>scoping</em> da linguagem são dois tópicos relativamente avançados, e que costumam causar certa confusão em muitos iniciantes. Por isso, um novo capítulo foi produzido para descrever essas funcionalidades que sustentam partes essenciais da linguagem, assim como de alguns dos pacotes que introduzimos ao longo do livro (e.g.&nbsp;<code>dplyr</code> e <code>ggplot2</code>).</p>
-<p>Quinto, várias adições e melhorias foram feitas no capítulo 6 (Introdução a base de dados relacionais com <code>dplyr</code>) e, principalmente, no capítulo 2 (Fundamentos da Linguagem R). Dentre elas, temos: um novo estudo de caso (Importando os dados da PINTEC); novas seções sobre as funções <code>str()</code> e <code>is.*()</code>; melhorias significativas sobre as seções de Coerção no R e Valores especiais do R.</p>
-<p>Sexto, foi introduzido um novo capítulo que descreve os controles condicionais de fluxo (<code>if else</code> <em>statements</em> e <code>switch()</code>) que a linguagem R oferece.</p>
-<p>Sétimo, um novo e pequeno capítulo foi adicionado à segunda parte do livro, com o objetivo de introduzir o universo do <code>tidyverse</code> ao leitor de maneira mais clara e amigável 🥰.</p>
-<p>Oitavo, o apêndice contendo as respostas dos exercícios foi retirado, com o objetivo de reduzir o número de páginas do livro. Consequentemente, as respostas dos exercícios estão sendo disponibilizadas em um PDF separado, o qual pode ser baixado gratuitamente, a partir da página de <a href="https://pedro-faria.netlify.app/pt/publication/book/introducao_linguagem_r/">publicação do livro</a>.</p>
-</section>
-<section id="sobre-onde-encontrar-o-livro" class="level1">
-<h1>Sobre onde encontrar o livro</h1>
-<p>Assim como ocorreu nas edições anteriores, você poderá ler toda a obra de maneira gratuita e aberta através de seu <a href="https://pedropark99.github.io/Introducao_R/">website</a> 📖.</p>
-<p>Contudo, diferente das edições anteriores, a versão em PDF da obra não será aberta. Você poderá adquirir uma versão em PDF ou física do livro através da loja da Amazon. Ao comprar essas versões, você estará me ajudando a continuar contribuindo com a nossa comunidade ❤️.</p>
-</section>
-<section id="contribua-para-a-obra-ou-faça-sugestões" class="level1">
-<h1>Contribua para a obra ou faça sugestões!</h1>
-<p>Caso seja de seu interesse, você pode contribuir diretamente para a obra, ao postar <em>pull requests</em> dentro de seu <a href="https://github.com/pedropark99/Introducao_R">repositório oficial</a>. Para mais, você também pode fazer sugestões ou comentários, ao postar <em>issues</em> neste mesmo repositório.</p>
-
-
-</section>
-
- ]]></description>
-  <category>Book</category>
-  <category>R</category>
-  <guid>https://pedro-faria.netlify.app/posts/2022/2022-04-06-3nd-edition-rbook/pt/</guid>
-  <pubDate>Wed, 06 Apr 2022 03:00:00 GMT</pubDate>
-  <media:content url="https://pedro-faria.netlify.app/posts/2022/2022-04-06-3nd-edition-rbook/featured.png" medium="image" type="image/png" height="206" width="144"/>
 </item>
 </channel>
 </rss>
