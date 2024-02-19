@@ -46,6 +46,23 @@ int off_boundaries (double x, double y, int limit) {
 	);
 }
 
+
+
+int valid_seedpoint (double x, double y, int curve_id, double d_sep) {
+	int density_col = get_density_col(x, d_sep);
+	int density_row = get_density_row(y, d_sep);
+	  
+	int sc = (density_col - 1);
+	int ec = (density_col + 1);
+	int sr = (density_row - 1);
+	int er = (density_row + 1);
+	  
+	int result = 1;
+	return result;
+}
+
+
+
 int main() {
 	int n = 120;
 	double* noiseData = malloc(n * n * sizeof(double));
