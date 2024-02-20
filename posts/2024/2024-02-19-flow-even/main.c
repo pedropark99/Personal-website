@@ -56,25 +56,74 @@ int valid_seedpoint (double x, double y, int curve_id, double d_sep) {
 	int ec = (density_col + 1);
 	int sr = (density_row - 1);
 	int er = (density_row + 1);
-	  
-	int result = 1;
-	return result;
+	
+	// Boolean value
+	int return_value = 1;
+	return return_value;
 }
+
+
+
+struct Curve {
+	int id;
+	double* x;
+	double* y;
+} typedef Curve;
+
+Curve* instantiate_curve (int id, int n) {
+	struct Curve curve = malloc(1 * sizeof(struct Curve));
+	curve.id = id;
+	return &curve;
+}
+
 
 
 
 int main() {
 	int n = 120;
-	double* noiseData = malloc(n * n * sizeof(double));
-	build_angle_grid(noiseData, n);
+	double* angles = malloc(n * n * sizeof(double));
+	build_angle_grid(angles, n);
 
 
 	int grid_width = n;
 	int grid_height = n;
-	int n_curves = 20;
+	int n_curves = 5;
 	int n_steps = 30;
 	double d_sep = 0.4;
 	double step_length = 0.01 * grid_width;
+
+	double* curves_x = malloc(n_curves * n_steps * sizeof(double));
+	double* curves_y = malloc(n_curves * n_steps * sizeof(double));
+
+
+	for (int curve_id = 0; curve_id < n_curves; curve_id++) {
+		double x = starts[curve_id][1];
+		double y = starts[curve_id][2];
+  
+		for (int i = 0; i < n_steps; i++) {
+			int ff_column_index = (int) x;
+			int ff_row_index = (int) y;
+    
+			if (off_boundaries(ff_column_index, ff_row_index, grid_width)) {
+				break;
+			}
+    
+			double angle = angles[ff_row_index * ff_column_index];
+			double x_step = step_length * cos(angle);
+			double y_step = step_length * sin(angle);
+			x = x + x_step;
+			y = y + y_step;
+    
+    
+			curve_index = (n_steps * (curve_id - 1)) + i;
+			curves$curve_id[curve_index] = curve_id;
+			curves$x[curve_index] = x;
+			curves$y[curve_index] = y;
+			curves$dx[curve_index] = get_density_col(x, d_sep);
+			curves$dy[curve_index] = get_density_row(y, d_sep);
+		}
+	}
+
 
 	printf("x: %f\n", noiseData[15]);
 	// Free data later
