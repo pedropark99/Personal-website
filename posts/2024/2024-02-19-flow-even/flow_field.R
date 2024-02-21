@@ -10,6 +10,7 @@ curves <- curves %>%
 
 
 curves %>%
+  filter(curve_id %in% c(258, 56)) %>% 
   ggplot() +
   geom_path(aes(x, y, group = curve_id)) +
   coord_cartesian(
@@ -19,6 +20,11 @@ curves %>%
 
 
 
+curves %>% 
+  filter(curve_id == 258)
+
+curves %>% 
+  filter(between(x, 88, 93), between(y, 55,58))
 
 
 visualize_grid <- function(grid, n){
@@ -114,3 +120,29 @@ for (i in seq_len(n_steps)) {
 
 
 
+distance <- function(x1, y1, x2, y2){
+  s1 <- (x2 - x1)^2
+  s2 <- (y2 - y1)^2
+  return(sqrt(s1 + s2))
+}
+
+curves %>%
+  filter(curve_id %in% c(258, 56)) %>% 
+  mutate(
+    dist = distance(
+      91.682406842372131,
+      56.134913138987564,
+      x,
+      y
+    )
+  ) %>% 
+  arrange(dist)
+
+
+
+get_density_col <- function(x){
+  as.integer(x / 1.2) + 1L
+}
+get_density_row <- function(y){
+  as.integer(y / 1.2) + 1L
+}

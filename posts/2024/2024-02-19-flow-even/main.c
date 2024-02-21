@@ -14,7 +14,7 @@
 #define N_STEPS 30
 #define N_CURVES 500
 #define STEP_LENGTH 0.01 * FLOW_FIELD_WIDTH
-#define D_SEP 1.0
+#define D_SEP 1.2
 #define DENSITY_GRID_WIDTH ((int) (FLOW_FIELD_WIDTH / D_SEP))
 
 void insert_coord_in_density_grid (double x,
@@ -23,7 +23,6 @@ void insert_coord_in_density_grid (double x,
 				   DensityCell density_grid[DENSITY_GRID_WIDTH][DENSITY_GRID_WIDTH]);
 
 int valid_seedpoint (double x, double y,
-		     int field_width,
 		     double d_sep,
 		     int density_grid_width,
 		     DensityCell density_grid[DENSITY_GRID_WIDTH][DENSITY_GRID_WIDTH]);
@@ -59,7 +58,7 @@ int main() {
 
 	printf("[INFO]: Generating %i random starting points for %i curves.\n", N_CURVES, N_CURVES);
 	StartPoint* start_points = malloc(N_CURVES * sizeof(StartPoint));
-	for(int i = 0; i < N_CURVES; i++){
+	for (int i = 0; i < N_CURVES; i++) {
 		srand(i + 1);
 		start_points[i].x = rand_from(5, FLOW_FIELD_WIDTH - 5); 
 		start_points[i].y = rand_from(5, FLOW_FIELD_WIDTH - 5);
@@ -110,7 +109,6 @@ int main() {
 
 			int valid = valid_seedpoint(
 				x, y,
-				FLOW_FIELD_WIDTH,
 				D_SEP,
 				DENSITY_GRID_WIDTH,
 				density_grid
@@ -230,7 +228,10 @@ void insert_coord_in_density_grid (double x,
 				   DensityCell density_grid[DENSITY_GRID_WIDTH][DENSITY_GRID_WIDTH]) {
 	int density_col = get_density_col(x, d_sep);
 	int density_row = get_density_row(y, d_sep);
-	
+	if (off_boundaries(density_col, density_row, DENSITY_GRID_WIDTH)) {
+		return;
+	}
+
 	int space_used = density_grid[density_col][density_row].space_used;
 	int capacity = density_grid[density_col][density_row].capacity;
 	
@@ -245,18 +246,20 @@ void insert_coord_in_density_grid (double x,
 
 
 int valid_seedpoint (double x, double y,
-		     int field_width,
 		     double d_sep,
 		     int density_grid_width,
 		     DensityCell density_grid[DENSITY_GRID_WIDTH][DENSITY_GRID_WIDTH]) {
 
 	int density_col = get_density_col(x, d_sep);
 	int density_row = get_density_row(y, d_sep);
+	if (off_boundaries(density_col, density_row, DENSITY_GRID_WIDTH)) {
+		return 0;
+	}
    
 	int start_row = (density_row - 1) > 0 ? (density_row - 1) : 0;
-	int end_row = (density_row + 1) < field_width ? (density_row + 1) : field_width; 
+	int end_row = (density_row + 1) < density_grid_width ? (density_row + 1) : density_grid_width; 
 	int start_col = (density_col - 1) > 0 ? (density_col - 1) : 0;
-	int end_col = (density_col + 1) < field_width ? (density_col + 1) : field_width; 
+	int end_col = (density_col + 1) < density_grid_width ? (density_col + 1) : density_grid_width;
  
 	for (int c = start_col; c < end_col; c++) {
 		for (int r = start_row; r < end_row; r++) {
