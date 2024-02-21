@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Pedro Duarte Faria">
-<meta name="dcterms.date" content="2023-12-12">
-<meta name="description" content="A quick introduction to string literals in Zig, and how strings in Zig differ from strings in other programming languages.">
+<meta name="dcterms.date" content="2024-02-19">
+<meta name="description" content="This article implements the Jobard-Lefer Algorithm in C. This algorithm is used to produce evely spaced curves in a flow field.">
 
-<title>home |&gt; dplyr::glimpse() - How strings work in Zig?</title>
+<title>home |&gt; dplyr::glimpse() - Producing evenly spaced curves with Jobard-Lefer Algorithm in C</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,41 +23,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
 }
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
 }
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
 }
-</style>
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -245,16 +231,17 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">How strings work in Zig?</h1>
+      <h1 class="title">Producing evenly spaced curves with Jobard-Lefer Algorithm in C</h1>
                   <div>
         <div class="description">
-          A quick introduction to string literals in Zig, and how strings in Zig differ from strings in other programming languages.
+          This article implements the Jobard-Lefer Algorithm in C. This algorithm is used to produce evely spaced curves in a flow field.
         </div>
       </div>
                           <div class="quarto-categories">
-                <div class="quarto-category">Zig</div>
-                <div class="quarto-category">Strings</div>
-                <div class="quarto-category">Encoding</div>
+                <div class="quarto-category">Flow Fields</div>
+                <div class="quarto-category">C</div>
+                <div class="quarto-category">Algorithm</div>
+                <div class="quarto-category">Computer Graphcis</div>
               </div>
                   </div>
   </div>
@@ -279,7 +266,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">December 12, 2023</p>
+        <p class="date">February 19, 2024</p>
       </div>
     </div>
     
@@ -296,10 +283,6 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
    
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#what-strings-in-zig-are" id="toc-what-strings-in-zig-are" class="nav-link" data-scroll-target="#what-strings-in-zig-are">What strings in Zig are?</a></li>
-  <li><a href="#strings-in-c" id="toc-strings-in-c" class="nav-link" data-scroll-target="#strings-in-c">Strings in C</a></li>
-  <li><a href="#a-better-look-at-the-object-type" id="toc-a-better-look-at-the-object-type" class="nav-link" data-scroll-target="#a-better-look-at-the-object-type">A better look at the object type</a></li>
-  <li><a href="#byte-vs-unicode-points" id="toc-byte-vs-unicode-points" class="nav-link" data-scroll-target="#byte-vs-unicode-points">Byte vs unicode points</a></li>
   </ul>
 </nav>
     </div>
@@ -312,143 +295,17 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
-<p>Zig is a new general-purpose and low level programming language that is being very promising. The documentation of the language<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> is very good in quality, but I missed some more specific details about strings in there.</p>
-<p>That is why, I decided to write this article, to discuss in more depth how strings work in Zig, and give you some more specific details about it.</p>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<p>This is a reference to <span class="citation" data-cites="jobard97">Jobard and Lefer (<a href="#ref-jobard97" role="doc-biblioref">1997</a>)</span>.</p>
 
-<script type="text/javascript" src="https://notabug.org/Ash/highlightjs-zig/raw/master/dist/zig.min.js"></script>
-
-
-<script>hljs.highlightAll();</script>
-</section>
-<section id="what-strings-in-zig-are" class="level1">
-<h1>What strings in Zig are?</h1>
-<p>In Zig, a string literal (or a string object if you prefer) is a pointer to a null-terminated array of bytes. Each byte in this array is represented by an <code>u8</code> value, which is an unsigned 8 bit integer.</p>
-<p>Zig always assumes that this sequence of bytes is UTF-8 encoded. This might not be true for every sequence of bytes you have it, but is not really Zig’s job to fix the encoding of your string (you can use <code>iconv</code> for that). Today, most of text data in our modern world should be UTF-8 encoded. So if your string literal is not UTF-8 encoded, then, you will probably have problems in Zig.</p>
-<p>Let’s take for example the word “Hello”. In UTF-8, this sequence of characters (H, e, l, l, o) is represented by the sequence of decimal numbers 72, 101, 108, 108, 111. In xecadecimal, this is the sequence <code>0x48</code>, <code>0x65</code>, <code>0x6C</code>, <code>0x6C</code>, <code>0x6F</code>. So if I take this sequence of hexadecimal values, and ask Zig to print this sequence of bytes as a sequence of characters (i.e.&nbsp;a string), then, the text “Hello” will be printed into the terminal:</p>
-<pre><code class="zig">const std = @import("std");
-
-pub fn main() !void {
-    const bytes = [_]u8{0x48, 0x65, 0x6C, 0x6C, 0x6F};
-    std.debug.print("{s}\n", .{bytes});
-}
-</code></pre>
-<pre class="text"><code>Hello</code></pre>
-<p>If you want to see the actual bytes that represents a string in Zig, you can use a for loop to loop trough each byte in the string, and ask Zig to print each byte as an hexadecimal value to the terminal, using a <code>print()</code> statement with the <code>X</code> formatting specifier. Like this:</p>
-<pre><code class="zig">const std = @import("std");
-
-pub fn main() !void {
-    const string_literal = "This is an example of string literal in Zig";
-    std.debug.print("Bytes that represents the string object: ", .{});
-    for (string_literal) |byte| {
-        std.debug.print("{X} ", .{byte});
-    }
-    std.debug.print("\n", .{});
-}
-</code></pre>
-<pre class="text"><code>Bytes that represents the string object: 54 68 69 73 20 69 73 20 61 6E 20 65 78 61 6D 70 6C 65 20 6F 66 20 73 74 72 69 6E 67 20 6C 69 74 65 72 61 6C 20 69 6E 20 5A 69 67 </code></pre>
-</section>
-<section id="strings-in-c" class="level1">
-<h1>Strings in C</h1>
-<p>This is very similar to how C treats strings as well. That is, string values in C are also treated internally as an array of bytes, and this array is also null-terminated.</p>
-<p>But one key difference between a Zig string and a C string, is that Zig also stores the length of the array inside the string object. This small detail makes your code safer, because is much easier for the Zig compiler to check if you are trying to access an element out of bounds, or if your trying to access memory that does not belong to you.</p>
-<p>To achieve this same kind of safety in C, you have to do a lot of work, that kind of seems pointless. So getting this kind of safety is not automatic and much harder to do in C. For example, if you want to track the length of your string troughout your program in C, then, you first need to loop through the array of bytes that represents this string, and find the null element (<code>'\0'</code>) position to discover where exactly the array ends, or, in other words, to find how much elements the array of bytes contain.</p>
-<p>To do that, you would need something like this in C. In this example, the C string is 25 bytes long:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">char</span><span class="op">*</span> array <span class="op">=</span> <span class="st">"An example of string in C"</span><span class="op">;</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> index <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="op">(</span><span class="dv">1</span><span class="op">)</span> <span class="op">{</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>array<span class="op">[</span>index<span class="op">]</span> <span class="op">==</span> <span class="ch">'</span><span class="sc">\0</span><span class="ch">'</span><span class="op">)</span> <span class="op">{</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span><span class="op">;</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        index<span class="op">++;</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">"Number of elements in the array: </span><span class="sc">%d\n</span><span class="st">"</span><span class="op">,</span> index<span class="op">);</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<pre class="text"><code>Number of elements in the array: 25</code></pre>
-<p>But in Zig, you do not have to do this, because the object already contains a <code>len</code> field which stores the length information of the array. As an example, the <code>string_literal</code> object below is 43 bytes long:</p>
-<pre><code class="zig">const std = @import("std");
-
-pub fn main() !void {
-    const string_literal = "This is an example of string literal in Zig";
-    std.debug.print("{d}\n", .{string_literal.len});
-}
-</code></pre>
-<pre class="text"><code>43</code></pre>
-</section>
-<section id="a-better-look-at-the-object-type" class="level1">
-<h1>A better look at the object type</h1>
-<p>Now, we can inspect better the type of objects that Zig create. To check the type of any object in Zig, you can use the <code>@TypeOf()</code> function.</p>
-<p>If we look at the type of the <code>simple_array</code> object below, you will find that this object is a array of 4 elements. Each element is a signed integer of 32 bits (<code>i32</code>). That is what an object of type <code>[4]i32</code> is.</p>
-<p>But if we look closely at the type of the <code>string_literal</code> object below, you will find that this object is a constant pointer (<code>*const</code>) to an array of 43 elements (or 43 bytes). Each element is a single byte (more precisely, an unsigned 8 bit integer), that is why we have the <code>[43:0]u8</code> portion of the type below. In other words, the string stored inside the <code>string_literal</code> object is 43 bytes long. That is why you have the type <code>*const [43:0]u8</code> below.</p>
-<p>Now, if we create an pointer to the array object, then, we get a constant pointer to an array of 4 elements (<code>*const [4]i32</code>), which is very similar to the type of the <code>string_literal</code> object. This demonstrates that a string object (or a string literal) in Zig is already a pointer to an array.</p>
-<p>Just remember that a “pointer to an array” is different than an “array”. So a string object in Zig is a pointer to an array of bytes, and not simply an array of bytes.</p>
-<pre><code class="zig">const std = @import("std");
-const print = std.debug.print;
-
-pub fn main() !void {
-    const string_literal = "This is an example of string literal in Zig";
-    const simple_array = [_]i32{1, 2, 3, 4};
-
-
-    print("Type of array object: {}\n", .{@TypeOf(simple_array)});
-    print("Type of string object: {}\n", .{@TypeOf(string_literal)});
-    print("Type of a pointer that points to the array object: {}\n", .{@TypeOf(&amp;simple_array)});
-}
-</code></pre>
-<pre class="text"><code>Type of array object: [4]i32
-Type of string object: *const [43:0]u8
-Type of a pointer that points to the array object: *const [4]i32</code></pre>
-</section>
-<section id="byte-vs-unicode-points" class="level1">
-<h1>Byte vs unicode points</h1>
-<p>Is important to point out that each byte in the array is not necessarily a single character. This fact arises from the difference between a single byte and a single unicode point.</p>
-<p>The encoding UTF-8 works by assigning a number (which is called a <em>unicode point</em>) to each character in the string. For example, the character “H” is stored in UTF-8 as the decimal number 72. This means that the number 72 is the unicode point for the character “H”. Each possible character that can appear in a UTF-8 encoded string have its own unicode point.</p>
-<p>For example, the Latin Capital Letter A With Stroke (Ⱥ) is represented by the number (or the unicode point) 570. However, this decimal number (570) is higher than the maximum number stored inside a single byte, which is 255. In other words, the maximum decimal number that can be represented with a single byte is 255. That is why, the unicode point 570 is actually stored inside the computer’s memory as the bytes <code>C8 BA</code>.</p>
-<pre><code class="zig">const std = @import("std");
-
-pub fn main() !void {
-    const string_literal = "Ⱥ";
-    std.debug.print("Bytes that represents the string object: ", .{});
-    for (string_literal) |char| {
-        std.debug.print("{X} ", .{char});
-    }
-    std.debug.print("\n", .{});
-}
-</code></pre>
-<pre class="text"><code>Bytes that represents the string object: C8 BA</code></pre>
-<p>This means that to store the character Ⱥ in an UTF-8 encoded string, we need to use two bytes together to represent the number 570. That is why the relationship between bytes and unicode points is not always 1 to 1. Each unicode point is a single character in the string, but not always a single byte corresponds to a single unicode point.</p>
-<p>All of this means that if you loop trough the elements of a string in Zig, you will be looping through the bytes that represents that string, and not through the characters of that string. In the Ⱥ example above, the for loop needed two iterations (instead of a single iteration) to print the two bytes that represents this Ⱥ letter.</p>
-<p>Now, all english letters (or ASCII letters if you prefer) can be represented by a single byte in UTF-8. As a consequence, if your UTF-8 string contains only english letters (or ASCII letters), then, you are lucky. Because the number of bytes will be equal to the number of characters in that string. In other words, in this specific situation, the relationship between bytes and unicode points is 1 to 1.</p>
-<p>But on the other side, if your string contains other types of letters… for example, you might be working with text data that contains, chinese, japanese or latin letters, then, the number of bytes necessary to represent your UTF-8 string will likely be much higher than the number of characters in that string.</p>
-<p>If you need to iterate through the characters of a string, instead of its bytes, then, you can use the <code>std.unicode.Utf8View</code> struct to create an iterator that iterates through the unicode points of your string.</p>
-<p>In the example below, we loop through the japanese characters “アメリカ”. Each of the four characters in this string is represented by three bytes. But the for loop iterates four times, one iteration for each character/unicode point in this string:</p>
-<pre><code class="zig">const std = @import("std");
-
-pub fn main() !void {
-    var utf8 = (try std.unicode.Utf8View.init("アメリカ")).iterator();
-    while (utf8.nextCodepointSlice()) |codepoint| {
-        std.debug.print("got codepoint {}\n", .{std.fmt.fmtSliceHexUpper(codepoint)});
-    }
-}
-</code></pre>
-<pre class="text"><code>got codepoint E382A2
-got codepoint E383A1
-got codepoint E383AA
-got codepoint E382AB</code></pre>
 
 
 </section>
 
-
-<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
-
-<ol>
-<li id="fn1"><p><a href="https://ziglang.org/documentation/0.11.0/" class="uri">https://ziglang.org/documentation/0.11.0/</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section></div></main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-jobard97" class="csl-entry" role="listitem">
+Jobard, Bruno, and Wilfrid Lefer. 1997. <span>“Creating Evenly-Spaced Streamlines of Arbitrary Density.”</span> In <em>Visualization in Scientific Computing ’97</em>, edited by Wilfrid Lefer and Michel Grave, 43–55. Vienna: Springer Vienna.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
