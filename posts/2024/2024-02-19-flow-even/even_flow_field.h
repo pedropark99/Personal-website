@@ -45,5 +45,3 @@ int get_density_col (double x, double d_sep);
 int get_density_row (double y, double d_sep);
 
 
-
-

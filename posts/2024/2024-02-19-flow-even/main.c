@@ -12,9 +12,9 @@
 #define FLOW_FIELD_WIDTH 120
 #define FLOW_FIELD_HEIGHT 120
 #define N_STEPS 30
-#define N_CURVES 500
+#define N_CURVES 1500
 #define STEP_LENGTH 0.01 * FLOW_FIELD_WIDTH
-#define D_SEP 1.2
+#define D_SEP 0.8
 #define DENSITY_GRID_WIDTH ((int) (FLOW_FIELD_WIDTH / D_SEP))
 
 void insert_coord_in_density_grid (double x,
@@ -74,7 +74,7 @@ int main() {
 
 	printf("[INFO]: Setting up a density grid with dimensions %ix%i.\n", DENSITY_GRID_WIDTH, DENSITY_GRID_WIDTH);
 	DensityCell density_grid[DENSITY_GRID_WIDTH][DENSITY_GRID_WIDTH];
-	int density_capacity = 14000;
+	int density_capacity = 3 * 14000;
 	for (int y = 0; y < DENSITY_GRID_WIDTH; y++) {
 		for (int x = 0; x < DENSITY_GRID_WIDTH; x++) {
 			density_grid[x][y].space_used = 0;
@@ -148,6 +148,21 @@ int main() {
 		}
 	};
 	fclose(f);
+
+
+	FILE* f2 = fopen("curves_starts.csv", "w");
+	fprintf(f2, "curve_id;x;y\n");
+	for (int curve_id = 0; curve_id < N_CURVES; curve_id++) {
+		fprintf(
+			f2,
+			"%d;%.8f;%.8f\n",
+			curve_id,
+			start_points[curve_id].x,
+			start_points[curve_id].y
+		);
+	};
+	fclose(f2);
+
 
 
 	// Free data 

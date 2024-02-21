@@ -12,7 +12,7 @@
 <generator>quarto-1.4.549</generator>
 <lastBuildDate>Mon, 19 Feb 2024 03:00:00 GMT</lastBuildDate>
 <item>
-  <title>Producing evenly spaced curves with Jobard-Lefer Algorithm in C</title>
+  <title>Producing evenly-spaced and non-overlapping curves with Jobard-Lefer Algorithm in C</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
   <link>https://pedro-faria.netlify.app/posts/2024/2024-02-19-flow-even/en/</link>
   <description><![CDATA[ 
@@ -21,17 +21,558 @@
 
 
 
-<section id="introduction" class="level1">
-<h1>Introduction</h1>
-<p>This is a reference to <span class="citation" data-cites="jobard97">Jobard and Lefer (1997)</span>.</p>
+<section id="introduction" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
+<p>I’m currently writing a book about R and Graphics (stay tuned for more news about this book soon 😉). During my research for this book, I had to study a relatively famous and established algorithm, called as the Jobard-Lefer algorithm. It is an algorithm for producing evenly spaced curves in a flow field (or a vector field). This algorithm is thoroughly described in a scientific paper <span class="citation" data-cites="jobard97">(Jobard and Lefer 1997)</span>.</p>
+<p>In this article, I want to describe how you can implement this algorithm in C. These are the topics we are going to discuss:</p>
+<ul>
+<li>What are flow fields (or vector fields)?</li>
+<li>How to draw curves in a flow field?</li>
+<li>What the algorithm does?</li>
+<li>How does it work?</li>
+<li>How to implement it in C?</li>
+</ul>
+</section>
+<section id="what-are-flow-fields-or-vector-fields" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> What are flow fields (or vector fields)?</h1>
+<p>A flow field (which is also called a vector field in some ocasions) is essentially a field (or a two-dimensional grid) of angles. Figure&nbsp;1 shows an example of a flow field:</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-flow-field1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-flow-field1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://pedro-faria.netlify.app/posts/2024/2024-02-19-flow-even/en/index_files/figure-html/fig-flow-field1-1.png" class="img-fluid figure-img" width="1400">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-flow-field1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: An example of flow field
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>In more details, a flow field is usually represented as a 2D (two-dimensional) grid, or a 2D matrix of angle values. So each element in this matrix is a real number, and this real number is interpretd as an angle value (in the radians scale). This 2D matrix of angle values is usually produced by a Perlin Noise algorithm <span class="citation" data-cites="perlin">(Wikipedia 2024a)</span>, or a similar algorithm, like the Simplex Noise algorithm <span class="citation" data-cites="simplex">(Wikipedia 2024b)</span>.</p>
+<p>In other words, the numbers in the 2D matrix are normally random numbers. But you cannot use any random number generator to produce them. You must use a 2D (or two-dimensional) noise algorithm to produce these random numbers.</p>
+<p>Just to give you a very brief example, you can build a flow field in C, by using the <a href="https://github.com/Auburn/FastNoiseLite"><code>FastNoiseLite</code> library</a>. In this library, you have multiple algorithms you can use for producing two-dimensional noise.</p>
+<p>Despite the many options, I will use as an example in this article, the classic Perlin Noise algorithm for producing the flow field. You can see in the snippet below that I am building a flow field with 120 of width and height. In other words, we have a 120x120 grid of angle values.</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb1-1"><span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">#include </span><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">&lt;math.h&gt;</span></span>
+<span id="cb1-2"><span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">#include </span><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">&lt;stdlib.h&gt;</span></span>
+<span id="cb1-3"></span>
+<span id="cb1-4"><span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">#define FNL_IMPL</span></span>
+<span id="cb1-5"><span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">#include </span><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">"FastNoiseLite.h"</span></span>
+<span id="cb1-6"></span>
+<span id="cb1-7"><span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">#define FLOW_FIELD_WIDTH </span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">120</span></span>
+<span id="cb1-8"><span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">#define FLOW_FIELD_HEIGHT </span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">120</span></span>
+<span id="cb1-9"></span>
+<span id="cb1-10"><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">int</span> main<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">()</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span id="cb1-11">  <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">double</span> flow_field<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span>FLOW_FIELD_WIDTH<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">][</span>FLOW_FIELD_HEIGHT<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">];</span></span>
+<span id="cb1-12">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">// Create and configure noise state</span></span>
+<span id="cb1-13">    fnl_state noise <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> fnlCreateState<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">();</span></span>
+<span id="cb1-14">    noise<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>seed <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">50</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-15">    noise<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>noise_type <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> FNL_NOISE_PERLIN<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-16">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">int</span> index <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-17">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">for</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">int</span> y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span> y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> FLOW_FIELD_HEIGHT<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span> y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">++)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span id="cb1-18">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">for</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">int</span> x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span> x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> FLOW_FIELD_WIDTH<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span> x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">++)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span id="cb1-19">            <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">// Scale each value to the radians scale by</span></span>
+<span id="cb1-20">            <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">// multiplying each value by 2PI.</span></span>
+<span id="cb1-21">            flow_field<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span>x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">][</span>y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> fnlGetNoise2D<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(&amp;</span>noise<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> M_PI<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb1-22">        <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span id="cb1-23">    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span id="cb1-24"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span></code></pre></div>
+</section>
+<section id="sec-draw-curve" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> How to draw curves in a flow field?</h1>
+<p>Flow fields have multiple applications in computer graphics. For example, you can use them to draw interesting (or “very pleasing looking”) curves.</p>
+<p>The basic idea is to draw a curve by walking across the flow field. First, we choose a point in the flow field as our starting point, and then, we start to walking by following the direction of the angles we encounter in the flow field. As we walk trough the flow field, we record the x and y coordinates of our positions. When we finish walking, we can draw a curve by “connecting the dots”, i.e.&nbsp;connecting the points (x and y coordinates) that we passed through.</p>
+<p>So, in essence, the steps for drawing a curve in a flow field are:</p>
+<ol type="1">
+<li>Choose a starting point in the grid.</li>
+<li>Look at the angle that is stored in the position of the grid that you are currently in.</li>
+<li>Take a step in the direction of that angle.</li>
+<li>Recalculate your current position in the grid, and record/store this position for later use.</li>
+<li>Comeback to step 2.</li>
+</ol>
+<p>You can see in the bullet points above that, we begin a loop at step 5. We are repeatedly taking a step in the direction of an angle, recalculating our current position in the flow field, and taking another step in the direction of another angle. As long as we stay inside the boundaries of the flow field, we can repeat this pattern as much as we want to.</p>
+<p>The Figure&nbsp;2 below shows the end result of this process. In this example, we begin in coordinate <img src="https://latex.codecogs.com/png.latex?(5,%2010)">, i.e.&nbsp;<img src="https://latex.codecogs.com/png.latex?x%20=%205"> and <img src="https://latex.codecogs.com/png.latex?y%20=%2010">, in the field, and take 45 sequential steps in the field by following the direction of the angles we encounter in the way. The curve painted in red shows the end result of this “walking process”.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-flow-field2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-flow-field2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://pedro-faria.netlify.app/posts/2024/2024-02-19-flow-even/en/index_files/figure-html/fig-flow-field2-1.png" class="img-fluid figure-img" width="1400">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-flow-field2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Drawing a curve in the flow field
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>As you walk trough the flow field, the angle that you currently using might lead you to a position that is off the boundaries of the flow field. In that case, you should stop walking, before you go off the flow field. Because if you pass the boundaries of the flow field, then, the lookup process we perform to take an angle in the flow field, will fail.</p>
+<p>Two important variables need to be defined to draw your curve:</p>
+<ul>
+<li>The number of steps you want to take.</li>
+<li>The distance of each step (or “step length”).</li>
+</ul>
+<p>First is the number of steps you want to take in your walk. You can definetly set this to infinity, so you walk indefinitely until you hit one of the boundaries of the flow field. But you normally do not want to walk indefinitely. Because this usually produces a very long curve that goes across the entire flow field.</p>
+<p>Yes! You might want to draw a very long curve. As you probably notice, this is very subjective to each person and their objective. But for the most part, you usually do not have to set this number of steps too much high. Around 30-40 steps is a good range for those who doesn’t know what they want.</p>
+<p>Therefore, the number of steps directly affects the length of the curve that you are drawing. If you take a high number for steps , the curve will be longer. In contrast, if you take just few steps, your curve will be shorter.</p>
+<p>Second is the distance you will take in each step (let’s call it as the “step length”). The step length affects how “sharp” the curve looks. If you set the step length correctly, the curve will look nice, very “curvy”. In other words, the curve will look like an actual curve. But if you set the step length too high, then, the “connect the dots” effects will be much more appearant. In other words, your curve will not look like a curve, and more like an attempt to draw a polygon with very sharp edges.</p>
+<p>But be careful to also not set the step length too low. If you set it very very low, then, you will end up affecting the length of the curve as well. Because the step length is soo low, that even if you set the number of steps very high, you still get a very short curve as a result. This is bad because you will be tempted to raise the number of steps even higher, and by setting the number of steps too high, you end up increasing the overhead and computing time of the algorithm.</p>
+<p>I mean, increasing the number of steps from 10 to 1000 for drawing a single curve into the field is fine. But when you raise the number of steps to 1000 when you are drawing like 10000 curves into field, then you will notice the overhead very quickly. So, if you want your algorithm to perform well, and still get nice and visually attractive curves in the output, you usually want to set the step length to a number that is in the range from 0.1% to 1% of the flow field width.</p>
+<p>The C code snippet below translates the steps I described at Section&nbsp;3 to draw a curve into the field. You can see in this code that our current position in the Cartesian plane is mapped to a specific position in the flow field, or, in other words, to a position in the 2D matrix of angles, by transforming our current x and y positions into integers.</p>
+<p>So for example, if our current position in the Cartesian plane is <img src="https://latex.codecogs.com/png.latex?x%20=%2045.289"> and <img src="https://latex.codecogs.com/png.latex?y%20=%2021.556">, then, our current position in the flow field is <img src="https://latex.codecogs.com/png.latex?x%20=%2045"> and <img src="https://latex.codecogs.com/png.latex?y%20=%2021">. So, the current angle that we need to retrieve and use from the flow field, is the angle that is stored in the element <code>angles[45][21]</code> of the matrix.</p>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb2-1"><span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">#define N_STEPS </span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">30</span></span>
+<span id="cb2-2"><span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">#define STEP_LENGTH </span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.01</span><span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;"> </span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span><span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;"> FLOW_FIELD_WIDTH</span></span>
+<span id="cb2-3"></span>
+<span id="cb2-4"><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">int</span> off_boundaries <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">double</span> x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">double</span> y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">int</span> limit<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span id="cb2-5">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">return</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span id="cb2-6">    x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">||</span></span>
+<span id="cb2-7">        y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">||</span></span>
+<span id="cb2-8">        x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;=</span> limit <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">||</span></span>
+<span id="cb2-9">        y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;=</span> limit</span>
+<span id="cb2-10">    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">);</span></span>
+<span id="cb2-11"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span id="cb2-12"></span>
+<span id="cb2-13"><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">double</span> x_coords<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span>N_STEPS<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">];</span></span>
+<span id="cb2-14"><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">double</span> y_coords<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span>N_STEPS<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">];</span></span>
+<span id="cb2-15"></span>
+<span id="cb2-16"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">for</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">int</span> i <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span> i <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> N_STEPS<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span> i<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">++)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span id="cb2-17">  <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">int</span> ff_column_index <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">int</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> floor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">);</span></span>
+<span id="cb2-18">  <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">int</span> ff_row_index <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">int</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> floor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">);</span></span>
+<span id="cb2-19"></span>
+<span id="cb2-20">  <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>off_boundaries<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>ff_column_index<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> ff_row_index<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> FLOW_FIELD_WIDTH<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">))</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span id="cb2-21">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">break</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb2-22">  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span id="cb2-23"></span>
+<span id="cb2-24">  <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">double</span> angle <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> flow_field<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span>ff_row_index<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">][</span>ff_column_index<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">];</span></span>
+<span id="cb2-25">  <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">double</span> x_step <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> STEP_LENGTH <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> cos<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>angle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">);</span></span>
+<span id="cb2-26">  <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">double</span> y_step <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> STEP_LENGTH <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> sin<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>angle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">);</span></span>
+<span id="cb2-27">  x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> x_step<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb2-28">  y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> y_step<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb2-29"></span>
+<span id="cb2-30">  x_coords<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span>i<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb2-31">  y_coords<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span>i<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb2-32"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span></code></pre></div>
+<p>Furthermore, this C code uses a pair of equations from geometry (Equation&nbsp;1 and Equation&nbsp;2) to calculate the new x and y coordinates after I take the step by following the direction of the current angle. These equations are normally used to calculate the coordinates in the circumference of a circle centered at the origin point of the Cartesian plane, and they are exposed below.</p>
+<p>Given that a circle that is centered at the origin point of the Cartesian plane, and that <img src="https://latex.codecogs.com/png.latex?r"> is the radius of the circle, and that <img src="https://latex.codecogs.com/png.latex?A"> is the angle, in radians, that identifies the position in the circumference that you are trying to calculate it’s coordinates, you can calculate the x (<img src="https://latex.codecogs.com/png.latex?x'">) and y (<img src="https://latex.codecogs.com/png.latex?y'">) coordinates of the corresponding position in the circumference by using the following pair of equations:</p>
+<p><span id="eq-rotation1"><img src="https://latex.codecogs.com/png.latex?%0Ax'=r%5Ctimes%20%5Ccos(A)%0A%5Ctag%7B1%7D"></span></p>
+<p><span id="eq-rotation2"><img src="https://latex.codecogs.com/png.latex?%0Ay'=r%5Ctimes%20%5Csin(A)%0A%5Ctag%7B2%7D"></span></p>
+</section>
+<section id="the-jobard-lefer-algorithm" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> The Jobard-Lefer algorithm</h1>
+<p>When you start to draw multiple curves in the flow field, without caring where these curves are placed and where they go, eventually, you will end up with a very dense image, with many curves overlapping each other. Some people are intentionally trying to produce such dense images, because they want the interesting depth effect that these images normally have around the curves.</p>
+<p>But sometimes, you are really trying to avoid that. Sometimes, you want to meet all of these criterias below at the same time:</p>
+<ul>
+<li>draw a high number of curves (i.e.&nbsp;a number that is high enough to “fill” the image) in the field.</li>
+<li>draw only non-overlapping curves.</li>
+<li>draw curves that are “evenly-spaced” between each other.</li>
+</ul>
+<p><span class="citation" data-cites="jobard97">Jobard and Lefer (1997)</span> proposes an algorithm that produces non-overlapping and evenly-spaced curves around a flow field. If you read the paper carefully, you might notice that you can divide the algorithm into two separate parts. And splitting this algorithm like this, into two separate parts, will be very useful here in this article for explaining how each piece of the algorithm works.</p>
+<p>These parts are:</p>
+<ul>
+<li>An algorithm to draw non-overlapping curves.</li>
+<li>An algorithm to select new start points for new curves.</li>
+</ul>
+<p>Since each part have it’s own quirks, I begin by focusing on the first part of the algorithm. After explaining how this first part works, it will be a little easier for you to understand how the second part works.</p>
+<section id="drawing-non-overlapping-curves" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="drawing-non-overlapping-curves"><span class="header-section-number">4.1</span> Drawing non-overlapping curves</h2>
+<p>This first part of the algorithm is the part that makes sure that only non-overlapping curves are drawn to the field. The idea behind it, is that we are constantly checking the distances between our next position and the other curves around us. We want to always make sure that the current curve is far enough from the other curves, and, if not, stop drawing this curve.</p>
+<p>This specific part of the algorithm works around a constant value, that represents the minimum distance allowed between two curves. <span class="citation" data-cites="jobard97">Jobard and Lefer (1997)</span> call this value as <img src="https://latex.codecogs.com/png.latex?d_%7Bsep%7D">, or, as the “separating distance”. The end result of the algorithm is that any point in any curve in the field is, at least, at a distance of <img src="https://latex.codecogs.com/png.latex?d_%7Bsep%7D"> units from any other point from another curve in the field.</p>
+<p>If you use this part of the algorithm, you normally produce some very nice and “pleasing to the eyes” type of images. At Figure&nbsp;3, I am showing the difference that this part of the algorithm makes to the image. In both subfigures, we used the same colors for each curve, the same starting points for each curve, the same step length, the same number of steps, same flow field, etc. Anymway, all the configs used in both images are literally the same. The only difference between these two images, is the use (or not) of this “non-overlaping” curve algorithm.</p>
+<p>In the first image (without the Jobard-Lefer algorithm) I simply drawn the curves using the steps I described at Section&nbsp;3, without caring if the curves were overlapping (or, if they were too close to) each other. In contrast, in the second image, I used the first part of the Jobard-Lefer algorithm to draw the curves while checking if they were overlapping (or, if they were too close to) each other.</p>
+<div id="fig-diff-algorithm" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-diff-algorithm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-diff-algorithm" style="flex-basis: 100.0%;justify-content: flex-start;">
+<div id="fig-diff-overlap" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-diff-overlap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://pedro-faria.netlify.app/posts/2024/2024-02-19-flow-even/overlap.png" class="img-fluid figure-img" data-ref-parent="fig-diff-algorithm">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-diff-overlap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Without Jobard-Lefer algorithm
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-diff-algorithm" style="flex-basis: 100.0%;justify-content: flex-start;">
+<div id="fig-diff-non-overlap" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-diff-non-overlap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://pedro-faria.netlify.app/posts/2024/2024-02-19-flow-even/non_overlap.png" class="img-fluid figure-img" data-ref-parent="fig-diff-algorithm">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-diff-non-overlap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) With Jobard-Lefer algorithm
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-diff-algorithm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Demonstrating the effect of the Jobard-Lefer algorithm on curves drawn in the field
+</figcaption>
+</figure>
+</div>
+<section id="how-this-part-of-the-algorithm-works" class="level3" data-number="4.1.1">
+<h3 data-number="4.1.1" class="anchored" data-anchor-id="how-this-part-of-the-algorithm-works"><span class="header-section-number">4.1.1</span> How this part of the algorithm works?</h3>
+<p>In essence, at each step we take drawing our curve in the flow field, we look at the curves that are around us, and we compare the distance between our current position and all of these neighboring curves. If this distance between the next step we take and any of the neighboring curves, is lower or equal to a specific value ()</p>
+<p>, then, we do not take this next step, and we stop drawing the current curve. At this point, if we have a next curve to draw, then, we start to this next curve in the field, and restart this process of checking if the distance of this next step we take and the neighboring curves will be less or equal to the “separating distance”.</p>
 
 
 
+</section>
+</section>
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0">
 <div id="ref-jobard97" class="csl-entry">
 Jobard, Bruno, and Wilfrid Lefer. 1997. <span>“Creating Evenly-Spaced Streamlines of Arbitrary Density.”</span> In <em>Visualization in Scientific Computing ’97</em>, edited by Wilfrid Lefer and Michel Grave, 43–55. Vienna: Springer Vienna.
+</div>
+<div id="ref-perlin" class="csl-entry">
+Wikipedia. 2024a. <span>“Perlin Noise.”</span> <a href="https://en.wikipedia.org/wiki/Perlin_noise">https://en.wikipedia.org/wiki/Perlin_noise</a>.
+</div>
+<div id="ref-simplex" class="csl-entry">
+———. 2024b. <span>“Simplex Noise.”</span> <a href="https://en.wikipedia.org/wiki/Simplex_noise">https://en.wikipedia.org/wiki/Simplex_noise</a>.
 </div>
 </div></section></div> ]]></description>
   <category>Flow Fields</category>

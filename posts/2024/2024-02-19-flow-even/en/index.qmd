@@ -1,16 +1,413 @@
 ---
-title: Producing evenly spaced curves with Jobard-Lefer Algorithm in C
-description: "In this article, I want to implement the Jobard-Lefer Algorithm in C to produce evenly spaced curves in a flow field (i.e. a vector field)."
+title: Producing evenly-spaced and non-overlapping curves with Jobard-Lefer Algorithm in C
+description: "In this article, I want to implement the Jobard-Lefer Algorithm in C. With this algorithm, we can produce evenly-spaced and non-overlapping curves in a flow field (i.e. a vector field)."
 date: "2024-02-19"
 categories: ["Flow Fields", "C", "Algorithm", "Computer Graphcis"]
 bibliography: "./../reference.bib"
 image: "./../flow_field.png"
+number-sections: true
 ---
+
+```{r setup}
+#| include: false
+library(tidyverse)
+library(ambient)
+
+knitr::opts_chunk$set(dev = "ragg_png")
+knitr::opts_chunk$set(dpi = 200)
+
+visualize_grid <- function(grid, n){
+  # Calculate the n^2 lines
+  grid <- grid %>% 
+    mutate(
+      line_id = seq_len(nrow(grid)),
+      xend = cos(value),
+      yend = sin(value),
+    )
+  
+  # Spread the lines across the grid
+  grid <- grid %>% 
+    mutate(
+      xend = xend + x,
+      yend = yend + y
+    )
+  
+  # Plot these lines
+  u <- "inches"
+  a <- arrow(length = unit(0.025, u))
+  ggplot(grid) +
+    geom_segment(
+      aes(
+        x = x, y = y,
+        xend = xend,yend = yend,
+        group = line_id
+      ),
+      arrow = a
+    ) +
+    coord_cartesian(
+      xlim = c(0,n), ylim = c(0,n)
+    ) +
+    theme_void()
+}
+
+build_grid_df <- function(angles, n) {
+  tibble(
+    x = rep(seq_len(n), each = n),
+    y = rep(seq_len(n), times = n),
+    value = angles |> as.vector()
+  )
+}
+
+
+
+n <- 50
+set.seed(50)
+angles <- noise_perlin(c(n, n)) * 2 * pi
+grid <- build_grid_df(angles, n)
+```
 
 # Introduction
 
-I'm currently writing a book about a specific intersection between R and Graphics (stay tuned for more news about this book soon 😉).
+I'm currently writing a book about R and Graphics (stay tuned for more news about this book soon 😉).
 During my research for this book, I had to study a relatively famous and established algorithm, called as the Jobard-Lefer algorithm.
-It is an algorithm for producing evenly spaced curves in a flow field (or a vector field if you prefer).
-
+It is an algorithm for producing evenly spaced curves in a flow field (or a vector field).
 This algorithm is thoroughly described in a scientific paper [@jobard97].
+
+In this article, I want to describe how you can implement this algorithm in C.
+These are the topics we are going to discuss:
+
+- What are flow fields (or vector fields)?
+- How to draw curves in a flow field?
+- What the algorithm does?
+- How does it work?
+- How to implement it in C?
+
+# What are flow fields (or vector fields)?
+
+A flow field (which is also called a vector field in some ocasions) is essentially a field (or a two-dimensional grid) of angles.
+@fig-flow-field1 shows an example of a flow field:
+
+```{r}
+#| echo: false
+#| label: fig-flow-field1
+#| fig-cap: "An example of flow field"
+visualize_grid(grid, n)
+```
+
+In more details, a flow field is usually represented as a 2D (two-dimensional) grid, or a 2D matrix of angle values.
+So each element in this matrix is a real number, and this real number is interpretd as an angle value (in the radians scale).
+This 2D matrix of angle values is usually produced by a Perlin Noise algorithm [@perlin], or a similar algorithm, like
+the Simplex Noise algorithm [@simplex].
+
+In other words, the numbers in the 2D matrix are normally random numbers. But you cannot use any
+random number generator to produce them. You must use a 2D (or two-dimensional) noise algorithm
+to produce these random numbers.
+
+Just to give you a very brief example, you can
+build a flow field in C, by using the [`FastNoiseLite` library](https://github.com/Auburn/FastNoiseLite).
+In this library, you have multiple algorithms you can use for producing two-dimensional noise.
+
+Despite the many options, I will use as an example in this article, the classic Perlin Noise algorithm for producing the flow field.
+You can see in the snippet below that I am building a flow field with 120 of width and height. In other words, we have
+a 120x120 grid of angle values.
+
+```c
+#include <math.h>
+#include <stdlib.h>
+
+#define FNL_IMPL
+#include "FastNoiseLite.h"
+
+#define FLOW_FIELD_WIDTH 120
+#define FLOW_FIELD_HEIGHT 120
+
+int main() {
+  double flow_field[FLOW_FIELD_WIDTH][FLOW_FIELD_HEIGHT];
+	// Create and configure noise state
+	fnl_state noise = fnlCreateState();
+	noise.seed = 50;
+	noise.noise_type = FNL_NOISE_PERLIN;
+	int index = 0;
+	for (int y = 0; y < FLOW_FIELD_HEIGHT; y++) {
+	    for (int x = 0; x < FLOW_FIELD_WIDTH; x++) {
+		    // Scale each value to the radians scale by
+            // multiplying each value by 2PI.
+		    flow_field[x][y] = fnlGetNoise2D(&noise, x, y) * 2 * M_PI;
+	    }
+	}
+}
+```
+
+
+# How to draw curves in a flow field? {#sec-draw-curve}
+
+Flow fields have multiple applications in computer graphics. For example, you can use
+them to draw interesting (or "very pleasing looking") curves.
+
+The basic idea is to draw a curve by walking across the flow field. First, we choose a point in the flow field as our starting point,
+and then, we start to walking by following the direction of the angles we encounter in the flow field.
+As we walk trough the flow field, we record the x and y coordinates of our positions.
+When we finish walking, we can draw a curve by "connecting the dots", i.e. connecting the points (x and y coordinates) that we passed through.
+
+So, in essence, the steps for drawing a curve in a flow field are:
+
+1. Choose a starting point in the grid.
+1. Look at the angle that is stored in the position of the grid that you are currently in.
+1. Take a step in the direction of that angle.
+1. Recalculate your current position in the grid, and record/store this position for later use.
+1. Comeback to step 2.
+
+You can see in the bullet points above that, we begin a loop at step 5. We are repeatedly taking a step in the direction of an angle, recalculating our current position in the flow field, and taking another step in the direction of another angle. As long as we stay inside the boundaries of the flow field, we can repeat this pattern as much as we want to.
+
+The @fig-flow-field2 below shows the end result of this process. In this example, we begin in coordinate $(5, 10)$,
+i.e. $x = 5$ and $y = 10$, in the field, and take 45 sequential steps in the field by following the direction of the angles
+we encounter in the way. The curve painted in red shows the end result of this "walking process".
+
+```{r}
+#| echo: false
+#| fig-cap: "Drawing a curve in the flow field"
+#| label: fig-flow-field2
+n <- 50
+set.seed(50)
+angles <- noise_perlin(c(n, n)) * 2 * pi
+
+# Set some variables
+n_steps <- 45
+grid_width <- 50
+grid_height <- 50
+step_length <- 0.01 * grid_width
+
+off_boundaries <- function(x, y, limit = grid_width){
+  x <= 0 ||
+    y <= 0 ||
+    x >= limit ||
+    y >= limit
+}
+
+# Pre allocate space for the x and y
+# coordinates of the curve that we are drawing
+x_coords <- vector("double", length = n_steps)
+y_coords <- vector("double", length = n_steps)
+
+# Set our starting point
+x <- 5
+y <- 10
+
+# Start walking
+for (i in seq_len(n_steps)) {
+  column_index <- as.integer(x)
+  row_index <- as.integer(y)
+  
+  if (off_boundaries(column_index, row_index)) {
+    break
+  }
+  
+  angle <- angles[row_index, column_index]
+  x_step <- step_length * cos(angle)
+  y_step <- step_length * sin(angle)
+  x <- x + x_step
+  y <- y + y_step
+  
+  x_coords[i] <- x
+  y_coords[i] <- y
+}
+
+curve <- tibble(
+  x = x_coords,
+  y = y_coords
+)
+
+grid <- build_grid_df(angles, n)
+visualize_grid(grid, n) +
+  geom_path(
+    aes(x, y),
+    data = curve,
+    color = "red",
+    linewidth = 1
+  )
+```
+
+As you walk trough the flow field, the angle that you currently using might lead you to a position that is off the boundaries of the flow field. In that case, you should stop walking, before you go off the flow field. Because if you pass the boundaries of the flow field, then, the lookup process we perform to take an angle in the flow field, will fail.
+
+Two important variables need to be defined to draw your curve:
+
+- The number of steps you want to take.
+- The distance of each step (or "step length").
+
+First is the number of steps you want to take
+in your walk. You can definetly set this to infinity, so you walk indefinitely until you hit one of
+the boundaries of the flow field. But you normally do not want to walk indefinitely. Because
+this usually produces a very long curve that goes across the entire flow field.
+
+Yes! You might want to draw a very long curve. As you probably notice, this is very subjective to each person and their objective.
+But for the most part, you usually do not have to set this number of steps too much high.
+Around 30-40 steps is a good range for those who doesn't know what they want.
+
+Therefore, the number of steps directly affects the length of the curve that you are drawing. If you take a high number for steps
+, the curve will be longer. In contrast, if you take just few steps, your
+curve will be shorter.
+
+Second is the distance you will take in each step (let's call it as the "step length").
+The step length affects how "sharp" the curve looks. If you set the step length
+correctly, the curve will look nice, very "curvy". In other words, the curve will look like an actual curve.
+But if you set the step length too high, then, the "connect the dots" effects will be much more appearant.
+In other words, your curve will not look like a curve, and more like an attempt to draw a polygon with very sharp
+edges.
+
+But be careful to also not set the step length too low. If you set it very very low, then, you will end up affecting the length
+of the curve as well. Because the step length is soo low, that even if you set the number of steps very high, you still
+get a very short curve as a result. This is bad because you will be tempted to raise the number of steps even higher,
+and by setting the number of steps too high, you end up increasing the overhead and computing time of the algorithm.
+
+I mean, increasing the number of steps from 10 to 1000 for drawing a single curve into the field is fine.
+But when you raise the number of steps to 1000 when you are drawing like 10000 curves into field, then you will
+notice the overhead very quickly. So, if you want your algorithm to perform well, and still get nice
+and visually attractive curves in the output, you usually want to set the step length to a number that is in
+the range from 0.1% to 1% of the flow field width.
+
+The C code snippet below translates the steps I described at @sec-draw-curve to draw a curve into
+the field. You can see in this code that our current position in the Cartesian plane
+is mapped to a specific position in the flow field, or, in other words, to a position in the 2D matrix of angles,
+by transforming our current x and y positions into integers.
+
+So for example, if our current position in the Cartesian plane is $x = 45.289$ and $y = 21.556$,
+then, our current position in the flow field is $x = 45$ and $y = 21$. So, the current angle that
+we need to retrieve and use from the flow field, is the angle that is stored in the
+element `angles[45][21]` of the matrix.
+
+```c
+#define N_STEPS 30
+#define STEP_LENGTH 0.01 * FLOW_FIELD_WIDTH
+
+int off_boundaries (double x, double y, int limit) {
+	return (
+	x <= 0 ||
+	    y <= 0 ||
+	    x >= limit ||
+	    y >= limit
+	);
+}
+
+double x_coords[N_STEPS];
+double y_coords[N_STEPS];
+
+for (int i = 0; i < N_STEPS; i++) {
+  int ff_column_index = (int) floor(x);
+  int ff_row_index = (int) floor(y);
+
+  if (off_boundaries(ff_column_index, ff_row_index, FLOW_FIELD_WIDTH)) {
+    break;
+  }
+
+  double angle = flow_field[ff_row_index][ff_column_index];
+  double x_step = STEP_LENGTH * cos(angle);
+  double y_step = STEP_LENGTH * sin(angle);
+  x = x + x_step;
+  y = y + y_step;
+
+  x_coords[i] = x;
+  y_coords[i] = y;
+}
+```
+
+Furthermore, this C code uses a pair of equations from geometry (@eq-rotation1 and @eq-rotation2) to calculate
+the new x and y coordinates after I take the step by following the direction of the current angle.
+These equations are normally used to calculate the coordinates
+in the circumference of a circle centered at the origin point of the Cartesian plane,
+and they are exposed below.
+
+Given that a circle that is centered at the origin point of the Cartesian plane, and 
+that $r$ is the radius of the circle, and that $A$ is the angle, in radians,
+that identifies the position in the circumference that you are trying to calculate it's coordinates,
+you can calculate the x ($x'$) and y ($y'$) coordinates of the corresponding position
+in the circumference by using the following pair of equations:
+
+$$
+x'=r\times \cos(A)
+$${#eq-rotation1}
+
+$$
+y'=r\times \sin(A)
+$${#eq-rotation2}
+
+
+
+# The Jobard-Lefer algorithm
+
+When you start to draw multiple curves in the flow field, without caring where these curves are placed
+and where they go, eventually, you will end up with a very dense
+image, with many curves overlapping each other. Some people are intentionally
+trying to produce such dense images, because they want the interesting depth effect that these
+images normally have around the curves.
+
+But sometimes, you are really trying to avoid that. Sometimes, you want to meet all of these criterias below at the same time:
+
+- draw a high number of curves (i.e. a number that is high enough to "fill" the image) in the field.
+- draw only non-overlapping curves.
+- draw curves that are "evenly-spaced" between each other.
+
+@jobard97 proposes an algorithm that produces non-overlapping and
+evenly-spaced curves around a flow field. If you read the paper carefully,
+you might notice that you can divide the algorithm into two separate parts.
+And splitting this algorithm like this, into two separate parts, will be very
+useful here in this article for explaining how each piece of the algorithm works.
+
+These parts are:
+
+- An algorithm to draw non-overlapping curves.
+- An algorithm to select new start points for new curves.
+
+[^parts]: There are other parts to the entire algorithm proposed by @jobard97. But these other parts are not worth explaining in this article. Read the original scientific paper for full details about the algorithm.
+
+Since each part have it's own quirks, I begin by focusing on the first part of the algorithm. After explaining
+how this first part works, it will be a little easier for you to understand how the
+second part works.
+
+## Drawing non-overlapping curves
+
+This first part of the algorithm is the part that makes sure that only non-overlapping
+curves are drawn to the field. The idea behind it, is that we are constantly checking the distances
+between our next position and the other curves around us. We want to always make sure
+that the current curve is far enough from the other curves, and, if not, stop drawing this curve.
+
+This specific part of the algorithm works around a constant value, that represents the minimum
+distance allowed between two curves. @jobard97 call this value as $d_{sep}$,
+or, as the "separating distance". The end result of the algorithm is that any point
+in any curve in the field is, at least, at a distance of
+$d_{sep}$ units from any other point from another curve in the field.
+
+If you use this part of the algorithm, you normally produce some very nice and "pleasing to the eyes" type of
+images. At @fig-diff-algorithm, I am showing the difference that this part of the algorithm makes
+to the image. In both subfigures, we used the same colors for each curve, the same
+starting points for each curve, the same step length, the same number of steps,
+same flow field, etc. Anymway, all the configs used in both images are literally the same. The only
+difference between these two images, is the use (or not) of this
+"non-overlaping" curve algorithm.
+
+In the first image (without the Jobard-Lefer algorithm)
+I simply drawn the curves using the steps I described at @sec-draw-curve, without caring if the
+curves were overlapping (or, if they were too close to) each other.
+In contrast, in the second image, I used the first part of the Jobard-Lefer algorithm to draw the curves
+while checking if they were overlapping (or, if they were too close to) each other.
+
+::: {#fig-diff-algorithm layout-nrow=2}
+
+![Without Jobard-Lefer algorithm](./../overlap.png){#fig-diff-overlap}
+
+![With Jobard-Lefer algorithm](./../non_overlap.png){#fig-diff-non-overlap}
+
+Demonstrating the effect of the Jobard-Lefer algorithm on curves drawn in the field
+:::
+
+### How this part of the algorithm works?
+
+In essence, at each step we take drawing our curve in the flow field, we look at the curves that are around us,
+and we compare the distance between our current position and all of these neighboring curves.
+If this distance between the next step we take and any of the neighboring curves, is lower or
+equal to a specific value ()
+
+
+, then, we do not take this next step, and we stop drawing the current curve. At this point, if we have
+a next curve to draw, then, we start to this next curve in the field, and restart this process
+of checking if the distance of this next step we take and the neighboring curves will
+be less or equal to the "separating distance".
