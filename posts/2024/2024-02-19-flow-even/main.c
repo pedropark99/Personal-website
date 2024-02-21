@@ -256,13 +256,13 @@ int valid_seedpoint (double x, double y,
 		return 0;
 	}
    
-	int start_row = (density_row - 1) > 0 ? (density_row - 1) : 0;
-	int end_row = (density_row + 1) < density_grid_width ? (density_row + 1) : density_grid_width; 
-	int start_col = (density_col - 1) > 0 ? (density_col - 1) : 0;
-	int end_col = (density_col + 1) < density_grid_width ? (density_col + 1) : density_grid_width;
+	int start_row = (density_row - 1) > 0 ? density_row - 1 : 0;
+	int end_row = (density_row + 1) < density_grid_width ? density_row + 1 : density_row; 
+	int start_col = (density_col - 1) > 0 ? density_col - 1 : 0;
+	int end_col = (density_col + 1) < density_grid_width ? density_col + 1 : density_col;
  
-	for (int c = start_col; c < end_col; c++) {
-		for (int r = start_row; r < end_row; r++) {
+	for (int c = start_col; c <= end_col; c++) {
+		for (int r = start_row; r <= end_row; r++) {
 			if (r > DENSITY_GRID_WIDTH || c > DENSITY_GRID_WIDTH) {
 				printf("[ERROR]: Attempt to access a cell that is out of boundaries of the density grid! Index: %d|%d\n", c, r);
 			}

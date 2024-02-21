@@ -10,7 +10,6 @@ curves <- curves %>%
 
 
 curves %>%
-  filter(curve_id %in% c(258, 56)) %>% 
   ggplot() +
   geom_path(aes(x, y, group = curve_id)) +
   coord_cartesian(
