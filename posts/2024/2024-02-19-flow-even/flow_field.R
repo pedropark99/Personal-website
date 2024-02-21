@@ -15,7 +15,8 @@ curves %>%
   coord_cartesian(
     xlim = c(0, 120),
     ylim = c(0, 120)
-  )
+  ) +
+  theme_void()
 
 
 
