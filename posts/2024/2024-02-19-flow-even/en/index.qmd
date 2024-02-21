@@ -1,6 +1,6 @@
 ---
 title: Producing evenly spaced curves with Jobard-Lefer Algorithm in C
-description: "This article implements the Jobard-Lefer Algorithm in C. This algorithm is used to produce evely spaced curves in a flow field."
+description: "In this article, I want to implement the Jobard-Lefer Algorithm in C to produce evenly spaced curves in a flow field (i.e. a vector field)."
 date: "2024-02-19"
 categories: ["Flow Fields", "C", "Algorithm", "Computer Graphcis"]
 bibliography: "./../reference.bib"
