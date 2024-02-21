@@ -9,5 +9,8 @@ image: "./../flow_field.png"
 
 # Introduction
 
+I'm currently writing a book about a specific intersection between R and Graphics (stay tuned for more news about this book soon 😉).
+During my research for this book, I had to study a relatively famous and established algorithm, called as the Jobard-Lefer algorithm.
+It is an algorithm for producing evenly spaced curves in a flow field (or a vector field if you prefer).
 
-This is a reference to @jobard97.
+This algorithm is thoroughly described in a scientific paper [@jobard97].
