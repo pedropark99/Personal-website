@@ -443,20 +443,53 @@ $${#eq-distance}
 
 ### The density grid
 
-However, calculating the distance between one point and all points from all other curves
-would be impractical. What the Jobard-Lefer algorithm does is calculating the distance
-between one point and **all of the points that are near by and that belongs to others (already existing) curves**.
+I think this specific section of the paper is a little confusing. But if I did understand
+the authors correctly, then, at each step we take in the field, the Jobard-Lefer algorithm
+takes the coordinate of out next step, and calculates the distance between this point and
+**all of the points that are near by and that belongs to others (already existing) curves**.
 
 To find the points that are near by, the algorithm uses a second Cartesian grid that is superposed
-over the Cartesian plane. In other words, it uses a second Cartesian plane
+over the Cartesian plane that our flow field lives. In other words, it uses a second Cartesian plane
 that uses a different scale, accordingly to the "separating distance" ($d_{sep}$).
-@jobard97 call this second Cartesian plane as the "density grid".
+@jobard97 call this second Cartesian grid as the "density grid".
 
-So every coordinate in the Cartesian plane can be mapped to a position in the density grid.
+So every coordinate in the Cartesian plane can be mapped to a specific position in the density grid.
 You do that by scaling the x and y coordinates in the Cartesian to fit the scale used in the density grid.
 As an example, let's consider a Cartesian plane that is 100x100.
 
-At @fig-cartesian-grid.
+For example, if you have an x and y coordinates in the flow field, and you want
+to calculate the corresponding position in the density grid for this specific
+coordinate, you can use the functions `get_density_col()` and `get_density_row()`
+exposed below:
+
+```c
+int get_density_col (double x, double d_sep) {
+	double c = (x / d_sep) + 1;
+	return (int) c;
+}
+
+int get_density_row (double y, double d_sep) {
+	double r = (y / d_sep) + 1;
+	return (int) r;
+}
+```
+
+At @fig-cartesian-grid, we are using as an example, a Cartesian plane with dimensions 100x100.
+With $d_{sep} = 2$, the corresponding density grid becomes a Cartesian grid with dimensions 50x50.
+You can see in this figure that, the density grid is a grid of $50 \times 50 = 2500$ cells.
+Each cell have width and height equal to $d_{sep}$.
+
+That is why the functions `get_density_col()` and `get_density_row()` always return an integer value
+as output. Because they calculate the coordinates of the cell in which the original coordinate in
+the Cartesian plane is mapped to.
+
+So a single cell in the density grid can contain
+multiple points from the Cartesian plane where the flow field lives. Or, on the other side,
+you can say that multiple points in the Cartesian plane can be mapped to the same cell in
+the density grid.
+
+In the example of @fig-cartesian-grid, the coordinate $x = 42.312$ and $y = 72.112$
+is mapped to the cell at position $x = 22$ and $y = 37$ in the density grid.
 
 ::: {#fig-cartesian-grid layout-ncol=2}
 
@@ -466,3 +499,4 @@ At @fig-cartesian-grid.
 
 The relationship between the Cartesian plane and the density grid.
 :::
+

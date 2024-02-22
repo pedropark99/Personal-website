@@ -576,10 +576,107 @@ Figure&nbsp;4: The steps to check if the current curve is too close to a neighbo
 </section>
 <section id="the-density-grid" class="level3" data-number="4.1.2">
 <h3 data-number="4.1.2" class="anchored" data-anchor-id="the-density-grid"><span class="header-section-number">4.1.2</span> The density grid</h3>
-<p>However, calculating the distance between one point and all points from all other curves would be impractical. What the Jobard-Lefer algorithm does is calculating the distance between one point and <strong>all of the points that are near by and that belongs to others (already existing) curves</strong>.</p>
-<p>To find the points that are near by, the algorithm uses a second Cartesian grid that is superposed over the Cartesian plane. In other words, it uses a second Cartesian plane that uses a different scale, accordingly to the “separating distance” (<img src="https://latex.codecogs.com/png.latex?d_%7Bsep%7D">). <span class="citation" data-cites="jobard97">Jobard and Lefer (1997)</span> call this second Cartesian plane as the “density grid”.</p>
-<p>So every coordinate in the Cartesian plane can be mapped to a position in the density grid. You do that by scaling the x and y coordinates in the Cartesian to fit the scale used in the density grid. As an example, let’s consider a Cartesian plane that is 100x100.</p>
-<p>At Figure&nbsp;5.</p>
+<p>I think this specific section of the paper is a little confusing. But if I did understand the authors correctly, then, at each step we take in the field, the Jobard-Lefer algorithm takes the coordinate of out next step, and calculates the distance between this point and <strong>all of the points that are near by and that belongs to others (already existing) curves</strong>.</p>
+<p>To find the points that are near by, the algorithm uses a second Cartesian grid that is superposed over the Cartesian plane that our flow field lives. In other words, it uses a second Cartesian plane that uses a different scale, accordingly to the “separating distance” (<img src="https://latex.codecogs.com/png.latex?d_%7Bsep%7D">). <span class="citation" data-cites="jobard97">Jobard and Lefer (1997)</span> call this second Cartesian grid as the “density grid”.</p>
+<p>So every coordinate in the Cartesian plane can be mapped to a specific position in the density grid. You do that by scaling the x and y coordinates in the Cartesian to fit the scale used in the density grid. As an example, let’s consider a Cartesian plane that is 100x100.</p>
+<p>For example, if you have an x and y coordinates in the flow field, and you want to calculate the corresponding position in the density grid for this specific coordinate, you can use the functions <code>get_density_col()</code> and <code>get_density_row()</code> exposed below:</p>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb3-1"><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">int</span> get_density_col <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">double</span> x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">double</span> d_sep<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span id="cb3-2">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">double</span> c <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> d_sep<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb3-3">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">return</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">int</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> c<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb3-4"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span id="cb3-5"></span>
+<span id="cb3-6"><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">int</span> get_density_row <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">double</span> y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">double</span> d_sep<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span id="cb3-7">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">double</span> r <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> d_sep<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb3-8">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">return</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">int</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> r<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb3-9"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span></code></pre></div>
+<p>At Figure&nbsp;5, we are using as an example, a Cartesian plane with dimensions 100x100. With <img src="https://latex.codecogs.com/png.latex?d_%7Bsep%7D%20=%202">, the corresponding density grid becomes a Cartesian grid with dimensions 50x50. You can see in this figure that, the density grid is a grid of <img src="https://latex.codecogs.com/png.latex?50%20%5Ctimes%2050%20=%202500"> cells. Each cell have width and height equal to <img src="https://latex.codecogs.com/png.latex?d_%7Bsep%7D">.</p>
+<p>That is why the functions <code>get_density_col()</code> and <code>get_density_row()</code> always return an integer value as output. Because they calculate the coordinates of the cell in which the original coordinate in the Cartesian plane is mapped to.</p>
+<p>So a single cell in the density grid can contain multiple points from the Cartesian plane where the flow field lives. Or, on the other side, you can say that multiple points in the Cartesian plane can be mapped to the same cell in the density grid.</p>
+<p>In the example of Figure&nbsp;5, the coordinate <img src="https://latex.codecogs.com/png.latex?x%20=%2042.312"> and <img src="https://latex.codecogs.com/png.latex?y%20=%2072.112"> is mapped to the cell at position <img src="https://latex.codecogs.com/png.latex?x%20=%2022"> and <img src="https://latex.codecogs.com/png.latex?y%20=%2037"> in the density grid.</p>
 <div id="fig-cartesian-grid" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-cartesian-grid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
