@@ -749,6 +749,13 @@ not valid (i.e. it is too close to a neighboring curve), and because of
 that, we run a `break` statement to drawing the current curve. Then,
 we comeback to the main and outer loop, and we start to draw the next curve in the field. 
 
+You can also see that, after this first inner loop, it means that you finished drawing
+the current curve. Because of that, we now need, to register/insert all
+points of this curve into the density grid. So that the next curves that are
+drawn into the field, take the points from this current curve into account.
+That is what the second inner loop does. It walks trough the points of
+the curve, and register these points into the density grid.
+
 ```c
 Curve* curves = malloc(N_CURVES * sizeof(Curve));
 for (int i = 0; i < N_CURVES; i++) {
