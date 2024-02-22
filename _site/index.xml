@@ -257,14 +257,94 @@ Figure&nbsp;2: Drawing a curve in the flow field
 <p>Second is the distance you will take in each step (let’s call it as the “step length”). The step length affects how “sharp” the curve looks. If you set the step length correctly, the curve will look nice, very “curvy”. In other words, the curve will look like an actual curve. But if you set the step length too high, then, the “connect the dots” effects will be much more appearant. In other words, your curve will not look like a curve, and more like an attempt to draw a polygon with very sharp edges.</p>
 <p>But be careful to also not set the step length too low. If you set it very very low, then, you will end up affecting the length of the curve as well. Because the step length is soo low, that even if you set the number of steps very high, you still get a very short curve as a result. This is bad because you will be tempted to raise the number of steps even higher, and by setting the number of steps too high, you end up increasing the overhead and computing time of the algorithm.</p>
 <p>I mean, increasing the number of steps from 10 to 1000 for drawing a single curve into the field is fine. But when you raise the number of steps to 1000 when you are drawing like 10000 curves into field, then you will notice the overhead very quickly. So, if you want your algorithm to perform well, and still get nice and visually attractive curves in the output, you usually want to set the step length to a number that is in the range from 0.1% to 1% of the flow field width.</p>
-<p>The C code snippet below translates the steps I described at Section&nbsp;3 to draw a curve into the field. You can see in this code that our current position in the Cartesian plane is mapped to a specific position in the flow field, or, in other words, to a position in the 2D matrix of angles, by transforming our current x and y positions into integers.</p>
-<p>So for example, if our current position in the Cartesian plane is <img src="https://latex.codecogs.com/png.latex?x%20=%2045.289"> and <img src="https://latex.codecogs.com/png.latex?y%20=%2021.556">, then, our current position in the flow field is <img src="https://latex.codecogs.com/png.latex?x%20=%2045"> and <img src="https://latex.codecogs.com/png.latex?y%20=%2021">. So, the current angle that we need to retrieve and use from the flow field, is the angle that is stored in the element <code>angles[45][21]</code> of the matrix.</p>
+<p>In C, you can represent a curve with the struct <code>Curve</code> below. You can see below that I am dynamically allocating space to store the x and y coordinates that compose this curve.</p>
 <div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb2-1"><span class="pp" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">#define N_STEPS </span><span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">30</span></span>
-<span id="cb2-2"><span class="pp" style="color: #AD0000;
+<span id="cb2-2"></span>
+<span id="cb2-3"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">struct</span> Curve <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span id="cb2-4">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">int</span> id<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb2-5">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">double</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb2-6">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">double</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb2-7"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">typedef</span> Curve<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb2-8"></span>
+<span id="cb2-9">Curve curve<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb2-10">curve<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>id <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb2-11">curve<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> malloc<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>N_STEPS <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">sizeof</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">double</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">));</span></span>
+<span id="cb2-12">curve<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> malloc<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>N_STEPS <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">sizeof</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">double</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">));</span></span></code></pre></div>
+<p>Also, the C snippet below translates the steps I described above to draw a curve into the field. You can see in this code that our current position in the Cartesian plane is mapped to a specific position in the flow field, or, in other words, to a position in the 2D matrix of angles, by transforming our current x and y positions into integers.</p>
+<p>So for example, if our current position in the Cartesian plane is <img src="https://latex.codecogs.com/png.latex?x%20=%2045.289"> and <img src="https://latex.codecogs.com/png.latex?y%20=%2021.556">, then, our current position in the flow field is <img src="https://latex.codecogs.com/png.latex?x%20=%2045"> and <img src="https://latex.codecogs.com/png.latex?y%20=%2021">. So, the current angle that we need to retrieve and use from the flow field, is the angle that is stored in the element <code>angles[45][21]</code> of the matrix.</p>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb3-1"><span class="pp" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">#define STEP_LENGTH </span><span class="fl" style="color: #AD0000;
 background-color: null;
@@ -275,8 +355,8 @@ background-color: null;
 font-style: inherit;">*</span><span class="pp" style="color: #AD0000;
 background-color: null;
 font-style: inherit;"> FLOW_FIELD_WIDTH</span></span>
-<span id="cb2-3"></span>
-<span id="cb2-4"><span class="dt" style="color: #AD0000;
+<span id="cb3-2"></span>
+<span id="cb3-3"><span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">int</span> off_boundaries <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -295,56 +375,41 @@ background-color: null;
 font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">{</span></span>
-<span id="cb2-5">    <span class="cf" style="color: #003B4F;
+<span id="cb3-4">    <span class="cf" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">return</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span></span>
-<span id="cb2-6">    x <span class="op" style="color: #5E5E5E;
+<span id="cb3-5">    x <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">&lt;=</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">||</span></span>
-<span id="cb2-7">        y <span class="op" style="color: #5E5E5E;
+<span id="cb3-6">        y <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">&lt;=</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">||</span></span>
-<span id="cb2-8">        x <span class="op" style="color: #5E5E5E;
+<span id="cb3-7">        x <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">&gt;=</span> limit <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">||</span></span>
-<span id="cb2-9">        y <span class="op" style="color: #5E5E5E;
+<span id="cb3-8">        y <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">&gt;=</span> limit</span>
-<span id="cb2-10">    <span class="op" style="color: #5E5E5E;
+<span id="cb3-9">    <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">);</span></span>
-<span id="cb2-11"><span class="op" style="color: #5E5E5E;
+<span id="cb3-10"><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">}</span></span>
-<span id="cb2-12"></span>
-<span id="cb2-13"><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">double</span> x_coords<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">[</span>N_STEPS<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">];</span></span>
-<span id="cb2-14"><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">double</span> y_coords<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">[</span>N_STEPS<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">];</span></span>
-<span id="cb2-15"></span>
-<span id="cb2-16"><span class="cf" style="color: #003B4F;
+<span id="cb3-11"></span>
+<span id="cb3-12"><span class="cf" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">for</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -365,7 +430,7 @@ background-color: null;
 font-style: inherit;">++)</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">{</span></span>
-<span id="cb2-17">  <span class="dt" style="color: #AD0000;
+<span id="cb3-13">  <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">int</span> ff_column_index <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -380,7 +445,7 @@ background-color: null;
 font-style: inherit;">(</span>x<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">);</span></span>
-<span id="cb2-18">  <span class="dt" style="color: #AD0000;
+<span id="cb3-14">  <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">int</span> ff_row_index <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -395,8 +460,8 @@ background-color: null;
 font-style: inherit;">(</span>y<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">);</span></span>
-<span id="cb2-19"></span>
-<span id="cb2-20">  <span class="cf" style="color: #003B4F;
+<span id="cb3-15"></span>
+<span id="cb3-16">  <span class="cf" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -411,16 +476,16 @@ background-color: null;
 font-style: inherit;">))</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">{</span></span>
-<span id="cb2-21">    <span class="cf" style="color: #003B4F;
+<span id="cb3-17">    <span class="cf" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">break</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">;</span></span>
-<span id="cb2-22">  <span class="op" style="color: #5E5E5E;
+<span id="cb3-18">  <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">}</span></span>
-<span id="cb2-23"></span>
-<span id="cb2-24">  <span class="dt" style="color: #AD0000;
+<span id="cb3-19"></span>
+<span id="cb3-20">  <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">double</span> angle <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -431,7 +496,7 @@ background-color: null;
 font-style: inherit;">][</span>ff_column_index<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">];</span></span>
-<span id="cb2-25">  <span class="dt" style="color: #AD0000;
+<span id="cb3-21">  <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">double</span> x_step <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -442,7 +507,7 @@ background-color: null;
 font-style: inherit;">(</span>angle<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">);</span></span>
-<span id="cb2-26">  <span class="dt" style="color: #AD0000;
+<span id="cb3-22">  <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">double</span> y_step <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -453,22 +518,24 @@ background-color: null;
 font-style: inherit;">(</span>angle<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">);</span></span>
-<span id="cb2-27">  x <span class="op" style="color: #5E5E5E;
+<span id="cb3-23">  x <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> x <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">+</span> x_step<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">;</span></span>
-<span id="cb2-28">  y <span class="op" style="color: #5E5E5E;
+<span id="cb3-24">  y <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> y <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">+</span> y_step<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">;</span></span>
-<span id="cb2-29"></span>
-<span id="cb2-30">  x_coords<span class="op" style="color: #5E5E5E;
+<span id="cb3-25"></span>
+<span id="cb3-26">  curve<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>x<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">[</span>i<span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -477,7 +544,9 @@ background-color: null;
 font-style: inherit;">=</span> x<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">;</span></span>
-<span id="cb2-31">  y_coords<span class="op" style="color: #5E5E5E;
+<span id="cb3-27">  curve<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>y<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">[</span>i<span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -486,7 +555,7 @@ background-color: null;
 font-style: inherit;">=</span> y<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">;</span></span>
-<span id="cb2-32"><span class="op" style="color: #5E5E5E;
+<span id="cb3-28"><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">}</span></span></code></pre></div>
 <p>Furthermore, this C code uses a pair of equations from geometry (Equation&nbsp;1 and Equation&nbsp;2) to calculate the new x and y coordinates after I take the step by following the direction of the current angle. These equations are normally used to calculate the coordinates in the circumference of a circle centered at the origin point of the Cartesian plane, and they are exposed below.</p>
@@ -510,8 +579,9 @@ font-style: inherit;">}</span></span></code></pre></div>
 <li>An algorithm to select new start points for new curves.</li>
 </ul>
 <p>First, I will focus on the first part of the algorithm, and, after explaining how this first part works, it will be a little easier for you to understand how the second part works.</p>
-<section id="drawing-non-overlapping-curves" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="drawing-non-overlapping-curves"><span class="header-section-number">4.1</span> Drawing non-overlapping curves</h2>
+</section>
+<section id="drawing-non-overlapping-curves" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Drawing non-overlapping curves</h1>
 <p>This first part of the algorithm is the part that makes sure that only non-overlapping curves are drawn to the field. The idea behind it, is that we are constantly checking the distances between our next position and the other curves around us. We want to always make sure that the current curve is far enough from the other curves, and, if not, stop drawing this curve.</p>
 <p>This specific part of the algorithm works around a constant value, that represents the minimum distance allowed between two curves. <span class="citation" data-cites="jobard97">Jobard and Lefer (1997)</span> call this value as <img src="https://latex.codecogs.com/png.latex?d_%7Bsep%7D">, or, as the “separating distance”. The end result of the algorithm is that any point in any curve in the field is, at least, at a distance of <img src="https://latex.codecogs.com/png.latex?d_%7Bsep%7D"> units from any other point from another curve in the field.</p>
 <p>If you use this part of the algorithm, you normally produce some very nice and “pleasing to the eyes” type of images. At Figure&nbsp;3, I am showing the difference that this part of the algorithm makes to the image. In both subfigures, we used the same colors for each curve, the same starting points for each curve, the same step length, the same number of steps, same flow field, etc. Anymway, all the configs used in both images are literally the same. The only difference between these two images, is the use (or not) of this “non-overlaping” curve algorithm.</p>
@@ -553,8 +623,8 @@ Figure&nbsp;3: Demonstrating the effect of the Jobard-Lefer algorithm on curves 
 </figcaption>
 </figure>
 </div>
-<section id="how-this-part-of-the-algorithm-works" class="level3" data-number="4.1.1">
-<h3 data-number="4.1.1" class="anchored" data-anchor-id="how-this-part-of-the-algorithm-works"><span class="header-section-number">4.1.1</span> How this part of the algorithm works?</h3>
+<section id="how-this-part-of-the-algorithm-works" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="how-this-part-of-the-algorithm-works"><span class="header-section-number">5.1</span> How this part of the algorithm works?</h2>
 <p>In essence, at each step we take while drawing our curve, we look at the curves that are around us, and we compare the distance between our next step and all of these neighboring curves. If this distance between is lower or equal to the separating value (<img src="https://latex.codecogs.com/png.latex?d_%7Bsep%7D">), then, we do not take the next step, and we stop drawing the current line.</p>
 <p>Notice that we are still using the exact same steps I described at Section&nbsp;3 to draw the curves into the field. We are still start with a starting point, then, we start to take sequential steps by following the direction of the angles we encounter through the field.</p>
 <p>However, the key difference here, is that we added a new step, or new check to these previous steps. Now, while we are walking through the field, we are constantly calculating distances, and checking these distances to make sure that we are not too close to a neighbour curve.</p>
@@ -573,14 +643,80 @@ Figure&nbsp;4: The steps to check if the current curve is too close to a neighbo
 </div>
 <p>To calculate the distance between two points in the Cartesian plane, we use another equation from geometry, which is commonly know as the “distance formula”:</p>
 <p><span id="eq-distance"><img src="https://latex.codecogs.com/png.latex?%0Ad%20=%20%5Csqrt%7B%5B(x_2%20-%20x_1)%5E2%20+%20(y_2%20-%20y_1)%5E2%5D%7D%0A%5Ctag%7B3%7D"></span></p>
+<p>The function <code>distance()</code> below translates this Equation&nbsp;3 into a C function.</p>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb4-1"><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">double</span> distance <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">double</span> x1<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">double</span> y1<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">double</span> x2<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">double</span> y2<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span id="cb4-2">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">double</span> s1 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pow<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>x2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> x1<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.0</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">);</span></span>
+<span id="cb4-3">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">double</span> s2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pow<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>y2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> y1<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.0</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">);</span></span>
+<span id="cb4-4">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">return</span> sqrt<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>s1 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> s2<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">);</span></span>
+<span id="cb4-5"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span></code></pre></div>
 </section>
-<section id="the-density-grid" class="level3" data-number="4.1.2">
-<h3 data-number="4.1.2" class="anchored" data-anchor-id="the-density-grid"><span class="header-section-number">4.1.2</span> The density grid</h3>
+<section id="the-density-grid" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="the-density-grid"><span class="header-section-number">5.2</span> The density grid</h2>
 <p>I think this specific section of the paper is a little confusing. But if I did understand the authors correctly, then, at each step we take in the field, the Jobard-Lefer algorithm takes the coordinate of out next step, and calculates the distance between this point and <strong>all of the points that are near by and that belongs to others (already existing) curves</strong>.</p>
 <p>To find the points that are near by, the algorithm uses a second Cartesian grid that is superposed over the Cartesian plane that our flow field lives. In other words, it uses a second Cartesian plane that uses a different scale, accordingly to the “separating distance” (<img src="https://latex.codecogs.com/png.latex?d_%7Bsep%7D">). <span class="citation" data-cites="jobard97">Jobard and Lefer (1997)</span> call this second Cartesian grid as the “density grid”.</p>
 <p>So every coordinate in the Cartesian plane can be mapped to a specific position in the density grid. You do that by scaling the x and y coordinates in the Cartesian to fit the scale used in the density grid. As an example, let’s consider a Cartesian plane that is 100x100.</p>
 <p>For example, if you have an x and y coordinates in the flow field, and you want to calculate the corresponding position in the density grid for this specific coordinate, you can use the functions <code>get_density_col()</code> and <code>get_density_row()</code> exposed below:</p>
-<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb3-1"><span class="dt" style="color: #AD0000;
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb5-1"><span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">int</span> get_density_col <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -595,7 +731,7 @@ background-color: null;
 font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">{</span></span>
-<span id="cb3-2">    <span class="dt" style="color: #AD0000;
+<span id="cb5-2">    <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">double</span> c <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -612,7 +748,7 @@ background-color: null;
 font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">;</span></span>
-<span id="cb3-3">    <span class="cf" style="color: #003B4F;
+<span id="cb5-3">    <span class="cf" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">return</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -623,11 +759,11 @@ background-color: null;
 font-style: inherit;">)</span> c<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">;</span></span>
-<span id="cb3-4"><span class="op" style="color: #5E5E5E;
+<span id="cb5-4"><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">}</span></span>
-<span id="cb3-5"></span>
-<span id="cb3-6"><span class="dt" style="color: #AD0000;
+<span id="cb5-5"></span>
+<span id="cb5-6"><span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">int</span> get_density_row <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -642,7 +778,7 @@ background-color: null;
 font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">{</span></span>
-<span id="cb3-7">    <span class="dt" style="color: #AD0000;
+<span id="cb5-7">    <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">double</span> r <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -659,7 +795,7 @@ background-color: null;
 font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">;</span></span>
-<span id="cb3-8">    <span class="cf" style="color: #003B4F;
+<span id="cb5-8">    <span class="cf" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">return</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -670,11 +806,11 @@ background-color: null;
 font-style: inherit;">)</span> r<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">;</span></span>
-<span id="cb3-9"><span class="op" style="color: #5E5E5E;
+<span id="cb5-9"><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">}</span></span></code></pre></div>
-<p>At Figure&nbsp;5, we are using as an example, a Cartesian plane with dimensions 100x100. With <img src="https://latex.codecogs.com/png.latex?d_%7Bsep%7D%20=%202">, the corresponding density grid becomes a Cartesian grid with dimensions 50x50. You can see in this figure that, the density grid is a grid of <img src="https://latex.codecogs.com/png.latex?50%20%5Ctimes%2050%20=%202500"> cells. Each cell have width and height equal to <img src="https://latex.codecogs.com/png.latex?d_%7Bsep%7D">.</p>
-<p>That is why the functions <code>get_density_col()</code> and <code>get_density_row()</code> always return an integer value as output. Because they calculate the coordinates of the cell in which the original coordinate in the Cartesian plane is mapped to.</p>
+<p>At Figure&nbsp;5, we are using as an example, a Cartesian plane with dimensions 100x100. With <img src="https://latex.codecogs.com/png.latex?d_%7Bsep%7D%20=%202">, the corresponding density grid becomes a Cartesian grid with dimensions 50x50. You can see at Figure&nbsp;5 (b) that, the density grid is a grid of <img src="https://latex.codecogs.com/png.latex?50%20%5Ctimes%2050%20=%202500"> cells. Each cell have width and height equal to <img src="https://latex.codecogs.com/png.latex?d_%7Bsep%7D">. In <span class="citation" data-cites="jobard97">Jobard and Lefer (1997)</span> paper, these cells are called “density cells”.</p>
+<p>The functions <code>get_density_col()</code> and <code>get_density_row()</code> always return an integer value as output. Because they calculate the coordinates of the density cell in which the original coordinate in the Cartesian plane is mapped to.</p>
 <p>So a single cell in the density grid can contain multiple points from the Cartesian plane where the flow field lives. Or, on the other side, you can say that multiple points in the Cartesian plane can be mapped to the same cell in the density grid.</p>
 <p>In the example of Figure&nbsp;5, the coordinate <img src="https://latex.codecogs.com/png.latex?x%20=%2042.312"> and <img src="https://latex.codecogs.com/png.latex?y%20=%2072.112"> is mapped to the cell at position <img src="https://latex.codecogs.com/png.latex?x%20=%2022"> and <img src="https://latex.codecogs.com/png.latex?y%20=%2037"> in the density grid.</p>
 <div id="fig-cartesian-grid" class="quarto-layout-panel">
@@ -712,10 +848,811 @@ Figure&nbsp;5: The relationship between the Cartesian plane and the density grid
 </figcaption>
 </figure>
 </div>
-
-
-
+<p>Each cell in the density grid should store a collection of pointers. Each pointer points to a specific point in the flow field that belongs to a curve drawn in the field, and that is mapped to that specific cell.</p>
+<p>As an example, let’s suppose we are using a 100x100 flow field, and that we already drawn two curves in the field, curve A and curve B. Because we configured the number of steps to 30, each curve have approximatelly 30 different points.</p>
+<p>But let’s focus our example on 4 specific points. One specific point (of these 4) belongs to curve B. While the remaining 3 points (of the 4) belongs to curve A. Let’s suppose these points are the following x and y coordinates:</p>
+<ul>
+<li><img src="https://latex.codecogs.com/png.latex?x%20=%2021.2,%20y%20=%2055.5"> (Curve A);</li>
+<li><img src="https://latex.codecogs.com/png.latex?x%20=%2020.2,%20y%20=%2054.5"> (Curve A);</li>
+<li><img src="https://latex.codecogs.com/png.latex?x%20=%2019.8,%20y%20=%2053.1"> (Curve A);</li>
+<li><img src="https://latex.codecogs.com/png.latex?x%20=%2021.9,%20y%20=%2052.9"> (Curve B);</li>
+</ul>
+<p>If we set <img src="https://latex.codecogs.com/png.latex?d_%7Bsep%7D"> to 15, then, all of these 4 points will be mapped into the same density cell at position <img src="https://latex.codecogs.com/png.latex?x%20=%202"> and <img src="https://latex.codecogs.com/png.latex?y%20=%204"> of the density grid. Figure&nbsp;6 presents this idea visually.</p>
+<div id="fig-density-cell" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-density-cell-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://pedro-faria.netlify.app/posts/2024/2024-02-19-flow-even/density_cell.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-density-cell-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: An example of density cell
+</figcaption>
+</figure>
+</div>
+<p>As a consequence, the density cell at position <img src="https://latex.codecogs.com/png.latex?x%20=%202"> and <img src="https://latex.codecogs.com/png.latex?y%20=%204"> of the density grid, should store 4 pointers. Each pointer will point to one of these 4 coordinates that we described above. Because each of these coordinates in the flow field were mapped to this particular density cell.</p>
+<p>A density grid can be represented in C as a two dimensional array, where each element of this array is a density cell object. The struct <code>DensityCell</code> below represents a density cell.</p>
+<p>Notice that, I am dynamically allocating memory on the heap, with <code>malloc()</code>, for reserving space to store the values for each (x and y) coordinates that will be mapped to this density cell. Since this is a dynamically allocated memory, we need to remember to free this memory later, when we are done with it.</p>
+<p>To start, I am allocation space for 14000 x and y coordinates in each density cell with <code>malloc()</code>. This value might be too high, or might be too low. Is hard to predict the number of coordinates that will be stored inside this density cell.</p>
+<p>Because of that, it might be a good idea to transform these x and y arrays inside the density cell into growable arrays, instead of using fixed sized arrays. But for now, I don’t care about that, I don’t need this work now, I just want to write a version of the algorithm that works.</p>
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb6-1"><span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">#define D_SEP </span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span></span>
+<span id="cb6-2"><span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">#define DENSITY_GRID_WIDTH </span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">((</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">int</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;"> </span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">FLOW_FIELD_WIDTH </span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span><span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;"> D_SEP</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">))</span></span>
+<span id="cb6-3"></span>
+<span id="cb6-4"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">struct</span> DensityCell <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span id="cb6-5">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">double</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb6-6">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">double</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb6-7">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">int</span> space_used<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb6-8">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">int</span> capacity<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb6-9"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">typedef</span> DensityCell<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb6-10"></span>
+<span id="cb6-11">DensityCell density_grid<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span>DENSITY_GRID_WIDTH<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">][</span>DENSITY_GRID_WIDTH<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">];</span></span>
+<span id="cb6-12"><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">int</span> density_capacity <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">14000</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb6-13"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">for</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">int</span> y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span> y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> DENSITY_GRID_WIDTH<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span> y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">++)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span id="cb6-14">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">for</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">int</span> x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span> x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> DENSITY_GRID_WIDTH<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span> x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">++)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span id="cb6-15">        density_grid<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span>x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">][</span>y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">].</span>space_used <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb6-16">        density_grid<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span>x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">][</span>y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">].</span>capacity <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> density_capacity<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb6-17">        density_grid<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span>x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">][</span>y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">].</span>x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> malloc<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>density_capacity <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">sizeof</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">double</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">));</span></span>
+<span id="cb6-18">        density_grid<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span>x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">][</span>y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">].</span>y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> malloc<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>density_capacity <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">sizeof</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">double</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">));</span></span>
+<span id="cb6-19">    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span id="cb6-20"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span></code></pre></div>
+<p>Now, given that you have a coordinate in the flow field, how to do you store this coordinate inside the density grid? The function <code>insert_coord_in_density_grid()</code> below summarises this process.</p>
+<p>First, we calculate the coordinate of the density cell that is mapped to this particular coordinate. We check if we are inside the boundaries of the density grid. Then, we look at the density cell found, and check if we have enough space to add this one coordinate to the density cell. If we do have space, then, we simply add this coordinate to the x and y arrays that are inside this <code>DensityCell</code> object.</p>
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb7-1"><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">void</span> insert_coord_in_density_grid <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">double</span> x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb7-2">                   <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">double</span> y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb7-3">                   <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">double</span> d_sep<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb7-4">                   DensityCell density_grid<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span>DENSITY_GRID_WIDTH<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">][</span>DENSITY_GRID_WIDTH<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">])</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span id="cb7-5">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">int</span> density_col <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> get_density_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> d_sep<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">);</span></span>
+<span id="cb7-6">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">int</span> density_row <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> get_density_row<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> d_sep<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">);</span></span>
+<span id="cb7-7">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>off_boundaries<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>density_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> density_row<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> DENSITY_GRID_WIDTH<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">))</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span id="cb7-8">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">return</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb7-9">    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span id="cb7-10"></span>
+<span id="cb7-11">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">int</span> space_used <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> density_grid<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span>density_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">][</span>density_row<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">].</span>space_used<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb7-12">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">int</span> capacity <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> density_grid<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span>density_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">][</span>density_row<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">].</span>capacity<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb7-13">    </span>
+<span id="cb7-14">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">((</span>space_used <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> capacity<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span id="cb7-15">        density_grid<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span>density_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">][</span>density_row<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">].</span>x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span>space_used<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb7-16">        density_grid<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span>density_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">][</span>density_row<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">].</span>y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span>space_used<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb7-17">        density_grid<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span>density_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">][</span>density_row<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">].</span>space_used <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> space_used <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb7-18">    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">else</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span id="cb7-19">        printf<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"[ERROR]: Attempt to add coordinate in density cell that is out of capacity!</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">);</span></span>
+<span id="cb7-20">    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span id="cb7-21"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span></code></pre></div>
 </section>
+<section id="searching-for-points-near-by" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="searching-for-points-near-by"><span class="header-section-number">5.3</span> Searching for points near by</h2>
+<p>We use the density grid to find all points from another curves that are near by our next move in the flow field. That is essentially the main purpose of the density grid. To help us finding which points are near by our next move in the flow field.</p>
+<p>In essence, at each step we take in the flow field, we need to calculate the position of the density cell that is mapped to our next move. By identifying which cell in the density grid we are mapped to, we can look at the pointers that are already stored inside this specific density cell to find which points are near by.</p>
+<p>Actually, the algortihm from <span class="citation" data-cites="jobard97">Jobard and Lefer (1997)</span> looks not only at the specific cell that is mapped to our next move, but it also looks at the 8 density cells that are surrounding this current cell.</p>
+<p>You can see at Figure&nbsp;7 a representation of this process.</p>
+<div id="fig-distance3" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-distance3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://pedro-faria.netlify.app/posts/2024/2024-02-19-flow-even/distance-surroundings.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-distance3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7: Calculating the distance between our current position and the near by points from neighbouring curves
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="checking-if-our-next-step-is-valid" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="checking-if-our-next-step-is-valid"><span class="header-section-number">5.4</span> Checking if our next step is valid</h2>
+<p>So, in summary, we need to check if our next step, is a valid step, before we take it. If the step is not valid, we should “cancel” the next step, and stop drawing the current curve.</p>
+<p>But how to check if this next step is valid. The function <code>is_valid_step()</code> below summarises this process. This function returns a boolean value, 1 for true and 0 for false.</p>
+<p>First, we find which density cell is mapped to the coordinates of this next step. Then, we need to calculate the coordinates of the surrounding density cells, as I showed at Figure&nbsp;7.</p>
+<p>Having the coordinates of density cells we need to pass through, we use then, calculate the distance between our next step and each point stored in each density cell, and check if any of these distances are less or equal than <img src="https://latex.codecogs.com/png.latex?d_%7Bsep%7D">.</p>
+<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb8-1"><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">int</span> is_valid_step <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">double</span> x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">double</span> y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb8-2">             <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">double</span> d_sep<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb8-3">             <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">int</span> density_grid_width<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb8-4">             DensityCell density_grid<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span>DENSITY_GRID_WIDTH<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">][</span>DENSITY_GRID_WIDTH<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">])</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span id="cb8-5"></span>
+<span id="cb8-6">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">int</span> density_col <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> get_density_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> d_sep<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">);</span></span>
+<span id="cb8-7">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">int</span> density_row <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> get_density_row<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> d_sep<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">);</span></span>
+<span id="cb8-8">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>off_boundaries<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>density_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> density_row<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> DENSITY_GRID_WIDTH<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">))</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span id="cb8-9">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">return</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb8-10">    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span id="cb8-11">   </span>
+<span id="cb8-12">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">int</span> start_row <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>density_row <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">?</span> density_row <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb8-13">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">int</span> end_row <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>density_row <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> density_grid_width <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">?</span> density_row <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> density_row<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span> </span>
+<span id="cb8-14">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">int</span> start_col <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>density_col <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">?</span> density_col <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb8-15">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">int</span> end_col <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>density_col <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> density_grid_width <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">?</span> density_col <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> density_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb8-16"> </span>
+<span id="cb8-17">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">for</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">int</span> c <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> start_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span> c <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;=</span> end_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span> c<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">++)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span id="cb8-18">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">for</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">int</span> r <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> start_row<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span> r <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;=</span> end_row<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span> r<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">++)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span id="cb8-19">            <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">int</span> n_elements <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> density_grid<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span>c<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">][</span>r<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">].</span>space_used<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb8-20">            <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>n_elements <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span id="cb8-21">                <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">continue</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb8-22">            <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span id="cb8-23"></span>
+<span id="cb8-24">            <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">for</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">int</span> i <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span> i <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> n_elements<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span> i<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">++)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span id="cb8-25">                <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">double</span> x2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> density_grid<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span>c<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">][</span>r<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">].</span>x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span>i<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">];</span></span>
+<span id="cb8-26">                <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">double</span> y2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> density_grid<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span>c<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">][</span>r<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">].</span>y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span>i<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">];</span></span>
+<span id="cb8-27">                <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">double</span> dist <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> distance<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> x2<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> y2<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">);</span></span>
+<span id="cb8-28">                <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>dist <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;=</span> d_sep<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span id="cb8-29">                    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">return</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb8-30">                <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span id="cb8-31">            <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span id="cb8-32">        <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span id="cb8-33">    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span id="cb8-34">  </span>
+<span id="cb8-35">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">return</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb8-36"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span></code></pre></div>
+
+
+
 </section>
 </section>
 

@@ -265,7 +265,26 @@ notice the overhead very quickly. So, if you want your algorithm to perform well
 and visually attractive curves in the output, you usually want to set the step length to a number that is in
 the range from 0.1% to 1% of the flow field width.
 
-The C code snippet below translates the steps I described at @sec-draw-curve to draw a curve into
+In C, you can represent a curve with the struct `Curve` below. You can
+see below that I am dynamically allocating space to store the x and
+y coordinates that compose this curve.
+
+```c
+#define N_STEPS 30
+
+struct Curve {
+	int id;
+	double* x;
+	double* y;
+} typedef Curve;
+
+Curve curve;
+curve.id = 0;
+curve.x = malloc(N_STEPS * sizeof(double));
+curve.y = malloc(N_STEPS * sizeof(double));
+```
+
+Also, the C snippet below translates the steps I described above to draw a curve into
 the field. You can see in this code that our current position in the Cartesian plane
 is mapped to a specific position in the flow field, or, in other words, to a position in the 2D matrix of angles,
 by transforming our current x and y positions into integers.
@@ -276,7 +295,6 @@ we need to retrieve and use from the flow field, is the angle that is stored in 
 element `angles[45][21]` of the matrix.
 
 ```c
-#define N_STEPS 30
 #define STEP_LENGTH 0.01 * FLOW_FIELD_WIDTH
 
 int off_boundaries (double x, double y, int limit) {
@@ -287,9 +305,6 @@ int off_boundaries (double x, double y, int limit) {
 	    y >= limit
 	);
 }
-
-double x_coords[N_STEPS];
-double y_coords[N_STEPS];
 
 for (int i = 0; i < N_STEPS; i++) {
   int ff_column_index = (int) floor(x);
@@ -305,8 +320,8 @@ for (int i = 0; i < N_STEPS; i++) {
   x = x + x_step;
   y = y + y_step;
 
-  x_coords[i] = x;
-  y_coords[i] = y;
+  curve.x[i] = x;
+  curve.y[i] = y;
 }
 ```
 
@@ -362,7 +377,7 @@ First, I will focus on the first part of the algorithm, and, after explaining
 how this first part works, it will be a little easier for you to understand how the
 second part works.
 
-## Drawing non-overlapping curves
+# Drawing non-overlapping curves
 
 This first part of the algorithm is the part that makes sure that only non-overlapping
 curves are drawn to the field. The idea behind it, is that we are constantly checking the distances
@@ -398,7 +413,7 @@ while checking if they were overlapping (or, if they were too close to) each oth
 Demonstrating the effect of the Jobard-Lefer algorithm on curves drawn in the field
 :::
 
-### How this part of the algorithm works?
+## How this part of the algorithm works?
 
 In essence, at each step we take while drawing our curve, we look at the curves that are around us,
 and we compare the distance between our next step and all of these neighboring curves.
@@ -440,8 +455,18 @@ $$
 d = \sqrt{[(x_2 - x_1)^2 + (y_2 - y_1)^2]}
 $${#eq-distance}
 
+The function `distance()` below translates this @eq-distance into a C function.
 
-### The density grid
+```c
+double distance (double x1, double y1, double x2, double y2) {
+	double s1 = pow(x2 - x1, 2.0);
+	double s2 = pow(y2 - y1, 2.0);
+	return sqrt(s1 + s2);
+}
+```
+
+
+## The density grid
 
 I think this specific section of the paper is a little confusing. But if I did understand
 the authors correctly, then, at each step we take in the field, the Jobard-Lefer algorithm
@@ -462,6 +487,7 @@ to calculate the corresponding position in the density grid for this specific
 coordinate, you can use the functions `get_density_col()` and `get_density_row()`
 exposed below:
 
+
 ```c
 int get_density_col (double x, double d_sep) {
 	double c = (x / d_sep) + 1;
@@ -476,11 +502,12 @@ int get_density_row (double y, double d_sep) {
 
 At @fig-cartesian-grid, we are using as an example, a Cartesian plane with dimensions 100x100.
 With $d_{sep} = 2$, the corresponding density grid becomes a Cartesian grid with dimensions 50x50.
-You can see in this figure that, the density grid is a grid of $50 \times 50 = 2500$ cells.
-Each cell have width and height equal to $d_{sep}$.
+You can see at @fig-density1 that, the density grid is a grid of $50 \times 50 = 2500$ cells.
+Each cell have width and height equal to $d_{sep}$. In @jobard97 paper, these cells are called
+"density cells".
 
-That is why the functions `get_density_col()` and `get_density_row()` always return an integer value
-as output. Because they calculate the coordinates of the cell in which the original coordinate in
+The functions `get_density_col()` and `get_density_row()` always return an integer value
+as output. Because they calculate the coordinates of the density cell in which the original coordinate in
 the Cartesian plane is mapped to.
 
 So a single cell in the density grid can contain
@@ -500,3 +527,202 @@ is mapped to the cell at position $x = 22$ and $y = 37$ in the density grid.
 The relationship between the Cartesian plane and the density grid.
 :::
 
+Each cell in the density grid should store a collection of pointers. Each pointer
+points to a specific point in the flow field that belongs to a curve drawn in the field,
+and that is mapped to that specific cell.
+
+
+As an example, let's suppose we are using a 100x100 flow field, and that
+we already drawn two curves in the field,
+curve A and curve B. Because we configured the number of steps to 30,
+each curve have approximatelly 30 different points.
+
+But let's focus our example on 4 specific points.
+One specific point (of these 4) belongs
+to curve B. While the remaining 3 points (of the 4)
+belongs to curve A. Let's suppose these points are the following
+x and y coordinates:
+
+- $x = 21.2, y = 55.5$ (Curve A);
+- $x = 20.2, y = 54.5$ (Curve A);
+- $x = 19.8, y = 53.1$ (Curve A);
+- $x = 21.9, y = 52.9$ (Curve B);
+
+If we set $d_{sep}$ to 15, then, all of these 4 points will be mapped into
+the same density cell at position $x = 2$ and $y = 4$ of the density
+grid. @fig-density-cell presents this idea visually.
+
+![An example of density cell](./../density_cell.svg){#fig-density-cell}
+
+As a consequence, the density cell at position $x = 2$ and $y = 4$ of the density
+grid, should store 4 pointers. Each pointer will point to one
+of these 4 coordinates that we described above. Because each of these
+coordinates in the flow field were mapped to this particular
+density cell.
+
+
+
+A density grid can be represented in C as a two dimensional array,
+where each element of this array is a density cell object. The
+struct `DensityCell` below represents a density cell.
+
+Notice that, I am dynamically allocating memory on the heap, with `malloc()`, for reserving space
+to store the values for each (x and y) coordinates that will be mapped to
+this density cell. Since this is a dynamically allocated memory, we need to
+remember to free this memory later, when we are done with it.
+
+To start, I am allocation space for 14000 x and y coordinates in each
+density cell with `malloc()`. This value might be too high, or might be too low.
+Is hard to predict the number of coordinates that will be stored
+inside this density cell.
+
+Because of that, it might be a good idea to transform
+these x and y arrays inside the density cell into growable arrays, instead of using fixed sized arrays. But
+for now, I don't care about that, I don't need this work now, I just
+want to write a version of the algorithm that works.
+
+```c
+#define D_SEP 0.8
+#define DENSITY_GRID_WIDTH ((int) (FLOW_FIELD_WIDTH / D_SEP))
+
+struct DensityCell {
+	double* x;
+	double* y;
+	int space_used;
+	int capacity;
+} typedef DensityCell;
+
+DensityCell density_grid[DENSITY_GRID_WIDTH][DENSITY_GRID_WIDTH];
+int density_capacity = 14000;
+for (int y = 0; y < DENSITY_GRID_WIDTH; y++) {
+	for (int x = 0; x < DENSITY_GRID_WIDTH; x++) {
+		density_grid[x][y].space_used = 0;
+		density_grid[x][y].capacity = density_capacity;
+		density_grid[x][y].x = malloc(density_capacity * sizeof(double));
+		density_grid[x][y].y = malloc(density_capacity * sizeof(double));
+	}
+}
+```
+
+Now, given that you have a coordinate in the flow field,
+how to do you store this coordinate inside the density grid?
+The function `insert_coord_in_density_grid()` below summarises this process.
+
+First, we calculate the coordinate of the density cell that is mapped
+to this particular coordinate. We check if we are inside the boundaries
+of the density grid. Then, we look at the density cell found, and
+check if we have enough space to add this one coordinate to the
+density cell. If we do have space, then, we simply add this coordinate
+to the x and y arrays that are inside this `DensityCell` object.
+
+```c
+void insert_coord_in_density_grid (double x,
+				   double y,
+				   double d_sep,
+				   DensityCell density_grid[DENSITY_GRID_WIDTH][DENSITY_GRID_WIDTH]) {
+	int density_col = get_density_col(x, d_sep);
+	int density_row = get_density_row(y, d_sep);
+	if (off_boundaries(density_col, density_row, DENSITY_GRID_WIDTH)) {
+		return;
+	}
+
+	int space_used = density_grid[density_col][density_row].space_used;
+	int capacity = density_grid[density_col][density_row].capacity;
+	
+	if ((space_used + 1) < capacity) {
+		density_grid[density_col][density_row].x[space_used] = x;
+		density_grid[density_col][density_row].y[space_used] = y;
+		density_grid[density_col][density_row].space_used = space_used + 1;
+	} else {
+		printf("[ERROR]: Attempt to add coordinate in density cell that is out of capacity!\n");
+	}
+}
+
+```
+
+
+## Searching for points near by
+
+We use the density grid to find all points from another curves that are near by our next
+move in the flow field. That is essentially the main purpose
+of the density grid. To help us finding which points are near by our next move
+in the flow field.
+
+In essence, at each step we take in the flow field, we need to calculate
+the position of the density cell that is mapped to our
+next move. By identifying which cell in
+the density grid we are mapped to, we can look at the pointers
+that are already stored inside this specific density cell
+to find which points are near by.
+
+Actually, the algortihm from @jobard97 looks not only
+at the specific cell that is mapped to our next move,
+but it also looks at the 8 density cells that are surrounding
+this current cell.
+
+You can see at @fig-distance3 a representation of this
+process.
+
+![Calculating the distance between our current position and the near by points from neighbouring curves](./../distance-surroundings.svg){#fig-distance3}
+
+
+## Checking if our next step is valid
+
+So, in summary, we need to check if our next step, is a valid step, before we
+take it. If the step is not valid, we should "cancel" the next step, and stop
+drawing the current curve.
+
+
+But how to check if this next step is valid. The function `is_valid_step()`
+below summarises this process. This function returns a boolean
+value, 1 for true and 0 for false.
+
+First, we find which density cell
+is mapped to the coordinates of this next step. Then, we need to calculate
+the coordinates of the surrounding density cells, as I showed
+at @fig-distance3.
+
+Having the coordinates of density cells we need to pass through,
+we use then, calculate the distance between our next step and
+each point stored in each density cell, and check if any
+of these distances are less or equal than $d_{sep}$.
+
+```c
+int is_valid_step (double x, double y,
+		     double d_sep,
+		     int density_grid_width,
+		     DensityCell density_grid[DENSITY_GRID_WIDTH][DENSITY_GRID_WIDTH]) {
+
+	int density_col = get_density_col(x, d_sep);
+	int density_row = get_density_row(y, d_sep);
+	if (off_boundaries(density_col, density_row, DENSITY_GRID_WIDTH)) {
+		return 0;
+	}
+   
+	int start_row = (density_row - 1) > 0 ? density_row - 1 : 0;
+	int end_row = (density_row + 1) < density_grid_width ? density_row + 1 : density_row; 
+	int start_col = (density_col - 1) > 0 ? density_col - 1 : 0;
+	int end_col = (density_col + 1) < density_grid_width ? density_col + 1 : density_col;
+ 
+	for (int c = start_col; c <= end_col; c++) {
+		for (int r = start_row; r <= end_row; r++) {
+			int n_elements = density_grid[c][r].space_used;
+			if (n_elements == 0) {
+				continue;
+			}
+
+			for (int i = 0; i < n_elements; i++) {
+				double x2 = density_grid[c][r].x[i];
+				double y2 = density_grid[c][r].y[i];
+				double dist = distance(x, y, x2, y2);
+				if (dist <= d_sep) {
+					return 0;
+				}
+			}
+		}
+	}
+  
+	return 1;
+}
+
+```
