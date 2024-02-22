@@ -23,9 +23,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
-     inkscape:zoom="2.9077441"
-     inkscape:cx="599.26181"
-     inkscape:cy="458.43099"
+     inkscape:zoom="0.72693603"
+     inkscape:cx="334.96758"
+     inkscape:cy="458.08708"
      inkscape:window-width="1920"
      inkscape:window-height="1016"
      inkscape:window-x="0"
@@ -184,14 +184,14 @@
        style="font-size:26.6667px;font-family:Roboto;-inkscape-font-specification:Roboto;white-space:pre;shape-inside:url(#rect6);display:inline;fill:none;fill-opacity:1;stroke:#552200;stroke-width:0;stroke-dasharray:none;stroke-opacity:1"><tspan
          x="270.82812"
          y="410.20324"
-         id="tspan7"><tspan
+         id="tspan2"><tspan
            style="font-weight:bold;font-family:Inconsolata;-inkscape-font-specification:Inconsolata;fill:#1a1a1a;stroke:#1a1a1a"
-           id="tspan5">Starting point </tspan></tspan><tspan
+           id="tspan1">Starting point </tspan></tspan><tspan
          x="270.82812"
          y="445.37328"
-         id="tspan9"><tspan
+         id="tspan4"><tspan
            style="font-weight:bold;font-family:Inconsolata;-inkscape-font-specification:Inconsolata;fill:#1a1a1a;stroke:#1a1a1a"
-           id="tspan8">of the curve</tspan></tspan></text>
+           id="tspan3">of the curve</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,-7.2906904,64.883603)"
@@ -199,9 +199,9 @@
        style="font-size:26.6667px;font-family:Roboto;-inkscape-font-specification:Roboto;white-space:pre;shape-inside:url(#rect6-6);display:inline;fill:none;fill-opacity:1;stroke:#552200;stroke-width:0;stroke-dasharray:none;stroke-opacity:1"><tspan
          x="270.82812"
          y="410.20324"
-         id="tspan11"><tspan
+         id="tspan6"><tspan
            style="font-weight:bold;font-family:Inconsolata;-inkscape-font-specification:Inconsolata;fill:#1a1a1a;stroke:#1a1a1a"
-           id="tspan10">1st step</tspan></tspan></text>
+           id="tspan5">1st step</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,6.308071,-19.543672)"
@@ -209,9 +209,9 @@
        style="font-size:26.6667px;font-family:Roboto;-inkscape-font-specification:Roboto;white-space:pre;shape-inside:url(#rect6-6-3);display:inline;fill:none;fill-opacity:1;stroke:#552200;stroke-width:0;stroke-dasharray:none;stroke-opacity:1"><tspan
          x="270.82812"
          y="410.20324"
-         id="tspan13"><tspan
+         id="tspan8"><tspan
            style="font-weight:bold;font-family:Inconsolata;-inkscape-font-specification:Inconsolata;fill:#1a1a1a;stroke:#1a1a1a"
-           id="tspan12">2nd step</tspan></tspan></text>
+           id="tspan7">2nd step</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,61.52926,-73.418501)"
@@ -219,9 +219,9 @@
        style="font-size:26.6667px;font-family:Roboto;-inkscape-font-specification:Roboto;white-space:pre;shape-inside:url(#rect6-6-3-0);display:inline;fill:none;fill-opacity:1;stroke:#552200;stroke-width:0;stroke-dasharray:none;stroke-opacity:1"><tspan
          x="270.82812"
          y="410.20324"
-         id="tspan15"><tspan
+         id="tspan10"><tspan
            style="font-weight:bold;font-family:Inconsolata;-inkscape-font-specification:Inconsolata;fill:#1a1a1a;stroke:#1a1a1a"
-           id="tspan14">3rd step</tspan></tspan></text>
+           id="tspan9">3rd step</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,-51.383765,56.06473)"
@@ -229,9 +229,9 @@
        style="font-size:26.6667px;font-family:Roboto;-inkscape-font-specification:Roboto;white-space:pre;shape-inside:url(#rect6-6-7);display:inline;fill:none;fill-opacity:1;stroke:#552200;stroke-width:0;stroke-dasharray:none;stroke-opacity:1"><tspan
          x="270.82812"
          y="410.20324"
-         id="tspan18"><tspan
+         id="tspan12"><tspan
            style="font-weight:bold;font-family:Inconsolata;-inkscape-font-specification:Inconsolata;fill:#1a1a1a;stroke:#1a1a1a"
-           id="tspan16">d = 3.2</tspan></tspan></text>
+           id="tspan11">d = 3.2</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,-22.141903,-41.270868)"
@@ -239,9 +239,9 @@
        style="font-size:26.6667px;font-family:Roboto;-inkscape-font-specification:Roboto;white-space:pre;shape-inside:url(#rect6-6-7-9);display:inline;fill:none;fill-opacity:1;stroke:#552200;stroke-width:0;stroke-dasharray:none;stroke-opacity:1"><tspan
          x="270.82812"
          y="410.20324"
-         id="tspan20"><tspan
+         id="tspan14"><tspan
            style="font-weight:bold;font-family:Inconsolata;-inkscape-font-specification:Inconsolata;fill:#1a1a1a;stroke:#1a1a1a"
-           id="tspan19">d = 2.4</tspan></tspan></text>
+           id="tspan13">d = 2.4</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,58.139555,-87.017814)"
@@ -249,9 +249,9 @@
        style="font-size:26.6667px;font-family:Roboto;-inkscape-font-specification:Roboto;white-space:pre;shape-inside:url(#rect6-6-7-9-6);display:inline;fill:none;fill-opacity:1;stroke:#552200;stroke-width:0;stroke-dasharray:none;stroke-opacity:1"><tspan
          x="270.82812"
          y="410.20324"
-         id="tspan22"><tspan
+         id="tspan16"><tspan
            style="font-weight:bold;font-family:Inconsolata;-inkscape-font-specification:Inconsolata;fill:#1a1a1a;stroke:#1a1a1a"
-           id="tspan21">d = 0.5</tspan></tspan></text>
+           id="tspan15">d = 0.5</tspan></tspan></text>
     <circle
        style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:3.5;stroke-dasharray:none;stroke-opacity:1"
        id="path5-9"
@@ -286,39 +286,42 @@
        id="path16" />
     <text
        xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,-13.219525,5.422593)"
+       transform="matrix(0.26458333,0,0,0.26458333,-13.329001,0.11942778)"
        id="text17"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:26.6667px;font-family:Inconsolata;-inkscape-font-specification:Inconsolata;word-spacing:-3px;white-space:pre;shape-inside:url(#rect17);display:inline;fill:none;fill-opacity:1;stroke:#ff0000;stroke-width:0;stroke-dasharray:none;stroke-opacity:1"><tspan
          x="384.87695"
          y="432.39074"
-         id="tspan24"><tspan
+         id="tspan18"><tspan
            dx="0 0 0 0 0 0 0 0 0 0 0 2.9999981 -2.9999866 2.9999981 -3.0000019 0 0 0 2.9999981 -3.0000019 2.9999981 -2.9999866 0 0 0 2.9999828 -2.9999866 0 3.0000134 -3.0000172 0 0 0 3.0000134"
            style="fill:#000000;stroke:#000000"
-           id="tspan23">Considering a dsep = 0.6, we stop </tspan></tspan><tspan
+           id="tspan17">Considering a dsep = 0.6, we stop </tspan></tspan><tspan
          x="384.87695"
          y="465.72411"
-         id="tspan26"><tspan
+         id="tspan20"><tspan
            dx="0 0 0 0 0 0 0 2.9999981 -3.0000019 0 0 0 3.0000134 -3.0000019 0 0 0 0 2.9999981 -3.0000019 0 3.0000134 -3.0000172 0 0 2.9999828 -2.9999866 0 0 2.9999828"
            style="fill:#000000;stroke:#000000"
-           id="tspan25">drawing this curve at the 2nd </tspan></tspan><tspan
+           id="tspan19">drawing this curve at the 2nd </tspan></tspan><tspan
          x="384.87695"
          y="499.05749"
-         id="tspan28"><tspan
+         id="tspan22"><tspan
            dx="0 0 0 0 0 2.9999981 -2.9999943 0 0 0 0 0 0 2.9999981 -3.0000019 0 2.9999981 -3.0000019 0 2.9999981 -3.0000019 0 0 0 3.0000134 -3.0000172 0 0 3.0000134 -3.0000172 0 0 3.0000134"
            style="fill:#000000;stroke:#000000"
-           id="tspan27">step. Because if we took the 3rd </tspan></tspan><tspan
+           id="tspan21">step. Because if we take the 3rd </tspan></tspan><tspan
          x="384.87695"
          y="532.39086"
-         id="tspan30"><tspan
-           dx="0 0 0 0 0 2.9999981 -2.9999943 0 0 2.9999981 -3.0000019 0 0 0 0 2.9999981 -3.0000019 0 0 0 0 3.0000134 -3.0000172 0 3.0000134 -3.0000172 0 0 3.0000134"
+         id="tspan35"><tspan
+           dx="0 0 0 0 0 2.9999981 -2.9999943 0 0 2.9999981 -3.0000019 0 0 0 0 2.9999981 -3.0000019 0 0 0 2.9999981 -2.9999866 0 3.0000134 -2.9999866 0 0 2.9999828"
            style="fill:#000000;stroke:#000000"
-           id="tspan29">step, the curve would be too </tspan></tspan><tspan
+           id="tspan33">step, the curve will be too </tspan><tspan
+           dx="-2.9999866 0 0 0 0 3.0000134"
+           style="fill:#000000;stroke:#000000"
+           id="tspan34">close </tspan></tspan><tspan
          x="384.87695"
          y="565.72423"
-         id="tspan32"><tspan
-           dx="0 0 0 0 0 2.9999981 -2.9999943 0 2.9999981 -3.0000019 2.9999981 -3.0000019 0 0 0 0 0 0 0 0 2.9999981 -2.9999866"
+         id="tspan37"><tspan
+           dx="0 0 3 -2.9999981 2.9999981 -3.0000019 0 0 0 0 0 0 0 0 2.9999981 -3.0000019"
            style="fill:#000000;stroke:#000000"
-           id="tspan31">close to a neighbour curve.</tspan></tspan></text>
+           id="tspan36">to a neighbour curve.</tspan></tspan></text>
     <path
        style="fill:#ffffff;fill-opacity:1;stroke:#0053cf;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        d="M 8.1965061,166.43441 41.319317,63.565396"
