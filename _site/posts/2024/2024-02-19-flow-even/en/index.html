@@ -355,6 +355,8 @@ window.Quarto = {
   <li><a href="#the-density-grid" id="toc-the-density-grid" class="nav-link" data-scroll-target="#the-density-grid"><span class="header-section-number">5.2</span> The density grid</a></li>
   <li><a href="#searching-for-points-near-by" id="toc-searching-for-points-near-by" class="nav-link" data-scroll-target="#searching-for-points-near-by"><span class="header-section-number">5.3</span> Searching for points near by</a></li>
   <li><a href="#checking-if-our-next-step-is-valid" id="toc-checking-if-our-next-step-is-valid" class="nav-link" data-scroll-target="#checking-if-our-next-step-is-valid"><span class="header-section-number">5.4</span> Checking if our next step is valid</a></li>
+  <li><a href="#drawing-the-curves" id="toc-drawing-the-curves" class="nav-link" data-scroll-target="#drawing-the-curves"><span class="header-section-number">5.5</span> Drawing the curves</a></li>
+  <li><a href="#the-full-algorithm" id="toc-the-full-algorithm" class="nav-link" data-scroll-target="#the-full-algorithm"><span class="header-section-number">5.6</span> The full algorithm</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -787,6 +789,68 @@ Figure&nbsp;7: Calculating the distance between our current position and the nea
 <span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
 <span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="drawing-the-curves" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="drawing-the-curves"><span class="header-section-number">5.5</span> Drawing the curves</h2>
+<p>Now, the final piece of the alorithm. How can you draw non-overlaping curves? Actually, all we need to do, is to add two more steps to the same steps we described at <a href="#sec-draw-curve" class="quarto-xref">Section&nbsp;3</a>.</p>
+<p>If you look at the C code below, you can see that we now have a main for loop, that draws a single curve per iteration. Now, the first inner loop is the exact same for loop we presented at <a href="#sec-draw-curve" class="quarto-xref">Section&nbsp;3</a>, with essentially the same steps, with only one difference.</p>
+<p>We now have a if statement to check the result of <code>is_valid_next_step()</code>. If the function returns true, then, the next step we are trying to take is valid, so we go on with our lives, and we go to the next iteration.</p>
+<p>However, if the function returns false (0), then, it means that the next step is not valid (i.e.&nbsp;it is too close to a neighboring curve), and because of that, we run a <code>break</code> statement to drawing the current curve. Then, we comeback to the main and outer loop, and we start to draw the next curve in the field.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>Curve<span class="op">*</span> curves <span class="op">=</span> malloc<span class="op">(</span>N_CURVES <span class="op">*</span> <span class="kw">sizeof</span><span class="op">(</span>Curve<span class="op">));</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> N_CURVES<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    curves<span class="op">[</span>i<span class="op">].</span>x <span class="op">=</span> malloc<span class="op">(</span>N_STEPS <span class="op">*</span> <span class="kw">sizeof</span><span class="op">(</span><span class="dt">double</span><span class="op">));</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    curves<span class="op">[</span>i<span class="op">].</span>y <span class="op">=</span> malloc<span class="op">(</span>N_STEPS <span class="op">*</span> <span class="kw">sizeof</span><span class="op">(</span><span class="dt">double</span><span class="op">));</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> curve_id <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> curve_id <span class="op">&lt;</span> N_CURVES<span class="op">;</span> curve_id<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">double</span> x <span class="op">=</span> start_points<span class="op">[</span>curve_id<span class="op">].</span>x<span class="op">;</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">double</span> y <span class="op">=</span> start_points<span class="op">[</span>curve_id<span class="op">].</span>y<span class="op">;</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    curves<span class="op">[</span>curve_id<span class="op">].</span>id <span class="op">=</span> curve_id<span class="op">;</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> N_STEPS<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> ff_column_index <span class="op">=</span> <span class="op">(</span><span class="dt">int</span><span class="op">)</span> floor<span class="op">(</span>x<span class="op">);</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> ff_row_index <span class="op">=</span> <span class="op">(</span><span class="dt">int</span><span class="op">)</span> floor<span class="op">(</span>y<span class="op">);</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>off_boundaries<span class="op">(</span>ff_column_index<span class="op">,</span> ff_row_index<span class="op">,</span> FLOW_FIELD_WIDTH<span class="op">))</span> <span class="op">{</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>            <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>        <span class="dt">double</span> angle <span class="op">=</span> flow_field<span class="op">[</span>ff_row_index<span class="op">][</span>ff_column_index<span class="op">];</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>        <span class="dt">double</span> x_step <span class="op">=</span> STEP_LENGTH <span class="op">*</span> cos<span class="op">(</span>angle<span class="op">);</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>        <span class="dt">double</span> y_step <span class="op">=</span> STEP_LENGTH <span class="op">*</span> sin<span class="op">(</span>angle<span class="op">);</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> x <span class="op">+</span> x_step<span class="op">;</span></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>        y <span class="op">=</span> y <span class="op">+</span> y_step<span class="op">;</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> valid <span class="op">=</span> is_valid_next_step<span class="op">(</span></span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>            x<span class="op">,</span> y<span class="op">,</span></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>            D_SEP<span class="op">,</span></span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>            DENSITY_GRID_WIDTH<span class="op">,</span></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>            density_grid</span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>        <span class="op">);</span></span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(!</span>valid<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>            <span class="co">// This next step is not valid, stop drawing current curve</span></span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>            <span class="co">// and jump to start drawing next curve.</span></span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>            <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>        curves<span class="op">[</span>curve_id<span class="op">].</span>x<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> x<span class="op">;</span></span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>        curves<span class="op">[</span>curve_id<span class="op">].</span>y<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> y<span class="op">;</span></span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>    <span class="co">// After we finish calculating the coordinates of a curve,</span></span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a>    <span class="co">// we add the coordinates of this curve to the density grid.</span></span>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> N_STEPS<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>        <span class="dt">double</span> x <span class="op">=</span> curves<span class="op">[</span>curve_id<span class="op">].</span>x<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a>        <span class="dt">double</span> y <span class="op">=</span> curves<span class="op">[</span>curve_id<span class="op">].</span>y<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a>        insert_coord_in_density_grid<span class="op">(</span>x<span class="op">,</span> y<span class="op">,</span> D_SEP<span class="op">,</span> density_grid<span class="op">);</span></span>
+<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="the-full-algorithm" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="the-full-algorithm"><span class="header-section-number">5.6</span> The full algorithm</h2>
+<p>After I explained each individual part of the algorithm, is finally time to see the entire piece. But, just for brevity reasons, and to save space in this article, I will not show the entire algorithm here. Instead, I will give you a link to GitHub, where you can read the source code peacefully.</p>
+<p>Link to the entire algorithm: <a href="https://github.com/pedropark99/Personal-website/blob/main/posts/2024/2024-02-19-flow-even/src/non_overlap_curves.c" class="uri">https://github.com/pedropark99/Personal-website/blob/main/posts/2024/2024-02-19-flow-even/src/non_overlap_curves.c</a></p>
 
 
 
