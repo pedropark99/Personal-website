@@ -348,18 +348,17 @@ But sometimes, you are really trying to avoid that. Sometimes, you want to meet 
 
 @jobard97 proposes an algorithm that produces non-overlapping and
 evenly-spaced curves around a flow field. If you read the paper carefully,
-you might notice that you can divide the algorithm into two separate parts.
-And splitting this algorithm like this, into two separate parts, will be very
-useful here in this article for explaining how each piece of the algorithm works.
+you might notice that you can divide this algorithm into two separate parts.
+Splitting this algorithm into two separate is very useful for the objective of this article.
+Because is easier to explain how each part works separately, than to trying to explain
+the entire algorithm at once.
 
-These parts are:
+These two parts are:
 
 - An algorithm to draw non-overlapping curves.
 - An algorithm to select new start points for new curves.
 
-[^parts]: There are other parts to the entire algorithm proposed by @jobard97. But these other parts are not worth explaining in this article. Read the original scientific paper for full details about the algorithm.
-
-Since each part have it's own quirks, I begin by focusing on the first part of the algorithm. After explaining
+First, I will focus on the first part of the algorithm, and, after explaining
 how this first part works, it will be a little easier for you to understand how the
 second part works.
 
@@ -401,13 +400,69 @@ Demonstrating the effect of the Jobard-Lefer algorithm on curves drawn in the fi
 
 ### How this part of the algorithm works?
 
-In essence, at each step we take drawing our curve in the flow field, we look at the curves that are around us,
-and we compare the distance between our current position and all of these neighboring curves.
-If this distance between the next step we take and any of the neighboring curves, is lower or
-equal to a specific value ()
+In essence, at each step we take while drawing our curve, we look at the curves that are around us,
+and we compare the distance between our next step and all of these neighboring curves.
+If this distance between is lower or equal to the separating value ($d_{sep}$), then,
+we do not take the next step, and we stop drawing the current line.
+
+Notice that we are still using the exact same steps I described at @sec-draw-curve to draw the curves
+into the field. We are still start with a starting point, then, we start to take sequential steps
+by following the direction of the angles we encounter through the field.
+
+However, the key difference here, is that we added a new step, or new check
+to these previous steps. Now, while we are walking through the field, we are constantly calculating distances,
+and checking these distances to make sure that we are not too close to a neighbour curve.
+
+@fig-even-algo demonstrates this process visually. And I know what you are thinking! "These curves
+in @fig-even-algo doesn't look like curves!". Just remember the steps I described at @sec-draw-curve.
+We are essentially drawing curves by connecting the positions where we walked through.
+Is like I applied a very big zoom over the image
+while the algorithm is actively drawing the curves.
+
+So, at a very low scale, the curves we are drawing are not really curves at all. But at a normal scale, when we zoom
+out of the image, and look to the image with our own human eyes, the steps are so small,
+so small, that we cannot perceive the connected dots. The curve effectivelly
+looks very much like a nice and fluid curve.
+
+In the example of @fig-even-algo, we have one already existing curve (in blue), and we are currently
+drawing a second curve into the field. At each step, we calculate the coordinates of
+the next step we need to make, them, we compare the distance between the position of this next step,
+and the points from other curves that are close by. If this distance between this next
+step and any point from the surrounding curves is lower or equal than $d_{sep}$, we "cancel"
+the next step, and we stop drawing the current curve.
+
+![The steps to check if the current curve is too close to a neighbour](./../distance.svg){#fig-even-algo}
+
+To calculate the distance between two points in the Cartesian plane, we use
+another equation from geometry, which is commonly know as the "distance formula":
+
+$$
+d = \sqrt{[(x_2 - x_1)^2 + (y_2 - y_1)^2]}
+$${#eq-distance}
 
 
-, then, we do not take this next step, and we stop drawing the current curve. At this point, if we have
-a next curve to draw, then, we start to this next curve in the field, and restart this process
-of checking if the distance of this next step we take and the neighboring curves will
-be less or equal to the "separating distance".
+### The density grid
+
+However, calculating the distance between one point and all points from all other curves
+would be impractical. What the Jobard-Lefer algorithm does is calculating the distance
+between one point and **all of the points that are near by and that belongs to others (already existing) curves**.
+
+To find the points that are near by, the algorithm uses a second Cartesian grid that is superposed
+over the Cartesian plane. In other words, it uses a second Cartesian plane
+that uses a different scale, accordingly to the "separating distance" ($d_{sep}$).
+@jobard97 call this second Cartesian plane as the "density grid".
+
+So every coordinate in the Cartesian plane can be mapped to a position in the density grid.
+You do that by scaling the x and y coordinates in the Cartesian to fit the scale used in the density grid.
+As an example, let's consider a Cartesian plane that is 100x100.
+
+At @fig-cartesian-grid.
+
+::: {#fig-cartesian-grid layout-ncol=2}
+
+![100x100 Cartesian plane](./../cartesian_plane.png){#fig-cartesian1}
+
+![The equivalent density grid with dsep = 2](./../density_grid.png){#fig-density1}
+
+The relationship between the Cartesian plane and the density grid.
+:::

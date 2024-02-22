@@ -503,13 +503,13 @@ font-style: inherit;">}</span></span></code></pre></div>
 <li>draw only non-overlapping curves.</li>
 <li>draw curves that are “evenly-spaced” between each other.</li>
 </ul>
-<p><span class="citation" data-cites="jobard97">Jobard and Lefer (1997)</span> proposes an algorithm that produces non-overlapping and evenly-spaced curves around a flow field. If you read the paper carefully, you might notice that you can divide the algorithm into two separate parts. And splitting this algorithm like this, into two separate parts, will be very useful here in this article for explaining how each piece of the algorithm works.</p>
-<p>These parts are:</p>
+<p><span class="citation" data-cites="jobard97">Jobard and Lefer (1997)</span> proposes an algorithm that produces non-overlapping and evenly-spaced curves around a flow field. If you read the paper carefully, you might notice that you can divide this algorithm into two separate parts. Splitting this algorithm into two separate is very useful for the objective of this article. Because is easier to explain how each part works separately, than to trying to explain the entire algorithm at once.</p>
+<p>These two parts are:</p>
 <ul>
 <li>An algorithm to draw non-overlapping curves.</li>
 <li>An algorithm to select new start points for new curves.</li>
 </ul>
-<p>Since each part have it’s own quirks, I begin by focusing on the first part of the algorithm. After explaining how this first part works, it will be a little easier for you to understand how the second part works.</p>
+<p>First, I will focus on the first part of the algorithm, and, after explaining how this first part works, it will be a little easier for you to understand how the second part works.</p>
 <section id="drawing-non-overlapping-curves" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="drawing-non-overlapping-curves"><span class="header-section-number">4.1</span> Drawing non-overlapping curves</h2>
 <p>This first part of the algorithm is the part that makes sure that only non-overlapping curves are drawn to the field. The idea behind it, is that we are constantly checking the distances between our next position and the other curves around us. We want to always make sure that the current curve is far enough from the other curves, and, if not, stop drawing this curve.</p>
@@ -555,8 +555,66 @@ Figure&nbsp;3: Demonstrating the effect of the Jobard-Lefer algorithm on curves 
 </div>
 <section id="how-this-part-of-the-algorithm-works" class="level3" data-number="4.1.1">
 <h3 data-number="4.1.1" class="anchored" data-anchor-id="how-this-part-of-the-algorithm-works"><span class="header-section-number">4.1.1</span> How this part of the algorithm works?</h3>
-<p>In essence, at each step we take drawing our curve in the flow field, we look at the curves that are around us, and we compare the distance between our current position and all of these neighboring curves. If this distance between the next step we take and any of the neighboring curves, is lower or equal to a specific value ()</p>
-<p>, then, we do not take this next step, and we stop drawing the current curve. At this point, if we have a next curve to draw, then, we start to this next curve in the field, and restart this process of checking if the distance of this next step we take and the neighboring curves will be less or equal to the “separating distance”.</p>
+<p>In essence, at each step we take while drawing our curve, we look at the curves that are around us, and we compare the distance between our next step and all of these neighboring curves. If this distance between is lower or equal to the separating value (<img src="https://latex.codecogs.com/png.latex?d_%7Bsep%7D">), then, we do not take the next step, and we stop drawing the current line.</p>
+<p>Notice that we are still using the exact same steps I described at Section&nbsp;3 to draw the curves into the field. We are still start with a starting point, then, we start to take sequential steps by following the direction of the angles we encounter through the field.</p>
+<p>However, the key difference here, is that we added a new step, or new check to these previous steps. Now, while we are walking through the field, we are constantly calculating distances, and checking these distances to make sure that we are not too close to a neighbour curve.</p>
+<p>Figure&nbsp;4 demonstrates this process visually. And I know what you are thinking! “These curves in Figure&nbsp;4 doesn’t look like curves!”. Just remember the steps I described at Section&nbsp;3. We are essentially drawing curves by connecting the positions where we walked through. Is like I applied a very big zoom over the image while the algorithm is actively drawing the curves.</p>
+<p>So, at a very low scale, the curves we are drawing are not really curves at all. But at a normal scale, when we zoom out of the image, and look to the image with our own human eyes, the steps are so small, so small, that we cannot perceive the connected dots. The curve effectivelly looks very much like a nice and fluid curve.</p>
+<p>In the example of Figure&nbsp;4, we have one already existing curve (in blue), and we are currently drawing a second curve into the field. At each step, we calculate the coordinates of the next step we need to make, them, we compare the distance between the position of this next step, and the points from other curves that are close by. If this distance between this next step and any point from the surrounding curves is lower or equal than <img src="https://latex.codecogs.com/png.latex?d_%7Bsep%7D">, we “cancel” the next step, and we stop drawing the current curve.</p>
+<div id="fig-even-algo" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-even-algo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://pedro-faria.netlify.app/posts/2024/2024-02-19-flow-even/distance.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-even-algo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: The steps to check if the current curve is too close to a neighbour
+</figcaption>
+</figure>
+</div>
+<p>To calculate the distance between two points in the Cartesian plane, we use another equation from geometry, which is commonly know as the “distance formula”:</p>
+<p><span id="eq-distance"><img src="https://latex.codecogs.com/png.latex?%0Ad%20=%20%5Csqrt%7B%5B(x_2%20-%20x_1)%5E2%20+%20(y_2%20-%20y_1)%5E2%5D%7D%0A%5Ctag%7B3%7D"></span></p>
+</section>
+<section id="the-density-grid" class="level3" data-number="4.1.2">
+<h3 data-number="4.1.2" class="anchored" data-anchor-id="the-density-grid"><span class="header-section-number">4.1.2</span> The density grid</h3>
+<p>However, calculating the distance between one point and all points from all other curves would be impractical. What the Jobard-Lefer algorithm does is calculating the distance between one point and <strong>all of the points that are near by and that belongs to others (already existing) curves</strong>.</p>
+<p>To find the points that are near by, the algorithm uses a second Cartesian grid that is superposed over the Cartesian plane. In other words, it uses a second Cartesian plane that uses a different scale, accordingly to the “separating distance” (<img src="https://latex.codecogs.com/png.latex?d_%7Bsep%7D">). <span class="citation" data-cites="jobard97">Jobard and Lefer (1997)</span> call this second Cartesian plane as the “density grid”.</p>
+<p>So every coordinate in the Cartesian plane can be mapped to a position in the density grid. You do that by scaling the x and y coordinates in the Cartesian to fit the scale used in the density grid. As an example, let’s consider a Cartesian plane that is 100x100.</p>
+<p>At Figure&nbsp;5.</p>
+<div id="fig-cartesian-grid" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-cartesian-grid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-cartesian-grid" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-cartesian1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-cartesian1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://pedro-faria.netlify.app/posts/2024/2024-02-19-flow-even/cartesian_plane.png" class="img-fluid figure-img" data-ref-parent="fig-cartesian-grid">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-cartesian1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) 100x100 Cartesian plane
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-cartesian-grid" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-density1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-density1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://pedro-faria.netlify.app/posts/2024/2024-02-19-flow-even/density_grid.png" class="img-fluid figure-img" data-ref-parent="fig-cartesian-grid">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-density1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) The equivalent density grid with dsep = 2
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cartesian-grid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: The relationship between the Cartesian plane and the density grid.
+</figcaption>
+</figure>
+</div>
 
 
 
