@@ -23,8 +23,13 @@ curves %>%
   geom_path(
     aes(x, y, group = curve_id)
   ) +
-  cartesian +
-  theme_void()
+  cartesian
+
+
+curves %>% 
+  filter(curve_id %in% 20:25) %>% 
+  arrange(curve_id) %>% 
+  View()
 
 
 

@@ -137,5 +137,12 @@ visualize_grid(flow_field, n = 120) +
 
 
 
+distance <- function(x1, y1, x2, y2){
+  s1 <- (x2 - x1)^2
+  s2 <- (y2 - y1)^2
+  return(sqrt(s1 + s2))
+}
 
+
+distance(45.39132, 17.46354, 45.47030, 17.58913)
 

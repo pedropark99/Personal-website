@@ -10,7 +10,8 @@
 #define N_STEPS 30
 #define N_CURVES 1500
 #define STEP_LENGTH 0.01 * FLOW_FIELD_WIDTH
-#define D_SEP 0.8
+#define D_SEP 1
+#define D_TEST 1
 #define DENSITY_GRID_WIDTH ((int) (FLOW_FIELD_WIDTH / D_SEP))
 
 struct Point {
@@ -108,6 +109,7 @@ void insert_coord_in_density_grid (double x,
 
 int is_valid_next_step (double x, double y,
 			double d_sep,
+			double d_test,
 			int density_grid_width,
 			DensityCell density_grid[DENSITY_GRID_WIDTH][DENSITY_GRID_WIDTH]) {
 	int density_col = get_density_col(x, d_sep);
@@ -132,7 +134,7 @@ int is_valid_next_step (double x, double y,
 				double x2 = density_grid[c][r].x[i];
 				double y2 = density_grid[c][r].y[i];
 				double dist = distance(x, y, x2, y2);
-				if (dist <= d_sep) {
+				if (dist <= d_test) {
 					return 0;
 				}
 			}
@@ -184,6 +186,7 @@ Curve draw_curve(double x_start, double y_start, int curve_id,
 		int valid = is_valid_next_step(
 			x, y,
 			D_SEP,
+			D_TEST,
 			DENSITY_GRID_WIDTH,
 			density_grid
 		);
@@ -219,6 +222,7 @@ Curve draw_curve(double x_start, double y_start, int curve_id,
 		int valid = is_valid_next_step(
 			x, y,
 			D_SEP,
+			D_TEST,
 			DENSITY_GRID_WIDTH,
 			density_grid
 		);
@@ -316,7 +320,7 @@ int main() {
 	int curve_id = 0;
 	curves[curve_array_index] = draw_curve(x, y, curve_id, flow_field, density_grid);
 	int steps_taken = curves[curve_array_index].steps_taken;
-	for (int i = 0; i < steps_taken; i++) {
+	for (int i = 0; i < steps_taken + 1; i++) {
 		double x = curves[curve_array_index].x[i];
 		double y = curves[curve_array_index].y[i];
 		insert_coord_in_density_grid(x, y, D_SEP, density_grid);
@@ -334,6 +338,7 @@ int main() {
 			int valid = is_valid_next_step(
 				p.x, p.y,
 				D_SEP,
+				D_SEP,
 				DENSITY_GRID_WIDTH,
 				density_grid
 			);
@@ -346,14 +351,14 @@ int main() {
 					flow_field,
 					density_grid
 				);
-				if (curve.steps_taken == 0) {
+				if (curve.steps_taken < 6) {
 					continue;
 				}
 
 				curves[curve_array_index] = curve;
 				// insert this new curve into the density grid
 				int steps_taken = curves[curve_array_index].steps_taken;
-				for (int i = 0; i < steps_taken; i++) {
+				for (int i = 0; i < steps_taken + 1; i++) {
 					double x = curves[curve_array_index].x[i];
 					double y = curves[curve_array_index].y[i];
 					insert_coord_in_density_grid(x, y, D_SEP, density_grid);
