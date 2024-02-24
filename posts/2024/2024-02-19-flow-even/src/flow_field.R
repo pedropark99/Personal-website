@@ -69,21 +69,18 @@ build_grid_df <- function(angles, n) {
   )
 }
 
-# flow_field %>% 
-#   visualize_grid(n = 120)
-# 
-# angles %>% 
-#   build_grid_df(n = 120) %>% 
-#   visualize_grid(n = 120)
+flow_field %>%
+  visualize_grid(n = 120)
 
 
+grid_width <- 120
 ### Teste
 angles <- matrix(NA_real_, nrow = grid_width, ncol = grid_width)
 for(i in seq_along(flow_field$x)) {
   x <- flow_field$x[i]
   y <- flow_field$y[i]
   v <- flow_field$value[i]
-  angles[x, y] <- v
+  angles[y, x] <- v
 }
 
 off_boundaries <- function(x, y, limit = grid_width){
@@ -100,49 +97,45 @@ n_steps = 30
 x = 78.813140200829665
 y = 47.606804877336515
 
+x_coords <- vector("double", length = n_steps)
+y_coords <- vector("double", length = n_steps)
+
 for (i in seq_len(n_steps)) {
   ff_column_index <- as.integer(x)
   ff_row_index <- as.integer(y)
   
   if (off_boundaries(ff_column_index, ff_row_index)) {
-    print(sprintf("[INFO]: Out of boundaries at x: %f | y: %f", x, y))
     break
   }
   
   angle <- angles[ff_row_index, ff_column_index]
-  print(sprintf("x: %f | y: %f | a: %f", x, y, angle))
+  #angle <- angle + pi
   x_step <- step_length * cos(angle)
   y_step <- step_length * sin(angle)
-  x <- x + x_step
-  y <- y + y_step
+  x <- x - x_step
+  y <- y - y_step
   
+  x_coords[i] <- x
+  y_coords[i] <- y
 }
 
+df <- tibble(
+  x = x_coords,
+  y = y_coords
+)
 
 
-distance <- function(x1, y1, x2, y2){
-  s1 <- (x2 - x1)^2
-  s2 <- (y2 - y1)^2
-  return(sqrt(s1 + s2))
-}
-
-curves %>%
-  filter(curve_id %in% c(258, 56)) %>% 
-  mutate(
-    dist = distance(
-      91.682406842372131,
-      56.134913138987564,
-      x,
-      y
-    )
-  ) %>% 
-  arrange(dist)
+visualize_grid(flow_field, n = 120) +
+  geom_path(
+    aes(x, y),
+    color = "red",
+    linewidth = 1,
+    data = df
+  ) +
+  cartesian
 
 
 
-get_density_col <- function(x){
-  as.integer(x / 1.2) + 1L
-}
-get_density_row <- function(y){
-  as.integer(y / 1.2) + 1L
-}
+
+
+

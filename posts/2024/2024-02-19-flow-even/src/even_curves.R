@@ -6,9 +6,16 @@ curves <- read_delim(p_curves, delim = ";") |>
   filter(x != 0)
 curves$curve_id <- as.integer(curves$curve_id)
 
+left <- curves %>% filter(direction == 0) %>% arrange(curve_id, desc(step_id))
+right <- curves %>% filter(direction == 1)
+
+curves <- left %>% 
+  bind_rows(right)
+
 cartesian = coord_cartesian(
   xlim = c(0, 120),
-  ylim = c(0, 120)
+  ylim = c(0, 120),
+  expand =  FALSE
 )
 
 curves %>% 
@@ -16,7 +23,8 @@ curves %>%
   geom_path(
     aes(x, y, group = curve_id)
   ) +
-  cartesian
+  cartesian +
+  theme_void()
 
 
 

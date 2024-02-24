@@ -20,9 +20,14 @@ struct Point {
 
 /* Struct to store all information about a curve that is being draw to the flow field */
 struct Curve {
-	int id;
+	int curve_id;
 	double x[N_STEPS];
 	double y[N_STEPS];
+	// If x and y coordinates are from a step that was taken from left to right (1)
+	// or a step from right to left (0).
+	int direction[N_STEPS];
+	// The id of the step
+	int step_id[N_STEPS];
 	int steps_taken;
 } typedef Curve;
 
@@ -140,19 +145,64 @@ int is_valid_next_step (double x, double y,
 
 
 
-Curve draw_curve(double x, double y, int curve_id,
+Curve draw_curve(double x_start, double y_start, int curve_id,
 		 double flow_field[FLOW_FIELD_WIDTH][FLOW_FIELD_HEIGHT],
 		 DensityCell density_grid[DENSITY_GRID_WIDTH][DENSITY_GRID_WIDTH]) {
 
 	Curve curve;
-	curve.id = curve_id;
+	curve.curve_id = curve_id;
 	curve.steps_taken = 0;
 	for (int i = 0; i < N_STEPS; i++) {
 		curve.x[i] = 0;
 		curve.y[i] = 0;
+		curve.direction[i] = 0;
+		curve.step_id[i] = 0;
 	}
 
-	for (int i = 0; i < N_STEPS; i++) {
+	double x = x_start;
+	double y = y_start;
+	int direction = 0;
+	curve.x[0] = x_start;
+	curve.y[0] = y_start;
+	int step_id = 1;
+	int i = 1;
+	// Draw curve from right to left
+	while (i < (N_STEPS / 2)) {
+		int ff_column_index = (int) floor(x);
+		int ff_row_index = (int) floor(y);
+
+		if (off_boundaries(ff_column_index, ff_row_index, FLOW_FIELD_WIDTH)) {
+			break;
+		}
+
+		double angle = flow_field[ff_row_index][ff_column_index];
+		double x_step = STEP_LENGTH * cos(angle);
+		double y_step = STEP_LENGTH * sin(angle);
+		x = x - x_step;
+		y = y - y_step;
+
+		int valid = is_valid_next_step(
+			x, y,
+			D_SEP,
+			DENSITY_GRID_WIDTH,
+			density_grid
+		);
+
+		if (!valid) break;
+
+		curve.x[i] = x;
+		curve.y[i] = y;
+		curve.step_id[i] = step_id;
+		step_id++;
+		curve.steps_taken++;
+		i++;
+	}
+
+
+	x = x_start;
+	y = y_start;
+	// Draw curve from left to right
+	while (i < N_STEPS) {
 		int ff_column_index = (int) floor(x);
 		int ff_row_index = (int) floor(y);
 
@@ -177,7 +227,11 @@ Curve draw_curve(double x, double y, int curve_id,
 
 		curve.x[i] = x;
 		curve.y[i] = y;
+		curve.direction[i] = 1;
+		curve.step_id[i] = step_id;
+		step_id++;
 		curve.steps_taken++;
+		i++;
 	}
 
 	return curve;
@@ -270,6 +324,7 @@ int main() {
 	curve_array_index++;
 
 
+
 	while (curve_id < N_CURVES && curve_array_index < N_CURVES) {
 		SeedPointsQueue queue;
 		queue = collect_seedpoints(curves[curve_id]);
@@ -315,7 +370,7 @@ int main() {
 	printf("[INFO]: Finished calculating curves!\n");
 	printf("[INFO]: Saving curves data into CSV %s\n", filename);
 	FILE* f = fopen(filename, "w");
-	fprintf(f, "curve_id;x;y\n");
+	fprintf(f, "curve_id;x;y;step_id;direction\n");
 	/*
 	for (int pi = 0; pi < (N_STEPS * 2); pi++) {
 		fprintf(
@@ -327,14 +382,15 @@ int main() {
 		);
 	};*/
 	for (int curve_id = 0; curve_id < N_CURVES; curve_id++) {
-		int steps_taken = curves[curve_id].steps_taken;
-		for (int i = 0; i < steps_taken; i++) {
+		for (int i = 0; i < N_STEPS; i++) {
 			fprintf(
 				f,
-				"%d;%.8f;%.8f\n",
-				curves[curve_id].id,
+				"%d;%.8f;%.8f;%d;%d\n",
+				curves[curve_id].curve_id,
 				curves[curve_id].x[i],
-				curves[curve_id].y[i]
+				curves[curve_id].y[i],
+				curves[curve_id].step_id[i],
+				curves[curve_id].direction[i]
 			);
 		}
 	};
