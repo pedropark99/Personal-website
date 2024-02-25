@@ -704,6 +704,9 @@ int is_valid_step (double x, double y,
 	int start_col = (density_col - 1) > 0 ? density_col - 1 : 0;
 	int end_col = (density_col + 1) < density_grid_width ? density_col + 1 : density_col;
  
+ 	// Subtracting a very small amount from D_SEP, just to account for the lost of float precision
+	// that happens during the calculations below, specially in the distance calc
+	d_sep = fabs(d_sep - (0.01 * D_SEP));
 	for (int c = start_col; c <= end_col; c++) {
 		for (int r = start_row; r <= end_row; r++) {
 			int n_elements = density_grid[c][r].space_used;
@@ -810,11 +813,430 @@ for (int curve_id = 0; curve_id < N_CURVES; curve_id++) {
 ```
 
 
-## The full algorithm
+## The full source code
 
-After I explained each individual part of the algorithm, is finally time to see the entire piece.
+After I explained each individual aspect about this first part of the algorithm, is finally time to see the entire piece.
 But, just for brevity reasons, and to save space in this article, I will not show
-the entire algorithm here. Instead, I will give you a link to GitHub, where
+the entire source code here. Instead, I will give you a link to GitHub, where
 you can read the source code peacefully.
 
 Link to the entire algorithm: <https://github.com/pedropark99/Personal-website/blob/main/posts/2024/2024-02-19-flow-even/src/non_overlap_curves.c>
+
+
+# Drawing evenly-spaced curves
+
+Now, the other part of the algorithm introduces some new concepts,
+and strategies. According to @jobard97, in order to obtain a
+good visual appearance of the flow field, an accurante
+seed point selection method needs to be performed.
+
+This sentence introduces a new term that we haven't spoked about
+yet. A seed point is the term chosen by @jobard97 to designate a starting point of a curve, is the point
+from where the curves starts to grow.
+
+What @jobard97 is really trying to say, is that, if you
+really want to draw curves that are evenly spaced between each other, then,
+you need choose wisely the points from where your curves starts.
+
+## Drawing a curve in two directions
+
+Before we talk about how to select proper seed points for your curves, I want
+to talk about how can you draw a curve in two directions. Because @jobard97
+algorithm actually draws a curve in both directions (from right to left and left to right).
+
+In other words, for the @jobard97 algorithm to work effectively, we need to draw every
+single curve in both directions. @fig-curve-both-directions shows what "drawing
+a curve in both directions" actually means.
+
+```{r}
+#| echo: false
+#| label: fig-curve-both-directions
+#| fig-cap: "Drawing a curve in both directions"
+df <- tibble(
+  x = seq(1, 1.5, by = 0.05) |> cos(),
+  y = seq(1, 1.5, by = 0.05) |> sin()
+)
+
+c <- tibble(
+  x = c(0.29, 0.36),
+  y = c(0.97, 0.945),
+  xend = c(0.1, 0.5),
+  yend = c(1.005, 0.88),
+  curve_id = c(1L, 2L)
+)
+
+
+df |>
+  ggplot() +
+  geom_point(aes(x, y, color = "Normal step")) +
+  geom_line(aes(x, y)) +
+  geom_point(
+    aes(x = cos(1.25), y = sin(1.25), color = "Starting point"),
+    size = 3
+  ) +
+  geom_curve(
+    aes(x = x, y = y, xend = xend, yend = yend),
+    data = c |> filter(curve_id == 1L),
+    linewidth = 2,
+    curvature = 0.15,
+    arrow = arrow()
+  ) +
+  geom_curve(
+    aes(x = x, y = y, xend = xend, yend = yend),
+    data = c |> filter(curve_id == 2L),
+    linewidth = 2,
+    curvature = -0.15,
+    arrow = arrow()
+  ) +
+  scale_color_manual(values = c("black", "red")) +
+  guides(colour = guide_legend(title = "Legend: ")) +
+  theme_void() +
+  theme(
+    legend.text = element_text(family = "Inconsolata", size = 14),
+    legend.title = element_text(face = "bold", family = "Inconsolata", size = 20),
+    legend.position = "top"
+  )
+
+```
+
+
+So, to do that, we need to adjust our current script. First, let's change
+the `Curve` struct to include some more information that will
+help us tracking the coordinates that are being calculated.
+These extra informations, will help us to sort these coordinates,
+or, to track the order of each step taken.
+
+You can see below that, three more variables were added to the
+struct: `step_id` is essentially the number of the step that
+created the corresponding x and y coordinates; `steps_taken`
+is the total number of steps taken to draw this curve;
+`direction`, an integer indicating if the corresponding
+x and y coordinates were calculated when the algorithm was
+drawing the curve in the direction right to left (zero),
+or, if was drawing the curve from left to right (one).
+
+```c
+struct Curve {
+	int curve_id;
+	double x[N_STEPS];
+	double y[N_STEPS];
+	// If x and y coordinates are from a step that was taken from left to right (1)
+	// or a step from right to left (0).
+	int direction[N_STEPS];
+	// The id of the step
+	int step_id[N_STEPS];
+	int steps_taken;
+} typedef Curve;
+```
+
+Now, our algorithm currently draws only curves from left to right. But
+we want to draw curves in both directions. For that, is good to include
+the logic for drawing curves into a nice function. That is why, I 
+created the `draw_curve()` function below:
+
+You can see in the function that, the logic of the function is essentially
+the same as before. But now, we have two main loops, represented as
+`while` loops. But the only thing that changes between one loop
+and another, is the "translation" operation that we apply
+after we calculated the step.
+
+On the first `while` loop, we **add** the steps to the current x and y coordinates.
+But on the second `while` loop, we **subtract** these steps instead from
+the current x and y coordinates. That makes the walking process go backwards.
+In other words, that draws the curve in the inverse direction.
+
+Despite this diference, we are essentially doing the exact same computations we did
+before. We are still validating at each iteration it the next step we
+calculated is a valid one, using the `is_valid_next_step()`
+function.
+
+```c
+
+Curve draw_curve(double x_start,
+				 double y_start,
+				 int curve_id,
+				 double flow_field[FLOW_FIELD_WIDTH][FLOW_FIELD_HEIGHT],
+				 DensityCell density_grid[DENSITY_GRID_WIDTH][DENSITY_GRID_WIDTH]) {
+
+	Curve curve;
+	curve.curve_id = curve_id;
+	curve.steps_taken = 0;
+	for (int i = 0; i < N_STEPS; i++) {
+		curve.x[i] = 0;
+		curve.y[i] = 0;
+		curve.direction[i] = 0;
+		curve.step_id[i] = 0;
+	}
+
+	double x = x_start;
+	double y = y_start;
+	int direction = 0;
+	curve.x[0] = x_start;
+	curve.y[0] = y_start;
+	int step_id = 1;
+	int i = 1;
+	// Draw curve from right to left
+	while (i < (N_STEPS / 2)) {
+		int ff_column_index = (int) floor(x);
+		int ff_row_index = (int) floor(y);
+
+		if (off_boundaries(ff_column_index, ff_row_index, FLOW_FIELD_WIDTH)) {
+			break;
+		}
+
+		double angle = flow_field[ff_row_index][ff_column_index];
+		double x_step = STEP_LENGTH * cos(angle);
+		double y_step = STEP_LENGTH * sin(angle);
+		x = x - x_step;
+		y = y - y_step;
+
+		int valid = is_valid_next_step(
+			x, y,
+			D_SEP,
+			D_TEST,
+			DENSITY_GRID_WIDTH,
+			density_grid
+		);
+
+		if (!valid) break;
+
+		curve.x[i] = x;
+		curve.y[i] = y;
+		curve.step_id[i] = step_id;
+		step_id++;
+		curve.steps_taken++;
+		i++;
+	}
+
+
+	x = x_start;
+	y = y_start;
+	// Draw curve from left to right
+	while (i < N_STEPS) {
+		int ff_column_index = (int) floor(x);
+		int ff_row_index = (int) floor(y);
+
+		if (off_boundaries(ff_column_index, ff_row_index, FLOW_FIELD_WIDTH)) {
+			break;
+		}
+
+		double angle = flow_field[ff_row_index][ff_column_index];
+		double x_step = STEP_LENGTH * cos(angle);
+		double y_step = STEP_LENGTH * sin(angle);
+		x = x + x_step;
+		y = y + y_step;
+
+		int valid = is_valid_next_step(
+			x, y,
+			D_SEP,
+			D_TEST,
+			DENSITY_GRID_WIDTH,
+			density_grid
+		);
+
+		if (!valid) break;
+
+		curve.x[i] = x;
+		curve.y[i] = y;
+		curve.direction[i] = 1;
+		curve.step_id[i] = step_id;
+		step_id++;
+		curve.steps_taken++;
+		i++;
+	}
+
+	return curve;
+}
+```
+
+
+## The logic behind the core algorithm
+
+The main idea behind the core algorithm, is to select the next seed points
+from the current curve. In other words, instead of selecting all
+starting points for all the curves we want to draw, before we even
+touch the flow field and starting to draw any curve, in this
+algorithm, we now want to select new starting points from the curve
+we are currently drawing.
+
+The main logic of the algorithm is:
+
+1. First, we draw a curve;
+1. Then, we go trough each point of this curve, and collects all possible seed points that are in a distance of $d_{sep}$ from each point of the curve. That becomes like a queue of elegible seed points to be processed.
+1. We then go through that queue of elegible seed points, and we check if each seed point is valid (i.e. if is not too close to a neighbouring curve).
+1. If the current seedpoint is not valid, we jump to the next seed point in the queue, and we check it is valid.
+1. If the current seedpoint is valid, then, we draw a curve from this seed point, and we add this new curve to the queue of curves to be evaluated.
+1. After we finished going through all of the elegible seed points we collected from the current curve, we jump to the next curve in the queue, and repeat this process from step 2, until we have no more curves to be evaluated.
+
+
+You can see in the above steps that there are two types of "queues" involved in this process. First, we have a queue
+of starting points (or seed points). We need to check if each starting point in this queue is valid.
+Second, we also have a queue of curves to be evaluated. The idea is to collect all elegible starting points
+we can find from each curve registered in this queue.
+
+The function `collect_seedpoints()` below is responsible for collecting all elegible seed points
+from a single curve. The collected seedpoints are stored inside a `SeedPointsQueue` object,
+that represents a queue of seed points to be evaluated.
+
+```c
+struct Point {
+	double x;
+	double y;
+} typedef Point;
+
+struct SeedPointsQueue {
+	Point* points;
+	int space_used;
+	int capacity;
+} typedef SeedPointsQueue;
+
+SeedPointsQueue collect_seedpoints (Curve curve) {
+	int steps_taken = curve.steps_taken;
+	SeedPointsQueue queue;
+	queue.space_used = 0;
+	if (steps_taken == 0) {
+		queue.capacity = 0;
+		return queue;
+	}
+
+	queue.points = malloc(steps_taken * 2 * sizeof(Point));
+	queue.capacity = steps_taken * 2;
+	int candidate_point_index = 0;
+	for (int i = 0; i < steps_taken - 1; i++) {
+		double x = curve.x[i];
+		double y = curve.y[i];
+			
+		int ff_column_index = (int) floor(x);
+		int ff_row_index = (int) floor(y);
+		double angle = atan2(curve.y[i + 1] - y, curve.x[i + 1] - x);
+
+		double angle_left = angle + (M_PI / 2);
+		double angle_right = angle - (M_PI / 2);
+
+		Point left_point = {
+			x + (D_SEP * cos(angle_left)),
+			y + (D_SEP * sin(angle_left))
+		};
+		Point right_point = {
+			x + (D_SEP * cos(angle_right)),
+			y + (D_SEP * sin(angle_right))
+		};
+
+		queue.points[candidate_point_index] = left_point;
+		candidate_point_index++;
+		queue.space_used++;
+		queue.points[candidate_point_index] = right_point;
+		candidate_point_index++;
+		queue.space_used++;
+	}
+
+	return queue;
+}
+```
+
+
+With this function, we can now build the complete logic of the algorithm.
+In the previous sections, we drawn all curves inside a for loop. But
+this time, we first, draw manually a single curve in to the field,
+from whatever starting point we want to (in the example below, I choose to start from the coordinate $x = 45$ and $y = 24$). And then, all of the
+other curves are derived from this first curve that we drawn.
+
+```c
+#define MIN_STEPS_ALLOWED 2
+
+Curve curves[N_CURVES];
+double x = 45.0;
+double y = 24.0;
+int curve_array_index = 0;
+int curve_id = 0;
+curves[curve_array_index] = draw_curve(x, y, curve_id, flow_field, density_grid);
+int steps_taken = curves[curve_array_index].steps_taken;
+for (int i = 0; i < steps_taken + 1; i++) {
+	double x = curves[curve_array_index].x[i];
+	double y = curves[curve_array_index].y[i];
+	insert_coord_in_density_grid(x, y, D_SEP, density_grid);
+}
+curve_array_index++;
+
+
+while (curve_id < N_CURVES && curve_array_index < N_CURVES) {
+	SeedPointsQueue queue;
+	queue = collect_seedpoints(curves[curve_id]);
+	for (int point_index = 0; point_index < queue.space_used; point_index++) {
+		Point p = queue.points[point_index];
+		// check if it is valid given the current state
+		int valid = is_valid_next_step(
+			p.x, p.y,
+			D_SEP,
+			DENSITY_GRID_WIDTH,
+			density_grid
+		);
+
+		if (valid) {
+			// if it is, draw the curve from it
+			Curve curve = draw_curve(
+				p.x, p.y,
+				curve_array_index,
+				flow_field,
+				density_grid
+			);
+			if (curve.steps_taken < MIN_STEPS_ALLOWED) {
+				continue;
+			}
+
+			curves[curve_array_index] = curve;
+			// insert this new curve into the density grid
+			int steps_taken = curves[curve_array_index].steps_taken;
+			for (int i = 0; i < steps_taken + 1; i++) {
+				double x = curves[curve_array_index].x[i];
+				double y = curves[curve_array_index].y[i];
+				insert_coord_in_density_grid(x, y, D_SEP, density_grid);
+			}
+			curve_array_index++;
+		}
+	}
+
+	curve_id++;
+}
+```
+
+## The end result of the algorithm
+
+Now that the algorithm is complete, we can now see the end results it produces.
+@fig-even-curves1 shows an example. We essentially took the exact same flow field
+of @fig-diff-algorithm. We just changed the value for $d_{sep}$ slightly.
+
+![A result of the evenly-spaced curves algorithm. Configs: flow_field_width=120; dsep=1; n_curves=1500; n_steps=30; step_length=0.01*flow_field_width; min_steps_allowed=2](./../even_curves1.png){#fig-even-curves1}
+
+Now, that is a variable that is useful for you to control when you producing such
+images, which is the `MIN_STEPS_ALLOWED` variable. This variable controls
+which curves are considered and included in the end result, and which are not,
+based on the number of steps taken in that particular curve.
+
+You see at @fig-even-curves1 that it has a lot of very short curves in some particular
+areas of the flow field. In other words, depending on the flow field you are using,
+and all of the global configs (i.e. value of $d_{sep}$, the number of steps, the step length, the number of curves, etc.),
+some particular areas of the flow field will tend to concentrate some very short curves.
+
+Also, the order in which you draw each valid seed point you find can also influence this specific aspect of the image.
+For example, if you draw the valid seed points in sequential order, as they come to you, them, you get a result.
+But if you draw these valid seed points in a random order, you might end up getting a slightly different result.
+
+This is not something that will happen always, in 100% cases. It depends a lot on the flow field
+you have and in your configs. But it normally does happen
+with this particular algorithm. However, this is something that you can easily improve (or fix)
+by changing the value of `MIN_STEPS_ALLOWED`.
+
+In most cases, this variable is configured to 2. But If you raise this number, just a bit, you usually
+end up getting much nicer results. At @fig-even-curves2 we have the result, when `MIN_STEPS_ALLOWED`
+is configured to 5.
+
+![A result of the evenly-spaced curves algorithm. Configs: flow_field_width=120; dsep=1; n_curves=1500; n_steps=30; step_length=0.01*flow_field_width; min_steps_allowed=5](./../even_curves2.png){#fig-even-curves2}
+
+
+## The full source code
+
+Again, for brevity reasons and to save space in this article, I will give you a link to GitHub, where
+you can read the full source code peacefully.
+
+Link to the entire algorithm: <https://github.com/pedropark99/Personal-website/blob/main/posts/2024/2024-02-19-flow-even/src/even_spaced_curves.c>

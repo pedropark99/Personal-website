@@ -8,6 +8,7 @@
 #define FLOW_FIELD_WIDTH 120
 #define FLOW_FIELD_HEIGHT 120
 #define N_STEPS 30
+#define MIN_STEPS_ALLOWED 5
 #define N_CURVES 1500
 #define STEP_LENGTH 0.01 * FLOW_FIELD_WIDTH
 #define D_SEP 1
@@ -123,6 +124,9 @@ int is_valid_next_step (double x, double y,
 	int start_col = (density_col - 1) > 0 ? density_col - 1 : 0;
 	int end_col = (density_col + 1) < density_grid_width ? density_col + 1 : density_col;
 
+	// Subtracting a very small amount from D_TEST, just to account for the lost of float precision
+	// that happens during the calculations below, specially in the distance calc
+	d_test = d_test - (0.01 * D_SEP);
 	for (int c = start_col; c <= end_col; c++) {
 		for (int r = start_row; r <= end_row; r++) {
 			int n_elements = density_grid[c][r].space_used;
@@ -266,12 +270,12 @@ SeedPointsQueue collect_seedpoints (Curve curve) {
 		double angle_right = angle - (M_PI / 2);
 
 		Point left_point = {
-			x + (D_SEP * 1.2 * cos(angle_left)),
-			y + (D_SEP * 1.2 * sin(angle_left))
+			x + (D_SEP * cos(angle_left)),
+			y + (D_SEP * sin(angle_left))
 		};
 		Point right_point = {
-			x + (D_SEP * 1.2 * cos(angle_right)),
-			y + (D_SEP * 1.2 * sin(angle_right))
+			x + (D_SEP * cos(angle_right)),
+			y + (D_SEP * sin(angle_right))
 		};
 
 		queue.points[candidate_point_index] = left_point;
@@ -351,7 +355,7 @@ int main() {
 					flow_field,
 					density_grid
 				);
-				if (curve.steps_taken < 6) {
+				if (curve.steps_taken < MIN_STEPS_ALLOWED) {
 					continue;
 				}
 

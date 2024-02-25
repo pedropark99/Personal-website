@@ -12,24 +12,51 @@ right <- curves %>% filter(direction == 1)
 curves <- left %>% 
   bind_rows(right)
 
+
+pallete <- c(
+  "#8ecae6",
+  "#219ebc",
+  "#023047",
+  "#ffb703",
+  "#fb8500"
+)
+curve_ids <- unique(curves$curve_id)
+set.seed(50)
+colors <- tibble(
+  curve_id = curve_ids,
+  color = sample(
+    pallete, size = length(curve_ids), replace = TRUE
+  )
+)
+curves <- curves %>% 
+  left_join(colors)
+
+
+
 cartesian = coord_cartesian(
   xlim = c(0, 120),
   ylim = c(0, 120),
   expand =  FALSE
 )
 
-curves %>% 
+pl <- curves %>% 
   ggplot() +
   geom_path(
-    aes(x, y, group = curve_id)
+    aes(x, y, group = curve_id, color = color),
+    linewidth = 1
   ) +
-  cartesian
+  cartesian +
+  scale_color_identity() +
+  theme_void() +
+  theme(
+    legend.position = "none",
+    plot.background = element_rect(fill = "#fae9be")
+  )
 
 
-curves %>% 
-  filter(curve_id %in% 20:25) %>% 
-  arrange(curve_id) %>% 
-  View()
+ragg::agg_png("even_curves2.png", width = 2000, height = 1200, res = 200)
+print(pl)
+dev.off()
 
 
 
