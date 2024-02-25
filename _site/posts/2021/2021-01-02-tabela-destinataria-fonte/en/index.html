@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.538">
+<meta name="generator" content="quarto-1.4.549">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -357,11 +357,11 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <pre><code># A tibble: 5 × 5
       x     y z         r t    
   &lt;int&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;
-1     1  2.93 a       3.5 tzu  
-2     2  2.84 b       2.1 tzu  
-3     3  1.56 c       1   tzu  
-4     4  2.77 d       5.6 tzu  
-5     5  3.05 e       7.2 tzu  </code></pre>
+1     1  1.11 a       3.5 tzu  
+2     2  3.3  b       2.1 tzu  
+3     3  3.53 c       1   tzu  
+4     4  0.4  d       5.6 tzu  
+5     5  1.78 e       7.2 tzu  </code></pre>
 </div>
 </div>
 <p>With this, we are creating the idea that <strong>a <em>join</em> always has a direction</strong>. In other words, we first extract the columns from table <code>B</code>, and then we add those columns to table <code>A</code>. Note that we are always starting from table <code>B</code> towards table <code>A</code>.</p>
@@ -566,7 +566,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      return note.innerHTML;
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
     }
   }
   for (var i=0; i<xrefs.length; i++) {

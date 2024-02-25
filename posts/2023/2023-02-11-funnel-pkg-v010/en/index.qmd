@@ -31,6 +31,17 @@ For now, `{ggfunnel}` is available only at GitHub. You can download and install 
 devtools::install_github("pedropark99/ggfunnel")
 ```
 
+```{r}
+#| include: false
+if (!require("ggfunnel")){
+  devtools::install_github("pedropark99/ggfunnel")
+}
+
+if (!require("ggtext")) {
+  install.packages("ggtext")
+}
+```
+
 
 # A small example of use
 

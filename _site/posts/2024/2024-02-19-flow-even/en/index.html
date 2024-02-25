@@ -1,0 +1,1571 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.549">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Pedro Duarte Faria">
+<meta name="dcterms.date" content="2024-02-19">
+<meta name="description" content="In this article, I want to implement the Jobard-Lefer Algorithm in C. With this algorithm, we can produce evenly-spaced and non-overlapping curves in a flow field (i.e.&nbsp;a vector field).">
+
+<title>home |&gt; dplyr::glimpse() - Producing evenly-spaced and non-overlapping curves with Jobard-Lefer Algorithm in C</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../">
+<script src="../../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-7E6XG4WKHE"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
+</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../../index.html">
+    <span class="navbar-title">home |&gt; dplyr::glimpse()</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../about.html"> 
+<span class="menu-text">About Me</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Posts</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-posts">    
+        <li>
+    <a class="dropdown-item" href="../../../../posts/index.html">
+ <span class="dropdown-text">All posts</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../posts/en.html">
+ <span class="dropdown-text">Posts in english</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../posts/pt.html">
+ <span class="dropdown-text">Posts em português</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-publications" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Publications</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-publications">    
+        <li>
+    <a class="dropdown-item" href="../../../../publications/index.html">
+ <span class="dropdown-text">All publications</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../publications/en.html">
+ <span class="dropdown-text">Publications in English</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../publications/pt.html">
+ <span class="dropdown-text">Publicações em Português</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../open_source_contrib.html"> 
+<span class="menu-text">Open source contributions</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../donate.html"> 
+<span class="menu-text">Donate or Sponsor Me</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-cv" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">CV</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-cv">    
+        <li>
+    <a class="dropdown-item" href="../../../../files/cv/cv-english.pdf">
+ <span class="dropdown-text">CV in English</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../files/cv/cv-portuguese.pdf">
+ <span class="dropdown-text">CV em Português</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item compact">
+    <a class="nav-link" href="mailto:pedropark99@gmail.com"> <i class="bi bi-envelope-fill" role="img" aria-label="Email for contact">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/pedropark99"> <i class="bi bi-github" role="img" aria-label="Github profile">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://fosstodon.org/web/@pedropark99"> <i class="bi bi-mastodon" role="img" aria-label="Mastodon profile">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://medium.com/@pedropark99"> <i class="bi bi-medium" role="img" aria-label="Medium profile">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/PedroPark9"> <i class="bi bi-twitter" role="img" aria-label="Twitter profile">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/pedro-faria-a68140209/"> <i class="bi bi-linkedin" role="img" aria-label="Linkedin profile">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://pedro-faria.netlify.app/index.xml"> <i class="bi bi-rss" role="img" aria-label="RSS feed for Pedro's blog">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Producing evenly-spaced and non-overlapping curves with Jobard-Lefer Algorithm in C</h1>
+                  <div>
+        <div class="description">
+          In this article, I want to implement the Jobard-Lefer Algorithm in C. With this algorithm, we can produce evenly-spaced and non-overlapping curves in a flow field (i.e.&nbsp;a vector field).
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Flow Fields</div>
+                <div class="quarto-category">C</div>
+                <div class="quarto-category">Algorithm</div>
+                <div class="quarto-category">Computer Graphcis</div>
+              </div>
+                  </div>
+  </div>
+    
+  <div class="quarto-title-meta-author">
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-heading">Affiliation</div>
+    
+      <div class="quarto-title-meta-contents">
+      <p class="author">Pedro Duarte Faria </p>
+    </div>
+    <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              Blip
+            </p>
+        </div>
+    </div>
+
+  <div class="quarto-title-meta">
+
+        
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">February 19, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
+  <li><a href="#what-are-flow-fields-or-vector-fields" id="toc-what-are-flow-fields-or-vector-fields" class="nav-link" data-scroll-target="#what-are-flow-fields-or-vector-fields"><span class="header-section-number">2</span> What are flow fields (or vector fields)?</a></li>
+  <li><a href="#sec-draw-curve" id="toc-sec-draw-curve" class="nav-link" data-scroll-target="#sec-draw-curve"><span class="header-section-number">3</span> How to draw curves in a flow field?</a></li>
+  <li><a href="#the-jobard-lefer-algorithm" id="toc-the-jobard-lefer-algorithm" class="nav-link" data-scroll-target="#the-jobard-lefer-algorithm"><span class="header-section-number">4</span> The Jobard-Lefer algorithm</a></li>
+  <li><a href="#drawing-non-overlapping-curves" id="toc-drawing-non-overlapping-curves" class="nav-link" data-scroll-target="#drawing-non-overlapping-curves"><span class="header-section-number">5</span> Drawing non-overlapping curves</a>
+  <ul class="collapse">
+  <li><a href="#how-this-part-of-the-algorithm-works" id="toc-how-this-part-of-the-algorithm-works" class="nav-link" data-scroll-target="#how-this-part-of-the-algorithm-works"><span class="header-section-number">5.1</span> How this part of the algorithm works?</a></li>
+  <li><a href="#the-density-grid" id="toc-the-density-grid" class="nav-link" data-scroll-target="#the-density-grid"><span class="header-section-number">5.2</span> The density grid</a></li>
+  <li><a href="#searching-for-points-near-by" id="toc-searching-for-points-near-by" class="nav-link" data-scroll-target="#searching-for-points-near-by"><span class="header-section-number">5.3</span> Searching for points near by</a></li>
+  <li><a href="#checking-if-our-next-step-is-valid" id="toc-checking-if-our-next-step-is-valid" class="nav-link" data-scroll-target="#checking-if-our-next-step-is-valid"><span class="header-section-number">5.4</span> Checking if our next step is valid</a></li>
+  <li><a href="#drawing-the-curves" id="toc-drawing-the-curves" class="nav-link" data-scroll-target="#drawing-the-curves"><span class="header-section-number">5.5</span> Drawing the curves</a></li>
+  <li><a href="#the-full-source-code" id="toc-the-full-source-code" class="nav-link" data-scroll-target="#the-full-source-code"><span class="header-section-number">5.6</span> The full source code</a></li>
+  </ul></li>
+  <li><a href="#drawing-evenly-spaced-curves" id="toc-drawing-evenly-spaced-curves" class="nav-link" data-scroll-target="#drawing-evenly-spaced-curves"><span class="header-section-number">6</span> Drawing evenly-spaced curves</a>
+  <ul class="collapse">
+  <li><a href="#drawing-a-curve-in-two-directions" id="toc-drawing-a-curve-in-two-directions" class="nav-link" data-scroll-target="#drawing-a-curve-in-two-directions"><span class="header-section-number">6.1</span> Drawing a curve in two directions</a></li>
+  <li><a href="#the-logic-behind-the-core-algorithm" id="toc-the-logic-behind-the-core-algorithm" class="nav-link" data-scroll-target="#the-logic-behind-the-core-algorithm"><span class="header-section-number">6.2</span> The logic behind the core algorithm</a></li>
+  <li><a href="#the-end-result-of-the-algorithm" id="toc-the-end-result-of-the-algorithm" class="nav-link" data-scroll-target="#the-end-result-of-the-algorithm"><span class="header-section-number">6.3</span> The end result of the algorithm</a></li>
+  <li><a href="#the-full-source-code-1" id="toc-the-full-source-code-1" class="nav-link" data-scroll-target="#the-full-source-code-1"><span class="header-section-number">6.4</span> The full source code</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="introduction" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
+<p>I’m currently writing a book about R and Graphics (stay tuned for more news about this book soon 😉). During my research for this book, I had to study a relatively famous and established algorithm, called as the Jobard-Lefer algorithm. It is an algorithm for producing evenly spaced curves in a flow field (or a vector field). This algorithm is thoroughly described in a scientific paper <span class="citation" data-cites="jobard97">(<a href="#ref-jobard97" role="doc-biblioref">Jobard and Lefer 1997</a>)</span>.</p>
+<p>In this article, I want to describe how you can implement this algorithm in C. These are the topics we are going to discuss:</p>
+<ul>
+<li>What are flow fields (or vector fields)?</li>
+<li>How to draw curves in a flow field?</li>
+<li>What the algorithm does?</li>
+<li>How does it work?</li>
+<li>How to implement it in C?</li>
+</ul>
+</section>
+<section id="what-are-flow-fields-or-vector-fields" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> What are flow fields (or vector fields)?</h1>
+<p>A flow field (which is also called a vector field in some ocasions) is essentially a field (or a two-dimensional grid) of angles. <a href="#fig-flow-field1" class="quarto-xref">Figure&nbsp;1</a> shows an example of a flow field:</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-flow-field1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-flow-field1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-flow-field1-1.png" class="img-fluid figure-img" width="1400">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-flow-field1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: An example of flow field
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>In more details, a flow field is usually represented as a 2D (two-dimensional) grid, or a 2D matrix of angle values. So each element in this matrix is a real number, and this real number is interpretd as an angle value (in the radians scale). This 2D matrix of angle values is usually produced by a Perlin Noise algorithm <span class="citation" data-cites="perlin">(<a href="#ref-perlin" role="doc-biblioref">Wikipedia 2024a</a>)</span>, or a similar algorithm, like the Simplex Noise algorithm <span class="citation" data-cites="simplex">(<a href="#ref-simplex" role="doc-biblioref">Wikipedia 2024b</a>)</span>.</p>
+<p>In other words, the numbers in the 2D matrix are normally random numbers. But you cannot use any random number generator to produce them. You must use a 2D (or two-dimensional) noise algorithm to produce these random numbers.</p>
+<p>Just to give you a very brief example, you can build a flow field in C, by using the <a href="https://github.com/Auburn/FastNoiseLite"><code>FastNoiseLite</code> library</a>. In this library, you have multiple algorithms you can use for producing two-dimensional noise.</p>
+<p>Despite the many options, I will use as an example in this article, the classic Perlin Noise algorithm for producing the flow field. You can see in the snippet below that I am building a flow field with 120 of width and height. In other words, we have a 120x120 grid of angle values.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;math.h&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="pp">#define FNL_IMPL</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">"FastNoiseLite.h"</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="pp">#define FLOW_FIELD_WIDTH </span><span class="dv">120</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="pp">#define FLOW_FIELD_HEIGHT </span><span class="dv">120</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="dt">double</span> flow_field<span class="op">[</span>FLOW_FIELD_WIDTH<span class="op">][</span>FLOW_FIELD_HEIGHT<span class="op">];</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Create and configure noise state</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    fnl_state noise <span class="op">=</span> fnlCreateState<span class="op">();</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    noise<span class="op">.</span>seed <span class="op">=</span> <span class="dv">50</span><span class="op">;</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    noise<span class="op">.</span>noise_type <span class="op">=</span> FNL_NOISE_PERLIN<span class="op">;</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> index <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> y <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> y <span class="op">&lt;</span> FLOW_FIELD_HEIGHT<span class="op">;</span> y<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> x <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> x <span class="op">&lt;</span> FLOW_FIELD_WIDTH<span class="op">;</span> x<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>            <span class="co">// Scale each value to the radians scale by</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>            <span class="co">// multiplying each value by 2PI.</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>            flow_field<span class="op">[</span>x<span class="op">][</span>y<span class="op">]</span> <span class="op">=</span> fnlGetNoise2D<span class="op">(&amp;</span>noise<span class="op">,</span> x<span class="op">,</span> y<span class="op">)</span> <span class="op">*</span> <span class="dv">2</span> <span class="op">*</span> M_PI<span class="op">;</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="sec-draw-curve" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> How to draw curves in a flow field?</h1>
+<p>Flow fields have multiple applications in computer graphics. For example, you can use them to draw interesting (or “very pleasing looking”) curves.</p>
+<p>The basic idea is to draw a curve by walking across the flow field. First, we choose a point in the flow field as our starting point, and then, we start to walking by following the direction of the angles we encounter in the flow field. As we walk trough the flow field, we record the x and y coordinates of our positions. When we finish walking, we can draw a curve by “connecting the dots”, i.e.&nbsp;connecting the points (x and y coordinates) that we passed through.</p>
+<p>So, in essence, the steps for drawing a curve in a flow field are:</p>
+<ol type="1">
+<li>Choose a starting point in the grid.</li>
+<li>Look at the angle that is stored in the position of the grid that you are currently in.</li>
+<li>Take a step in the direction of that angle.</li>
+<li>Recalculate your current position in the grid, and record/store this position for later use.</li>
+<li>Comeback to step 2.</li>
+</ol>
+<p>You can see in the bullet points above that, we begin a loop at step 5. We are repeatedly taking a step in the direction of an angle, recalculating our current position in the flow field, and taking another step in the direction of another angle. As long as we stay inside the boundaries of the flow field, we can repeat this pattern as much as we want to.</p>
+<p>The <a href="#fig-flow-field2" class="quarto-xref">Figure&nbsp;2</a> below shows the end result of this process. In this example, we begin in coordinate <span class="math inline">\((5, 10)\)</span>, i.e.&nbsp;<span class="math inline">\(x = 5\)</span> and <span class="math inline">\(y = 10\)</span>, in the field, and take 45 sequential steps in the field by following the direction of the angles we encounter in the way. The curve painted in red shows the end result of this “walking process”.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-flow-field2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-flow-field2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-flow-field2-1.png" class="img-fluid figure-img" width="1400">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-flow-field2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Drawing a curve in the flow field
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>As you walk trough the flow field, the angle that you currently using might lead you to a position that is off the boundaries of the flow field. In that case, you should stop walking, before you go off the flow field. Because if you pass the boundaries of the flow field, then, the lookup process we perform to take an angle in the flow field, will fail.</p>
+<p>Two important variables need to be defined to draw your curve:</p>
+<ul>
+<li>The number of steps you want to take.</li>
+<li>The distance of each step (or “step length”).</li>
+</ul>
+<p>First is the number of steps you want to take in your walk. You can definetly set this to infinity, so you walk indefinitely until you hit one of the boundaries of the flow field. But you normally do not want to walk indefinitely. Because this usually produces a very long curve that goes across the entire flow field.</p>
+<p>Yes! You might want to draw a very long curve. As you probably notice, this is very subjective to each person and their objective. But for the most part, you usually do not have to set this number of steps too much high. Around 30-40 steps is a good range for those who doesn’t know what they want.</p>
+<p>Therefore, the number of steps directly affects the length of the curve that you are drawing. If you take a high number for steps , the curve will be longer. In contrast, if you take just few steps, your curve will be shorter.</p>
+<p>Second is the distance you will take in each step (let’s call it as the “step length”). The step length affects how “sharp” the curve looks. If you set the step length correctly, the curve will look nice, very “curvy”. In other words, the curve will look like an actual curve. But if you set the step length too high, then, the “connect the dots” effects will be much more appearant. In other words, your curve will not look like a curve, and more like an attempt to draw a polygon with very sharp edges.</p>
+<p>But be careful to also not set the step length too low. If you set it very very low, then, you will end up affecting the length of the curve as well. Because the step length is soo low, that even if you set the number of steps very high, you still get a very short curve as a result. This is bad because you will be tempted to raise the number of steps even higher, and by setting the number of steps too high, you end up increasing the overhead and computing time of the algorithm.</p>
+<p>I mean, increasing the number of steps from 10 to 1000 for drawing a single curve into the field is fine. But when you raise the number of steps to 1000 when you are drawing like 10000 curves into field, then you will notice the overhead very quickly. So, if you want your algorithm to perform well, and still get nice and visually attractive curves in the output, you usually want to set the step length to a number that is in the range from 0.1% to 1% of the flow field width.</p>
+<p>In C, you can represent a curve with the struct <code>Curve</code> below. You can see below that I am dynamically allocating space to store the x and y coordinates that compose this curve.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#define N_STEPS </span><span class="dv">30</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> Curve <span class="op">{</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> id<span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">double</span><span class="op">*</span> x<span class="op">;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">double</span><span class="op">*</span> y<span class="op">;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> <span class="kw">typedef</span> Curve<span class="op">;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>Curve curve<span class="op">;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>curve<span class="op">.</span>id <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>curve<span class="op">.</span>x <span class="op">=</span> malloc<span class="op">(</span>N_STEPS <span class="op">*</span> <span class="kw">sizeof</span><span class="op">(</span><span class="dt">double</span><span class="op">));</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>curve<span class="op">.</span>y <span class="op">=</span> malloc<span class="op">(</span>N_STEPS <span class="op">*</span> <span class="kw">sizeof</span><span class="op">(</span><span class="dt">double</span><span class="op">));</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Also, the C snippet below translates the steps I described above to draw a curve into the field. You can see in this code that our current position in the Cartesian plane is mapped to a specific position in the flow field, or, in other words, to a position in the 2D matrix of angles, by transforming our current x and y positions into integers.</p>
+<p>So for example, if our current position in the Cartesian plane is <span class="math inline">\(x = 45.289\)</span> and <span class="math inline">\(y = 21.556\)</span>, then, our current position in the flow field is <span class="math inline">\(x = 45\)</span> and <span class="math inline">\(y = 21\)</span>. So, the current angle that we need to retrieve and use from the flow field, is the angle that is stored in the element <code>angles[45][21]</code> of the matrix.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#define STEP_LENGTH </span><span class="fl">0.01</span><span class="pp"> </span><span class="op">*</span><span class="pp"> FLOW_FIELD_WIDTH</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> off_boundaries <span class="op">(</span><span class="dt">double</span> x<span class="op">,</span> <span class="dt">double</span> y<span class="op">,</span> <span class="dt">int</span> limit<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">(</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    x <span class="op">&lt;=</span> <span class="dv">0</span> <span class="op">||</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        y <span class="op">&lt;=</span> <span class="dv">0</span> <span class="op">||</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        x <span class="op">&gt;=</span> limit <span class="op">||</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        y <span class="op">&gt;=</span> limit</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">);</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> N_STEPS<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> ff_column_index <span class="op">=</span> <span class="op">(</span><span class="dt">int</span><span class="op">)</span> floor<span class="op">(</span>x<span class="op">);</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> ff_row_index <span class="op">=</span> <span class="op">(</span><span class="dt">int</span><span class="op">)</span> floor<span class="op">(</span>y<span class="op">);</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>off_boundaries<span class="op">(</span>ff_column_index<span class="op">,</span> ff_row_index<span class="op">,</span> FLOW_FIELD_WIDTH<span class="op">))</span> <span class="op">{</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  <span class="dt">double</span> angle <span class="op">=</span> flow_field<span class="op">[</span>ff_row_index<span class="op">][</span>ff_column_index<span class="op">];</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  <span class="dt">double</span> x_step <span class="op">=</span> STEP_LENGTH <span class="op">*</span> cos<span class="op">(</span>angle<span class="op">);</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  <span class="dt">double</span> y_step <span class="op">=</span> STEP_LENGTH <span class="op">*</span> sin<span class="op">(</span>angle<span class="op">);</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  x <span class="op">=</span> x <span class="op">+</span> x_step<span class="op">;</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>  y <span class="op">=</span> y <span class="op">+</span> y_step<span class="op">;</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>  curve<span class="op">.</span>x<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> x<span class="op">;</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>  curve<span class="op">.</span>y<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> y<span class="op">;</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Furthermore, this C code uses a pair of equations from geometry (<a href="#eq-rotation1" class="quarto-xref">Equation&nbsp;1</a> and <a href="#eq-rotation2" class="quarto-xref">Equation&nbsp;2</a>) to calculate the new x and y coordinates after I take the step by following the direction of the current angle. These equations are normally used to calculate the coordinates in the circumference of a circle centered at the origin point of the Cartesian plane, and they are exposed below.</p>
+<p>Given that a circle that is centered at the origin point of the Cartesian plane, and that <span class="math inline">\(r\)</span> is the radius of the circle, and that <span class="math inline">\(A\)</span> is the angle, in radians, that identifies the position in the circumference that you are trying to calculate it’s coordinates, you can calculate the x (<span class="math inline">\(x'\)</span>) and y (<span class="math inline">\(y'\)</span>) coordinates of the corresponding position in the circumference by using the following pair of equations:</p>
+<p><span id="eq-rotation1"><span class="math display">\[
+x'=r\times \cos(A)
+\tag{1}\]</span></span></p>
+<p><span id="eq-rotation2"><span class="math display">\[
+y'=r\times \sin(A)
+\tag{2}\]</span></span></p>
+</section>
+<section id="the-jobard-lefer-algorithm" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> The Jobard-Lefer algorithm</h1>
+<p>When you start to draw multiple curves in the flow field, without caring where these curves are placed and where they go, eventually, you will end up with a very dense image, with many curves overlapping each other. Some people are intentionally trying to produce such dense images, because they want the interesting depth effect that these images normally have around the curves.</p>
+<p>But sometimes, you are really trying to avoid that. Sometimes, you want to meet all of these criterias below at the same time:</p>
+<ul>
+<li>draw a high number of curves (i.e.&nbsp;a number that is high enough to “fill” the image) in the field.</li>
+<li>draw only non-overlapping curves.</li>
+<li>draw curves that are “evenly-spaced” between each other.</li>
+</ul>
+<p><span class="citation" data-cites="jobard97">Jobard and Lefer (<a href="#ref-jobard97" role="doc-biblioref">1997</a>)</span> proposes an algorithm that produces non-overlapping and evenly-spaced curves around a flow field. If you read the paper carefully, you might notice that you can divide this algorithm into two separate parts. Splitting this algorithm into two separate is very useful for the objective of this article. Because is easier to explain how each part works separately, than to trying to explain the entire algorithm at once.</p>
+<p>These two parts are:</p>
+<ul>
+<li>An algorithm to draw non-overlapping curves.</li>
+<li>An algorithm to select new start points for new curves.</li>
+</ul>
+<p>First, I will focus on the first part of the algorithm, and, after explaining how this first part works, it will be a little easier for you to understand how the second part works.</p>
+</section>
+<section id="drawing-non-overlapping-curves" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Drawing non-overlapping curves</h1>
+<p>This first part of the algorithm is the part that makes sure that only non-overlapping curves are drawn to the field. The idea behind it, is that we are constantly checking the distances between our next position and the other curves around us. We want to always make sure that the current curve is far enough from the other curves, and, if not, stop drawing this curve.</p>
+<p>This specific part of the algorithm works around a constant value, that represents the minimum distance allowed between two curves. <span class="citation" data-cites="jobard97">Jobard and Lefer (<a href="#ref-jobard97" role="doc-biblioref">1997</a>)</span> call this value as <span class="math inline">\(d_{sep}\)</span>, or, as the “separating distance”. The end result of the algorithm is that any point in any curve in the field is, at least, at a distance of <span class="math inline">\(d_{sep}\)</span> units from any other point from another curve in the field.</p>
+<p>If you use this part of the algorithm, you normally produce some very nice and “pleasing to the eyes” type of images. At <a href="#fig-diff-algorithm" class="quarto-xref">Figure&nbsp;3</a>, I am showing the difference that this part of the algorithm makes to the image. In both subfigures, we used the same colors for each curve, the same starting points for each curve, the same step length, the same number of steps, same flow field, etc. Anymway, all the configs used in both images are literally the same. The only difference between these two images, is the use (or not) of this “non-overlaping” curve algorithm.</p>
+<p>In the first image (without the Jobard-Lefer algorithm) I simply drawn the curves using the steps I described at <a href="#sec-draw-curve" class="quarto-xref">Section&nbsp;3</a>, without caring if the curves were overlapping (or, if they were too close to) each other. In contrast, in the second image, I used the first part of the Jobard-Lefer algorithm to draw the curves while checking if they were overlapping (or, if they were too close to) each other.</p>
+<div id="fig-diff-algorithm" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-diff-algorithm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-diff-algorithm" style="flex-basis: 100.0%;justify-content: flex-start;">
+<div id="fig-diff-overlap" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-diff-overlap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./../overlap.png" class="img-fluid figure-img" data-ref-parent="fig-diff-algorithm">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-diff-overlap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Without Jobard-Lefer algorithm
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-diff-algorithm" style="flex-basis: 100.0%;justify-content: flex-start;">
+<div id="fig-diff-non-overlap" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-diff-non-overlap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./../non_overlap.png" class="img-fluid figure-img" data-ref-parent="fig-diff-algorithm">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-diff-non-overlap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) With Jobard-Lefer algorithm
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-diff-algorithm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Demonstrating the effect of the Jobard-Lefer algorithm on curves drawn in the field
+</figcaption>
+</figure>
+</div>
+<section id="how-this-part-of-the-algorithm-works" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="how-this-part-of-the-algorithm-works"><span class="header-section-number">5.1</span> How this part of the algorithm works?</h2>
+<p>In essence, at each step we take while drawing our curve, we look at the curves that are around us, and we compare the distance between our next step and all of these neighboring curves. If this distance between is lower or equal to the separating value (<span class="math inline">\(d_{sep}\)</span>), then, we do not take the next step, and we stop drawing the current line.</p>
+<p>Notice that we are still using the exact same steps I described at <a href="#sec-draw-curve" class="quarto-xref">Section&nbsp;3</a> to draw the curves into the field. We are still start with a starting point, then, we start to take sequential steps by following the direction of the angles we encounter through the field.</p>
+<p>However, the key difference here, is that we added a new step, or new check to these previous steps. Now, while we are walking through the field, we are constantly calculating distances, and checking these distances to make sure that we are not too close to a neighbour curve.</p>
+<p><a href="#fig-even-algo" class="quarto-xref">Figure&nbsp;4</a> demonstrates this process visually. And I know what you are thinking! “These curves in <a href="#fig-even-algo" class="quarto-xref">Figure&nbsp;4</a> doesn’t look like curves!”. Just remember the steps I described at <a href="#sec-draw-curve" class="quarto-xref">Section&nbsp;3</a>. We are essentially drawing curves by connecting the positions where we walked through. Is like I applied a very big zoom over the image while the algorithm is actively drawing the curves.</p>
+<p>So, at a very low scale, the curves we are drawing are not really curves at all. But at a normal scale, when we zoom out of the image, and look to the image with our own human eyes, the steps are so small, so small, that we cannot perceive the connected dots. The curve effectivelly looks very much like a nice and fluid curve.</p>
+<p>In the example of <a href="#fig-even-algo" class="quarto-xref">Figure&nbsp;4</a>, we have one already existing curve (in blue), and we are currently drawing a second curve into the field. At each step, we calculate the coordinates of the next step we need to make, them, we compare the distance between the position of this next step, and the points from other curves that are close by. If this distance between this next step and any point from the surrounding curves is lower or equal than <span class="math inline">\(d_{sep}\)</span>, we “cancel” the next step, and we stop drawing the current curve.</p>
+<div id="fig-even-algo" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-even-algo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./../distance.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-even-algo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: The steps to check if the current curve is too close to a neighbour
+</figcaption>
+</figure>
+</div>
+<p>To calculate the distance between two points in the Cartesian plane, we use another equation from geometry, which is commonly know as the “distance formula”:</p>
+<p><span id="eq-distance"><span class="math display">\[
+d = \sqrt{[(x_2 - x_1)^2 + (y_2 - y_1)^2]}
+\tag{3}\]</span></span></p>
+<p>The function <code>distance()</code> below translates this <a href="#eq-distance" class="quarto-xref">Equation&nbsp;3</a> into a C function.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dt">double</span> distance <span class="op">(</span><span class="dt">double</span> x1<span class="op">,</span> <span class="dt">double</span> y1<span class="op">,</span> <span class="dt">double</span> x2<span class="op">,</span> <span class="dt">double</span> y2<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">double</span> s1 <span class="op">=</span> pow<span class="op">(</span>x2 <span class="op">-</span> x1<span class="op">,</span> <span class="fl">2.0</span><span class="op">);</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">double</span> s2 <span class="op">=</span> pow<span class="op">(</span>y2 <span class="op">-</span> y1<span class="op">,</span> <span class="fl">2.0</span><span class="op">);</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> sqrt<span class="op">(</span>s1 <span class="op">+</span> s2<span class="op">);</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="the-density-grid" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="the-density-grid"><span class="header-section-number">5.2</span> The density grid</h2>
+<p>I think this specific section of the paper is a little confusing. But if I did understand the authors correctly, then, at each step we take in the field, the Jobard-Lefer algorithm takes the coordinate of out next step, and calculates the distance between this point and <strong>all of the points that are near by and that belongs to others (already existing) curves</strong>.</p>
+<p>To find the points that are near by, the algorithm uses a second Cartesian grid that is superposed over the Cartesian plane that our flow field lives. In other words, it uses a second Cartesian plane that uses a different scale, accordingly to the “separating distance” (<span class="math inline">\(d_{sep}\)</span>). <span class="citation" data-cites="jobard97">Jobard and Lefer (<a href="#ref-jobard97" role="doc-biblioref">1997</a>)</span> call this second Cartesian grid as the “density grid”.</p>
+<p>So every coordinate in the Cartesian plane can be mapped to a specific position in the density grid. You do that by scaling the x and y coordinates in the Cartesian to fit the scale used in the density grid. As an example, let’s consider a Cartesian plane that is 100x100.</p>
+<p>For example, if you have an x and y coordinates in the flow field, and you want to calculate the corresponding position in the density grid for this specific coordinate, you can use the functions <code>get_density_col()</code> and <code>get_density_row()</code> exposed below:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> get_density_col <span class="op">(</span><span class="dt">double</span> x<span class="op">,</span> <span class="dt">double</span> d_sep<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">double</span> c <span class="op">=</span> <span class="op">(</span>x <span class="op">/</span> d_sep<span class="op">)</span> <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">(</span><span class="dt">int</span><span class="op">)</span> c<span class="op">;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> get_density_row <span class="op">(</span><span class="dt">double</span> y<span class="op">,</span> <span class="dt">double</span> d_sep<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">double</span> r <span class="op">=</span> <span class="op">(</span>y <span class="op">/</span> d_sep<span class="op">)</span> <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">(</span><span class="dt">int</span><span class="op">)</span> r<span class="op">;</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>At <a href="#fig-cartesian-grid" class="quarto-xref">Figure&nbsp;5</a>, we are using as an example, a Cartesian plane with dimensions 100x100. With <span class="math inline">\(d_{sep} = 2\)</span>, the corresponding density grid becomes a Cartesian grid with dimensions 50x50. You can see at <a href="#fig-density1" class="quarto-xref">Figure&nbsp;5 (b)</a> that, the density grid is a grid of <span class="math inline">\(50 \times 50 = 2500\)</span> cells. Each cell have width and height equal to <span class="math inline">\(d_{sep}\)</span>. In <span class="citation" data-cites="jobard97">Jobard and Lefer (<a href="#ref-jobard97" role="doc-biblioref">1997</a>)</span> paper, these cells are called “density cells”.</p>
+<p>The functions <code>get_density_col()</code> and <code>get_density_row()</code> always return an integer value as output. Because they calculate the coordinates of the density cell in which the original coordinate in the Cartesian plane is mapped to.</p>
+<p>So a single cell in the density grid can contain multiple points from the Cartesian plane where the flow field lives. Or, on the other side, you can say that multiple points in the Cartesian plane can be mapped to the same cell in the density grid.</p>
+<p>In the example of <a href="#fig-cartesian-grid" class="quarto-xref">Figure&nbsp;5</a>, the coordinate <span class="math inline">\(x = 42.312\)</span> and <span class="math inline">\(y = 72.112\)</span> is mapped to the cell at position <span class="math inline">\(x = 22\)</span> and <span class="math inline">\(y = 37\)</span> in the density grid.</p>
+<div id="fig-cartesian-grid" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-cartesian-grid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-cartesian-grid" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-cartesian1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-cartesian1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./../cartesian_plane.png" class="img-fluid figure-img" data-ref-parent="fig-cartesian-grid">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-cartesian1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) 100x100 Cartesian plane
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-cartesian-grid" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-density1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-density1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./../density_grid.png" class="img-fluid figure-img" data-ref-parent="fig-cartesian-grid">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-density1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) The equivalent density grid with dsep = 2
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cartesian-grid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: The relationship between the Cartesian plane and the density grid.
+</figcaption>
+</figure>
+</div>
+<p>Each cell in the density grid should store a collection of pointers. Each pointer points to a specific point in the flow field that belongs to a curve drawn in the field, and that is mapped to that specific cell.</p>
+<p>As an example, let’s suppose we are using a 100x100 flow field, and that we already drawn two curves in the field, curve A and curve B. Because we configured the number of steps to 30, each curve have approximatelly 30 different points.</p>
+<p>But let’s focus our example on 4 specific points. One specific point (of these 4) belongs to curve B. While the remaining 3 points (of the 4) belongs to curve A. Let’s suppose these points are the following x and y coordinates:</p>
+<ul>
+<li><span class="math inline">\(x = 21.2, y = 55.5\)</span> (Curve A);</li>
+<li><span class="math inline">\(x = 20.2, y = 54.5\)</span> (Curve A);</li>
+<li><span class="math inline">\(x = 19.8, y = 53.1\)</span> (Curve A);</li>
+<li><span class="math inline">\(x = 21.9, y = 52.9\)</span> (Curve B);</li>
+</ul>
+<p>If we set <span class="math inline">\(d_{sep}\)</span> to 15, then, all of these 4 points will be mapped into the same density cell at position <span class="math inline">\(x = 2\)</span> and <span class="math inline">\(y = 4\)</span> of the density grid. <a href="#fig-density-cell" class="quarto-xref">Figure&nbsp;6</a> presents this idea visually.</p>
+<div id="fig-density-cell" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-density-cell-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./../density_cell.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-density-cell-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: An example of density cell
+</figcaption>
+</figure>
+</div>
+<p>As a consequence, the density cell at position <span class="math inline">\(x = 2\)</span> and <span class="math inline">\(y = 4\)</span> of the density grid, should store 4 pointers. Each pointer will point to one of these 4 coordinates that we described above. Because each of these coordinates in the flow field were mapped to this particular density cell.</p>
+<p>A density grid can be represented in C as a two dimensional array, where each element of this array is a density cell object. The struct <code>DensityCell</code> below represents a density cell.</p>
+<p>Notice that, I am dynamically allocating memory on the heap, with <code>malloc()</code>, for reserving space to store the values for each (x and y) coordinates that will be mapped to this density cell. Since this is a dynamically allocated memory, we need to remember to free this memory later, when we are done with it.</p>
+<p>To start, I am allocation space for 14000 x and y coordinates in each density cell with <code>malloc()</code>. This value might be too high, or might be too low. Is hard to predict the number of coordinates that will be stored inside this density cell.</p>
+<p>Because of that, it might be a good idea to transform these x and y arrays inside the density cell into growable arrays, instead of using fixed sized arrays. But for now, I don’t care about that, I don’t need this work now, I just want to write a version of the algorithm that works.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#define D_SEP </span><span class="fl">0.8</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#define DENSITY_GRID_WIDTH </span><span class="op">((</span><span class="dt">int</span><span class="op">)</span><span class="pp"> </span><span class="op">(</span><span class="pp">FLOW_FIELD_WIDTH </span><span class="op">/</span><span class="pp"> D_SEP</span><span class="op">))</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> DensityCell <span class="op">{</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">double</span><span class="op">*</span> x<span class="op">;</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">double</span><span class="op">*</span> y<span class="op">;</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> space_used<span class="op">;</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> capacity<span class="op">;</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> <span class="kw">typedef</span> DensityCell<span class="op">;</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>DensityCell density_grid<span class="op">[</span>DENSITY_GRID_WIDTH<span class="op">][</span>DENSITY_GRID_WIDTH<span class="op">];</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> density_capacity <span class="op">=</span> <span class="dv">14000</span><span class="op">;</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> y <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> y <span class="op">&lt;</span> DENSITY_GRID_WIDTH<span class="op">;</span> y<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> x <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> x <span class="op">&lt;</span> DENSITY_GRID_WIDTH<span class="op">;</span> x<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>        density_grid<span class="op">[</span>x<span class="op">][</span>y<span class="op">].</span>space_used <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>        density_grid<span class="op">[</span>x<span class="op">][</span>y<span class="op">].</span>capacity <span class="op">=</span> density_capacity<span class="op">;</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>        density_grid<span class="op">[</span>x<span class="op">][</span>y<span class="op">].</span>x <span class="op">=</span> malloc<span class="op">(</span>density_capacity <span class="op">*</span> <span class="kw">sizeof</span><span class="op">(</span><span class="dt">double</span><span class="op">));</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>        density_grid<span class="op">[</span>x<span class="op">][</span>y<span class="op">].</span>y <span class="op">=</span> malloc<span class="op">(</span>density_capacity <span class="op">*</span> <span class="kw">sizeof</span><span class="op">(</span><span class="dt">double</span><span class="op">));</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now, given that you have a coordinate in the flow field, how to do you store this coordinate inside the density grid? The function <code>insert_coord_in_density_grid()</code> below summarises this process.</p>
+<p>First, we calculate the coordinate of the density cell that is mapped to this particular coordinate. We check if we are inside the boundaries of the density grid. Then, we look at the density cell found, and check if we have enough space to add this one coordinate to the density cell. If we do have space, then, we simply add this coordinate to the x and y arrays that are inside this <code>DensityCell</code> object.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> insert_coord_in_density_grid <span class="op">(</span><span class="dt">double</span> x<span class="op">,</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                   <span class="dt">double</span> y<span class="op">,</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                   <span class="dt">double</span> d_sep<span class="op">,</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                   DensityCell density_grid<span class="op">[</span>DENSITY_GRID_WIDTH<span class="op">][</span>DENSITY_GRID_WIDTH<span class="op">])</span> <span class="op">{</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> density_col <span class="op">=</span> get_density_col<span class="op">(</span>x<span class="op">,</span> d_sep<span class="op">);</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> density_row <span class="op">=</span> get_density_row<span class="op">(</span>y<span class="op">,</span> d_sep<span class="op">);</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>off_boundaries<span class="op">(</span>density_col<span class="op">,</span> density_row<span class="op">,</span> DENSITY_GRID_WIDTH<span class="op">))</span> <span class="op">{</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> space_used <span class="op">=</span> density_grid<span class="op">[</span>density_col<span class="op">][</span>density_row<span class="op">].</span>space_used<span class="op">;</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> capacity <span class="op">=</span> density_grid<span class="op">[</span>density_col<span class="op">][</span>density_row<span class="op">].</span>capacity<span class="op">;</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">((</span>space_used <span class="op">+</span> <span class="dv">1</span><span class="op">)</span> <span class="op">&lt;</span> capacity<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>        density_grid<span class="op">[</span>density_col<span class="op">][</span>density_row<span class="op">].</span>x<span class="op">[</span>space_used<span class="op">]</span> <span class="op">=</span> x<span class="op">;</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>        density_grid<span class="op">[</span>density_col<span class="op">][</span>density_row<span class="op">].</span>y<span class="op">[</span>space_used<span class="op">]</span> <span class="op">=</span> y<span class="op">;</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>        density_grid<span class="op">[</span>density_col<span class="op">][</span>density_row<span class="op">].</span>space_used <span class="op">=</span> space_used <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">"[ERROR]: Attempt to add coordinate in density cell that is out of capacity!</span><span class="sc">\n</span><span class="st">"</span><span class="op">);</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="searching-for-points-near-by" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="searching-for-points-near-by"><span class="header-section-number">5.3</span> Searching for points near by</h2>
+<p>We use the density grid to find all points from another curves that are near by our next move in the flow field. That is essentially the main purpose of the density grid. To help us finding which points are near by our next move in the flow field.</p>
+<p>In essence, at each step we take in the flow field, we need to calculate the position of the density cell that is mapped to our next move. By identifying which cell in the density grid we are mapped to, we can look at the pointers that are already stored inside this specific density cell to find which points are near by.</p>
+<p>Actually, the algortihm from <span class="citation" data-cites="jobard97">Jobard and Lefer (<a href="#ref-jobard97" role="doc-biblioref">1997</a>)</span> looks not only at the specific cell that is mapped to our next move, but it also looks at the 8 density cells that are surrounding this current cell.</p>
+<p>You can see at <a href="#fig-distance3" class="quarto-xref">Figure&nbsp;7</a> a representation of this process.</p>
+<div id="fig-distance3" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-distance3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./../distance-surroundings.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-distance3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7: Calculating the distance between our current position and the near by points from neighbouring curves
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="checking-if-our-next-step-is-valid" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="checking-if-our-next-step-is-valid"><span class="header-section-number">5.4</span> Checking if our next step is valid</h2>
+<p>So, in summary, we need to check if our next step, is a valid step, before we take it. If the step is not valid, we should “cancel” the next step, and stop drawing the current curve.</p>
+<p>But how to check if this next step is valid. The function <code>is_valid_step()</code> below summarises this process. This function returns a boolean value, 1 for true and 0 for false.</p>
+<p>First, we find which density cell is mapped to the coordinates of this next step. Then, we need to calculate the coordinates of the surrounding density cells, as I showed at <a href="#fig-distance3" class="quarto-xref">Figure&nbsp;7</a>.</p>
+<p>Having the coordinates of density cells we need to pass through, we use then, calculate the distance between our next step and each point stored in each density cell, and check if any of these distances are less or equal than <span class="math inline">\(d_{sep}\)</span>.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> is_valid_step <span class="op">(</span><span class="dt">double</span> x<span class="op">,</span> <span class="dt">double</span> y<span class="op">,</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>             <span class="dt">double</span> d_sep<span class="op">,</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>             <span class="dt">int</span> density_grid_width<span class="op">,</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>             DensityCell density_grid<span class="op">[</span>DENSITY_GRID_WIDTH<span class="op">][</span>DENSITY_GRID_WIDTH<span class="op">])</span> <span class="op">{</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> density_col <span class="op">=</span> get_density_col<span class="op">(</span>x<span class="op">,</span> d_sep<span class="op">);</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> density_row <span class="op">=</span> get_density_row<span class="op">(</span>y<span class="op">,</span> d_sep<span class="op">);</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>off_boundaries<span class="op">(</span>density_col<span class="op">,</span> density_row<span class="op">,</span> DENSITY_GRID_WIDTH<span class="op">))</span> <span class="op">{</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>   </span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> start_row <span class="op">=</span> <span class="op">(</span>density_row <span class="op">-</span> <span class="dv">1</span><span class="op">)</span> <span class="op">&gt;</span> <span class="dv">0</span> <span class="op">?</span> density_row <span class="op">-</span> <span class="dv">1</span> <span class="op">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> end_row <span class="op">=</span> <span class="op">(</span>density_row <span class="op">+</span> <span class="dv">1</span><span class="op">)</span> <span class="op">&lt;</span> density_grid_width <span class="op">?</span> density_row <span class="op">+</span> <span class="dv">1</span> <span class="op">:</span> density_row<span class="op">;</span> </span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> start_col <span class="op">=</span> <span class="op">(</span>density_col <span class="op">-</span> <span class="dv">1</span><span class="op">)</span> <span class="op">&gt;</span> <span class="dv">0</span> <span class="op">?</span> density_col <span class="op">-</span> <span class="dv">1</span> <span class="op">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> end_col <span class="op">=</span> <span class="op">(</span>density_col <span class="op">+</span> <span class="dv">1</span><span class="op">)</span> <span class="op">&lt;</span> density_grid_width <span class="op">?</span> density_col <span class="op">+</span> <span class="dv">1</span> <span class="op">:</span> density_col<span class="op">;</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Subtracting a very small amount from D_SEP, just to account for the lost of float precision</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    <span class="co">// that happens during the calculations below, specially in the distance calc</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    d_sep <span class="op">=</span> fabs<span class="op">(</span>d_sep <span class="op">-</span> <span class="op">(</span><span class="fl">0.01</span> <span class="op">*</span> D_SEP<span class="op">));</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> c <span class="op">=</span> start_col<span class="op">;</span> c <span class="op">&lt;=</span> end_col<span class="op">;</span> c<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> r <span class="op">=</span> start_row<span class="op">;</span> r <span class="op">&lt;=</span> end_row<span class="op">;</span> r<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>            <span class="dt">int</span> n_elements <span class="op">=</span> density_grid<span class="op">[</span>c<span class="op">][</span>r<span class="op">].</span>space_used<span class="op">;</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="op">(</span>n_elements <span class="op">==</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>                <span class="cf">continue</span><span class="op">;</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n_elements<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>                <span class="dt">double</span> x2 <span class="op">=</span> density_grid<span class="op">[</span>c<span class="op">][</span>r<span class="op">].</span>x<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>                <span class="dt">double</span> y2 <span class="op">=</span> density_grid<span class="op">[</span>c<span class="op">][</span>r<span class="op">].</span>y<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>                <span class="dt">double</span> dist <span class="op">=</span> distance<span class="op">(</span>x<span class="op">,</span> y<span class="op">,</span> x2<span class="op">,</span> y2<span class="op">);</span></span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> <span class="op">(</span>dist <span class="op">&lt;=</span> d_sep<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>                <span class="op">}</span></span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="drawing-the-curves" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="drawing-the-curves"><span class="header-section-number">5.5</span> Drawing the curves</h2>
+<p>Now, the final piece of the alorithm. How can you draw non-overlaping curves? Actually, all we need to do, is to add two more steps to the same steps we described at <a href="#sec-draw-curve" class="quarto-xref">Section&nbsp;3</a>.</p>
+<p>If you look at the C code below, you can see that we now have a main for loop, that draws a single curve per iteration. Now, the first inner loop is the exact same for loop we presented at <a href="#sec-draw-curve" class="quarto-xref">Section&nbsp;3</a>, with essentially the same steps, with only one difference.</p>
+<p>We now have a if statement to check the result of <code>is_valid_next_step()</code>. If the function returns true, then, the next step we are trying to take is valid, so we go on with our lives, and we go to the next iteration.</p>
+<p>However, if the function returns false (0), then, it means that the next step is not valid (i.e.&nbsp;it is too close to a neighboring curve), and because of that, we run a <code>break</code> statement to drawing the current curve. Then, we comeback to the main and outer loop, and we start to draw the next curve in the field.</p>
+<p>You can also see that, after this first inner loop, it means that you finished drawing the current curve. Because of that, we now need, to register/insert all points of this curve into the density grid. So that the next curves that are drawn into the field, take the points from this current curve into account. That is what the second inner loop does. It walks trough the points of the curve, and register these points into the density grid.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>Curve<span class="op">*</span> curves <span class="op">=</span> malloc<span class="op">(</span>N_CURVES <span class="op">*</span> <span class="kw">sizeof</span><span class="op">(</span>Curve<span class="op">));</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> N_CURVES<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    curves<span class="op">[</span>i<span class="op">].</span>x <span class="op">=</span> malloc<span class="op">(</span>N_STEPS <span class="op">*</span> <span class="kw">sizeof</span><span class="op">(</span><span class="dt">double</span><span class="op">));</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    curves<span class="op">[</span>i<span class="op">].</span>y <span class="op">=</span> malloc<span class="op">(</span>N_STEPS <span class="op">*</span> <span class="kw">sizeof</span><span class="op">(</span><span class="dt">double</span><span class="op">));</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> curve_id <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> curve_id <span class="op">&lt;</span> N_CURVES<span class="op">;</span> curve_id<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">double</span> x <span class="op">=</span> start_points<span class="op">[</span>curve_id<span class="op">].</span>x<span class="op">;</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">double</span> y <span class="op">=</span> start_points<span class="op">[</span>curve_id<span class="op">].</span>y<span class="op">;</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    curves<span class="op">[</span>curve_id<span class="op">].</span>id <span class="op">=</span> curve_id<span class="op">;</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> N_STEPS<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> ff_column_index <span class="op">=</span> <span class="op">(</span><span class="dt">int</span><span class="op">)</span> floor<span class="op">(</span>x<span class="op">);</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> ff_row_index <span class="op">=</span> <span class="op">(</span><span class="dt">int</span><span class="op">)</span> floor<span class="op">(</span>y<span class="op">);</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>off_boundaries<span class="op">(</span>ff_column_index<span class="op">,</span> ff_row_index<span class="op">,</span> FLOW_FIELD_WIDTH<span class="op">))</span> <span class="op">{</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>            <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>        <span class="dt">double</span> angle <span class="op">=</span> flow_field<span class="op">[</span>ff_row_index<span class="op">][</span>ff_column_index<span class="op">];</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>        <span class="dt">double</span> x_step <span class="op">=</span> STEP_LENGTH <span class="op">*</span> cos<span class="op">(</span>angle<span class="op">);</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>        <span class="dt">double</span> y_step <span class="op">=</span> STEP_LENGTH <span class="op">*</span> sin<span class="op">(</span>angle<span class="op">);</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> x <span class="op">+</span> x_step<span class="op">;</span></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>        y <span class="op">=</span> y <span class="op">+</span> y_step<span class="op">;</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> valid <span class="op">=</span> is_valid_next_step<span class="op">(</span></span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>            x<span class="op">,</span> y<span class="op">,</span></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>            D_SEP<span class="op">,</span></span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>            DENSITY_GRID_WIDTH<span class="op">,</span></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>            density_grid</span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>        <span class="op">);</span></span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(!</span>valid<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>            <span class="co">// This next step is not valid, stop drawing current curve</span></span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>            <span class="co">// and jump to start drawing next curve.</span></span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>            <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>        curves<span class="op">[</span>curve_id<span class="op">].</span>x<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> x<span class="op">;</span></span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>        curves<span class="op">[</span>curve_id<span class="op">].</span>y<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> y<span class="op">;</span></span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>    <span class="co">// After we finish calculating the coordinates of a curve,</span></span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a>    <span class="co">// we add the coordinates of this curve to the density grid.</span></span>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> N_STEPS<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>        <span class="dt">double</span> x <span class="op">=</span> curves<span class="op">[</span>curve_id<span class="op">].</span>x<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a>        <span class="dt">double</span> y <span class="op">=</span> curves<span class="op">[</span>curve_id<span class="op">].</span>y<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a>        insert_coord_in_density_grid<span class="op">(</span>x<span class="op">,</span> y<span class="op">,</span> D_SEP<span class="op">,</span> density_grid<span class="op">);</span></span>
+<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="the-full-source-code" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="the-full-source-code"><span class="header-section-number">5.6</span> The full source code</h2>
+<p>After I explained each individual aspect about this first part of the algorithm, is finally time to see the entire piece. But, just for brevity reasons, and to save space in this article, I will not show the entire source code here. Instead, I will give you a link to GitHub, where you can read the source code peacefully.</p>
+<p>Link to the entire algorithm: <a href="https://github.com/pedropark99/Personal-website/blob/main/posts/2024/2024-02-19-flow-even/src/non_overlap_curves.c" class="uri">https://github.com/pedropark99/Personal-website/blob/main/posts/2024/2024-02-19-flow-even/src/non_overlap_curves.c</a></p>
+</section>
+</section>
+<section id="drawing-evenly-spaced-curves" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Drawing evenly-spaced curves</h1>
+<p>Now, the other part of the algorithm introduces some new concepts, and strategies. According to <span class="citation" data-cites="jobard97">Jobard and Lefer (<a href="#ref-jobard97" role="doc-biblioref">1997</a>)</span>, in order to obtain a good visual appearance of the flow field, an accurante seed point selection method needs to be performed.</p>
+<p>This sentence introduces a new term that we haven’t spoked about yet. A seed point is the term chosen by <span class="citation" data-cites="jobard97">Jobard and Lefer (<a href="#ref-jobard97" role="doc-biblioref">1997</a>)</span> to designate a starting point of a curve, is the point from where the curves starts to grow.</p>
+<p>What <span class="citation" data-cites="jobard97">Jobard and Lefer (<a href="#ref-jobard97" role="doc-biblioref">1997</a>)</span> is really trying to say, is that, if you really want to draw curves that are evenly spaced between each other, then, you need choose wisely the points from where your curves starts.</p>
+<section id="drawing-a-curve-in-two-directions" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="drawing-a-curve-in-two-directions"><span class="header-section-number">6.1</span> Drawing a curve in two directions</h2>
+<p>Before we talk about how to select proper seed points for your curves, I want to talk about how can you draw a curve in two directions. Because <span class="citation" data-cites="jobard97">Jobard and Lefer (<a href="#ref-jobard97" role="doc-biblioref">1997</a>)</span> algorithm actually draws a curve in both directions (from right to left and left to right).</p>
+<p>In other words, for the <span class="citation" data-cites="jobard97">Jobard and Lefer (<a href="#ref-jobard97" role="doc-biblioref">1997</a>)</span> algorithm to work effectively, we need to draw every single curve in both directions. <a href="#fig-curve-both-directions" class="quarto-xref">Figure&nbsp;8</a> shows what “drawing a curve in both directions” actually means.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-curve-both-directions" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-curve-both-directions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-curve-both-directions-1.png" class="img-fluid figure-img" width="1400">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-curve-both-directions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8: Drawing a curve in both directions
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>So, to do that, we need to adjust our current script. First, let’s change the <code>Curve</code> struct to include some more information that will help us tracking the coordinates that are being calculated. These extra informations, will help us to sort these coordinates, or, to track the order of each step taken.</p>
+<p>You can see below that, three more variables were added to the struct: <code>step_id</code> is essentially the number of the step that created the corresponding x and y coordinates; <code>steps_taken</code> is the total number of steps taken to draw this curve; <code>direction</code>, an integer indicating if the corresponding x and y coordinates were calculated when the algorithm was drawing the curve in the direction right to left (zero), or, if was drawing the curve from left to right (one).</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> Curve <span class="op">{</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> curve_id<span class="op">;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">double</span> x<span class="op">[</span>N_STEPS<span class="op">];</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">double</span> y<span class="op">[</span>N_STEPS<span class="op">];</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">// If x and y coordinates are from a step that was taken from left to right (1)</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">// or a step from right to left (0).</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> direction<span class="op">[</span>N_STEPS<span class="op">];</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">// The id of the step</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> step_id<span class="op">[</span>N_STEPS<span class="op">];</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> steps_taken<span class="op">;</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> <span class="kw">typedef</span> Curve<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now, our algorithm currently draws only curves from left to right. But we want to draw curves in both directions. For that, is good to include the logic for drawing curves into a nice function. That is why, I created the <code>draw_curve()</code> function below:</p>
+<p>You can see in the function that, the logic of the function is essentially the same as before. But now, we have two main loops, represented as <code>while</code> loops. But the only thing that changes between one loop and another, is the “translation” operation that we apply after we calculated the step.</p>
+<p>On the first <code>while</code> loop, we <strong>add</strong> the steps to the current x and y coordinates. But on the second <code>while</code> loop, we <strong>subtract</strong> these steps instead from the current x and y coordinates. That makes the walking process go backwards. In other words, that draws the curve in the inverse direction.</p>
+<p>Despite this diference, we are essentially doing the exact same computations we did before. We are still validating at each iteration it the next step we calculated is a valid one, using the <code>is_valid_next_step()</code> function.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>Curve draw_curve<span class="op">(</span><span class="dt">double</span> x_start<span class="op">,</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                 <span class="dt">double</span> y_start<span class="op">,</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>                 <span class="dt">int</span> curve_id<span class="op">,</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>                 <span class="dt">double</span> flow_field<span class="op">[</span>FLOW_FIELD_WIDTH<span class="op">][</span>FLOW_FIELD_HEIGHT<span class="op">],</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>                 DensityCell density_grid<span class="op">[</span>DENSITY_GRID_WIDTH<span class="op">][</span>DENSITY_GRID_WIDTH<span class="op">])</span> <span class="op">{</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    Curve curve<span class="op">;</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    curve<span class="op">.</span>curve_id <span class="op">=</span> curve_id<span class="op">;</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    curve<span class="op">.</span>steps_taken <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> N_STEPS<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>        curve<span class="op">.</span>x<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>        curve<span class="op">.</span>y<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>        curve<span class="op">.</span>direction<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>        curve<span class="op">.</span>step_id<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>    <span class="dt">double</span> x <span class="op">=</span> x_start<span class="op">;</span></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>    <span class="dt">double</span> y <span class="op">=</span> y_start<span class="op">;</span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> direction <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>    curve<span class="op">.</span>x<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> x_start<span class="op">;</span></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>    curve<span class="op">.</span>y<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> y_start<span class="op">;</span></span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> step_id <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Draw curve from right to left</span></span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="op">(</span>i <span class="op">&lt;</span> <span class="op">(</span>N_STEPS <span class="op">/</span> <span class="dv">2</span><span class="op">))</span> <span class="op">{</span></span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> ff_column_index <span class="op">=</span> <span class="op">(</span><span class="dt">int</span><span class="op">)</span> floor<span class="op">(</span>x<span class="op">);</span></span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> ff_row_index <span class="op">=</span> <span class="op">(</span><span class="dt">int</span><span class="op">)</span> floor<span class="op">(</span>y<span class="op">);</span></span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>off_boundaries<span class="op">(</span>ff_column_index<span class="op">,</span> ff_row_index<span class="op">,</span> FLOW_FIELD_WIDTH<span class="op">))</span> <span class="op">{</span></span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>            <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>        <span class="dt">double</span> angle <span class="op">=</span> flow_field<span class="op">[</span>ff_row_index<span class="op">][</span>ff_column_index<span class="op">];</span></span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>        <span class="dt">double</span> x_step <span class="op">=</span> STEP_LENGTH <span class="op">*</span> cos<span class="op">(</span>angle<span class="op">);</span></span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>        <span class="dt">double</span> y_step <span class="op">=</span> STEP_LENGTH <span class="op">*</span> sin<span class="op">(</span>angle<span class="op">);</span></span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> x <span class="op">-</span> x_step<span class="op">;</span></span>
+<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>        y <span class="op">=</span> y <span class="op">-</span> y_step<span class="op">;</span></span>
+<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> valid <span class="op">=</span> is_valid_next_step<span class="op">(</span></span>
+<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a>            x<span class="op">,</span> y<span class="op">,</span></span>
+<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a>            D_SEP<span class="op">,</span></span>
+<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a>            D_TEST<span class="op">,</span></span>
+<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a>            DENSITY_GRID_WIDTH<span class="op">,</span></span>
+<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a>            density_grid</span>
+<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a>        <span class="op">);</span></span>
+<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(!</span>valid<span class="op">)</span> <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-50"><a href="#cb11-50" aria-hidden="true" tabindex="-1"></a>        curve<span class="op">.</span>x<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> x<span class="op">;</span></span>
+<span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a>        curve<span class="op">.</span>y<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> y<span class="op">;</span></span>
+<span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a>        curve<span class="op">.</span>step_id<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> step_id<span class="op">;</span></span>
+<span id="cb11-53"><a href="#cb11-53" aria-hidden="true" tabindex="-1"></a>        step_id<span class="op">++;</span></span>
+<span id="cb11-54"><a href="#cb11-54" aria-hidden="true" tabindex="-1"></a>        curve<span class="op">.</span>steps_taken<span class="op">++;</span></span>
+<span id="cb11-55"><a href="#cb11-55" aria-hidden="true" tabindex="-1"></a>        i<span class="op">++;</span></span>
+<span id="cb11-56"><a href="#cb11-56" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb11-57"><a href="#cb11-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-58"><a href="#cb11-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-59"><a href="#cb11-59" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> x_start<span class="op">;</span></span>
+<span id="cb11-60"><a href="#cb11-60" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> y_start<span class="op">;</span></span>
+<span id="cb11-61"><a href="#cb11-61" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Draw curve from left to right</span></span>
+<span id="cb11-62"><a href="#cb11-62" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="op">(</span>i <span class="op">&lt;</span> N_STEPS<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb11-63"><a href="#cb11-63" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> ff_column_index <span class="op">=</span> <span class="op">(</span><span class="dt">int</span><span class="op">)</span> floor<span class="op">(</span>x<span class="op">);</span></span>
+<span id="cb11-64"><a href="#cb11-64" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> ff_row_index <span class="op">=</span> <span class="op">(</span><span class="dt">int</span><span class="op">)</span> floor<span class="op">(</span>y<span class="op">);</span></span>
+<span id="cb11-65"><a href="#cb11-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-66"><a href="#cb11-66" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>off_boundaries<span class="op">(</span>ff_column_index<span class="op">,</span> ff_row_index<span class="op">,</span> FLOW_FIELD_WIDTH<span class="op">))</span> <span class="op">{</span></span>
+<span id="cb11-67"><a href="#cb11-67" aria-hidden="true" tabindex="-1"></a>            <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb11-68"><a href="#cb11-68" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb11-69"><a href="#cb11-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-70"><a href="#cb11-70" aria-hidden="true" tabindex="-1"></a>        <span class="dt">double</span> angle <span class="op">=</span> flow_field<span class="op">[</span>ff_row_index<span class="op">][</span>ff_column_index<span class="op">];</span></span>
+<span id="cb11-71"><a href="#cb11-71" aria-hidden="true" tabindex="-1"></a>        <span class="dt">double</span> x_step <span class="op">=</span> STEP_LENGTH <span class="op">*</span> cos<span class="op">(</span>angle<span class="op">);</span></span>
+<span id="cb11-72"><a href="#cb11-72" aria-hidden="true" tabindex="-1"></a>        <span class="dt">double</span> y_step <span class="op">=</span> STEP_LENGTH <span class="op">*</span> sin<span class="op">(</span>angle<span class="op">);</span></span>
+<span id="cb11-73"><a href="#cb11-73" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> x <span class="op">+</span> x_step<span class="op">;</span></span>
+<span id="cb11-74"><a href="#cb11-74" aria-hidden="true" tabindex="-1"></a>        y <span class="op">=</span> y <span class="op">+</span> y_step<span class="op">;</span></span>
+<span id="cb11-75"><a href="#cb11-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-76"><a href="#cb11-76" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> valid <span class="op">=</span> is_valid_next_step<span class="op">(</span></span>
+<span id="cb11-77"><a href="#cb11-77" aria-hidden="true" tabindex="-1"></a>            x<span class="op">,</span> y<span class="op">,</span></span>
+<span id="cb11-78"><a href="#cb11-78" aria-hidden="true" tabindex="-1"></a>            D_SEP<span class="op">,</span></span>
+<span id="cb11-79"><a href="#cb11-79" aria-hidden="true" tabindex="-1"></a>            D_TEST<span class="op">,</span></span>
+<span id="cb11-80"><a href="#cb11-80" aria-hidden="true" tabindex="-1"></a>            DENSITY_GRID_WIDTH<span class="op">,</span></span>
+<span id="cb11-81"><a href="#cb11-81" aria-hidden="true" tabindex="-1"></a>            density_grid</span>
+<span id="cb11-82"><a href="#cb11-82" aria-hidden="true" tabindex="-1"></a>        <span class="op">);</span></span>
+<span id="cb11-83"><a href="#cb11-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-84"><a href="#cb11-84" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(!</span>valid<span class="op">)</span> <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb11-85"><a href="#cb11-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-86"><a href="#cb11-86" aria-hidden="true" tabindex="-1"></a>        curve<span class="op">.</span>x<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> x<span class="op">;</span></span>
+<span id="cb11-87"><a href="#cb11-87" aria-hidden="true" tabindex="-1"></a>        curve<span class="op">.</span>y<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> y<span class="op">;</span></span>
+<span id="cb11-88"><a href="#cb11-88" aria-hidden="true" tabindex="-1"></a>        curve<span class="op">.</span>direction<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb11-89"><a href="#cb11-89" aria-hidden="true" tabindex="-1"></a>        curve<span class="op">.</span>step_id<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> step_id<span class="op">;</span></span>
+<span id="cb11-90"><a href="#cb11-90" aria-hidden="true" tabindex="-1"></a>        step_id<span class="op">++;</span></span>
+<span id="cb11-91"><a href="#cb11-91" aria-hidden="true" tabindex="-1"></a>        curve<span class="op">.</span>steps_taken<span class="op">++;</span></span>
+<span id="cb11-92"><a href="#cb11-92" aria-hidden="true" tabindex="-1"></a>        i<span class="op">++;</span></span>
+<span id="cb11-93"><a href="#cb11-93" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb11-94"><a href="#cb11-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-95"><a href="#cb11-95" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> curve<span class="op">;</span></span>
+<span id="cb11-96"><a href="#cb11-96" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="the-logic-behind-the-core-algorithm" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="the-logic-behind-the-core-algorithm"><span class="header-section-number">6.2</span> The logic behind the core algorithm</h2>
+<p>The main idea behind the core algorithm, is to select the next seed points from the current curve. In other words, instead of selecting all starting points for all the curves we want to draw, before we even touch the flow field and starting to draw any curve, in this algorithm, we now want to select new starting points from the curve we are currently drawing.</p>
+<p>The main logic of the algorithm is:</p>
+<ol type="1">
+<li>First, we draw a curve;</li>
+<li>Then, we go trough each point of this curve, and collects all possible seed points that are in a distance of <span class="math inline">\(d_{sep}\)</span> from each point of the curve. That becomes like a queue of elegible seed points to be processed.</li>
+<li>We then go through that queue of elegible seed points, and we check if each seed point is valid (i.e.&nbsp;if is not too close to a neighbouring curve).</li>
+<li>If the current seedpoint is not valid, we jump to the next seed point in the queue, and we check it is valid.</li>
+<li>If the current seedpoint is valid, then, we draw a curve from this seed point, and we add this new curve to the queue of curves to be evaluated.</li>
+<li>After we finished going through all of the elegible seed points we collected from the current curve, we jump to the next curve in the queue, and repeat this process from step 2, until we have no more curves to be evaluated.</li>
+</ol>
+<p>You can see in the above steps that there are two types of “queues” involved in this process. First, we have a queue of starting points (or seed points). We need to check if each starting point in this queue is valid. Second, we also have a queue of curves to be evaluated. The idea is to collect all elegible starting points we can find from each curve registered in this queue.</p>
+<p>The function <code>collect_seedpoints()</code> below is responsible for collecting all elegible seed points from a single curve. The collected seedpoints are stored inside a <code>SeedPointsQueue</code> object, that represents a queue of seed points to be evaluated.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> Point <span class="op">{</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">double</span> x<span class="op">;</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">double</span> y<span class="op">;</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> <span class="kw">typedef</span> Point<span class="op">;</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> SeedPointsQueue <span class="op">{</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    Point<span class="op">*</span> points<span class="op">;</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> space_used<span class="op">;</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> capacity<span class="op">;</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> <span class="kw">typedef</span> SeedPointsQueue<span class="op">;</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>SeedPointsQueue collect_seedpoints <span class="op">(</span>Curve curve<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> steps_taken <span class="op">=</span> curve<span class="op">.</span>steps_taken<span class="op">;</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    SeedPointsQueue queue<span class="op">;</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>    queue<span class="op">.</span>space_used <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>steps_taken <span class="op">==</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>        queue<span class="op">.</span>capacity <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> queue<span class="op">;</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>    queue<span class="op">.</span>points <span class="op">=</span> malloc<span class="op">(</span>steps_taken <span class="op">*</span> <span class="dv">2</span> <span class="op">*</span> <span class="kw">sizeof</span><span class="op">(</span>Point<span class="op">));</span></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>    queue<span class="op">.</span>capacity <span class="op">=</span> steps_taken <span class="op">*</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> candidate_point_index <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> steps_taken <span class="op">-</span> <span class="dv">1</span><span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>        <span class="dt">double</span> x <span class="op">=</span> curve<span class="op">.</span>x<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>        <span class="dt">double</span> y <span class="op">=</span> curve<span class="op">.</span>y<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> ff_column_index <span class="op">=</span> <span class="op">(</span><span class="dt">int</span><span class="op">)</span> floor<span class="op">(</span>x<span class="op">);</span></span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> ff_row_index <span class="op">=</span> <span class="op">(</span><span class="dt">int</span><span class="op">)</span> floor<span class="op">(</span>y<span class="op">);</span></span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>        <span class="dt">double</span> angle <span class="op">=</span> atan2<span class="op">(</span>curve<span class="op">.</span>y<span class="op">[</span>i <span class="op">+</span> <span class="dv">1</span><span class="op">]</span> <span class="op">-</span> y<span class="op">,</span> curve<span class="op">.</span>x<span class="op">[</span>i <span class="op">+</span> <span class="dv">1</span><span class="op">]</span> <span class="op">-</span> x<span class="op">);</span></span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>        <span class="dt">double</span> angle_left <span class="op">=</span> angle <span class="op">+</span> <span class="op">(</span>M_PI <span class="op">/</span> <span class="dv">2</span><span class="op">);</span></span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>        <span class="dt">double</span> angle_right <span class="op">=</span> angle <span class="op">-</span> <span class="op">(</span>M_PI <span class="op">/</span> <span class="dv">2</span><span class="op">);</span></span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>        Point left_point <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>            x <span class="op">+</span> <span class="op">(</span>D_SEP <span class="op">*</span> cos<span class="op">(</span>angle_left<span class="op">)),</span></span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a>            y <span class="op">+</span> <span class="op">(</span>D_SEP <span class="op">*</span> sin<span class="op">(</span>angle_left<span class="op">))</span></span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a>        <span class="op">};</span></span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a>        Point right_point <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a>            x <span class="op">+</span> <span class="op">(</span>D_SEP <span class="op">*</span> cos<span class="op">(</span>angle_right<span class="op">)),</span></span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a>            y <span class="op">+</span> <span class="op">(</span>D_SEP <span class="op">*</span> sin<span class="op">(</span>angle_right<span class="op">))</span></span>
+<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a>        <span class="op">};</span></span>
+<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a>        queue<span class="op">.</span>points<span class="op">[</span>candidate_point_index<span class="op">]</span> <span class="op">=</span> left_point<span class="op">;</span></span>
+<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a>        candidate_point_index<span class="op">++;</span></span>
+<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a>        queue<span class="op">.</span>space_used<span class="op">++;</span></span>
+<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a>        queue<span class="op">.</span>points<span class="op">[</span>candidate_point_index<span class="op">]</span> <span class="op">=</span> right_point<span class="op">;</span></span>
+<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a>        candidate_point_index<span class="op">++;</span></span>
+<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a>        queue<span class="op">.</span>space_used<span class="op">++;</span></span>
+<span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> queue<span class="op">;</span></span>
+<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>With this function, we can now build the complete logic of the algorithm. In the previous sections, we drawn all curves inside a for loop. But this time, we first, draw manually a single curve in to the field, from whatever starting point we want to (in the example below, I choose to start from the coordinate <span class="math inline">\(x = 45\)</span> and <span class="math inline">\(y = 24\)</span>). And then, all of the other curves are derived from this first curve that we drawn.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#define MIN_STEPS_ALLOWED </span><span class="dv">2</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>Curve curves<span class="op">[</span>N_CURVES<span class="op">];</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="dt">double</span> x <span class="op">=</span> <span class="fl">45.0</span><span class="op">;</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="dt">double</span> y <span class="op">=</span> <span class="fl">24.0</span><span class="op">;</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> curve_array_index <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> curve_id <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>curves<span class="op">[</span>curve_array_index<span class="op">]</span> <span class="op">=</span> draw_curve<span class="op">(</span>x<span class="op">,</span> y<span class="op">,</span> curve_id<span class="op">,</span> flow_field<span class="op">,</span> density_grid<span class="op">);</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> steps_taken <span class="op">=</span> curves<span class="op">[</span>curve_array_index<span class="op">].</span>steps_taken<span class="op">;</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> steps_taken <span class="op">+</span> <span class="dv">1</span><span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="dt">double</span> x <span class="op">=</span> curves<span class="op">[</span>curve_array_index<span class="op">].</span>x<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">double</span> y <span class="op">=</span> curves<span class="op">[</span>curve_array_index<span class="op">].</span>y<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    insert_coord_in_density_grid<span class="op">(</span>x<span class="op">,</span> y<span class="op">,</span> D_SEP<span class="op">,</span> density_grid<span class="op">);</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>curve_array_index<span class="op">++;</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="op">(</span>curve_id <span class="op">&lt;</span> N_CURVES <span class="op">&amp;&amp;</span> curve_array_index <span class="op">&lt;</span> N_CURVES<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>    SeedPointsQueue queue<span class="op">;</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>    queue <span class="op">=</span> collect_seedpoints<span class="op">(</span>curves<span class="op">[</span>curve_id<span class="op">]);</span></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> point_index <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> point_index <span class="op">&lt;</span> queue<span class="op">.</span>space_used<span class="op">;</span> point_index<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>        Point p <span class="op">=</span> queue<span class="op">.</span>points<span class="op">[</span>point_index<span class="op">];</span></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>        <span class="co">// check if it is valid given the current state</span></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> valid <span class="op">=</span> is_valid_next_step<span class="op">(</span></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>            p<span class="op">.</span>x<span class="op">,</span> p<span class="op">.</span>y<span class="op">,</span></span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>            D_SEP<span class="op">,</span></span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>            DENSITY_GRID_WIDTH<span class="op">,</span></span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>            density_grid</span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>        <span class="op">);</span></span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>valid<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>            <span class="co">// if it is, draw the curve from it</span></span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>            Curve curve <span class="op">=</span> draw_curve<span class="op">(</span></span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>                p<span class="op">.</span>x<span class="op">,</span> p<span class="op">.</span>y<span class="op">,</span></span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>                curve_array_index<span class="op">,</span></span>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a>                flow_field<span class="op">,</span></span>
+<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a>                density_grid</span>
+<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a>            <span class="op">);</span></span>
+<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="op">(</span>curve<span class="op">.</span>steps_taken <span class="op">&lt;</span> MIN_STEPS_ALLOWED<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a>                <span class="cf">continue</span><span class="op">;</span></span>
+<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="cb13-42"><a href="#cb13-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-43"><a href="#cb13-43" aria-hidden="true" tabindex="-1"></a>            curves<span class="op">[</span>curve_array_index<span class="op">]</span> <span class="op">=</span> curve<span class="op">;</span></span>
+<span id="cb13-44"><a href="#cb13-44" aria-hidden="true" tabindex="-1"></a>            <span class="co">// insert this new curve into the density grid</span></span>
+<span id="cb13-45"><a href="#cb13-45" aria-hidden="true" tabindex="-1"></a>            <span class="dt">int</span> steps_taken <span class="op">=</span> curves<span class="op">[</span>curve_array_index<span class="op">].</span>steps_taken<span class="op">;</span></span>
+<span id="cb13-46"><a href="#cb13-46" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> steps_taken <span class="op">+</span> <span class="dv">1</span><span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb13-47"><a href="#cb13-47" aria-hidden="true" tabindex="-1"></a>                <span class="dt">double</span> x <span class="op">=</span> curves<span class="op">[</span>curve_array_index<span class="op">].</span>x<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb13-48"><a href="#cb13-48" aria-hidden="true" tabindex="-1"></a>                <span class="dt">double</span> y <span class="op">=</span> curves<span class="op">[</span>curve_array_index<span class="op">].</span>y<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb13-49"><a href="#cb13-49" aria-hidden="true" tabindex="-1"></a>                insert_coord_in_density_grid<span class="op">(</span>x<span class="op">,</span> y<span class="op">,</span> D_SEP<span class="op">,</span> density_grid<span class="op">);</span></span>
+<span id="cb13-50"><a href="#cb13-50" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="cb13-51"><a href="#cb13-51" aria-hidden="true" tabindex="-1"></a>            curve_array_index<span class="op">++;</span></span>
+<span id="cb13-52"><a href="#cb13-52" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb13-53"><a href="#cb13-53" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb13-54"><a href="#cb13-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-55"><a href="#cb13-55" aria-hidden="true" tabindex="-1"></a>    curve_id<span class="op">++;</span></span>
+<span id="cb13-56"><a href="#cb13-56" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="the-end-result-of-the-algorithm" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="the-end-result-of-the-algorithm"><span class="header-section-number">6.3</span> The end result of the algorithm</h2>
+<p>Now that the algorithm is complete, we can now see the end results it produces. <a href="#fig-even-curves1" class="quarto-xref">Figure&nbsp;9</a> shows an example. We essentially took the exact same flow field of <a href="#fig-diff-algorithm" class="quarto-xref">Figure&nbsp;3</a>. We just changed the value for <span class="math inline">\(d_{sep}\)</span> slightly.</p>
+<div id="fig-even-curves1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-even-curves1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./../even_curves1.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-even-curves1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9: A result of the evenly-spaced curves algorithm. Configs: flow_field_width=120; dsep=1; n_curves=1500; n_steps=30; step_length=0.01*flow_field_width; min_steps_allowed=2
+</figcaption>
+</figure>
+</div>
+<p>Now, that is a variable that is useful for you to control when you producing such images, which is the <code>MIN_STEPS_ALLOWED</code> variable. This variable controls which curves are considered and included in the end result, and which are not, based on the number of steps taken in that particular curve.</p>
+<p>You see at <a href="#fig-even-curves1" class="quarto-xref">Figure&nbsp;9</a> that it has a lot of very short curves in some particular areas of the flow field. In other words, depending on the flow field you are using, and all of the global configs (i.e.&nbsp;value of <span class="math inline">\(d_{sep}\)</span>, the number of steps, the step length, the number of curves, etc.), some particular areas of the flow field will tend to concentrate some very short curves.</p>
+<p>Also, the order in which you draw each valid seed point you find can also influence this specific aspect of the image. For example, if you draw the valid seed points in sequential order, as they come to you, them, you get a result. But if you draw these valid seed points in a random order, you might end up getting a slightly different result.</p>
+<p>This is not something that will happen always, in 100% cases. But it normally does happen with this particular algorithm. But this is something that you can easily improve (or fix) by changing the value of <code>MIN_STEPS_ALLOWED</code>.</p>
+<p>In most cases, this variable is configured to 2. But If you raise this number, just a bit, you usually end up getting much better results. At <a href="#fig-even-curves2" class="quarto-xref">Figure&nbsp;10</a> we have the result, when <code>MIN_STEPS_ALLOWED</code> is configured to 5.</p>
+<div id="fig-even-curves2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-even-curves2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./../even_curves2.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-even-curves2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10: A result of the evenly-spaced curves algorithm. Configs: flow_field_width=120; dsep=1; n_curves=1500; n_steps=30; step_length=0.01*flow_field_width; min_steps_allowed=5
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="the-full-source-code-1" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="the-full-source-code-1"><span class="header-section-number">6.4</span> The full source code</h2>
+<p>Again, for brevity reasons and to save space in this article, I will give you a link to GitHub, where you can read the full source code peacefully.</p>
+<p>Link to the entire algorithm: <a href="https://github.com/pedropark99/Personal-website/blob/main/posts/2024/2024-02-19-flow-even/src/even_spaced_curves.c" class="uri">https://github.com/pedropark99/Personal-website/blob/main/posts/2024/2024-02-19-flow-even/src/even_spaced_curves.c</a></p>
+
+
+
+</section>
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-jobard97" class="csl-entry" role="listitem">
+Jobard, Bruno, and Wilfrid Lefer. 1997. <span>“Creating Evenly-Spaced Streamlines of Arbitrary Density.”</span> In <em>Visualization in Scientific Computing ’97</em>, edited by Wilfrid Lefer and Michel Grave, 43–55. Vienna: Springer Vienna.
+</div>
+<div id="ref-perlin" class="csl-entry" role="listitem">
+Wikipedia. 2024a. <span>“Perlin Noise.”</span> <a href="https://en.wikipedia.org/wiki/Perlin_noise">https://en.wikipedia.org/wiki/Perlin_noise</a>.
+</div>
+<div id="ref-simplex" class="csl-entry" role="listitem">
+———. 2024b. <span>“Simplex Noise.”</span> <a href="https://en.wikipedia.org/wiki/Simplex_noise">https://en.wikipedia.org/wiki/Simplex_noise</a>.
+</div>
+</div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.538">
+<meta name="generator" content="quarto-1.4.549">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -370,16 +370,16 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <section id="the-search-path-of-python" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="the-search-path-of-python"><span class="header-section-number">3.1</span> The search path of Python</h2>
 <p>We usually import a package in Python, by including a <code>import</code> statement at the beginning of our script. For example, to import the <code>pandas</code> package to my Python session, I could do this:</p>
-<div id="d0fa166d" class="cell" data-execution_count="1">
+<div id="951ca647" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>When you import a package in Python, the Python interpreter starts a search process 🔍 through your computer, to find the specific package you called in your script. Every Python package you use must be installed in your machine. Otherwise, Python will never find it, and, as a consequence, you can not use it.</p>
 <p>The Python interpreter will always look for the packages you import, inside a set of pre-defined locations of your computer. This pre-defined list is stored inside the <code>sys.path</code> variable <span class="citation" data-cites="pymodule">(<a href="#ref-pymodule" role="doc-biblioref">Foundation 2023c</a>)</span>. In other words, when you import a package, Python looks for this package inside each one of the directories listed at <code>sys.path</code> variable.</p>
-<div id="5ad459e3" class="cell" data-execution_count="2">
+<div id="403756fb" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sys.path)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>['C:\\Users\\pedro.duarte\\Documents\\Personal-website\\posts\\2023\\2023-02-06-python-pckg\\en', 'C:\\Users\\pedro.duarte\\AppData\\Local\\Programs\\Python\\Python311\\python311.zip', 'C:\\Users\\pedro.duarte\\AppData\\Local\\Programs\\Python\\Python311\\DLLs', 'C:\\Users\\pedro.duarte\\AppData\\Local\\Programs\\Python\\Python311\\Lib', 'C:\\Users\\pedro.duarte\\AppData\\Local\\Programs\\Python\\Python311', '', 'C:\\Users\\pedro.duarte\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages', 'C:\\Users\\pedro.duarte\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\win32', 'C:\\Users\\pedro.duarte\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\win32\\lib', 'C:\\Users\\pedro.duarte\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\Pythonwin']</code></pre>
+<pre><code>['/usr/lib/python310.zip', '/usr/lib/python3.10', '/usr/lib/python3.10/lib-dynload', '', '/home/pedro-dev/.local/lib/python3.10/site-packages', '/usr/local/lib/python3.10/dist-packages', '/usr/lib/python3/dist-packages']</code></pre>
 </div>
 </div>
 <p>You might also find contents about the <code>PYTHONPATH</code> variable when searching for this subject on the internet. In essence, <code>PYTHONPATH</code> is a environment variable that can contain a complementary list of directories to be added to <code>sys.path</code> <span class="citation" data-cites="pypathvar">(<a href="#ref-pypathvar" role="doc-biblioref">Foundation 2023a</a>)</span>.</p>
@@ -391,7 +391,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <p>The <code>sys.path</code> variable is a standard Python list, and, as any other list, can be altered to include other directories that are not currently there. The same goes for the <code>PYTHONPATH</code> variable, which is an environment variable, and can be altered too.</p>
 <p>As an example, when you try to import your package, which is stored at folder <code>A</code>, and, you face a <code>ModuleNotFoundError</code> error, you might be tempted to alter <code>PYTHONPATH</code> or <code>sys.path</code>, to add the folder <code>A</code> to this search path of Python. DO NOT DO IT! YOU SHOULD NEVER alter <code>PYTHONPATH</code> or <code>sys.path</code> ⚠️ ! I mean, at least not inside a Python package.</p>
 <p>In other words, if at some point inside the source code of your Python package, you execute a code like this:</p>
-<div id="e5e3ac37" class="cell" data-execution_count="3">
+<div id="c504ad50" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="st">'./../weird-unknow-folder'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -498,7 +498,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <p>The traditional <code>setuptools</code> way of packaging Python modules uses a <code>setup()</code> function within the <code>setup.py</code> script. <span class="citation" data-cites="setuptools">(<a href="#ref-setuptools" role="doc-biblioref">Authority 2023</a>)</span></p>
 </blockquote>
 <p>In summary, you can replace <code>pyproject.toml</code> with the <code>setup.py</code> file. Just as an example, I could replace the <code>pyproject.toml</code> file for <code>spark_map</code> with a <code>setup.py</code> file similar to the file below. The whole <code>setup.py</code> file is usually composed of just a single call to the <code>setuptools.setup()</code> function, and nothing more. All of the various metadata about the package stored at <code>pyproject.toml</code> are translated to named arguments to this <code>setup()</code> function.</p>
-<div id="184fbb55" class="cell" data-execution_count="4">
+<div id="91ff760d" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># setup.py placed at root directory</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> setuptools <span class="im">import</span> setup</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>setup(</span>
@@ -763,7 +763,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      return note.innerHTML;
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
     }
   }
   for (var i=0; i<xrefs.length; i++) {
