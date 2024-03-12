@@ -25,14 +25,17 @@ about:
 ---
  
 ## Bio
-Hey! I'm Pedro Duarte Faria. A brazilian economist, data engineer and software engineer, working mainly with R, SQL, Python and Apache Spark. I do a lot of data engineering these days, but I do love teaching software development and building open-source software too.
+Hey! I'm Pedro Duarte Faria. A brazilian economist and data platform engineer, working mainly with R, SQL, Python, Databricks and Apache Spark. I do a lot of data engineering these days, but I do love teaching and writing about software development and building open-source software too.
 
 -----------------------------------------------------------------------------------------------------------------------------------
 
 ## Experience
 
-**Data Engineer**,
-Blip, Feb 2023 - present.
+**Data Platform Engineer**
+Blip, Mar 2024 - present.
+
+**Analytics Engineer**,
+Blip, Feb 2023 - Mar 2024.
 
 **Data Analyst**,
 Blip, May 2021 - Feb 2023.
@@ -47,7 +50,7 @@ Beltech, June 2019 - August 2019.
 
 ## Projects
 
-I'm the author of R package `{figma}` and Python package `spark_map`. I'm also author of a technical and introductory book about the R language. I also made contributions to R package `{knitr}`, which is a big open-source project in the R community.
+I'm the author of the R package `{figma}`, the Python package `spark_map`, and also, the C++ library `lefer`. I'm also the author of technical books about the R language, and the Python API of Apache Spark. I have also made some contributions to the R package `{knitr}` (which is a big open-source project in the R community), and also, to the book "rOpenSci Packages: Development, Maintenance, and Peer Review" by rOpenSci.
 
 -----------------------------------------------------------------------------------------------------------------------------------
 
@@ -56,3 +59,7 @@ I'm the author of R package `{figma}` and Python package `spark_map`. I'm also a
 **Federal University of Ouro Preto - UFOP, Brazil**
 
 *Economics, B.S.*, March 2017 - February 2022.
+
+**Federal University of Minas Gerais - UFMG, Brazil**
+
+*Visiting Student in the Economics Department*, February 2019 - November 2020.

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.549">
+<meta name="generator" content="quarto-1.4.538">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -240,7 +240,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 
 <p>Currently, I only support direct transfers made via <a href="https://business.ebanx.com/en/resources/payments-explained/pix-instant-payment-system">Pix</a>. Which is a brazilian payment method available in most banks operating in the Brazilian market.</p>
 <div class="cell">
-<script>
+<script type="text/javascript">
 function copyText() {
     navigator.clipboard.writeText(
       "00020101021126580014br.gov.bcb.pix01362510f316-d7d3-4282-8c93-6f9ca1d203b75204000053039865802BR5918PEDRO DUARTE FARIA6013BELO HORIZONT62070503***630446EB"
@@ -429,12 +429,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
-      }
+      return note.innerHTML;
     }
   }
   for (var i=0; i<xrefs.length; i++) {

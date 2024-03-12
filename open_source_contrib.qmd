@@ -16,11 +16,13 @@ page just to track down all of my contributions to various open source projects.
 
 - [`figma`](https://github.com/pedropark99/figma): an R package that provides a R client to the Figma API.
 - [`spark_map`](https://github.com/pedropark99/spark_map): a Python package to easily apply a function over multiple columns of a Spark DataFrame.
+- [`lefer`](https://github.com/The-Erebor-Foundry/lefer): a C++ library for drawing evenly-spaced and non-overlapping curves in a flow field, using the Jobard and Lefer (1997) algorithm.
 - [`ggfunnel`](https://github.com/pedropark99/ggfunnel): an R package to easily produce Power BI like funnel charts in R.
 
 - [Introduction to pyspark](https://github.com/pedropark99/Introd-pyspark): First edition. An open source and introductory book about the Python package `pyspark`.
 - [Introdução à Linguagem R: seus fundamentos e sua prática](https://github.com/pedropark99/Introducao_R): Fourth edition. An open source and introductory book (in
 portuguese) about the R programming language.
+- [rOpenSci Packages: Development, Maintenance, and Peer Review](https://github.com/ropensci/dev_guide): I contributed to the project as the lead translator of the book for the Portuguese language.
 
 # Contributions to other open source projects
 
