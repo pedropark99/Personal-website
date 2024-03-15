@@ -1,0 +1,48 @@
+---
+title: Running a ChatGPT assistant locally
+description: "Some people might want to run AI assistants (such as ChatGPT) locally on their system. In this article, I explain how you can do this."
+date: "2024-03-16"
+---
+
+# Introduction
+
+Despite the current success of AI assistants (such as ChatGPT), the technology, the infrastructure,
+and the knowledge behind these assistants are concentrated on a very small subset of companies (e.g. OpenAI, Nvidia, Meta and Microsoft).
+This fact might represent a barrier for a very large adoption of the technology. Mainly
+because of two factors:
+
+- Privacy.
+- Costs.
+
+In other words, because we have such a strong monopoly over the technology right now,
+some corporations might have difficulties of adopting AI assistants, because of
+costs and privacy limits. The privacy or costs factors might become a "deal-breaker"
+for these corporations.
+
+Banks for example, are usually very careful with sharing sensible user-information with anyone.
+As a consequence, using OpenAI services might be a deal-breaker for this bank,
+because it cannot share user-information with OpenAI in any circumstance. The bank
+could be exposed to legal penalties otherwise.
+
+In this situation, it might be a good idea for the bank, to host and run the AI
+assistant inside their own infrastructure, on a very restrict and secure place.
+So, in other words, this bank in theory host and run it's own ChatGPT on
+their own servers.
+
+This article explain how you can download, manage, and use
+LLMs (Large Language Models) locally on your machine, with the [Ollama assistant](https://ollama.com/).
+By running a LLM model locally in your machine, you can apply this knowledge to run LLM
+models on your own servers and private services.
+
+
+## Download a model
+
+```
+ollama pull codellama:7b
+```
+
+## Start the Ollama server
+
+```
+ollama serve
+```
