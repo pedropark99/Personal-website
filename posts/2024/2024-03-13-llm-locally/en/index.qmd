@@ -6,36 +6,87 @@ date: "2024-03-16"
 
 # Introduction
 
-Despite the current success of AI assistants (such as ChatGPT), the technology, the infrastructure,
-and the knowledge behind these assistants are concentrated on a very small subset of companies (e.g. OpenAI, Nvidia, Meta and Microsoft).
-This fact might represent a barrier for a very large adoption of the technology. Mainly
+Despite the current success of AI assistants (such as ChatGPT), the infrastructure,
+and the knowledge behind the services around these assistants are concentrated on a very small subset of companies (e.g. OpenAI, Nvidia, Meta and Microsoft).
+This fact might represent a barrier for very large adoption of the technology. Mainly
 because of two factors:
 
 - Privacy.
 - Costs.
 
-In other words, because we have such a strong monopoly over the technology right now,
+In other words, because we have such a strong monopoly right now,
 some corporations might have difficulties of adopting AI assistants, because of
 costs and privacy limits. The privacy or costs factors might become a "deal-breaker"
 for these corporations.
 
 Banks for example, are usually very careful with sharing sensible user-information with anyone.
-As a consequence, using OpenAI services might be a deal-breaker for this bank,
-because it cannot share user-information with OpenAI in any circumstance. The bank
+As a consequence, for example, using OpenAI services might be a deal-breaker for this bank,
+because the bank cannot share user-information with OpenAI in any circumstance. The bank
 could be exposed to legal penalties otherwise.
 
 In this situation, it might be a good idea for the bank, to host and run the AI
 assistant inside their own infrastructure, on a very restrict and secure place.
-So, in other words, this bank in theory host and run it's own ChatGPT on
+So, in other words, this bank would host and run it's own ChatGPT on
 their own servers.
 
-This article explain how you can download, manage, and use
-LLMs (Large Language Models) locally on your machine, with the [Ollama assistant](https://ollama.com/).
-By running a LLM model locally in your machine, you can apply this knowledge to run LLM
+This article explain how you can download and use
+LLMs (Large Language Models) locally on your own machine, with [Ollama](https://ollama.com/).
+By running a LLM model locally in your own machine, you can apply this knowledge to run LLM
 models on your own servers and private services.
 
 
+# Overview
+
+In essence, running a LLM model locally in your machine, consists
+of following these steps:
+
+- Make sure to download the LLM model you want to use.
+- Make sure that the Ollama server is up and running.
+- Send your prompt to the local API, and get the response back.
+
+
+# Introducing Ollama
+
+Ollama is a command line util that helps you download, manage
+and use LLM models. It is almost like a package manager, but for LLM models.
+
+The success of LLM models were so big that scientists, companies,
+and the general community developed many different LLM models,
+and made them publicly available at GitHub, or
+at HuggingFace.
+
+So, in other words, the infrastructure and the technology behind AI services
+is very monopolized right now. But the LLM technology per se, is
+rather accesible and widespread.
+
+Now, you can download and use these models
+through Ollama. The complete list of LLM models
+available is large, and you can see
+the full list at the [Models page of Ollama's website.](https://ollama.com/library)
+
+In order to use Ollama, you have to download and install it.
+By [visiting Ollama's website](https://ollama.com/) you will find
+instructions to install it in each OS.
+
+After you download and install, you can start to use `ollama` in the command line
+of your OS. There are two main commands in `ollama`, which are:
+
+- `pull`: downloads a LLM model.
+- `serve`: starts the Ollama service as a HTTP server.
+- `run`: run a LLM model with an input prompt.
+
+
+
 ## Download a model
+
+First, we need to download the LLM model we want to use,
+so that is locally available to use in our machine.
+You do this by using the `pull` command.
+
+For the examples in this article, I will be using the
+CodeLlama model, which is based on the Llama 2 model.
+It is a LLM model refined and tuned for
+code related questions and assignments.
 
 ```
 ollama pull codellama:7b
