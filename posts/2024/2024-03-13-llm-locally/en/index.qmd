@@ -59,7 +59,7 @@ So, in other words, the infrastructure and the technology behind AI services
 is very monopolized right now. But the LLM technology per se, is
 rather accesible and widespread.
 
-Now, you can download and use these models
+Now, we can easily download and use these models
 through Ollama. The complete list of LLM models
 available is large, and you can see
 the full list at the [Models page of Ollama's website.](https://ollama.com/library)
@@ -91,6 +91,35 @@ code related questions and assignments.
 ```
 ollama pull codellama:7b
 ```
+
+## Be careful with the size of the model
+
+A commom way to classifying LLM models is measuring them by their size.
+The size of a LLM model is normally measured by the number of parameters
+of the model, and they are normally in the level of billions of parameters. So a LLM model
+usually have 1, 7, 20, 50, 100 billions parameters.
+
+That sad. Be careful with the size of model you choose! In
+my example here, I am running on very standard laptop,
+literally nothing fancy. It has 8GB RAM,
+and a normal Intel i5 Core CPU.
+
+Because of that, I do not want to select a very large
+model. I want to choose the smallest model as possible,
+with the smallest number of parameters. That is
+why I choose specifically
+the version of CodeLlama with 7 billion parameters.
+
+There are different versions of CodeLlama that go
+up to 70 billion parameters. But, since
+LLM models are very heavy to run by default, and,
+I am using a small laptop, I will definetly use
+the smallest model.
+
+You should take the power of your machine in consideration
+when choosing your LLM model.
+
+
 
 ## Start the Ollama server
 
