@@ -1,23 +1,22 @@
 ---
-title: Running a ChatGPT assistant locally
-description: "Some people might want to run AI assistants (such as ChatGPT) locally on their system. In this article, I explain how you can do this."
+title: Running an AI ChatBot locally
+description: "You might need to run an AI ChatBot (like a ChatGPT) locally on your system. In this article, I explain how you can do this."
 date: "2024-03-16"
+image: "./../chatgpt.webp"
 ---
 
 # Introduction
 
-Despite the current success of AI assistants (such as ChatGPT), the infrastructure,
-and the knowledge behind the services around these assistants are concentrated on a very small subset of companies (e.g. OpenAI, Nvidia, Meta and Microsoft).
-This fact might represent a barrier for very large adoption of the technology. Mainly
-because of two factors:
+Despite the current success of AI assistants (such as ChatGPT), privacy and information security
+might represent barriers for very large adoption of the technology among some
+specific users and corporations.
+Because either they do not want to share the information, or they are legally bound to not share it
+with other companies, such as OpenAI, Meta and Microsoft.
 
-- Privacy.
-- Costs.
-
-In other words, because we have such a strong monopoly right now,
-some corporations might have difficulties of adopting AI assistants, because of
-costs and privacy limits. The privacy or costs factors might become a "deal-breaker"
-for these corporations.
+In other words, to use an AI assistant, you might need to provide key-information in your prompt, but you might
+not want (or might not be authorized) to share this key-information with this AI
+service. So the privacy aspect involved in the use of AI assistants might become a "deal-breaker"
+for these users/corporations.
 
 Banks for example, are usually very careful with sharing sensible user-information with anyone.
 As a consequence, for example, using OpenAI services might be a deal-breaker for this bank,
@@ -31,8 +30,8 @@ their own servers.
 
 This article explain how you can download and use
 LLMs (Large Language Models) locally on your own machine, with [Ollama](https://ollama.com/).
-By running a LLM model locally in your own machine, you can apply this knowledge to run LLM
-models on your own servers and private services.
+By knowing how to run a LLM model locally in your own machine, you can apply this knowledge to run a LLM
+model anywhere you want, on your own servers and private services.
 
 
 # Overview
@@ -51,13 +50,12 @@ Ollama is a command line util that helps you download, manage
 and use LLM models. It is almost like a package manager, but for LLM models.
 
 The success of LLM models were so big that scientists, companies,
-and the general community developed many different LLM models,
-and made them publicly available at GitHub, or
-at HuggingFace.
+and the general community developed and trained many different LLM models,
+and made them publicly available, either at [GitHub](https://github.com/), or at [HuggingFace](https://huggingface.co/).
 
 So, in other words, the infrastructure and the technology behind AI services
-is very monopolized right now. But the LLM technology per se, is
-rather accesible and widespread.
+is very monopolized right now, with big corporations (OpenAI, Meta, Microsoft, etc.).
+But the LLM technology per se, is rather accesible and widespread.
 
 Now, we can easily download and use these models
 through Ollama. The complete list of LLM models
@@ -72,7 +70,7 @@ After you download and install, you can start to use `ollama` in the command lin
 of your OS. There are two main commands in `ollama`, which are:
 
 - `pull`: downloads a LLM model.
-- `serve`: starts the Ollama service as a HTTP server.
+- `serve`: starts the LLM model as a HTTP server.
 - `run`: run a LLM model with an input prompt.
 
 
@@ -85,44 +83,212 @@ You do this by using the `pull` command.
 
 For the examples in this article, I will be using the
 CodeLlama model, which is based on the Llama 2 model.
+More specifically, the version of the model with 7 billions
+of parameters.
 It is a LLM model refined and tuned for
 code related questions and assignments.
 
-```
+```bash
 ollama pull codellama:7b
 ```
 
-## Be careful with the size of the model
+## LLM models are very heavy and expensive to run
+
+In general, LLM models are very heavy and expensive to run,
+and they do not scale particularly well. So to make services like
+ChatGPT, that serves millions of users everyday, the actual LLM model,
+or the actual ChatGPT that answers your questions, is running on a big data center,
+more specifically, on a very (I mean, VERY) expensive and powerful set
+of GPUs (with hundreds and hundreds of VRAM available to use).
+
+All of this means that, not every machine is capable of running a LLM model.
+Specially if your machine does not have a good GPU card in it.
+So, if you want to run a LLM model on a "weak machine", always
+choose the smallest version possible of a LLM model.
 
 A commom way to classifying LLM models is measuring them by their size.
 The size of a LLM model is normally measured by the number of parameters
 of the model, and they are normally in the level of billions of parameters. So a LLM model
 usually have 1, 7, 20, 50, 100 billions parameters.
 
-That sad. Be careful with the size of model you choose! In
-my example here, I am running on very standard laptop,
-literally nothing fancy. It has 8GB RAM,
-and a normal Intel i5 Core CPU.
+In Ollama, you choose the version of the model with the number of the parameters
+you want, by writing a colon followed by the number of parameters you want.
+So the text `<name of model>:20b` represents
+the version of a model with 20 billion parameters.
+
+In my example here, I am running on very standard laptop,
+literally nothing fancy. It has 12GB RAM,
+and a normal Intel i5 Core CPU. And it does not
+have any GPU card installed.
 
 Because of that, I do not want to select a very large
 model. I want to choose the smallest model as possible,
 with the smallest number of parameters. That is
 why I choose specifically
-the version of CodeLlama with 7 billion parameters.
+the version of CodeLlama with 7 billion parameters - `codellama:7b`
+(there are different versions of CodeLlama that go
+up to 70 billion parameters).
 
-There are different versions of CodeLlama that go
-up to 70 billion parameters. But, since
-LLM models are very heavy to run by default, and,
-I am using a small laptop, I will definetly use
-the smallest model.
-
-You should take the power of your machine in consideration
+So, you should take the power of your machine in consideration
 when choosing your LLM model.
 
+## Prompt your LLM model
 
+Let's quickly use our LLM model. You can simply
+run the LLM model with an input prompt, by using the
+`run` command of `ollama`.
 
-## Start the Ollama server
+For example, I can ask CodeLlama to write me a Python
+function that outputs the fibonacci sequence, like this:
+
+```bash
+ollama run codellama:7b "Write me a Python function that outputs the fibonacci sequence"
+```
+
+This is the output I get:
 
 ```
+[PYTHON]
+def fibonacci(n):
+    if n <= 1:
+        return n
+    else:
+        return fibonacci(n-1) + fibonacci(n-2)
+[/PYTHON]
+[TESTS]
+# Test case 1:
+assert fibonacci(0) == 0
+# Test case 2:
+assert fibonacci(1) == 1
+# Test case 3:
+assert fibonacci(2) == 1
+# Test case 4:
+assert fibonacci(3) == 2
+# Test case 5:
+assert fibonacci(4) == 3
+# Test case 6:
+assert fibonacci(5) == 5
+# Test case 7:
+assert fibonacci(6) == 8
+# Test case 8:
+assert fibonacci(7) == 13
+# Test case 9:
+assert fibonacci(8) == 21
+# Test case 10:
+assert fibonacci(9) == 34
+[/TESTS]
+```
+
+## Start your LLM model as a HTTP server
+
+In Ollama, you can use your LLM model as a HTTP server. You
+start the server, and send input prompts to it.
+This server will response you back,
+with the output of the LLM model.
+
+Fist, you start the server with the `serve` command:
+
+```bash
 ollama serve
 ```
+
+After that, the endpoint `'api/generate'` become available at
+port 11434 in localhost.
+
+```py
+import requests
+url = 'http://localhost:11434/api/generate'
+body = '{"model": "codellama:7b", "prompt": "Write me a Python function that outputs the fibonacci sequence"}'
+r = requests.post(url, data = body)
+print(str(r.content))
+```
+
+```
+b'{"model":"codellama:7b","created_at":"2024-03-18T14:45:08.92502Z","response":"\\n","done":false}\n
+{"model":"codellama:7b","created_at":"2024-03-18T14:45:09.4067275Z","response":"[PY","done":false}\n
+{"model":"codellama:7b","created_at":"2024-03-18T14:45:09.6486965Z","response":"TH","done":false}\n
+{"model":"codellama:7b","created_at":"2024-03-18T14:45:09.8871347Z","response":"ON","done":false}\n
+{"model":"codellama:7b","created_at":"2024-03-18T14:45:10.1047816Z","response":"]","done":false}\n
+{"model":"codellama:7b","created_at":"2024-03-18T14:45:10.3401777Z","response":"\\n","done":false}\n
+{"model":"codellama:7b","created_at":"2024-03-18T14:45:10.5807352Z","response":"def","done":false}\n
+{"model":"codellama:7b","created_at":"2024-03-18T14:45:10.8011125Z","response":" fib","done":false}\n
+{"model":"codellama:7b","created_at":"2024-03-18T14:45:11.0347653Z","response":"on","done":false}\n
+{"model":"codellama:7b","created_at":"2024-03-18T14:45:11.2923311Z","response":"acci","done":false}\n
+{"model":"codellama:7b","created_at":"2024-03-18T14:45:11.5700897Z","response":"(","done":false}\n
+{"model":"codellama:7b","created_at":"2024-03-18T14:45:11.8455609Z","response":"n","done":false}\n
+... truncated output
+```
+
+
+We can see above that we get a JSON-like type of response from the API, with the contents
+produced by the LLM model inside the element `"response"` in each JSON object.
+
+We can parse this JSON response from the API, and collect all the `"response"` elements
+to form the full text produced by the LLM model.
+
+Using the same URL and HTTP Request Body, I could parse the HTTP Response using
+something similar to this. You can see in the example below, that we
+get the exact same result as we got when we executed the LLM model
+through the `run` command of `ollama`:
+
+```py
+import json
+import re
+
+def parse_response(resp: str) -> dict:
+    resp = resp.content.decode("utf-8")
+    resp = re.sub(r'\}\n\{', '},\n{', resp)
+    resp = f'[{resp}]'
+    return json.loads(resp)
+
+response = requests.post(url, data = body)
+response = parse_response(response)
+tokens = list()
+for token in response:
+    tokens.append(token['response'])
+
+print(''.join(tokens))
+```
+
+```
+[PYTHON]
+def fibonacci(n):
+    if n <= 1:
+        return n
+    else:
+        return fibonacci(n-1) + fibonacci(n-2)
+[/PYTHON]
+[TESTS]
+# Test case 1:
+assert fibonacci(0) == 0
+# Test case 2:
+assert fibonacci(1) == 1
+# Test case 3:
+assert fibonacci(2) == 1
+# Test case 4:
+assert fibonacci(3) == 2
+# Test case 5:
+assert fibonacci(4) == 3
+# Test case 6:
+assert fibonacci(5) == 5
+# Test case 7:
+assert fibonacci(6) == 8
+# Test case 8:
+assert fibonacci(7) == 13
+# Test case 9:
+assert fibonacci(8) == 21
+# Test case 10:
+assert fibonacci(9) == 34
+[/TESTS]
+```
+
+# Going further
+
+You can now start to develop this new knowledge you acquired in
+this article. Going further in your AI journey.
+
+For example, you can:
+
+- test different LLM models, by downloading new models with `ollama pull`.
+- deploy and run Ollama on a cloud environment with specialized infrastructure (like [P4 instances in Amazon EC2](https://aws.amazon.com/ec2/instance-types/p4/?nc1=h_ls)).
+- use an AI app framework, such as LangChain, to build an AI app that uses Ollama.

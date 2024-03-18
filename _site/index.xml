@@ -12,7 +12,7 @@
 <generator>quarto-1.4.538</generator>
 <lastBuildDate>Sat, 16 Mar 2024 03:00:00 GMT</lastBuildDate>
 <item>
-  <title>Running a ChatGPT assistant locally</title>
+  <title>Running an AI ChatBot locally</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
   <link>https://pedro-faria.netlify.app/posts/2024/2024-03-13-llm-locally/en/</link>
   <description><![CDATA[ 
@@ -23,15 +23,11 @@
 
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
-<p>Despite the current success of AI assistants (such as ChatGPT), the technology, the infrastructure, and the knowledge behind these assistants are concentrated on a very small subset of companies (e.g.&nbsp;OpenAI, Nvidia, Meta and Microsoft). This fact might represent a barrier for a very large adoption of the technology. Mainly because of two factors:</p>
-<ul>
-<li>Privacy.</li>
-<li>Costs.</li>
-</ul>
-<p>In other words, because we have such a strong monopoly over the technology right now, some corporations might have difficulties of adopting AI assistants, because of costs and privacy limits. The privacy or costs factors might become a “deal-breaker” for these corporations.</p>
-<p>Banks for example, are usually very careful with sharing sensible user-information with anyone. As a consequence, using OpenAI services might be a deal-breaker for this bank, because it cannot share user-information with OpenAI in any circumstance. The bank could be exposed to legal penalties otherwise.</p>
-<p>In this situation, it might be a good idea for the bank, to host and run the AI assistant inside their own infrastructure, on a very restrict and secure place. So, in other words, this bank in theory host and run it’s own ChatGPT on their own servers.</p>
-<p>This article explain how you can download, manage, and use LLMs (Large Language Models) locally on your machine, with the <a href="https://ollama.com/">Ollama assistant</a>. By running a LLM model locally in your machine, you can apply this knowledge to run LLM models on your own servers and private services.</p>
+<p>Despite the current success of AI assistants (such as ChatGPT), privacy and information security might represent barriers for very large adoption of the technology among some specific users and corporations. Because either they do not want to share the information, or they are legally bound to not share it with other companies, such as OpenAI, Meta and Microsoft.</p>
+<p>In other words, to use an AI assistant, you might need to provide key-information in your prompt, but you might not want (or might not be authorized) to share this key-information with this AI service. So the privacy aspect involved in the use of AI assistants might become a “deal-breaker” for these users/corporations.</p>
+<p>Banks for example, are usually very careful with sharing sensible user-information with anyone. As a consequence, for example, using OpenAI services might be a deal-breaker for this bank, because the bank cannot share user-information with OpenAI in any circumstance. The bank could be exposed to legal penalties otherwise.</p>
+<p>In this situation, it might be a good idea for the bank, to host and run the AI assistant inside their own infrastructure, on a very restrict and secure place. So, in other words, this bank would host and run it’s own ChatGPT on their own servers.</p>
+<p>This article explain how you can download and use LLMs (Large Language Models) locally on your own machine, with <a href="https://ollama.com/">Ollama</a>. By knowing how to run a LLM model locally in your own machine, you can apply this knowledge to run a LLM model anywhere you want, on your own servers and private services.</p>
 </section>
 <section id="overview" class="level1">
 <h1>Overview</h1>
@@ -45,30 +41,243 @@
 <section id="introducing-ollama" class="level1">
 <h1>Introducing Ollama</h1>
 <p>Ollama is a command line util that helps you download, manage and use LLM models. It is almost like a package manager, but for LLM models.</p>
-<p>The success of LLM models were so big that scientists, companies, and the general community developed many different LLM models, and made them publicly available at GitHub, or at HuggingFace.</p>
-<p>Now, you can download and use these models through Ollama. The complete list of LLM models available is large, and you can see the full list at the <a href="https://ollama.com/library">Models page of Ollama’s website.</a></p>
+<p>The success of LLM models were so big that scientists, companies, and the general community developed and trained many different LLM models, and made them publicly available, either at <a href="https://github.com/">GitHub</a>, or at <a href="https://huggingface.co/">HuggingFace</a>.</p>
+<p>So, in other words, the infrastructure and the technology behind AI services is very monopolized right now, with big corporations (OpenAI, Meta, Microsoft, etc.). But the LLM technology per se, is rather accesible and widespread.</p>
+<p>Now, we can easily download and use these models through Ollama. The complete list of LLM models available is large, and you can see the full list at the <a href="https://ollama.com/library">Models page of Ollama’s website.</a></p>
 <p>In order to use Ollama, you have to download and install it. By <a href="https://ollama.com/">visiting Ollama’s website</a> you will find instructions to install it in each OS.</p>
 <p>After you download and install, you can start to use <code>ollama</code> in the command line of your OS. There are two main commands in <code>ollama</code>, which are:</p>
 <ul>
 <li><code>pull</code>: downloads a LLM model.</li>
-<li><code>serve</code>: starts the Ollama service as a HTTP server.</li>
+<li><code>serve</code>: starts the LLM model as a HTTP server.</li>
 <li><code>run</code>: run a LLM model with an input prompt.</li>
 </ul>
 <section id="download-a-model" class="level2">
 <h2 class="anchored" data-anchor-id="download-a-model">Download a model</h2>
-<pre><code>ollama pull codellama:7b</code></pre>
+<p>First, we need to download the LLM model we want to use, so that is locally available to use in our machine. You do this by using the <code>pull</code> command.</p>
+<p>For the examples in this article, I will be using the CodeLlama model, which is based on the Llama 2 model. More specifically, the version of the model with 7 billions of parameters. It is a LLM model refined and tuned for code related questions and assignments.</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">ollama</span> pull codellama:7b</span></code></pre></div>
 </section>
-<section id="start-the-ollama-server" class="level2">
-<h2 class="anchored" data-anchor-id="start-the-ollama-server">Start the Ollama server</h2>
-<pre><code>ollama serve</code></pre>
+<section id="llm-models-are-very-heavy-and-expensive-to-run" class="level2">
+<h2 class="anchored" data-anchor-id="llm-models-are-very-heavy-and-expensive-to-run">LLM models are very heavy and expensive to run</h2>
+<p>In general, LLM models are very heavy and expensive to run, and they do not scale particularly well. So to make services like ChatGPT, that serves millions of users everyday, the actual LLM model, or the actual ChatGPT that answers your questions, is running on a big data center, more specifically, on a very (I mean, VERY) expensive and powerful set of GPUs (with hundreds and hundreds of VRAM available to use).</p>
+<p>All of this means that, not every machine is capable of running a LLM model. Specially if your machine does not have a good GPU card in it. So, if you want to run a LLM model on a “weak machine”, always choose the smallest version possible of a LLM model.</p>
+<p>A commom way to classifying LLM models is measuring them by their size. The size of a LLM model is normally measured by the number of parameters of the model, and they are normally in the level of billions of parameters. So a LLM model usually have 1, 7, 20, 50, 100 billions parameters.</p>
+<p>In Ollama, you choose the version of the model with the number of the parameters you want, by writing a colon followed by the number of parameters you want. So the text <code>&lt;name of model&gt;:20b</code> represents the version of a model with 20 billion parameters.</p>
+<p>In my example here, I am running on very standard laptop, literally nothing fancy. It has 12GB RAM, and a normal Intel i5 Core CPU. And it does not have any GPU card installed.</p>
+<p>Because of that, I do not want to select a very large model. I want to choose the smallest model as possible, with the smallest number of parameters. That is why I choose specifically the version of CodeLlama with 7 billion parameters - <code>codellama:7b</code> (there are different versions of CodeLlama that go up to 70 billion parameters).</p>
+<p>So, you should take the power of your machine in consideration when choosing your LLM model.</p>
+</section>
+<section id="prompt-your-llm-model" class="level2">
+<h2 class="anchored" data-anchor-id="prompt-your-llm-model">Prompt your LLM model</h2>
+<p>Let’s quickly use our LLM model. You can simply run the LLM model with an input prompt, by using the <code>run</code> command of <code>ollama</code>.</p>
+<p>For example, I can ask CodeLlama to write me a Python function that outputs the fibonacci sequence, like this:</p>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">ollama</span> run codellama:7b <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Write me a Python function that outputs the fibonacci sequence"</span></span></code></pre></div>
+<p>This is the output I get:</p>
+<pre><code>[PYTHON]
+def fibonacci(n):
+    if n &lt;= 1:
+        return n
+    else:
+        return fibonacci(n-1) + fibonacci(n-2)
+[/PYTHON]
+[TESTS]
+# Test case 1:
+assert fibonacci(0) == 0
+# Test case 2:
+assert fibonacci(1) == 1
+# Test case 3:
+assert fibonacci(2) == 1
+# Test case 4:
+assert fibonacci(3) == 2
+# Test case 5:
+assert fibonacci(4) == 3
+# Test case 6:
+assert fibonacci(5) == 5
+# Test case 7:
+assert fibonacci(6) == 8
+# Test case 8:
+assert fibonacci(7) == 13
+# Test case 9:
+assert fibonacci(8) == 21
+# Test case 10:
+assert fibonacci(9) == 34
+[/TESTS]</code></pre>
+</section>
+<section id="start-your-llm-model-as-a-http-server" class="level2">
+<h2 class="anchored" data-anchor-id="start-your-llm-model-as-a-http-server">Start your LLM model as a HTTP server</h2>
+<p>In Ollama, you can use your LLM model as a HTTP server. You start the server, and send input prompts to it. This server will response you back, with the output of the LLM model.</p>
+<p>Fist, you start the server with the <code>serve</code> command:</p>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">ollama</span> serve</span></code></pre></div>
+<p>After that, the endpoint <code>'api/generate'</code> become available at port 11434 in localhost.</p>
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode py code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> requests</span>
+<span id="cb5-2">url <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'http://localhost:11434/api/generate'</span></span>
+<span id="cb5-3">body <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'{"model": "codellama:7b", "prompt": "Write me a Python function that outputs the fibonacci sequence"}'</span></span>
+<span id="cb5-4">r <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> requests.post(url, data <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> body)</span>
+<span id="cb5-5"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>(r.content))</span></code></pre></div>
+<pre><code>b'{"model":"codellama:7b","created_at":"2024-03-18T14:45:08.92502Z","response":"\\n","done":false}\n
+{"model":"codellama:7b","created_at":"2024-03-18T14:45:09.4067275Z","response":"[PY","done":false}\n
+{"model":"codellama:7b","created_at":"2024-03-18T14:45:09.6486965Z","response":"TH","done":false}\n
+{"model":"codellama:7b","created_at":"2024-03-18T14:45:09.8871347Z","response":"ON","done":false}\n
+{"model":"codellama:7b","created_at":"2024-03-18T14:45:10.1047816Z","response":"]","done":false}\n
+{"model":"codellama:7b","created_at":"2024-03-18T14:45:10.3401777Z","response":"\\n","done":false}\n
+{"model":"codellama:7b","created_at":"2024-03-18T14:45:10.5807352Z","response":"def","done":false}\n
+{"model":"codellama:7b","created_at":"2024-03-18T14:45:10.8011125Z","response":" fib","done":false}\n
+{"model":"codellama:7b","created_at":"2024-03-18T14:45:11.0347653Z","response":"on","done":false}\n
+{"model":"codellama:7b","created_at":"2024-03-18T14:45:11.2923311Z","response":"acci","done":false}\n
+{"model":"codellama:7b","created_at":"2024-03-18T14:45:11.5700897Z","response":"(","done":false}\n
+{"model":"codellama:7b","created_at":"2024-03-18T14:45:11.8455609Z","response":"n","done":false}\n
+... truncated output</code></pre>
+<p>We can see above that we get a JSON-like type of response from the API, with the contents produced by the LLM model inside the element <code>"response"</code> in each JSON object.</p>
+<p>We can parse this JSON response from the API, and collect all the <code>"response"</code> elements to form the full text produced by the LLM model.</p>
+<p>Using the same URL and HTTP Request Body, I could parse the HTTP Response using something similar to this. You can see in the example below, that we get the exact same result as we got when we executed the LLM model through the <code>run</code> command of <code>ollama</code>:</p>
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode py code-with-copy"><code class="sourceCode python"><span id="cb7-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> json</span>
+<span id="cb7-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> re</span>
+<span id="cb7-3"></span>
+<span id="cb7-4"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">def</span> parse_response(resp: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-&gt;</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">dict</span>:</span>
+<span id="cb7-5">    resp <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> resp.content.decode(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"utf-8"</span>)</span>
+<span id="cb7-6">    resp <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> re.sub(<span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;">r'\}\n\{'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'},</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">{'</span>, resp)</span>
+<span id="cb7-7">    resp <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f'[</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>resp<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">]'</span></span>
+<span id="cb7-8">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">return</span> json.loads(resp)</span>
+<span id="cb7-9"></span>
+<span id="cb7-10">response <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> requests.post(url, data <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> body)</span>
+<span id="cb7-11">response <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> parse_response(response)</span>
+<span id="cb7-12">tokens <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">list</span>()</span>
+<span id="cb7-13"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">for</span> token <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">in</span> response:</span>
+<span id="cb7-14">    tokens.append(token[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'response'</span>])</span>
+<span id="cb7-15"></span>
+<span id="cb7-16"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">''</span>.join(tokens))</span></code></pre></div>
+<pre><code>[PYTHON]
+def fibonacci(n):
+    if n &lt;= 1:
+        return n
+    else:
+        return fibonacci(n-1) + fibonacci(n-2)
+[/PYTHON]
+[TESTS]
+# Test case 1:
+assert fibonacci(0) == 0
+# Test case 2:
+assert fibonacci(1) == 1
+# Test case 3:
+assert fibonacci(2) == 1
+# Test case 4:
+assert fibonacci(3) == 2
+# Test case 5:
+assert fibonacci(4) == 3
+# Test case 6:
+assert fibonacci(5) == 5
+# Test case 7:
+assert fibonacci(6) == 8
+# Test case 8:
+assert fibonacci(7) == 13
+# Test case 9:
+assert fibonacci(8) == 21
+# Test case 10:
+assert fibonacci(9) == 34
+[/TESTS]</code></pre>
+</section>
+</section>
+<section id="going-further" class="level1">
+<h1>Going further</h1>
+<p>You can now start to develop this new knowledge you acquired in this article. Going further in your AI journey.</p>
+<p>For example, you can:</p>
+<ul>
+<li>test different LLM models, by downloading new models with <code>ollama pull</code>.</li>
+<li>deploy and run Ollama on a cloud environment with specialized infrastructure (like <a href="https://aws.amazon.com/ec2/instance-types/p4/?nc1=h_ls">P4 instances in Amazon EC2</a>).</li>
+<li>use an AI app framework, such as LangChain, to build an AI app that uses Ollama.</li>
+</ul>
 
 
-</section>
 </section>
 
  ]]></description>
   <guid>https://pedro-faria.netlify.app/posts/2024/2024-03-13-llm-locally/en/</guid>
   <pubDate>Sat, 16 Mar 2024 03:00:00 GMT</pubDate>
+  <media:content url="https://pedro-faria.netlify.app/posts/2024/2024-03-13-llm-locally/chatgpt.webp" medium="image" type="image/webp"/>
 </item>
 <item>
   <title>Producing evenly-spaced and non-overlapping curves with Jobard-Lefer Algorithm in C</title>
