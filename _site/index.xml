@@ -10,7 +10,275 @@
 <atom:link href="https://pedro-faria.netlify.app/index.xml" rel="self" type="application/rss+xml"/>
 <description>A blog about programming and data analysis, specially with R and Python</description>
 <generator>quarto-1.4.538</generator>
-<lastBuildDate>Mon, 19 Feb 2024 03:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sat, 16 Mar 2024 03:00:00 GMT</lastBuildDate>
+<item>
+  <title>Running an AI ChatBot locally</title>
+  <dc:creator>Pedro Duarte Faria</dc:creator>
+  <link>https://pedro-faria.netlify.app/posts/2024/2024-03-13-llm-locally/en/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>Despite the current success of AI assistants (such as ChatGPT), privacy and information security might represent barriers for very large adoption of the technology among some specific users and corporations. Because either they do not want to share the information, or they are legally bound to not share it with other companies, such as OpenAI, Meta and Microsoft.</p>
+<p>In other words, to use an AI assistant, you might need to provide key-information in your prompt, but you might not want (or might not be authorized) to share this key-information with this AI service. So the privacy aspect involved in the use of AI assistants might become a “deal-breaker” for these users/corporations.</p>
+<p>Banks for example, are usually very careful with sharing sensible user-information with anyone. As a consequence, for example, using OpenAI services might be a deal-breaker for this bank, because the bank cannot share user-information with OpenAI in any circumstance. The bank could be exposed to legal penalties otherwise.</p>
+<p>In this situation, it might be a good idea for the bank, to host and run the AI assistant inside their own infrastructure, on a very restrict and secure place. So, in other words, this bank would host and run it’s own ChatGPT on their own servers.</p>
+<p>This article explain how you can download and use LLMs (Large Language Models) locally on your own machine, with <a href="https://ollama.com/">Ollama</a>. By knowing how to run a LLM model locally in your own machine, you can apply this knowledge to run a LLM model anywhere you want, on your own servers and private services.</p>
+</section>
+<section id="overview" class="level1">
+<h1>Overview</h1>
+<p>In essence, running a LLM model locally in your machine, consists of following these steps:</p>
+<ul>
+<li>Make sure to download the LLM model you want to use.</li>
+<li>Make sure that the Ollama server is up and running.</li>
+<li>Send your prompt to the local API, and get the response back.</li>
+</ul>
+</section>
+<section id="introducing-ollama" class="level1">
+<h1>Introducing Ollama</h1>
+<p>Ollama is a command line util that helps you download, manage and use LLM models. It is almost like a package manager, but for LLM models.</p>
+<p>The success of LLM models were so big that scientists, companies, and the general community developed and trained many different LLM models, and made them publicly available, either at <a href="https://github.com/">GitHub</a>, or at <a href="https://huggingface.co/">HuggingFace</a>.</p>
+<p>So, in other words, the infrastructure and the technology behind AI services is very monopolized right now, with big corporations (OpenAI, Meta, Microsoft, etc.). But the LLM technology per se, is rather accesible and widespread.</p>
+<p>Now, we can easily download and use these models through Ollama. The complete list of LLM models available is large, and you can see the full list at the <a href="https://ollama.com/library">Models page of Ollama’s website.</a></p>
+<p>In order to use Ollama, you have to download and install it. By <a href="https://ollama.com/">visiting Ollama’s website</a> you will find instructions to install it in each OS.</p>
+<p>After you download and install, you can start to use <code>ollama</code> in the command line of your OS. There are two main commands in <code>ollama</code>, which are:</p>
+<ul>
+<li><code>pull</code>: downloads a LLM model.</li>
+<li><code>serve</code>: starts the LLM model as a HTTP server.</li>
+<li><code>run</code>: run a LLM model with an input prompt.</li>
+</ul>
+<section id="download-a-model" class="level2">
+<h2 class="anchored" data-anchor-id="download-a-model">Download a model</h2>
+<p>First, we need to download the LLM model we want to use, so that is locally available to use in our machine. You do this by using the <code>pull</code> command.</p>
+<p>For the examples in this article, I will be using the CodeLlama model, which is based on the Llama 2 model. More specifically, the version of the model with 7 billions of parameters. It is a LLM model refined and tuned for code related questions and assignments.</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">ollama</span> pull codellama:7b</span></code></pre></div>
+</section>
+<section id="llm-models-are-very-heavy-and-expensive-to-run" class="level2">
+<h2 class="anchored" data-anchor-id="llm-models-are-very-heavy-and-expensive-to-run">LLM models are very heavy and expensive to run</h2>
+<p>In general, LLM models are very heavy and expensive to run, and they do not scale particularly well. So to make services like ChatGPT, that serves millions of users everyday, the actual LLM model, or the actual ChatGPT that answers your questions, is running on a big data center, more specifically, on a very (I mean, VERY) expensive and powerful set of GPUs (with hundreds and hundreds of VRAM available to use).</p>
+<p>All of this means that, not every machine is capable of running a LLM model. Specially if your machine does not have a good GPU card in it. So, if you want to run a LLM model on a “weak machine”, always choose the smallest version possible of a LLM model.</p>
+<p>A commom way to classifying LLM models is measuring them by their size. The size of a LLM model is normally measured by the number of parameters of the model, and they are normally in the level of billions of parameters. So a LLM model usually have 1, 7, 20, 50, 100 billions parameters.</p>
+<p>In Ollama, you choose the version of the model with the number of the parameters you want, by writing a colon followed by the number of parameters you want. So the text <code>&lt;name of model&gt;:20b</code> represents the version of a model with 20 billion parameters.</p>
+<p>In my example here, I am running on very standard laptop, literally nothing fancy. It has 12GB RAM, and a normal Intel i5 Core CPU. And it does not have any GPU card installed.</p>
+<p>Because of that, I do not want to select a very large model. I want to choose the smallest model as possible, with the smallest number of parameters. That is why I choose specifically the version of CodeLlama with 7 billion parameters - <code>codellama:7b</code> (there are different versions of CodeLlama that go up to 70 billion parameters).</p>
+<p>So, you should take the power of your machine in consideration when choosing your LLM model.</p>
+</section>
+<section id="prompt-your-llm-model" class="level2">
+<h2 class="anchored" data-anchor-id="prompt-your-llm-model">Prompt your LLM model</h2>
+<p>Let’s quickly use our LLM model. You can simply run the LLM model with an input prompt, by using the <code>run</code> command of <code>ollama</code>.</p>
+<p>For example, I can ask CodeLlama to write me a Python function that outputs the fibonacci sequence, like this:</p>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">ollama</span> run codellama:7b <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Write me a Python function that outputs the fibonacci sequence"</span></span></code></pre></div>
+<p>This is the output I get:</p>
+<pre><code>[PYTHON]
+def fibonacci(n):
+    if n &lt;= 1:
+        return n
+    else:
+        return fibonacci(n-1) + fibonacci(n-2)
+[/PYTHON]
+[TESTS]
+# Test case 1:
+assert fibonacci(0) == 0
+# Test case 2:
+assert fibonacci(1) == 1
+# Test case 3:
+assert fibonacci(2) == 1
+# Test case 4:
+assert fibonacci(3) == 2
+# Test case 5:
+assert fibonacci(4) == 3
+# Test case 6:
+assert fibonacci(5) == 5
+# Test case 7:
+assert fibonacci(6) == 8
+# Test case 8:
+assert fibonacci(7) == 13
+# Test case 9:
+assert fibonacci(8) == 21
+# Test case 10:
+assert fibonacci(9) == 34
+[/TESTS]</code></pre>
+</section>
+<section id="start-your-llm-model-as-a-http-server" class="level2">
+<h2 class="anchored" data-anchor-id="start-your-llm-model-as-a-http-server">Start your LLM model as a HTTP server</h2>
+<p>In Ollama, you can use your LLM model as a HTTP server. You start the server, and send input prompts to it. This server will response you back, with the output of the LLM model.</p>
+<p>Fist, you start the server with the <code>serve</code> command:</p>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">ollama</span> serve</span></code></pre></div>
+<p>After that, the endpoint <code>'api/generate'</code> become available at port 11434 in localhost.</p>
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode py code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> requests</span>
+<span id="cb5-2">url <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'http://localhost:11434/api/generate'</span></span>
+<span id="cb5-3">body <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'{"model": "codellama:7b", "prompt": "Write me a Python function that outputs the fibonacci sequence"}'</span></span>
+<span id="cb5-4">r <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> requests.post(url, data <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> body)</span>
+<span id="cb5-5"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>(r.content))</span></code></pre></div>
+<pre><code>b'{"model":"codellama:7b","created_at":"2024-03-18T14:45:08.92502Z","response":"\\n","done":false}\n
+{"model":"codellama:7b","created_at":"2024-03-18T14:45:09.4067275Z","response":"[PY","done":false}\n
+{"model":"codellama:7b","created_at":"2024-03-18T14:45:09.6486965Z","response":"TH","done":false}\n
+{"model":"codellama:7b","created_at":"2024-03-18T14:45:09.8871347Z","response":"ON","done":false}\n
+{"model":"codellama:7b","created_at":"2024-03-18T14:45:10.1047816Z","response":"]","done":false}\n
+{"model":"codellama:7b","created_at":"2024-03-18T14:45:10.3401777Z","response":"\\n","done":false}\n
+{"model":"codellama:7b","created_at":"2024-03-18T14:45:10.5807352Z","response":"def","done":false}\n
+{"model":"codellama:7b","created_at":"2024-03-18T14:45:10.8011125Z","response":" fib","done":false}\n
+{"model":"codellama:7b","created_at":"2024-03-18T14:45:11.0347653Z","response":"on","done":false}\n
+{"model":"codellama:7b","created_at":"2024-03-18T14:45:11.2923311Z","response":"acci","done":false}\n
+{"model":"codellama:7b","created_at":"2024-03-18T14:45:11.5700897Z","response":"(","done":false}\n
+{"model":"codellama:7b","created_at":"2024-03-18T14:45:11.8455609Z","response":"n","done":false}\n
+... truncated output</code></pre>
+<p>We can see above that we get a JSON-like type of response from the API, with the contents produced by the LLM model inside the element <code>"response"</code> in each JSON object.</p>
+<p>We can parse this JSON response from the API, and collect all the <code>"response"</code> elements to form the full text produced by the LLM model.</p>
+<p>Using the same URL and HTTP Request Body, I could parse the HTTP Response using something similar to this. You can see in the example below, that we get the exact same result as we got when we executed the LLM model through the <code>run</code> command of <code>ollama</code>:</p>
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode py code-with-copy"><code class="sourceCode python"><span id="cb7-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> json</span>
+<span id="cb7-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> re</span>
+<span id="cb7-3"></span>
+<span id="cb7-4"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">def</span> parse_response(resp: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-&gt;</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">dict</span>:</span>
+<span id="cb7-5">    resp <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> resp.content.decode(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"utf-8"</span>)</span>
+<span id="cb7-6">    resp <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> re.sub(<span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;">r'\}\n\{'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'},</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">{'</span>, resp)</span>
+<span id="cb7-7">    resp <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f'[</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>resp<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">]'</span></span>
+<span id="cb7-8">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">return</span> json.loads(resp)</span>
+<span id="cb7-9"></span>
+<span id="cb7-10">response <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> requests.post(url, data <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> body)</span>
+<span id="cb7-11">response <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> parse_response(response)</span>
+<span id="cb7-12">tokens <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">list</span>()</span>
+<span id="cb7-13"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">for</span> token <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">in</span> response:</span>
+<span id="cb7-14">    tokens.append(token[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'response'</span>])</span>
+<span id="cb7-15"></span>
+<span id="cb7-16"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">''</span>.join(tokens))</span></code></pre></div>
+<pre><code>[PYTHON]
+def fibonacci(n):
+    if n &lt;= 1:
+        return n
+    else:
+        return fibonacci(n-1) + fibonacci(n-2)
+[/PYTHON]
+[TESTS]
+# Test case 1:
+assert fibonacci(0) == 0
+# Test case 2:
+assert fibonacci(1) == 1
+# Test case 3:
+assert fibonacci(2) == 1
+# Test case 4:
+assert fibonacci(3) == 2
+# Test case 5:
+assert fibonacci(4) == 3
+# Test case 6:
+assert fibonacci(5) == 5
+# Test case 7:
+assert fibonacci(6) == 8
+# Test case 8:
+assert fibonacci(7) == 13
+# Test case 9:
+assert fibonacci(8) == 21
+# Test case 10:
+assert fibonacci(9) == 34
+[/TESTS]</code></pre>
+</section>
+</section>
+<section id="going-further" class="level1">
+<h1>Going further</h1>
+<p>You can now start to develop this new knowledge you acquired in this article. Going further in your AI journey.</p>
+<p>For example, you can:</p>
+<ul>
+<li>test different LLM models, by downloading new models with <code>ollama pull</code>.</li>
+<li>deploy and run Ollama on a cloud environment with specialized infrastructure (like <a href="https://aws.amazon.com/ec2/instance-types/p4/?nc1=h_ls">P4 instances in Amazon EC2</a>).</li>
+<li>use an AI app framework, such as LangChain, to build an AI app that uses Ollama.</li>
+</ul>
+
+
+</section>
+
+ ]]></description>
+  <guid>https://pedro-faria.netlify.app/posts/2024/2024-03-13-llm-locally/en/</guid>
+  <pubDate>Sat, 16 Mar 2024 03:00:00 GMT</pubDate>
+  <media:content url="https://pedro-faria.netlify.app/posts/2024/2024-03-13-llm-locally/chatgpt.webp" medium="image" type="image/webp"/>
+</item>
 <item>
   <title>Producing evenly-spaced and non-overlapping curves with Jobard-Lefer Algorithm in C</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
@@ -8629,181 +8897,6 @@ font-style: inherit;">sum</span>)</span></code></pre></div>
   <guid>https://pedro-faria.netlify.app/posts/2022/2022-12-21-spark-map-v0.2.3/en/</guid>
   <pubDate>Wed, 21 Dec 2022 03:00:00 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/posts/2022/2022-12-21-spark-map-v0.2.3/spark-map-logo.png" medium="image" type="image/png" height="76" width="144"/>
-</item>
-<item>
-  <title>Erro de memória no Power BI Online? Hora de repensar o seu dashboard</title>
-  <dc:creator>Pedro Duarte Faria</dc:creator>
-  <link>https://pedro-faria.netlify.app/posts/2022/2022-12-14-power-bi-memory-error/pt/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<section id="introdução" class="level1">
-<h1>Introdução</h1>
-<p>Em um dia recente, eu descobri que um dos dashboards que estavam publicados em nosso ambiente de produção do Power BI Online havia sofrido um erro de atualização. Logo, eu prontamente parei o que estava fazendo e comecei a investigar o motivo do erro, até porque: 1) o nosso cliente depende dos dados desse dashboard ; e 2) erros em produção não são legais!</p>
-<p>Nesse post, eu quero mostrar como esse tipo de erro de atualização pode ser um forte sinal de que você precisa repensar o design de seu dashboard. Em outras palavras, meu objetivo é mostrar que se você está puxando milhões e milhões de linhas de dados para um dashboard… é provável que você <strong>não tenha entendido o que é um dashboard e qual o seu propósito.</strong></p>
-</section>
-<section id="contexto" class="level1">
-<h1>Contexto</h1>
-<p>Bem, você já sabe que tudo começou por um erro durante a atualização de um dashboard publicado no Power BI Online. Porém, este não era qualquer erro, e sim, um erro de falta de memória:</p>
-<div class="cell">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://pedro-faria.netlify.app/posts/2022/2022-12-14-power-bi-memory-error/image.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<figcaption>Mensagem de erro da atualização no Power BI Online</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<p>Perceba pela mensagem acima, que o motivo do erro foi uma falta de memória (<em>insufficient memory</em>) nos clusters responsáveis por executar a atualização. O que isso significa? Significa que este dashboard estava pedindo por um volume tão grande, mas tão grande de dados durante a atualização, que os clusters que estavam executando essa atualização não tinham mais espaço para alocar esse volume tão grande de dados.</p>
-<section id="hora-de-explorar-o-terreno-desconhecido" class="level2">
-<h2 class="anchored" data-anchor-id="hora-de-explorar-o-terreno-desconhecido">Hora de explorar o terreno desconhecido</h2>
-<p>Nesse dia, eu estava em minha primeira semana em uma nova equipe, e, eu não conhecia esse dashboard. Em outras palavras, eu havia herdado esse dashboard, que foi criado pelos analistas anteriores dessa equipe. Logo, eu precisava abrir o <code>.pbix</code> desse dashboard e começar a investigar, tentando descobrir que mistérios e perigos estão escondidos dentro dele.</p>
-<p>Inicialmente, percebi oito tabelas associadas ao dashboard que foram puxadas diretamente dos nossos databases SQL (<code>campanhas</code>, <code>cartoes_selecionados</code>, <code>usuarios_por_dia</code>, <code>formatos</code>, <code>inputs</code>, <code>usuarios_por_mes</code>, <code>perfis</code> e <code>tracks</code>), as quais estão expostas na imagem abaixo<sup>1</sup>. Além delas, temos outras duas tabelas calculadas no próprio <code>.pbix</code>, através de DAX (<code>dCalendario</code> e <code>Medidas</code>).</p>
-<div class="cell">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://pedro-faria.netlify.app/posts/2022/2022-12-14-power-bi-memory-error/tabelas.png" class="img-fluid figure-img" style="width:50.0%"></p>
-<figcaption>Tabelas associadas ao arquivo <code>.pbix</code></figcaption>
-</figure>
-</div>
-</div>
-</div>
-<p>Decidi simplesmente clicar no botão de <code>Atualizar</code>. Já que o erro ocorreu durante a atualização, imaginei que seria mais simples descobrir a fonte do problema dessa forma.</p>
-<p>A maioria das tabelas atualizaram rapidamente. Porém, a tabela <code>input</code> ainda estava atualizando. Em resumo, essa tabela continha todas as mensagens digitadas por todos os usuários que acessaram o nosso sistema.</p>
-<p>O tempo foi passando, e após 3 horas com a atualização rodando em meu computador, o Power BI já havia puxado mais de 80 milhões de linhas para essa única tabela. Decidi verificar se o recurso de <a href="https://learn.microsoft.com/pt-br/power-bi/connect-data/incremental-refresh-overview">Atualização incremental</a> estava ligado para essa tabela <code>input</code>, e, percebi que ele estava desligado.</p>
-</section>
-<section id="a-fonte-do-problema" class="level2">
-<h2 class="anchored" data-anchor-id="a-fonte-do-problema">A fonte do problema</h2>
-<p>Portanto, a fonte do problema estava claro. Como o recurso de “Atualização incremental” estava desligado para essa tabela <code>input</code>, a cada atualização, o Power BI Online estava recalculando toda a tabela <code>input</code> de uma vez só.</p>
-<p>Isso significa que, todos os dias, o Power BI estava coletando todas as <strong>80 milhões de linhas</strong> dessa tabela <code>input</code>. Devido a este volume monumental de dados, o serviço do Power BI decidiu interromper a atualização.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="https://pedro-faria.netlify.app/posts/2022/2022-12-14-power-bi-memory-error/conversa.png" class="img-fluid figure-img" style="width:80.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section id="a-solução-simples-e-suja-o-famoso-quick-and-dirty" class="level1">
-<h1>A solução simples e suja (o famoso <em>quick and dirty</em>)</h1>
-<p>Um jeito simples de resolver esse erro de falta de memória, seria simplesmente não carregar todas as 80 milhões de linhas de uma vez só! E sim, carregar essas linhas aos poucos.</p>
-<p>Para isso, poderíamos ligar a atualização incremental nessa tabela <code>input</code>. Desse modo, cada atualização vai atualizar apenas os dados dos últimos dias (ao invés de atualizar a tabela inteira), e em seguida, começamos a carregar os dados aos poucos para o dashboard.</p>
-<p>Por exemplo, na primeira atualização, tentamos puxar os dados do primeiro mês, depois, na próxima atualização, puxamos os dados do segundo mês, e assim por diante, até puxarmos todas as 80 mihões de linhas. Contudo, isso não é uma solução de fato!</p>
-</section>
-<section id="antes-de-tudo-pare-um-pouco-e-pense" class="level1">
-<h1>Antes de tudo, pare um pouco e pense</h1>
-<p>Primeiro de tudo, pare! E pense… tente entender o porquê você está puxando milhões e milhões de linhas. Você realmente precisa desse volume tão grande de dados em seu dashboard? É muito provável que não!</p>
-<blockquote class="blockquote">
-<p><strong>Insight 1:</strong> Se você está puxando milhões e milhões de linhas de dados para um dashboard, é provável que você não tenha entendido o que é um dashboard e qual o seu propósito.</p>
-</blockquote>
-<section id="manutenção-se-torna-um-peso-grande" class="level2">
-<h2 class="anchored" data-anchor-id="manutenção-se-torna-um-peso-grande">Manutenção se torna um peso grande</h2>
-<p>Atualizar 80 milhões de linhas <strong>não é prático, não é rápido, e é difícil de manter e testar</strong>. Se por algum motivo, você precisar atualizar todos os dados de seu dashboard<sup>2</sup>, você vai muito provavelmente perder uma tarde, talvez um dia inteiro de trabalho só para completar a atualização.</p>
-<blockquote class="blockquote">
-<p><strong>Insight 2:</strong> Um dashboard deve ser fácil de se manter e expandir. Em contrapartida, manter um volume grande de dados em um dashboard é trabalhoso demais.</p>
-</blockquote>
-</section>
-<section id="vamos-pensar-um-pouco-sobre-user-experience" class="level2">
-<h2 class="anchored" data-anchor-id="vamos-pensar-um-pouco-sobre-user-experience">Vamos pensar um pouco sobre <em>user experience</em></h2>
-<p>Por um momento, vamos adotar o papel de um UX, e refletir sobre a experiência dos usuários que consomem o nosso dashboard. É esquisito pensar dessa forma, entretanto, às vezes, nós nos esquecemos que pessoas de verdade usam o nosso produto (nesse caso, o dashboard) e se baseiam nele diariamente para desempenhar trabalhos e planejamentos importantes. Portanto, é muito importante que eles tenham uma experiência agradável utilizando o nosso dashboard.</p>
-<ul>
-<li><strong>Definindo o público-alvo:</strong> Primeiro, quem utiliza o nosso dashboard?</li>
-</ul>
-<p>Na maioria das vezes, quem está consumindo os nossos dashboards são <strong>gerentes de alguma área</strong>. Gente importante, que tem pouco tempo no dia, e que lidam com várias tarefas e responsabilidades ao mesmo tempo.</p>
-<p>É justamente por essa escassez de tempo e atenção que, em geral, gerentes gostam muito de dashboards. Eles gostam de entrar num dashboard, e rapidamente visualizar todos os indicadores que eles precisam acompanhar. Com isso, eles não precisam gastar horas e horas caçando números em diferentes lugares, e com diferentes pessoas. Está tudo concentrado em um lugar único e de fácil acesso.</p>
-<p>Por isso, um dashboard tem que ser <strong>rápido</strong>. Todo gerente tem pressa, então, a página inicial do dashboard precisa carregar rápido! Navegar pelas diferentes páginas e visões do dashboard também precisa ser uma experiência rápida e flúida. Ninguém gosta de uma página que demora 5 minutos para carregar… muito menos um gerente.</p>
-<p>É por esse mesmo motivo, que cada página de um dashboard precisa ser focada em um tema central, e manter o mínimo possível de informação que o gerente precisa, da forma mais clara possível. Se uma mesma página mistura diferentes temas, o leitor pode ter dificuldade em navegar pelos indicadores e encontrar o que ele está procurando (ou seja, misturar temas = confusão mental!).</p>
-<blockquote class="blockquote">
-<p>Ah! Achei a página com os indicadores de vendas. Ok. Espera! Por que os indicadores de atendimento estão nessa página? Onde está o número de vendas de maquininhas nesse mês? Ahhh achei! Não, espera… Esse é o número de maquininhas vendidas somente no setor de atendimento, mas eu quero os números de venda em TODOS os setores…</p>
-</blockquote>
-<p>Portanto, dashboards precisam ser rápidos, claros e bem dividos! E se você está puxando um volume muito grande de dados para dentro dele, você com certeza vai impactar negativamente a rapidez desse dashboard, pois ele precisa carregar o grande conjunto de dados que você inseriu lá dentro. Além disso, um grande volume de dados pode indicar que você está preenchendo esse dashboard com informações que são irrelevante para o gerente.</p>
-<blockquote class="blockquote">
-<p><strong>Insight 3:</strong> Dashboards precisam ser rápidos, claros e bem dividos!</p>
-</blockquote>
-</section>
-<section id="gerentes-querem-indicadores-e-agregados-não-dados-brutos" class="level2">
-<h2 class="anchored" data-anchor-id="gerentes-querem-indicadores-e-agregados-não-dados-brutos">Gerentes querem indicadores e agregados! Não dados brutos…</h2>
-<p>Gerentes querem acompanhar indicadores e agregados que descrevam de maneira rápida a situação atual do negócio que eles gerem, e das pessoas que estão envolvidas nele.</p>
-<p>Logo, por que trazer dados brutos para o dashboard? Por que trazer para o dashboard uma tabela com a lista completa de todos os usuários que visitaram o nosso serviço em todos os dias do ano? Se eu posso simplesmente trazer uma tabela já agregada, com o número de usuários que visitaram esse serviço dentro de cada dia do ano?</p>
-<blockquote class="blockquote">
-<p><strong>Insight 4:</strong> Gerentes estão interessados em acompanhar indicadores e agregados, ao invés de dados brutos. Portanto, importe os seus dados já agregados para dentro do dashboard.</p>
-</blockquote>
-</section>
-<section id="isso-significa-que-dados-brutos-geralmente-não-devem-estar-em-um-dashboard" class="level2">
-<h2 class="anchored" data-anchor-id="isso-significa-que-dados-brutos-geralmente-não-devem-estar-em-um-dashboard">Isso significa que dados brutos geralmente não devem estar em um dashboard</h2>
-<p>Isso tudo não significa que gerentes não consomem dados brutos em momento algum. Mas isso significa que um dashboard é geralmente o lugar errado para esses dados brutos.</p>
-<p>É até comum em certos momentos um gerente pedir para nós coletarmos um conjunto específico de dados brutos para ele. Mas se você refletir sobre todas as ocasiões onde isso ocorreu, você talvez consiga perceber que essas situações caem em duas categorias:</p>
-<ol type="1">
-<li><p>o gerente queria investigar um problema bem específico, e é bem provável que esse problema não se repita, logo, ele nunca mais vai precisar desses dados brutos específicos novamente (i.e.&nbsp;foi uma entrega pontual);</p></li>
-<li><p>o gerente precisa desses dados brutos com certa frequência para alimentar algum fluxo de trabalho que você não conhece, ou está em uma equipe/setor diferente do seu;</p></li>
-</ol>
-<p>Essas duas categorias não justificam incluir dados brutos em um dashboard. Para a primeira situação, você pode armazenar a query (ou o script) que você usou no momento para puxar os dados brutos que o gerente te pediu naquele momento. Desse modo, se lá na frente, por algum motivo você precisar extrair novamente esses dados brutos, você precisa apenas retornar à query e executá-la novamente. Além disso, é muito mais econômico armazenar centenas de queries distintas, do que armazenar os dados brutos produzidos em cada uma dessas queries (imagine ter centenas de CSV’s de vários MB’s armazenados no seu computador…).</p>
-<p>Em minha equipe de trabalho, nós utilizamos um board de cards no estilo kanban (como o Asana, ou o Azure DevOps, etc.) para organizar as nossas tarefas e demandas. Eu particularmente gosto de sempre salvar a query que eu utilizei para completar uma demanda, dentro do card correspondente a essa demanda. Sendo assim, caso eu precisar utilizar essa mesma query, eu procuro rapidamente pelo card dessa demanda no histórico do nosso board de cards, e, copio a query que está salva lá dentro desse card.</p>
-<p>Já na segunda situação, faz mais sentido criar rotinas automatizadas de envio desses dados para o gerente, ou para qualquer que seja a pessoa que esteja precisando desses dados. Ou seja, se por exemplo, o Paulo precisa extrair toda semana, uma lista com todos os usuários que são elegíveis a adquirir um empréstimo, eu posso, por exemplo, criar uma rotina automatizada em Python ou em R, que pega os dados brutos do nosso database SQL, filtra todos esses usuários elegíveis, e compila esses dados em um formato agradável e intuitivo, e por fim, envia esses dados para o Paulo, seja por email, ou talvez, para um servidor ou uma pasta na nuvem que o Paulo tem acesso.</p>
-</section>
-<section id="dashboards-são-ferramentas-de-uso-diário" class="level2">
-<h2 class="anchored" data-anchor-id="dashboards-são-ferramentas-de-uso-diário">Dashboards são ferramentas de uso diário</h2>
-<p>O gerente depende desse dashboard todos os dias (ou talvez toda semana) para extrair informações importantes sobre o seu negócio. Portanto, dashboards possuem uma frequência de uso alta, e por essa característica, é essencial que um dashboard <strong>seja estável</strong> e que esteja sempre o mais atualizado possível.</p>
-<p>Contudo, ao puxar milhões e milhões de linhas de dados para um dashboard, todos os dias, você está aumentando as chances desse dashboard enfrentar um erro de atualização. Isso não é algo estável!</p>
-<p>Você não quer erros acontecendo no seu dashboard, pois você não quer perder uma tarde inteira de trabalho investigando onde nas milhões e milhões de linhas que você puxou está a fonte do erro. Você também não quer perder horas e horas atualizando essas milhões de linhas. Isso está bastante relacionado também com o insight 2, onde definimos que um dashboard deve ser fácil de se manter e expandir.</p>
-<blockquote class="blockquote">
-<p><strong>Insight 5:</strong> Dashboards precisam ser estáveis! Quanto menos erros ele gerar, melhor para você (que vai gastar menos tempo de debugging e manutenção) e também para o gerente que utiliza esse dash.</p>
-</blockquote>
-<p>Você quer um dashboard simples, leve, claro, e que funcione da forma como você esperava que ele funcionasse. Na empresa onde trabalho, temos um lema: “A simplicidade é o mais alto nível de sofisticação”. Portanto, leve essa simplicidade para os seus dashboards. Não tente fazer coisas complexas e confusas, que são difíceis de se entender e de investigar (ou “desbugar”).</p>
-</section>
-<section id="as-vezes-não-existe-maneira-simples-de-contornar-o-problema" class="level2">
-<h2 class="anchored" data-anchor-id="as-vezes-não-existe-maneira-simples-de-contornar-o-problema">As vezes não existe maneira simples de contornar o problema</h2>
-<p>Em certas ocasiões, os usuários de um dashboard realmente precisam ver algum tipo de dado bruto dentro dele. Nesses casos, você traçar algumas outras estratégias e perguntas para reduzir ao máximo o número de linhas importadas. Por exemplo:</p>
-<ol type="1">
-<li>eu posso trazer para dentro dashboard uma parte bastante filtrada dos dados brutos?</li>
-</ol>
-<p>Ou seja, ao invés de trazer as 80 milhões de linhas, será que eu consigo aplicar vários filtros sobre esses dados brutos, antes de importá-los para dentro do dashboard? Esses filtros podem te ajudar a reduzir drasticamente o número de linhas carregadas.</p>
-<ol start="2" type="1">
-<li>ao invés de trazer todos os dados, por que não trazer uma amostra aleatória da população?</li>
-</ol>
-<p>É útil entender o porquê exatamente o seu usuário precisa ver algum dado bruto em seu dashboard. Ao entender o que esse usuário está perseguindo, você talvez chegue a conclusão de que o seu usuário já ficaria satisfeito ao ver pelo menos uma parte dos dados brutos (não precisa trazer literalmente tudo). Portanto, você poderia selecionar uma amostra aleatória dos dados, e importar apenas essa amostra para dentro do dashboard.</p>
-<ol start="3" type="1">
-<li>será que eu preciso manter o histórico desses dados brutos dentro do dash?</li>
-</ol>
-<p>Será que o seu cliente precisa frequentemente visualizar os dados brutos de 6 meses atrás? É muito provável que não. Então, por que não manter apenas os dados brutos dos últimos 30 dias? Em outras palavras, os dados históricos são sempre limpos, e apenas os dados brutos mais recentes são mantidos.</p>
-<p>Ao reduzir o volume de dados mantidos dentro do dashboard, você talvez traga uma melhoria considerável sobre o tempo de navegação e carregamento do dashboard (lembre-se, um dashboard preciso ser rápido, claro e bem divido).</p>
-</section>
-</section>
-<section id="conclusão" class="level1">
-<h1>Conclusão</h1>
-<p>Espero que neste artigo, tenha consiguido deixar claro como um número exacerbado de dados brutos em seu dashboard pode ser um forte sinal de que você tenha desenvolvido um dashboard mal desenhado. Apenas para recapitular, os principais pontos abordados foram:</p>
-<ol type="1">
-<li><p>Se você está puxando milhões e milhões de linhas de dados para um dashboard, é provável que você não tenha entendido o que é um dashboard e qual o seu propósito.</p></li>
-<li><p>Um dashboard deve ser fácil de se manter e expandir. Em contrapartida, manter um volume grande de dados em um dashboard é trabalhoso demais.</p></li>
-<li><p>Dashboards precisam ser rápidos, claros e bem dividos!</p></li>
-<li><p>Gerentes estão interessados em acompanhar indicadores e agregados, ao invés de dados brutos. Portanto, importe os seus dados já agregados para dentro do dashboard.</p></li>
-<li><p>Dashboards precisam ser estáveis! Quanto menos erros ele gerar, melhor para você (que vai gastar menos tempo de debugging e manutenção) e também para o gerente que utiliza esse dash.</p></li>
-</ol>
-
-
-</section>
-
-
-<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
-
-<ol>
-<li id="fn1"><p>Vale destacar que essas tabelas foram renomeadas com o objetivo de manter o anonimato do cliente e dos dados associados a elas.↩︎</p></li>
-<li id="fn2"><p>Como exemplo, talvez a fonte dos dados sofreu uma atualização, e você quer trazer essa atualização para o seu dashboard, ou então, porque houve uma perda de dados no Power BI Online e você deseja recuperar esses dados perdidos.↩︎</p></li>
-</ol>
-</section></div> ]]></description>
-  <category>Power BI</category>
-  <category>Power BI Online</category>
-  <guid>https://pedro-faria.netlify.app/posts/2022/2022-12-14-power-bi-memory-error/pt/</guid>
-  <pubDate>Wed, 14 Dec 2022 03:00:00 GMT</pubDate>
-  <media:content url="https://pedro-faria.netlify.app/posts/2022/2022-12-14-power-bi-memory-error/featured.png" medium="image" type="image/png" height="52" width="144"/>
 </item>
 </channel>
 </rss>

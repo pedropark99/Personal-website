@@ -14,6 +14,7 @@
   {
     "listing": "/posts/index.html",
     "items": [
+      "/posts/2024/2024-03-13-llm-locally/en/index.html",
       "/posts/2024/2024-02-19-flow-even/en/index.html",
       "/posts/2024/2024-01-22-did-you-ever-ssh/en/index.html",
       "/posts/2024/2024-01-13-spark-cache/en/index.html",
@@ -44,6 +45,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/2024/2024-03-13-llm-locally/en/index.html",
       "/posts/2024/2024-02-19-flow-even/en/index.html",
       "/posts/2024/2024-01-22-did-you-ever-ssh/en/index.html",
       "/posts/2024/2024-01-13-spark-cache/en/index.html",
@@ -76,6 +78,7 @@
   {
     "listing": "/posts/en.html",
     "items": [
+      "/posts/2024/2024-03-13-llm-locally/en/index.html",
       "/posts/2024/2024-02-19-flow-even/en/index.html",
       "/posts/2024/2024-01-22-did-you-ever-ssh/en/index.html",
       "/posts/2024/2024-01-13-spark-cache/en/index.html",
