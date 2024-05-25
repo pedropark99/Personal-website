@@ -95,7 +95,7 @@ Temos três tipos principais de *outer joins*, que são *left join*, *right join
 
 No entanto, *left join* e *right join* buscam conservar as linhas de apenas uma das tabelas utilizadas no *join*. Nesse ponto, muitos professores diriam algo como: "se temos desejamos aplicar um *join* entre as tabelas `A` e `B`, um *left join* irá manter as linhas da tabela `A` e um *right join* vai manter as linhas da tabela `B`". Outros professores ainda tentariam dizer: "*left join* irá manter as linhas da tabela à esquerda, enquanto um *right join* vai manter as linhas da tabela à direita". 
 
-Porém, certa confusão pode ser facilmente aplicada em ambas alternativas. Digo, um aluno pode facilmente enfrentar a seguinte questão: "`r emoji::emoji("thinking")` Uhmm... Eu não me lembro muito bem. Um *left join* mantém as linhas da tabela `A`? Ou são as linhas da tabela `B`?"; ou então, "`r emoji::emoji("thinking")` Pera! Mas qual das duas tabelas está a direita?".
+Porém, certa confusão pode ser facilmente aplicada em ambas alternativas. Digo, um aluno pode facilmente enfrentar a seguinte questão: "🤔 Uhmm... Eu não me lembro muito bem. Um *left join* mantém as linhas da tabela `A`? Ou são as linhas da tabela `B`?"; ou então, "🤔 Pera! Mas qual das duas tabelas está a direita?".
 
 # Conclusão
 

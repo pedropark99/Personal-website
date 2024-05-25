@@ -57,12 +57,12 @@ Em resumo, há três novidades principais para essa nova edição, que incluem a
 
 Se tudo ocorrer conforme planejado:
 
-- 📣 O lançamento ocorrerá no **dia 26/06** `r emoji::emoji("pushpin")`.
+- 📣 O lançamento ocorrerá no **dia 26/06** 📌.
 
 - Nesse dia, o PDF da obra será disponibilizada em ambas as páginas do [ResearchGate](https://www.researchgate.net/publication/345985082_Introducao_a_Linguagem_R_seus_fundamentos_e_sua_pratica) e no [Academia](https://www.academia.edu/44520051/Introdu%C3%A7%C3%A3o_%C3%A0_Linguagem_R_seus_fundamentos_e_sua_pr%C3%A1tica), que são os dois locais onde o livro está atualmente hospedado. 
 
 
-A produção dessa nova edição se encontra avançada, mas pode enfrentar atrasos no próximo mês, pois recentemente assumi um novo emprego em uma grande empresa de tecnologia ([Take Blip](https://www.take.net/)) e, portanto, posso ter que atrasar a produção em detrimento de demandas urgentes. Estou ansioso e torcendo muito para que nada de errado ocorra `r emoji::emoji("grinning_face_with_sweat")`, e que eu possa cumprir este compromisso com a nossa comunidade brasileira de R.
+A produção dessa nova edição se encontra avançada, mas pode enfrentar atrasos no próximo mês, pois recentemente assumi um novo emprego em uma grande empresa de tecnologia ([Take Blip](https://www.take.net/)) e, portanto, posso ter que atrasar a produção em detrimento de demandas urgentes. Estou ansioso e torcendo muito para que nada de errado ocorra 😅, e que eu possa cumprir este compromisso com a nossa comunidade brasileira de R.
 
 
 
