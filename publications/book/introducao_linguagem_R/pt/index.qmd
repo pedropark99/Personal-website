@@ -2,8 +2,8 @@
 title: "Introdução à Linguagem R: seus fundamentos e sua prática"
 description: "Este livro oferece uma descrição profunda sobre os fundamentos da linguagem R, e como eles se aplicam no contexto da análise de dados."
 authors: ["Pedro Duarte Faria"]
-date: "2022-12-01"
-isbn: "978-65-00-57872-0"
+date: "2024-05-25"
+isbn: "978-65-01-03954-1"
 number-sections: true
 categories: [R, Book, Brazil]
 image: "../featured.png"
@@ -12,7 +12,6 @@ projects: [R_curso]
 aliases: 
     - "./../../../../publication/pt/book/introducao_linguagem_r/"
     - "./../../../../pt/publication/book/introducao_linguagem_r/"
-
 ---
 
 # Sobre o livro
@@ -43,7 +42,7 @@ Através deste livro, você pode aprender sobre os fundamentos da linguagem R, e
 
 Hoje, o livro está disponível para compra em duas versões: como ebook (Kindle), e como livro físico (Amazon, Estante Virtual e Clube dos Autores). Abaixo temos os links para todas essas versões.
 
-- Versão ebook (**Amazon**): <https://www.amazon.com.br/dp/B0BNW4K232>
+- Versão ebook (**Amazon**): <https://www.amazon.com.br/dp/B0D57F5Q1P>
 - Versão física (**Amazon**): <https://www.amazon.com.br/dp/6500578724>
 - Versão física (**Estante Virtual**): <https://www.estantevirtual.com.br/clube-de-autores/pedro-duarte-faria-introducao-a-linguagem-r-3850927716>
 - Versão física (**Clube dos Autores**): <https://clubedeautores.com.br/livro/introducao-a-linguagem-r>
