@@ -6,7 +6,7 @@ date: "2024-05-25"
 isbn: "978-65-01-03954-1"
 number-sections: true
 categories: [R, Book, Brazil]
-image: "../featured.png"
+image: "../featured.jpg"
 projects: [R_curso]
 
 aliases: 
@@ -69,4 +69,8 @@ cat(readLines("../cite.bib"), sep = '\n')
 
 # Capa do livro
 
-![](./../featured.png){width="100%"}
+```{r}
+#| echo: false
+#| out.width: "100%"
+knitr::include_graphics("./../featured.jpg")
+```

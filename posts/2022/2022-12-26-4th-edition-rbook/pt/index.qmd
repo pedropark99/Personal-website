@@ -18,8 +18,6 @@ aliases:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-
-library(emoji)
 library(stringr)
 ```
 
@@ -48,7 +46,9 @@ Quinto, tivemos algumas melhorias sobre o capítulo 4, especialmente sobre a des
 
 # Sobre onde encontrar o livro
 
-Você pode ler toda a obra de maneira gratuita e aberta através de seu [website](https://pedropark99.github.io/Introducao_R/) `r emoji::emoji("book")`. Caso você queira contribuir para o projeto desse livro, você pode adquirir uma [versão física ou em EBook do livro através da loja da Amazon](https://www.amazon.com.br/dp/B0BNW4K232). Ao comprar essas versões, você estará me ajudando a continuar contribuindo com a nossa comunidade `r emoji::emoji("heart")`. Além disso, você também pode doar um Pix para o autor (veja a página [Donate or Sponsor Me](https://pedro-faria.netlify.app/donate.html)).
+Você pode ler toda a obra de maneira gratuita e aberta através de seu [website](https://pedropark99.github.io/Introducao_R/) 📖. Caso você queira contribuir para o projeto desse livro, você pode adquirir uma [versão física ou em EBook do livro através da loja da Amazon](https://www.amazon.com.br/dp/B0BNW4K232).
+
+Ao comprar essas versões, você estará me ajudando a continuar contribuindo com a nossa comunidade ❤️. Além disso, você também pode doar um Pix para o autor (veja a página [Donate or Sponsor Me](https://pedro-faria.netlify.app/donate.html)).
 
 
 

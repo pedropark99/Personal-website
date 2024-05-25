@@ -1,6 +1,6 @@
 ---
 title: "Donate or Sponsor Me"
-description: 'If you like my work, and want to support me, you can send money to me `r paste0(c(emoji::emoji("money_with_wings"), emoji::emoji("winking_face")), collapse = "")`'
+description: 'If you like my work, and want to support me, you can send money to me 💸😉'
 title-block-banner: true
 ---
 
