@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.554">
+<meta name="generator" content="quarto-1.4.549">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -271,7 +271,7 @@ window.Quarto = {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-cloud"><div class="category" data-category="Apache Spark"><span class="quarto-category-count category-cloud-5">Apache Spark</span></div><div class="category" data-category="Book"><span class="quarto-category-count category-cloud-10">Book</span></div><div class="category" data-category="Brazil"><span class="quarto-category-count category-cloud-5">Brazil</span></div><div class="category" data-category="Python"><span class="quarto-category-count category-cloud-5">Python</span></div><div class="category" data-category="R"><span class="quarto-category-count category-cloud-5">R</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-cloud"><div class="category" data-category="Apache Spark"><span class="quarto-category-count category-cloud-4">Apache Spark</span></div><div class="category" data-category="Book"><span class="quarto-category-count category-cloud-10">Book</span></div><div class="category" data-category="Brazil"><span class="quarto-category-count category-cloud-4">Brazil</span></div><div class="category" data-category="Programming language"><span class="quarto-category-count category-cloud-4">Programming language</span></div><div class="category" data-category="Python"><span class="quarto-category-count category-cloud-4">Python</span></div><div class="category" data-category="R"><span class="quarto-category-count category-cloud-4">R</span></div><div class="category" data-category="Zig"><span class="quarto-category-count category-cloud-4">Zig</span></div></div></div>
 <!-- main -->
 <main class="content column-page-left" id="quarto-document-content">
 
@@ -334,7 +334,40 @@ window.Quarto = {
     </div>
 </div>
 <div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-categories="R,Book,Brazil" data-listing-date-sort="1716606000000" data-listing-file-modified-sort="1716662583299" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="455">
+<div class="g-col-1" data-index="0" data-categories="Zig,Book,Programming language" data-listing-file-modified-sort="1721501958576" data-listing-reading-time-sort="1" data-listing-word-count-sort="105">
+<a href="../publications/book/zig-book/en/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="../publications/book/zig-book/featured.png" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Introduction to Zig: an project-based book
+</h5>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('Zig'); return false;">
+Zig
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Book'); return false;">
+Book
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Programming language'); return false;">
+Programming language
+</div>
+</div>
+<div class="card-text listing-description">
+An open and introductory book for the Zig programming language. 🚧 Currently under construction 🚧.
+</div>
+<div class="card-attribution card-text-small start">
+<div class="listing-author">
+Pedro Duarte Faria
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="1" data-categories="R,Book,Brazil" data-listing-date-sort="1716606000000" data-listing-file-modified-sort="1721501502561" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="455">
 <a href="../publications/book/introducao_linguagem_R/pt/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -370,7 +403,7 @@ May 25, 2024
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="1" data-categories="Python,Apache Spark,Book" data-listing-date-sort="1704769200000" data-listing-file-modified-sort="1705157858624" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="401">
+<div class="g-col-1" data-index="2" data-categories="Python,Apache Spark,Book" data-listing-date-sort="1704769200000" data-listing-file-modified-sort="1721501502545" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="401">
 <a href="../publications/book/introd-pyspark/en/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -495,24 +528,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/pedro-faria\.netlify\.app\/");
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -547,11 +562,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
+      return note.innerHTML;
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
