@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.549">
+<meta name="generator" content="quarto-1.5.56">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -10,7 +10,7 @@
 <meta name="dcterms.date" content="2023-11-18">
 <meta name="description" content="This past week I had to develop a parser for Python expressions with Python. In this article, I want to use this experience to introduce the subject of parsing to beginners.">
 
-<title>home |&gt; dplyr::glimpse() - Developing a parser for Python with Python</title>
+<title>Developing a parser for Python with Python – home |&gt; dplyr::glimpse()</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -36,7 +36,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -150,7 +150,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -160,7 +160,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <span class="menu-text">About Me</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Posts</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-posts">    
@@ -179,7 +179,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
     </ul>
   </li>
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-publications" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-publications" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Publications</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-publications">    
@@ -206,7 +206,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <span class="menu-text">Donate or Sponsor Me</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-cv" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-cv" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">CV</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-cv">    
@@ -236,12 +236,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://medium.com/@pedropark99"> <i class="bi bi-medium" role="img" aria-label="Medium profile">
-</i> 
-<span class="menu-text"></span></a>
-  </li>  
-  <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/PedroPark9"> <i class="bi bi-twitter" role="img" aria-label="Twitter profile">
+    <a class="nav-link" href="https://twitter.com/PedroPark9"> <i class="bi bi-twitter-x" role="img" aria-label="Twitter profile">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -257,7 +252,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
-          <div class="quarto-navbar-tools">
+            <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -359,7 +354,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <h1 data-number="2"><span class="header-section-number">2</span> Context about what we have to do</h1>
 <p>Most of these 130 thousand lines of Python code are <a href="https://spark.apache.org/docs/latest/api/python/index.html"><code>pyspark</code></a> code to extract, transform and load data using the <a href="https://spark.apache.org/">Apache Spark</a> engine.</p>
 <p>Let’s consider the following example:</p>
-<div id="lst-table" class="python listing quarto-float">
+<div id="lst-table" class="python listing quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-lst figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-table-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Listing&nbsp;1: Example of pyspark code that we might find in our codebase
@@ -375,7 +370,7 @@ Listing&nbsp;1: Example of pyspark code that we might find in our codebase
 </div>
 <p>You can see at <a href="#lst-table" class="quarto-xref">Listing&nbsp;1</a> that we have a <code>spark.table()</code> call to access the SQL table <code>blip.events</code>. In other words, we are basically making a <code>SELECT * FROM</code> query over this table. However, in our new infrastructure, all table references will change. As a result, me and my team need to rewrite every table reference that we find across our codebase.</p>
 <p>For example, let’s suppose that the new table reference is <code>platform.blipraw.events</code>. This means that I need to alter the above snippet of code to:</p>
-<div id="lst-table2" class="python listing quarto-float">
+<div id="lst-table2" class="python listing quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-lst figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-table2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Listing&nbsp;2: Example with the new reference
@@ -436,7 +431,7 @@ df.show()
 <p>Parsers (or the process of parsing expressions) are core components of every existing compiler, like <code>gcc</code> or <code>rustc</code>, as well as the R and Python compilers. In essence, a parser is a piece of software that analyzes expressions following the rules of a grammar. A parser is the main part of compilers responsible for analyzing and comprehend the structure of your source code.</p>
 <p>The process of parsing is usually made in two steps, which are: 1) breaking (or “splitting”) the input expression into smaller pieces, building a list of tokens, or a list of small components; 2) analyzing this sequence of tokens to build a tree that is equivalent to the input expression. The first step above is usually made by a component called <em>lexer</em> or <em>tokenizer</em> (both names are commom to find), and the second step is made by the parser itself.</p>
 <p>Basically, the process of parsing takes a string (which contains the expression, or the source code your want to parse) as input. Then, the lexer (or tokenizer) breaks the input string into smaller pieces, which are usually called <em>tokens</em>. Then, the parser receives this stream of tokens produced by the tokenizer as input, and starts to analyze this sequence of tokens, to understand the structure of the input expression (or source code). As output, the parser produces a tree that is equivalent to the input expression, which is usually called <em>abstract syntax tree</em> (or AST for short). <a href="#fig-parser-pic" class="quarto-xref">Figure&nbsp;1</a> below exposes this process.</p>
-<div id="fig-parser-pic" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-parser-pic" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-parser-pic-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="./../parser-pic.png" class="img-fluid figure-img">
@@ -478,7 +473,7 @@ Figure&nbsp;1: The process of parsing
 <p>This approach is probably the easiest of all to implement, and it fit’s perfectly our example here because we are interested in parsing just a very small subset of simple Python expressions. If we wanted to parse more complex expressions, then, it would probably be better to use another approach to break the input string.</p>
 <p>So, the tokenizer will iterate through each character in the input string, and will mark any place that contains a single character the we interpret as an elegible place to break the string. Considering the type of expressions we stated at <a href="#sec-kind" class="quarto-xref">Section&nbsp;3.2</a>, the characters <code>"</code>, <code>'</code>, <code>+</code>, <code>{</code>, <code>}</code> are good candidates for “elegible break points”. Also, the character <code>f</code> is important for identifying formatted strings, as a consequence, he is also a good candidate.</p>
 <p>Let’s consider the following tokenizer:</p>
-<div id="lst-tokenizer" class="python listing quarto-float">
+<div id="lst-tokenizer" class="python listing quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-lst figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-tokenizer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Listing&nbsp;3: The function that represents our tokenizer
@@ -799,7 +794,7 @@ Listing&nbsp;3: The function that represents our tokenizer
 <p>When the loop stops in situation 1, then, the stack object will contain all of the tokens that represents the right operand. Having that in mind, all we need to do is to create a new temporary <code>ParserCache</code> object with these tokens, and call <code>_parse_input()</code> over it to parse the right operand. Then, <code>_parse_right_operand()</code> will simply return the parsed AST from this operation.</p>
 <p>In the other side, if the loop stops in situation 2, that means that, the right operand that we are currently trying to parse, is in fact, the left hand to a new addition operation. In other words, the tokens that we accumulated in the stack object until this very moment, are in fact, the tokens that represents the left operand of this new addition operation that we found.</p>
 <p>At <a href="#fig-addition" class="quarto-xref">Figure&nbsp;2</a> we can see this idea visually. Everything that is marked by the light red rectangle is the left operand of that particular addition operation, and everything that is marked by the dark blue rectangle is the right operand of that particular addition operation.</p>
-<div id="fig-addition" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-addition" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-addition-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="./../addition.png" class="img-fluid figure-img">
@@ -910,18 +905,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -953,7 +937,47 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/pedro-faria\.netlify\.app\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -988,7 +1012,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');

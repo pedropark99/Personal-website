@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.549">
+<meta name="generator" content="quarto-1.5.56">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -10,7 +10,7 @@
 <meta name="dcterms.date" content="2023-03-06">
 <meta name="description" content="Neste artigo discuto a minha experiência sobre como eu construi e melhorei o Data Storytelling de minhas apresentações para dois dos maiores bancos do mercado brasileiro.">
 
-<title>home |&gt; dplyr::glimpse() - Um estudo de caso sobre Data Storytelling em alguns dos maiores bancos brasileiros</title>
+<title>Um estudo de caso sobre Data Storytelling em alguns dos maiores bancos brasileiros – home |&gt; dplyr::glimpse()</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -95,7 +95,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -105,7 +105,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <span class="menu-text">About Me</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Posts</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-posts">    
@@ -124,7 +124,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
     </ul>
   </li>
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-publications" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-publications" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Publications</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-publications">    
@@ -151,7 +151,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <span class="menu-text">Donate or Sponsor Me</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-cv" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-cv" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">CV</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-cv">    
@@ -181,12 +181,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://medium.com/@pedropark99"> <i class="bi bi-medium" role="img" aria-label="Medium profile">
-</i> 
-<span class="menu-text"></span></a>
-  </li>  
-  <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/PedroPark9"> <i class="bi bi-twitter" role="img" aria-label="Twitter profile">
+    <a class="nav-link" href="https://twitter.com/PedroPark9"> <i class="bi bi-twitter-x" role="img" aria-label="Twitter profile">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -202,7 +197,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
-          <div class="quarto-navbar-tools">
+            <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -356,7 +351,7 @@ Important
 <p>Contudo, o formato dessa apresentação era problemático. Nós trazíamos uma <strong>quantidade monumental</strong> de informações para o banco. A apresentação usualmente trazia em torno de 40 slides diferentes, com aproximadamente 36 gráficos e 70 indicadores diferentes. Para mais, nós tentávamos apresentar todo esse volume de informações em uma reunião de apenas 1 hora.</p>
 <p>O resultado final disso tudo era uma apresentação que trazia um volume monumental de informações, porém, que também trazia um <strong>volume muito pequeno de insights e novas ideias de negócio para os gestores</strong>.</p>
 <p>Em <a href="#fig-print-report1" class="quarto-xref">Figura&nbsp;1</a> temos uma representação de um dos vários slides dessa apresentação<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. Imagine que essa apresentação trazia em torno de 40 slides semelhantes a esse:</p>
-<div id="fig-print-report1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-print-report1" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-print-report1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="./../print-report1.png" class="img-fluid figure-img">
@@ -389,7 +384,7 @@ Figura&nbsp;1: Representação de um slide da versão antiga do relatório
 <p>Tente ser parsimonioso nos seus slides! Isto é, tente incluir o mínimo possível de informação dentro dele. Se você precisa repassar várias informações em um slide, tente incorporar o máximo possível desse conteúdo em sua fala, e o mínino possível dele em forma escrita neste slide. Em geral, evite ao máximo incluir textos muito longos em seus slides.</p>
 <p>É estranho pensar nisso, mas geralmente, os gestores vão participar e assistir à sua apresentação porque eles estão interessados no que <strong>você</strong> tem a dizer sobre o negócio deles. Portanto, os seus slides são apenas um material de suporte, eles devem ser secundários, um coadjuvante de sua apresentação. Pois a peça principal da apresentação deve ser sempre a sua fala e a história que você quer contar através dela.</p>
 <p>Veja o slide em <a href="#fig-texto-longo" class="quarto-xref">Figura&nbsp;2</a> como exemplo. O problema principal desse slide, é que ele <strong>divide muito a atenção de seu espectador</strong>.</p>
-<div id="fig-texto-longo" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-texto-longo" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-texto-longo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="./../texto-longo.png" class="img-fluid figure-img">
@@ -423,7 +418,7 @@ Figura&nbsp;2: Slide com um parágrafo longo
 <section id="sec-relacoes" class="level3" data-number="4.2.2">
 <h3 data-number="4.2.2" class="anchored" data-anchor-id="sec-relacoes"><span class="header-section-number">4.2.2</span> Trace relações entre os indicadores</h3>
 <p>Agora, vamos analisar o slide mostrado em <a href="#fig-divisao2" class="quarto-xref">Figura&nbsp;3</a>. Perceba que esse slide, novamente, lembra muito uma página de um dashboard. O slide não parece tão cativante à primeira vista, pois ele só mostra os indicadores, ele não constrói uma relação, ou <strong>uma história</strong> entre eles.</p>
-<div id="fig-divisao2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-divisao2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-divisao2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="./../divisao2.png" class="img-fluid figure-img">
@@ -614,18 +609,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -657,7 +641,47 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/pedro-faria\.netlify\.app\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -692,7 +716,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');

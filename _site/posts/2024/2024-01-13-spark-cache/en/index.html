@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.549">
+<meta name="generator" content="quarto-1.5.56">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -10,7 +10,7 @@
 <meta name="dcterms.date" content="2024-01-13">
 <meta name="description" content="Did you ever used the DataFrame method cache() to cache your Spark DataFrame? In this post, I want to describe how you can use this method to get better performance.">
 
-<title>home |&gt; dplyr::glimpse() - How to use the cache effectively on Apache Spark</title>
+<title>How to use the cache effectively on Apache Spark – home |&gt; dplyr::glimpse()</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -36,7 +36,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -149,7 +149,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -159,7 +159,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <span class="menu-text">About Me</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Posts</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-posts">    
@@ -178,7 +178,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
     </ul>
   </li>
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-publications" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-publications" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Publications</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-publications">    
@@ -205,7 +205,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <span class="menu-text">Donate or Sponsor Me</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-cv" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-cv" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">CV</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-cv">    
@@ -235,12 +235,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://medium.com/@pedropark99"> <i class="bi bi-medium" role="img" aria-label="Medium profile">
-</i> 
-<span class="menu-text"></span></a>
-  </li>  
-  <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/PedroPark9"> <i class="bi bi-twitter" role="img" aria-label="Twitter profile">
+    <a class="nav-link" href="https://twitter.com/PedroPark9"> <i class="bi bi-twitter-x" role="img" aria-label="Twitter profile">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -256,7 +251,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
-          <div class="quarto-navbar-tools">
+            <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -422,7 +417,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <p>The notebook I encountered, was essentially responsible for update 3 different tables in our SQL databases, and to do that, this notebook was defining 5 different Spark DataFrames, and all of them were being cached with the <code>cache()</code> DataFrame method.</p>
 <p>If I execute this notebook in a more robust Spark cluster, with more worker nodes, with more RAM memory available, then, the notebook just executed fine.</p>
 <p>The complete execution of the notebook took around 55 minutes, which is a long time… But no runtime errors were raised. In essence, no <code>OutOfMemory</code> errors were raised because we were lucky. Because this more robust cluster had enough memory space to hold 5 DataFrames in cache. <a href="#fig-memory2" class="quarto-xref">Figure&nbsp;1</a> presents this process visually:</p>
-<div id="fig-memory2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-memory2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-memory2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="./../memory2.svg" class="img-fluid figure-img">
@@ -435,7 +430,7 @@ Figure&nbsp;1: DataFrames being cached in a more robust Spark cluster
 <p>However, this same notebook was being executed every day by a scheduled job in Databricks (i.e.&nbsp;a Databricks Workflow). But every time this notebook was executed through the scheduled job, it failed with <code>OutOfMemory</code> errors. The scheduled job was being executed by a much smaller cluster, that had only two worder nodes and 8 GB of RAM memory available.</p>
 <p>The <code>OutOfMemory</code> errors were being raised right after we cached the third Spark DataFrame (let’s call this DataFrame of <code>df3</code>) defined in the notebook. So, in summary, what was happening is: Spark was caching each DataFrame defined in the notebook, but on the third DataFrame, the Spark process run out of memory. In other words, we did not had any more memory to do anything!</p>
 <p><a href="#fig-memory" class="quarto-xref">Figure&nbsp;2</a> summarizes this process visually:</p>
-<div id="fig-memory" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-memory" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-memory-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="./../memory.svg" class="img-fluid figure-img">
@@ -503,18 +498,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -546,7 +530,47 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/pedro-faria\.netlify\.app\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -581,7 +605,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');

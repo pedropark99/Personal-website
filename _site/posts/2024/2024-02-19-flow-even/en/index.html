@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.549">
+<meta name="generator" content="quarto-1.5.56">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -10,7 +10,7 @@
 <meta name="dcterms.date" content="2024-02-19">
 <meta name="description" content="In this article, I want to implement the Jobard-Lefer Algorithm in C. With this algorithm, we can produce evenly-spaced and non-overlapping curves in a flow field (i.e.&nbsp;a vector field).">
 
-<title>home |&gt; dplyr::glimpse() - Producing evenly-spaced and non-overlapping curves with Jobard-Lefer Algorithm in C</title>
+<title>Producing evenly-spaced and non-overlapping curves with Jobard-Lefer Algorithm in C – home |&gt; dplyr::glimpse()</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -36,7 +36,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -133,7 +133,7 @@ gtag('js', new Date());
 gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 </script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -178,7 +178,7 @@ window.Quarto = {
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -188,7 +188,7 @@ window.Quarto = {
 <span class="menu-text">About Me</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Posts</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-posts">    
@@ -207,7 +207,7 @@ window.Quarto = {
     </ul>
   </li>
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-publications" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-publications" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Publications</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-publications">    
@@ -234,7 +234,7 @@ window.Quarto = {
 <span class="menu-text">Donate or Sponsor Me</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-cv" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-cv" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">CV</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-cv">    
@@ -264,12 +264,7 @@ window.Quarto = {
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://medium.com/@pedropark99"> <i class="bi bi-medium" role="img" aria-label="Medium profile">
-</i> 
-<span class="menu-text"></span></a>
-  </li>  
-  <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/PedroPark9"> <i class="bi bi-twitter" role="img" aria-label="Twitter profile">
+    <a class="nav-link" href="https://twitter.com/PedroPark9"> <i class="bi bi-twitter-x" role="img" aria-label="Twitter profile">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -285,7 +280,7 @@ window.Quarto = {
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
-          <div class="quarto-navbar-tools">
+            <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -392,7 +387,7 @@ window.Quarto = {
 <p>A flow field (which is also called a vector field in some ocasions) is essentially a field (or a two-dimensional grid) of angles. <a href="#fig-flow-field1" class="quarto-xref">Figure&nbsp;1</a> shows an example of a flow field:</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-flow-field1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-flow-field1" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-flow-field1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="index_files/figure-html/fig-flow-field1-1.png" class="img-fluid figure-img" width="1400">
@@ -449,7 +444,7 @@ Figure&nbsp;1: An example of flow field
 <p>The <a href="#fig-flow-field2" class="quarto-xref">Figure&nbsp;2</a> below shows the end result of this process. In this example, we begin in coordinate <span class="math inline">\((5, 10)\)</span>, i.e.&nbsp;<span class="math inline">\(x = 5\)</span> and <span class="math inline">\(y = 10\)</span>, in the field, and take 45 sequential steps in the field by following the direction of the angles we encounter in the way. The curve painted in red shows the end result of this “walking process”.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-flow-field2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-flow-field2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-flow-field2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="index_files/figure-html/fig-flow-field2-1.png" class="img-fluid figure-img" width="1400">
@@ -553,7 +548,7 @@ y'=r\times \sin(A)
 <div aria-describedby="fig-diff-algorithm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-diff-algorithm" style="flex-basis: 100.0%;justify-content: flex-start;">
-<div id="fig-diff-overlap" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-diff-overlap" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
 <div aria-describedby="fig-diff-overlap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="./../overlap.png" class="img-fluid figure-img" data-ref-parent="fig-diff-algorithm">
@@ -567,7 +562,7 @@ y'=r\times \sin(A)
 </div>
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-diff-algorithm" style="flex-basis: 100.0%;justify-content: flex-start;">
-<div id="fig-diff-non-overlap" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-diff-non-overlap" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
 <div aria-describedby="fig-diff-non-overlap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="./../non_overlap.png" class="img-fluid figure-img" data-ref-parent="fig-diff-algorithm">
@@ -593,7 +588,7 @@ Figure&nbsp;3: Demonstrating the effect of the Jobard-Lefer algorithm on curves 
 <p><a href="#fig-even-algo" class="quarto-xref">Figure&nbsp;4</a> demonstrates this process visually. And I know what you are thinking! “These curves in <a href="#fig-even-algo" class="quarto-xref">Figure&nbsp;4</a> doesn’t look like curves!”. Just remember the steps I described at <a href="#sec-draw-curve" class="quarto-xref">Section&nbsp;3</a>. We are essentially drawing curves by connecting the positions where we walked through. Is like I applied a very big zoom over the image while the algorithm is actively drawing the curves.</p>
 <p>So, at a very low scale, the curves we are drawing are not really curves at all. But at a normal scale, when we zoom out of the image, and look to the image with our own human eyes, the steps are so small, so small, that we cannot perceive the connected dots. The curve effectivelly looks very much like a nice and fluid curve.</p>
 <p>In the example of <a href="#fig-even-algo" class="quarto-xref">Figure&nbsp;4</a>, we have one already existing curve (in blue), and we are currently drawing a second curve into the field. At each step, we calculate the coordinates of the next step we need to make, them, we compare the distance between the position of this next step, and the points from other curves that are close by. If this distance between this next step and any point from the surrounding curves is lower or equal than <span class="math inline">\(d_{sep}\)</span>, we “cancel” the next step, and we stop drawing the current curve.</p>
-<div id="fig-even-algo" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-even-algo" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-even-algo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="./../distance.svg" class="img-fluid figure-img">
@@ -638,7 +633,7 @@ d = \sqrt{[(x_2 - x_1)^2 + (y_2 - y_1)^2]}
 <div aria-describedby="fig-cartesian-grid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-cartesian-grid" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-cartesian1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-cartesian1" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
 <div aria-describedby="fig-cartesian1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="./../cartesian_plane.png" class="img-fluid figure-img" data-ref-parent="fig-cartesian-grid">
@@ -650,7 +645,7 @@ d = \sqrt{[(x_2 - x_1)^2 + (y_2 - y_1)^2]}
 </div>
 </div>
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-cartesian-grid" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-density1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-density1" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
 <div aria-describedby="fig-density1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="./../density_grid.png" class="img-fluid figure-img" data-ref-parent="fig-cartesian-grid">
@@ -678,7 +673,7 @@ Figure&nbsp;5: The relationship between the Cartesian plane and the density grid
 <li><span class="math inline">\(x = 21.9, y = 52.9\)</span> (Curve B);</li>
 </ul>
 <p>If we set <span class="math inline">\(d_{sep}\)</span> to 15, then, all of these 4 points will be mapped into the same density cell at position <span class="math inline">\(x = 2\)</span> and <span class="math inline">\(y = 4\)</span> of the density grid. <a href="#fig-density-cell" class="quarto-xref">Figure&nbsp;6</a> presents this idea visually.</p>
-<div id="fig-density-cell" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-density-cell" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-density-cell-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="./../density_cell.svg" class="img-fluid figure-img">
@@ -743,7 +738,7 @@ Figure&nbsp;6: An example of density cell
 <p>In essence, at each step we take in the flow field, we need to calculate the position of the density cell that is mapped to our next move. By identifying which cell in the density grid we are mapped to, we can look at the pointers that are already stored inside this specific density cell to find which points are near by.</p>
 <p>Actually, the algortihm from <span class="citation" data-cites="jobard97">Jobard and Lefer (<a href="#ref-jobard97" role="doc-biblioref">1997</a>)</span> looks not only at the specific cell that is mapped to our next move, but it also looks at the 8 density cells that are surrounding this current cell.</p>
 <p>You can see at <a href="#fig-distance3" class="quarto-xref">Figure&nbsp;7</a> a representation of this process.</p>
-<div id="fig-distance3" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-distance3" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-distance3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="./../distance-surroundings.svg" class="img-fluid figure-img">
@@ -875,7 +870,7 @@ Figure&nbsp;7: Calculating the distance between our current position and the nea
 <p>In other words, for the <span class="citation" data-cites="jobard97">Jobard and Lefer (<a href="#ref-jobard97" role="doc-biblioref">1997</a>)</span> algorithm to work effectively, we need to draw every single curve in both directions. <a href="#fig-curve-both-directions" class="quarto-xref">Figure&nbsp;8</a> shows what “drawing a curve in both directions” actually means.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-curve-both-directions" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-curve-both-directions" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-curve-both-directions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="index_files/figure-html/fig-curve-both-directions-1.png" class="img-fluid figure-img" width="1400">
@@ -1129,7 +1124,7 @@ Figure&nbsp;8: Drawing a curve in both directions
 <section id="the-end-result-of-the-algorithm" class="level2" data-number="6.3">
 <h2 data-number="6.3" class="anchored" data-anchor-id="the-end-result-of-the-algorithm"><span class="header-section-number">6.3</span> The end result of the algorithm</h2>
 <p>Now that the algorithm is complete, we can now see the end results it produces. <a href="#fig-even-curves1" class="quarto-xref">Figure&nbsp;9</a> shows an example. We essentially took the exact same flow field of <a href="#fig-diff-algorithm" class="quarto-xref">Figure&nbsp;3</a>. We just changed the value for <span class="math inline">\(d_{sep}\)</span> slightly.</p>
-<div id="fig-even-curves1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-even-curves1" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-even-curves1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="./../even_curves1.png" class="img-fluid figure-img">
@@ -1144,7 +1139,7 @@ Figure&nbsp;9: A result of the evenly-spaced curves algorithm. Configs: flow_fie
 <p>Also, the order in which you draw each valid seed point you find can also influence this specific aspect of the image. For example, if you draw the valid seed points in sequential order, as they come to you, them, you get a result. But if you draw these valid seed points in a random order, you might end up getting a slightly different result.</p>
 <p>This is not something that will happen always, in 100% cases. But it normally does happen with this particular algorithm. But this is something that you can easily improve (or fix) by changing the value of <code>MIN_STEPS_ALLOWED</code>.</p>
 <p>In most cases, this variable is configured to 2. But If you raise this number, just a bit, you usually end up getting much better results. At <a href="#fig-even-curves2" class="quarto-xref">Figure&nbsp;10</a> we have the result, when <code>MIN_STEPS_ALLOWED</code> is configured to 5.</p>
-<div id="fig-even-curves2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-even-curves2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-even-curves2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="./../even_curves2.png" class="img-fluid figure-img">
@@ -1211,18 +1206,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1254,7 +1238,47 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/pedro-faria\.netlify\.app\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -1289,7 +1313,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');

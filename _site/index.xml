@@ -9,7 +9,7 @@
 <link>https://pedro-faria.netlify.app/</link>
 <atom:link href="https://pedro-faria.netlify.app/index.xml" rel="self" type="application/rss+xml"/>
 <description>A blog about programming and data analysis, specially with R and Python</description>
-<generator>quarto-1.4.549</generator>
+<generator>quarto-1.5.56</generator>
 <lastBuildDate>Sat, 25 May 2024 03:00:00 GMT</lastBuildDate>
 <item>
   <title>Introdução à Linguagem R: seus fundamentos e sua prática</title>
@@ -250,6 +250,7 @@ font-style: inherit;">import</span> re</span>
 <span id="cb7-3"></span>
 <span id="cb7-4"><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">def</span> parse_response(resp: <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">str</span>) <span class="op" style="color: #5E5E5E;
@@ -286,6 +287,7 @@ background-color: null;
 font-style: inherit;">]'</span></span>
 <span id="cb7-8">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">return</span> json.loads(resp)</span>
 <span id="cb7-9"></span>
 <span id="cb7-10">response <span class="op" style="color: #5E5E5E;
@@ -303,8 +305,10 @@ background-color: null;
 font-style: inherit;">list</span>()</span>
 <span id="cb7-13"><span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> token <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> response:</span>
 <span id="cb7-14">    tokens.append(token[<span class="st" style="color: #20794D;
 background-color: null;
@@ -391,7 +395,7 @@ assert fibonacci(9) == 34
 <p>A flow field (which is also called a vector field in some ocasions) is essentially a field (or a two-dimensional grid) of angles. Figure&nbsp;1 shows an example of a flow field:</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-flow-field1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-flow-field1" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-flow-field1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://pedro-faria.netlify.app/posts/2024/2024-02-19-flow-even/en/index_files/figure-html/fig-flow-field1-1.png" class="img-fluid figure-img" width="1400">
@@ -489,6 +493,7 @@ background-color: null;
 font-style: inherit;">;</span></span>
 <span id="cb1-17">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
@@ -510,6 +515,7 @@ background-color: null;
 font-style: inherit;">{</span></span>
 <span id="cb1-18">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
@@ -586,7 +592,7 @@ font-style: inherit;">}</span></span></code></pre></div>
 <p>The Figure&nbsp;2 below shows the end result of this process. In this example, we begin in coordinate <img src="https://latex.codecogs.com/png.latex?(5,%2010)">, i.e.&nbsp;<img src="https://latex.codecogs.com/png.latex?x%20=%205"> and <img src="https://latex.codecogs.com/png.latex?y%20=%2010">, in the field, and take 45 sequential steps in the field by following the direction of the angles we encounter in the way. The curve painted in red shows the end result of this “walking process”.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-flow-field2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-flow-field2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-flow-field2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://pedro-faria.netlify.app/posts/2024/2024-02-19-flow-even/en/index_files/figure-html/fig-flow-field2-1.png" class="img-fluid figure-img" width="1400">
@@ -619,6 +625,7 @@ font-style: inherit;">30</span></span>
 <span id="cb2-2"></span>
 <span id="cb2-3"><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">struct</span> Curve <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">{</span></span>
@@ -645,6 +652,7 @@ font-style: inherit;">;</span></span>
 background-color: null;
 font-style: inherit;">}</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">typedef</span> Curve<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">;</span></span>
@@ -671,6 +679,7 @@ font-style: inherit;">(</span>N_STEPS <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">*</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">sizeof</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
@@ -688,6 +697,7 @@ font-style: inherit;">(</span>N_STEPS <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">*</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">sizeof</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
@@ -730,6 +740,7 @@ background-color: null;
 font-style: inherit;">{</span></span>
 <span id="cb3-4">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">return</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span></span>
@@ -764,6 +775,7 @@ font-style: inherit;">}</span></span>
 <span id="cb3-11"></span>
 <span id="cb3-12"><span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
@@ -816,6 +828,7 @@ font-style: inherit;">);</span></span>
 <span id="cb3-15"></span>
 <span id="cb3-16">  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span>off_boundaries<span class="op" style="color: #5E5E5E;
@@ -831,6 +844,7 @@ background-color: null;
 font-style: inherit;">{</span></span>
 <span id="cb3-17">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">break</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">;</span></span>
@@ -944,7 +958,7 @@ font-style: inherit;">}</span></span></code></pre></div>
 <div aria-describedby="fig-diff-algorithm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-diff-algorithm" style="flex-basis: 100.0%;justify-content: flex-start;">
-<div id="fig-diff-overlap" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-diff-overlap" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
 <div aria-describedby="fig-diff-overlap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://pedro-faria.netlify.app/posts/2024/2024-02-19-flow-even/overlap.png" class="img-fluid figure-img" data-ref-parent="fig-diff-algorithm">
@@ -958,7 +972,7 @@ font-style: inherit;">}</span></span></code></pre></div>
 </div>
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-diff-algorithm" style="flex-basis: 100.0%;justify-content: flex-start;">
-<div id="fig-diff-non-overlap" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-diff-non-overlap" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
 <div aria-describedby="fig-diff-non-overlap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://pedro-faria.netlify.app/posts/2024/2024-02-19-flow-even/non_overlap.png" class="img-fluid figure-img" data-ref-parent="fig-diff-algorithm">
@@ -984,7 +998,7 @@ Figure&nbsp;3: Demonstrating the effect of the Jobard-Lefer algorithm on curves 
 <p>Figure&nbsp;4 demonstrates this process visually. And I know what you are thinking! “These curves in Figure&nbsp;4 doesn’t look like curves!”. Just remember the steps I described at Section&nbsp;3. We are essentially drawing curves by connecting the positions where we walked through. Is like I applied a very big zoom over the image while the algorithm is actively drawing the curves.</p>
 <p>So, at a very low scale, the curves we are drawing are not really curves at all. But at a normal scale, when we zoom out of the image, and look to the image with our own human eyes, the steps are so small, so small, that we cannot perceive the connected dots. The curve effectivelly looks very much like a nice and fluid curve.</p>
 <p>In the example of Figure&nbsp;4, we have one already existing curve (in blue), and we are currently drawing a second curve into the field. At each step, we calculate the coordinates of the next step we need to make, them, we compare the distance between the position of this next step, and the points from other curves that are close by. If this distance between this next step and any point from the surrounding curves is lower or equal than <img src="https://latex.codecogs.com/png.latex?d_%7Bsep%7D">, we “cancel” the next step, and we stop drawing the current curve.</p>
-<div id="fig-even-algo" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-even-algo" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-even-algo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://pedro-faria.netlify.app/posts/2024/2024-02-19-flow-even/distance.svg" class="img-fluid figure-img">
@@ -1052,6 +1066,7 @@ background-color: null;
 font-style: inherit;">);</span></span>
 <span id="cb4-4">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">return</span> sqrt<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span>s1 <span class="op" style="color: #5E5E5E;
@@ -1103,6 +1118,7 @@ background-color: null;
 font-style: inherit;">;</span></span>
 <span id="cb5-3">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">return</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
@@ -1150,6 +1166,7 @@ background-color: null;
 font-style: inherit;">;</span></span>
 <span id="cb5-8">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">return</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
@@ -1171,7 +1188,7 @@ font-style: inherit;">}</span></span></code></pre></div>
 <div aria-describedby="fig-cartesian-grid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-cartesian-grid" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-cartesian1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-cartesian1" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
 <div aria-describedby="fig-cartesian1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://pedro-faria.netlify.app/posts/2024/2024-02-19-flow-even/cartesian_plane.png" class="img-fluid figure-img" data-ref-parent="fig-cartesian-grid">
@@ -1183,7 +1200,7 @@ font-style: inherit;">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-cartesian-grid" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-density1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-density1" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
 <div aria-describedby="fig-density1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://pedro-faria.netlify.app/posts/2024/2024-02-19-flow-even/density_grid.png" class="img-fluid figure-img" data-ref-parent="fig-cartesian-grid">
@@ -1211,7 +1228,7 @@ Figure&nbsp;5: The relationship between the Cartesian plane and the density grid
 <li><img src="https://latex.codecogs.com/png.latex?x%20=%2021.9,%20y%20=%2052.9"> (Curve B);</li>
 </ul>
 <p>If we set <img src="https://latex.codecogs.com/png.latex?d_%7Bsep%7D"> to 15, then, all of these 4 points will be mapped into the same density cell at position <img src="https://latex.codecogs.com/png.latex?x%20=%202"> and <img src="https://latex.codecogs.com/png.latex?y%20=%204"> of the density grid. Figure&nbsp;6 presents this idea visually.</p>
-<div id="fig-density-cell" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-density-cell" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-density-cell-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://pedro-faria.netlify.app/posts/2024/2024-02-19-flow-even/density_cell.svg" class="img-fluid figure-img">
@@ -1255,6 +1272,7 @@ font-style: inherit;">))</span></span>
 <span id="cb6-3"></span>
 <span id="cb6-4"><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">struct</span> DensityCell <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">{</span></span>
@@ -1286,6 +1304,7 @@ font-style: inherit;">;</span></span>
 background-color: null;
 font-style: inherit;">}</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">typedef</span> DensityCell<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">;</span></span>
@@ -1308,6 +1327,7 @@ background-color: null;
 font-style: inherit;">;</span></span>
 <span id="cb6-13"><span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
@@ -1329,6 +1349,7 @@ background-color: null;
 font-style: inherit;">{</span></span>
 <span id="cb6-14">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
@@ -1386,6 +1407,7 @@ font-style: inherit;">(</span>density_capacity <span class="op" style="color: #5
 background-color: null;
 font-style: inherit;">*</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">sizeof</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
@@ -1407,6 +1429,7 @@ font-style: inherit;">(</span>density_capacity <span class="op" style="color: #5
 background-color: null;
 font-style: inherit;">*</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">sizeof</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
@@ -1474,6 +1497,7 @@ background-color: null;
 font-style: inherit;">);</span></span>
 <span id="cb7-7">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span>off_boundaries<span class="op" style="color: #5E5E5E;
@@ -1489,6 +1513,7 @@ background-color: null;
 font-style: inherit;">{</span></span>
 <span id="cb7-8">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">return</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">;</span></span>
@@ -1525,6 +1550,7 @@ font-style: inherit;">;</span></span>
 <span id="cb7-13">    </span>
 <span id="cb7-14">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">((</span>space_used <span class="op" style="color: #5E5E5E;
@@ -1589,6 +1615,7 @@ font-style: inherit;">;</span></span>
 background-color: null;
 font-style: inherit;">}</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">else</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">{</span></span>
@@ -1616,7 +1643,7 @@ font-style: inherit;">}</span></span></code></pre></div>
 <p>In essence, at each step we take in the flow field, we need to calculate the position of the density cell that is mapped to our next move. By identifying which cell in the density grid we are mapped to, we can look at the pointers that are already stored inside this specific density cell to find which points are near by.</p>
 <p>Actually, the algortihm from <span class="citation" data-cites="jobard97">Jobard and Lefer (1997)</span> looks not only at the specific cell that is mapped to our next move, but it also looks at the 8 density cells that are surrounding this current cell.</p>
 <p>You can see at Figure&nbsp;7 a representation of this process.</p>
-<div id="fig-distance3" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-distance3" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-distance3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://pedro-faria.netlify.app/posts/2024/2024-02-19-flow-even/distance-surroundings.svg" class="img-fluid figure-img">
@@ -1690,6 +1717,7 @@ background-color: null;
 font-style: inherit;">);</span></span>
 <span id="cb8-8">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span>off_boundaries<span class="op" style="color: #5E5E5E;
@@ -1705,6 +1733,7 @@ background-color: null;
 font-style: inherit;">{</span></span>
 <span id="cb8-9">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">return</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
@@ -1846,6 +1875,7 @@ background-color: null;
 font-style: inherit;">));</span></span>
 <span id="cb8-20">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
@@ -1865,6 +1895,7 @@ background-color: null;
 font-style: inherit;">{</span></span>
 <span id="cb8-21">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
@@ -1897,6 +1928,7 @@ background-color: null;
 font-style: inherit;">;</span></span>
 <span id="cb8-23">            <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span>n_elements <span class="op" style="color: #5E5E5E;
@@ -1910,6 +1942,7 @@ background-color: null;
 font-style: inherit;">{</span></span>
 <span id="cb8-24">                <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">continue</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">;</span></span>
@@ -1919,6 +1952,7 @@ font-style: inherit;">}</span></span>
 <span id="cb8-26"></span>
 <span id="cb8-27">            <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
@@ -1985,6 +2019,7 @@ background-color: null;
 font-style: inherit;">);</span></span>
 <span id="cb8-31">                <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span>dist <span class="op" style="color: #5E5E5E;
@@ -1996,6 +2031,7 @@ background-color: null;
 font-style: inherit;">{</span></span>
 <span id="cb8-32">                    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">return</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
@@ -2016,6 +2052,7 @@ font-style: inherit;">}</span></span>
 <span id="cb8-37">  </span>
 <span id="cb8-38">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">return</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
@@ -2042,6 +2079,7 @@ font-style: inherit;">(</span>N_CURVES <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">*</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">sizeof</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span>Curve<span class="op" style="color: #5E5E5E;
@@ -2049,6 +2087,7 @@ background-color: null;
 font-style: inherit;">));</span></span>
 <span id="cb9-2"><span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
@@ -2080,6 +2119,7 @@ font-style: inherit;">(</span>N_STEPS <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">*</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">sizeof</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
@@ -2099,6 +2139,7 @@ font-style: inherit;">(</span>N_STEPS <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">*</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">sizeof</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
@@ -2112,6 +2153,7 @@ font-style: inherit;">}</span></span>
 <span id="cb9-6"></span>
 <span id="cb9-7"><span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
@@ -2165,6 +2207,7 @@ font-style: inherit;">;</span></span>
 <span id="cb9-11"></span>
 <span id="cb9-12">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
@@ -2217,6 +2260,7 @@ font-style: inherit;">);</span></span>
 <span id="cb9-15"></span>
 <span id="cb9-16">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span>off_boundaries<span class="op" style="color: #5E5E5E;
@@ -2232,6 +2276,7 @@ background-color: null;
 font-style: inherit;">{</span></span>
 <span id="cb9-17">            <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">break</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">;</span></span>
@@ -2312,6 +2357,7 @@ font-style: inherit;">);</span></span>
 <span id="cb9-32"></span>
 <span id="cb9-33">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(!</span>valid<span class="op" style="color: #5E5E5E;
@@ -2327,6 +2373,7 @@ background-color: null;
 font-style: inherit;">// and jump to start drawing next curve.</span></span>
 <span id="cb9-36">            <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">break</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">;</span></span>
@@ -2372,6 +2419,7 @@ background-color: null;
 font-style: inherit;">// we add the coordinates of this curve to the density grid.</span></span>
 <span id="cb9-45">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
@@ -2452,7 +2500,7 @@ font-style: inherit;">}</span></span></code></pre></div>
 <p>In other words, for the <span class="citation" data-cites="jobard97">Jobard and Lefer (1997)</span> algorithm to work effectively, we need to draw every single curve in both directions. Figure&nbsp;8 shows what “drawing a curve in both directions” actually means.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-curve-both-directions" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-curve-both-directions" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-curve-both-directions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://pedro-faria.netlify.app/posts/2024/2024-02-19-flow-even/en/index_files/figure-html/fig-curve-both-directions-1.png" class="img-fluid figure-img" width="1400">
@@ -2468,6 +2516,7 @@ Figure&nbsp;8: Drawing a curve in both directions
 <p>You can see below that, three more variables were added to the struct: <code>step_id</code> is essentially the number of the step that created the corresponding x and y coordinates; <code>steps_taken</code> is the total number of steps taken to draw this curve; <code>direction</code>, an integer indicating if the corresponding x and y coordinates were calculated when the algorithm was drawing the curve in the direction right to left (zero), or, if was drawing the curve from left to right (one).</p>
 <div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb10-1"><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">struct</span> Curve <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">{</span></span>
@@ -2522,6 +2571,7 @@ font-style: inherit;">;</span></span>
 background-color: null;
 font-style: inherit;">}</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">typedef</span> Curve<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">;</span></span></code></pre></div>
@@ -2587,6 +2637,7 @@ background-color: null;
 font-style: inherit;">;</span></span>
 <span id="cb11-11">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
@@ -2734,6 +2785,7 @@ background-color: null;
 font-style: inherit;">// Draw curve from right to left</span></span>
 <span id="cb11-26">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">while</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span>i <span class="op" style="color: #5E5E5E;
@@ -2782,6 +2834,7 @@ font-style: inherit;">);</span></span>
 <span id="cb11-29"></span>
 <span id="cb11-30">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span>off_boundaries<span class="op" style="color: #5E5E5E;
@@ -2797,6 +2850,7 @@ background-color: null;
 font-style: inherit;">{</span></span>
 <span id="cb11-31">            <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">break</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">;</span></span>
@@ -2880,12 +2934,14 @@ font-style: inherit;">);</span></span>
 <span id="cb11-47"></span>
 <span id="cb11-48">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(!</span>valid<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">)</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">break</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">;</span></span>
@@ -2954,6 +3010,7 @@ background-color: null;
 font-style: inherit;">// Draw curve from left to right</span></span>
 <span id="cb11-62">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">while</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span>i <span class="op" style="color: #5E5E5E;
@@ -2996,6 +3053,7 @@ font-style: inherit;">);</span></span>
 <span id="cb11-65"></span>
 <span id="cb11-66">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span>off_boundaries<span class="op" style="color: #5E5E5E;
@@ -3011,6 +3069,7 @@ background-color: null;
 font-style: inherit;">{</span></span>
 <span id="cb11-67">            <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">break</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">;</span></span>
@@ -3094,12 +3153,14 @@ font-style: inherit;">);</span></span>
 <span id="cb11-83"></span>
 <span id="cb11-84">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(!</span>valid<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">)</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">break</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">;</span></span>
@@ -3167,6 +3228,7 @@ font-style: inherit;">}</span></span>
 <span id="cb11-94"></span>
 <span id="cb11-95">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">return</span> curve<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">;</span></span>
@@ -3190,6 +3252,7 @@ font-style: inherit;">}</span></span></code></pre></div>
 <p>The function <code>collect_seedpoints()</code> below is responsible for collecting all elegible seed points from a single curve. The collected seedpoints are stored inside a <code>SeedPointsQueue</code> object, that represents a queue of seed points to be evaluated.</p>
 <div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb12-1"><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">struct</span> Point <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">{</span></span>
@@ -3207,12 +3270,14 @@ font-style: inherit;">;</span></span>
 background-color: null;
 font-style: inherit;">}</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">typedef</span> Point<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">;</span></span>
 <span id="cb12-5"></span>
 <span id="cb12-6"><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">struct</span> SeedPointsQueue <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">{</span></span>
@@ -3235,6 +3300,7 @@ font-style: inherit;">;</span></span>
 background-color: null;
 font-style: inherit;">}</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">typedef</span> SeedPointsQueue<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">;</span></span>
@@ -3269,6 +3335,7 @@ background-color: null;
 font-style: inherit;">;</span></span>
 <span id="cb12-16">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span>steps_taken <span class="op" style="color: #5E5E5E;
@@ -3291,6 +3358,7 @@ background-color: null;
 font-style: inherit;">;</span></span>
 <span id="cb12-18">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">return</span> queue<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">;</span></span>
@@ -3312,6 +3380,7 @@ font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">*</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">sizeof</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span>Point<span class="op" style="color: #5E5E5E;
@@ -3339,6 +3408,7 @@ background-color: null;
 font-style: inherit;">;</span></span>
 <span id="cb12-24">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
@@ -3587,6 +3657,7 @@ font-style: inherit;">}</span></span>
 <span id="cb12-51"></span>
 <span id="cb12-52">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">return</span> queue<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">;</span></span>
@@ -3673,6 +3744,7 @@ background-color: null;
 font-style: inherit;">;</span></span>
 <span id="cb13-10"><span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
@@ -3743,6 +3815,7 @@ font-style: inherit;">++;</span></span>
 <span id="cb13-17"></span>
 <span id="cb13-18"><span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">while</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span>curve_id <span class="op" style="color: #5E5E5E;
@@ -3770,6 +3843,7 @@ background-color: null;
 font-style: inherit;">]);</span></span>
 <span id="cb13-21">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
@@ -3832,6 +3906,7 @@ font-style: inherit;">);</span></span>
 <span id="cb13-30"></span>
 <span id="cb13-31">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span>valid<span class="op" style="color: #5E5E5E;
@@ -3868,6 +3943,7 @@ background-color: null;
 font-style: inherit;">);</span></span>
 <span id="cb13-39">            <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span>curve<span class="op" style="color: #5E5E5E;
@@ -3881,6 +3957,7 @@ background-color: null;
 font-style: inherit;">{</span></span>
 <span id="cb13-40">                <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">continue</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">;</span></span>
@@ -3913,6 +3990,7 @@ background-color: null;
 font-style: inherit;">;</span></span>
 <span id="cb13-46">            <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="dt" style="color: #AD0000;
@@ -3996,7 +4074,7 @@ font-style: inherit;">}</span></span></code></pre></div>
 <section id="the-end-result-of-the-algorithm" class="level2" data-number="6.3">
 <h2 data-number="6.3" class="anchored" data-anchor-id="the-end-result-of-the-algorithm"><span class="header-section-number">6.3</span> The end result of the algorithm</h2>
 <p>Now that the algorithm is complete, we can now see the end results it produces. Figure&nbsp;9 shows an example. We essentially took the exact same flow field of Figure&nbsp;3. We just changed the value for <img src="https://latex.codecogs.com/png.latex?d_%7Bsep%7D"> slightly.</p>
-<div id="fig-even-curves1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-even-curves1" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-even-curves1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://pedro-faria.netlify.app/posts/2024/2024-02-19-flow-even/even_curves1.png" class="img-fluid figure-img">
@@ -4011,7 +4089,7 @@ Figure&nbsp;9: A result of the evenly-spaced curves algorithm. Configs: flow_fie
 <p>Also, the order in which you draw each valid seed point you find can also influence this specific aspect of the image. For example, if you draw the valid seed points in sequential order, as they come to you, them, you get a result. But if you draw these valid seed points in a random order, you might end up getting a slightly different result.</p>
 <p>This is not something that will happen always, in 100% cases. But it normally does happen with this particular algorithm. But this is something that you can easily improve (or fix) by changing the value of <code>MIN_STEPS_ALLOWED</code>.</p>
 <p>In most cases, this variable is configured to 2. But If you raise this number, just a bit, you usually end up getting much better results. At Figure&nbsp;10 we have the result, when <code>MIN_STEPS_ALLOWED</code> is configured to 5.</p>
-<div id="fig-even-curves2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-even-curves2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-even-curves2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://pedro-faria.netlify.app/posts/2024/2024-02-19-flow-even/even_curves2.png" class="img-fluid figure-img">
@@ -4436,7 +4514,7 @@ font-style: inherit;">10</span>)</span>
 <p>The notebook I encountered, was essentially responsible for update 3 different tables in our SQL databases, and to do that, this notebook was defining 5 different Spark DataFrames, and all of them were being cached with the <code>cache()</code> DataFrame method.</p>
 <p>If I execute this notebook in a more robust Spark cluster, with more worker nodes, with more RAM memory available, then, the notebook just executed fine.</p>
 <p>The complete execution of the notebook took around 55 minutes, which is a long time… But no runtime errors were raised. In essence, no <code>OutOfMemory</code> errors were raised because we were lucky. Because this more robust cluster had enough memory space to hold 5 DataFrames in cache. Figure&nbsp;1 presents this process visually:</p>
-<div id="fig-memory2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-memory2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-memory2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://pedro-faria.netlify.app/posts/2024/2024-01-13-spark-cache/memory2.svg" class="img-fluid figure-img">
@@ -4449,7 +4527,7 @@ Figure&nbsp;1: DataFrames being cached in a more robust Spark cluster
 <p>However, this same notebook was being executed every day by a scheduled job in Databricks (i.e.&nbsp;a Databricks Workflow). But every time this notebook was executed through the scheduled job, it failed with <code>OutOfMemory</code> errors. The scheduled job was being executed by a much smaller cluster, that had only two worder nodes and 8 GB of RAM memory available.</p>
 <p>The <code>OutOfMemory</code> errors were being raised right after we cached the third Spark DataFrame (let’s call this DataFrame of <code>df3</code>) defined in the notebook. So, in summary, what was happening is: Spark was caching each DataFrame defined in the notebook, but on the third DataFrame, the Spark process run out of memory. In other words, we did not had any more memory to do anything!</p>
 <p>Figure&nbsp;2 summarizes this process visually:</p>
-<div id="fig-memory" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-memory" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-memory-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://pedro-faria.netlify.app/posts/2024/2024-01-13-spark-cache/memory.svg" class="img-fluid figure-img">
@@ -4791,6 +4869,7 @@ background-color: null;
 font-style: inherit;">;</span></span>
 <span id="cb3-5">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">while</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="dv" style="color: #AD0000;
@@ -4802,6 +4881,7 @@ background-color: null;
 font-style: inherit;">{</span></span>
 <span id="cb3-6">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span>array<span class="op" style="color: #5E5E5E;
@@ -4823,6 +4903,7 @@ background-color: null;
 font-style: inherit;">{</span></span>
 <span id="cb3-7">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">break</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">;</span></span>
@@ -4959,7 +5040,7 @@ got codepoint E382AB</code></pre>
 <h1 data-number="2"><span class="header-section-number">2</span> Context about what we have to do</h1>
 <p>Most of these 130 thousand lines of Python code are <a href="https://spark.apache.org/docs/latest/api/python/index.html"><code>pyspark</code></a> code to extract, transform and load data using the <a href="https://spark.apache.org/">Apache Spark</a> engine.</p>
 <p>Let’s consider the following example:</p>
-<div id="lst-table" class="python listing quarto-float">
+<div id="lst-table" class="python listing quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-lst figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-table-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Listing&nbsp;1: Example of pyspark code that we might find in our codebase
@@ -4985,7 +5066,7 @@ font-style: inherit;">"blip.events"</span>)</span>
 </div>
 <p>You can see at Listing&nbsp;1 that we have a <code>spark.table()</code> call to access the SQL table <code>blip.events</code>. In other words, we are basically making a <code>SELECT * FROM</code> query over this table. However, in our new infrastructure, all table references will change. As a result, me and my team need to rewrite every table reference that we find across our codebase.</p>
 <p>For example, let’s suppose that the new table reference is <code>platform.blipraw.events</code>. This means that I need to alter the above snippet of code to:</p>
-<div id="lst-table2" class="python listing quarto-float">
+<div id="lst-table2" class="python listing quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-lst figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-table2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Listing&nbsp;2: Example with the new reference
@@ -5124,7 +5205,7 @@ font-style: inherit;">=</span> spark.table(table_ref)</span></code></pre></div>
 <p>Parsers (or the process of parsing expressions) are core components of every existing compiler, like <code>gcc</code> or <code>rustc</code>, as well as the R and Python compilers. In essence, a parser is a piece of software that analyzes expressions following the rules of a grammar. A parser is the main part of compilers responsible for analyzing and comprehend the structure of your source code.</p>
 <p>The process of parsing is usually made in two steps, which are: 1) breaking (or “splitting”) the input expression into smaller pieces, building a list of tokens, or a list of small components; 2) analyzing this sequence of tokens to build a tree that is equivalent to the input expression. The first step above is usually made by a component called <em>lexer</em> or <em>tokenizer</em> (both names are commom to find), and the second step is made by the parser itself.</p>
 <p>Basically, the process of parsing takes a string (which contains the expression, or the source code your want to parse) as input. Then, the lexer (or tokenizer) breaks the input string into smaller pieces, which are usually called <em>tokens</em>. Then, the parser receives this stream of tokens produced by the tokenizer as input, and starts to analyze this sequence of tokens, to understand the structure of the input expression (or source code). As output, the parser produces a tree that is equivalent to the input expression, which is usually called <em>abstract syntax tree</em> (or AST for short). Figure&nbsp;1 below exposes this process.</p>
-<div id="fig-parser-pic" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-parser-pic" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-parser-pic-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://pedro-faria.netlify.app/posts/2023/2023-11-18-python-parser/parser-pic.png" class="img-fluid figure-img">
@@ -5192,7 +5273,7 @@ font-style: inherit;">"'</span></span>
 <p>This approach is probably the easiest of all to implement, and it fit’s perfectly our example here because we are interested in parsing just a very small subset of simple Python expressions. If we wanted to parse more complex expressions, then, it would probably be better to use another approach to break the input string.</p>
 <p>So, the tokenizer will iterate through each character in the input string, and will mark any place that contains a single character the we interpret as an elegible place to break the string. Considering the type of expressions we stated at Section&nbsp;3.2, the characters <code>"</code>, <code>'</code>, <code>+</code>, <code>{</code>, <code>}</code> are good candidates for “elegible break points”. Also, the character <code>f</code> is important for identifying formatted strings, as a consequence, he is also a good candidate.</p>
 <p>Let’s consider the following tokenizer:</p>
-<div id="lst-tokenizer" class="python listing quarto-float">
+<div id="lst-tokenizer" class="python listing quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-lst figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-tokenizer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Listing&nbsp;3: The function that represents our tokenizer
@@ -5211,19 +5292,23 @@ font-style: inherit;">import</span> re</span>
 background-color: null;
 font-style: inherit;">=</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">lambda</span> x: x <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">!=</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">""</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">and</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">not</span> re.search(<span class="vs" style="color: #20794D;
 background-color: null;
 font-style: inherit;">r"^ +$"</span>, x)</span>
 <span id="lst-tokenizer-5"><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">def</span> tokenizer(input_string: <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">str</span>) <span class="op" style="color: #5E5E5E;
@@ -5251,8 +5336,10 @@ background-color: null;
 font-style: inherit;">list</span>()</span>
 <span id="lst-tokenizer-8">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">range</span>(<span class="bu" style="color: null;
@@ -5263,18 +5350,22 @@ background-color: null;
 font-style: inherit;">=</span> input_string[i]</span>
 <span id="lst-tokenizer-10">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> current_char <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> candidates:</span>
 <span id="lst-tokenizer-11">            break_points.append(i)</span>
 <span id="lst-tokenizer-12">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> current_char <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">==</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"f"</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">and</span> (i <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
@@ -5293,8 +5384,10 @@ background-color: null;
 font-style: inherit;">1</span>]</span>
 <span id="lst-tokenizer-14">            <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> next_char <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> [<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'"'</span>, <span class="st" style="color: #20794D;
@@ -5304,6 +5397,7 @@ font-style: inherit;">"'"</span>]:</span>
 <span id="lst-tokenizer-16"></span>
 <span id="lst-tokenizer-17">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">len</span>(break_points) <span class="op" style="color: #5E5E5E;
@@ -5313,6 +5407,7 @@ background-color: null;
 font-style: inherit;">0</span>:</span>
 <span id="lst-tokenizer-18">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">return</span> [input_string]</span>
 <span id="lst-tokenizer-19"></span>
 <span id="lst-tokenizer-20">    tokens <span class="op" style="color: #5E5E5E;
@@ -5327,8 +5422,10 @@ background-color: null;
 font-style: inherit;">0</span></span>
 <span id="lst-tokenizer-22">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> index <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> break_points:</span>
 <span id="lst-tokenizer-23">        tokens.append(input_string[last_index:index])</span>
 <span id="lst-tokenizer-24">        tokens.append(input_string[index:(index<span class="op" style="color: #5E5E5E;
@@ -5347,6 +5444,7 @@ font-style: inherit;">1</span></span>
 <span id="lst-tokenizer-27">    tokens.append(input_string[last_index:])</span>
 <span id="lst-tokenizer-28">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">return</span> <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">list</span>(<span class="bu" style="color: null;
@@ -5365,8 +5463,10 @@ font-style: inherit;">filter</span>(is_not_blank, tokens))</span></code></pre></
 <div id="3087c5da" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> example <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> EXPRESSION_EXAMPLES:</span>
 <span id="cb6-2">    tokens <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -5430,12 +5530,14 @@ font-style: inherit;">"  * Tokens produced: "</span>, tokens)</span></code></pre
 <div id="9f13e297" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">class</span> ParserCache:</span>
 <span id="cb8-2">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">'''Class that represents a cache to store the current state of the parser.'''</span></span>
 <span id="cb8-3">    <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">def</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">__init__</span>(<span class="va" style="color: #111111;
@@ -5468,6 +5570,7 @@ background-color: null;
 font-style: inherit;">0</span></span>
 <span id="cb8-7">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">len</span>(tokens) <span class="op" style="color: #5E5E5E;
@@ -5484,6 +5587,7 @@ background-color: null;
 font-style: inherit;">self</span>.index]</span>
 <span id="cb8-9">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">else</span>:</span>
 <span id="cb8-10">            <span class="va" style="color: #111111;
 background-color: null;
@@ -5494,10 +5598,12 @@ background-color: null;
 font-style: inherit;">None</span></span>
 <span id="cb8-11">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">return</span></span>
 <span id="cb8-12"></span>
 <span id="cb8-13">    <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">def</span> <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">len</span>(<span class="va" style="color: #111111;
@@ -5509,6 +5615,7 @@ background-color: null;
 font-style: inherit;">int</span>:</span>
 <span id="cb8-14">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">return</span> <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">len</span>(<span class="va" style="color: #111111;
@@ -5517,6 +5624,7 @@ font-style: inherit;">self</span>.tokens)</span>
 <span id="cb8-15"></span>
 <span id="cb8-16">    <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">def</span> current_token(<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">self</span>) <span class="op" style="color: #5E5E5E;
@@ -5526,12 +5634,14 @@ background-color: null;
 font-style: inherit;">str</span>:</span>
 <span id="cb8-17">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">return</span> <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">self</span>.token</span>
 <span id="cb8-18"></span>
 <span id="cb8-19">    <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">def</span> current_index(<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">self</span>) <span class="op" style="color: #5E5E5E;
@@ -5541,12 +5651,14 @@ background-color: null;
 font-style: inherit;">int</span>:</span>
 <span id="cb8-20">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">return</span> <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">self</span>.index</span>
 <span id="cb8-21"></span>
 <span id="cb8-22">    <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">def</span> next_token(<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">self</span>) <span class="op" style="color: #5E5E5E;
@@ -5563,6 +5675,7 @@ background-color: null;
 font-style: inherit;">1</span></span>
 <span id="cb8-24">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">self</span>.index <span class="op" style="color: #5E5E5E;
@@ -5583,6 +5696,7 @@ background-color: null;
 font-style: inherit;">self</span>.index]</span>
 <span id="cb8-26">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">return</span></span></code></pre></div>
 </div>
 </section>
@@ -5599,6 +5713,7 @@ background-color: null;
 font-style: inherit;">import</span> Dict, Any</span>
 <span id="cb9-2"><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">def</span> parse(input_string: <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">str</span>) <span class="op" style="color: #5E5E5E;
@@ -5617,6 +5732,7 @@ background-color: null;
 font-style: inherit;">=</span> _parse_input(parser_cache)</span>
 <span id="cb9-6">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">return</span> parsing_result.ast</span></code></pre></div>
 </div>
 </section>
@@ -5630,11 +5746,13 @@ font-style: inherit;">return</span> parsing_result.ast</span></code></pre></div>
 <div id="1b47fdea" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="annotated-cell-8" style="background: #f1f3f5;"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-8-1"><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">def</span> _parse_input(parser_cache: ParserCache) <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">-&gt;</span> ParserCache:</span>
 <a class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-8-2" class="code-annotation-target">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> parser_cache.<span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">len</span>() <span class="op" style="color: #5E5E5E;
@@ -5644,12 +5762,15 @@ background-color: null;
 font-style: inherit;">0</span>:</span>
 <span id="annotated-cell-8-3">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">return</span> parser_cache</span>
 <span id="annotated-cell-8-4"></span>
 <span id="annotated-cell-8-5">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> parser_cache.current_token() <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> [<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'"'</span>, <span class="st" style="color: #20794D;
@@ -5660,6 +5781,7 @@ background-color: null;
 font-style: inherit;">=</span> _parse_string(parser_cache)</span>
 <span id="annotated-cell-8-7">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">elif</span> parser_cache.current_token() <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">==</span> <span class="st" style="color: #20794D;
@@ -5671,6 +5793,7 @@ background-color: null;
 font-style: inherit;">=</span> _parse_string(parser_cache)</span>
 <span id="annotated-cell-8-10">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">elif</span> parser_cache.current_token() <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">==</span> <span class="st" style="color: #20794D;
@@ -5681,6 +5804,7 @@ background-color: null;
 font-style: inherit;">=</span> _parse_addition(parser_cache)</span>
 <span id="annotated-cell-8-12">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">else</span>:</span>
 <span id="annotated-cell-8-13">        parser_cache <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -5689,6 +5813,7 @@ font-style: inherit;">=</span> _parse_identifier(parser_cache)</span>
 <span id="annotated-cell-8-15">    parser_cache.next_token()</span>
 <span id="annotated-cell-8-16">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> parser_cache.current_index() <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">&lt;=</span> parser_cache.<span class="bu" style="color: null;
@@ -5704,6 +5829,7 @@ font-style: inherit;">=</span> _parse_input(parser_cache)</span>
 <span id="annotated-cell-8-18"></span>
 <span id="annotated-cell-8-19">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">return</span> parser_cache</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-grid">
@@ -5726,6 +5852,7 @@ font-style: inherit;">return</span> parser_cache</span><div class="code-annotati
 <div id="2895ea2c" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">def</span> _parse_identifier(parser_cache: ParserCache) <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">-&gt;</span> ParserCache:</span>
@@ -5743,6 +5870,7 @@ font-style: inherit;">str</span>(parser_cache.current_token())</span>
 <span id="cb10-5">    })</span>
 <span id="cb10-6">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">return</span> parser_cache</span></code></pre></div>
 </div>
 </section>
@@ -5757,6 +5885,7 @@ font-style: inherit;">return</span> parser_cache</span></code></pre></div>
 <div id="3ef7343b" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="annotated-cell-10" style="background: #f1f3f5;"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-10-1"><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">def</span> _parse_string(parser_cache: ParserCache) <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">-&gt;</span> ParserCache:</span>
@@ -5782,6 +5911,7 @@ font-style: inherit;">list</span>()</span>
 <span id="annotated-cell-10-9"></span>
 <span id="annotated-cell-10-10">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">while</span> parser_cache.current_index() <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">&lt;</span> parser_cache.<span class="bu" style="color: null;
@@ -5793,14 +5923,17 @@ background-color: null;
 font-style: inherit;">1</span>:</span>
 <span id="annotated-cell-10-11">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> parser_cache.current_token() <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">==</span> char_that_opens_the_string:</span>
 <span id="annotated-cell-10-12">            <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">break</span></span>
 <span id="annotated-cell-10-13">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> parser_cache.current_token() <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">==</span> <span class="st" style="color: #20794D;
@@ -5812,6 +5945,7 @@ background-color: null;
 font-style: inherit;">=</span> _parse_formatted_string(parser_cache)</span>
 <span id="annotated-cell-10-16">            <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">continue</span></span>
 <span id="annotated-cell-10-17">        </span>
 <span id="annotated-cell-10-18">        elem_ref <span class="op" style="color: #5E5E5E;
@@ -5828,6 +5962,7 @@ font-style: inherit;">'value'</span>].append(parser_cache.current_token())</span
 <span id="annotated-cell-10-21">    </span>
 <span id="annotated-cell-10-22">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">return</span> parser_cache</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-grid">
@@ -5847,6 +5982,7 @@ font-style: inherit;">return</span> parser_cache</span><div class="code-annotati
 <div id="68a31cfe" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="annotated-cell-11" style="background: #f1f3f5;"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-11-1"><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">def</span> _parse_formatted_string(parser_cache: ParserCache) <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">-&gt;</span> ParserCache:</span>
@@ -5857,6 +5993,7 @@ background-color: null;
 font-style: inherit;">list</span>()</span>
 <span id="annotated-cell-11-3">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">while</span> parser_cache.current_index() <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">&lt;</span> parser_cache.<span class="bu" style="color: null;
@@ -5868,6 +6005,7 @@ background-color: null;
 font-style: inherit;">1</span>:</span>
 <a class="code-annotation-anchor" data-target-cell="annotated-cell-11" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-11-4" class="code-annotation-target">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> parser_cache.current_token() <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">==</span> <span class="st" style="color: #20794D;
@@ -5876,6 +6014,7 @@ font-style: inherit;">'}'</span>:</span>
 <span id="annotated-cell-11-5">            parser_cache.next_token()</span>
 <span id="annotated-cell-11-6">            <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">break</span></span>
 <span id="annotated-cell-11-7">        stack.append(parser_cache.current_token())</span>
 <span id="annotated-cell-11-8">        parser_cache.next_token()</span>
@@ -5907,6 +6046,7 @@ font-style: inherit;">'value'</span>: parsed_subexpression.ast</span>
 <span id="annotated-cell-11-16">    })</span>
 <span id="annotated-cell-11-17">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">return</span> parser_cache</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-grid">
@@ -5949,6 +6089,7 @@ font-style: inherit;">'database + ".events"'</span>))</span></code></pre></div>
 <div id="45bd6c0f" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">def</span> _parse_addition(parser_cache: ParserCache) <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">-&gt;</span> ParserCache:</span>
@@ -5961,6 +6102,7 @@ background-color: null;
 font-style: inherit;">1</span>]</span>
 <span id="cb13-3">    <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">del</span> parser_cache.ast[<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
@@ -5974,6 +6116,7 @@ background-color: null;
 font-style: inherit;"># with the right operand in the next section</span></span>
 <span id="cb13-6">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">return</span> parser_cache</span></code></pre></div>
 </div>
 </section>
@@ -5984,6 +6127,7 @@ font-style: inherit;">return</span> parser_cache</span></code></pre></div>
 <div id="77e9b27b" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">def</span> _parse_addition(parser_cache: ParserCache) <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">-&gt;</span> ParserCache:</span>
@@ -5996,6 +6140,7 @@ background-color: null;
 font-style: inherit;">1</span>]</span>
 <span id="cb14-3">    <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">del</span> parser_cache.ast[<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
@@ -6020,6 +6165,7 @@ font-style: inherit;">'right_operand'</span>: right_operand</span>
 <span id="cb14-10">    })</span>
 <span id="cb14-11">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">return</span> parser_cache</span></code></pre></div>
 </div>
 <p>Now, what <code>_parse_right_operand()</code> should do? I think it should iterate through the sequence of tokens that is after the plus sign, parse this sequence of tokens and then, return the parsed AST of this sequence. That is basically what <code>_parse_right_operand()</code> is doing in the function definition below.</p>
@@ -6031,7 +6177,7 @@ font-style: inherit;">return</span> parser_cache</span></code></pre></div>
 <p>When the loop stops in situation 1, then, the stack object will contain all of the tokens that represents the right operand. Having that in mind, all we need to do is to create a new temporary <code>ParserCache</code> object with these tokens, and call <code>_parse_input()</code> over it to parse the right operand. Then, <code>_parse_right_operand()</code> will simply return the parsed AST from this operation.</p>
 <p>In the other side, if the loop stops in situation 2, that means that, the right operand that we are currently trying to parse, is in fact, the left hand to a new addition operation. In other words, the tokens that we accumulated in the stack object until this very moment, are in fact, the tokens that represents the left operand of this new addition operation that we found.</p>
 <p>At Figure&nbsp;2 we can see this idea visually. Everything that is marked by the light red rectangle is the left operand of that particular addition operation, and everything that is marked by the dark blue rectangle is the right operand of that particular addition operation.</p>
-<div id="fig-addition" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-addition" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-addition-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://pedro-faria.netlify.app/posts/2023/2023-11-18-python-parser/addition.png" class="img-fluid figure-img">
@@ -6048,6 +6194,7 @@ Figure&nbsp;2: Marking the right and left operands in each addition operation
 <div id="9f585493" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">def</span> _parse_right_operand(parser_cache: ParserCache) <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">-&gt;</span> ParserCache:</span>
@@ -6058,6 +6205,7 @@ background-color: null;
 font-style: inherit;">list</span>()</span>
 <span id="cb15-3">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">while</span> parser_cache.current_index() <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">&lt;=</span> parser_cache.<span class="bu" style="color: null;
@@ -6069,6 +6217,7 @@ background-color: null;
 font-style: inherit;">1</span>:</span>
 <span id="cb15-4">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> parser_cache.current_token() <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">==</span> <span class="st" style="color: #20794D;
@@ -6086,6 +6235,7 @@ background-color: null;
 font-style: inherit;">=</span> _parse_input(temp_parse_cache)</span>
 <span id="cb15-9">            <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">return</span> {</span>
 <span id="cb15-10">                <span class="st" style="color: #20794D;
 background-color: null;
@@ -6113,6 +6263,7 @@ background-color: null;
 font-style: inherit;">=</span> _parse_input(temp_parse_cache)</span>
 <span id="cb15-20">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">return</span> parsed_right_operand.ast[<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0</span>]</span></code></pre></div>
@@ -6126,8 +6277,10 @@ font-style: inherit;">0</span>]</span></code></pre></div>
 <div id="3dd8f2c3" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> example <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> EXPRESSION_EXAMPLES:</span>
 <span id="cb16-2">    parsed_expr <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -7107,7 +7260,7 @@ Important
 <p>However, the format of this presentation was problematic. We brought a <strong>monumental amount</strong> of information to the bank. The presentation usually had around 40 different slides, with approximately 36 charts and 70 different indicators. Furthermore, we tried to present all this volume of information in a meeting of just 1 hour.</p>
 <p>The end result was a presentation that brought a monumental volume of information, however, which also brought a <strong>very small volume of insights and new business ideas for managers</strong>.</p>
 <p>In Figure&nbsp;1 we have a representation of one of the several slides of this presentation<sup>1</sup>. Imagine that this presentation had around 40 slides similar to this one:</p>
-<div id="fig-print-report1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-print-report1" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-print-report1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://pedro-faria.netlify.app/posts/2023/2023-03-06-storytelling/print-report1-en.png" class="img-fluid figure-img">
@@ -7140,7 +7293,7 @@ Figure&nbsp;1: A single slide from the old version of the report
 <p>Try to be parsimonious in your slides! That is, try to include as little information as possible within it. If you need to convey a lot of information on a single slide, then try to incorporate most of this content into your speech, and as little of it as possible in written form on this slide. In general, avoid including very long texts in your slides as much as possible.</p>
 <p>It’s weird to think about, but generally, managers will jump in and watch your presentation because they’re interested in what <strong>you</strong> have to say about their business. Therefore, your slides are only support material, they must be secondary, a supporting element of your presentation. Because the main piece of the presentation should always be your speech and the story you want to tell through it.</p>
 <p>See the slide at Figure&nbsp;2 as an example. The main problem with this slide is that it <strong>divides the viewer’s attention a lot</strong>.</p>
-<div id="fig-texto-longo" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-texto-longo" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-texto-longo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://pedro-faria.netlify.app/posts/2023/2023-03-06-storytelling/texto-longo-en.png" class="img-fluid figure-img">
@@ -7174,7 +7327,7 @@ Figure&nbsp;2: Slide with a long paragraph
 <section id="sec-relacoes" class="level3" data-number="4.2.2">
 <h3 data-number="4.2.2" class="anchored" data-anchor-id="sec-relacoes"><span class="header-section-number">4.2.2</span> Trace relationships between indicators</h3>
 <p>Now, let’s analyze the slide shown in Figure&nbsp;3. Notice that this slide, again, is very reminiscent of a dashboard page. The slide doesn’t look so captivating at first glance, as it only shows the indicators, it doesn’t build a relationship, or <strong>a story</strong>, between them.</p>
-<div id="fig-divisao2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-divisao2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-divisao2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://pedro-faria.netlify.app/posts/2023/2023-03-06-storytelling/divisao2-en.png" class="img-fluid figure-img">
@@ -7395,7 +7548,7 @@ Important
 <p>Contudo, o formato dessa apresentação era problemático. Nós trazíamos uma <strong>quantidade monumental</strong> de informações para o banco. A apresentação usualmente trazia em torno de 40 slides diferentes, com aproximadamente 36 gráficos e 70 indicadores diferentes. Para mais, nós tentávamos apresentar todo esse volume de informações em uma reunião de apenas 1 hora.</p>
 <p>O resultado final disso tudo era uma apresentação que trazia um volume monumental de informações, porém, que também trazia um <strong>volume muito pequeno de insights e novas ideias de negócio para os gestores</strong>.</p>
 <p>Em Figura&nbsp;1 temos uma representação de um dos vários slides dessa apresentação<sup>1</sup>. Imagine que essa apresentação trazia em torno de 40 slides semelhantes a esse:</p>
-<div id="fig-print-report1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-print-report1" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-print-report1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://pedro-faria.netlify.app/posts/2023/2023-03-06-storytelling/print-report1.png" class="img-fluid figure-img">
@@ -7428,7 +7581,7 @@ Figura&nbsp;1: Representação de um slide da versão antiga do relatório
 <p>Tente ser parsimonioso nos seus slides! Isto é, tente incluir o mínimo possível de informação dentro dele. Se você precisa repassar várias informações em um slide, tente incorporar o máximo possível desse conteúdo em sua fala, e o mínino possível dele em forma escrita neste slide. Em geral, evite ao máximo incluir textos muito longos em seus slides.</p>
 <p>É estranho pensar nisso, mas geralmente, os gestores vão participar e assistir à sua apresentação porque eles estão interessados no que <strong>você</strong> tem a dizer sobre o negócio deles. Portanto, os seus slides são apenas um material de suporte, eles devem ser secundários, um coadjuvante de sua apresentação. Pois a peça principal da apresentação deve ser sempre a sua fala e a história que você quer contar através dela.</p>
 <p>Veja o slide em Figura&nbsp;2 como exemplo. O problema principal desse slide, é que ele <strong>divide muito a atenção de seu espectador</strong>.</p>
-<div id="fig-texto-longo" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-texto-longo" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-texto-longo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://pedro-faria.netlify.app/posts/2023/2023-03-06-storytelling/texto-longo.png" class="img-fluid figure-img">
@@ -7462,7 +7615,7 @@ Figura&nbsp;2: Slide com um parágrafo longo
 <section id="sec-relacoes" class="level3" data-number="4.2.2">
 <h3 data-number="4.2.2" class="anchored" data-anchor-id="sec-relacoes"><span class="header-section-number">4.2.2</span> Trace relações entre os indicadores</h3>
 <p>Agora, vamos analisar o slide mostrado em Figura&nbsp;3. Perceba que esse slide, novamente, lembra muito uma página de um dashboard. O slide não parece tão cativante à primeira vista, pois ele só mostra os indicadores, ele não constrói uma relação, ou <strong>uma história</strong> entre eles.</p>
-<div id="fig-divisao2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-divisao2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-divisao2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://pedro-faria.netlify.app/posts/2023/2023-03-06-storytelling/divisao2.png" class="img-fluid figure-img">
@@ -8100,6 +8253,7 @@ font-style: inherit;">'./../weird-unknow-folder'</span>)</span></code></pre></di
 <p>This <code>build-system</code> table is the part of <code>pyproject.toml</code> file where you can specify options and configurations for the build system. As an example, to use the <code>setuptools</code> build system, you would add these lines to <code>pyproject.toml</code>:</p>
 <div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode toml code-with-copy"><code class="sourceCode toml"><span id="cb6-1"><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">[build-system]</span></span>
 <span id="cb6-2"><span class="dt" style="color: #AD0000;
 background-color: null;
@@ -8122,6 +8276,7 @@ font-style: inherit;">"setuptools.build_meta"</span></span></code></pre></div>
 <p>In the other hand, if you want to use the <code>hatchling</code> build system instead, you would change the above lines to:</p>
 <div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode toml code-with-copy"><code class="sourceCode toml"><span id="cb7-1"><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">[build-system]</span></span>
 <span id="cb7-2"><span class="dt" style="color: #AD0000;
 background-color: null;
@@ -8144,6 +8299,7 @@ font-style: inherit;">"hatchling.build"</span></span></code></pre></div>
 <p>Or, maybe you prefer <code>flit</code>:</p>
 <div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode toml code-with-copy"><code class="sourceCode toml"><span id="cb8-1"><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">[build-system]</span></span>
 <span id="cb8-2"><span class="dt" style="color: #AD0000;
 background-color: null;
@@ -8166,6 +8322,7 @@ font-style: inherit;">"flit_core.buildapi"</span></span></code></pre></div>
 <p>Anyway, you get it. You use the options <code>requires</code> and <code>build-backend</code> under the <code>build-system</code> table to specificy which system you want to use in the building process of your package. All of these different systems will use <code>pyproject.toml</code> to collect other very important metadata about your package, like these metadata below:</p>
 <div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode toml code-with-copy"><code class="sourceCode toml"><span id="cb9-1"><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">[project]</span></span>
 <span id="cb9-2"><span class="dt" style="color: #AD0000;
 background-color: null;
@@ -8451,6 +8608,7 @@ font-style: inherit;">python3</span> setup.py sdist</span></code></pre></div>
 <p>To fix this problem inside my package project, I had to add the lines below to my <code>pyproject.toml</code> file. These lines tell <code>setuptools</code> which are the packages available inside the project, and, which is the folder inside the project where all the source code of the package was stored.</p>
 <div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode toml code-with-copy"><code class="sourceCode toml"><span id="cb13-1"><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">[tool.setuptools]</span></span>
 <span id="cb13-2"><span class="dt" style="color: #AD0000;
 background-color: null;
@@ -8706,7 +8864,7 @@ font-style: inherit;">TRUE</span>)</span>
 <h2 class="anchored" data-anchor-id="entenda-o-processo-de-pareamento-de-um-join">Entenda o processo de pareamento de um JOIN</h2>
 <p>A única linha de ID 105 na tabela <code>cores_de_pele</code> se transformou em 3 linhas devido ao processo de pareamento dos dados realizado pelo JOIN. Todo JOIN, independe do tipo que ele seja (<em>left, inner, right, full</em>), vai sempre realizar um processo de pareamento entre os dados das duas tabelas, utilizando as colunas que representam as “chaves” do JOIN <span class="citation" data-cites="pedro2022">(Faria 2022)</span>.</p>
 <p>Podemos visualizar esse processo de pareamento dos dados em Figure&nbsp;1. Perceba que, tanto no exemplo dessa imagem, quanto no exemplo desse post, as chaves do JOIN são representadas pela coluna <code>ID</code>. Logo, o JOIN vai puxar os dados de uma tabela para a outra, utilizando os valores dessa coluna como guia.</p>
-<div id="fig-pareamento" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-pareamento" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-pareamento-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://pedro-faria.netlify.app/posts/2023/2023-01-10-join-duplicates/pareamento1.png" class="img-fluid figure-img">
@@ -8724,7 +8882,7 @@ Figure&nbsp;1: Processo de pareamento realizado em um JOIN
 <li><p>Para reequilibrar essa balança, o JOIN vai executar um produto cartesiano entre as linhas dessas duas tabelas.</p></li>
 </ol>
 <p>A Figure&nbsp;2 apresenta de forma visual essa conexão:</p>
-<div id="fig-desenho-expansao" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-desenho-expansao" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-desenho-expansao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://pedro-faria.netlify.app/posts/2023/2023-01-10-join-duplicates/expansao.png" class="img-fluid figure-img">
@@ -8755,7 +8913,7 @@ Figure&nbsp;2: Uma representação visual do efeito expansivo sobre o ID 105
 <h1>Conclusão</h1>
 <p>Portanto, o produto cartesiano executado pelo JOIN gerou linhas duplicadas para o ID 105, e essa introdução de dados duplicados acabou distorcendo o valor dos indicadores. <strong>O efeito expansivo está no produto cartesiano gerado pelo JOIN</strong>, e você deve ficar atento em todas as situações em que esse produto pode ocorrer.</p>
 <p>Mas então… em que momentos especificamente esse produto cartesiano é gerado? A resposta é: sempre que existir uma relação de “um para muitos” ou de “muitos para muitos” entre as chaves do JOIN. As “chaves” (ou <em>keys</em>) de todo JOIN podem formar três tipos de relação: 1) um para um; 2) um para muitos; e 3) muitos para muitos <span class="citation" data-cites="pedro2022">(Faria 2022)</span>. Em Figure&nbsp;3 apresentamos de forma visual essas relações, e os produtos cartesianos que elas geram, onde a coluna <code>key</code> representa a “chave” do JOIN.</p>
-<div id="fig-relacoes" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-relacoes" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-relacoes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://pedro-faria.netlify.app/posts/2023/2023-01-10-join-duplicates/relacoes_keys.png" class="img-fluid figure-img" style="width:80.0%">

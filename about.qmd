@@ -13,15 +13,12 @@ about:
     - icon: mastodon
       text: Mastodon
       href: https://fosstodon.org/web/@pedropark99
-    - icon: twitter
-      text: Twitter
+    - icon: twitter-x
+      text: X - Twitter
       href: https://twitter.com/PedroPark9
     - icon: linkedin
       text: LinkedIn
       href: https://www.linkedin.com/in/pedro-faria-a68140209/
-    - icon: medium
-      text: Medium
-      href: https://medium.com/@pedropark99
 ---
  
 ## Bio

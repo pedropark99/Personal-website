@@ -44,10 +44,7 @@ website:
       - icon: mastodon
         href: https://fosstodon.org/web/@pedropark99
         aria-label: "Mastodon profile"
-      - icon: medium
-        href: https://medium.com/@pedropark99
-        aria-label: "Medium profile"
-      - icon: twitter
+      - icon: twitter-x
         href: https://twitter.com/PedroPark9
         aria-label: "Twitter profile"
       - icon: linkedin
