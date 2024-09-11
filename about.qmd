@@ -15,7 +15,7 @@ about:
       href: https://fosstodon.org/web/@pedropark99
     - icon: twitter-x
       text: X - Twitter
-      href: https://twitter.com/PedroPark9
+      href: https://x.com/PedroPark9
     - icon: linkedin
       text: LinkedIn
       href: https://www.linkedin.com/in/pedro-faria-a68140209/
