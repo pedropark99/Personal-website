@@ -4,9 +4,38 @@ description: 'If you like my work, and want to support me, you can send money to
 title-block-banner: true
 ---
 
+By supporting me directly, you make it possible for me to keep writing helpful tools and
+materials for the community. Currently, you can send me money by using
+the following systems:
+
+- Pix (brazilian payment method).
+- PayPal Donation.
+- Wise.
+- Revolut.
+
+You can find details about how to send money through each one of these methods below.
+
+<style>
+  .btn {
+    border-radius: 5px;
+    background-color: #abd9bd;
+    border: #0e326b;
+    color: #0e326b;
+    opacity: 1;
+    transition: 0.3s;
+  }
+    
+  .btn:hover {
+    background-color: #58bf80;
+  }
+</style>
 
 
-Currently, I only support direct transfers made via [Pix](https://business.ebanx.com/en/resources/payments-explained/pix-instant-payment-system). Which is a brazilian payment method available in most banks operating in the Brazilian market.
+## Pix
+
+[Pix](https://business.ebanx.com/en/resources/payments-explained/pix-instant-payment-system)
+is a brazilian payment method available in most banks operating in the Brazilian market.
+To get my Pix key, you can click in the button below to copy the key to your clipboard:
 
 ```{js, echo = FALSE}
 function copyText() {
@@ -18,14 +47,67 @@ function copyText() {
 ```
 
 
-To get my Pix key, you can click in the button below to copy the key to your clipboard:
-
-<button type="button" class="btn btn-primary" onclick="copyText()">Copy Pix Key</button>
-</br>
+<button type="button" class="btn btn-primary" onclick="copyText()">
+  Copy Pix Key
+</button>
 
 Or, if you prefer, you can also get my Pix key by scanning the QR Code below:
 
 ```{r, out.width="50%", fig.align='center', echo=FALSE}
 knitr::include_graphics("files/images/pix-qrcode.jpg")
 ```
+
+
+## PayPal Donation
+
+
+<a href="https://www.paypal.com/donate/?business=D58J5LFEERC3N&no_recurring=0&item_name=These+donations+make+it+possible+for+me+to+continue+writing+new+and+useful+content+for+our+community%F0%9F%98%89+Thank+you%21%E2%9D%A4%EF%B8%8F%F0%9F%A5%B3&currency_code=USD">
+    <button class="btn btn-primary" type="button">
+        Donate via PayPal 💵
+    </button>
+</a>
+
+## Revolut
+
+You can send money via Swift Payment with the following bank and Swift details:
+
+```
+Recipient: Pedro Duarte Faria
+BIC/SWIFT Code: REVOSGS2
+Account number: 6124512226
+Name and address of the bank: Revolut Technologies Singapore Pte. Ltd, 6 Battery Road, Floor 6-01, 049909, Singapore, Singapore
+Corresponding BIC: CHASGB2L
+```
+
+If you do have a Revolut account, you can scan the following QR code:
+
+<a href="http://revolut.me/pedroduartefaria">
+    <button class="btn btn-primary" type="button">
+        Revolut QR Code 💵
+    </button>
+</a>
+
+## Wise
+
+If you don't have a Wise account, you can send money via Swift Payment
+with the following bank and Swift details:
+
+```
+Owner of the Wise account: Pedro Duarte Faria
+Owner of the account: Wise US Inc.
+Swift/BIC: TRWIUS35XXX
+Account number: 715958645769167
+Name and address of the bank: Wise US Inc 30 W. 26th Street, Sixth Floor, New York NY 10010, United States.
+```
+
+If you do have a Wise account, you can scan the following QR code:
+
+<a href="https://wise.com/pay/me/pedrod4845">
+    <button class="btn btn-primary" type="button">
+        Wise QR Code 💵
+    </button>
+</a>
+
+
+
 
