@@ -434,6 +434,34 @@
     "text": "By supporting me directly, you make it possible for me to keep writing helpful tools and materials for the community. Currently, you can send me money by using the following systems:\nYou can find details about how to send money through each one of these methods below."
   },
   {
+    "objectID": "donate.html#pix",
+    "href": "donate.html#pix",
+    "title": "Donate or Sponsor Me",
+    "section": "Pix",
+    "text": "Pix\nPix is a brazilian payment method available in most banks operating in the Brazilian market. To get my Pix key, you can click in the button below to copy the key to your clipboard:\n\n\n\n\nCopy Pix Key\n\nOr, if you prefer, you can also get my Pix key by scanning the QR Code below:"
+  },
+  {
+    "objectID": "donate.html#paypal-donation",
+    "href": "donate.html#paypal-donation",
+    "title": "Donate or Sponsor Me",
+    "section": "PayPal Donation",
+    "text": "PayPal Donation\n  Donate via PayPal 💵"
+  },
+  {
+    "objectID": "donate.html#revolut",
+    "href": "donate.html#revolut",
+    "title": "Donate or Sponsor Me",
+    "section": "Revolut",
+    "text": "Revolut\nYou can send money via Swift Payment with the following bank and Swift details:\nRecipient: Pedro Duarte Faria\nBIC/SWIFT Code: REVOSGS2\nAccount number: 6124512226\nName and address of the bank: Revolut Technologies Singapore Pte. Ltd, 6 Battery Road, Floor 6-01, 049909, Singapore, Singapore\nCorresponding BIC: CHASGB2L\nIf you do have a Revolut account, you can scan the following QR code:\n  Revolut QR Code 💵"
+  },
+  {
+    "objectID": "donate.html#wise",
+    "href": "donate.html#wise",
+    "title": "Donate or Sponsor Me",
+    "section": "Wise",
+    "text": "Wise\nIf you don’t have a Wise account, you can send money via Swift Payment with the following bank and Swift details:\nOwner of the Wise account: Pedro Duarte Faria\nOwner of the account: Wise US Inc.\nSwift/BIC: TRWIUS35XXX\nAccount number: 715958645769167\nName and address of the bank: Wise US Inc 30 W. 26th Street, Sixth Floor, New York NY 10010, United States.\nIf you do have a Wise account, you can scan the following QR code:\n  Wise QR Code 💵"
+  },
+  {
     "objectID": "open_source_contrib.html",
     "href": "open_source_contrib.html",
     "title": "Open source contributions",
@@ -964,33 +992,5 @@
     "title": "My experience with Typst, the potential sucessor of LaTex",
     "section": "2.9 Syntax similar to Markdown",
     "text": "2.9 Syntax similar to Markdown\nTypst have a markup language whose syntax is similar to Markdown. And this is a great thing. Because the markup language in LaTex is…., well, it is not awfull to write, but it produces an awfull visual mess in the text you write.\nFor example, if your write some text in LaTex that have a lot of emphasized words, you need to add a lot of \\textbf{} or \\emph{} macros in it, and, as a result, your text looks very messy. In typst, you just surround each word by stars (*), and, as consequence, you leave much less visual noise in your text. In other words, your text looks cleaner (or clearer) in Typst."
-  },
-  {
-    "objectID": "donate.html#pix",
-    "href": "donate.html#pix",
-    "title": "Donate or Sponsor Me",
-    "section": "Pix",
-    "text": "Pix\nPix is a brazilian payment method available in most banks operating in the Brazilian market. To get my Pix key, you can click in the button below to copy the key to your clipboard:\n\n\n\n\nCopy Pix Key\n\nOr, if you prefer, you can also get my Pix key by scanning the QR Code below:"
-  },
-  {
-    "objectID": "donate.html#paypal-donation",
-    "href": "donate.html#paypal-donation",
-    "title": "Donate or Sponsor Me",
-    "section": "PayPal Donation",
-    "text": "PayPal Donation\n  Donate via PayPal 💵"
-  },
-  {
-    "objectID": "donate.html#revolut",
-    "href": "donate.html#revolut",
-    "title": "Donate or Sponsor Me",
-    "section": "Revolut",
-    "text": "Revolut\nYou can send money via Swift Payment with the following bank and Swift details:\nRecipient: Pedro Duarte Faria\nBIC/SWIFT Code: REVOSGS2\nAccount number: 6124512226\nName and address of the bank: Revolut Technologies Singapore Pte. Ltd, 6 Battery Road, Floor 6-01, 049909, Singapore, Singapore\nCorresponding BIC: CHASGB2L\nIf you do have a Revolut account, you can scan the following QR code:\n  Revolut QR Code 💵"
-  },
-  {
-    "objectID": "donate.html#wise",
-    "href": "donate.html#wise",
-    "title": "Donate or Sponsor Me",
-    "section": "Wise",
-    "text": "Wise\nIf you don’t have a Wise account, you can send money via Swift Payment with the following bank and Swift details:\nOwner of the Wise account: Pedro Duarte Faria\nOwner of the account: Wise US Inc.\nSwift/BIC: TRWIUS35XXX\nAccount number: 715958645769167\nName and address of the bank: Wise US Inc 30 W. 26th Street, Sixth Floor, New York NY 10010, United States.\nIf you do have a Wise account, you can scan the following QR code:\n  Wise QR Code 💵"
   }
 ]
