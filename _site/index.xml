@@ -247,6 +247,12 @@ font-style: inherit;">"append"</span>)<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">\</span></span>
 <span id="cb3-14">    .save()</span></code></pre></div>
+</section>
+<section id="potential-problems-you-might-face" class="level2">
+<h2 class="anchored" data-anchor-id="potential-problems-you-might-face">Potential problems you might face</h2>
+<p>While using these Spark native data sources you might face some problems. The most likely error that you might encounter while using these data sources is a “403/Forbidden” error message, which basically means that, with the inputs that you provided, the Spark data source is asking the Elasticsearch/Opensearch server to perform an operation that you don’t have enough authorization to perform. However, this is kind of generic, i.e.&nbsp;this “forbidden” can mean a lot of things. That is, there are many different operations that you may or may not have enough authorization to perform in the database.</p>
+<p>For example, maybe, the data that you have provided does not follow the schema of the JSON documents that are already indexed in the database index that you are using. If that is your case, then, you will likely cause a “refresh the index” operation in the database, and this operation essentially needs to redefine/recreate the index in the database from scratch, and, you might not have enough authorization to perform this “refresh the index” operation, therefore, causing a “403/Forbidden” error.</p>
+<p>This is just one example, but there are many other examples of operations that you might be silently causing/triggering through these Spark data sources, and that you do not have enough authorization to perform. Unfortunately, the error messages provided by these Spark data sources are really poor in details in some cases. So you will probably need to do a lot of testing, until you find the perfect combination of inputs and data that work for your case.</p>
 
 
 </section>
