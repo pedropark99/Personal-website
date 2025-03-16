@@ -25,10 +25,41 @@ an extra documentation, or, an extra resource that you can rely on when writing 
 Elasticsearch/Opensearch.
 
 
-## Elasticsearch/Opensearch native Spark drivers
+# Spark native data sources
 
-If you want to write data from Spark fast and with high scalability, you want to use a Spark native driver
-to write your data. Thankfully, both Elasticsearch and Opensearch have a free/open-source Spark native
+If you want to write data from Spark fast and with high scalability, you want to use a Spark native data source
+to write your data. Maybe you don't know what are Spark native data sources, so let's discuss them now.
+
+Spark data sources are described in details at the [Spark documentation](https://spark.apache.org/docs/3.5.3/sql-data-sources.html).
+Spark supports many different data sources out of the box. For example, it supports static files like CSV, JSON and Parquet files.
+But, you can also install Maven packages in your environment to use other data sources that were developed by the community.
+
+For example, by installing the `spark-sql-kafka` Maven package[^spark-kafka], a new Spark data source becomes available to you, which is the
+Kafka data source. With this data source, Spark supports streaming with Apache Kafka queues. Therefore, Spark supports multiple data
+sources out of the box, but you can add more data sources to the list by installing Maven packages that include new data sources
+to the Spark engine.
+
+[^spark-kafka]: <https://mvnrepository.com/artifact/org.apache.spark/spark-sql-kafka-0-10>
+
+
+## Selecting a data source
+
+For example, if you are writing a Spark application through `pyspark`, you can choose the specific data source that
+you want to use in Spark by using the
+[`format()` method from a `DataFrameWriter` class](https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.DataFrameWriter.format.html#pyspark.sql.DataFrameWriter.format).
+In the example below, I'm using the JSON data source to write data from Spark into a JSON file.
+
+```python
+df = spark.range(1)
+df.write.format('json')
+```
+
+
+
+## Elasticsearch/Opensearch native Spark data sources
+
+
+Thankfully, both Elasticsearch and Opensearch have a free/open-source Spark native
 driver that we can use.
 
 These drivers are both available as packages in the [Maven repository](https://mvnrepository.com/).
@@ -59,4 +90,11 @@ these packages in my specific environment.
 
 Your specific environment might have different versions, and, therefore, you might need
 to use a different version of these packages for your specific case. Just be aware of that.
+
+In Databricks, you can install these Maven packages in your cluster to make these
+native Spark data sources available in your environment. If you don't know how to do this, checkout the
+[Databricks documentation](https://docs.databricks.com/aws/en/libraries/package-repositories#maven-or-spark-package)
+for this.
+
+
 

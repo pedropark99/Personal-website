@@ -29,21 +29,60 @@
 <h2 class="anchored" data-anchor-id="why-this-post">Why this post?</h2>
 <p>Just to be clear, I’m writing this post specially because the existing documentation about the connection between Spark and Elasticsearch/Opensearch is very, I mean, veeeery poor. Therefore, this post serves as an extra documentation, or, an extra resource that you can rely on when writing data from Spark into Elasticsearch/Opensearch.</p>
 </section>
-<section id="elasticsearchopensearch-native-spark-drivers" class="level2">
-<h2 class="anchored" data-anchor-id="elasticsearchopensearch-native-spark-drivers">Elasticsearch/Opensearch native Spark drivers</h2>
-<p>If you want to write data from Spark fast and with high scalability, you want to use a Spark native driver to write your data. Hopefully, both Elasticsearch and Opensearch have a free/open-source Spark native driver that we can use.</p>
+</section>
+<section id="spark-native-data-sources" class="level1">
+<h1>Spark native data sources</h1>
+<p>If you want to write data from Spark fast and with high scalability, you want to use a Spark native data source to write your data. Maybe you don’t know what are Spark native data sources, so let’s discuss them now.</p>
+<p>Spark data sources are described in details at the <a href="https://spark.apache.org/docs/3.5.3/sql-data-sources.html">Spark documentation</a>. Spark supports many different data sources out of the box. For example, it supports static files like CSV, JSON and Parquet files. But, you can also install Maven packages in your environment to use other data sources that were developed by the community.</p>
+<p>For example, by installing the <code>spark-sql-kafka</code> Maven package<sup>1</sup>, a new Spark data source becomes available to you, which is the Kafka data source. With this data source, Spark supports streaming with Apache Kafka queues. Therefore, Spark supports multiple data sources out of the box, but you can add more data sources to the list by installing Maven packages that include new data sources to the Spark engine.</p>
+<section id="selecting-a-data-source" class="level2">
+<h2 class="anchored" data-anchor-id="selecting-a-data-source">Selecting a data source</h2>
+<p>For example, if you are writing a Spark application through <code>pyspark</code>, you can choose the specific data source that you want to use in Spark by using the <a href="https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.DataFrameWriter.format.html#pyspark.sql.DataFrameWriter.format"><code>format()</code> method from a <code>DataFrameWriter</code> class</a>. In the example below, I’m using the JSON data source to write data from Spark into a JSON file.</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1">df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> spark.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb1-2">df.write.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">format</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'json'</span>)</span></code></pre></div>
+</section>
+<section id="elasticsearchopensearch-native-spark-data-sources" class="level2">
+<h2 class="anchored" data-anchor-id="elasticsearchopensearch-native-spark-data-sources">Elasticsearch/Opensearch native Spark data sources</h2>
+<p>Thankfully, both Elasticsearch and Opensearch have a free/open-source Spark native driver that we can use.</p>
 <p>These drivers are both available as packages in the <a href="https://mvnrepository.com/">Maven repository</a>. If you want to write data to Elasticsearch, then, you are looking for the <code>elasticsearch-spark</code> package. But, if you want to write data to Opensearch instead, then, you are looking for the <code>opensearch-spark</code> package.</p>
 <p>You can see more info about these packages in the links below:</p>
 <ul>
 <li><a href="https://mvnrepository.com/artifact/org.opensearch.client/opensearch-spark-30" class="uri">https://mvnrepository.com/artifact/org.opensearch.client/opensearch-spark-30</a>.</li>
 <li><a href="https://mvnrepository.com/artifact/org.elasticsearch/elasticsearch-spark-30" class="uri">https://mvnrepository.com/artifact/org.elasticsearch/elasticsearch-spark-30</a>.</li>
 </ul>
+<p>Now, you need to use the specific version of these packages that match your specific environment. For my example, my environment is this:</p>
+<ul>
+<li>Databricks Runtime 15.4 LTS.</li>
+<li>Apache Spark 3.5.0.</li>
+<li>Scala 2.12.18.</li>
+<li>Python 3.11.0.</li>
+</ul>
+<p>The version of Spark and Scala are the most important infos in this case. Since the version of Spark is 3.5.0, we want to use a version of these packages that are compatible with the 3.* versions of Spark, which are <code>opensearch-spark-30</code> and <code>elasticsearch-spark-30</code>.</p>
+<p>And we also need to use a version of these packages that are compatible with the 2.12 version of Scala. This is why, I’ve installed the <code>opensearch-spark-30_2.12</code> and <code>elasticsearch-spark-30_2.12</code> versions of these packages in my specific environment.</p>
+<p>Your specific environment might have different versions, and, therefore, you might need to use a different version of these packages for your specific case. Just be aware of that.</p>
+<p>In Databricks, you can install these Maven packages in your cluster to make these native Spark data sources available in your environment. If you don’t know how to do this, checkout the <a href="https://docs.databricks.com/aws/en/libraries/package-repositories#maven-or-spark-package">Databricks documentation</a> for this.</p>
 
 
 </section>
 </section>
 
- ]]></description>
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p><a href="https://mvnrepository.com/artifact/org.apache.spark/spark-sql-kafka-0-10" class="uri">https://mvnrepository.com/artifact/org.apache.spark/spark-sql-kafka-0-10</a>↩︎</p></li>
+</ol>
+</section></div> ]]></description>
   <guid>https://pedro-faria.netlify.app/posts/2025/2025-03-16-spark-elasticsearch/en/</guid>
   <pubDate>Sun, 16 Mar 2025 03:00:00 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/posts/2025/2025-03-16-spark-elasticsearch/spark-elasticsearch-cover.webp" medium="image" type="image/webp"/>
