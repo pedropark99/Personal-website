@@ -8,7 +8,7 @@
 
 <meta name="author" content="Pedro Duarte Faria">
 <meta name="dcterms.date" content="2025-03-16">
-<meta name="description" content="Elasticsearch and Opensearch are two very popular No-SQL databases, which are used in many different scenarios. In this post, I want to address how can you write data from a Spark DataFrame into an Elasticsearch/Opensearch database.">
+<meta name="description" content="Elasticsearch and Opensearch are two very popular No-SQL databases. In this post, I want to address how can you write data from a Spark DataFrame into an Elasticsearch/Opensearch database.">
 
 <title>Writing Spark DataFrames to Elasticsearch/Opensearch databases – home |&gt; dplyr::glimpse()</title>
 <style>
@@ -209,7 +209,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
       <h1 class="title">Writing Spark DataFrames to Elasticsearch/Opensearch databases</h1>
                   <div>
         <div class="description">
-          Elasticsearch and Opensearch are two very popular No-SQL databases, which are used in many different scenarios. In this post, I want to address how can you write data from a Spark DataFrame into an Elasticsearch/Opensearch database.
+          Elasticsearch and Opensearch are two very popular No-SQL databases. In this post, I want to address how can you write data from a Spark DataFrame into an Elasticsearch/Opensearch database.
         </div>
       </div>
                 </div>
@@ -251,7 +251,11 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
+  <ul class="collapse">
+  <li><a href="#why-this-post" id="toc-why-this-post" class="nav-link" data-scroll-target="#why-this-post">Why this post?</a></li>
+  <li><a href="#elasticsearchopensearch-native-spark-drivers" id="toc-elasticsearchopensearch-native-spark-drivers" class="nav-link" data-scroll-target="#elasticsearchopensearch-native-spark-drivers">Elasticsearch/Opensearch native Spark drivers</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -264,8 +268,24 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
+<p>Recently, I had to develop a simple connector (i.e.&nbsp;a Python function) that allows a user to upload/write data from a Spark DataFrame into both an Elasticsearch and an Opensearch database. If you are not familiar with Elasticsearch or Opensearch, they are both No-SQL databases. Which means that they are databases that store a collection of JSON documents, instead of storing a collection of tables as you would expect from a traditional SQL database like PostgreSQL.</p>
+<p>Our data lake is processed by Apache Spark and Databricks, and some of the data that is being processed needs to be written into an Elasticsearch/Opensearch database, and it is best if we use the high scalability of Apache Spark to write this data. Thus, in this post, I want to describe how you can use the Spark to write data into these databases.</p>
+<section id="why-this-post" class="level2">
+<h2 class="anchored" data-anchor-id="why-this-post">Why this post?</h2>
+<p>Just to be clear, I’m writing this post specially because the existing documentation about the connection between Spark and Elasticsearch/Opensearch is very, I mean, veeeery poor. Therefore, this post serves as an extra documentation, or, an extra resource that you can rely on when writing data from Spark into Elasticsearch/Opensearch.</p>
+</section>
+<section id="elasticsearchopensearch-native-spark-drivers" class="level2">
+<h2 class="anchored" data-anchor-id="elasticsearchopensearch-native-spark-drivers">Elasticsearch/Opensearch native Spark drivers</h2>
+<p>If you want to write data from Spark fast and with high scalability, you want to use a Spark native driver to write your data. Hopefully, both Elasticsearch and Opensearch have a free/open-source Spark native driver that we can use.</p>
+<p>These drivers are both available as packages in the <a href="https://mvnrepository.com/">Maven repository</a>. If you want to write data to Elasticsearch, then, you are looking for the <code>elasticsearch-spark</code> package. But, if you want to write data to Opensearch instead, then, you are looking for the <code>opensearch-spark</code> package.</p>
+<p>You can see more info about these packages in the links below:</p>
+<ul>
+<li><a href="https://mvnrepository.com/artifact/org.opensearch.client/opensearch-spark-30" class="uri">https://mvnrepository.com/artifact/org.opensearch.client/opensearch-spark-30</a>.</li>
+<li><a href="https://mvnrepository.com/artifact/org.elasticsearch/elasticsearch-spark-30" class="uri">https://mvnrepository.com/artifact/org.elasticsearch/elasticsearch-spark-30</a>.</li>
+</ul>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

@@ -1,8 +1,62 @@
 ---
 title: Writing Spark DataFrames to Elasticsearch/Opensearch databases
-description: "Elasticsearch and Opensearch are two very popular No-SQL databases, which are used in many different scenarios. In this post, I want to address how can you write data from a Spark DataFrame into an Elasticsearch/Opensearch database."
+description: "Elasticsearch and Opensearch are two very popular No-SQL databases. In this post, I want to address how can you write data from a Spark DataFrame into an Elasticsearch/Opensearch database."
 date: "2025-03-16"
 image: "../spark-elasticsearch-cover.webp"
 ---
 
 # Introduction
+
+Recently, I had to develop a simple connector (i.e. a Python function) that allows a user to upload/write
+data from a Spark DataFrame into both an Elasticsearch and an Opensearch database. If you are not familiar
+with Elasticsearch or Opensearch, they are both No-SQL databases. Which means that they are databases that
+store a collection of JSON documents, instead of storing a collection of tables as you would expect from
+a traditional SQL database like PostgreSQL.
+
+Our data lake is processed by Apache Spark and Databricks, and some of the data that is being processed
+needs to be written into an Elasticsearch/Opensearch database, and it is best if we use the high scalability
+of Apache Spark to write this data. Thus, in this post, I want to describe how you can use the Spark to write data into these databases.
+
+## Why this post?
+
+Just to be clear, I'm writing this post specially because the existing documentation about the connection between
+Spark and Elasticsearch/Opensearch is very, I mean, veeeery poor. Therefore, this post serves as
+an extra documentation, or, an extra resource that you can rely on when writing data from Spark into
+Elasticsearch/Opensearch.
+
+
+## Elasticsearch/Opensearch native Spark drivers
+
+If you want to write data from Spark fast and with high scalability, you want to use a Spark native driver
+to write your data. Thankfully, both Elasticsearch and Opensearch have a free/open-source Spark native
+driver that we can use.
+
+These drivers are both available as packages in the [Maven repository](https://mvnrepository.com/).
+If you want to write data to Elasticsearch, then, you are looking for the `elasticsearch-spark` package.
+But, if you want to write data to Opensearch instead, then, you are looking for the
+`opensearch-spark` package.
+
+You can see more info about these packages in the links below:
+
+- <https://mvnrepository.com/artifact/org.opensearch.client/opensearch-spark-30>.
+- <https://mvnrepository.com/artifact/org.elasticsearch/elasticsearch-spark-30>.
+
+Now, you need to use the specific version of these packages that match your specific environment.
+For my example, my environment is this:
+
+- Databricks Runtime 15.4 LTS.
+- Apache Spark 3.5.0.
+- Scala 2.12.18.
+- Python 3.11.0.
+
+The version of Spark and Scala are the most important infos in this case. Since the version of Spark
+is 3.5.0, we want to use a version of these packages that are compatible with the 3.* versions of Spark,
+which are `opensearch-spark-30` and `elasticsearch-spark-30`.
+
+And we also need to use a version of these packages that are compatible with the 2.12 version of Scala.
+This is why, I've installed the `opensearch-spark-30_2.12` and `elasticsearch-spark-30_2.12` versions of
+these packages in my specific environment.
+
+Your specific environment might have different versions, and, therefore, you might need
+to use a different version of these packages for your specific case. Just be aware of that.
+
