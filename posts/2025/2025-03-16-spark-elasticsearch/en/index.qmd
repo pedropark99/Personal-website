@@ -100,10 +100,67 @@ After you install these Maven packages, you should be able to select the Elastic
 data source by using the strings `"org.opensearch.spark.sql"` and `"org.elasticsearch.spark.sql"`
 in the `format()` method.
 
-In the example below, we are selecting the Opensearch data source.
+Now, in order to use the data source, you have to set some options with the `option()`
+method of the `DataFrameWriter` class. These are the mandatory options that you have to set
+in the Opensearch driver:
+
+- `opensearch.nodes`: the hostname where your Opensearch server is hosted.
+- `opensearch.port`: the port to use in the connection with the Opensearch server.
+- `opensearch.resource`: the name of the target index in the Opensearch database to write the data to.
+- `opensearch.net.http.auth.user`: the username to login into the Opensearch server.
+- `opensearch.net.http.auth.pass`: the password to login into the Opensearch server.
+- `opensearch.write.operation`: the type of operation (e.g. `index`, `create`, `upsert`, etc.) that you want to use when writing the data to the Opensearch server.
+
+
+In the example below, we are selecting the Opensearch data source, and setting these mandatory
+options. Of course, the values of these options are not real, they are fictitious.
 
 ```python
 df = spark.range(1)
-df.write.format("org.opensearch.spark.sql")
+index = "my_index"
+host = "https://my-hostname.com"
+port = 1234
+user = "my_username"
+password = "my_secret_pass"
+
+df.write.format("org.opensearch.spark.sql")\
+    .option("opensearch.nodes", host)\
+    .option("opensearch.port", port)\
+    .option("opensearch.resource", index)\
+    .option("opensearch.net.http.auth.user", user)\
+    .option("opensearch.net.http.auth.pass", password)\
+    .option("opensearch.write.operation", "index")\
+    .mode("append")\
+    .save()
 ```
 
+
+Now, if you are trying to write data to an Elasticsearch server instead, then, these
+are the mandatory options that you have to set:
+
+
+- `es.nodes`: the hostname where your Elasticsearch server is hosted.
+- `es.port`: the port to use in the connection with the Elasticsearch server.
+- `es.resource`: the name of the target index in the Elasticsearch database to write the data to.
+- `es.write.operation`: the type of operation (e.g. `index`, `create`, `upsert`, etc.) that you want to use when writing the data to the Elasticsearch server.
+- `es.net.http.header.Authorization`: if you are using an API key to authenticate in the Elasticsearch server, you should use this option to set the authorization header that will be used in the HTTP request that is made to the Elasticsearch server.
+
+
+In the example below, I'm setting the mandatory options for the Elasticsearch driver:
+
+```python
+df = spark.range(1)
+index = "my_index"
+host = "https://my-hostname.com"
+port = 1234
+api_key = "my_secret_api_key"
+
+df.write.format("org.opensearch.spark.sql")\
+    .option("es.nodes", host)\
+    .option("es.port", port)\
+    .option("es.resource", index)\
+    .option("es.net.http.header.Authorization", f"ApiKey {api_key}")\
+    .option("es.write.operation", "index")\
+    .mode("append")\
+    .save()
+```
