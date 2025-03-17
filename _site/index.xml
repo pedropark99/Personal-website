@@ -9,8 +9,489 @@
 <link>https://pedro-faria.netlify.app/</link>
 <atom:link href="https://pedro-faria.netlify.app/index.xml" rel="self" type="application/rss+xml"/>
 <description>A blog about programming and data analysis, specially with R and Python</description>
-<generator>quarto-1.5.56</generator>
-<lastBuildDate>Sat, 12 Oct 2024 03:00:00 GMT</lastBuildDate>
+<generator>quarto-1.5.57</generator>
+<lastBuildDate>Sun, 16 Mar 2025 03:00:00 GMT</lastBuildDate>
+<item>
+  <title>Writing Spark DataFrames to Elasticsearch/Opensearch databases</title>
+  <dc:creator>Pedro Duarte Faria</dc:creator>
+  <link>https://pedro-faria.netlify.app/posts/2025/2025-03-16-spark-elasticsearch/en/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>Recently, I had to develop a simple connector (i.e.&nbsp;a Python function) to allow a user to upload/write data from a Spark DataFrame into both an Elasticsearch and an Opensearch database. If you are not familiar with Elasticsearch or Opensearch, they are both No-SQL databases. More specificaly, they are databases that store a collection of JSON documents, instead of storing a collection of tables as you would expect from a traditional SQL database like PostgreSQL.</p>
+<p>In more detail, the company had some new problems and needs that needed to be addressed. One of them was to send/write some of the data in our data lake into an Elasticsearch/Opensearch database. This is where I came in, to develop a simple solution that would allow the company to write such data into an Elasticsearch/Opensearch databases.</p>
+<p>Since our data lake is currently being processed by Apache Spark and Databricks, I needed to develop a solution that would make use of the high scalability of Apache Spark to write this data. In other words, because the company work in a “big data” scenario, I had to develop a solution that would be appropriate with this “big data” scenario.</p>
+<p>This task turn out to be a little more complicated than I expected. Mainly because the existing documentation about the connection between Spark and Elasticsearch/Opensearch is very, I mean, veeery poor. Therefore, it was a little hard to “make the thing work”. Since I don’t want you to face the same challenges I did, I’ve decided to write this post to describe how you can use Apache Spark to write data into these kinds of databases.</p>
+</section>
+<section id="spark-native-data-sources" class="level1">
+<h1>Spark native data sources</h1>
+<p>If you want to write data from Apache Spark fast and with high scalability, you want to use a Spark native data source to write your data. If you use Spark, you likely know what a “data source” is. But I want to discuss a few things here.</p>
+<p>First of all, Spark data sources are described in details at <a href="https://spark.apache.org/docs/3.5.3/sql-data-sources.html">this specific page in the Spark documentation</a>. Spark supports many different data sources out of the box. For example, it supports static files like CSV, JSON and Parquet files.</p>
+<p>But, you can also install Maven packages in your environment to use other data sources that were developed by the community. In other words, Spark is “extensible” in this regard. Because these Maven packages work almost like a “plugin”, by adding new data sources to the Spark engine.</p>
+<p>For example, by installing the <code>spark-sql-kafka</code> Maven package<sup>1</sup> into your environment, a new Spark data source becomes available to you, which is the Kafka data source. With this new data source, Spark supports streaming with Apache Kafka queues.</p>
+<p>Therefore, Spark supports multiple data sources out of the box, but you can add more data sources to the list by installing Maven packages that include new data sources to the Spark engine.</p>
+<section id="selecting-a-data-source" class="level2">
+<h2 class="anchored" data-anchor-id="selecting-a-data-source">Selecting a data source</h2>
+<p>For example, if you are writing a Spark application through <code>pyspark</code>, you can choose the specific data source that you want to use in Spark by using the <a href="https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.DataFrameWriter.format.html#pyspark.sql.DataFrameWriter.format"><code>format()</code> method from a <code>DataFrameWriter</code> class</a>. In the example below, I’m using the JSON data source to write data from Spark into a JSON file.</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1">df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> spark.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb1-2">df.write.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">format</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'json'</span>)</span></code></pre></div>
+</section>
+<section id="elasticsearchopensearch-native-spark-data-sources" class="level2">
+<h2 class="anchored" data-anchor-id="elasticsearchopensearch-native-spark-data-sources">Elasticsearch/Opensearch native Spark data sources</h2>
+<p>Both Elasticsearch and Opensearch have a free/open-source Spark native data source that we can use. These data sources are both available as packages in the <a href="https://mvnrepository.com/">Maven repository</a>. If you want to write data to Elasticsearch, then, you are looking for the <code>elasticsearch-spark</code> package. But, if you want to write data to Opensearch instead, then, you are looking for the <code>opensearch-spark</code> package.</p>
+<p>You can see more info about these packages in the links below:</p>
+<ul>
+<li><a href="https://mvnrepository.com/artifact/org.opensearch.client/opensearch-spark-30" class="uri">https://mvnrepository.com/artifact/org.opensearch.client/opensearch-spark-30</a>.</li>
+<li><a href="https://mvnrepository.com/artifact/org.elasticsearch/elasticsearch-spark-30" class="uri">https://mvnrepository.com/artifact/org.elasticsearch/elasticsearch-spark-30</a>.</li>
+</ul>
+<p>Now, you need to use the specific version of these packages that match your specific environment. For example, my environment is this:</p>
+<ul>
+<li>Databricks Runtime 15.4 LTS.</li>
+<li>Apache Spark 3.5.0.</li>
+<li>Scala 2.12.18.</li>
+<li>Python 3.11.0.</li>
+</ul>
+<p>The version of Spark and Scala are the most important infos in this case. Since the version of Spark is 3.5.0, we want to use a version of these packages that are compatible with the 3.* versions of Spark, which are versions <code>opensearch-spark-30</code> and <code>elasticsearch-spark-30</code>.</p>
+<p>And we also need to use a version of these packages that are compatible with the 2.12 version of Scala specifically. This is why, I’ve installed the <code>opensearch-spark-30_2.12</code> and <code>elasticsearch-spark-30_2.12</code> versions of these packages in my specific environment.</p>
+<p>Your specific environment might have different versions, and, therefore, you might need to use a different version of these packages for your specific case. Just be aware of that.</p>
+<p>In Databricks, you can install these Maven packages in your cluster to make these native Spark data sources available in your environment. If you don’t know how to do this, checkout the <a href="https://docs.databricks.com/aws/en/libraries/package-repositories#maven-or-spark-package">Databricks documentation</a> for this.</p>
+</section>
+<section id="using-the-elasticsearchopensearch-data-source" class="level2">
+<h2 class="anchored" data-anchor-id="using-the-elasticsearchopensearch-data-source">Using the Elasticsearch/Opensearch data source</h2>
+<p>After you install these Maven packages, you should be able to select the Elasticsearch/Opensearch data source by using the string <code>"org.opensearch.spark.sql"</code> or <code>"org.elasticsearch.spark.sql"</code> in the <code>format()</code> method.</p>
+<p>Now, in order to use the data source, you have to set some options with the <code>option()</code> method of the <code>DataFrameWriter</code> class. These are the mandatory options that you have to set if you use the Opensearch data source:</p>
+<ul>
+<li><code>opensearch.nodes</code>: the host URL where your Opensearch server is hosted.</li>
+<li><code>opensearch.port</code>: the port to use in the connection with the Opensearch server.</li>
+<li><code>opensearch.resource</code>: the name of the target index in the Opensearch database to write the data to.</li>
+<li><code>opensearch.net.http.auth.user</code>: the username to login into the Opensearch server.</li>
+<li><code>opensearch.net.http.auth.pass</code>: the password to login into the Opensearch server.</li>
+<li><code>opensearch.write.operation</code>: the type of operation (e.g.&nbsp;<code>index</code>, <code>create</code>, <code>upsert</code>, etc.) that you want to use when writing the data to the Opensearch server.</li>
+</ul>
+<p>In the example below, we are selecting the Opensearch data source, and setting these mandatory options. Of course, the values of these options are not real, they are fictitious.</p>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> spark.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb2-2">index <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"my_index"</span></span>
+<span id="cb2-3">host <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"https://my-hostname.com"</span></span>
+<span id="cb2-4">port <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1234</span></span>
+<span id="cb2-5">user <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"my_username"</span></span>
+<span id="cb2-6">password <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"my_secret_pass"</span></span>
+<span id="cb2-7"></span>
+<span id="cb2-8">df.write.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">format</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"org.opensearch.spark.sql"</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-9">    .option(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"opensearch.nodes"</span>, host)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-10">    .option(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"opensearch.port"</span>, port)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-11">    .option(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"opensearch.resource"</span>, index)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-12">    .option(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"opensearch.net.http.auth.user"</span>, user)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-13">    .option(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"opensearch.net.http.auth.pass"</span>, password)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-14">    .option(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"opensearch.write.operation"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"index"</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-15">    .mode(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"append"</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-16">    .save()</span></code></pre></div>
+<p>Now, if you are using the Elasticsearch data source instead, then, these are the mandatory options that you have to set:</p>
+<ul>
+<li><code>es.nodes</code>: the host URL where your Elasticsearch server is hosted.</li>
+<li><code>es.port</code>: the port to use in the connection with the Elasticsearch server.</li>
+<li><code>es.resource</code>: the name of the target index in the Elasticsearch database to write the data to.</li>
+<li><code>es.write.operation</code>: the type of operation (e.g.&nbsp;<code>index</code>, <code>create</code>, <code>upsert</code>, etc.) that you want to use when writing the data to the Elasticsearch server.</li>
+<li><code>es.net.http.header.Authorization</code>: if you are using an API key to authenticate in the Elasticsearch server, you should use this option to set the authorization header that will be used in the HTTP request that is made to the Elasticsearch server.</li>
+<li><code>es.net.http.auth.user</code>: if you are using basic username + password to authenticate in the Elasticsearch server, you should use this option to set the username to login into the Elasticsearch server.</li>
+<li><code>es.net.http.auth.pass</code>: if you are using basic username + password to authenticate in the Elasticsearch server, you should use this option to set the password to login into the Elasticsearch server.</li>
+</ul>
+<p>In the example below, I’m setting these mandatory options for the Elasticsearch data source:</p>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1">df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> spark.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb3-2">index <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"my_index"</span></span>
+<span id="cb3-3">host <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"https://my-hostname.com"</span></span>
+<span id="cb3-4">port <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1234</span></span>
+<span id="cb3-5">api_key <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"my_secret_api_key"</span></span>
+<span id="cb3-6"></span>
+<span id="cb3-7">df.write.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">format</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"org.opensearch.spark.sql"</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb3-8">    .option(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"es.nodes"</span>, host)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb3-9">    .option(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"es.port"</span>, port)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb3-10">    .option(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"es.resource"</span>, index)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb3-11">    .option(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"es.net.http.header.Authorization"</span>, <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"ApiKey </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>api_key<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb3-12">    .option(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"es.write.operation"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"index"</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb3-13">    .mode(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"append"</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb3-14">    .save()</span></code></pre></div>
+</section>
+</section>
+<section id="spark-write-mode" class="level1">
+<h1>Spark write mode</h1>
+<p>Usually, you don’t care about which Spark write mode is being used when using the Elasticsearch/Opensearch data source. In other words, the Spark write mode is usually irrelevant for most case scenarios.</p>
+<p>But, depending on what you want to do, you might have to change the Spark write mode to meet your specific goals. As it will become more clear further in this article, you want to use the Spark write mode <code>"append"</code> in most situations, i.e.&nbsp;it should be your “default”.</p>
+<p>But, before we continue, let me explain the differences between the Spark write mode, and the type of write operation that you set through the <code>es.write.operation</code> and <code>opensearch.write.operation</code> options.</p>
+<p>With the <code>es.write.operation</code> and <code>opensearch.write.operation</code> options, you specify which type of operation you want to use to insert the new data into the Opensearch database. That is, if the new data should be inserted into the Opensearch index using an <code>upsert</code> operation, or maybe, a <code>create</code> operation, or an <code>index</code> operation, etc.</p>
+<p>On the other hand, by setting the Spark write mode, you are basically adding a new effect into the process. Usually, you want to use the Spark write mode <code>"append"</code> in most situations, because this write mode does not introduces any new effect into the mix. In other words, the write mode <code>"append"</code> does nothing, it “means nothing” to the Elasticsearch/Opensearch Spark data source.</p>
+<p>But, if you set the Spark write mode to anything else, then, you start to introduce new operations in the mix. In the list below, you can see which effects each Spark write mode has on the process:</p>
+<ul>
+<li><code>overwrite</code>: a <code>delete</code> operation is performed in the Elasticsearch/Opensearch index before the Spark data is written into the Elasticsearch/Opensearch index.</li>
+<li><code>error</code> or <code>errorifexists</code>: if the Elasticsearch/Opensearch index is empty (i.e.&nbsp;document count is zero, or, the index doesn’t even exist), nothing happens, the Spark data is written into the Elasticsearch/Opensearch index as expected. Otherwise, an exception is raised.</li>
+<li><code>ignore</code>: if the Elasticsearch/Opensearch index is empty (i.e.&nbsp;document count is zero, or, the index doesn’t even exist), the Spark data is written into the Elasticsearch/Opensearch index as expected. Otherwise, the Spark data is completely ignored, that is, it is not written into the Elasticsearch/Opensearch index.</li>
+</ul>
+</section>
+<section id="extra-options-that-you-might-want-to-use" class="level1">
+<h1>Extra options that you might want to use</h1>
+<section id="mapping-the-id-column" class="level2">
+<h2 class="anchored" data-anchor-id="mapping-the-id-column">Mapping the ID column</h2>
+<p>Elasticsearch and Opensearch are No-SQL databases that store a collection of JSON documents. Each JSON document that you add/insert into these databases is always associated with a particular ID. In other words, each document in the database has an ID associated with it.</p>
+<p>This ID is crucial to identify each document in the database. In most cases, this ID is created automatically, at runtime, by the database itself. In more details, when you insert new documents into the database, the Elasticsearch/Opensearch server calculates automatically these ID’s for you. This tipically happens when you use an <code>index</code> write operation to insert these new documents into the database.</p>
+<p>This <code>index</code> write operation in an Elasticsearch/Opensearch database works similarly to an <code>INSERT INTO</code> SQL statement in a traditional SQL database. It basically means that you are inserting new data into the database. And because this data is <strong>new</strong>, the database can generate a completely new and unique ID for this new data that is being inserted, without the help of anyone else.</p>
+<p>However, this scenario changes completely when you are updating pre-existing data/documents in the database, or, when you are deleting some pre-existing data/documents. Because in this instance, you, the user, needs to provide the ID’s of the documents that you want to delete/update. In other words, the database needs to know which specific documents you want to update/delete, and you is responsible for specifying the ID’s of these documents.</p>
+<p>For example, if you are using an <code>upsert</code> operation (which is basically a “update if exists, and insert otherwise” operation) to write your Spark data into the Elasticsearch/Opensearch database, then, your Spark DataFrame must have a column in it that contains the ID’s of each document, and you need to tell the Elasticsearch/Opensearch Spark data source which column in the DataFrame contains such ID’s through the <code>opensearch.mapping.id</code> and <code>es.mapping.id</code> options.</p>
+<p>For example, if the ID’s of each document are in a column named <code>id</code>, then, I should set this option to the string <code>"id"</code>. In the example below, we are using the Opensearch data source, but the same thing applies to the Elasticsearch data source, just changes the option to <code>es.mapping.id</code>:</p>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1">df.write.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">format</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"org.opensearch.spark.sql"</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb4-2">    .option(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"es.write.operation"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"upsert"</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb4-3">    .option(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"es.mapping.id"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"id"</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb4-4">    .option(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"es.nodes"</span>, host)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb4-5">    .option(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"es.port"</span>, port)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb4-6">    .option(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"es.resource"</span>, index)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb4-7">    .option(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"es.net.http.header.Authorization"</span>, <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"ApiKey </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>api_key<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb4-8">    .mode(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"append"</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb4-9">    .save()</span></code></pre></div>
+</section>
+<section id="avoiding-unnecessary-refresh-index-operations" class="level2">
+<h2 class="anchored" data-anchor-id="avoiding-unnecessary-refresh-index-operations">Avoiding unnecessary refresh index operations</h2>
+<p>Every time that you add new data into an Elasticsearch/Opensearch database, the database needs to perform a “refresh index operation” at some point. A “refresh index operation” makes recent operations performed on one or more indices on the database available for search.</p>
+<p>In other words, when you add a new document to an index, or, when you change a pre-existing document in the index, these changes that you made in the index will usually become available to be “searched/accessed” only after a “refresh index operation” is performed in the index.</p>
+<p>Therefore, the Elasticsearch/Opensearch database needs to perform this “refresh index operation” at some point, so that you can access/see the changes that you made in the index.</p>
+<p>But here is the catch! Everytime you use the Elasticsearch/Opensearch Spark data source to write some data from Spark, the data source always perform a “refresh index operation” at the end of the write process, by making a HTTP request to the Refresh API of the Elasticsearch/Opensearch database at the end of the process. For most case scenarios, you should always avoid this “refresh index operation” at the end!</p>
+<p>In other words, you should not let the Spark data source to dictate when the “refresh index operation” should be performed. Let the Elasticsearch/Opensearch database be responsible for that! When the time is appropriate, the Elasticsearch/Opensearch database itself will decide and automatically perform the “refresh index operation” to include your changes.</p>
+<p>You can do that by setting the options <code>es.batch.write.refresh</code> and <code>opensearch.batch.write.refresh</code> to <code>False</code>.</p>
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1">df.write.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">format</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"org.opensearch.spark.sql"</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb5-2">    .option(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"es.batch.write.refresh"</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb5-3">    .option(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"es.nodes"</span>, host)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb5-4">    .option(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"es.port"</span>, port)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb5-5">    .option(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"es.resource"</span>, index)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb5-6">    .option(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"es.net.http.header.Authorization"</span>, <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"ApiKey </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>api_key<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb5-7">    .option(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"es.write.operation"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"index"</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb5-8">    .mode(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"append"</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb5-9">    .save()</span></code></pre></div>
+</section>
+<section id="define-the-chunk-size" class="level2">
+<h2 class="anchored" data-anchor-id="define-the-chunk-size">Define the chunk size</h2>
+<p>When you use the Elasticsearch/Opensearch Spark data sources, they split your Spark DataFrame in chunks, and send these chunks/batches to the Elasticsearch/Opensearch server, piece by piece. You can use the <code>es.batch.size.entries</code> and <code>opensearch.batch.size.entries</code> options to specify the size (number of entries) of these chunks that are created by the Spark data source.</p>
+<p>For example, if your DataFrame contains 10000 rows, and you set this chunk size to 1000, then, the Spark data source will split your DataFrame into 10 chunks, and send each chunk sequentially to the Elasticsearch/Opensearch server.</p>
+<p>By controlling the size of the chunk that is sent to the server, you can control how much data (or, how much “stuff”) the server needs to process in each request. This is useful if your Elasticsearch/Opensearch server have a rate limit, or, a if it does not have much powerful resources to process huge amounts of data in a single request.</p>
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1">df.write.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">format</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"org.opensearch.spark.sql"</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb6-2">    .option(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"es.batch.size.entries"</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb6-3">    .option(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"es.nodes"</span>, host)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb6-4">    .option(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"es.port"</span>, port)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb6-5">    .option(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"es.resource"</span>, index)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb6-6">    .option(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"es.net.http.header.Authorization"</span>, <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"ApiKey </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>api_key<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb6-7">    .option(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"es.write.operation"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"index"</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb6-8">    .mode(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"append"</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb6-9">    .save()</span></code></pre></div>
+</section>
+</section>
+<section id="potential-problems-that-you-might-face" class="level1">
+<h1>Potential problems that you might face</h1>
+<section id="finding-your-elasticsearchopensearch-server" class="level2">
+<h2 class="anchored" data-anchor-id="finding-your-elasticsearchopensearch-server">Finding your Elasticsearch/Opensearch server</h2>
+<p>This is likely the first problem that you will face when trying to use the Elasticsearch/Opensearch Spark data source. This problem happens when your Elasticsearch/Opensearch server is not found by the Spark data source. In other words, this is a network problem. For example, you ask the Spark data source to write your data into the server located at the URL “https://my-host.com”, but, the Spark data source was unable to find/locate the server at this URL.</p>
+<p>This specific problem can happen for multiple reasons. Maybe…</p>
+<ul>
+<li>the URL that you provided at the <code>es.nodes</code> or <code>opensearch.nodes</code> option is wrong in some way.</li>
+<li>the port number that you provided at the <code>es.port</code> or <code>opensearch.port</code> option is wrong in some way.</li>
+<li>the Elasticsearch/Opensearch server might not be accessible through the internet, i.e.&nbsp;maybe this server is hosted on a private/closed network.</li>
+<li>the Elasticsearch/Opensearch server has a firewall rule that is blocking your network access.</li>
+<li>your Spark process might not have access to the internet for some reason.</li>
+</ul>
+</section>
+<section id="forbidden-database-operations" class="level2">
+<h2 class="anchored" data-anchor-id="forbidden-database-operations">Forbidden database operations</h2>
+<p>While using these Spark native data sources you might face some problems. The most likely error that you might encounter while using these data sources is a “403/Forbidden” error message, which basically means that, with the inputs that you provided, the Spark data source is asking the Elasticsearch/Opensearch server to perform an operation that you don’t have enough authorization to perform. However, this is kind of generic, i.e.&nbsp;this “forbidden” can mean a lot of things. That is, there are many different operations that you may or may not have enough authorization to perform in the database.</p>
+<p>For example, maybe, the data that you have provided does not follow the schema of the JSON documents that are already present in the database index that you are using. If that is your case, then, the database will likely need to redefine/recreate the index in the database from scratch, so that it can alter the schema of that index, and, you might not have enough authorization to recreate such index, therefore, causing a “403/Forbidden” error.</p>
+<p>This is just one example, but there are many other examples of operations that you might be silently causing/triggering through these Spark data sources, and that you do not have enough authorization to perform. Unfortunately, the error messages provided by these Spark data sources are really poor in details in some cases. So you will probably need to do a lot of testing, until you find the perfect combination of inputs and data that work for your case.</p>
+
+
+</section>
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p><a href="https://mvnrepository.com/artifact/org.apache.spark/spark-sql-kafka-0-10" class="uri">https://mvnrepository.com/artifact/org.apache.spark/spark-sql-kafka-0-10</a>↩︎</p></li>
+</ol>
+</section></div> ]]></description>
+  <guid>https://pedro-faria.netlify.app/posts/2025/2025-03-16-spark-elasticsearch/en/</guid>
+  <pubDate>Sun, 16 Mar 2025 03:00:00 GMT</pubDate>
+  <media:content url="https://pedro-faria.netlify.app/posts/2025/2025-03-16-spark-elasticsearch/spark-elasticsearch-cover.webp" medium="image" type="image/webp"/>
+</item>
 <item>
   <title>Introduction to Zig: a project-based book</title>
   <dc:creator>Pedro Duarte Faria</dc:creator>
@@ -24,7 +505,7 @@
 <section id="about-the-book" class="level1">
 <h1>About the book</h1>
 <p>This is an open book that provides an introduction to the <a href="https://ziglang.org/">Zig programming language</a>, which is a new general-purpose, and low-level programming language for building robust and optimal software.</p>
-<p><a href="https://www.amazon.com/dp/B0DJYMDRLP"> <button type="button" class="btn btn-primary">Buy the book!</button></a> <a href="https://pedropark99.github.io/zig-book/"> <button type="button" class="btn btn-primary">Read online</button></a> <a href="https://github.com/pedropark99/zig-book"> <button type="button" class="btn btn-primary">Official repository</button></a></p>
+<p><a href="https://www.amazon.com/dp/B0DJYMDRLP"> <button type="button" class="btn btn-primary">Buy the book at Amazon!</button></a> <a href="https://leanpub.com/introductiontozigaproject-basedbook"> <button type="button" class="btn btn-primary">Buy the book at Leanpub!</button></a> <a href="https://pedropark99.github.io/zig-book/"> <button type="button" class="btn btn-primary">Read online</button></a> <a href="https://github.com/pedropark99/zig-book"> <button type="button" class="btn btn-primary">Official repository</button></a></p>
 <p>This book is designed for both beginners and experienced developers. It explores the exciting world of Zig through small and simple projects (in a similar style to the famous “Python Crash Course” book from Eric Matthes). Some of these projects are: a Base64 encoder/decoder, a HTTP Server and an image filter.</p>
 <p>As you work through the book, you will learn:</p>
 <ul>
@@ -8735,274 +9216,6 @@ Ganssle, Paul. 2021. <span>“Why You Shouldn’t Invoke Setup.py Directly.”</
   <guid>https://pedro-faria.netlify.app/posts/2023/2023-02-06-python-pckg/en/</guid>
   <pubDate>Mon, 06 Feb 2023 03:00:00 GMT</pubDate>
   <media:content url="https://pedro-faria.netlify.app/posts/2023/2023-02-06-python-pckg/package.jpg" medium="image" type="image/jpeg"/>
-</item>
-<item>
-  <title>JOINs são importantes fontes de duplicações em seus dados</title>
-  <dc:creator>Pedro Duarte Faria</dc:creator>
-  <link>https://pedro-faria.netlify.app/posts/2023/2023-01-10-join-duplicates/pt/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<section id="introdução" class="level1">
-<h1>Introdução</h1>
-<!--
-A regra de ouro da programação DRY (*do not repeat yourself*) também pode influenciar outras dimensões de sua vida. Por exemplo, se você der o mesmo conselho para uma pessoa pela terceira vez ou mais, é melhor que você escreva ou documente esse conselho de alguma forma. Desse modo, você pode disseminar esse conselho para outras pessoas de forma mais efetiva. Esse post é um reflexo direto disso:
-
-> When you’ve written the same code 3 times, write a function. When you’ve given the same in-person advice 3 times, write a blog post. ROBINSON, David, 2017 ^[Essa citação vem de um tweet de David Robinson, o qual está disponível no link: <https://twitter.com/drob/status/928447584712253440?s=20&t=5gy5SkBKGr6oXsWcg9LIag>].
--->
-<p>Quando estamos construindo uma nova tabela de dados, é muito comum compararmos os nossos resultados com tabelas anteriores e nos depararmos com problemas de divergência nos dados. Isto é, situações como:</p>
-<blockquote class="blockquote">
-<p>Uhmm… a tabela antiga indica que o número de maquininhas vendidas no mês de Dezembro foi de 1387. Porém, esse mesmo indicador na tabela nova está em 1824 para o mesmo mês de Dezembro. Porque esse aumento?</p>
-</blockquote>
-<p>Aumentos desse tipo podem ocorrer por uma variedade de razões. Porém, operações de JOIN tem sido uma razão específica que tenho enfrentado com muita frequência em meu trabalho. Em outras palavras, JOINs são fontes extremamente comuns de dados duplicados. Como resultado, esses dados duplicados acabam gerando um “efeito expansivo” sobre os seus indicadores e suas tabelas.</p>
-<p>Muitos analistas não compreendem o porquê, ou não enxergam como isso pode ocorrer. Nesse post, busco justamente esclarecer como uma operação de JOIN pode causar esse “efeito expansivo” em seus dados. Eu também explico esse efeito em detalhes no capítulo 6 do meu livro introdutório da linguagem R. Mais especificamente, a partir da seção <a href="https://pedropark99.github.io/Introducao_R/introdu%C3%A7%C3%A3o-a-base-de-dados-relacionais-com-dplyr.html#rela%C3%A7%C3%B5es-entre-keys-primary-keys-s%C3%A3o-menos-comuns-do-que-voc%C3%AA-pensa">Relações entre <em>keys: primary keys</em> são menos comuns do que você pensa</a>. Portanto, grande parte do conhecimento exposto aqui são referências diretas ao livro.</p>
-</section>
-<section id="esse-efeito-independe-da-linguagem-de-programação-utilizada" class="level1">
-<h1>Esse efeito independe da linguagem de programação utilizada</h1>
-<p>Por opção minha, vou utilizar exemplos na linguagem R para demonstrar esse “efeito expansivo” de JOINs. Mas você poderia facilmente transpor todos esses exemplos para qualquer outra linguagem de sua preferência (e.g.&nbsp;como o Python).</p>
-<p>Ou seja, o conhecimento exposto aqui <strong>independe da linguagem utilizada</strong>. Pois o efeito descrito aqui é uma característica intrínseca ao processo de JOIN, e não da linguagem utilizada.</p>
-</section>
-<section id="um-exemplo-de-efeito-expansivo" class="level1">
-<h1>Um exemplo de efeito expansivo</h1>
-<p>Para demonstrar esse efeito expansivo, vou utilizar as tabelas <code>cores_de_pele</code> e <code>alturas</code> como exemplo. Podemos visualizar os dados dessas duas tabelas abaixo:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1">cores_de_pele</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 4 × 2
-     ID Cor    
-  &lt;dbl&gt; &lt;chr&gt;  
-1   100 Pardo  
-2   102 Branco 
-3   104 Branco 
-4   105 Amarelo</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">alturas</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 4 × 3
-  DataRegistro    ID Altura
-  &lt;date&gt;       &lt;dbl&gt;  &lt;dbl&gt;
-1 2022-01-10     102   1.58
-2 2022-01-10     105   1.72
-3 2022-06-12     105   1.74
-4 2022-08-24     105   1.75</code></pre>
-</div>
-</div>
-<section id="necessidade-inicial" class="level2">
-<h2 class="anchored" data-anchor-id="necessidade-inicial">Necessidade inicial</h2>
-<p>Vamos supor que, no início, você precisava manter um indicador de “número de usuários por cor de pele” em um relatório. Para isso, você simplesmente contava o número de linhas na tabela <code>cores_de_pele</code> agrupado pelos valores da coluna <code>Cor</code>. Como demonstrado abaixo:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">library</span>(dplyr)</span>
-<span id="cb5-2">usuarios_por_cor <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> cores_de_pele <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">|&gt;</span></span>
-<span id="cb5-3">    <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">group_by</span>(Cor) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">|&gt;</span></span>
-<span id="cb5-4">    <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">summarise</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">N_usuarios =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">n</span>())</span>
-<span id="cb5-5"></span>
-<span id="cb5-6">usuarios_por_cor</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 2
-  Cor     N_usuarios
-  &lt;chr&gt;        &lt;int&gt;
-1 Amarelo          1
-2 Branco           2
-3 Pardo            1</code></pre>
-</div>
-</div>
-</section>
-<section id="uma-nova-necessidade" class="level2">
-<h2 class="anchored" data-anchor-id="uma-nova-necessidade">Uma nova necessidade</h2>
-<p>Porém, uma nova necessidade surge no time. Agora, você precisa calcular também a “altura média por cor de pele”. Você sabe que as alturas dos usuários estão armazenadas na tabela <code>alturas</code>, contudo, você precisa trazer essas alturas para dentro da tabela <code>cores_de_pele</code>, para que você possa de fato calcular a altura média para cada cor de pele.</p>
-<p>Portanto, você precisa realizar um JOIN entre essas tabelas, e é isso que estamos fazendo no código abaixo:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1">dados <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> cores_de_pele <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">|&gt;</span></span>
-<span id="cb7-2">    <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">left_join</span>(alturas, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">by =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"ID"</span>)</span></code></pre></div>
-</div>
-<p>Agora, temos uma nova tabela chamada <code>dados</code> que contém todos os dados que precisamos para calcular ambos os indicadores (“número de usuários” e “altura média”) para cada cor de pele. Entretanto, quando calculamos esses indicadores com essa tabela <code>dados</code>, perceba que o número de usuários (indicador <code>N_usuarios</code>) de cor “Amarelo” sofreu um <strong>aumento repentino</strong>.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1">indicadores <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> dados <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">|&gt;</span></span>
-<span id="cb8-2">    <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">group_by</span>(Cor) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">|&gt;</span></span>
-<span id="cb8-3">    <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">summarise</span>(</span>
-<span id="cb8-4">        <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">N_usuarios =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">n</span>(),</span>
-<span id="cb8-5">        <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">Altura_media =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">mean</span>(Altura, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">na.rm =</span> <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">TRUE</span>)</span>
-<span id="cb8-6">    )</span>
-<span id="cb8-7"></span>
-<span id="cb8-8">indicadores</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 3
-  Cor     N_usuarios Altura_media
-  &lt;chr&gt;        &lt;int&gt;        &lt;dbl&gt;
-1 Amarelo          3         1.74
-2 Branco           2         1.58
-3 Pardo            1       NaN   </code></pre>
-</div>
-</div>
-<p>Repare que nós não mudamos a fórmula de cálculo do indicador <code>N_usuarios</code>. Nós aplicamos a mesma função <code>n()</code> que utilizamos anteriormente. Nós também agrupamos a tabela <code>dados</code> pela coluna <code>Cor</code> com <code>group_by()</code>, da mesma forma que fizemos anteriormente. Porque esse aumento ocorreu?</p>
-<p>Nós não mudamos nada na fórmula de cálculo do indicador <code>N_usuarios</code>. Porém, nós introduzimos um novo item na cadeia de transformações da tabela. Mais especificamente, um LEFT JOIN realizado pela função <code>left_join()</code>. Ou seja, <strong>o JOIN é o que mudou nesse código</strong>, e ele é o culpado por esse estranho e repentino aumento no número de usuários de cor “Amarelo”.</p>
-</section>
-<section id="o-que-aconteceu" class="level2">
-<h2 class="anchored" data-anchor-id="o-que-aconteceu">O que aconteceu?</h2>
-<p>Se olharmos bem para a tabela resultado do JOIN (tabela <code>dados</code>) podemos começar a compreender o que aconteceu. Perceba que temos 6 linhas nessa tabela, isto é, temos 2 linhas a mais que a tabela <code>cores_de_pele</code> (que possui 4 linhas). Perceba também que temos 3 linhas nessa tabela descrevendo o mesmo usuário de ID 105. Ou seja, temos <strong>dados duplicados</strong> para esse usuário.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1">dados</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 4
-     ID Cor     DataRegistro Altura
-  &lt;dbl&gt; &lt;chr&gt;   &lt;date&gt;        &lt;dbl&gt;
-1   100 Pardo   NA            NA   
-2   102 Branco  2022-01-10     1.58
-3   104 Branco  NA            NA   
-4   105 Amarelo 2022-01-10     1.72
-5   105 Amarelo 2022-06-12     1.74
-6   105 Amarelo 2022-08-24     1.75</code></pre>
-</div>
-</div>
-<p>O usuário de ID 105 é o único usuário de cor “Amarelo” na tabela. Portanto, essas 3 linhas referentes ao ID 105 são a causa da mudança repentina no indicador <code>N_usuarios</code> para a cor “Amarelo”. Porém, como podemos ver abaixo, a tabela <code>cores_de_pele</code> tem 1 única linha para o usuário de ID 105. Como essa única linha se transformou em três?</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1">cores_de_pele</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 4 × 2
-     ID Cor    
-  &lt;dbl&gt; &lt;chr&gt;  
-1   100 Pardo  
-2   102 Branco 
-3   104 Branco 
-4   105 Amarelo</code></pre>
-</div>
-</div>
-</section>
-<section id="entenda-o-processo-de-pareamento-de-um-join" class="level2">
-<h2 class="anchored" data-anchor-id="entenda-o-processo-de-pareamento-de-um-join">Entenda o processo de pareamento de um JOIN</h2>
-<p>A única linha de ID 105 na tabela <code>cores_de_pele</code> se transformou em 3 linhas devido ao processo de pareamento dos dados realizado pelo JOIN. Todo JOIN, independe do tipo que ele seja (<em>left, inner, right, full</em>), vai sempre realizar um processo de pareamento entre os dados das duas tabelas, utilizando as colunas que representam as “chaves” do JOIN <span class="citation" data-cites="pedro2022">(Faria 2022)</span>.</p>
-<p>Podemos visualizar esse processo de pareamento dos dados em Figure&nbsp;1. Perceba que, tanto no exemplo dessa imagem, quanto no exemplo desse post, as chaves do JOIN são representadas pela coluna <code>ID</code>. Logo, o JOIN vai puxar os dados de uma tabela para a outra, utilizando os valores dessa coluna como guia.</p>
-<div id="fig-pareamento" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-pareamento-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="https://pedro-faria.netlify.app/posts/2023/2023-01-10-join-duplicates/pareamento1.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pareamento-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Processo de pareamento realizado em um JOIN
-</figcaption>
-</figure>
-</div>
-<p>No exemplo de Figure&nbsp;1, ambas as tabelas que estão sendo unidas possuem uma linha para cada <code>ID</code>. Ou seja, não existe IDs duplicados em nenhuma das duas tabelas, formando assim, uma relação de “um para um” entre as chaves do JOIN.</p>
-<p>Contudo, no exemplo deste post, a tabela <code>alturas</code> possui três linhas diferentes para o mesmo ID 105, enquanto a tabela <code>cores_de_pele</code> não apresenta IDs duplicados. Isso acaba formando uma relação de “um para muitos” entre as chaves do JOIN. Nesse caso, como o processo de pareamento do JOIN deve se comportar? Bem, o seguinte vai acontecer…</p>
-<ol type="1">
-<li><p>O JOIN vai pegar o ID 105 da tabela <code>cores_de_pele</code> e pesquisar por ele ao longo da tabela <code>alturas</code>. Como resultado, o JOIN vai localizar três linhas distintas para o ID 105 na tabela <code>alturas</code>.</p></li>
-<li><p>O JOIN percebe que há um desequilíbrio (1 linha de <code>cores_de_pele</code> <img src="https://latex.codecogs.com/png.latex?%5Ctimes"> 3 linhas de <code>alturas</code>).</p></li>
-<li><p>Para reequilibrar essa balança, o JOIN vai executar um produto cartesiano entre as linhas dessas duas tabelas.</p></li>
-</ol>
-<p>A Figure&nbsp;2 apresenta de forma visual essa conexão:</p>
-<div id="fig-desenho-expansao" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-desenho-expansao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="https://pedro-faria.netlify.app/posts/2023/2023-01-10-join-duplicates/expansao.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-desenho-expansao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Uma representação visual do efeito expansivo sobre o ID 105
-</figcaption>
-</figure>
-</div>
-<p>Ou seja, o JOIN vai retornar como resultado, <strong>todas as combinações possíveis</strong> entre a linha única de <code>cores_de_pele</code> e as 3 linhas de <code>alturas</code>. Ou seja, a linha única de <code>cores_de_pele</code> é combinada com cada uma das 3 linhas de <code>alturas</code>. Como resultado, temos as 3 linhas de ID 105 na tabela <code>dados</code>:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1">dados</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 4
-     ID Cor     DataRegistro Altura
-  &lt;dbl&gt; &lt;chr&gt;   &lt;date&gt;        &lt;dbl&gt;
-1   100 Pardo   NA            NA   
-2   102 Branco  2022-01-10     1.58
-3   104 Branco  NA            NA   
-4   105 Amarelo 2022-01-10     1.72
-5   105 Amarelo 2022-06-12     1.74
-6   105 Amarelo 2022-08-24     1.75</code></pre>
-</div>
-</div>
-</section>
-</section>
-<section id="conclusão" class="level1">
-<h1>Conclusão</h1>
-<p>Portanto, o produto cartesiano executado pelo JOIN gerou linhas duplicadas para o ID 105, e essa introdução de dados duplicados acabou distorcendo o valor dos indicadores. <strong>O efeito expansivo está no produto cartesiano gerado pelo JOIN</strong>, e você deve ficar atento em todas as situações em que esse produto pode ocorrer.</p>
-<p>Mas então… em que momentos especificamente esse produto cartesiano é gerado? A resposta é: sempre que existir uma relação de “um para muitos” ou de “muitos para muitos” entre as chaves do JOIN. As “chaves” (ou <em>keys</em>) de todo JOIN podem formar três tipos de relação: 1) um para um; 2) um para muitos; e 3) muitos para muitos <span class="citation" data-cites="pedro2022">(Faria 2022)</span>. Em Figure&nbsp;3 apresentamos de forma visual essas relações, e os produtos cartesianos que elas geram, onde a coluna <code>key</code> representa a “chave” do JOIN.</p>
-<div id="fig-relacoes" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-relacoes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="https://pedro-faria.netlify.app/posts/2023/2023-01-10-join-duplicates/relacoes_keys.png" class="img-fluid figure-img" style="width:80.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-relacoes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Resumo das relações possíveis entre <em>keys</em> e seus respectivos produtos cartesianos
-</figcaption>
-</figure>
-</div>
-<p>Perceba que, para o caso de relação um para um, o número de linhas na tabela resultado permanece inalterado. Porém, as relações que realmente nos interessam nesse post são as relações de “um para muitos” e de “muitos para muitos”. Perceba que um produto cartesiano ocorre nesses dois tipos de relação, e, como resultado, algum nível de “duplicação” de informações é gerado na tabela resultado do JOIN.</p>
-<p>É através dessa “duplicação” que pode ocorrer o que estamos chamando de “efeito expansivo” dos JOINs nesse post. Perceba em Figure&nbsp;3 que o “efeito expansivo” e, consequentemente, a distorção sobre os seus indicadores pode ser ainda maior no caso de relações “muitos para muitos”. Pois o produto cartesiano gerado por esse tipo de relação resulta em um número maior de linhas duplicadas.</p>
-<p>É provável que as “chaves” do seu JOIN apresentem ao menos alguns valores (ou IDs específicos) que possuem uma relação de “um para um”. Logo, esses valores específicos não vão causar esse efeito expansivo em seu JOIN. O ID 102 da tabela <code>cores_de_pele</code> é um exemplo de ID que também está presente na tabela <code>alturas</code>, e que ocupa uma única linha dessa tabela. Logo, esse ID específico forma uma relação de “um para um” entre as tabelas <code>cores_de_pele</code> e <code>alturas</code>.</p>
-<p>Por outro lado, é bastante provável que as “chaves” do seu JOIN também possuem alguns valores (ou IDs específicos) que apresentem relações do tipo “um para muitos” ou “muitos para muitos”. Portanto, um produto cartesiano vai ocorrer para cada um desses valores que apresentam essas relações. Isto é, se por exemplo, tivessemos 30 IDs na tabela <code>x</code> que formassem uma relação de “um para muitos” com IDs na tabela <code>y</code>, um JOIN entre as tabelas <code>x</code> e <code>y</code>, geraria como resultado 30 produtos cartesianos diferentes. Por causa disso, o efeito expansivo sobre a sua tabela pode ser considerável se você tiver um número grande de valores que possuem esses tipos de relações.</p>
-<p>Por último, vale destacar uma última vez, que estes produtos cartesianos independem do tipo de JOIN (<em>inner, left, right, full</em>) que você está executando, mas dependem diretamente dos seus dados e da relação que eles formam entre as chaves do JOIN.</p>
-
-
-
-</section>
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0">
-<div id="ref-pedro2022" class="csl-entry">
-Faria, Pedro Duarte. 2022. <em>Introdução à Linguagem r: Seus Fundamentos e Sua Prática</em>. 4th ed. Belo Horizonte.
-</div>
-</div></section></div> ]]></description>
-  <category>JOINs</category>
-  <guid>https://pedro-faria.netlify.app/posts/2023/2023-01-10-join-duplicates/pt/</guid>
-  <pubDate>Tue, 10 Jan 2023 03:00:00 GMT</pubDate>
-  <media:content url="https://pedro-faria.netlify.app/posts/2023/2023-01-10-join-duplicates/expansao.png" medium="image" type="image/png" height="81" width="144"/>
 </item>
 </channel>
 </rss>

@@ -1,7 +1,22 @@
 [
   {
+    "listing": "/publications/index.html",
+    "items": [
+      "/publications/book/zig-book/en/index.html",
+      "/publications/book/introducao_linguagem_R/pt/index.html",
+      "/publications/book/introd-pyspark/en/index.html"
+    ]
+  },
+  {
+    "listing": "/publications/pt.html",
+    "items": [
+      "/publications/book/introducao_linguagem_R/pt/index.html"
+    ]
+  },
+  {
     "listing": "/posts/en.html",
     "items": [
+      "/posts/2025/2025-03-16-spark-elasticsearch/en/index.html",
       "/posts/2024/2024-03-13-llm-locally/en/index.html",
       "/posts/2024/2024-02-19-flow-even/en/index.html",
       "/posts/2024/2024-01-22-did-you-ever-ssh/en/index.html",
@@ -23,6 +38,7 @@
   {
     "listing": "/posts/index.html",
     "items": [
+      "/posts/2025/2025-03-16-spark-elasticsearch/en/index.html",
       "/posts/2024/2024-03-13-llm-locally/en/index.html",
       "/posts/2024/2024-02-19-flow-even/en/index.html",
       "/posts/2024/2024-01-22-did-you-ever-ssh/en/index.html",
@@ -52,29 +68,9 @@
     ]
   },
   {
-    "listing": "/publications/pt.html",
-    "items": [
-      "/publications/book/introducao_linguagem_R/pt/index.html"
-    ]
-  },
-  {
-    "listing": "/publications/index.html",
-    "items": [
-      "/publications/book/zig-book/en/index.html",
-      "/publications/book/introducao_linguagem_R/pt/index.html",
-      "/publications/book/introd-pyspark/en/index.html"
-    ]
-  },
-  {
-    "listing": "/publications/en.html",
-    "items": [
-      "/publications/book/zig-book/en/index.html",
-      "/publications/book/introd-pyspark/en/index.html"
-    ]
-  },
-  {
     "listing": "/index.html",
     "items": [
+      "/posts/2025/2025-03-16-spark-elasticsearch/en/index.html",
       "/posts/2024/2024-03-13-llm-locally/en/index.html",
       "/posts/2024/2024-02-19-flow-even/en/index.html",
       "/posts/2024/2024-01-22-did-you-ever-ssh/en/index.html",
@@ -119,6 +115,13 @@
       "/posts/2021/2021-05-26-2nd-edition-rbook/pt/index.html",
       "/posts/2021/2021-01-02-tabela-destinataria-fonte/pt/index.html",
       "/posts/2020/2020-10-17-formulario-pesquisa/pt/index.html"
+    ]
+  },
+  {
+    "listing": "/publications/en.html",
+    "items": [
+      "/publications/book/zig-book/en/index.html",
+      "/publications/book/introd-pyspark/en/index.html"
     ]
   }
 ]

@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Pedro Duarte Faria">
+<meta name="dcterms.date" content="2025-03-16">
+<meta name="description" content="Elasticsearch and Opensearch are two very popular No-SQL databases. In this post, I want to address how can you write data from a Spark DataFrame into an Elasticsearch/Opensearch database.">
+
+<title>Writing Spark DataFrames to Elasticsearch/Opensearch databases – home |&gt; dplyr::glimpse()</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../">
+<script src="../../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-7E6XG4WKHE"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
+</script>
+
+
+<link rel="stylesheet" href="../../../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../../index.html">
+    <span class="navbar-title">home |&gt; dplyr::glimpse()</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../about.html"> 
+<span class="menu-text">About Me</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Posts</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-posts">    
+        <li>
+    <a class="dropdown-item" href="../../../../posts/index.html">
+ <span class="dropdown-text">All posts</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../posts/en.html">
+ <span class="dropdown-text">Posts in english</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../posts/pt.html">
+ <span class="dropdown-text">Posts em português</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-publications" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Publications</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-publications">    
+        <li>
+    <a class="dropdown-item" href="../../../../publications/index.html">
+ <span class="dropdown-text">All publications</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../publications/en.html">
+ <span class="dropdown-text">Publications in English</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../publications/pt.html">
+ <span class="dropdown-text">Publicações em Português</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../open_source_contrib.html"> 
+<span class="menu-text">Open source contributions</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../donate.html"> 
+<span class="menu-text">Donate or Sponsor Me</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-cv" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">CV</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-cv">    
+        <li>
+    <a class="dropdown-item" href="../../../../files/cv/cv-english.pdf">
+ <span class="dropdown-text">CV in English</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../files/cv/cv-portuguese.pdf">
+ <span class="dropdown-text">CV em Português</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item compact">
+    <a class="nav-link" href="mailto:pedropark99@gmail.com"> <i class="bi bi-envelope-fill" role="img" aria-label="Email for contact">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/pedropark99"> <i class="bi bi-github" role="img" aria-label="Github profile">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://fosstodon.org/web/@pedropark99"> <i class="bi bi-mastodon" role="img" aria-label="Mastodon profile">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://x.com/PedroPark9"> <i class="bi bi-twitter-x" role="img" aria-label="Twitter profile">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/pedro-faria-a68140209/"> <i class="bi bi-linkedin" role="img" aria-label="Linkedin profile">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://pedro-faria.netlify.app/index.xml"> <i class="bi bi-rss" role="img" aria-label="RSS feed for Pedro's blog">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Writing Spark DataFrames to Elasticsearch/Opensearch databases</h1>
+                  <div>
+        <div class="description">
+          Elasticsearch and Opensearch are two very popular No-SQL databases. In this post, I want to address how can you write data from a Spark DataFrame into an Elasticsearch/Opensearch database.
+        </div>
+      </div>
+                </div>
+  </div>
+    
+  <div class="quarto-title-meta-author">
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-heading">Affiliation</div>
+    
+      <div class="quarto-title-meta-contents">
+      <p class="author">Pedro Duarte Faria </p>
+    </div>
+    <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              Blip
+            </p>
+        </div>
+    </div>
+
+  <div class="quarto-title-meta">
+
+        
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">March 16, 2025</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#spark-native-data-sources" id="toc-spark-native-data-sources" class="nav-link" data-scroll-target="#spark-native-data-sources">Spark native data sources</a>
+  <ul class="collapse">
+  <li><a href="#selecting-a-data-source" id="toc-selecting-a-data-source" class="nav-link" data-scroll-target="#selecting-a-data-source">Selecting a data source</a></li>
+  <li><a href="#elasticsearchopensearch-native-spark-data-sources" id="toc-elasticsearchopensearch-native-spark-data-sources" class="nav-link" data-scroll-target="#elasticsearchopensearch-native-spark-data-sources">Elasticsearch/Opensearch native Spark data sources</a></li>
+  <li><a href="#using-the-elasticsearchopensearch-data-source" id="toc-using-the-elasticsearchopensearch-data-source" class="nav-link" data-scroll-target="#using-the-elasticsearchopensearch-data-source">Using the Elasticsearch/Opensearch data source</a></li>
+  </ul></li>
+  <li><a href="#spark-write-mode" id="toc-spark-write-mode" class="nav-link" data-scroll-target="#spark-write-mode">Spark write mode</a></li>
+  <li><a href="#extra-options-that-you-might-want-to-use" id="toc-extra-options-that-you-might-want-to-use" class="nav-link" data-scroll-target="#extra-options-that-you-might-want-to-use">Extra options that you might want to use</a>
+  <ul class="collapse">
+  <li><a href="#mapping-the-id-column" id="toc-mapping-the-id-column" class="nav-link" data-scroll-target="#mapping-the-id-column">Mapping the ID column</a></li>
+  <li><a href="#avoiding-unnecessary-refresh-index-operations" id="toc-avoiding-unnecessary-refresh-index-operations" class="nav-link" data-scroll-target="#avoiding-unnecessary-refresh-index-operations">Avoiding unnecessary refresh index operations</a></li>
+  <li><a href="#define-the-chunk-size" id="toc-define-the-chunk-size" class="nav-link" data-scroll-target="#define-the-chunk-size">Define the chunk size</a></li>
+  </ul></li>
+  <li><a href="#potential-problems-that-you-might-face" id="toc-potential-problems-that-you-might-face" class="nav-link" data-scroll-target="#potential-problems-that-you-might-face">Potential problems that you might face</a>
+  <ul class="collapse">
+  <li><a href="#finding-your-elasticsearchopensearch-server" id="toc-finding-your-elasticsearchopensearch-server" class="nav-link" data-scroll-target="#finding-your-elasticsearchopensearch-server">Finding your Elasticsearch/Opensearch server</a></li>
+  <li><a href="#forbidden-database-operations" id="toc-forbidden-database-operations" class="nav-link" data-scroll-target="#forbidden-database-operations">Forbidden database operations</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>Recently, I had to develop a simple connector (i.e.&nbsp;a Python function) to allow a user to upload/write data from a Spark DataFrame into both an Elasticsearch and an Opensearch database. If you are not familiar with Elasticsearch or Opensearch, they are both No-SQL databases. More specificaly, they are databases that store a collection of JSON documents, instead of storing a collection of tables as you would expect from a traditional SQL database like PostgreSQL.</p>
+<p>In more detail, the company had some new problems and needs that needed to be addressed. One of them was to send/write some of the data in our data lake into an Elasticsearch/Opensearch database. This is where I came in, to develop a simple solution that would allow the company to write such data into an Elasticsearch/Opensearch databases.</p>
+<p>Since our data lake is currently being processed by Apache Spark and Databricks, I needed to develop a solution that would make use of the high scalability of Apache Spark to write this data. In other words, because the company work in a “big data” scenario, I had to develop a solution that would be appropriate with this “big data” scenario.</p>
+<p>This task turn out to be a little more complicated than I expected. Mainly because the existing documentation about the connection between Spark and Elasticsearch/Opensearch is very, I mean, veeery poor. Therefore, it was a little hard to “make the thing work”. Since I don’t want you to face the same challenges I did, I’ve decided to write this post to describe how you can use Apache Spark to write data into these kinds of databases.</p>
+</section>
+<section id="spark-native-data-sources" class="level1">
+<h1>Spark native data sources</h1>
+<p>If you want to write data from Apache Spark fast and with high scalability, you want to use a Spark native data source to write your data. If you use Spark, you likely know what a “data source” is. But I want to discuss a few things here.</p>
+<p>First of all, Spark data sources are described in details at <a href="https://spark.apache.org/docs/3.5.3/sql-data-sources.html">this specific page in the Spark documentation</a>. Spark supports many different data sources out of the box. For example, it supports static files like CSV, JSON and Parquet files.</p>
+<p>But, you can also install Maven packages in your environment to use other data sources that were developed by the community. In other words, Spark is “extensible” in this regard. Because these Maven packages work almost like a “plugin”, by adding new data sources to the Spark engine.</p>
+<p>For example, by installing the <code>spark-sql-kafka</code> Maven package<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> into your environment, a new Spark data source becomes available to you, which is the Kafka data source. With this new data source, Spark supports streaming with Apache Kafka queues.</p>
+<p>Therefore, Spark supports multiple data sources out of the box, but you can add more data sources to the list by installing Maven packages that include new data sources to the Spark engine.</p>
+<section id="selecting-a-data-source" class="level2">
+<h2 class="anchored" data-anchor-id="selecting-a-data-source">Selecting a data source</h2>
+<p>For example, if you are writing a Spark application through <code>pyspark</code>, you can choose the specific data source that you want to use in Spark by using the <a href="https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.DataFrameWriter.format.html#pyspark.sql.DataFrameWriter.format"><code>format()</code> method from a <code>DataFrameWriter</code> class</a>. In the example below, I’m using the JSON data source to write data from Spark into a JSON file.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> spark.<span class="bu">range</span>(<span class="dv">1</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>df.write.<span class="bu">format</span>(<span class="st">'json'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="elasticsearchopensearch-native-spark-data-sources" class="level2">
+<h2 class="anchored" data-anchor-id="elasticsearchopensearch-native-spark-data-sources">Elasticsearch/Opensearch native Spark data sources</h2>
+<p>Both Elasticsearch and Opensearch have a free/open-source Spark native data source that we can use. These data sources are both available as packages in the <a href="https://mvnrepository.com/">Maven repository</a>. If you want to write data to Elasticsearch, then, you are looking for the <code>elasticsearch-spark</code> package. But, if you want to write data to Opensearch instead, then, you are looking for the <code>opensearch-spark</code> package.</p>
+<p>You can see more info about these packages in the links below:</p>
+<ul>
+<li><a href="https://mvnrepository.com/artifact/org.opensearch.client/opensearch-spark-30" class="uri">https://mvnrepository.com/artifact/org.opensearch.client/opensearch-spark-30</a>.</li>
+<li><a href="https://mvnrepository.com/artifact/org.elasticsearch/elasticsearch-spark-30" class="uri">https://mvnrepository.com/artifact/org.elasticsearch/elasticsearch-spark-30</a>.</li>
+</ul>
+<p>Now, you need to use the specific version of these packages that match your specific environment. For example, my environment is this:</p>
+<ul>
+<li>Databricks Runtime 15.4 LTS.</li>
+<li>Apache Spark 3.5.0.</li>
+<li>Scala 2.12.18.</li>
+<li>Python 3.11.0.</li>
+</ul>
+<p>The version of Spark and Scala are the most important infos in this case. Since the version of Spark is 3.5.0, we want to use a version of these packages that are compatible with the 3.* versions of Spark, which are versions <code>opensearch-spark-30</code> and <code>elasticsearch-spark-30</code>.</p>
+<p>And we also need to use a version of these packages that are compatible with the 2.12 version of Scala specifically. This is why, I’ve installed the <code>opensearch-spark-30_2.12</code> and <code>elasticsearch-spark-30_2.12</code> versions of these packages in my specific environment.</p>
+<p>Your specific environment might have different versions, and, therefore, you might need to use a different version of these packages for your specific case. Just be aware of that.</p>
+<p>In Databricks, you can install these Maven packages in your cluster to make these native Spark data sources available in your environment. If you don’t know how to do this, checkout the <a href="https://docs.databricks.com/aws/en/libraries/package-repositories#maven-or-spark-package">Databricks documentation</a> for this.</p>
+</section>
+<section id="using-the-elasticsearchopensearch-data-source" class="level2">
+<h2 class="anchored" data-anchor-id="using-the-elasticsearchopensearch-data-source">Using the Elasticsearch/Opensearch data source</h2>
+<p>After you install these Maven packages, you should be able to select the Elasticsearch/Opensearch data source by using the string <code>"org.opensearch.spark.sql"</code> or <code>"org.elasticsearch.spark.sql"</code> in the <code>format()</code> method.</p>
+<p>Now, in order to use the data source, you have to set some options with the <code>option()</code> method of the <code>DataFrameWriter</code> class. These are the mandatory options that you have to set if you use the Opensearch data source:</p>
+<ul>
+<li><code>opensearch.nodes</code>: the host URL where your Opensearch server is hosted.</li>
+<li><code>opensearch.port</code>: the port to use in the connection with the Opensearch server.</li>
+<li><code>opensearch.resource</code>: the name of the target index in the Opensearch database to write the data to.</li>
+<li><code>opensearch.net.http.auth.user</code>: the username to login into the Opensearch server.</li>
+<li><code>opensearch.net.http.auth.pass</code>: the password to login into the Opensearch server.</li>
+<li><code>opensearch.write.operation</code>: the type of operation (e.g.&nbsp;<code>index</code>, <code>create</code>, <code>upsert</code>, etc.) that you want to use when writing the data to the Opensearch server.</li>
+</ul>
+<p>In the example below, we are selecting the Opensearch data source, and setting these mandatory options. Of course, the values of these options are not real, they are fictitious.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> spark.<span class="bu">range</span>(<span class="dv">1</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>index <span class="op">=</span> <span class="st">"my_index"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>host <span class="op">=</span> <span class="st">"https://my-hostname.com"</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>port <span class="op">=</span> <span class="dv">1234</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>user <span class="op">=</span> <span class="st">"my_username"</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>password <span class="op">=</span> <span class="st">"my_secret_pass"</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>df.write.<span class="bu">format</span>(<span class="st">"org.opensearch.spark.sql"</span>)<span class="op">\</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    .option(<span class="st">"opensearch.nodes"</span>, host)<span class="op">\</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    .option(<span class="st">"opensearch.port"</span>, port)<span class="op">\</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    .option(<span class="st">"opensearch.resource"</span>, index)<span class="op">\</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    .option(<span class="st">"opensearch.net.http.auth.user"</span>, user)<span class="op">\</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    .option(<span class="st">"opensearch.net.http.auth.pass"</span>, password)<span class="op">\</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    .option(<span class="st">"opensearch.write.operation"</span>, <span class="st">"index"</span>)<span class="op">\</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    .mode(<span class="st">"append"</span>)<span class="op">\</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    .save()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now, if you are using the Elasticsearch data source instead, then, these are the mandatory options that you have to set:</p>
+<ul>
+<li><code>es.nodes</code>: the host URL where your Elasticsearch server is hosted.</li>
+<li><code>es.port</code>: the port to use in the connection with the Elasticsearch server.</li>
+<li><code>es.resource</code>: the name of the target index in the Elasticsearch database to write the data to.</li>
+<li><code>es.write.operation</code>: the type of operation (e.g.&nbsp;<code>index</code>, <code>create</code>, <code>upsert</code>, etc.) that you want to use when writing the data to the Elasticsearch server.</li>
+<li><code>es.net.http.header.Authorization</code>: if you are using an API key to authenticate in the Elasticsearch server, you should use this option to set the authorization header that will be used in the HTTP request that is made to the Elasticsearch server.</li>
+<li><code>es.net.http.auth.user</code>: if you are using basic username + password to authenticate in the Elasticsearch server, you should use this option to set the username to login into the Elasticsearch server.</li>
+<li><code>es.net.http.auth.pass</code>: if you are using basic username + password to authenticate in the Elasticsearch server, you should use this option to set the password to login into the Elasticsearch server.</li>
+</ul>
+<p>In the example below, I’m setting these mandatory options for the Elasticsearch data source:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> spark.<span class="bu">range</span>(<span class="dv">1</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>index <span class="op">=</span> <span class="st">"my_index"</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>host <span class="op">=</span> <span class="st">"https://my-hostname.com"</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>port <span class="op">=</span> <span class="dv">1234</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>api_key <span class="op">=</span> <span class="st">"my_secret_api_key"</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>df.write.<span class="bu">format</span>(<span class="st">"org.opensearch.spark.sql"</span>)<span class="op">\</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    .option(<span class="st">"es.nodes"</span>, host)<span class="op">\</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    .option(<span class="st">"es.port"</span>, port)<span class="op">\</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    .option(<span class="st">"es.resource"</span>, index)<span class="op">\</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    .option(<span class="st">"es.net.http.header.Authorization"</span>, <span class="ss">f"ApiKey </span><span class="sc">{</span>api_key<span class="sc">}</span><span class="ss">"</span>)<span class="op">\</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    .option(<span class="st">"es.write.operation"</span>, <span class="st">"index"</span>)<span class="op">\</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    .mode(<span class="st">"append"</span>)<span class="op">\</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    .save()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="spark-write-mode" class="level1">
+<h1>Spark write mode</h1>
+<p>Usually, you don’t care about which Spark write mode is being used when using the Elasticsearch/Opensearch data source. In other words, the Spark write mode is usually irrelevant for most case scenarios.</p>
+<p>But, depending on what you want to do, you might have to change the Spark write mode to meet your specific goals. As it will become more clear further in this article, you want to use the Spark write mode <code>"append"</code> in most situations, i.e.&nbsp;it should be your “default”.</p>
+<p>But, before we continue, let me explain the differences between the Spark write mode, and the type of write operation that you set through the <code>es.write.operation</code> and <code>opensearch.write.operation</code> options.</p>
+<p>With the <code>es.write.operation</code> and <code>opensearch.write.operation</code> options, you specify which type of operation you want to use to insert the new data into the Opensearch database. That is, if the new data should be inserted into the Opensearch index using an <code>upsert</code> operation, or maybe, a <code>create</code> operation, or an <code>index</code> operation, etc.</p>
+<p>On the other hand, by setting the Spark write mode, you are basically adding a new effect into the process. Usually, you want to use the Spark write mode <code>"append"</code> in most situations, because this write mode does not introduces any new effect into the mix. In other words, the write mode <code>"append"</code> does nothing, it “means nothing” to the Elasticsearch/Opensearch Spark data source.</p>
+<p>But, if you set the Spark write mode to anything else, then, you start to introduce new operations in the mix. In the list below, you can see which effects each Spark write mode has on the process:</p>
+<ul>
+<li><code>overwrite</code>: a <code>delete</code> operation is performed in the Elasticsearch/Opensearch index before the Spark data is written into the Elasticsearch/Opensearch index.</li>
+<li><code>error</code> or <code>errorifexists</code>: if the Elasticsearch/Opensearch index is empty (i.e.&nbsp;document count is zero, or, the index doesn’t even exist), nothing happens, the Spark data is written into the Elasticsearch/Opensearch index as expected. Otherwise, an exception is raised.</li>
+<li><code>ignore</code>: if the Elasticsearch/Opensearch index is empty (i.e.&nbsp;document count is zero, or, the index doesn’t even exist), the Spark data is written into the Elasticsearch/Opensearch index as expected. Otherwise, the Spark data is completely ignored, that is, it is not written into the Elasticsearch/Opensearch index.</li>
+</ul>
+</section>
+<section id="extra-options-that-you-might-want-to-use" class="level1">
+<h1>Extra options that you might want to use</h1>
+<section id="mapping-the-id-column" class="level2">
+<h2 class="anchored" data-anchor-id="mapping-the-id-column">Mapping the ID column</h2>
+<p>Elasticsearch and Opensearch are No-SQL databases that store a collection of JSON documents. Each JSON document that you add/insert into these databases is always associated with a particular ID. In other words, each document in the database has an ID associated with it.</p>
+<p>This ID is crucial to identify each document in the database. In most cases, this ID is created automatically, at runtime, by the database itself. In more details, when you insert new documents into the database, the Elasticsearch/Opensearch server calculates automatically these ID’s for you. This tipically happens when you use an <code>index</code> write operation to insert these new documents into the database.</p>
+<p>This <code>index</code> write operation in an Elasticsearch/Opensearch database works similarly to an <code>INSERT INTO</code> SQL statement in a traditional SQL database. It basically means that you are inserting new data into the database. And because this data is <strong>new</strong>, the database can generate a completely new and unique ID for this new data that is being inserted, without the help of anyone else.</p>
+<p>However, this scenario changes completely when you are updating pre-existing data/documents in the database, or, when you are deleting some pre-existing data/documents. Because in this instance, you, the user, needs to provide the ID’s of the documents that you want to delete/update. In other words, the database needs to know which specific documents you want to update/delete, and you is responsible for specifying the ID’s of these documents.</p>
+<p>For example, if you are using an <code>upsert</code> operation (which is basically a “update if exists, and insert otherwise” operation) to write your Spark data into the Elasticsearch/Opensearch database, then, your Spark DataFrame must have a column in it that contains the ID’s of each document, and you need to tell the Elasticsearch/Opensearch Spark data source which column in the DataFrame contains such ID’s through the <code>opensearch.mapping.id</code> and <code>es.mapping.id</code> options.</p>
+<p>For example, if the ID’s of each document are in a column named <code>id</code>, then, I should set this option to the string <code>"id"</code>. In the example below, we are using the Opensearch data source, but the same thing applies to the Elasticsearch data source, just changes the option to <code>es.mapping.id</code>:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df.write.<span class="bu">format</span>(<span class="st">"org.opensearch.spark.sql"</span>)<span class="op">\</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    .option(<span class="st">"es.write.operation"</span>, <span class="st">"upsert"</span>)<span class="op">\</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    .option(<span class="st">"es.mapping.id"</span>, <span class="st">"id"</span>)<span class="op">\</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    .option(<span class="st">"es.nodes"</span>, host)<span class="op">\</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    .option(<span class="st">"es.port"</span>, port)<span class="op">\</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    .option(<span class="st">"es.resource"</span>, index)<span class="op">\</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    .option(<span class="st">"es.net.http.header.Authorization"</span>, <span class="ss">f"ApiKey </span><span class="sc">{</span>api_key<span class="sc">}</span><span class="ss">"</span>)<span class="op">\</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    .mode(<span class="st">"append"</span>)<span class="op">\</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    .save()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="avoiding-unnecessary-refresh-index-operations" class="level2">
+<h2 class="anchored" data-anchor-id="avoiding-unnecessary-refresh-index-operations">Avoiding unnecessary refresh index operations</h2>
+<p>Every time that you add new data into an Elasticsearch/Opensearch database, the database needs to perform a “refresh index operation” at some point. A “refresh index operation” makes recent operations performed on one or more indices on the database available for search.</p>
+<p>In other words, when you add a new document to an index, or, when you change a pre-existing document in the index, these changes that you made in the index will usually become available to be “searched/accessed” only after a “refresh index operation” is performed in the index.</p>
+<p>Therefore, the Elasticsearch/Opensearch database needs to perform this “refresh index operation” at some point, so that you can access/see the changes that you made in the index.</p>
+<p>But here is the catch! Everytime you use the Elasticsearch/Opensearch Spark data source to write some data from Spark, the data source always perform a “refresh index operation” at the end of the write process, by making a HTTP request to the Refresh API of the Elasticsearch/Opensearch database at the end of the process. For most case scenarios, you should always avoid this “refresh index operation” at the end!</p>
+<p>In other words, you should not let the Spark data source to dictate when the “refresh index operation” should be performed. Let the Elasticsearch/Opensearch database be responsible for that! When the time is appropriate, the Elasticsearch/Opensearch database itself will decide and automatically perform the “refresh index operation” to include your changes.</p>
+<p>You can do that by setting the options <code>es.batch.write.refresh</code> and <code>opensearch.batch.write.refresh</code> to <code>False</code>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df.write.<span class="bu">format</span>(<span class="st">"org.opensearch.spark.sql"</span>)<span class="op">\</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    .option(<span class="st">"es.batch.write.refresh"</span>, <span class="va">False</span>)<span class="op">\</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    .option(<span class="st">"es.nodes"</span>, host)<span class="op">\</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    .option(<span class="st">"es.port"</span>, port)<span class="op">\</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    .option(<span class="st">"es.resource"</span>, index)<span class="op">\</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    .option(<span class="st">"es.net.http.header.Authorization"</span>, <span class="ss">f"ApiKey </span><span class="sc">{</span>api_key<span class="sc">}</span><span class="ss">"</span>)<span class="op">\</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    .option(<span class="st">"es.write.operation"</span>, <span class="st">"index"</span>)<span class="op">\</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    .mode(<span class="st">"append"</span>)<span class="op">\</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    .save()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="define-the-chunk-size" class="level2">
+<h2 class="anchored" data-anchor-id="define-the-chunk-size">Define the chunk size</h2>
+<p>When you use the Elasticsearch/Opensearch Spark data sources, they split your Spark DataFrame in chunks, and send these chunks/batches to the Elasticsearch/Opensearch server, piece by piece. You can use the <code>es.batch.size.entries</code> and <code>opensearch.batch.size.entries</code> options to specify the size (number of entries) of these chunks that are created by the Spark data source.</p>
+<p>For example, if your DataFrame contains 10000 rows, and you set this chunk size to 1000, then, the Spark data source will split your DataFrame into 10 chunks, and send each chunk sequentially to the Elasticsearch/Opensearch server.</p>
+<p>By controlling the size of the chunk that is sent to the server, you can control how much data (or, how much “stuff”) the server needs to process in each request. This is useful if your Elasticsearch/Opensearch server have a rate limit, or, a if it does not have much powerful resources to process huge amounts of data in a single request.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df.write.<span class="bu">format</span>(<span class="st">"org.opensearch.spark.sql"</span>)<span class="op">\</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    .option(<span class="st">"es.batch.size.entries"</span>, <span class="dv">1000</span>)<span class="op">\</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    .option(<span class="st">"es.nodes"</span>, host)<span class="op">\</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    .option(<span class="st">"es.port"</span>, port)<span class="op">\</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    .option(<span class="st">"es.resource"</span>, index)<span class="op">\</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    .option(<span class="st">"es.net.http.header.Authorization"</span>, <span class="ss">f"ApiKey </span><span class="sc">{</span>api_key<span class="sc">}</span><span class="ss">"</span>)<span class="op">\</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    .option(<span class="st">"es.write.operation"</span>, <span class="st">"index"</span>)<span class="op">\</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    .mode(<span class="st">"append"</span>)<span class="op">\</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    .save()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="potential-problems-that-you-might-face" class="level1">
+<h1>Potential problems that you might face</h1>
+<section id="finding-your-elasticsearchopensearch-server" class="level2">
+<h2 class="anchored" data-anchor-id="finding-your-elasticsearchopensearch-server">Finding your Elasticsearch/Opensearch server</h2>
+<p>This is likely the first problem that you will face when trying to use the Elasticsearch/Opensearch Spark data source. This problem happens when your Elasticsearch/Opensearch server is not found by the Spark data source. In other words, this is a network problem. For example, you ask the Spark data source to write your data into the server located at the URL “https://my-host.com”, but, the Spark data source was unable to find/locate the server at this URL.</p>
+<p>This specific problem can happen for multiple reasons. Maybe…</p>
+<ul>
+<li>the URL that you provided at the <code>es.nodes</code> or <code>opensearch.nodes</code> option is wrong in some way.</li>
+<li>the port number that you provided at the <code>es.port</code> or <code>opensearch.port</code> option is wrong in some way.</li>
+<li>the Elasticsearch/Opensearch server might not be accessible through the internet, i.e.&nbsp;maybe this server is hosted on a private/closed network.</li>
+<li>the Elasticsearch/Opensearch server has a firewall rule that is blocking your network access.</li>
+<li>your Spark process might not have access to the internet for some reason.</li>
+</ul>
+</section>
+<section id="forbidden-database-operations" class="level2">
+<h2 class="anchored" data-anchor-id="forbidden-database-operations">Forbidden database operations</h2>
+<p>While using these Spark native data sources you might face some problems. The most likely error that you might encounter while using these data sources is a “403/Forbidden” error message, which basically means that, with the inputs that you provided, the Spark data source is asking the Elasticsearch/Opensearch server to perform an operation that you don’t have enough authorization to perform. However, this is kind of generic, i.e.&nbsp;this “forbidden” can mean a lot of things. That is, there are many different operations that you may or may not have enough authorization to perform in the database.</p>
+<p>For example, maybe, the data that you have provided does not follow the schema of the JSON documents that are already present in the database index that you are using. If that is your case, then, the database will likely need to redefine/recreate the index in the database from scratch, so that it can alter the schema of that index, and, you might not have enough authorization to recreate such index, therefore, causing a “403/Forbidden” error.</p>
+<p>This is just one example, but there are many other examples of operations that you might be silently causing/triggering through these Spark data sources, and that you do not have enough authorization to perform. Unfortunately, the error messages provided by these Spark data sources are really poor in details in some cases. So you will probably need to do a lot of testing, until you find the perfect combination of inputs and data that work for your case.</p>
+
+
+</section>
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p><a href="https://mvnrepository.com/artifact/org.apache.spark/spark-sql-kafka-0-10" class="uri">https://mvnrepository.com/artifact/org.apache.spark/spark-sql-kafka-0-10</a><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/pedro-faria\.netlify\.app\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
