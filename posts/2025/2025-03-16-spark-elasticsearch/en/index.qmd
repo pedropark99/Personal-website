@@ -327,7 +327,7 @@ df.write.format("org.opensearch.spark.sql")\
 
 
 
-# Potential problems you might face
+# Potential problems that you might face
 
 ## Finding your Elasticsearch/Opensearch server
 

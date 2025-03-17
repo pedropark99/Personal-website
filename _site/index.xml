@@ -457,8 +457,8 @@ font-style: inherit;">\</span></span>
 <span id="cb6-9">    .save()</span></code></pre></div>
 </section>
 </section>
-<section id="potential-problems-you-might-face" class="level1">
-<h1>Potential problems you might face</h1>
+<section id="potential-problems-that-you-might-face" class="level1">
+<h1>Potential problems that you might face</h1>
 <section id="finding-your-elasticsearchopensearch-server" class="level2">
 <h2 class="anchored" data-anchor-id="finding-your-elasticsearchopensearch-server">Finding your Elasticsearch/Opensearch server</h2>
 <p>This is likely the first problem that you will face when trying to use the Elasticsearch/Opensearch Spark data source. This problem happens when your Elasticsearch/Opensearch server is not found by the Spark data source. In other words, this is a network problem. For example, you ask the Spark data source to write your data into the server located at the URL “https://my-host.com”, but, the Spark data source was unable to find/locate the server at this URL.</p>
