@@ -295,6 +295,7 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
   <li><a href="#elasticsearchopensearch-native-spark-data-sources" id="toc-elasticsearchopensearch-native-spark-data-sources" class="nav-link" data-scroll-target="#elasticsearchopensearch-native-spark-data-sources">Elasticsearch/Opensearch native Spark data sources</a></li>
   <li><a href="#using-the-elasticsearchopensearch-data-source" id="toc-using-the-elasticsearchopensearch-data-source" class="nav-link" data-scroll-target="#using-the-elasticsearchopensearch-data-source">Using the Elasticsearch/Opensearch data source</a></li>
   </ul></li>
+  <li><a href="#spark-write-mode" id="toc-spark-write-mode" class="nav-link" data-scroll-target="#spark-write-mode">Spark write mode</a></li>
   <li><a href="#potential-problems-you-might-face" id="toc-potential-problems-you-might-face" class="nav-link" data-scroll-target="#potential-problems-you-might-face">Potential problems you might face</a>
   <ul class="collapse">
   <li><a href="#forbidden-database-operations" id="toc-forbidden-database-operations" class="nav-link" data-scroll-target="#forbidden-database-operations">Forbidden database operations</a></li>
@@ -402,6 +403,19 @@ gtag('config', 'G-7E6XG4WKHE', { 'anonymize_ip': true});
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    .mode(<span class="st">"append"</span>)<span class="op">\</span></span>
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    .save()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
+</section>
+<section id="spark-write-mode" class="level1">
+<h1>Spark write mode</h1>
+<p>Usually, you don’t care about which Spark write mode is being used when using the Elasticsearch/Opensearch data source. But, depending on what you want to do, you might have to change the Spark write mode to meet your goals. As it will become more clear further in this article, you want to use the Spark write mode <code>"append"</code> in most situations, i.e.&nbsp;it should be your “default”.</p>
+<p>But, before we continue, let me explain the differences between the Spark write mode, and the type of write operation that you set through the <code>es.write.operation</code> and <code>opensearch.write.operation</code> options.</p>
+<p>With the <code>es.write.operation</code> and <code>opensearch.write.operation</code> options, you specify which type of operation you want to use to insert the new data into the Opensearch database. That is, if the new data should be inserted into the Opensearch index using an <code>upsert</code> operation, or maybe, a <code>create</code> operation, or an <code>index</code> operation, etc.</p>
+<p>On the other hand, by setting the Spark write mode, you are basically adding a new effect into the process. Usually, you want to use the Spark write mode <code>"append"</code> in most situations, because this write mode does not introduces any new effect into the mix. In other words, the write mode <code>"append"</code> does nothing, it “means nothing” to the Elasticsearch/Opensearch Spark data source.</p>
+<p>But, if you set the Spark write mode to anything else, then, you start to introduce new operations in the mix. In the list below, you can see which effects each Spark write mode has on the process:</p>
+<ul>
+<li><code>overwrite</code>: a <code>delete</code> operation is performed in the Elasticsearch/Opensearch index before the Spark data is written into the Elasticsearch/Opensearch index.</li>
+<li><code>error</code> or <code>errorifexists</code>: if the Elasticsearch/Opensearch index is empty (i.e.&nbsp;document count is zero, or, the index doesn’t even exist), nothing happens, the Spark data is written into the Elasticsearch/Opensearch index as expected. Otherwise, an exception is raised.</li>
+<li><code>ignore</code>: if the Elasticsearch/Opensearch index is empty (i.e.&nbsp;document count is zero, or, the index doesn’t even exist), the Spark data is written into the Elasticsearch/Opensearch index as expected. Otherwise, the Spark data is completely ignored, that is, it is not written into the Elasticsearch/Opensearch index.</li>
+</ul>
 </section>
 <section id="potential-problems-you-might-face" class="level1">
 <h1>Potential problems you might face</h1>

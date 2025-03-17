@@ -166,6 +166,41 @@ df.write.format("org.opensearch.spark.sql")\
 ```
 
 
+# Spark write mode
+
+Usually, you don't care about which Spark write mode is being used when using
+the Elasticsearch/Opensearch data source. But, depending on what you want to do, you might
+have to change the Spark write mode to meet your goals.
+As it will become more clear further in this article, you want to use
+the Spark write mode `"append"` in most situations, i.e. it should be your "default".
+
+But, before we continue, let me explain the differences between the Spark write mode,
+and the type of write operation that you set through the `es.write.operation` and `opensearch.write.operation` options.
+
+With the `es.write.operation` and `opensearch.write.operation` options, you specify which type
+of operation you want to use to insert the new data into the Opensearch database. That is, if
+the new data should be inserted into the Opensearch index using an `upsert` operation, or maybe,
+a `create` operation, or an `index` operation, etc.
+
+On the other hand, by setting the Spark write mode, you are basically adding a new effect into the process.
+Usually, you want to use the Spark write mode `"append"` in most situations, because this
+write mode does not introduces any new effect into the mix. In other words, the write mode
+`"append"` does nothing, it "means nothing" to the Elasticsearch/Opensearch Spark data source.
+
+But, if you set the Spark write mode to anything else, then, you start to introduce new
+operations in the mix. In the list below, you can see which effects each Spark write mode
+has on the process:
+
+- `overwrite`: a `delete` operation is performed in the Elasticsearch/Opensearch index before the Spark data is written
+    into the Elasticsearch/Opensearch index.
+- `error` or `errorifexists`: if the Elasticsearch/Opensearch index is empty (i.e. document count is zero, or, the index doesn't even exist),
+    nothing happens, the Spark data is written into the Elasticsearch/Opensearch index as expected. Otherwise, an exception is raised.
+- `ignore`: if the Elasticsearch/Opensearch index is empty (i.e. document count is zero, or, the index doesn't even exist),
+    the Spark data is written into the Elasticsearch/Opensearch index as expected. Otherwise, the Spark data is completely
+    ignored, that is, it is not written into the Elasticsearch/Opensearch index.
+
+
+
 # Potential problems you might face
 
 ## Forbidden database operations
