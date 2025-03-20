@@ -22,14 +22,17 @@ about:
 ---
  
 ## Bio
-Hey! I'm Pedro Duarte Faria. A brazilian economist and data platform engineer, working mainly with R, SQL, Python, Databricks and Apache Spark. I do a lot of data engineering these days, but I do love teaching and writing about software development and building open-source software too.
+Hey! I'm Pedro Duarte Faria. A brazilian economist and senior data engineer, working mainly with R, SQL, Python, Databricks and Apache Spark. I do a lot of data engineering these days, but I do love teaching and writing about software development and building open-source software too.
 
 -----------------------------------------------------------------------------------------------------------------------------------
 
 ## Experience
 
+**Senior Data Engineer**
+DSM-Firmenich, April 2025 - *present*.
+
 **Data Platform Engineer**
-Blip, Mar 2024 - present.
+Blip, Mar 2024 - April 2025.
 
 **Analytics Engineer**,
 Blip, Feb 2023 - Mar 2024.
