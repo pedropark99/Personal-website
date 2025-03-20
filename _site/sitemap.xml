@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://pedro-faria.netlify.app/about.html</loc>
-    <lastmod>2025-03-16T17:08:37.203Z</lastmod>
+    <lastmod>2025-03-20T22:17:29.029Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/publications/index.html</loc>
@@ -18,7 +18,7 @@
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/posts/2025/2025-03-16-spark-elasticsearch/en/index.html</loc>
-    <lastmod>2025-03-17T21:02:26.893Z</lastmod>
+    <lastmod>2025-03-17T21:04:38.749Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/posts/2022/2022-12-21-spark-map-v0.2.3/en/index.html</loc>
@@ -146,7 +146,7 @@
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/donate.html</loc>
-    <lastmod>2025-03-16T17:22:26.118Z</lastmod>
+    <lastmod>2025-03-17T21:04:38.748Z</lastmod>
   </url>
   <url>
     <loc>https://pedro-faria.netlify.app/publications/book/introd-pyspark/en/index.html</loc>
