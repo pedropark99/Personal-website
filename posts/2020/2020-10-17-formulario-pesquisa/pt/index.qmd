@@ -4,6 +4,7 @@ description: "Uma rápida análise sobre o impacto e as sugestões fornecidas ao
 date: 2020-10-17
 categories: ["R", "Teaching"]
 image: './../featured.jpg'
+affiliation: FJP
 
 aliases: 
     - "./../../../2020-10-17-formulario-pesquisa/pt"

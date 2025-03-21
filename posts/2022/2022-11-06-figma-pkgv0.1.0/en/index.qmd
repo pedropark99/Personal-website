@@ -2,6 +2,7 @@
 title: "Introducing the `{figma}` R package"
 description: With this package, you can access the Figma API to bring your design files to R 🎨!
 date: '2022-11-06'
+affiliation: Blip
 image: './../featured.png'
 categories: ['R', 'Package', 'Figma', 'API']
 toc: true

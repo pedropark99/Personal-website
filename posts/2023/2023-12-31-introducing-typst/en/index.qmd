@@ -2,6 +2,7 @@
 title: My experience with `Typst`, the potential sucessor of `LaTex`
 date: "2023-12-31"
 categories: ["Typst", "Typesetting system", "Documents"]
+affiliation: Blip
 description: "Let me quickly describe my recent experience with Typst, which is a new markup-based typesetting system for composing documents and articles for science, and also, the most promissing sucessor of the famous LaTex typeset system."
 
 image: "./../post-back.svg"

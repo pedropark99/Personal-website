@@ -2,6 +2,7 @@
 title: 'Novidades da 4° edição de Introdução à Linguagem R: seus fundamentos e sua prática'
 description: 'Esta quarta edição traz algumas melhorias que buscam manter um dos principais objetivos deste livro, que é ser uma referência moderna, introdutória e técnica sobre a Linguagem R.'
 date: '2022-12-26'
+affiliation: Blip
 
 image: "./../featured.png"
 categories: ["Book", "R"]

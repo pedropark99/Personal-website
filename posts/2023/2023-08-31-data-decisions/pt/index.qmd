@@ -2,6 +2,7 @@
 title: "Um pequeno exemplo sobre como utilizar dados para tomar melhores decisões"
 description: "Este artigo descreve um exemplo real em que eu e meu time usamos dados para convencer o nosso cliente na época a tomar uma melhor decisão."
 number-sections: true
+affiliation: Blip
 categories: ['Data Storytelling', 'Data Science']
 image: "./../decision.avif"
 date: "2023-10-28"

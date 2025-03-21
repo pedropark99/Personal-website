@@ -2,6 +2,7 @@
 title: Have you ever SSH before?
 description: "Do you know how SSH works? Have you ever SSH into a remote computer before? In this post I want to describe how can you login into a remote computer using SSH."
 date: "2024-01-22"
+affiliation: Blip
 categories: ["SSH", "Servers", "Network"]
 ---
 

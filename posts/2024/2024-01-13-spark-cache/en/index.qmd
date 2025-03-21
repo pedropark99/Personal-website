@@ -2,6 +2,7 @@
 title: How to use the cache effectively on Apache Spark
 description: "Did you ever used the DataFrame method `cache()` to cache your Spark DataFrame? In this post, I want to describe how you can use this method to get better performance."
 date: 2024-01-13
+affiliation: Blip
 image: "./../memory.svg"
 categories: ['Apache Spark', 'Performance']
 bibliography: "./../refs.bib"

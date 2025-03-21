@@ -5,6 +5,7 @@ description: "This article discuss my experience on how I improved the Data Stor
 date: 2023-05-22
 categories: ['Storytelling', 'Data Storytelling', 'Data Science']
 draft: false
+affiliation: Blip
 toc: true
 number-sections: true
 
