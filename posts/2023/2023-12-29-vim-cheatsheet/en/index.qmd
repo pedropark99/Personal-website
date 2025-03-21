@@ -3,6 +3,7 @@ title: NeoVim commands and shortcuts cheatsheet
 description: "I have been using NeoVim in this past year. However, is hard to remember all commands and shortcuts available, so I dedided to write a cheatsheet with all Vim commands and keyboard shortcuts that I use the most."
 image: "./../post-image.png"
 categories: ["NeoVim", "Vim", "Cheatsheet"]
+affiliation: Blip
 date: "2023-12-30"
 ---
 

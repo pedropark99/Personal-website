@@ -5,6 +5,7 @@ description: 'Esse post descreve as novas adições à segunda edição do livro
 
 lastmod: '2021-05-26T20:27:29-03:00'
 categories: ["Book", "R"]
+affiliation: Blip
 
 image: "./../featured.png"
 links:

@@ -3,6 +3,7 @@ title: Running an AI ChatBot locally
 description: "You might need to run an AI ChatBot (like a ChatGPT) locally on your system. In this article, I explain how you can do this."
 date: "2024-03-16"
 image: "./../chatgpt.webp"
+affiliation: Blip
 ---
 
 # Introduction

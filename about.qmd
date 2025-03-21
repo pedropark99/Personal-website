@@ -28,10 +28,10 @@ Hey! I'm Pedro Duarte Faria. A brazilian economist and senior data engineer, wor
 
 ## Experience
 
-**Senior Data Engineer**
+**Senior Data Engineer**,
 DSM-Firmenich, April 2025 - *present*.
 
-**Data Platform Engineer**
+**Data Platform Engineer**,
 Blip, Mar 2024 - April 2025.
 
 **Analytics Engineer**,

@@ -3,6 +3,7 @@ title: Producing evenly-spaced and non-overlapping curves with Jobard-Lefer Algo
 description: "In this article, I want to implement the Jobard-Lefer Algorithm in C. With this algorithm, we can produce evenly-spaced and non-overlapping curves in a flow field (i.e. a vector field)."
 date: "2024-02-19"
 categories: ["Flow Fields", "C", "Algorithm", "Computer Graphcis"]
+affiliation: Blip
 bibliography: "./../reference.bib"
 image: "./../flow_field.png"
 number-sections: true

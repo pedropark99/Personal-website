@@ -3,6 +3,7 @@ title: "Introducing the `{spark_map}` Python package"
 description: With this package, you can easily apply a function over multiple columns of a Spark DataFrame
 date: '2022-12-21'
 image: './../spark-map-logo.png'
+affiliation: Blip
 categories: ['Python', 'Package', 'pyspark', 'Apache Spark']
 toc: true
 

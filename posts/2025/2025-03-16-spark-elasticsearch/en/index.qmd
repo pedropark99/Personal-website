@@ -2,6 +2,7 @@
 title: Writing Spark DataFrames to Elasticsearch/Opensearch databases
 description: "Elasticsearch and Opensearch are two very popular No-SQL databases. In this post, I want to address how can you write data from a Spark DataFrame into an Elasticsearch/Opensearch database."
 date: "2025-03-16"
+affiliation: Blip
 image: "../spark-elasticsearch-cover.webp"
 ---
 

@@ -5,6 +5,7 @@ description: "Neste artigo discuto a minha experiência sobre como eu construi e
 date: 2023-03-06
 categories: ['Storytelling', 'Data Storytelling', 'Data Science']
 draft: false
+affiliation: Blip
 toc: true
 number-sections: true
 

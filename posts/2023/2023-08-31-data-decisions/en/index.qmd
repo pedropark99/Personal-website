@@ -2,6 +2,7 @@
 title: "A small example on how to make better decisions with data"
 description: "This article describes a real world situation where me and my team used data to convince our client to do a better decision."
 number-sections: true
+affiliation: Blip
 categories: ['Data Storytelling', 'Data Science']
 image: "./../decision.avif"
 date: "2023-10-28"

@@ -5,6 +5,7 @@ date: '2022-04-06'
 
 image: "./../featured.png"
 categories: ["Book", "R"]
+affiliation: Blip
 projects: ["R_curso"]
 links:
   - name: "Link to the Book"

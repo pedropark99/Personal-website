@@ -2,6 +2,7 @@
 title: Introducing the `{ggfunnel}` R package
 description: In this post, I want to introduce an experimental R package 📦 which you can use to build Power BI like funnel charts in R.
 image: "./../background-ggfunnel.png"
+affiliation: Blip
 
 date: 2023-02-11
 categories: ['R', 'Package', 'Power BI', 'Funnel charts']

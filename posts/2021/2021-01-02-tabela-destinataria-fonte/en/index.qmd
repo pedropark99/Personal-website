@@ -5,6 +5,7 @@ description: "A different (maybe crazy) view on how to teach/explain *Outer join
 
 categories: ["JOINs", "Teaching"]
 date: 2021-01-02
+affiliation: Blip
 image: "./../featured.png"
 projects: ["R_curso"]
 

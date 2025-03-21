@@ -3,6 +3,7 @@ title: JOINs são importantes fontes de duplicações em seus dados
 description: "Se os seus dados crescerem de forma repentina, sem explicação aparente, verifique se os seus JOINs são a fonte desse problema"
 date: 2023-01-10
 image: './../expansao.png'
+affiliation: Blip
 bibliography: "../bibliography.bib"
 categories: ['JOINs']
 
