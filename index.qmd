@@ -13,6 +13,11 @@ listing:
     sort: "date desc"
     contents: posts/*/*/en/index.qmd
     max-items: 6
+  - id: posts-fr-index
+    type: grid
+    sort: "date desc"
+    contents: posts/*/*/fr/index.qmd
+    max-items: 6
   - id: posts-pt-index
     type: grid
     sort: "date desc"
@@ -38,6 +43,11 @@ In this page, you can quickly scan through my latest published books 📚 and bl
 ## Most recent Posts in English
 
 ::: {#posts-en-index}
+:::
+
+## 
+
+::: {#posts-fr-index}
 :::
 
 ## Posts mais recentes em Português
